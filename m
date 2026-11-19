@@ -1,60 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9573D606D3A8
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF60606E86E
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZaE9XsTl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU2Vu-0001aQ-05; Thu, 19 Nov 2026 08:49:22 -0500
+	id 1xU2Wh-0001jY-A7; Thu, 19 Nov 2026 08:50:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xU2Vr-0001Zv-IG
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:49:19 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xU2Vp-0005or-O0
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:49:19 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8500060E017;
- Thu, 19 Nov 2026 14:49:13 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id QkCo2g5LEeTI; Thu, 19 Nov 2026 14:49:11 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3A1A260CCE7; Thu, 19 Nov 2026 14:49:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 373A713C28F;
- Thu, 19 Nov 2026 14:49:11 +0100 (CET)
-Date: Thu, 19 Nov 2026 14:49:11 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- Markus Armbruster <armbru@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: Who should be allowed to unrealize a device, and what can you
- still do with it afterwards?
-In-Reply-To: <CAFEAcA8VP4vf6=x6Np26FLYHBNXt2OzRMna92F6uJFvde=jCcA@mail.gmail.com>
-Message-ID: <ce91d0a4-8364-752b-fc74-e45e6a51e35f@eik.bme.hu>
-References: <CAFEAcA9Ob8CsaufaAZ6jUhrKkxSfCkcig3ciG5LK_WCNCi14NA@mail.gmail.com>
- <de8cfd7a-9c43-44ac-baba-c8f892749dc4@eik.bme.hu>
- <CAFEAcA9BnWRnyMp4rswY1dxA4b5FQpQhK3YsGYGPXzwa-5YfGA@mail.gmail.com>
- <64F81A8F-4EC2-4147-B254-089A2D956264@gmail.com>
- <CAFEAcA8VP4vf6=x6Np26FLYHBNXt2OzRMna92F6uJFvde=jCcA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xU2Wb-0001j8-QW
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:50:05 -0500
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xU2WZ-0005ry-LF
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 08:50:05 -0500
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-67da7d18f2fso1167690d50.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 05:50:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795096202; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QwjXL9c/MfSfAkl6hAQ+rpWheA0ufR4Rih9sI5D8D2NZ9Wf+NrHE2F6m4ydEL6SGu+
+ 5RHu9RQFadfNB5nq9AdKa51WUMOAugROJhY7MPAy/j2cNAa+5vdxI5jct55POEpLXt57
+ enz5JrRTHEJ0pL5F8cXqxnIFpvfYoYMRhq8egKL1itgHFWcJVl9xxLTj1cDNHakC+4og
+ wjmmTajrzECJO1Z7Ey3gd4Tf2TU26JF6NxpWOpIXSeatOGxlF3NUgTPCO2iKfFnGIQBW
+ hhfh6VRFcxtC7iVuLr7B8fgmQdCfo61jg8xh6zVYPJxE6tXvUDm2XB3fmcbhDM4T6fjj
+ LbBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Nta8dsSXguqHYph67QA9MDb9jQVd5q47MMBE1TsgWis=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=Isp/JETWHgn43JimtxbCETpw1dXUhcVaVK4wFH4a+CE4Eb2mQg71f2v/roHDf4nRrn
+ Xj4m84exfKMexLkNyMXhGELDvf8+pzhw8gRSo35IUgaPH1mt8qc/PpAZ/xlae2j+HYL6
+ xb5gSngpkwAOyS4cVWzCVM4ouhd+UVZZ58/QlAZOTcY1x5yzBkkmw5V3GOhkezrIVG6m
+ lBDYLf6bpY84coOOM/5BYAzfthKu+60+DncPfc06wikw4jeEIWILTCpe/pdugw3BuOGa
+ hxUYHyMiRSkGzSRd31r17iBx2bSavh8YNudXefkVRI4P6dnLd6QFL2L9AHl3ZW32V5xY
+ NnkQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795096202; x=1795701002; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Nta8dsSXguqHYph67QA9MDb9jQVd5q47MMBE1TsgWis=;
+ b=ZaE9XsTl+rO7v6eNkmbJecEJYc03gplqvO64Z5dCT/IB6fPyTezMVT6qcWXpdMGnsD
+ 3fd6unUi7HDiLB3oFdtGzwuNvwrN8/95bxCheHvHPelpP4nxzMLXi33z6kNUy0LK1ViR
+ XsTHk8JWRLv2wz3wTRxgWfN1ay9X5ellw/CLjcCn0a6v0H9gwP4y+5XANOEJUBVEciAc
+ gM1Q9Z/ircnXf4M1eXgB/ptco7J84LhH7SsqcXXWmcIWSv7J0l9dSIjuHS0AadhN94KF
+ 52UPimJuROepZs0kOBTBYeZDLhXPerHIVxKq/7FMLLJImEujW0d1KIp/306DEtMmrJ6g
+ Hcbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795096202; x=1795701002;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Nta8dsSXguqHYph67QA9MDb9jQVd5q47MMBE1TsgWis=;
+ b=qVTaCRKTNlEGdP1V1+HC9AAGNPgmL8Mh3AZ87Y8ZSDI8PQpMqttfHMuxzDd1hIqrtZ
+ 2/vL4v85Hm76a3J7p7857C4LHGYZG/Jcpu5b7osVLz/goFuTmiTlz07cVnbxh5G78Bgw
+ wgHAInBVDMb1LcntJOD1DAIMcBjrouS3KmTImpyphP+u84twN9832P9mo00lEf5KJWDi
+ Pi3CJiBQA5ByyaKgx9r4vYVZ29D0j9Suj+uHiXRVaO1BTnKF/SX1fSpQ13PqP4Xu9Thu
+ uFitIrzSc/j/KqE0Ey1hwwYwkcpPyvNJ1YVR5xSn/aOPbeh7+KsnyO0ahFvS2Kj6UZ7h
+ H30g==
+X-Gm-Message-State: APuU4Z8GDa2h+sWGpYJRoVJYgWX8o0s9OcpPMMIxTnQwgt3JHCYeHU0J
+ rl+05ZxXrlCmFFgryQIJQX746m++1jmo5KHPUsn6rUcxg4CjrUp/NhqGIk6/voQVOFvt0O7w6Iy
+ J2Ml9sDa+rFmihBPwbho0r3xevjFdpyW95lfAr0ggBQ==
+X-Gm-Gg: AZFdTZd93CmgQdW50ZfCFd6YcfYFUwS2m3yeRPXztCGJScWu5z+gKYoVeGWIqLxs+7t
+ zuC0UY0h9nZla/cPejr/d3hJO3wmEi75IRpFHebHeB8vAB9mz4NTOfnlQL/rCo9BQGFW9LW70Kb
+ E39SktfDDex5QOYs/m9S8jwQyd4s79kFH2ONLobWDzPVK8AejNDhbFrJZtZrTItxIs87sbYomDa
+ qWxSrKJydh0zU5hL77ER2DMjCxCQJbZAUA6NxNARug2VuylLvB7dwW95rN1LOxZbdvYg2ZqRdre
+ ZzMQf58UxgUMv/DhXhpJlCVc5E+EA81wyLE64wkfvJqws1qE3gccBLD8ekmRyqP5VX5r+tk4IvS
+ snTFkiGtvogmTeToP+unmIH8vhhfvBsmpsmm1qVQ489aYXRK8dkie9PRznsGG4nxePL7miRkNyz
+ ghQfZY8uW2lHL5hW0pEMxp
+X-Received: by 2002:a05:690e:4009:b0:67d:c045:d0bb with SMTP id
+ 956f58d0204a3-67dec2bb682mr469603d50.5.1795096201719; Thu, 19 Nov 2026
+ 05:50:01 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20261119130738.269817-1-pbonzini@redhat.com>
+In-Reply-To: <20261119130738.269817-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Nov 2026 13:49:50 +0000
+X-Gm-Features: AclHuK9F3vGXo6K7LSh0yRnKo5fecY1LzcmTzIwETFXnXV7aqNZSKOt8ZT_lfuk
+Message-ID: <CAFEAcA-C2Zny3--QjgDafGzBzQCdDMK5sh0cH5=WXVKUFk36_g@mail.gmail.com>
+Subject: Re: [PATCH] tests/tcg/i386: compile test-i386-blendv.c with -msse4.1
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,57 +111,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 19 Nov 2026, Peter Maydell wrote:
-> On Wed, 18 Nov 2026 at 18:58, Bernhard Beschow <shentey@gmail.com> wrote:
->> Am 14. November 2026 10:37:09 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
->>> One thing I'm not sure about is what unrealize is actually for.
->>> Is there ever anything that a device needs to do in unrealize that
->>> it could not postpone to deinit?
->>
->> I think this question boils down to what the difference between init() and realize() is. deinit() and unrealize() should be their respective duals, i.e. undo what has been done there.
+On Thu, 19 Nov 2026 at 13:07, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> The main reason IMHO that we have split init and realize is:
-> (1) init can't fail, so operations that can fail go in realize
-> (2) operations that depend on properties set on the device
->     need to go in realize, which runs after properties are set
+> Otherwise, the test case fails to build for a 32-bit target.
 >
-> But neither of those apply to unrealize:
-> * unrealize can't fail
-> * there's no equivalent of setting properties that happens
->   during the unrealize-and-destroy sequence
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  tests/tcg/i386/meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> "Undo in unrealize what you did in realize, and undo in
-> deinit what you did in init" sounds like a nice rule, except
-> for the fact that we have no reference counting for "keep
-> this device realized', so there's no way for users of the
-> device to make sure that things they're relying on don't
-> go away if you clean them up in unrealize.
+> diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
+> index d2ba8410413..02ac2bbd6cd 100644
+> --- a/tests/tcg/i386/meson.build
+> +++ b/tests/tcg/i386/meson.build
+> @@ -10,7 +10,7 @@ tests += {
+>    },
+>    'test-aes.c': {'cflags': ['-O1', '-msse2', '-maes']},
+>    'test-i386-adcox.c': {'cflags': ['-O2']},
+> -  'test-i386-blendv.c': {},
+> +  'test-i386-blendv.c': {'cflags': ['-msse4.1']},
+>    'test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
+>    'test-i386-f2xm1.c': {},
+>    'test-i386-fbstp.c': {},
+> --
 
-I think the question is if an unrealized device is useful to keep for 
-anything. I can't think of a reason but I don't know a lot of details of 
-QEMU so there might be some cases when that happens. I think this was your 
-question too. If there's no reason to keep unrealized devices I'd say 
-unrealize should not be called by anybody except qdev itself and do that 
-on destroying the object which should only happen if there are no 
-references left so that would ensure we won't have unrealized devices and 
-other parts don't have to deal with it (which I think is better than 
-trying to handle it at some places that could miss others or introduce 
-problems in future models that don't handle this).
+Fixes: 0f9a4145bf55 ("target/i386/tcg: reject VEX encodings of
+PBLENDVB, BLENDVPS and BLENDVPD")
 
-Currently within qdev hw/code/bus.c seems to be unrealizing devices apart 
-from qdev itself, and some other device models call qdev_unrealize. 
-Probably those should be reviewed why those are needed and if they could 
-be replaced with proper refcounting so devices would be freed and 
-unrealized by that or if there's any reason to keep devices unrealized but 
-not destroyed. I've found these with
-git grep "object_property_set.*realized\|qdev_unrealize"
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Regards,
-BALATON Zoltan
+thanks
+-- PMM
 
