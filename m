@@ -1,139 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28351606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 23:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B006606A325
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 23:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OzJ5WHrV;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Pq5EYn8c
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=e7R4pWBB;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=JRw8inrQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUB8x-0003U3-TQ; Thu, 19 Nov 2026 18:02:15 -0500
+	id 1xUBCN-0004qh-Vd; Thu, 19 Nov 2026 18:05:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xUB8w-0003Tu-JB
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 18:02:14 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUBCM-0004qW-8O
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 18:05:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xUB8v-00019V-0U
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 18:02:14 -0500
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJJ1NP13814558
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 23:02:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=HHBhEjMGCl8EbFhvgcNzBr
- Tu60EkUHNioI1NKpoWu0U=; b=OzJ5WHrVDvceRG88B8jlWhuOfGARLYQGlj7LIW
- VUxCnP9SSfH0Z3o6yF5S7qNHk3h5DQVhvlnqSw67NwdfHvuMG1lZOOZIOdsRjxi1
- HbifIHYD7ebgNcHIb/KIFxf7cTTimPRNnqGF7/Uz1ohbbdvzy/iBGqCfNuFZrPlv
- gEF63651IAiUJtw7vSlfYL/9HJzJC3LSEmDtaULr7A6nRp/lt1ot+HLMeyzZ9ZfT
- yIc3kknItO4lOwc6QF7bPmsSLALlGZKT9URhVrkfKrMqxB7WpMQ8mZlmJ66qyGF7
- 7O/uv09qjjYDkleXXmba2Z60awfjsV8xzEHHIUoPxf62plkw==
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1xc6urpf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 23:02:10 +0000 (GMT)
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-8b18c67095dso4830337b3.2
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 15:02:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUBCJ-0005C6-Qv
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 18:05:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795129542;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rQ/6T3Im9ThdvoO2EpFueN8A+z+EPRmTVYbBbY8uxS8=;
+ b=e7R4pWBBUiJQsqvfASH1GarKO6iSvypvFuEIBJKCiZw6zsJm/dCMrAvYAutwpRPcMUZ+8O
+ iqN9gzBGVkLOCA76gRF09Z1bR/hJFCfoV2oD8ozKQnycWiXeGZmeIfdcZksHM609UrsfFG
+ lt2YTK6OAA5IrKl4iqnBuLs6H50OSfM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-304-o4gn6r3KMW-v3mLmGAoaNA-1; Thu, 19 Nov 2026 23:05:40 +0000
+X-MC-Unique: o4gn6r3KMW-v3mLmGAoaNA-1
+X-Mimecast-MFC-AGG-ID: o4gn6r3KMW-v3mLmGAoaNA_1795129540
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93f2c0e6653so62902185a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 15:05:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795129330; x=1795734130; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=HHBhEjMGCl8EbFhvgcNzBrTu60EkUHNioI1NKpoWu0U=;
- b=Pq5EYn8czSAC/5ZH4FbbelKRBfryDromQlfNVrpo1U95vUUvneAg2e/bNGv4CaP9Mi
- iOSWjkvkY7LRmVGFMWyfEb0E64GjtvIA8do1ADcCuGCUDqEIY2S1gBatF8UiTWyalieL
- tcXK/9SyR5LSDFLpugFGm7WJGBArsxI6JZYFb2eCYtBh9WbnRsttMylAPt0DPSfT88TP
- Gq0O0r6NRHT7ocml6b4Mq4n99lE19yv1QtFMkzQNxwaNdxM6ud4vtndSLllFSdiabrH3
- QoRUSpoFRtSdAGbOejt6rU2J3IGLeqeIOGB9wZzrG/X6IbG5T1HQMA77aIXL5BIq6/4R
- en6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795129330; x=1795734130;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=redhat.com; s=google; t=1795129540; x=1795734340; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=HHBhEjMGCl8EbFhvgcNzBrTu60EkUHNioI1NKpoWu0U=;
- b=Zn3+DwgOszG4jp0o0ZHVQ91oAKRcGZgSIfpumu1ydinpei8fBIyE0pw/CDc8Rmx52z
- 8UtGuRMMQd9YkXKChlJhdLxxjQHg00poZl+nKsmEhhjS2QNBsIPw/v+5cupt3wMAZu6A
- InRZIY9A3xqfm7lxrCXq2XBlJ1enGhGpLiub+jc3Ihk12uc9KhtpFb+Q6nXO3UCVBKf9
- f4XsOrSxQffYcmmjIY6TwO5uKT+aiISbz/D4PQiUew+ta0ol4F/hphwr4EIPSL490CR0
- WxIQOvLUrxCiqy7GNmIVu3510m/WNaiPClxtrm1o9IIFO8EnOCOgTAKOPSjm0TkBxA9a
- uQNw==
-X-Gm-Message-State: APuU4Z8Gs+aKCwMr7izbi6XaDC1EvOjWLxqmdlJMxPiQNOEnQCGJYgI+
- aqYJQybgoegJY5N2eVHC82cC6Ki7uX5zAoXjUmQ1oKiEjNGcj/PQ0Mm76gI0Ai3s7+h92CWdj8t
- UeJd50bA6RwBL1EjiCbG18GF3lONgQdFxIxpkNGNkGYXwRHDf//ng9FkcIALm3lH5HT/n
-X-Gm-Gg: AZFdTZdtbgRO0yL8m4lI2K7oxyup0It4M/CWXEzWUwyW3+QdjOocDm+GHEZNb2kavz9
- 1y/Cgefn6CE8i8W0HlwUENAJ0El4s3I7QGzMyxMPtj3fWwH8RsVO7OGGpJzpGLjYzVNTg0yk8py
- j/VovQ6DHXp0PQ1HhwKP/GUJRsxSvK9KtH8oHEBYIyJeZFay7Gu7c3aAVO5ULqkZR9BqyiMeeX2
- uZTeoqvD2zWXXaBBkHg0oiP7f6Dzg4dUytAmVB5+buzm7D5GV5k6BEEClAM0NJsiGb+ZR4EDlr0
- 3+3sh/XRfe0iuQkenaeYZJEeZPq8Uc1BC3meoH7iY6JcbS3hWvPuUuedCxxuQ09FAyVbuiuwcZO
- jA4LCoT8TQlkfmTp4ihY7KdCe5J4ujJ+Ot7wutBpTb2qTvfXG6CfMykKey81HU97z+AX1ZCfGzp
- O9/NUshvQcq0RWUA==
-X-Received: by 2002:a05:690c:31e:b0:8b4:c8c5:6b14 with SMTP id
- 00721157ae682-8b520480078mr5799117b3.32.1795129329552; 
- Thu, 19 Nov 2026 15:02:09 -0800 (PST)
-X-Received: by 2002:a05:690c:31e:b0:8b4:c8c5:6b14 with SMTP id
- 00721157ae682-8b520480078mr5798877b3.32.1795129329034; 
- Thu, 19 Nov 2026 15:02:09 -0800 (PST)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6bb989eesm2000344f8f.50.2026.11.19.15.02.06
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Nov 2026 15:02:07 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 0/2] target/xtensa: Describe RER and WER register operands
-Date: Fri, 20 Nov 2026 00:02:03 +0100
-Message-ID: <20261119230205.4744-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
+ bh=rQ/6T3Im9ThdvoO2EpFueN8A+z+EPRmTVYbBbY8uxS8=;
+ b=JRw8inrQ+HDsjz6RV91Mw4/qYYKHeLFMncC9vnncBTvBZsSkcfPmIxbAdX8evwdtCO
+ KmnwLV5OgiYZVOJ7BPnUMSAxDoPVV9+y/pEAYfSrBnmzrLUG2WjYolc279kFQFXlX8Qy
+ bBe2IBwL8yQxm5DgVkDMtTQfthT1dzSNS2M2QfbjJIXgOf/HxTgPWEgdn6zkwHAV5Rl/
+ yLD9P4aqmJhgJjlSNSDr+j1L6LogCBC+/htaUUiXUUy59nKy5qRf1Dv6iH/CsE7+n8yr
+ oPQStVzUZe8bKqzIycn5YCdiDm7l+Me+qLltd6xB+EJQwdIIH3SvppH1TiJAgbD5hZlY
+ tGpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795129540; x=1795734340;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rQ/6T3Im9ThdvoO2EpFueN8A+z+EPRmTVYbBbY8uxS8=;
+ b=pF0Q7rJsDtNOe+nNGjKmzJnXFYJXRGvAmi7+0W8an3+ZxOBx0jABMh6UAWUsXsQrv+
+ XnmA95cBuk5QXpg8WEXoxXcFR8vhZa9Mdi2Lirm0CJkcrkQWp36C72BusvOyfTSA82jl
+ BCacHYDJcHpFtC8/1yeET21qQWoaxHW//qfvJ0EVj+UB36tKByaGImARvRCByiF0YBA9
+ Q2gQnQeXLcd39x/OiYNCYt4eWrPpHA2wr84MP+Ci+d+GH3QZGG/tSdeFs3vfo4By+pxI
+ TaI2tAjGZLquY7YIPaLqKupwy3CVIErqUGzwd9iVmwIHO7h3P0MwumIy0L8+Rp+AURrz
+ dDrA==
+X-Gm-Message-State: APuU4Z8miM70G2PZ9e/ggLHLQD6zNwQK5oY82sKVhHe6dx3xqZzIAW0Z
+ QwZQIyAiNHsQKiHocRC50i2vbWDtMPdlqPbvE0eePW95D7Akb1vqdHFPXFjSsglX6tmv5sKeE42
+ WfjBNBG0eevLzueU88wRkk18CkgUDR+iDhqdebduQClDYoItQmbughBhT
+X-Gm-Gg: AYBFou2nk8Hdn/TpK3j7MnuE0U8WzXNF198u97idQQVqFe7ap1t42FwfW5jS+SgtmkZ
+ bDi44zHy1of56aswVDu4oWsplxBGyUSvc5JblD5dBkllQr1E1bBacGGp10lrTS8/npyzhRPVUVy
+ ILCuvaZICl8fkOoVQwqlyYWT8KzEMU0UtuV8I2ZBj/5Ma5zK6eXzhYHj9AUie2P7Ps6ped4PeBR
+ ZHGhPUep1e7BMb88okaZ23fW5SSBFN2MxoHLm1eEtUSXe79hV3M3jM0x3yCT3YaBuWRSSIa4S3t
+ Ety148q4BXYnuVf2J1l0Xwb8AFSqJWILYLqfzbrpmHHVUOOkz19Q6fnEo1VSWzdtG51lzDSKupY
+ CNRuWIO3ynSR/LSHbSSneF8+DS6TQfb1FXW8a7wx8AtkR
+X-Received: by 2002:a05:620a:130f:b0:93f:2ae1:ea06 with SMTP id
+ af79cd13be357-949bab20007mr197862685a.44.1795129539533; 
+ Thu, 19 Nov 2026 15:05:39 -0800 (PST)
+X-Received: by 2002:a05:620a:130f:b0:93f:2ae1:ea06 with SMTP id
+ af79cd13be357-949bab20007mr197856185a.44.1795129538915; 
+ Thu, 19 Nov 2026 15:05:38 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-949bb3bec3dsm65860785a.23.2026.11.19.15.05.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Nov 2026 15:05:38 -0800 (PST)
+Date: Thu, 19 Nov 2026 18:05:37 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>,
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Subject: Re: [PATCH for-12.0] coroutine: Make yield_until_fd_readable()
+ detach fd handler always
+Message-ID: <av-AweS887ZVL9HO@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261119145311.1144878-1-peterx@redhat.com>
+ <20261119222936.GB780462@shajnocz.csb>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ef+o7LEH c=1 sm=1 tr=0 ts=6aff7ff2 cx=c_pps
- a=g1v0Z557R90hA0UpD/5Yag==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=xUIsFMJfdJ-BqvSB1bkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=MFSWADHSvvjO3QEy5MdX:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA5MiBTYWx0ZWRfX7yZi1UtOVTT4
- rHxzuIFw1xzI7ZToaAGgpD1UzCzt/ufvFsDminnukbFLN3qF9yjBzDOhhgSrUaRaTA+NVRVARni
- mZF7Ai7/WnCYxs1CLL1m3bfBx8zIToQg0WxnudqJaJ3nibxQqpE3Xhyl0vN/jEK17vvNdjam+MT
- qkz04weqDLn1R+6l2rXR0rGL6Hi809+BMK2FTlqBu7qj1sAP8q3vFYHnpsdzKCZpIOiwej6YDeN
- P0m1gmhtbOIhjefGhVSBBvLIaJp72DgaCy6DloPVGiGxmctUQcbNKFygGS0scB03xqTgd+wVQum
- nBfBLh44cPtOU5nRMQuASdXB+8i1symE0Y9yKYKD2HjwpWEC8DPhti9EoEkAuy+AWqqWxtHfMgD
- dbSel66P9b6UtEAnSEJtzoJxBo6HHcZiWfEgDIhYEKaWAuIajWzDDfb61rIx4zru0QGRllbctWf
- n7W9/nlw9+JeHR7u/6Q==
-X-Proofpoint-ORIG-GUID: YLVRvWG-hk5JXtSygmxEZe67YoBna49l
-X-Proofpoint-GUID: YLVRvWG-hk5JXtSygmxEZe67YoBna49l
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA5MiBTYWx0ZWRfX1ufGdvwJ+wJZ
- Cx9XzZqRk8ylRpgIHAIhZ9zoCMfAmtxgnbgXj5oVNxy4e6iJh2NPNzik58Cq027SeT3Geno3/++
- 8rB8tZXumM8M5Ck0xn6834auEf3W0ew=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-19_05,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- malwarescore=0 clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261119222936.GB780462@shajnocz.csb>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,29 +116,107 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-dc233c, lx106 and dsp3400 cores lack the external
-register opcodes arguments. Fix and add a test.
+On Thu, Nov 19, 2026 at 05:29:36PM -0500, Stefan Hajnoczi wrote:
+> On Thu, Nov 19, 2026 at 09:53:11AM -0500, Peter Xu wrote:
+> > Hongyan reported a possible use-after-free of RDMA migration code:
+> > 
+> > https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
+> > 
+> > The issue seems real, while this patch is a proposal to fix it in a simpler
+> > way, meanwhile it should be a problem to the yield_until_fd_readable()
+> > helper in general, so it should make more sense to be fixed there too.
+> > 
+> > The problem is about the use of the stack allocated FDYieldUntilData where
+> > we must make sure after yield_until_fd_readable() returns it's not used
+> > anywhere.  If the coroutine yielded can be entered from outside of this
+> > helper (fd_coroutine_enter()), then the aio handler might be installed even
+> > after yield_until_fd_readable() returns, and that makes the stack variable
+> > accessible by aio codd, even if stack gone.
+> > 
+> > Fix it by moving the aio handler removal outside the handler.
+> > 
+> > Reported-by: Hongyan Xu <getshell@seu.edu.cn>
+> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> > Cc: Kevin Wolf <kwolf@redhat.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+> > Cc: Hongyan Xu <getshell@seu.edu.cn>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> > 
+> > NOTE: I targeted this for 12.0 because the bug was not introduced in 11.2,
+> > however this seems to be a real bug fix to coroutine in general, I'll leave
+> > that to maintainers to decide if to pick it for 11.2.
+> > ---
+> >  util/qemu-coroutine-io.c | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
+> > index 364f4d5abf..3c0a7feafa 100644
+> > --- a/util/qemu-coroutine-io.c
+> > +++ b/util/qemu-coroutine-io.c
+> > @@ -74,7 +74,6 @@ typedef struct {
+> >  static void fd_coroutine_enter(void *opaque)
+> >  {
+> >      FDYieldUntilData *data = opaque;
+> > -    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
+> >      qemu_coroutine_enter(data->co);
+> >  }
+> >  
+> > @@ -89,4 +88,9 @@ void coroutine_fn yield_until_fd_readable(int fd)
+> >      aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
+> >                         &data);
+> >      qemu_coroutine_yield();
+> > +    /*
+> > +     * Always remove the fd handler, no matter the re-entering of this
+> > +     * coroutine was caused by fd_coroutine_enter() or something else.
+> > +     */
+> > +    aio_set_fd_handler(data.ctx, fd, NULL, NULL, NULL, NULL, NULL);
+> >  }
+> 
+> Why would the coroutine be entered?
 
-Philippe Mathieu-Daudé (2):
-  target/xtensa: Describe RER and WER register operands
-  tests/qtest: Execute Xtensa external register instructions
+In case of RDMA, rdma_cm_poll_handler() could receive a disconnect event on
+another management fd, then it knows the link is down, hence it needs to
+kickoff this coroutine to quit.  See 923709896b1.
 
- tests/qtest/xtensa-extreg-test.c              | 81 +++++++++++++++++++
- .../xtensa/core-dc233c/xtensa-modules.c.inc   | 14 +++-
- .../xtensa/core-dsp3400/xtensa-modules.c.inc  | 14 +++-
- target/xtensa/core-lx106/xtensa-modules.c.inc | 14 +++-
- tests/qtest/meson.build                       |  2 +
- 5 files changed, 119 insertions(+), 6 deletions(-)
- create mode 100644 tests/qtest/xtensa-extreg-test.c
+> Should there be a loop around
+> qemu_coroutine_yield() - otherwise we fix the invalid stack memory
+> access but return to the caller without fulfilling the purpose of the
+> function (waiting for the fd to become readable), which could cause
+> further bugs?
+
+I feel like these are two separate things.
+
+IMO fixing reset of aio handler should be a pure positive fix, because not
+fixing it doesn't stop user from re-entering of the coroutine and bypass
+fd_coroutine_enter().
+
+My understanding is the caller should have full control of this: when the
+caller requires "fd must be readable", it should always wait until
+fd_coroutine_enter() returns.  This patch should have no functional
+difference.
+
+But it seems still legal if the caller is benign and can properly handle
+the case even if fd is still not readable.  In this case, this patch fixes
+a real issue.
+
+In case of RDMA migration, only the quit path can cause it to re-enter, so
+either there is IO or we need to quit.  RDMA code works well with either
+event, it can even loop back and wait on the fd again, but since quit is
+the only path kicking this off, it's also not possible even if the caller
+handles this.
+
+Thanks,
 
 -- 
-2.55.0
+Peter Xu
 
 
