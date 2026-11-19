@@ -1,106 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EA2606A326
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A713606A326
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QY7Qa2bF;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=T7KI3uY8
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=s2VGFV5S
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU3bh-0004C5-Ib; Thu, 19 Nov 2026 09:59:29 -0500
+	id 1xU3gt-00010P-VH; Thu, 19 Nov 2026 10:04:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU3W7-0007zW-Du
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:53:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xU3Vt-0001Ku-0I
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:53:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795099998;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=h8XeLTehm/K55teUc4g8IAfHo2NMdQKlyg3q2YLJK88=;
- b=QY7Qa2bFAfBDq8KFPl5txcIQy8I9XaWU+qxNfzY/fVYnRpqRAxcYDEtyXl6HkQbIc06tlF
- 3Sh+zvdV3zS+Uclv7I1UROgK30FUS2Lgql5ODjaFETcmRPfhJ1zPtDelgrtCxBl1b76s1f
- ciaFagxT19jD1NG8B4Ug0sFNmsoFxYI=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-47-6uXBU4j4O1aMP3DIympjlA-1; Thu, 19 Nov 2026 14:53:16 +0000
-X-MC-Unique: 6uXBU4j4O1aMP3DIympjlA-1
-X-Mimecast-MFC-AGG-ID: 6uXBU4j4O1aMP3DIympjlA_1795099995
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-5c156f01aabso1418731e87.2
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 06:53:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795099995; x=1795704795; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=h8XeLTehm/K55teUc4g8IAfHo2NMdQKlyg3q2YLJK88=;
- b=T7KI3uY8+//mcog9R2l9zmPmq8bsqmwx+FriILyo7UXNPxv6B59zLAl5Anp4iU9qin
- DM4tXlmdVNaj6TNwTlofkmV/YsyKNNdDmStkDre29Tey7GzucBFYIKL8BJWKkZed2bZu
- VmAGknaySLnvT8LOV23LZsI1jlsbLAk2kTchhuueG5iopOhg3kYW6jOw0y97XJTLxS/u
- HPzBcPyvstDP/XQMnizEXXWCJ1RSvuXm9YsuCGHTfvdN7pr1pkgsFlyYQ2YyknJYrqlr
- uwYFOWJzwClZzyyq7qltfb0s62uOmPJAFlHJs+aESpJ79p5fwoRybBuunTXX9l7AgMzf
- P8ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795099995; x=1795704795;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=h8XeLTehm/K55teUc4g8IAfHo2NMdQKlyg3q2YLJK88=;
- b=rj8uOaNEKYwB34//tf84Uf53htUmG98LrzAxDTungre3iRBuHJX5LyK+skZ1d3t0qu
- CqUkEJN/aBPCd6wSekXzAglfPlgWCyGl2c9qSbG5eJxzUiPg3Z0fV2vzQ+AIE5NwLOnf
- F3KrbB3oJfDHod5dDEsZ9vyaMSR3BkhH5eUG5gLiShVSHfXxhUnYawMNXPo/qqPIJoDY
- 2wwb3a1QW+hmcnX7wJM/9Oivqw3ToTqZFhj039UiwpBrfEKbpllycQ9IaAblu/Rlamwl
- 3Z0qeIeLFr366rm+a+oSXnKTNSqVTmZfSmavCyzy5JfVvH7ZfbnU2N8Rj78Jv9J2PlHZ
- JDZw==
-X-Gm-Message-State: APuU4Z/iRuXwBGN8v/XR0Tt/xt7rA9O4zVM/3DlerF2n+w2BA3JWaxld
- yuUIRY+6l0WzMBLW5B9frP6pgmow6TDNmQyGiInAgh9bfDQlU+i6Eo1XOEKY3SCHrhkFUr3876S
- GjgB6RpUzWxFTZVLtvabiCHt4yNmBDDeL6ZyBk1D7nQ+7tGGUHr8oLC2NT71x15m+t/MqZnFEIJ
- fVnhCPGmXor/VAz5NL6o7VVmMWTPPBBKH4BXM5hQ==
-X-Gm-Gg: AYBFou03ntLYUD0nfBs4f2tkVwhqyOCvMb6XAaLEaj2yqDxQV9SM0WCXHrwLKn8O0gz
- KdUdbISKOLQ4ZKrgAuGiaiQpMMHKUeZdrLs8VlkntViLAXIT+40aQVVnTMLLZtUzwIaphrMTNKy
- kivcufSX902G049yBtumTy9iYbuXUFXIBRMfETK1sknYHeuyZGroT+mnkiaXorBBVwdZY2a5fO+
- Wc2ZNLkjKTDr953ntBplCsc6FJy1sb0oNq1CcRu6mNcA/uyx8YhBTxqSc2PkdtVkZTECBhPf5eD
- d0leXv/5Wu7EvFubNqoW9OVuzVMzgc8dHAnciDIHS+zy8KYoHeLnMKB5YdE/m34RpwIZ5gLUWBh
- D3Tc7boi1Gi+0BFpfhg0klMvG+4E4RccUU+hPrG+qc08Q
-X-Received: by 2002:a05:6512:6891:10b0:5c1:b107:2bb with SMTP id
- 2adb3069b0e04-5c1b107097dmr753509e87.29.1795099994932; 
- Thu, 19 Nov 2026 06:53:14 -0800 (PST)
-X-Received: by 2002:a05:6512:6891:10b0:5c1:b107:2bb with SMTP id
- 2adb3069b0e04-5c1b107097dmr753490e87.29.1795099994285; 
- Thu, 19 Nov 2026 06:53:14 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5c1aa2d9b98sm1591405e87.1.2026.11.19.06.53.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Nov 2026 06:53:13 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Hongyan Xu <getshell@seu.edu.cn>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Subject: [PATCH for-12.0] coroutine: Make yield_until_fd_readable() detach fd
- handler always
-Date: Thu, 19 Nov 2026 09:53:11 -0500
-Message-ID: <20261119145311.1144878-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.56.0
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xU3Zu-000393-Mn; Thu, 19 Nov 2026 09:57:36 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xU3Zr-0007u4-86; Thu, 19 Nov 2026 09:57:34 -0500
+Received: from example.com (unknown [167.220.208.76])
+ by linux.microsoft.com (Postfix) with ESMTPSA id B613A20B716A;
+ Thu, 19 Nov 2026 06:57:24 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B613A20B716A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795100248;
+ bh=H4E2pt5Jzb29mE5WvYKWv8kXQcxb3SOEBPwaSH2tLaI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=s2VGFV5SNvV6HwJEDa4bxv+AstzNCtRIIRCfN7SfdJAhWzxgWIt88gH/TQQsrV3j4
+ QhhEoeMuYVJKt4pkF3ruYaGmgyXJmNzFjrVzoPr6XKywUuS1jxWQxr2SHViNQRLsmc
+ HFnmi0ewog3h+gJlCOIXDqWZTqq/f7ISGFoai2dQ=
+Date: Thu, 19 Nov 2026 15:57:18 +0100
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Aastha Rawat <aastharawat@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 02/14] accel/mshv: add arch-specific accelerator init
+ hook
+Message-ID: <av8OTldUyqKQnppQ@example.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-2-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-2-aefe5e76a0e3@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,69 +73,216 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hongyan reported a possible use-after-free of RDMA migration code:
+On Thu, Oct 01, 2026 at 10:52:47AM +0000, Aastha Rawat wrote:
+> From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+> 
+> Introduce mshv_arch_accel_init() as an arch-specific hook called early
+> in mshv_init(), before VM creation. This allows each architecture to
+> perform platform-specific initialization at accelerator init time.
+> 
+> For x86, the hook calls mshv_init_mmio_emu() which was previously called
+> directly from the common init path. Also move set_unimplemented_msr_action()
+> and mshv_arch_post_init_vm() from mshv-cpu.c to the new mshv-all.c, as
+> they are not vCPU-specific.
+> 
+> Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+> ---
+>  accel/mshv/mshv-all.c        |  5 ++-
+>  include/system/mshv_int.h    |  1 +
+>  target/i386/mshv/meson.build |  1 +
+>  target/i386/mshv/mshv-all.c  | 80 ++++++++++++++++++++++++++++++++++++++++++++
+>  target/i386/mshv/mshv-cpu.c  | 40 ----------------------
+>  5 files changed, 86 insertions(+), 41 deletions(-)
+> 
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 5921ce693ee..860f511fcba 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -544,7 +544,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>          return -1;
+>      }
+>  
+> -    mshv_init_mmio_emu();
+> +    ret = mshv_arch_accel_init(as, ms, mshv_fd);
+> +    if (ret < 0) {
 
-https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
+now that this is fallible, we probably want to close the mshv_fd before
+returning.
 
-The issue seems real, while this patch is a proposal to fix it in a simpler
-way, meanwhile it should be a problem to the yield_until_fd_readable()
-helper in general, so it should make more sense to be fixed there too.
-
-The problem is about the use of the stack allocated FDYieldUntilData where
-we must make sure after yield_until_fd_readable() returns it's not used
-anywhere.  If the coroutine yielded can be entered from outside of this
-helper (fd_coroutine_enter()), then the aio handler might be installed even
-after yield_until_fd_readable() returns, and that makes the stack variable
-accessible by aio codd, even if stack gone.
-
-Fix it by moving the aio handler removal outside the handler.
-
-Reported-by: Hongyan Xu <getshell@seu.edu.cn>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-Cc: Hongyan Xu <getshell@seu.edu.cn>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-
-NOTE: I targeted this for 12.0 because the bug was not introduced in 11.2,
-however this seems to be a real bug fix to coroutine in general, I'll leave
-that to maintainers to decide if to pick it for 11.2.
----
- util/qemu-coroutine-io.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
-index 364f4d5abf..3c0a7feafa 100644
---- a/util/qemu-coroutine-io.c
-+++ b/util/qemu-coroutine-io.c
-@@ -74,7 +74,6 @@ typedef struct {
- static void fd_coroutine_enter(void *opaque)
- {
-     FDYieldUntilData *data = opaque;
--    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
-     qemu_coroutine_enter(data->co);
- }
- 
-@@ -89,4 +88,9 @@ void coroutine_fn yield_until_fd_readable(int fd)
-     aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
-                        &data);
-     qemu_coroutine_yield();
-+    /*
-+     * Always remove the fd handler, no matter the re-entering of this
-+     * coroutine was caused by fd_coroutine_enter() or something else.
-+     */
-+    aio_set_fd_handler(data.ctx, fd, NULL, NULL, NULL, NULL, NULL);
- }
--- 
-2.56.0
-
+> +        return -1;
+> +    }
+>  
+>      ret = create_vm(mshv_fd, &vm_fd);
+>      if (ret < 0) {
+> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> index 2e8caad8fde..0e68365c63f 100644
+> --- a/include/system/mshv_int.h
+> +++ b/include/system/mshv_int.h
+> @@ -106,6 +106,7 @@ void mshv_arch_amend_proc_features(
+>      union hv_partition_synthetic_processor_features *features);
+>  void mshv_arch_disable_partition_proc_features(
+>       union hv_partition_processor_features *disabled_features);
+> +int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
+>  int mshv_arch_post_init_vm(int vm_fd);
+>  void mshv_setup_hvcall_args(AccelCPUState *state);
+>  int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
+> diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+> index 31ff4cc9950..0e95c5a00b9 100644
+> --- a/target/i386/mshv/meson.build
+> +++ b/target/i386/mshv/meson.build
+> @@ -1,6 +1,7 @@
+>  i386_mshv_ss = ss.source_set()
+>  
+>  i386_mshv_ss.add(files(
+> +  'mshv-all.c',
+>    'mshv-cpu.c',
+>    'msr.c',
+>    'synic.c',
+> diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+> new file mode 100644
+> index 00000000000..f0b43aa86f1
+> --- /dev/null
+> +++ b/target/i386/mshv/mshv-all.c
+> @@ -0,0 +1,80 @@
+> +/*
+> + * QEMU MSHV support
+> + *
+> + * Copyright Microsoft, Corp. 2026
+> + *
+> + * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
+> + *          Magnus Kulke  <magnuskulke@microsoft.com>
+> + *          Jinank Jain   <jinankjain@microsoft.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/memalign.h"
+> +
+> +#include "system/mshv.h"
+> +#include "system/mshv_int.h"
+> +#include "system/address-spaces.h"
+> +#include "linux/mshv.h"
+> +#include "hw/hyperv/hvgdk.h"
+> +#include "hw/hyperv/hvgdk_mini.h"
+> +#include "hw/hyperv/hvhdk_mini.h"
+> +#include "hw/i386/apic_internal.h"
+> +
+> +#include "cpu.h"
+> +#include "emulate/x86_decode.h"
+> +#include "emulate/x86_emu.h"
+> +#include "emulate/x86_flags.h"
+> +
+> +#include "trace-accel_mshv.h"
+> +#include "trace.h"
+> +
+> +#include <sys/ioctl.h>
+> +
+> +int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+> +{
+> +    mshv_init_mmio_emu();
+> +    return 0;
+> +}
+> +
+> +/*
+> + * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+> + * fault to the guest if it tries to access it. It is possible to override
+> + * this behavior with a more suitable option i.e., ignore writes from the guest
+> + * and return zero in attempt to read unimplemented.
+> + */
+> +static int set_unimplemented_msr_action(int vm_fd)
+> +{
+> +    struct hv_input_set_partition_property in = {0};
+> +    struct mshv_root_hvcall args = {0};
+> +
+> +    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
+> +    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
+> +
+> +    args.code   = HVCALL_SET_PARTITION_PROPERTY;
+> +    args.in_sz  = sizeof(in);
+> +    args.in_ptr = (uint64_t)&in;
+> +
+> +    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
+> +
+> +    int ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set unimplemented MSR action");
+> +        return -1;
+> +    }
+> +    return 0;
+> +}
+> +
+> +int mshv_arch_post_init_vm(int vm_fd)
+> +{
+> +    int ret;
+> +
+> +    ret = set_unimplemented_msr_action(vm_fd);
+> +    if (ret < 0) {
+> +        error_report("Failed to set unimplemented MSR action");
+> +    }
+> +
+> +    return ret;
+> +}
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 3eee097432a..f1056bd215e 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -2125,46 +2125,6 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+>      return ret;
+>  }
+>  
+> -/*
+> - * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+> - * fault to the guest if it tries to access it. It is possible to override
+> - * this behavior with a more suitable option i.e., ignore writes from the guest
+> - * and return zero in attempt to read unimplemented.
+> - */
+> -static int set_unimplemented_msr_action(int vm_fd)
+> -{
+> -    struct hv_input_set_partition_property in = {0};
+> -    struct mshv_root_hvcall args = {0};
+> -
+> -    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
+> -    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
+> -
+> -    args.code   = HVCALL_SET_PARTITION_PROPERTY;
+> -    args.in_sz  = sizeof(in);
+> -    args.in_ptr = (uint64_t)&in;
+> -
+> -    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
+> -
+> -    int ret = mshv_hvcall(vm_fd, &args);
+> -    if (ret < 0) {
+> -        error_report("Failed to set unimplemented MSR action");
+> -        return -1;
+> -    }
+> -    return 0;
+> -}
+> -
+> -int mshv_arch_post_init_vm(int vm_fd)
+> -{
+> -    int ret;
+> -
+> -    ret = set_unimplemented_msr_action(vm_fd);
+> -    if (ret < 0) {
+> -        error_report("Failed to set unimplemented MSR action");
+> -    }
+> -
+> -    return ret;
+> -}
+> -
+>  static void mshv_cpu_xsave_init(void)
+>  {
+>      static bool first = true;
+> 
+> -- 
+> 2.45.4
 
