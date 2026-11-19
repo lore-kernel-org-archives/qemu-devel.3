@@ -1,104 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78581606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8991C606A325
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PaAm8cPv
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lHd5bnQX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUA9o-0003CB-3L; Thu, 19 Nov 2026 16:59:04 -0500
+	id 1xUABq-0005xG-Op; Thu, 19 Nov 2026 17:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xUA9l-0003A9-NY
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 16:59:01 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xUA9h-0006Zg-82
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 16:59:01 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJJ1DId3594959
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 21:58:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=obaYNB5+EMm
- 2OLpXASkG5Fo78WwbSU4KyHhou3DNGqo=; b=PaAm8cPvDOB9PReNKfpbqJQlbJY
- y0UvdWikLci5/67VoBJ4atwijLhWBNrcAb/a22jwjgvVCmyw35QhTpLOVEFzX2Vp
- jH1XzNg7uPt1u9gEiSNTCuGKJvV9hhwpTTsVK73VqV306+wCxGYfAzipSzByVsB2
- KKKRmh0BWYKX9L+ayd+a6tqRoMMvwaFvbxJ3OlU7Nv3HjcRtIBt0L8/4f1c49K85
- WfBeHblx7RmwMmNgoTBlt86U8voy5DKBEEa+bmfRwbjksgAcQu4JZH458dQO82VM
- 3Mx9f5ct+8+HC1ief+xay7cHXfnjxiP1fS59EadhkvEo3tirlVARELocwbg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j255whhgv-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 21:58:54 +0000 (GMT)
-Received: from pps.filterd (nalasppmta01.qualcomm.com [127.0.0.1])
- by NALASPPMTA01.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJLwsNF3684702; Thu, 19 Nov 2026 21:58:54 GMT
-Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
- [10.81.81.31])
- by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 6AJLwsDM3684675
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 21:58:54 +0000 (GMT)
-Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
- id 6A0062578F; Thu, 19 Nov 2026 13:58:53 -0800 (PST)
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>
-Subject: [PATCH v3 11/15] target/hexagon: probe scalar packet memory in slot
- priority order
-Date: Thu, 19 Nov 2026 13:58:49 -0800
-Message-ID: <20261119215853.987158-12-marco.liebel@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261119215853.987158-1-marco.liebel@oss.qualcomm.com>
-References: <20261119215853.987158-1-marco.liebel@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
+ id 1xUABS-0005gk-BQ
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:00:50 -0500
+Received: from mail-qv2-x04.google.com ([2607:f8b0:4864:33::4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
+ id 1xUABQ-00014h-MV
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:00:46 -0500
+Received: by mail-qv2-x04.google.com with SMTP id
+ 6a1803df08f44-9211c92e822so2039256d6.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 14:00:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795125642; cv=none;
+ d=google.com; s=arc-20260327;
+ b=a6tHopUvWs0o6mf4dNyWgkLUi2157rtjAwlOVs9cxTM4ZbF0tyKR8J0XhMdQj/Kjp2
+ LvrMNtlvcQ9d2Mo2kw2LD16tcIoyIsbiECYNz7Epz5O8HkgjGn/Agh9Y1cmUcHFoHCqN
+ enX92FTb/rYzh8zZGPy6ByrlgDCKXqLNa9tI4yOIm3cMF3Sk122A5aHENqHSD9Yt2NSp
+ 8rgNhX+n/eCeVtSbv3K3WHhNLmRh2Wjp2BXscieIcLLvAX6XOkqX/JMQOuJHCi7ebLyb
+ us5DvRoSDdDPcxb8HIKFIs8gARZkqfOuyxe5JdZsI6jCIvLuAP01ToIdcWfgvn7H3IJ6
+ oADQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZwKiCro9TkGp13P67Cwz/4I9tTK9CxH1Xodthy/jFZA=;
+ fh=03AmPWFaHef3r0pr6lywoT+NsG/gfH+n4yTbB9xciVM=;
+ b=kaRIphhWZcYGq2qOTHhmPD5l8ZI14LUP8vj4leMmOZArecVMCqC9ihenBk8cpjH7gi
+ BFp5fENLwgVhgpnZWn/bU8IhXDzMTwk+eB6LEChUziJZWri4Rd7zxWHq4Jsb7g3bZWwC
+ 9XlXjDnG2jw4sp7OqUJnKQzfBm9y2AD+vb311dBkNhZTWEI//7jTGI2CNX3Fanx/y+vW
+ tLs0b7rcqlkt24l34tXJMfN0AqZhQy9VPPqQDD8AeVmOnMCPsMey4feSlILCoTEzCNk+
+ dg9livRvnIVR7lknVgTZ3+8sSPnsKEHGWwXCj/FISsgAr2Mv/fbh4eD/esjufTZAWdXs
+ 1Spg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795125642; x=1795730442; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZwKiCro9TkGp13P67Cwz/4I9tTK9CxH1Xodthy/jFZA=;
+ b=lHd5bnQXWYmiOCunf8f7bLCVlLg9S6rfVFnlhfPNY5r+8rdfBN30LWhrqo9Qhs1TlA
+ dvudlg9URHuEy4ryE9lJ30hgQe2H35XwRIolXzckQNFiLT9IOfnfdepawk2/ZF47pmu4
+ 3Cr8CdjyA1ytB1Io/KL3j2T4ZZn18+yh3llpwtKqfV57R79KCZA96D65zk4BhCEjMO4t
+ Gk3/VxB5Od4TBQoBQ4GBpdCoh0sazXd0UkznkIZQL82qw3E2WfCJkwYe4Wmxw0ThHb5B
+ YgXkBD9oQ6QM+WtWZ+/dRDbtp5M/4dBdCyC9TXfI81wa9gdXY+ep+JpERUGO17WlcMVR
+ FCwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795125642; x=1795730442;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZwKiCro9TkGp13P67Cwz/4I9tTK9CxH1Xodthy/jFZA=;
+ b=LKbUW5Nr8DwE9vZ3aeBg5ZTrI5NQwA/c+V8SVEfk9PTiwkbR2u0bGnU/MyFXipGf9Q
+ YznwCflnY1MA6oClSV4BrS3hX505DVT+TGeB5yfwOCsP93HsLSp6tuNa5LvDF5di0Ds4
+ Z1/4EGish4KxaBc3vI3fyoYTibLsRRHg/MPhrZH+y1xjAdMWcoHGYo9eYAS02mTt/aen
+ UuFzf4khzPvMh6z1joCawBfBlbmQc9FBMRaKalKygq3Aj8OD3FqvsJ7iSEwm5SCOsHeg
+ 5HUUBvILVRlKCO6W1x10TcCuuKXyt8pfgjwk/oEVo24+4ZTh4rv8r6IXelS8SAvU3mvv
+ nyow==
+X-Gm-Message-State: APuU4Z81C1vYI6fgizWEk3G9ZBViZsuscxbyFEUbzLtxMJpxOUHTn59M
+ rKKS0QORL/r0C2IoRrS0YXBVk8SaAVTF5kVwwy73doE33IHEjrs3da2o4uqoCmkJPDWcoILBBZv
+ joMVnUTF48NDeVEwKiMR4mtpI5n5zzkc=
+X-Gm-Gg: AZFdTZfqg4hdV3mNL+0zdD/cGJtnDhAH1gCIyBj6VvzCRo5XLGelg95b4czh395ebIo
+ lgGf4iJAp+K8ZSsEt1/PTUIcHXF6BWID50b3xZPmpi8h1UDcZYW/ze6wl/aYwY7WFSzo90Siss9
+ /hA0B2Peh163tH/r1TWTOjelPPBI1p6eAO3WP++y0BDiv51Z1jUTVh35ZRifl9e4lIV/kxQIMgQ
+ GkQs95UVqITomL5Gn+vSgLa3ASJEn7jmAygchbEufCqmLTIRdLXHDe76fkcm4XQc4w4HFI4ZtXd
+ GtaAtghY2Zk25p2uTXsnHXoB/sBrqW3IF8akEhqf+c85c5EM2A6xJZUhqkXwUQeisnoMs0aDWZm
+ mWiYxrZRTlZBu41LRzLpPUUBkljEQZ06aAdCO6W59RPcX67axAMF8lcB8g7CTeqpQcH3fBP7ESo
+ ffzPjyFQsV5H/mzw==
+X-Received: by 2002:a05:6214:d8a:b0:917:a253:4f8f with SMTP id
+ 6a1803df08f44-92134a960c2mr17740996d6.40.1795125642220; Thu, 19 Nov 2026
+ 14:00:42 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfX60NwcQdZKpw0
- ciL1phsVFv31buVb7gwd+GUPZKWDEw1wGZUYyHE35u7me2b2wlKkQV2Z7aXgeiAKoQebm7w8eMd
- BZScEfgevuJb2bKxCTB4gcYGOFGsG3Q=
-X-Proofpoint-GUID: YfN2aTDZvwMf8Dg00C94kQh2YPuWcvjq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfX2W2xFWZcdzYL
- 9Tym+oBDIXOpGskkPPcr/NRHDJ7dVIDLG1ikETGK6aeJ7rsPkqQqECS1169lLxSI/Aavr8pGaeq
- MUK98qfPKSIp5rrt5630c9QH7ST7h40OsZESbGiOm+LD9uWRkZwiwR03eBrcsga/ZEMk/IVE5a1
- sRWrAJ3cB5OfPj9Lp4Cf8vRpkC+tWBk9nAlv9Ez8OsxuFoDZ0gCK0VicmQMZMHC2V6etWvoRQFK
- ygaLptBi/b6AMBJVbxICljOLOefoFJEr/gr7PLvJxLWca12dfD8xWa9BL2osZ7AMJvzOD8gK1uO
- H4gVLccXEkh9sB4IQGzDbaIcJqTrHWYtbvRHcoJEWzKc1oxsFuMgvhzR68mVXsQLQmsFMQdle3T
- tz81aI1Y+mR9PRFa52urCIz1zef9dTGMPQV5vXEhZHj9AbhG4r2u52KKvdKwsmAPlBydlQp2J7C
- FwEDm70BNQTMHKdKYew==
-X-Authority-Analysis: v=2.4 cv=da0VTnXe c=1 sm=1 tr=0 ts=6aff711e cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8 a=dMN3z6l-B7iZEtH36-MA:9
-X-Proofpoint-ORIG-GUID: YfN2aTDZvwMf8Dg00C94kQh2YPuWcvjq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-19_05,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 suspectscore=0 phishscore=0 adultscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611190088
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=mliebel@qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20261110130108.706228-1-mdspan.github@gmail.com>
+ <20261110130108.706228-4-mdspan.github@gmail.com>
+ <4a2dd42c-fe8e-46ad-a74c-bae94d088be8@linaro.org>
+In-Reply-To: <4a2dd42c-fe8e-46ad-a74c-bae94d088be8@linaro.org>
+From: mdspan <mdspan.github@gmail.com>
+Date: Thu, 19 Nov 2026 16:00:29 -0600
+X-Gm-Features: Aa3M54rw4R3uzxMlVvqhGHdj-T7A5nHkmWnpYWD4Y3SzLL9GHwBOt8wLTmDQHbs
+Message-ID: <CALU8FV9cTiAwrF0QGzLMS+1aTGB+1=FemHf93wOZK_O-DGNOkw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] target/i386: emulate LAM in TCG
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:33::4;
+ envelope-from=mdspan.github@gmail.com; helo=mail-qv2-x04.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,50 +116,85 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Probe slot 1 before slot 0 without committing either access. A slot 1
-store miss must win over a slot 0 load miss in a mem_noshuf packet.
+Thanks, I'll do that in v2. Separate fetch indexes, returned by
+x86_cpu_mmu_index() when ifetch is true, so that fetch and data
+entries for a tagged page aren't sharing a TLB.
 
-Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
----
- target/hexagon/op_helper.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Tim
 
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index be5ce7d89c..f22353302b 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -459,6 +459,12 @@ void HELPER(probe_noshuf_load)(CPUHexagonState *env, target_ulong va,
- {
-     uintptr_t retaddr = GETPC();
- #ifndef CONFIG_USER_ONLY
-+    /* The slot 1 store fault must precede the slot 0 load fault. */
-+    if (env->mem_access_valid & (1U << 1)) {
-+        env->mem_slot = 1;
-+        probe_write(env, env->mem_access_va[1],
-+                    env->mem_log_stores[1].width, mmu_idx, retaddr);
-+    }
-     env->mem_slot = 0;
- #endif
-     probe_read(env, va, size, mmu_idx, retaddr);
-@@ -555,6 +561,10 @@ static void check_noshuf(CPUHexagonState *env, bool pkt_has_scalar_store_s1,
- {
-     if (slot == 0 && pkt_has_scalar_store_s1 &&
-         ((env->slot_cancelled & (1 << 1)) == 0)) {
-+#ifndef CONFIG_USER_ONLY
-+        probe_store(env, 1, MMU_USER_IDX, false, ra);
-+        env->mem_slot = 0;
-+#endif
-         probe_read(env, vaddr, size, MMU_USER_IDX, ra);
-         commit_store(env, 1, ra);
-     }
--- 
-2.43.0
-
+On Fri, Nov 13, 2026 at 12:12=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 11/10/26 06:01, Tim wrote:
+> > @@ -581,15 +581,35 @@ static bool get_physical_address(CPUX86State *env=
+, vaddr addr,
+> >           }
+> >
+> >           if (likely(env->cr[0] & CR0_PG_MASK || use_stage2)) {
+> > +            int lam_prot_mask =3D 0;
+> > +
+> >               in.cr3 =3D env->cr[3];
+> >               in.mmu_idx =3D mmu_idx;
+> >               in.ptw_idx =3D use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX=
+;
+> >               in.pg_mode =3D get_pg_mode(env);
+> >
+> >               if (in.pg_mode & PG_MODE_LMA) {
+> > -                /* test virtual address sign extension */
+> > +                vaddr masked =3D x86_lam_mask_addr(env, addr);
+> >                   int shift =3D in.pg_mode & PG_MODE_LA57 ? 56 : 47;
+> > -                int64_t sext =3D (int64_t)addr >> shift;
+> > +                int64_t sext;
+> > +
+> > +                /*
+> > +                 * LAM masks data addresses but not fetches.  Both ins=
+tall
+> > +                 * the entry under the unmasked address, so if masking
+> > +                 * changes it, keep only the permissions of this acces=
+s.
+> > +                 */
+> > +                if (masked !=3D addr) {
+> > +                    if (access_type =3D=3D MMU_INST_FETCH) {
+> > +                        lam_prot_mask =3D PAGE_READ | PAGE_WRITE;
+> > +                    } else {
+> > +                        lam_prot_mask =3D PAGE_EXEC;
+> > +                        addr =3D masked;
+> > +                        in.addr =3D addr;
+> > +                    }
+> > +                }
+> > +
+> > +                /* test virtual address sign extension */
+> > +                sext =3D (int64_t)addr >> shift;
+> >                   if (sext !=3D 0 && sext !=3D -1) {
+> >                       *err =3D (TranslateFault){
+> >                           .exception_index =3D EXCP0D_GPF,
+> > @@ -599,7 +619,11 @@ static bool get_physical_address(CPUX86State *env,=
+ vaddr addr,
+> >                       return false;
+> >                   }
+> >               }
+> > -            return mmu_translate(env, &in, out, err, ra);
+> > +            if (!mmu_translate(env, &in, out, err, ra)) {
+> > +                return false;
+> > +            }
+> > +            out->prot &=3D ~lam_prot_mask;
+> > +            return true;
+> >           }
+>
+> Swapping translations between read and execute isn't fantastic.  You may
+> get away with it for the most part because rip-relative data is not
+> generally stored on the same page as code.
+>
+> Better would be to split the mmu_index in two: one for execute, one for
+> read/write.
+>
+>
+> r~
 
