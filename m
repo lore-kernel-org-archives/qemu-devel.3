@@ -1,140 +1,138 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DEA60A2600
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3539A60A260B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=oppeNEyG;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AwglXv/m
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TSIMTACF;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=JOZB+Pj8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUAEu-0001vv-Q5; Thu, 19 Nov 2026 17:04:21 -0500
+	id 1xUAJJ-0003J8-0x; Thu, 19 Nov 2026 17:08:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xUAEt-0001vY-73
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:04:19 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xUAJH-0003Iz-E5
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:08:52 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xUAEp-0003m0-5h
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:04:18 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xUAJG-0006kA-0l
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:08:51 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJJ1G8e373592
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 22:04:05 GMT
+ 6AJJUXfD3367487
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 22:08:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- x3KrCt+tVCIFq7hbYgNEkj7ptwrh+KdVN5hpvEfRS8s=; b=oppeNEyG9CI/HAIC
- Than3zjmkktyZSzD4QY8HWu7e/Bo9z7H0qlZeHn9dWuNopNDSIdLhU36KBYcV50v
- oBd5SqaODUIiCZMaxROWqJ9RKCCoH2FJ49lBCAnHhDACvPncK6BEiXsk1Wq63j7c
- KYGzUtNR3quG6cVWjNJaPFkgc1Ddo4LJpRbwRNJjWab4nspVm5tyKRXY2VaCdmmk
- V3fW3AAJlKZ9Cga/tP0O4d1Lth0KfWn61jNVroXIf4ptRT2nz5iDqtL9c6L4oR5q
- m8z3pvdh6Zkigo10JIm/s67cv/xRevPEzmCQC2z5glTA0MPNlNnUjk3Ll8T2LQkf
- irs/jA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1xymkb4b-1
+ h2dJqBGRYPcKr/OQB7HAxQOtBhZ6kiAZvlt7ANZAA3A=; b=TSIMTACFxMMDsSAz
+ S4QiGmyJjclQL4oC41+uQJkihDYGP7ztsY+7Ul/vHUb0VA/Et2PnAY2pCwOXu0Ja
+ TmMPdox74ju/by76ekZ1YE5tcn+iR6GU3OPBP1x0zX9X+XC8aRk8A9XfiygtTD3p
+ kdQn1qaFLHIJk26K6GdFRbX6b3Uie6pIQx1CgORDeH4bWBY9Mrp1+ijVSi8AWb3S
+ T6UxcVbX3j3Xkwm5Xwz/RB5pfeQcFvR01H8huVq0iP9uiwvtSKGL+PVFjkUz3reJ
+ 3QNRczj/RR4TqjIPNC/fBBqUiyeg2P6TMcuaB+UqzVHf9pYzCnmDxUvVohiuXMgq
+ UpEYlg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j27b5rph6-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 22:04:05 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-949b0d322fbso44456585a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 14:04:05 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 22:08:49 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-9495dd0f07eso51244985a.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 14:08:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795125845; x=1795730645; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=x3KrCt+tVCIFq7hbYgNEkj7ptwrh+KdVN5hpvEfRS8s=;
- b=AwglXv/mxiUeq+JJP6xHZvrDtKLGUGeypgCHXyXD6T/QIzm8KGb+l39bBWTiE/AcPL
- SFcYMIyCUdewTYlQAr2OeA5qwkrQsu1rImPUrstOfkI7sMVw7bshahxJnlJfNSoUQ+J5
- cMCSgAt9RmGeyTwyYcBTQUPTxBpMYqaErjoKKGHEzjpviK2NhRU/Ai4IPtdT+un1FwY8
- vqBazic4CT4mxZBT5sXKGBoo3/xYN5Zub5cdv5zFqrASlAdjreR1fpLPmfnUC0eG6l3q
- 3dKKTu0hxhcFgek6lsRsWghrGv9F+4iTt4j9Zhy68tq+041lEhEC9E+a8IkO+zDiqqe/
- DC3A==
+ d=oss.qualcomm.com; s=google; t=1795126128; x=1795730928; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=h2dJqBGRYPcKr/OQB7HAxQOtBhZ6kiAZvlt7ANZAA3A=;
+ b=JOZB+Pj8Bd5CsN9xWZbQAWPJngCBCGi8W1i8DOAqACthf6efl9k8DaqW6zzYlQrZf5
+ cqb67UfhYvS+IN1kb8zz4nnQudp/nBmRTvU9jIFKThSExa53FbqYh2Y89xJOX4Y4sD6r
+ 0WeF7TY72Ut8BZ9fa4zotCQWiSFoeH5Ts9dR7uaPqzDT+HkZKbGmlrpDZTrr+fSlZcUL
+ lvsVS+5IAM5pQ/LobMTZdQF0vpXvdAm/am28SRx6xR3Oi36oU+bYczreqm6FWfndcSUb
+ 4KwRuucldCumUtE59tlOuCrpLGbKSq7NJ1aRK01MaQVc/b9+8tyz/iFtMZNFOife9GyS
+ fSFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795125845; x=1795730645;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=x3KrCt+tVCIFq7hbYgNEkj7ptwrh+KdVN5hpvEfRS8s=;
- b=icRBrEKC/C0eq2XSOBDiwzXchzQ2PEdhFWU5bBUWUmX1QPY6EuDY5Zns9w8i4azZIm
- SPfRmhrSb26xkLbTvw8J7xyWm8S/ffVBshzkueWJc1CgXD883LzaebEmeUYtNJ9YAh6t
- rzTBRgt6kQ1WgW3zUikFgllWbJnS6UYv2QaSBLga2eqwUYTpQeVFLfW1eWj8LAfkNugr
- px3KBUr5Q9lRyZIFGOdR1A/0z2s94529ddB657KPoPq/08nylDQAn+EHVE8Wb773jXy1
- q+jUdTHFtbwf68pv2bTlJnSg0hssOP1BlnbU/czCl/GZ42N1PcN0Z2/Nwy8Vk+okQ9RK
- 6uLw==
-X-Forwarded-Encrypted: i=1;
- AL+hErEbBiMAffBuELRia3k9ckA4dYQySPtz/mGXBKlt5coVd0DXCj9yp19X/h4fRpc+NTDnFWvK/NRwb9Un@nongnu.org
-X-Gm-Message-State: APuU4Z/o+D6gOWZhnMXWYhhemiDlq0dlNNDlAuiamDtUuEKQjEpp60+W
- 0SQYENxXIIrjIyqYt6xbKbRN5hAC/mLIi/A/EM+wfu/YKeHG7bsEH2/AZh6wFgwpU9mF/w3qyZQ
- VYi1xllMswGJOQJb4AigeLijROQwqmKwBZD4sVNmwcj3uTJv4BOY2KaPnPg==
-X-Gm-Gg: AYBFou2s61pntvDmO9t2SPj/lRzy3PxZnvdZvwO93QR8st7B2PNwn7IsMJG7cMtobV3
- +1Q6ozAbzhHrtNhF4zLd4nmCr9t1dTrXgHQCkSqUqMqJRoK/1fm/7019fB04KGyWtiGkHAv7L38
- RE87jpHTuubIZHw+ydwbYbg/zdKMZm/46WPpAa8T4HPGUVPC5/XPTdDt5j6yIJRxtmZY48RNxY2
- TQ27+WVtuasJaWRiBjM1ho03p5vhZq2Z5A9rGdDxq/76I+FNOWO85QZmZzb5yYe38ATuaWid7H3
- EW4C9xn0gyMD04mfIBWwf8/YEqSmPxyhzbji/iT6F0wthtjy5RIlWYbpSxmXWN/WfuhFKmB4aSF
- 7bQ2YbC1qa9PbWMV8Kh8we+e5Vc5CxC35xpwpFyqSWu66ojgaiL0X2zSaZrjE9PYM7ukWjblNbL
- 23WNJhdGSPxhfDBoYrsziv5uPxsX/SIvEsZW/BGg==
-X-Received: by 2002:a05:620a:1d0b:b0:93f:1dbf:6cfc with SMTP id
- af79cd13be357-949ba9a0514mr170828685a.36.1795125844621; 
- Thu, 19 Nov 2026 14:04:04 -0800 (PST)
-X-Received: by 2002:a05:620a:1d0b:b0:93f:1dbf:6cfc with SMTP id
- af79cd13be357-949ba9a0514mr170822985a.36.1795125844076; 
- Thu, 19 Nov 2026 14:04:04 -0800 (PST)
-Received: from [10.222.168.147] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949bb3f5c31sm56976085a.30.2026.11.19.14.04.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Nov 2026 14:04:03 -0800 (PST)
-Message-ID: <46626cb1-d69d-49c1-ba65-52626a10fdc4@oss.qualcomm.com>
-Date: Thu, 19 Nov 2026 16:04:00 -0600
+ d=1e100.net; s=20260707; t=1795126128; x=1795730928;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=h2dJqBGRYPcKr/OQB7HAxQOtBhZ6kiAZvlt7ANZAA3A=;
+ b=Fo6zPPYgWGx01TQiL8TY9UT6JC63yABLa58qN+/si7GT97KvM7dqujEq8wk9enROYI
+ 2kPOqxJ7Vc6Dc6H4T3nrbIFdokqEoGjp+rPI/vtZIT7g+eJGhm0cOUoS1+JTg+XCGvyE
+ RAxpxhWdSJpZWu6orZgx9c/uYqkCVOKPaaJl3G1jWzj/5+/0L622ECbn2+Mu7MF204iY
+ 0T0ef5/SPyiiNvfVlPz0xkPYFJT1YJVqcVBAcKEQ+2jeI8yh7vBVS0vfJyNtCP6qH8rv
+ rOuZX6l2vaLSOlcYv1gBKzfC2JU1QQGxRXIjcPwLddxcbwIGiqeWaQWKc60o5fEP9hVq
+ 1/iw==
+X-Gm-Message-State: APuU4Z/+Q8w3Gl9CaQ7XQv0XetDCXQrVoLckcQF2czCaR5oV6nM1JZIa
+ 8CoMdHZqOKNt70GXcvlBBANc2ffeX08Q89eP6Vwpin3go3Pzv/70CbjuuIITuU7AtfziHmDIrg/
+ npClDVfq1+d02GJ6UzdL3wM5z3sBUEcrKp9+/4yFF3pTnVN2F+FpwERIhvPSvoF0Kgegu
+X-Gm-Gg: AYBFou0LbITfplnd2+NJRp/pKiJ8TFcJhXitrpXmUoMETpeenLeTsMDfeQI/jiipHhk
+ U+e4otm9gxgD8eR0/+0ERGgA7qmn/Ewxu2X3anaic0Y0jZZ49c3ZJyQMFRio1P7eVbLbOFG+KMP
+ pxvqtXwLP4vqfeElUcpjMGxS86wY5yf2osQw9fQRoNdPmeVxcIRGNmtUdT7XZPxBf01lyGF3tIm
+ eQToxxSLCqDCiSYp1irToqaja3Z7vDqjPzsIek6DSDNy00oS+EokjAtkFpgQ5waHN/tEtBBlLcS
+ h7It2iiVfJTpDG1xL7KNhoJ4GaHn+rt+GTEy3ie9Z3EptsSuOMlaiAYqcOzMmNBd/z7xVxbkikf
+ 4HXPtEAWXm3znFjpfN89ndJTDX3bmXHgeEqey8H+Jy4m8/WWoUH2U8YyRnSbC+CVW0ZZ8utkDUS
+ nMDzasHDVSBiYBog==
+X-Received: by 2002:a05:620a:2856:b0:949:ba09:c68 with SMTP id
+ af79cd13be357-949bab5a3ddmr173227185a.76.1795126128343; 
+ Thu, 19 Nov 2026 14:08:48 -0800 (PST)
+X-Received: by 2002:a05:620a:2856:b0:949:ba09:c68 with SMTP id
+ af79cd13be357-949bab5a3ddmr173223085a.76.1795126127917; 
+ Thu, 19 Nov 2026 14:08:47 -0800 (PST)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb8526cbd0sm82588425e9.0.2026.11.19.14.08.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Nov 2026 14:08:46 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 1/3] hw/dma/i8257: Read the mask from the RWAMB port
+Date: Thu, 19 Nov 2026 23:08:35 +0100
+Message-ID: <20261119220838.52034-2-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261119220838.52034-1-philmd@oss.qualcomm.com>
+References: <20261119220838.52034-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/15] target/hexagon: reject HMX operands outside VTCM
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20261119215853.987158-1-marco.liebel@oss.qualcomm.com>
- <20261119215853.987158-5-marco.liebel@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261119215853.987158-5-marco.liebel@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfXxRaRq4MYSd5c
- iiKsMJpbueypVBwvEb9FP9ynL5ztdlaBmqQCgvKsuSi1V79EqavG48CTI78q4OStTk6dqvqzvmY
- hO1Eb60M/6AvK6DWisN+5M4jp/ZuIxg=
-X-Proofpoint-GUID: NW9JKQiHSQB_h6ntqZehQIC0OrNrtIaO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA4OCBTYWx0ZWRfX3WgAhprlfvZc
- vctFdJT8vUpbNR73mKiwXlMGkYqiVERB1UNKanvKIAq9SEt6Gaa9T64CqSTT5FTy9q0Ctsr4dkm
- DNmLaCp9kd700C19BRWKrz9W3SuWMFzzmNDepUBwTYtbydWj/czCll2J6nKoCoRWl4ePimzLWrP
- gUia0mQf4OOawm1K/xvyFEFw/O/taiqgEHlmfY52E+knDJympppgAqy6zOVKogNv1in6vG7DV5Y
- bi6dxkze+os1amNlluvVkGFHbdr7S1koZARoYIw194YWRE/sV8Emng0qyquYW30wWO1o/7Nq2Eb
- iaHBRImv8SHnazi9v8Qn7hdNc9DJxSD1Bnkp0DupVJqhM1cRzqGuXdsFEnCcn6uH41m1qcyZ9s7
- Vmt3juVpELreypUcnL30QFxIoYyA9otmRP7u6RnNxvmyAJWJeiLSgab8ok7Mvlxx74xUE3icSTh
- nGSy0oFe6e8HRWvaFVg==
-X-Proofpoint-ORIG-GUID: NW9JKQiHSQB_h6ntqZehQIC0OrNrtIaO
-X-Authority-Analysis: v=2.4 cv=WKPqzXsR c=1 sm=1 tr=0 ts=6aff7255 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=pDogMYiuAl29jsfYAhoA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA4OSBTYWx0ZWRfXywGvZwG7H2od
+ SV4a4pBV+4e5FsJ3JVhRtP3c5JVQEQModPASQQmO25rzQggtPpb9yNqYHSUA9IQhTGngJgUxbo+
+ ZUYfNYyzNAYXsXlXZCzyd4GXEkVDVG0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA4OSBTYWx0ZWRfX5kbCb7Hsn5mh
+ jXljMV/sgJ4LbghRZ/kVaQmDQodvw3coiAe6jSY8ovVgIe3aR99BqdkpIlRqEEjwWxdPih3oPUI
+ /zr9zjcqgTssc+qw5JwTyvmZgDjf5RHjk8uAznrjoL0fkZ2jF5z5xYzNaHcy1N+FxRnaxdSvlft
+ KrpJANCx60VupVPv8Rwyiusj8BC3A7WsRs21OTexnHWNys9UNai6uzyvuIHZhRlNyz0H0x/zQPV
+ 1kS5XLiHEuR56mDQLTUzF+W4It+sdZskNmK5TLDF5vgLmTpjtqbY+01ANlwPlym/NG9HEUj8pKW
+ qaMG1VZ9FKA56sBa73hj3eOBCUCBTZM/0exyNbCX4fwFB43YdJU9yWDCV4Kaos9+szT7Wvs+zO6
+ YIi7ZHqa4WqI1uNIKWT1Ev0rfFfteLyxgKdRnn4wLVEyXLu3kJrC3pVkBkDkfXkoyo3cKNYoS4r
+ /VrAEa1ddIg95V/GOKw==
+X-Proofpoint-GUID: etOBHfsJYXmEfkvbHWoC9E9AzqMFONQu
+X-Proofpoint-ORIG-GUID: etOBHfsJYXmEfkvbHWoC9E9AzqMFONQu
+X-Authority-Analysis: v=2.4 cv=LPTz05W9 c=1 sm=1 tr=0 ts=6aff7371 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=9CvvSRwhk_vVGl7fKr8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-19_05,2026-11-19_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- adultscore=0 spamscore=0 impostorscore=0 suspectscore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611190088
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190089
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,162 +151,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+The 82C37-compatible register layout, as documented in the PIIX3
+datasheet, has the write-only request register at I/O 0x09 and
+the read/write-all-mask register at 0x0F.
+Move the mask read to the latter.
 
-On 11/19/2026 3:58 PM, Marco Liebel wrote:
-> Check activation and weight addresses against the machine VTCM range
-> before executing packet instructions. An invalid operand raises the
-> precise coprocessor VMEM address error and prevents packet commit.
-> HMX arithmetic remains unimplemented.
->
-> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> ---
->   hw/hexagon/hex-subsys.c      |  4 ++++
->   include/hw/hexagon/hexagon.h |  2 ++
->   target/hexagon/cpu.c         |  2 ++
->   target/hexagon/cpu.h         |  2 ++
->   target/hexagon/translate.c   | 26 ++++++++++++++++++++++++++
->   target/hexagon/translate.h   |  4 ++++
->   6 files changed, 40 insertions(+)
->
-> diff --git a/hw/hexagon/hex-subsys.c b/hw/hexagon/hex-subsys.c
-> index 52ec0cadac..d2e095bb91 100644
-> --- a/hw/hexagon/hex-subsys.c
-> +++ b/hw/hexagon/hex-subsys.c
-> @@ -181,6 +181,8 @@ void hex_subsys_create(HexagonCommonMachineState *hms,
->                              sizeof(m_cfg->cfgtable), m_cfg->cfgbase,
->                              &address_space_memory);
->   
-> +    hms->vtcm_base = (uint64_t)m_cfg->cfgtable.vtcm_base << 16;
-> +    hms->vtcm_size = (uint64_t)m_cfg->cfgtable.vtcm_size_kb << 10;
->       if (m_cfg->cfgtable.vtcm_size_kb > 0) {
->           memory_region_init_ram(&hms->vtcm, NULL, "vtcm.ram",
->                                  m_cfg->cfgtable.vtcm_size_kb * 1024,
-> @@ -204,6 +206,8 @@ void hex_subsys_add_cpu(HexagonCommonMachineState *hms, DeviceState *cpu)
->       Object *hmx;
->   
->       object_property_add_child(OBJECT(hms->cluster), "cpu[*]", OBJECT(cpu));
-> +    qdev_prop_set_uint64(cpu, "vtcm-base", hms->vtcm_base);
-> +    qdev_prop_set_uint64(cpu, "vtcm-size", hms->vtcm_size);
->       object_property_set_link(OBJECT(cpu), "global-regs",
->                                OBJECT(hms->glob_regs), &error_fatal);
->       object_property_set_link(OBJECT(cpu), "tlb", OBJECT(hms->tlb),
-> diff --git a/include/hw/hexagon/hexagon.h b/include/hw/hexagon/hexagon.h
-> index 2ca4a518db..a856651fba 100644
-> --- a/include/hw/hexagon/hexagon.h
-> +++ b/include/hw/hexagon/hexagon.h
-> @@ -187,6 +187,8 @@ struct HexagonCommonMachineState {
->       MemoryRegion cfgtable_rom;
->       uint32_t cfgtable_data[HEXAGON_CFGSPACE_ENTRIES];
->       MemoryRegion vtcm;
-> +    uint64_t vtcm_base;
-> +    uint64_t vtcm_size;
->       DeviceState *cluster;
->       DeviceState *l2vic;
->       DeviceState *qtimer;
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index 3575b31d19..effa95534b 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -69,6 +69,8 @@ static const Property hexagon_cpu_properties[] = {
->       DEFINE_PROP_LINK("tlb", HexagonCPU, tlb, TYPE_HEXAGON_TLB,
->                        HexagonTLBState *),
->       DEFINE_PROP_UINT32("exec-start-addr", HexagonCPU, boot_addr, 0xffffffff),
-> +    DEFINE_PROP_UINT64("vtcm-base", HexagonCPU, vtcm_base, 0),
-> +    DEFINE_PROP_UINT64("vtcm-size", HexagonCPU, vtcm_size, 0),
->       DEFINE_PROP_LINK("l2vic", HexagonCPU, l2vic,
->                        TYPE_HEX_L2VIC_INTERFACE, HexL2VicInterface *),
->       DEFINE_PROP_LINK("global-regs", HexagonCPU, globalregs,
-> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> index 5739254f1f..1eb6c7d8bf 100644
-> --- a/target/hexagon/cpu.h
-> +++ b/target/hexagon/cpu.h
-> @@ -248,6 +248,8 @@ struct ArchCPU {
->       HexagonHMXContextState *hmx_ctx;
->       HexagonTLBState *tlb;
->       uint32_t boot_addr;
-> +    uint64_t vtcm_base;
-> +    uint64_t vtcm_size;
+Fixes: 9eb153f18f6 ("dma clean up - added missing read accesses")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/dma/i8257.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is semantically clearer as hwaddr.
+diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
+index 577154988952..f44632de3db0 100644
+--- a/hw/dma/i8257.c
++++ b/hw/dma/i8257.c
+@@ -281,7 +281,7 @@ static uint64_t i8257_read_cont(void *opaque, hwaddr nport, unsigned size)
+         val = d->status;
+         d->status &= 0xf0;
+         break;
+-    case 0x01:                  /* mask */
++    case 0x07:                  /* read all mask bits (RWAMB) */
+         val = d->mask;
+         break;
+     default:
+-- 
+2.55.0
 
-Also - IMO better to qualify the size to make the units more explicit 
-s/vtcm_size/vtcm_size_bytes/
-
->       HexagonGlobalRegState *globalregs;
->       uint32_t htid;
->       HexL2VicInterface *l2vic;
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-> index 10ed73590c..3601c4e9f3 100644
-> --- a/target/hexagon/translate.c
-> +++ b/target/hexagon/translate.c
-> @@ -149,6 +149,20 @@ void gen_precise_exception(int cause, uint32_t PC)
->                                  tcg_constant_i32(PC));
->   }
->   
-> +#ifndef CONFIG_USER_ONLY
-> +static void gen_hmx_check_address(DisasContext *ctx, TCGv_i32 address)
-> +{
-> +    TCGv_i64 offset = tcg_temp_new_i64();
-> +    TCGLabel *valid = gen_new_label();
-> +
-> +    tcg_gen_extu_i32_i64(offset, address);
-> +    tcg_gen_subi_i64(offset, offset, ctx->vtcm_base);
-> +    tcg_gen_brcondi_i64(TCG_COND_LTU, offset, ctx->vtcm_size, valid);
-> +    gen_precise_exception(HEX_CAUSE_COPROC_LDST, ctx->pkt.pc);
-> +    gen_set_label(valid);
-> +}
-> +#endif
-> +
->   static void gen_exec_counters(DisasContext *ctx)
->   {
->       tcg_gen_addi_tl(hex_gpr[HEX_REG_QEMU_PKT_CNT],
-> @@ -946,6 +960,16 @@ static void gen_start_packet(DisasContext *ctx)
->           gen_precise_exception(HEX_CAUSE_NO_COPROC2_ENABLE, ctx->pkt.pc);
->           ctx->hmx_check_emitted = true;
->       }
-> +    if (ctx->pkt.pkt_has_hmx) {
-> +        for (i = 0; i < ctx->pkt.num_insns; i++) {
-> +            Insn *insn = &ctx->pkt.insn[i];
-> +            if (GET_ATTRIB(insn->opcode, A_HMX) &&
-> +                (GET_ATTRIB(insn->opcode, A_PAIR_1OF2) ||
-> +                 GET_ATTRIB(insn->opcode, A_PAIR_2OF2))) {
-> +                gen_hmx_check_address(ctx, hex_gpr[insn->regno[0]]);
-> +            }
-> +        }
-> +    }
->   #endif
->   }
->   
-> @@ -1583,6 +1607,8 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
->       ctx->hlx_coproc_enabled = hex_cpu->hlx != NULL &&
->                                 hex_cpu->hlx->contexts_bitmap != 0;
->       ctx->hlx_check_emitted = false;
-> +    ctx->vtcm_base = hex_cpu->vtcm_base;
-> +    ctx->vtcm_size = hex_cpu->vtcm_size;
->   #endif
->       ctx->branch_cond = TCG_COND_NEVER;
->       ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
-> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-> index c988c85f33..aaafcb0954 100644
-> --- a/target/hexagon/translate.h
-> +++ b/target/hexagon/translate.h
-> @@ -114,6 +114,10 @@ typedef struct DisasContext {
->       DECLARE_BITMAP(lregs_updated_tmp, NUM_LREGS);
->       bool hmx_coproc_enabled;
->       bool hmx_check_emitted;
-> +#ifndef CONFIG_USER_ONLY
-> +    uint64_t vtcm_base;
-> +    uint64_t vtcm_size;
-> +#endif
->   } DisasContext;
->   
->   bool is_gather_store_insn(DisasContext *ctx);
 
