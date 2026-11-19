@@ -1,60 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656B3606A325
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CAF606A326
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 22:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ho38fJeG
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GM0fjeYs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUAv6-0005xl-4u; Thu, 19 Nov 2026 17:47:56 -0500
+	id 1xUAzD-0008St-6N; Thu, 19 Nov 2026 17:52:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xUAv4-0005x1-A3
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:47:54 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xUAzC-0008Rd-5T
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:52:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xUAv1-0004Gr-Nl
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:47:53 -0500
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 84E866115E;
- Thu, 19 Nov 2026 22:47:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4686F1F000C6;
- Thu, 19 Nov 2026 22:47:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795128469;
- bh=BB3Ub95FbHuB1A/cShSmZhYpai1KsSReEoj2D9G4WkU=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ho38fJeGVtrTG/YD1ASxLtPVkeyWtLf+klG9MQ5kKaRd4YDNJGocqFlZzcXIQ18y6
- X3Vk1T7/exeObBd1od3PjWspkZ9UOhwNy8XQ5EMdbAmd+5MmyG4c3KiQtep3NUgaMs
- KoBJjdepSBS1ko83XQmHGhfqNFjGfsAavfdNTrKGnMb6bDD6QnW74efO5iXf65CkjB
- Ohwm9Oeowp6cDHLmHBI8REV+QVHjTxkmQdgd/C+jCryqYeopFx/Q8EcHjpmcOzg0Z1
- pivzajQTRzVMUJOKw9TZ9nWUGqcf3YEW6B6GYDZSd+3JSgt7kClTb1F+Wgt5wRt7o7
- cpdne/FbNUPTw==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Keith Monahan <keith@techtravels.org>, Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 1/4] target/hppa: clear EIRR under the BQL and keep the
- interval timer matching
-Date: Thu, 19 Nov 2026 23:47:41 +0100
-Message-ID: <20261119224744.31309-2-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261119224744.31309-1-deller@kernel.org>
-References: <20261119224744.31309-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xUAzA-0005xQ-EU
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 17:52:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795128727;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=otv7/WStme270n9jbGrhByx6Tp6158eoLURuMsius1o=;
+ b=GM0fjeYsMvhxaPEPLuFKQSqgEdhK4Gc2aWO2Ir/ix9VBj93mAdGly7sxENscChjJAxvxQA
+ 9fUrqmh4sZEEfg9ZYkRnXur+OMVJU5K/GW9etMpJsNQuNL9q9CRABFgB30nmhqAkDJuGov
+ 0obi7Q2qQvct5vdMD0Fk4irfD4ISbMI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-Ezrr1z5XNeymC39n6-xIHw-1; Thu,
+ 19 Nov 2026 22:52:03 +0000
+X-MC-Unique: Ezrr1z5XNeymC39n6-xIHw-1
+X-Mimecast-MFC-AGG-ID: Ezrr1z5XNeymC39n6-xIHw_1795128722
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0149B18004FD; Thu, 19 Nov 2026 22:52:02 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 38E161800550; Thu, 19 Nov 2026 22:51:59 +0000 (UTC)
+Date: Thu, 19 Nov 2026 16:51:56 -0600
+From: Eric Blake <eblake@redhat.com>
+To: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com,
+ stefanha@redhat.com, fam@euphon.net
+Subject: Re: [PATCH 4/5] iotests: Add coverage for NBD resize
+Message-ID: <av98gYPX3Wsoiq7N@redhat.com>
+References: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
+ <20261119144632.232457-5-guillaume.vincke@ovhcloud.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261119144632.232457-5-guillaume.vincke@ovhcloud.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,73 +81,136 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Keith Monahan <keith@techtravels.org>
+On Thu, Nov 19, 2026 at 03:46:31PM +0100, Guillaume Vincke wrote:
+> Test the block_resize QMP function on an NBD device. Prior to the
+> addition of bdrv_co_refresh_connection(), running block_resize on a
+> node that did not process any requests between the device size
+> update and the function call failed with "Cannot grow NBD nodes".
+> 
+> Add a test that updates an NBD node size and verifies that the
+> block_resize behaves as expected. The first part configures a reconnect
+> delay and asserts that the call succeeds. The second uses the default
+> reconnect-delay=0 and asserts that, even though the function returns an
+> error, the reconnection routine gets started and that retrying succeeds
+> once the node has successfully reconnected.
+> 
+> Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+> ---
+>  tests/qemu-iotests/tests/nbd-resize     | 81 +++++++++++++++++++++++++
+>  tests/qemu-iotests/tests/nbd-resize.out | 24 ++++++++
+>  2 files changed, 105 insertions(+)
+>  create mode 100755 tests/qemu-iotests/tests/nbd-resize
+>  create mode 100644 tests/qemu-iotests/tests/nbd-resize.out
+> 
+> diff --git a/tests/qemu-iotests/tests/nbd-resize b/tests/qemu-iotests/tests/nbd-resize
+> new file mode 100755
+> index 0000000000..4f305eaebf
+> --- /dev/null
+> +++ b/tests/qemu-iotests/tests/nbd-resize
+> @@ -0,0 +1,81 @@
+> +#!/usr/bin/env python3
+> +# group: quick
 
-An unlocked EIRR clear could drop a tick set by the main loop thread,
-leaving the guest clock dead. HP-UX 10.20 installs wedged this way.
+Can this also go in the 'auto' group?
 
-Signed-off-by: Keith Monahan <keith@techtravels.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- target/hppa/int_helper.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+> +
+> +for reconnect_delay in [10, 0]:
+> +    iotests.log(f"=== Resize with reconnect-delay={reconnect_delay} ===")
+> +    with iotests.VM() as vm:
+> +        vm.launch()
+> +
+> +        iotests.qemu_img_create('-f', iotests.imgfmt, disk, '1M')
+> +        with iotests.qemu_nbd_popen('-k',
+> +                                    nbd_sock,
+> +                                    '-f',
+> +                                    iotests.imgfmt,
+> +                                    disk):
+> +            vm.cmd('blockdev-add', {
+> +                'driver': 'nbd',
+> +                'node-name': node_name,
+> +                'server': { 'type': 'unix', 'path': nbd_sock },
+> +                'reconnect-delay': reconnect_delay,
+> +            })
+> +
+> +            iotests.log('Size before resize:')
+> +            iotests.log(node_size(vm))
+> +
+> +        iotests.qemu_img('resize', '-f', iotests.imgfmt, disk, '2M')
+> +        with iotests.qemu_nbd_popen('-k',
+> +                                    nbd_sock,
+> +                                    '-f',
+> +                                    iotests.imgfmt,
+> +                                    disk):
+> +            iotests.log(vm.qmp('block_resize', {
+> +                'node-name': node_name,
+> +                'size': 2097152,
+> +            }))
+> +            iotests.log('Size after resize:')
+> +            iotests.log(node_size(vm))
 
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 598d1c6cef..da9c7c6457 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -25,6 +25,7 @@
- #include "hw/core/cpu.h"
- #include "hw/hppa/hppa_hardware.h"
- #include "qemu/plugin.h"
-+#include "qemu/timer.h"
- 
- static void eval_interrupt(HPPACPU *cpu)
- {
-@@ -78,14 +79,34 @@ const MemoryRegionOps hppa_io_eir_ops = {
- 
- void hppa_cpu_alarm_timer(void *opaque)
- {
-+    HPPACPU *cpu = opaque;
-+
-     /* Raise interrupt 0.  */
-     io_eir_write(opaque, 0, 0, 4);
-+
-+    /*
-+     * Re-arm the alarm one counter wrap later.  The hardware compares CR16
-+     * against a free running 32-bit counter, so the match recurs every
-+     * 2^32 counts, which is 2^34 ns at the 250 MHz shown to the guest.
-+     * This brings the model closer to that and limits a lost tick to a
-+     * 17 s stall instead of a dead clock.
-+     */
-+    cpu->env.cr[CR_IT] += 1ULL << 34;
-+    timer_mod(cpu->alarm_timer, cpu->env.cr[CR_IT]);
- }
- 
- void HELPER(write_eirr)(CPUHPPAState *env, target_ulong val)
- {
--    env->cr[CR_EIRR] &= ~val;
-+    /*
-+     * Clear EIRR under the BQL.  io_eir_write() sets EIRR bits from the main
-+     * loop thread for the interval timer and for device interrupts, and it
-+     * holds the BQL.  This helper runs in the vCPU thread, so an unlocked
-+     * read-modify-write here drops any bit set between the load and the
-+     * store.  A dropped interval timer bit is never re-armed and the guest
-+     * clock stops, which is how HP-UX 10.20 installs wedged under load.
-+     */
-     bql_lock();
-+    env->cr[CR_EIRR] &= ~val;
-     eval_interrupt(env_archcpu(env));
-     bql_unlock();
- }
+After growing the image from 1M to 2M, is it also worth doing IO to
+offsets in the newly-expanded part of the file to prove the resized
+region is accessible?
+
+> +            if reconnect_delay == 0:
+> +                # With delay=0, block_resize fails while the client reconnects.
+> +                # Retry once parked.
+> +                iotests.log('Waiting until the reconnection succeeds')
+> +                wait_for_parked_connection(vm)
+> +
+> +                iotests.log(vm.qmp('block_resize', {
+> +                    'node-name': node_name,
+> +                    'size': 2097152,
+> +                }))
+> +                iotests.log('Size after retried resize:')
+> +                iotests.log(node_size(vm))
+> +
+> +            vm.shutdown()
+> diff --git a/tests/qemu-iotests/tests/nbd-resize.out b/tests/qemu-iotests/tests/nbd-resize.out
+> new file mode 100644
+> index 0000000000..89eda39740
+> --- /dev/null
+> +++ b/tests/qemu-iotests/tests/nbd-resize.out
+> @@ -0,0 +1,24 @@
+> +=== Resize with reconnect-delay=10 ===
+> +Start NBD server
+> +Size before resize:
+> +1048576
+> +Kill NBD server
+> +Start NBD server
+> +{"return": {}}
+> +Size after resize:
+> +2097152
+> +Kill NBD server
+> +=== Resize with reconnect-delay=0 ===
+> +Start NBD server
+> +Size before resize:
+> +1048576
+> +Kill NBD server
+> +Start NBD server
+> +{"error": {"class": "GenericError", "desc": "Failed to reconnect NBD node"}}
+> +Size after resize:
+> +1048576
+> +Waiting until the reconnection succeeds
+> +{"return": {}}
+> +Size after retried resize:
+> +2097152
+> +Kill NBD server
+> -- 
+> 2.43.0
+> 
+
 -- 
-2.54.0
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
