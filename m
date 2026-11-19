@@ -1,42 +1,43 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AAA606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 07:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD3C606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 07:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTwpM-00076r-2G; Thu, 19 Nov 2026 02:45:04 -0500
+	id 1xTwuh-0005yL-9J; Thu, 19 Nov 2026 02:50:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1xTwoX-0006v2-E5; Thu, 19 Nov 2026 02:44:15 -0500
+ id 1xTwuD-0005lq-3a; Thu, 19 Nov 2026 02:50:06 -0500
 Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1xTwoS-0001j1-Ls; Thu, 19 Nov 2026 02:44:12 -0500
+ id 1xTwu9-0007F0-Sx; Thu, 19 Nov 2026 02:50:04 -0500
 Received: from xiaoou-ubuntu-01 (unknown [36.110.52.2])
- by APP-05 (Coremail) with SMTP id zQCowABX8LW1qP5qLIlyAQ--.23889S9;
- Thu, 19 Nov 2026 15:44:03 +0800 (CST)
+ by APP-05 (Coremail) with SMTP id zQCowABX8LW1qP5qLIlyAQ--.23889S14;
+ Thu, 19 Nov 2026 15:44:05 +0800 (CST)
 From: Molly Chen <xiaoou@iscas.ac.cn>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
  chao.liu.zevorn@gmail.com, Chao Liu <chao.liu@processmission.com>
 Cc: nutty.liu@hotmail.com, max.chou@sifive.com, xiaoou@iscas.ac.cn,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v4 07/20] target/riscv: Add packed SIMD exchange instructions
-Date: Thu, 19 Nov 2026 07:43:27 +0000
-Message-ID: <20261119074345.866125-8-xiaoou@iscas.ac.cn>
+Subject: [PATCH v4 12/20] target/riscv: Add packed SIMD Q-format
+ multiplication instructions
+Date: Thu, 19 Nov 2026 07:43:32 +0000
+Message-ID: <20261119074345.866125-13-xiaoou@iscas.ac.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261119074345.866125-1-xiaoou@iscas.ac.cn>
 References: <20261119074345.866125-1-xiaoou@iscas.ac.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowABX8LW1qP5qLIlyAQ--.23889S9
-X-Coremail-Antispam: 1UD129KBjvJXoW3Gr43tFWfWryfWry5tF47Arb_yoW7uw4kpa
- 97GFWagayUKryft3WSkr45tw13Ww4fKa1kursxKFsYva1DJF43XryUtr1akF47ZF9rXr1U
- Way0yr98AaykX3JanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: zQCowABX8LW1qP5qLIlyAQ--.23889S14
+X-Coremail-Antispam: 1UD129KBjvJXoWxXrW7Zw4UGFW7KF1DAw1fZwb_yoWrur1DpF
+ 4kG343G3y8XFWfJas3tr4Yyr13Ww4Fkw4Durs3tF1rZay5XFZxXr12qw12kF47XF9rXr1Y
+ gayjyr98Aay8t3JanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
  9KBjDU0xBIdaVrnRJUUUmm14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
  rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
  kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
@@ -78,142 +79,103 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Implement packed add-subtract cross operations.  Cover normal,
-saturating, and averaging variants for halfword and word elements.
+Implement Q-format multiplication operations.  Cover packed halfword
+and word elements, RV32 scalar forms, and rounded and non-rounded variants.
 Add the associated decode entries, translators and helpers.
 
-These instructions perform addition and subtraction using crossed
-source elements within each packed element pair.  Note that saturating
-variants clamp results to the signed element range and set vxsat when
-saturation occurs, while averaging variants shift the intermediate
-results right by one bit and do not affect vxsat.
+Note that these instructions double each signed full-width product and
+extract a result in the original element width.  Rounded variants add
+the required rounding value before extracting the result.  When both
+source elements are the minimum signed value, the Q-format product
+cannot be represented in the signed destination range, so saturate it
+to the maximum signed value and set vxsat.
 
 Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
 ---
- target/riscv/helper.h                       | 14 +++++++
- target/riscv/insn32.decode                  | 14 +++++++
- target/riscv/tcg/insn_trans/trans_rvp.c.inc | 14 +++++++
- target/riscv/tcg/psimd_helper.c             | 44 +++++++++++++++++++++
- 4 files changed, 86 insertions(+)
+ target/riscv/helper.h                       |  8 ++++++++
+ target/riscv/insn32.decode                  | 12 ++++++++++++
+ target/riscv/tcg/insn_trans/trans_rvp.c.inc |  8 ++++++++
+ target/riscv/tcg/psimd_helper.c             | 18 ++++++++++++++++++
+ 4 files changed, 46 insertions(+)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 198e2792c0..eded651d2b 100644
+index c95fb52211..a3cbc3736d 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -1536,3 +1536,17 @@ DEF_HELPER_3(sshl, i32, env, i32, i32)
- DEF_HELPER_3(sshlr, i32, env, i32, i32)
- DEF_HELPER_3(shl, i64, env, i64, i64)
- DEF_HELPER_3(shlr, i64, env, i64, i64)
+@@ -1716,3 +1716,11 @@ DEF_HELPER_4(maccsu_w11, i64, env, i64, i64, i64)
+ DEF_HELPER_4(maccu_w00, i64, env, i64, i64, i64)
+ DEF_HELPER_4(maccu_w01, i64, env, i64, i64, i64)
+ DEF_HELPER_4(maccu_w11, i64, env, i64, i64, i64)
 +
-+/* Packed SIMD - Exchange Operations */
-+DEF_HELPER_3(pas_hx, tl, env, tl, tl)
-+DEF_HELPER_3(psa_hx, tl, env, tl, tl)
-+DEF_HELPER_3(psas_hx, tl, env, tl, tl)
-+DEF_HELPER_3(pssa_hx, tl, env, tl, tl)
-+DEF_HELPER_3(paas_hx, tl, env, tl, tl)
-+DEF_HELPER_3(pasa_hx, tl, env, tl, tl)
-+DEF_HELPER_3(pas_wx, i64, env, i64, i64)
-+DEF_HELPER_3(psa_wx, i64, env, i64, i64)
-+DEF_HELPER_3(psas_wx, i64, env, i64, i64)
-+DEF_HELPER_3(pssa_wx, i64, env, i64, i64)
-+DEF_HELPER_3(paas_wx, i64, env, i64, i64)
-+DEF_HELPER_3(pasa_wx, i64, env, i64, i64)
++/* Packed SIMD - Q-Format Multiplication Operations */
++DEF_HELPER_3(pmulq_h, tl, env, tl, tl)
++DEF_HELPER_3(pmulqr_h, tl, env, tl, tl)
++DEF_HELPER_3(pmulq_w, i64, env, i64, i64)
++DEF_HELPER_3(pmulqr_w, i64, env, i64, i64)
++DEF_HELPER_3(mulq, i32, env, i32, i32)
++DEF_HELPER_3(mulqr, i32, env, i32, i32)
 diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 30ee8319ea..5c3b6195b9 100644
+index 84dcd150fc..b42ae50dd2 100644
 --- a/target/riscv/insn32.decode
 +++ b/target/riscv/insn32.decode
-@@ -1287,3 +1287,17 @@ psshlr_hs  1011100 ..... ..... 010 ..... 0011011 @r
- }
- shl        1010111 ..... ..... 010 ..... 0011011 @r
- shlr       1011111 ..... ..... 010 ..... 0011011 @r
+@@ -1534,3 +1534,15 @@ maccsu_w11      11111 11 ..... ..... 011 ..... 0111011 @r
+ maccu_w00       10101 11 ..... ..... 011 ..... 0111011 @r
+ maccu_w01       10111 11 ..... ..... 001 ..... 0111011 @r
+ maccu_w11       10111 11 ..... ..... 011 ..... 0111011 @r
 +
-+# Packed SIMD - Exchange Operations
-+pas_hx     1000000 ..... ..... 110 ..... 0111011 @r
-+psa_hx     1000010 ..... ..... 110 ..... 0111011 @r
-+psas_hx    1001000 ..... ..... 110 ..... 0111011 @r
-+pssa_hx    1001010 ..... ..... 110 ..... 0111011 @r
-+paas_hx    1001100 ..... ..... 110 ..... 0111011 @r
-+pasa_hx    1001110 ..... ..... 110 ..... 0111011 @r
-+pas_wx     1000001 ..... ..... 110 ..... 0111011 @r
-+psa_wx     1000011 ..... ..... 110 ..... 0111011 @r
-+psas_wx    1001001 ..... ..... 110 ..... 0111011 @r
-+pssa_wx    1001011 ..... ..... 110 ..... 0111011 @r
-+paas_wx    1001101 ..... ..... 110 ..... 0111011 @r
-+pasa_wx    1001111 ..... ..... 110 ..... 0111011 @r
++# Packed SIMD - Q-Format Multiplication Operations
++pmulq_h     11010 00 ..... ..... 111 ..... 0111011 @r
++pmulqr_h    11010 10 ..... ..... 111 ..... 0111011 @r
++{
++  mulq      11010 01 ..... ..... 111 ..... 0111011 @r
++  pmulq_w   11010 01 ..... ..... 111 ..... 0111011 @r
++}
++{
++  mulqr     11010 11 ..... ..... 111 ..... 0111011 @r
++  pmulqr_w  11010 11 ..... ..... 111 ..... 0111011 @r
++}
 diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-index 32b5de9f1b..c991ac37e3 100644
+index 5aaa3c6ffa..5eff803188 100644
 --- a/target/riscv/tcg/insn_trans/trans_rvp.c.inc
 +++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-@@ -650,3 +650,17 @@ GEN_SIMD_TRANS_32_VXSAT(sshl)
- GEN_SIMD_TRANS_32_VXSAT(sshlr)
- GEN_SIMD_TRANS_64(shl)
- GEN_SIMD_TRANS_64(shlr)
+@@ -846,3 +846,11 @@ GEN_SIMD_TRANS_ACC_64(maccsu_w11)
+ GEN_SIMD_TRANS_ACC_64(maccu_w00)
+ GEN_SIMD_TRANS_ACC_64(maccu_w01)
+ GEN_SIMD_TRANS_ACC_64(maccu_w11)
 +
-+/* Packed SIMD - Exchange Operations */
-+GEN_SIMD_TRANS(pas_hx)
-+GEN_SIMD_TRANS(psa_hx)
-+GEN_SIMD_TRANS_VXSAT(psas_hx)
-+GEN_SIMD_TRANS_VXSAT(pssa_hx)
-+GEN_SIMD_TRANS(paas_hx)
-+GEN_SIMD_TRANS(pasa_hx)
-+GEN_SIMD_TRANS_64(pas_wx)
-+GEN_SIMD_TRANS_64(psa_wx)
-+GEN_SIMD_TRANS_64_VXSAT(psas_wx)
-+GEN_SIMD_TRANS_64_VXSAT(pssa_wx)
-+GEN_SIMD_TRANS_64(paas_wx)
-+GEN_SIMD_TRANS_64(pasa_wx)
++/* Packed SIMD - Q-Format Multiplication Operations */
++GEN_SIMD_TRANS_VXSAT(pmulq_h)
++GEN_SIMD_TRANS_VXSAT(pmulqr_h)
++GEN_SIMD_TRANS_64_VXSAT(pmulq_w)
++GEN_SIMD_TRANS_64_VXSAT(pmulqr_w)
++GEN_SIMD_TRANS_32_VXSAT(mulq)
++GEN_SIMD_TRANS_32_VXSAT(mulqr)
 diff --git a/target/riscv/tcg/psimd_helper.c b/target/riscv/tcg/psimd_helper.c
-index 87359db208..5537a44dff 100644
+index 8995210859..e29f4438a0 100644
 --- a/target/riscv/tcg/psimd_helper.c
 +++ b/target/riscv/tcg/psimd_helper.c
-@@ -2413,3 +2413,47 @@ GEN_PSIMD_VAR_USHLR(sshlr, uint32_t, uint32_t, uint64_t,
- 
- GEN_PSIMD_VAR_SRL64(shl, PSIMD_DO_SRL64)
- GEN_PSIMD_VAR_SRL64(shlr, PSIMD_DO_RNDSRL64)
+@@ -3000,3 +3000,21 @@ GEN_PSIMD_MUL_ACC_INDEXED(maccu_w11, uint64_t, uint32_t, uint32_t,
+                           uint64_t, uint64_t, uint64_t, EXTRACT32,
+                           EXTRACT64, INSERT64, ELEMS_D, 0, 1, 1,
+                           PSIMD_MUL_U64)
 +
-+/* Cross add/subtract operations */
++/* Q-Format Multiplication Operations */
 +
-+GEN_PSIMD_XPAIR_BINOP(pas_hx, target_ulong, int16_t,
-+                      EXTRACT16, INSERT16, ELEMS_H,
-+                      PSIMD_DO_SUB, PSIMD_DO_ADD)
-+GEN_PSIMD_XPAIR_BINOP(psa_hx, target_ulong, int16_t,
-+                      EXTRACT16, INSERT16, ELEMS_H,
-+                      PSIMD_DO_ADD, PSIMD_DO_SUB)
-+
-+GEN_PSIMD_XPAIR_SAT_BINOP(psas_hx, target_ulong, int16_t, int32_t,
-+                          EXTRACT16, INSERT16, ELEMS_H,
-+                          PSIMD_DO_SUB, PSIMD_DO_ADD, signed_saturate_h)
-+GEN_PSIMD_XPAIR_SAT_BINOP(pssa_hx, target_ulong, int16_t, int32_t,
-+                          EXTRACT16, INSERT16, ELEMS_H,
-+                          PSIMD_DO_ADD, PSIMD_DO_SUB, signed_saturate_h)
-+
-+GEN_PSIMD_XPAIR_AVG_BINOP(paas_hx, target_ulong, int16_t, int32_t,
-+                          EXTRACT16, INSERT16, ELEMS_H,
-+                          PSIMD_DO_SUB, PSIMD_DO_ADD)
-+GEN_PSIMD_XPAIR_AVG_BINOP(pasa_hx, target_ulong, int16_t, int32_t,
-+                          EXTRACT16, INSERT16, ELEMS_H,
-+                          PSIMD_DO_ADD, PSIMD_DO_SUB)
-+
-+GEN_PSIMD_XPAIR_BINOP(pas_wx, uint64_t, int32_t,
-+                      EXTRACT32, INSERT32, ELEMS_W,
-+                      PSIMD_DO_SUB, PSIMD_DO_ADD)
-+GEN_PSIMD_XPAIR_BINOP(psa_wx, uint64_t, int32_t,
-+                      EXTRACT32, INSERT32, ELEMS_W,
-+                      PSIMD_DO_ADD, PSIMD_DO_SUB)
-+
-+GEN_PSIMD_XPAIR_SAT_BINOP(psas_wx, uint64_t, int32_t, int64_t,
-+                          EXTRACT32, INSERT32, ELEMS_W,
-+                          PSIMD_DO_SUB, PSIMD_DO_ADD, signed_saturate_w)
-+GEN_PSIMD_XPAIR_SAT_BINOP(pssa_wx, uint64_t, int32_t, int64_t,
-+                          EXTRACT32, INSERT32, ELEMS_W,
-+                          PSIMD_DO_ADD, PSIMD_DO_SUB, signed_saturate_w)
-+
-+GEN_PSIMD_XPAIR_AVG_BINOP(paas_wx, uint64_t, int32_t, int64_t,
-+                          EXTRACT32, INSERT32, ELEMS_W,
-+                          PSIMD_DO_SUB, PSIMD_DO_ADD)
-+GEN_PSIMD_XPAIR_AVG_BINOP(pasa_wx, uint64_t, int32_t, int64_t,
-+                          EXTRACT32, INSERT32, ELEMS_W,
-+                          PSIMD_DO_ADD, PSIMD_DO_SUB)
++GEN_PSIMD_QMUL(pmulq_h, target_ulong, int16_t, int32_t, uint16_t,
++               EXTRACT16, INSERT16, ELEMS_H, 15, 0, INT16_MIN, INT16_MAX)
++GEN_PSIMD_QMUL(pmulqr_h, target_ulong, int16_t, int32_t, uint16_t,
++               EXTRACT16, INSERT16, ELEMS_H, 15, 1 << 14, INT16_MIN,
++               INT16_MAX)
++GEN_PSIMD_QMUL(pmulq_w, uint64_t, int32_t, int64_t, uint32_t,
++               EXTRACT32, INSERT32, ELEMS_W, 31, 0, INT32_MIN, INT32_MAX)
++GEN_PSIMD_QMUL(pmulqr_w, uint64_t, int32_t, int64_t, uint32_t,
++               EXTRACT32, INSERT32, ELEMS_W, 31, 1LL << 30, INT32_MIN,
++               INT32_MAX)
++GEN_PSIMD_QMUL(mulq, uint32_t, int32_t, int64_t, uint32_t,
++               EXTRACT32, INSERT32, ELEMS_W, 31, 0, INT32_MIN, INT32_MAX)
++GEN_PSIMD_QMUL(mulqr, uint32_t, int32_t, int64_t, uint32_t,
++               EXTRACT32, INSERT32, ELEMS_W, 31, 1LL << 30, INT32_MIN,
++               INT32_MAX)
 -- 
 2.53.0
 
