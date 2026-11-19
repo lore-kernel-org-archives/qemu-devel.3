@@ -1,111 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4D4606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FE5606A325
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=E8D+nGVN
+	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=BK/WP96t;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DJKZhwQ/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU0NW-0004N2-V2; Thu, 19 Nov 2026 06:32:34 -0500
+	id 1xU0Qr-0007TE-I3; Thu, 19 Nov 2026 06:36:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1xU0NV-0004MX-8M; Thu, 19 Nov 2026 06:32:33 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xU0Qn-0007Ru-ME
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:35:57 -0500
+Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1xU0NT-0000FV-At; Thu, 19 Nov 2026 06:32:33 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJAuq1w2746734; Thu, 19 Nov 2026 11:32:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=yKxGJr3lcZzVxVis4
- aRvBAGB2yOV8pPdXGEQe0qCUJw=; b=E8D+nGVNRXn2T0eAAUhbR28YpsdgmF8GI
- e2FsOiBQTPhzyDA/POHlbmjMqe4ycHa9AES7S+uy9onbs3tFpStq77XrhGVB8rGY
- KqtGZuoFfWEli90/Z+TR3C8Q7pDc9m4Tr4nNdBkltgfHk9eeDF9S02CPgwUxwDQc
- j5mCCSzRxeK0sa9CRdvBJzjMnskaiCMotVkWA0l12zXf/Jw98GTILf8AtqbnOMVs
- jtJhLZbFEysFAznAYEL3bxjdODu1iQAEceZgu47tjvL8XMsOhVHqrTCMkC7LnzrO
- 6hspffHC3z0YkmTpbeAPi3unehT4ro9IadVhBDAIKB6LyyYzPVv8A==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105w0bju-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 11:32:27 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJB5BnX2447672; Thu, 19 Nov 2026 11:32:26 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j1v9x992v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 11:32:26 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AJBWMTo33358132
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 19 Nov 2026 11:32:22 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE6E820040;
- Thu, 19 Nov 2026 11:32:22 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24A322004F;
- Thu, 19 Nov 2026 11:32:21 +0000 (GMT)
-Received: from Mac.com (unknown [9.43.71.183])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 19 Nov 2026 11:32:19 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Chinmay Rath <rathc@linux.ibm.com>, qemu-stable@nongnu.org,
- Lazymio <mio@lazym.io>, Gautam Menghani <gautam@linux.ibm.com>
-Subject: [PULL 1/6] hw/scsi: validate IU buffer bounds in
- vscsi_preprocess_desc()
-Date: Thu, 19 Nov 2026 17:02:09 +0530
-Message-ID: <20261119113207.79328-9-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20261119113207.79328-8-harshpb@linux.ibm.com>
-References: <20261119113207.79328-8-harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xU0Qf-0001N7-7S
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:35:51 -0500
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id AB6CB1400186
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 06:35:47 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Thu, 19 Nov 2026 06:35:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
+ cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1795088147; x=
+ 1795174547; bh=gvCJxJUkIAGMkNV0ScjyOqAgWpl2WoX6E+aiAFOBLJM=; b=B
+ K/WP96teml8/YrLVRyFFawDTkIWX3QZ2MXq91kRED83OFln87+yxA2pb6jmmKZeC
+ 5EaqzkqsK57tsDDHhBhky+wykvFhIbUJ1kP9H9pf3o3L1oeIBLW7uu99Q8MODsmm
+ l5adBHlmcRTYVQXoaG4PF1LXWYvLS7HW4CwSD4a1fFlpyoj6dDM7lPSJYwwlkbIP
+ SC1Zh2K4XMJZuIqwdbDEcLVmvQH78weKt8OrZnTd5/k98y8IAlCjNj02f8xfhjns
+ FLIVZ/q8Ez3hkJ/EdSzw1XqeT1lgXVQw9SzqLWDbmVPCH21LtCMH3GDTr6nwtbuI
+ bkGjpzTlqDG426AvifhbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:mime-version:references:reply-to
+ :subject:subject:to:to:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; t=1795088147; x=1795174547; bh=gvCJxJUkIAGMk
+ NV0ScjyOqAgWpl2WoX6E+aiAFOBLJM=; b=DJKZhwQ/hWBY2WxfErXpgVBZ84oBa
+ nbMt+jLeHuUq/b6KwFy6Dn6/0ljKgteES1cgElbvydDJab8cCk9/2y2aDqiWnR6A
+ MRfnMylFowivyjkg6zPrGAi1B5SYTf860VX4ZF6XRxAsWBm9mdTBtwm83yFzhIio
+ BAvy9rGj9/LOJZfad7hE8qTzhBjpcHQc5H851umrFXBfk5QUrzWyFU6v/+TEm4Mg
+ zo5kiern9XN485A5XRhroVJ8//KzAnsB4OILCx15f2Phn2Pg8Np4OPrUIn2w/XdT
+ tBH7FNv9CAkq4BZ3CX829ek3WvO3ob+Bbi3I0tbCk5vbmdPXwRiOb0Z4Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+ repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+ action=sign d=defmacro.it a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795088147; d=defmacro.it;
+ mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
+ rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
+ s=fm3:rsa-sha256:CPl9DfVkGIpTeYxws1vjSGePrhO1IA91zEE0pyDN6nevmxX
+ mplB8MoR133CX5bWivmBTH/vnnIFP6FYvlQAjd7PHmcKN4RHg3o7n8m3EvFRH6Vm
+ vHeOiKkGwR+GT4f00jJnX+K0RNuXo3n39lFymFW8nzEuZDL1/3fnUDf41sw1F0go
+ 0VLqMsr0AutMddoKhNT8QicAes+wC/VFc79q4lLwNAFiZjGAwTEjRLvGEXSyLFLX
+ gwMDTwMB65T/M6SNs1XCmQc4Cj2UMzaDXj8367Nio+UdpxPHSxVyuotz/6YNUiEt
+ vu9PNo1A8Mf20Qkov64N4qfoYkUmNRzPqxDBqkQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+ repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+ action=mi-m=1; hc=12;
+ hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+ mime-version,mime-version,references,subject,to;
+Message-Instance: m=1;
+ h=sha256:l3uATaI8hozZdedRtPCiLB8+0iA17XkoN15ws9L39rQ=:e427LcqOP/kxsEoY4gVrawdyg0+PZGcr0PdTrG59uwU=;
+X-ME-Sender: <xms:E9_-aku4PQlqAfU3PULJrNCMkJffaJ5i35DOvVXxUY08zv85mc35_A>
+ <xme:E9_-aqYz-1V0dXyVGnBi1KkTiLgOxJ_pe0DzGzk9N97qc4NQ1rqdX6gMsoGsu4OcS
+ HmdGFfxCdbcGucJCi-nJl8qsAy2XjHt8Q_28G2AMnt_qMK2fjqItBNm>
+X-ME-Received: <xmr:E9_-arVpnTOCuVCf9AW_k6cZTmR0mcN5G_YqQ1ngWy2PczWGzST6gw0SsgZpmGRsd-g1TeiF1Z8meGRDqmV71Cz4cw>
+X-ME-Proxy-Cause: dmFkZTEQhxo9ViB0OCTboLOlvqVMtsCUzFkRHIeWnYdXLzJBJCajDab5jRBJ0JXNsH+1c1
+ lgpAipp/0X/VviB8ICMZbf4ifFrtM2JeOdbMkcaBULfw5VOUPShGt9Lqf9jcmDdck4hrE0
+ tg/8NcuiJFUbfEOS4a5EYbEPMmoPzDIUQL/lnos5TQADkoiK7/zrvi3Nw9sBZgJzWDVux8
+ y0+C/XiHaChegMHGDiPnB5EfJXkOLAVYPhu3HRqvDx8W4BbamRi0c3G+Bed9+PUiKqlUo4
+ 3jUsQXMib9TTpSza2WX0idg9pc16c+I4pEbfoF0H7h55MzKyHleL2pjFsrv8Y2xwTZkJF4
+ LC2qR+ltgNQLxgvZrnj4QgzgJRBuzjKvjTOo617Vja4q5pNsa+dihWSP7rfYoBW3+037se
+ p8/k2QuqgiacG0dQr1TtAQfQnKOue5Mibz79QMfzi+Bw9jgueLLDBpPuLrki9XVCHwVRf9
+ YJIeGGZSYDL4VEay/aisjsPPELuTS5wNIuYZmdpDBE3ylYKvLOhV68hjYlNrszCZovb0u9
+ P2oC+h/RFIeMa6T4lEnb6c/2RKkDfVcWNnDPPP0pHqfnwSZNfGi7fUNjOp5lFZ0fESAvaK
+ Ztp2ko5vsgesSnBZIqnB4bGK1xSRfY48nqAaSWduP39NW00/ZYbyyHGmG4pQ
+X-ME-Proxy: <xmx:E9_-anThS8d579YNFKxA_iYvnsq8JQjAbLERI2LPY-AKn4I8ALIWWg>
+ <xmx:E9_-ahORkL84nrw2TZKsG0gPruCnF5j__6CvOW7LCinn0tE5VvGQXA>
+ <xmx:E9_-atRGVo56-dN3FjzszDCLV9FdmNOyKxETT04QT5rUrG_bWqIIyQ>
+ <xmx:E9_-anhvRKgV2N-AzSbv1ugc1XAwFMYifowtknaKt5PV3atfevV04A>
+ <xmx:E9_-ahwx8FCV1XsqKF60YlXeTd2lnG6Ufba-jIl21egwoICW0ldwPY63>
+Feedback-ID: ic0014905:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Nov 2026 06:35:45 -0500 (EST)
+Date: Thu, 19 Nov 2026 11:35:29 +0000
+From: Jesper Wendel Devantier <foss@defmacro.it>
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ qemu-block@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH 3/3] hw/nvme: advance zone write pointer only once the
+ write is committed
+Message-ID: <20261119123529.2-foss@defmacro.it>
+In-Reply-To: <20261118-fix-4520-v1-3-dfa182213376@samsung.com>
+References: <20261118-fix-4520-v1-0-dfa182213376@samsung.com>
+ <20261118-fix-4520-v1-3-dfa182213376@samsung.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Qc9XNJanxU-o2_kWqaa2aFhG-ip_BndL
-X-Authority-Analysis: v=2.4 cv=Z8x5j3RA c=1 sm=1 tr=0 ts=6afede4b cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=zJRp6_cAMcgA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=gtT2MXwoUA80MS-wKdUA:9
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: Qc9XNJanxU-o2_kWqaa2aFhG-ip_BndL
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA0NSBTYWx0ZWRfXziXAFJ9tiA+6
- +nNAn1993mJx/xr6bl/ENDefGoTKzzDiOYUhgLbLCVWURhrwJpTzR59wrphUVEbCCfUZheHnRVC
- JsZWR5eWTONXrhfyHgTPOmUT/c1OhLM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA0NSBTYWx0ZWRfX6O6vxuos3nCe
- AUyIclZDQUqv86iG6TG3XV8elj9KQhCo5NJGd3UPbsW8lwhPgNrTrsS4iYzuzkJ9y0+UgbW5KCR
- Xbe+XMnBrfXp1lcKdaHq+6KpIdqwEpDx2vA1rDMs8ADyBoTYe29w9I8/buDX59JVjMKeBKFVizp
- hVopprZosbD2Sf94SDr15FhzU2cVCVGURf9d7NEyXaVuQ6l63EOJnLEdk02N7UlWjl7z5QHHra6
- 5V1uauhZNiC6tEzAhmt3PRhBnfoYZDpupx4Nv7OmsDkUpDMlJvoXBOWNVf1YHJnGp9AfqCnrDOY
- Ye4HnawA3FyrmDQRdnKHigvrh2bnc4dFb9BAI++H1kvOf7wmOgQYKDNmYEVCW2SaDA+0MbdOtZg
- 8GEZ39EAeZRQFf7W/lUxokrTIOsy49q8tXomgQ0QEBlur6lZ7radMplXaOgqZYy0Am8nrwzqOKv
- k4FkMePehPV6ybytFxw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-19_03,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- adultscore=0 bulkscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611190045
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+X-Mailer: neolore
+X-OriginalDate: 2026-11-19T12:35:29+01:00
+Received-SPF: pass client-ip=103.168.172.157; envelope-from=foss@defmacro.it;
+ helo=fhigh-a6-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,128 +125,92 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Chinmay Rath <rathc@linux.ibm.com>
 
-cdb_offset and local_desc values are dependent on the guest. If the value
-is large enough, it can lead to an out-of-bounds read in vscsi_fetch_desc().
 
-Add an 'avail' constant in vscsi_preprocess_desc() representing the number of
-bytes available in srp_cmd.add_data[] and use it to prevent out-of-bound reads.
+On Wed, 18 Nov 2026 13:45:36 +0100, Klaus Jensen <its@irrelevant.dk> wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
+>
+> nvme_do_write stages the updated zone write pointer before data is
+> mapped. If that fails, the write pointer update is already staged and
+> subsequent writes will be rejected if attempted at the original
+> position.
+>
+> Move the staging down.
+>
+> Cc: qemu-stable@nongnu.org
+> Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+> Fixes: 975b64665048 ("hw/block/nvme: refactor zone resource management")
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> ---
+>  hw/nvme/ctrl.c | 19 +++++++++++++------
+>  1 file changed, 13 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 35e2c57851ae..5755aad1fa72 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -3800,7 +3800,7 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
+>      uint64_t data_size = nvme_l2b(ns, nlb);
+>      uint64_t mapped_size = data_size;
+>      uint64_t data_offset;
+> -    NvmeZone *zone;
+> +    NvmeZone *zone = NULL;
+>      NvmeZonedResult *res = (NvmeZonedResult *)&req->cqe;
+>      BlockBackend *blk = ns->blkconf.blk;
+>      uint16_t status;
+> @@ -3893,10 +3893,6 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
+>          if (status) {
+>              goto invalid;
+>          }
+> -
+> -        if (!(zone->d.za & NVME_ZA_ZRWA_VALID)) {
+> -            zone->w_ptr += nlb;
+> -        }
+>      } else if (ns->endgrp && ns->endgrp->fdp.enabled) {
+>          nvme_do_write_fdp(n, req, slba, nlb);
+>      }
+> @@ -3904,7 +3900,13 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
+>      data_offset = nvme_l2b(ns, slba);
+>  
+>      if (NVME_ID_NS_DPS_TYPE(ns->id_ns.dps)) {
+> -        return nvme_dif_rw(n, req);
+> +        status = nvme_dif_rw(n, req);
+> +
+> +        if (status != NVME_NO_COMPLETE) {
+> +            return status;
+> +        }
+> +
+> +        goto out;
+>      }
+>  
+>      if (!wrz) {
+> @@ -3922,6 +3924,11 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
+>                                             req);
+>      }
+>  
+> +out:
+> +    if (ns->params.zoned && !(zone->d.za & NVME_ZA_ZRWA_VALID)) {
+> +        zone->w_ptr += nlb;
+> +    }
+> +
+>      return NVME_NO_COMPLETE;
+>  
+>  invalid:
+>
+> -- 
+> 2.53.0
+>
+>
+>
 
-Make all callers of vscsi_preprocess_desc() check its return value and
-handle failure accordingly.
-
-Cc: qemu-stable@nongnu.org
-Fixes: CVE-2026-132127
-Fixes: 8ca8a17c9a16 (pseries: rework PAPR virtual SCSI)
-Reported-by: Lazymio <mio@lazym.io>
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4162
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260819095855.115823-1-rathc@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- hw/scsi/spapr_vscsi.c | 43 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 5 deletions(-)
-
-diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-index eedae00273..1283590844 100644
---- a/hw/scsi/spapr_vscsi.c
-+++ b/hw/scsi/spapr_vscsi.c
-@@ -484,6 +484,8 @@ static int data_out_desc_size(struct srp_cmd *cmd)
- static int vscsi_preprocess_desc(vscsi_req *req)
- {
-     struct srp_cmd *cmd = &req_iu(req)->srp.cmd;
-+    /* bytes available for descriptors behind srp_cmd.add_data */
-+    const unsigned avail = SRP_MAX_IU_LEN - offsetof(struct srp_cmd, add_data);
- 
-     req->cdb_offset = cmd->add_cdb_len & ~3;
- 
-@@ -498,16 +500,35 @@ static int vscsi_preprocess_desc(vscsi_req *req)
-     case SRP_NO_DATA_DESC:
-         break;
-     case SRP_DATA_DESC_DIRECT:
-+        if (req->cdb_offset + sizeof(struct srp_direct_buf) > avail) {
-+            fprintf(stderr,
-+                    "vscsi_preprocess_desc: direct desc out of bounds\n");
-+            return -1;
-+        }
-         req->total_desc = req->local_desc = 1;
-         break;
-     case SRP_DATA_DESC_INDIRECT: {
--        struct srp_indirect_buf *ind_tmp = (struct srp_indirect_buf *)
--                (cmd->add_data + req->cdb_offset);
-+        struct srp_indirect_buf *ind_tmp;
-+
-+        if (req->cdb_offset + sizeof(struct srp_indirect_buf) > avail) {
-+            fprintf(stderr,
-+                    "vscsi_preprocess_desc: indirect desc out of bounds\n");
-+            return -1;
-+        }
-+        ind_tmp = (struct srp_indirect_buf *)(cmd->add_data + req->cdb_offset);
- 
-         req->total_desc = be32_to_cpu(ind_tmp->table_desc.len) /
-                           sizeof(struct srp_direct_buf);
-         req->local_desc = req->writing ? cmd->data_out_desc_cnt :
-                           cmd->data_in_desc_cnt;
-+
-+        /* desc_list[] entries must also fit inside the IU buffer */
-+        if (req->local_desc * sizeof(struct srp_direct_buf) >
-+            avail - req->cdb_offset - sizeof(struct srp_indirect_buf)) {
-+            fprintf(stderr,
-+                    "vscsi_preprocess_desc: local_desc out of bounds\n");
-+            return -1;
-+        }
-         break;
-     }
-     default:
-@@ -725,7 +746,11 @@ static void vscsi_inquiry_no_target(VSCSIState *s, vscsi_req *req)
-     memcpy(&resp_data[8], "QEMU    ", 8);
- 
-     req->writing = 0;
--    vscsi_preprocess_desc(req);
-+    if (vscsi_preprocess_desc(req) < 0) {
-+        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-+        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
-+        return;
-+    }
-     rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
-     if (rc < 0) {
-         vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-@@ -775,7 +800,12 @@ static void vscsi_report_luns(VSCSIState *s, vscsi_req *req)
-         i += 8;
-     }
- 
--    vscsi_preprocess_desc(req);
-+    if (vscsi_preprocess_desc(req) < 0) {
-+        g_free(resp_data);
-+        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-+        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
-+        return;
-+    }
-     rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
-     g_free(resp_data);
-     if (rc < 0) {
-@@ -823,7 +853,10 @@ static int vscsi_queue_cmd(VSCSIState *s, vscsi_req *req)
-         req->writing = (n < 1);
- 
-         /* Preprocess RDMA descriptors */
--        vscsi_preprocess_desc(req);
-+        if (vscsi_preprocess_desc(req) < 0) {
-+            scsi_req_cancel(req->sreq);
-+            return 1;
-+        }
- 
-         /* Get transfer direction and initiate transfer */
-         if (n > 0) {
--- 
-2.52.0
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 
 
