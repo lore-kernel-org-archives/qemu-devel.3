@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA69D606A324
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8F2606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU1zZ-0006bg-Bn; Thu, 19 Nov 2026 08:15:57 -0500
+	id 1xU1zp-0006fo-8k; Thu, 19 Nov 2026 08:16:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zX-0006Za-1D; Thu, 19 Nov 2026 08:15:55 -0500
-Received: from mxct.zte.com.cn ([183.62.165.209])
+ id 1xU1zX-0006Zf-1K; Thu, 19 Nov 2026 08:15:55 -0500
+Received: from mxhk.zte.com.cn ([160.30.148.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zT-0005ec-4p; Thu, 19 Nov 2026 08:15:54 -0500
+ id 1xU1zS-0005bl-Qg; Thu, 19 Nov 2026 08:15:54 -0500
 Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4jVf941cGkz52RnX;
- Thu, 19 Nov 2026 21:15:36 +0800 (CST)
-Received: from szxlzmapp03.zte.com.cn ([10.5.231.207])
- by mse-fl1.zte.com.cn with SMTP id 6AJDFWZj080018;
- Thu, 19 Nov 2026 21:15:32 +0800 (+08)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jVf9F0Kqgz8Xrr9;
+ Thu, 19 Nov 2026 21:15:45 +0800 (CST)
+Received: from szxlzmapp04.zte.com.cn ([10.5.231.166])
+ by mse-fl1.zte.com.cn with SMTP id 6AJDFbpN080063;
+ Thu, 19 Nov 2026 21:15:37 +0800 (+08)
  (envelope-from gong.shuai@sanechips.com.cn)
 Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:35 +0800
-X-Zmail-TransId: 3e816afef66e02f-55673
+ by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:40 +0800
+X-Zmail-TransId: 3e816afef67b02f-55707
 X-Zmail-LocalSMTP: 1
 X-Zmail-RealSender: gong.shuai@sanechips.com.cn
 From: Gong Shuai <gong.shuai@sanechips.com.cn>
@@ -43,29 +43,31 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Wu Fei <wu.fei9@sanechips.com.cn>,
  Qingye Zhao <zhao.qingye@sanechips.com.cn>,
  Gong Shuai <gong.shuai@sanechips.com.cn>
-Subject: [RFC PATCH v3 00/15] hw/riscv: Add accelerated (nested) translation
- support to the RISC-V IOMMU
-Date: Thu, 19 Nov 2026 21:15:09 +0800
-Message-ID: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v3 08/15] hw/riscv/riscv-iommu-accel: Restrict accelerated
+ IOMMU to vfio-pci endpoints with iommufd
+Date: Thu, 19 Nov 2026 21:15:17 +0800
+Message-ID: <20261119131524.395861-9-gong.shuai@sanechips.com.cn>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
+References: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 6AJDFWZj080018
+X-MAIL: mse-fl1.zte.com.cn 6AJDFbpN080063
 X-TLS: YES
 X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 19 Nov 2026 21:15:36 +0800
+X-SOURCE-IP: 10.5.228.132 unknown Thu, 19 Nov 2026 21:15:45 +0800
 X-CLEAN: YES
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AFEF678.000/4jVf941cGkz52RnX
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Fangmail-MID-QID: 6AFEF681.000/4jVf9F0Kqgz8Xrr9
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,139 +81,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-QEMU's RISC-V IOMMU model currently has no way to offload guest
-stage 1 translation to a physical IOMMU. For guests with assigned PCI
-devices, QEMU must handle the virtual IOMMU configuration itself
-instead of allowing hardware to walk the guest's device contexts and
-page tables. This leaves the nested translation support of RISC-V
-hardware unused.
+From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-Add an "accel" mode to the RISC-V IOMMU that connects the virtual
-IOMMU to the physical IOMMU through iommufd. The guest continues to
-manage its own device contexts and stage 1 page tables, while the host
-retains control of stage 2 translation. QEMU supplies the device
-contexts and forwards cache invalidations through iommufd. The physical
-IOMMU can then perform both stages of DMA translation for assigned
-devices.
+The accelerated mode is only meaningful for devices that can use the
+host IOMMU in nested mode (S1+S2). Following the ARM SMMUv3 accel
+device, restrict it to vfio-pci endpoints using the iommufd backend,
+and to PCIe bridges/root ports so endpoints can sit downstream.
+vfio-pci endpoints get the shared system address space so the VFIO
+core builds the stage-2 mappings for the nesting parent HWPT; all
+other devices get the IOMMU address space.
 
-This allows the guest to keep managing its own DMA mappings while
-hardware performs nested translation for assigned devices. The design
-follows the existing ARM SMMUv3 accelerated vIOMMU support. We are
-posting it as an RFC to collect feedback on the design and its kernel
-uAPI dependency.
+Unlike ARM, where the SMMUv3 is a system device, the RISC-V IOMMU
+can also be exposed as a PCI device. It must stay usable in
+accelerated mode, so it is exempted from the restrictions and its
+address space lookup bypasses the IOMMU, returning the target
+address space as the default path does.
 
-Patch organization
+Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
+Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
+---
+ hw/riscv/riscv-iommu-accel.c | 90 +++++++++++++++++++++++++++++++++++-
+ hw/riscv/riscv-iommu.c       |  5 --
+ hw/riscv/riscv-iommu.h       |  6 ++-
+ 3 files changed, 94 insertions(+), 7 deletions(-)
 
-Patch 1 temporarily imports the RISC-V IOMMU iommufd definitions
-needed by this series. A regular header update can replace this import
-after the kernel uAPI is merged.
-
-Patches 2 to 5 prepare the virt machine and the existing RISC-V IOMMU
-code for an alternate accelerated implementation.
-
-Patches 6 to 14 add that implementation. They create the iommufd
-objects, manage host page table attachments, handle device context
-updates and invalidations, and validate host capabilities. Patch 15
-exposes the accel property and blocks migration when it is enabled.
-
-Testing
-
-The host is a RISC-V machine whose physical IOMMU is provided by an
-outer QEMU riscv-iommu model, enabled with the iommu-sys machine
-property. An NVMe controller under it is bound to vfio-pci and passed
-through to the guest. For simplicity the guest runs the same kernel as
-the host, and inside the guest it mainly uses the normal IOMMU driver
-and the NVMe driver.
-
-    -object iommufd,id=iommufd0
-    -device riscv-iommu-pci,addr=1.0,s-stage=on,g-stage=off,accel=on
-    -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0
-
-Add iommu.passthrough=0 iommu.strict=1 to the guest command line so the
-guest installs and uses the vIOMMU. The guest's riscv-iommu driver then
-probes the vIOMMU, builds its stage 1 tables and programs device
-contexts. I/O on the passed through NVMe goes through the combined
-stage 1 and stage 2 walk on the physical IOMMU, and device MSIs reach
-the vCPU without host software in the data path. Correctness was
-checked by running fio against the passed through disk with
-verification enabled, including under load.
-
-Known limitations
-
-With accel=on, the guest controls stage 1 translation while the host
-owns stage 2. Only vfio-pci endpoints using the iommufd backend are
-supported, and emulated endpoints are rejected because supporting them
-would mean owning IOTLB invalidation in QEMU again. MSI remapping stays
-with the host IOMMU, so the guest sees the base device context format.
-There is no ATS or PRI support and no process_id or PDT support.
-Migration is blocked while accel=on because the host vIOMMU and HWPT
-state cannot be migrated. One accelerated IOMMU instance per VM is
-assumed for now.
-
-The series is also available from:
-https://github.com/leaprise/qemu/tree/riscv/iommu-nested-rfc-v3
-
-
-Changes in v3:
-- Rebased the series on master at 08c9bbb825
-- Reattach every device to the pre-allocated abort or bypass HWPT
-  selected by DDTP mode and re-apply the mode on every accepted DDTP
-  change (Tan Chi's suggestions).
-- Imported the RISC-V IOMMU uAPI definitions revised during review
-  and adapted QEMU accordingly.
-- Link to v2:
-  https://lore.kernel.org/qemu-devel/20261029054751.563493-1-gong.shuai@sanechips.com.cn/
-
-Changes in v2:
-There are no functional changes in this version.
-
-- Rebased the series on master at 73294d096cc
-- Imported the RISC-V IOMMU uAPI definitions revised during review
-  and adapted QEMU accordingly.
-- Link to v1:
-  https://lore.kernel.org/qemu-devel/202610140811.69E8BqaU098670@mse-fl2.zte.com.cn/
-
-
-Gong Shuai (6):
-  linux-headers: Update iommufd.h header for RISC-V IOMMU nested
-    translation
-  hw/riscv/riscv-iommu: Expose RISCVIOMMUSpace and split its helpers
-  hw/riscv/riscv-iommu: Split device context fetch from cache lookup
-  hw/riscv/riscv-iommu-accel: Add nested vDC install/uninstall support
-  hw/riscv/riscv-iommu-accel: Apply the DDTP mode to every device
-  hw/riscv/riscv-iommu-accel: Get host RISC-V IOMMU hw info and validate
-
-Wu Fei (9):
-  hw/riscv/Kconfig: Enable IOMMUFD on RISC-V virt machine
-  hw/riscv/riscv-iommu: Allow PCI IOMMU ops to be overridden
-  hw/riscv/riscv-iommu-accel: Introduce RISC-V IOMMU accel device
-  hw/riscv/riscv-iommu-accel: Initialize shared system address space
-  hw/riscv/riscv-iommu-accel: Restrict accelerated IOMMU to vfio-pci
-    endpoints with iommufd
-  hw/riscv/riscv-iommu-accel: Implement get_viommu_flags() callback
-  hw/riscv/riscv-iommu-accel: Add set/unset_iommu_device callback
-  hw/riscv/riscv-iommu-accel: Add support to issue invalidation cmd to
-    host
-  hw/riscv/riscv-iommu-accel: Add accel property for iommu device
-
- hw/riscv/Kconfig              |   6 +
- hw/riscv/meson.build          |   1 +
- hw/riscv/riscv-iommu-accel.c  | 753 ++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu-accel.h  |  87 ++++
- hw/riscv/riscv-iommu.c        | 224 +++++++---
- hw/riscv/riscv-iommu.h        |  36 ++
- hw/riscv/trace-events         |   6 +
- linux-headers/linux/iommufd.h |  84 ++++
- 8 files changed, 1140 insertions(+), 57 deletions(-)
- create mode 100644 hw/riscv/riscv-iommu-accel.c
- create mode 100644 hw/riscv/riscv-iommu-accel.h
-
+diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
+index a843cf9d01..7bb725d957 100644
+--- a/hw/riscv/riscv-iommu-accel.c
++++ b/hw/riscv/riscv-iommu-accel.c
+@@ -5,6 +5,11 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
++
++#include "hw/pci/pci_bridge.h"
++#include "hw/pci-host/gpex.h"
++#include "hw/vfio/pci.h"
+ 
+ #include "riscv-iommu.h"
+ #include "riscv-iommu-accel.h"
+@@ -36,18 +41,101 @@ static RISCVIOMMUAccelDevice *riscv_iommu_accel_get_dev(RISCVIOMMUState *s,
+     return accel_dev;
+ }
+ 
++/*
++ * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
++ * endpoints can sit downstream, and the RISC-V IOMMU PCI device
++ * itself. Unlike ARM, the RISC-V IOMMU can be exposed as a PCI device;
++ * it must stay usable in accelerated mode, but it is never translated
++ * and is handed its target address space directly.
++ * Accelerated IOMMU requires a vfio-pci endpoint using the iommufd
++ * backend; all other device types are rejected. This avoids supporting
++ * emulated endpoints, which would complicate IOTLB invalidation and
++ * hurt performance.
++ */
++static bool riscv_iommu_accel_pdev_allowed(PCIDevice *pdev, bool *vfio_pci)
++{
++    if (object_dynamic_cast(OBJECT(pdev), TYPE_PCI_BRIDGE) ||
++        object_dynamic_cast(OBJECT(pdev), TYPE_PXB_PCIE_DEV) ||
++        object_dynamic_cast(OBJECT(pdev), TYPE_GPEX_ROOT_DEVICE) ||
++        object_dynamic_cast(OBJECT(pdev), TYPE_RISCV_IOMMU_PCI)) {
++        return true;
++    } else if ((object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI))) {
++        *vfio_pci = true;
++        if (object_property_get_link(OBJECT(pdev), "iommufd", NULL)) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static bool riscv_iommu_accel_supports_as(PCIBus *bus, void *opaque, int devfn,
++                                          Error **errp)
++{
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
++    bool vfio_pci = false;
++
++    if (pdev && !riscv_iommu_accel_pdev_allowed(pdev, &vfio_pci)) {
++        if (vfio_pci) {
++            error_setg(errp, "vfio-pci endpoint devices without an iommufd "
++                       "backend not allowed when using riscv_iommu accel=on");
++        } else {
++            error_setg(errp, "Emulated endpoint devices are not allowed when "
++                       "using riscv_iommu accel=on");
++        }
++        return false;
++    }
++    return true;
++}
++
+ static AddressSpace *riscv_iommu_accel_find_as(PCIBus *bus, void *opaque,
+                                                int devfn)
+ {
+     RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
++
++    /*
++     * The riscv-iommu-pci itself is not a translated endpoint; hand out its
++     * target address space as the default path does.
++     */
++    if (pdev && pci_is_iommu(pdev)) {
++        return s->target_as;
++    }
+ 
+     RISCVIOMMUAccelDevice *accel_dev = riscv_iommu_accel_get_dev(s, bus, devfn);
+     RISCVIOMMUSpace *as = &accel_dev->as;
+ 
+-    return &as->iova_as;
++    bool vfio_pci = false;
++
++    if (pdev && !riscv_iommu_accel_pdev_allowed(pdev, &vfio_pci)) {
++        /* Should never be here: supports_address_space() filters these out */
++        g_assert_not_reached();
++    }
++
++    /*
++     * In the accelerated mode, a vfio-pci device attached via the iommufd
++     * backend must remain in the system address space. Such a device is
++     * always translated by its physical IOMMU (using either stage-2-only
++     * or nested S1+S2 translation), where the parent stage-2 page table
++     * is allocated by the VFIO core to back the system address space.
++     *
++     * Return the shared_as_sysmem aliased to the global system memory in
++     * this case. Sharing a single system address space also lets devices
++     * behind different accelerated IOMMU instances in the same VM reuse a
++     * single nesting parent HWPT in the VFIO core.
++     *
++     * For the remaining allowed devices, such as PCIe root ports and
++     * bridges, which use the normal emulated translation path and software
++     * IOTLBs, return the IOMMU address space.
++     */
++    if (vfio_pci) {
++        return shared_as_sysmem;
++    } else {
++        return &as->iova_as;
++    }
+ }
+ 
+ static const PCIIOMMUOps riscv_iommu_accel_ops = {
++    .supports_address_space = riscv_iommu_accel_supports_as,
+     .get_address_space = riscv_iommu_accel_find_as,
+ };
+ 
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 762691c8ed..fbc7f72cb6 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2973,11 +2973,6 @@ static int riscv_iommu_memory_region_notify(
+     return 0;
+ }
+ 
+-static inline bool pci_is_iommu(PCIDevice *pdev)
+-{
+-    return pci_get_word(pdev->config + PCI_CLASS_DEVICE) == 0x0806;
+-}
+-
+ static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
+ {
+     RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 0bc096ba60..92eeb18386 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -24,7 +24,7 @@
+ #include "system/dma.h"
+ #include "hw/riscv/iommu.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
+-#include "hw/pci/pci.h"
++#include "hw/pci/pci_device.h"
+ 
+ typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
+ 
+@@ -151,6 +151,10 @@ int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, unsigned devid,
+                           unsigned process_id, RISCVIOMMUContext *ctx);
+ 
+ /* private helpers */
++static inline bool pci_is_iommu(PCIDevice *pdev)
++{
++    return pci_get_word(pdev->config + PCI_CLASS_DEVICE) == 0x0806;
++}
+ 
+ /* Register helper functions */
+ static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
 -- 
 2.53.0
 
