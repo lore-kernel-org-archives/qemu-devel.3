@@ -1,99 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF8A606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 16:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F755606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 16:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xPQvgBG1
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tmL6/ZkI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU5JY-0000PB-U1; Thu, 19 Nov 2026 11:48:48 -0500
+	id 1xU5RF-0001bB-KR; Thu, 19 Nov 2026 11:56:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU5JX-0000Om-0p
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 11:48:47 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1xU5QP-0001WG-9y
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 11:55:56 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xU5JV-0004Tn-6j
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 11:48:46 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-8b4e18369c8so17248487b3.2
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 08:48:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795106924; cv=none;
- d=google.com; s=arc-20260327;
- b=oYQhFxO2sdHBnnSoClCGIls65THauU6f6ew9RuNg/Y/dUIUV2jkJFVTKDMg0Zkefjd
- 3R7lxzSrOMDRTg0V7oI3GbvZk1034Rw3mbYODkn0vnI9+kT8c+Gae5TMYjGYXmw8XNAl
- d3GGWkyKbv4T8avK0re4JlAvKI6C6e7RfOBGECcSttLApnK0ykTHlJB90WazGFLaDrK9
- 8oufjGjfrfd2HsHw9sucJ8/d5sq2ixXDscvGNDIgdLhpPhqfHlm8DZP+/XmZ0s6TUJeA
- ZRZpu6UcuANsG1+VnUR/ILOEmM6ao27mwbI1oBcM8OZgpC4NXlMTaAGrmy+Fc5ESiqD3
- GmhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=IvhSkC8okgKfKuEg19D0ret6PG0M7zmFKYS6DY3BJsY=;
- fh=jis90ebI1LXbWlN2f/uPaYiR3/160S3+nBo5cgb+Jhw=;
- b=gQXYHaM02YOzlqb+YlmpoMK6yQGSgGl6c/rdFtAp5AkJoZbMiKDh+xWA5Lbmvy/d1G
- DHhNjo2z4IUAobYVJxH57NcrV0sb8A7z6IkFdyBnBuzFSzkiUqPsSgOm6EEbRbSgvIK9
- cdE+6utVp8HzZsoTqVFqv9hjwo3okfuslVBmG1ZZD/XBDS5W1mjRKEwrqRDjfuefocQH
- 49JfRPbX1L6v/HQfE7+vk94zMpat0wNH6Q50kYTgqZbyqHDUW0V//xtMU4gxmrM5BJN2
- P8PwQHjQ4E2Mmn9u7k7nCelO5IiA5a+UKTz1FymQaelRtg2MDIc+AvxBKQilmQRNLQw1
- iT0w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1xU5QM-0002jA-RV
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 11:55:52 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4bb5b8ef642so23670205e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 08:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795106924; x=1795711724; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=IvhSkC8okgKfKuEg19D0ret6PG0M7zmFKYS6DY3BJsY=;
- b=xPQvgBG13wNnYPl8V+lUecCtWXdrte2J+ffWUyC84hai03p3yA7n36EDD6Hxu9vLQW
- 8Jmv8xMYHe50WaXQ6KVBHVak+G6oYpaONJ9wwT1iPyjxvFIacMeloHWsdp+yTcfnPrPi
- zLYIUUS4/dqNYkcKzXpcReEfK0nOFEKHuQJH7hCvdcKKZcn6dzl9tWtoK7DM3Ajc1zxe
- A8pVAKDNcFA7BOxBDPN1OFN4/QkkzNIeF6Zh7oO/ZdTnqavBGOlGaeiMhoeVvrZ0URCk
- kCjksOtsKP9OkA3XEonNVwnddu00nX5QZY2OhJa+OGiusMGes5rTW6XW2hAYBGRXMwJO
- 2zQQ==
+ d=linaro.org; s=google; t=1795107348; x=1795712148; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xHpJkOyP9xOQShQJ1+9T14i7Dxot0L5OZKDQXM6lmDA=;
+ b=tmL6/ZkIM9nz6p5aiLm9exOdGlmVm+8MPI4Y8nr6Cp6aax9A6l9SlQmM1iVcYrvt/c
+ 4/l7xlTZ9ipzKIUgnak2rYzc+IW+0G2L/hZKeuCybbElbWa+Ba9zotiRRLsEeDX3VeOW
+ T2v+KeIEZHAieXKuCk7hG4F3m/F9GePrvnraMgYK8/De5J37lr0DKVPOvsReTqXokyBB
+ HJVgppikOZZqvjPbtRgc+Q/cBRxfAv+t+d53x+W4ofvPfQe6EF4XXhZsD0JBAnO/pdzI
+ XrJcBbFOkv/W3+A/PkFSlC2J5hJVJQgeJF0cc0GLcu2r1LGnvoV2vm07nWeTDqYfmFFe
+ 3c0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795106924; x=1795711724;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=IvhSkC8okgKfKuEg19D0ret6PG0M7zmFKYS6DY3BJsY=;
- b=xAEvjzthSl1H9WgYcJdl0SalIHD5WZimKylD9lw/3zj32nnlmJWPMlCn0/teoWzix2
- 9eoWIbjSWpTTveONTiKY0NmKNGLro5b/zSAUl1sUFnN7CD5f3HUrmiGczQetF1RKdzDM
- RHacZoI8oF0N3Xrhqhsflu5klBwBn9daAPtPDpnveI8wgMisyj6YcnSKj/RlndiFM4wQ
- uV/IGyI0YjYIp87rTDNVDFH0qoGKDS7IML5XSf/XicPKixrDByP+LDuiOXTzv/8sOh2N
- PnQYumqI8YwmEYeBJNxsiAdKdDDTOhfgtErAnNGD9LwnOqfQKvLEjBgmreBgfYj2I3gP
- rZ+w==
-X-Gm-Message-State: APuU4Z+zJy9y9j12A97O40jIwUonxxq3zNCwWNtCSC57/VFxSU8RxVOj
- KGLQ4cx/qHJzQpr1BV+HUBQUbFPsLjnniXM1nMZyBf4YpHYzu0dIrqJMnX8Ke2nFQd6JJNu6Tc7
- yRXLE4Pd/GSUQJbm/BoyLVhbR5bA8fxVfqb7fwNE4/Q==
-X-Gm-Gg: AZFdTZfaEoQa3WemFFr9UAezhSSelxtyINPM18Q/gLjQH2rSf0mrvHtgk4aQP+ltAOV
- w7Gq92Dp1GcBQn+Idk7prGk0GRnO7iJOKOLO+4uoYZYZUcNtbMOmrv2jhg3i2xizlg4C1d4Jud/
- TRcYVvtsV8EOP6d9oIWfYlz8esK+unEdRNsT9vsnJJ7nedqrm2Ejy9O8/kPH/HXJrRjB9jPQYat
- YOT2QsOdJCSO/uH6BT9KSWamNAharDduzc2o7YZZkbhfXsiY4KV3eNwrqtI8Jz4Gkxef8KPG8Xi
- ShDROtcGDsx2hSpTAGf2FoIfz64CRdlDY3UV1g3LlQR93zzU3VtTLRiN2xL5p/zApeQVZyccyVH
- EJ0HgvKgMAR5f6ZN1M4CushBVA6gESkke44WK890bjQWTiAmcpHRIphQjkCJ/unhu2LirV3Q6F4
- xUxm7WooVegfgxi9bG1k4KcQ==
-X-Received: by 2002:a05:690e:11c5:b0:67d:ea8d:e43a with SMTP id
- 956f58d0204a3-67df4468ebbmr23551d50.107.1795106923537; Thu, 19 Nov 2026
- 08:48:43 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795107348; x=1795712148;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xHpJkOyP9xOQShQJ1+9T14i7Dxot0L5OZKDQXM6lmDA=;
+ b=24RQmHV7JelbqY/pQwHgkL2mOLlBE2Exq5ViQ6nf+uJNEVQU5lLRXmGQaQ5qqRa9+7
+ nC/PwWooUfZi74BCmOM9yLE+ueOGnRWwvdDQkv3jeR6aBTdlNcyzr9CQuvtcVR8OSSBC
+ bAJ4FYu912UC6Mz+e053A0ApGeQxJu0iNgOsyX+56RCHQynQdzL7GsNJJJg/VMyNY4Rd
+ /QOxz77orK+KHpt3CuGIw33KaqRcQIzoAvN6ewfS4FICJQdVOB+en+3jD8vJwfcNK+sW
+ GzWCMjwQOdVEyc0kn6e+h9nOSzKdnXEMWVu8is1RJkh3nxX50JxW8+/cZKFtAQxqpOTc
+ +0/g==
+X-Forwarded-Encrypted: i=1;
+ AL+hErF+cVUOQ+kf7EydxBMmC/H8qbnJdelXg/lPcBsl5vk9WNzAIcNihmKjtpAj7CS1nY089wjHWLRn1I55@nongnu.org
+X-Gm-Message-State: APuU4Z/eNvy3J8HRUhsiYTPOmfUwRUVOcfnZ17wEm1tG63jJquGDvZlc
+ +wFqLpGH01EGrfJYsUVXT0OT4MRLzLXrOE97v2Pwu0htGfP0p3vFrhG97s6XScrGlAA=
+X-Gm-Gg: AYBFou3O9U30kofFGclnW2cye6DPSLh7DZcT9fEgvf5OopCGsxBga0BTIGr/fxOI4Sc
+ CNJG7ZiBmUsbnGdGtv6SdDSSsWnZ1QhsBLcJpoz4qGOl1+LJtMpoYNF3/GMWaJCqJv8pHRo1FcN
+ HsLUN1R7eb7GSAufFBOs/ZUReotqPmstxOZBUuK1RZS0q81IPtO7IUo/5+qgejU82udFr0QKB9C
+ rDbN8W5wJPMwfupaIjWYkasmw62yriPmUQOrtZVKDcAZg8KFqPr+BEE3hABGf7J3izPDEk4UjJz
+ zdWRRWBnFzgoYGXw023vWf5MqmGUmhMQq10BYbhRfkNbP+ceWV6CaoIYpKj8r02/WYd0n0AcwC2
+ ThZ0n2zWA2/T1rPxJA3r/XTJO45eKVz0kwKEsJ60SJqcf+YI8ldjTQnt+wrb0/5AQtZybbuzDqx
+ O4f9GsVz1anKr6h0qOaHEF7MtCanVct+Y8ssvzVGNREOg3OVg2J368L0mxHUEQjjNwYJ7PajNge
+ UbC85x8kyxZ642NjERU0TKSRZf7pmCdXVMdWz1hOkw3aFMQh+vkC6kAy4bhrNBcinJdsJkoYdAi
+ mOAGkEfMUETpaeF/cDDQl3He3KQOQhxbe7zLpKHa3QMqm4Fss/AczHmGHKrE9GD0iQAORr3hMVY
+ 9J6MC5doU/bXcwZBawuL56jwtAT9SsHN+MQ==
+X-Received: by 2002:a05:600c:1c11:b0:4a1:e57b:667c with SMTP id
+ 5b1f17b1804b1-4bb8881c357mr1864925e9.26.1795107348172; 
+ Thu, 19 Nov 2026 08:55:48 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb8849e598sm9522665e9.8.2026.11.19.08.55.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Nov 2026 08:55:47 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PATCH for-11.2] target/arm: Handle "PMU disabled" in migration
+ validate functions
+Date: Thu, 19 Nov 2026 16:55:46 +0000
+Message-ID: <20261119165546.3050013-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <CAFEAcA-iAdTGc0M4ZV5LYXscVVj2oEr7FN+Ac=oBo2_oxuygzg@mail.gmail.com>
- <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
-In-Reply-To: <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Nov 2026 16:48:31 +0000
-X-Gm-Features: AclHuK9c-TrxuwXjtkXeqDXvhbo7V8q2XAeR4R3kGlPG6v8qfCqlBLJZClhRMbc
-Message-ID: <CAFEAcA_8EAke9-dk-2HfkQ5BJyuODtcSK+DUcmYKRSKgEf=Wnw@mail.gmail.com>
-Subject: Re: VMSTATE_VALIDATE failures on outbound migration
-To: Peter Xu <peterx@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,71 +99,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 19 Nov 2026 at 16:34, Peter Xu <peterx@redhat.com> wrote:
->
-> On Thu, Nov 19, 2026 at 03:37:43PM +0000, Peter Maydell wrote:
-> > I'm going to fix the bug which is causing this specific failure,
-> > but is it intentional/the right thing that we assert here rather
-> > than simply aborting the attempted migration ?
-> >
-> > I can kind of see it either way:
-> >  * we can't do this migration, but the VM itself might be fine
-> >    and we might as well continue to let it run
-> >  * failing a VMSTATE_VALIDATE field check on an outbound migration
-> >    indicates that the device is in some unexpected state (i.e. one
-> >    which we would reject on input), which might also be a problem
-> >    for continued running of the VM; so err on the side of caution
-> >    and treat it like an assertion failure, killing the VM
-> >
-> > I note that there is no documentation at all of VMSTATE_VALIDATE
-> > unless you count the one-liner comment
-> > "/* Validate state using a boolean predicate. */"
-> >
-> > and we use it in exactly seven places. This is the kind of
-> > amount of usage where I feel like we should either be using it
-> > a lot more, or not at all :-)
->
-> I agree.
->
-> I think assertion isn't good here, it's just that it was since 2014 and
-> maybe we start to hit it only today?
+In various test functions for VMSTATE_VALIDATE() fields, we check
+whether the migrated region number register is within bounds (i.e.
+less than the total number of configured regions).  These tests fail
+spuriously if there are zero configured regions, because then "x <
+cpu->pmsav7_dregion" is always false.
 
-We only hit it I think if either the validate function is buggy
-or the device code is buggy. So we only hit it now because we made
-a change in target/arm that exposed/created a bug.
+When we allowed v6M CPUs to have PMSAv7 in commit 157f6c69edd06, this
+exposed a bug, because we now have a CPU which has PMSAv7 according
+to the pmsav7_needed() function but which is configured with 0 PMSA
+regions: the Cortex-M0.
 
-> One reason being that as you said the assert behavior isn't described and
-> not sure if it's always wanted, and also some corrupted device state may
-> not always imply the VM is fully doomed.
->
-> The other thing is I believe we have proper way to report errors now with
-> either pre_save_errp() or post_load_errp().  We should use them.
+We could fix this by having pmsav7_needed() return false if there
+are 0 regions; however, the cpu/m-security vmstate struct does
+migration of the secure equivalents of these fields, and we also do
+a VMSTATE_VALIDATE that checks against the number of MPU regions
+there. Making those fields be migrated only if there is more than
+one region would be awkward (we'd need to pull them out into their
+own vmstate struct), and it's unnecessary -- migrating something
+that's all zeroes and not used isn't a problem.
 
-The thing that occurred to me is that post_load_errp() only happens
-after migration of the whole struct is done, and there might be
-cases where you want to validate a field because you're about to
-use it in a following field; for instance vmstate_hpet does:
+So instead we relax the checks to handle the "no configured regions"
+case, insisting then that the rnr field in the CPU state (which
+should never be used) is zero.
 
-        VMSTATE_UINT8(num_timers_save, HPETState),
-        VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
-        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
-                                    vmstate_hpet_timer, HPETTimer),
+Similarly, we adjust the check in sau_rnr_vmstate_validate against
+sau_sregion; this one is currently theoretical as all our CPUs which
+implement the Security Extension have at least one SAU region, but
+architecturally it is permitted to implemnt no SAU regions.
 
-and the hpet_validate_num_timers() function is checking the
-incoming num_timers_save before we rely on it as the count
-in the following VMSTATE_STRUCT_VARRAY_UINT8(). The use in
-pcie_aer.c is also like that. However the uses in
-target/arm/machine.c and hw/gpio/zaurus.c are just checking
-incoming data for sanity and could be done in a post_load
-hook instead.
+Fixes: 157f6c69edd06 ("target/arm: extend PMSAv7 support to v6-M CPUs")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/machine.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-thanks
--- PMM
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index c3aef3f3301..d624425c0dd 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -593,7 +593,8 @@ static bool pmsav7_rgnr_vmstate_validate(void *opaque, int version_id)
+ {
+     ARMCPU *cpu = opaque;
+ 
+-    return cpu->env.pmsav7.rnr[M_REG_NS] < cpu->pmsav7_dregion;
++    return cpu->env.pmsav7.rnr[M_REG_NS] < cpu->pmsav7_dregion ||
++        (cpu->pmsav7_dregion == 0 && cpu->env.pmsav7.rnr[M_REG_NS] == 0);
+ }
+ 
+ static const VMStateDescription vmstate_pmsav7 = {
+@@ -693,14 +694,16 @@ static bool s_rnr_vmstate_validate(void *opaque, int version_id)
+ {
+     ARMCPU *cpu = opaque;
+ 
+-    return cpu->env.pmsav7.rnr[M_REG_S] < cpu->pmsav7_dregion;
++    return cpu->env.pmsav7.rnr[M_REG_S] < cpu->pmsav7_dregion ||
++        (cpu->pmsav7_dregion == 0 && cpu->env.pmsav7.rnr[M_REG_NS] == 0);
+ }
+ 
+ static bool sau_rnr_vmstate_validate(void *opaque, int version_id)
+ {
+     ARMCPU *cpu = opaque;
+ 
+-    return cpu->env.sau.rnr < cpu->sau_sregion;
++    return cpu->env.sau.rnr < cpu->sau_sregion ||
++        (cpu->sau_sregion == 0 && cpu->env.sau.rnr == 0);
+ }
+ 
+ static bool m_security_needed(void *opaque)
+-- 
+2.43.0
+
 
