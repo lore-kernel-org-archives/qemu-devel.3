@@ -1,46 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99657606A324
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB704606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 15:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=TcEox5L+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU3nm-0005CM-VZ; Thu, 19 Nov 2026 10:11:55 -0500
+	id 1xU3xq-0006wo-Ui; Thu, 19 Nov 2026 10:22:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1xU3lK-0003te-Pq; Thu, 19 Nov 2026 10:09:22 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1xU3lI-0001JQ-7b; Thu, 19 Nov 2026 10:09:22 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B334F48D4D;
- Thu, 19 Nov 2026 16:08:45 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, fam@euphon.net, stefanha@redhat.com,
- jmaguire2013@gmail.com, axboe@kernel.dk, kwolf@redhat.com,
- hreitz@redhat.com, t.lamprecht@proxmox.com, qemu-stable@nongnu.org,
- casasfernando@outlook.com, ncopa@alpinelinux.org
-Subject: [PATCH] fdmon-io_uring: avoid idle event loop being accounted as IO
- wait
-Date: Thu, 19 Nov 2026 16:08:08 +0100
-Message-ID: <20261119150839.439544-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xU3xe-0006w2-NY; Thu, 19 Nov 2026 10:22:06 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xU3xc-000387-TD; Thu, 19 Nov 2026 10:22:06 -0500
+Received: from example.com (unknown [167.220.208.76])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 20C0220B716A;
+ Thu, 19 Nov 2026 07:21:56 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 20C0220B716A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795101720;
+ bh=91vLDm9esa2UYE3beL983ujdoZi45yscOAuVqZiDq1I=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=TcEox5L+gi3aEy3NQpH6mRAi/5csJhU//8tTMHjBhRAxzjDn/O7/n1rdoxewXE8W4
+ HPQwoGp990Ii2h2KmpyMY/CtgVfwAfxFG+GJyyVOPpBzewUmf5idZ/1sRNBeQMegQr
+ SAEKpNloRjZXjOq1pWKc2jbzVcvFIaNQfokGURCw=
+Date: Thu, 19 Nov 2026 16:21:55 +0100
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Aastha Rawat <aastharawat@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
+ arch-specific
+Message-ID: <av8UE3dpLrEY6uD9@example.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1795100924267
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -52,172 +73,145 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
+> x86 specific migration handlers currently live in common MSHV code. Move
+> these handlers into x86 backend and add a generic architecture migration
+> initialization hook. ARM MSHV live migration support is not added yet,
+> this will allow ARM to add an empty initialization hook.
+> 
+> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> ---
+>  accel/mshv/mshv-all.c       | 35 ++++-------------------------------
+>  include/system/mshv_int.h   |  1 +
+>  target/i386/mshv/mshv-all.c | 34 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 39 insertions(+), 31 deletions(-)
+> 
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 860f511fcba..efe19a39140 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -60,30 +60,6 @@ static int init_mshv(int *mshv_fd)
+>      return 0;
+>  }
+>  
+> -static int mshv_load_cleanup(void *opaque)
+> -{
+> -    CPUState *cpu;
+> -    int ret;
+> -
+> -    ret = mshv_arch_set_partition_msrs(first_cpu);
+> -    if (ret < 0) {
+> -        error_report("Failed to set partition MSRs: %s", strerror(-ret));
+> -        return -1;
+> -    }
+> -
+> -    CPU_FOREACH(cpu) {
+> -        ret = mshv_arch_set_mp_state(cpu);
+> -        if (ret < 0) {
+> -            error_report("Failed to set mp state for vCPU %d: %s",
+> -                         cpu->cpu_index, strerror(-ret));
+> -            return -1;
+> -        }
+> -    }
+> -
+> -    return 0;
+> -}
+> -
+> -
+>  static int get_host_partition_property(int mshv_fd, uint32_t property_code,
+>                                         uint64_t *value)
+>  {
+> @@ -519,10 +495,6 @@ static int mshv_init_vcpu(CPUState *cpu)
+>      return 0;
+>  }
+>  
+> -static SaveVMHandlers savevm_mshv = {
+> -    .load_cleanup = mshv_load_cleanup,
+> -};
+> -
+>  static int mshv_init(AccelState *as, MachineState *ms)
+>  {
+>      MshvState *s;
+> @@ -574,9 +546,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>                                    0, "mshv-memory");
+>      memory_listener_register(&mshv_io_listener, &address_space_io);
+>  
+> -    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
+> -
+> -    mshv_clock_init();
+> +    ret = mshv_arch_migration_init(s);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+>  
+>      return 0;
+>  }
+> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> index 0e68365c63f..31d2f4381c7 100644
+> --- a/include/system/mshv_int.h
+> +++ b/include/system/mshv_int.h
+> @@ -109,6 +109,7 @@ void mshv_arch_disable_partition_proc_features(
+>  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
+>  int mshv_arch_post_init_vm(int vm_fd);
+>  void mshv_setup_hvcall_args(AccelCPUState *state);
+> +int mshv_arch_migration_init(MshvState *s);
+>  int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
+>  int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
+>  typedef struct mshv_root_hvcall mshv_root_hvcall;
+> diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+> index f0b43aa86f1..968fe2a4494 100644
+> --- a/target/i386/mshv/mshv-all.c
+> +++ b/target/i386/mshv/mshv-all.c
+> @@ -78,3 +78,37 @@ int mshv_arch_post_init_vm(int vm_fd)
+>  
+>      return ret;
+>  }
+> +
+> +static int mshv_load_cleanup(void *opaque)
+> +{
+> +    CPUState *cpu;
+> +    int ret;
+> +
+> +    ret = mshv_arch_set_partition_msrs(first_cpu);
+> +    if (ret < 0) {
+> +        error_report("Failed to set partition MSRs: %s", strerror(-ret));
+> +        return -1;
+> +    }
+> +
+> +    CPU_FOREACH(cpu) {
+> +        ret = mshv_arch_set_mp_state(cpu);
+> +        if (ret < 0) {
+> +            error_report("Failed to set mp state for vCPU %d: %s",
+> +                         cpu->cpu_index, strerror(-ret));
+> +            return -1;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static SaveVMHandlers savevm_mshv = {
+> +    .load_cleanup = mshv_load_cleanup,
+> +};
+> +
+> +int mshv_arch_migration_init(MshvState *s)
 
-Since QEMU 10.2, iothreads use io_uring for file descriptor monitoring
-when available at build time. The blocking wait in io_uring_enter()
-gets accounted as IO wait by the kernel even when only poll or timeout
-SQEs are present. The result is nearly 100% IO pressure in PSI on idle
-VMs.
+mshv_clock_init() is also relevant for pause/resume handling, so maybe
+"mshv_arch_vm_state_init()"?
 
-The Linux kernel also has a bug conflating reservations for task
-references and real in-flight requests [0], so the issue would occur
-even if no poll or timeout SQE was present.
-
-Split io_uring_submit_and_wait() into separate submit and wait calls
-so the IORING_ENTER_NO_IOWAIT flag can be passed to io_uring_enter().
-Track the number of in-flight requests that represent real block-layer
-IO (currently, anything submitted via aio_add_sqe() is) in a
-per-AioContext counter, and pass the flag when the count is zero.
-
-SQ-ring composition alone is not a usable signal here: poll SQEs get
-re-armed by process_cqe_aio_handler() on every fd-event cycle, so
-workloads with constant fd wakeups (observed with librbd) always leave
-a non-timeout SQE in the ring even when the guest is idle. Block
-drivers that do not go through aio_add_sqe() (e.g. librbd, libaio,
-thread-pool) never increment the counter and thus always get the flag
-passed, which matches the semantic intent: their iothreads block on
-completion notifications from other threads, not on IO they issued
-themselves.
-
-The flag is gated on IORING_FEAT_NO_IOWAIT so older kernels are
-unaffected.
-
-The iowait_accounting_reqs counter added to the AioContext struct,
-must be accessed with atomics, since a vCPU thread can reach
-fdmon_io_uring_wait() via aio_poll() (for example via
-virtio_scsi_dataplane_stop()).
-
-Even with this change, some users observe higher IO pressure than
-before the switch to io_uring in the event loop, but at least not
-nearly 100% when idle anymore.
-
-[0]: https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@proxmox.com/T/
-
-Cc: qemu-stable@nongnu.org
-Fixes: ded29e64c6f3 ("aio-posix: integrate fdmon into glib event loop")
-Suggested-by: Fiona Ebner <f.ebner@proxmox.com>
-Link: https://lore.proxmox.com/pve-devel/525c4dad-6d04-41f0-8a21-9302b0c6baa4@proxmox.com/
-Co-authored-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
----
- include/qemu/aio.h    | 12 ++++++++++++
- util/fdmon-io_uring.c | 36 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 47 insertions(+), 1 deletion(-)
-
-diff --git a/include/qemu/aio.h b/include/qemu/aio.h
-index e65e90093a..17bc145eb6 100644
---- a/include/qemu/aio.h
-+++ b/include/qemu/aio.h
-@@ -55,6 +55,12 @@ struct CqeHandler {
- 
-     /* This field is filled in before ->cb() is called */
-     struct io_uring_cqe cqe;
-+
-+    /*
-+     * Whether the in-flight request should count towards IO wait.
-+     * Set by the fdmon layer; callers must not touch it.
-+     */
-+    bool iowait_accounting;
- };
- 
- typedef QSIMPLEQ_HEAD(, CqeHandler) CqeHandlerSimpleQ;
-@@ -295,6 +301,12 @@ struct AioContext {
- 
-     /* Pending callback state for cqe handlers */
-     CqeHandlerSimpleQ cqe_handler_ready_list;
-+
-+    /*
-+     * Number of in-flight requests that should count towards IO wait.
-+     * Must be accessed using atomics.
-+     */
-+    unsigned int iowait_accounting_reqs;
- #endif /* CONFIG_LINUX_IO_URING */
- 
-     /* TimerLists for calling timers - one per clock type.  Has its own
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index b81e412402..d308ddfb04 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -51,6 +51,15 @@
- #include "aio-posix.h"
- #include "trace.h"
- 
-+/* Compat defines for liburing versions that lack NO_IOWAIT support */
-+#ifndef IORING_ENTER_NO_IOWAIT
-+#define IORING_ENTER_NO_IOWAIT (1U << 7)
-+#endif
-+
-+#ifndef IORING_FEAT_NO_IOWAIT
-+#define IORING_FEAT_NO_IOWAIT  (1U << 17)
-+#endif
-+
- enum {
-     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
- 
-@@ -176,9 +185,14 @@ static void fdmon_io_uring_add_sqe(AioContext *ctx,
- {
-     struct io_uring_sqe *sqe = get_sqe(ctx);
- 
-+    /* Currently, IO wait should be accounted for all requests here. */
-+    cqe_handler->iowait_accounting = true;
-+
-     prep_sqe(sqe, opaque);
-     io_uring_sqe_set_data(sqe, cqe_handler);
- 
-+    qatomic_inc(&ctx->iowait_accounting_reqs);
-+
-     trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
-                                  cqe_handler);
- }
-@@ -286,6 +300,10 @@ static bool process_cqe(AioContext *ctx,
-         return false;
-     }
- 
-+    if (cqe_handler->iowait_accounting) {
-+        qatomic_dec(&ctx->iowait_accounting_reqs);
-+    }
-+
-     /*
-      * Special handling for AioHandler cqes. They need ready_list and have a
-      * return value.
-@@ -422,9 +440,25 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
-      * 1. If no SQEs were submitted, then -EINTR is returned.
-      * 2. If SQEs were submitted then the number of SQEs submitted is returned
-      *    rather than -EINTR.
-+     *
-+     * Submit and wait are split into separate calls so we can pass
-+     * IORING_ENTER_NO_IOWAIT when no request that should count against IO
-+     * wait is in flight.
-      */
-     do {
--        ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
-+        ret = io_uring_submit(&ctx->fdmon_io_uring);
-+
-+        if (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)) {
-+            unsigned flags = IORING_ENTER_GETEVENTS;
-+
-+            if ((ctx->fdmon_io_uring.features & IORING_FEAT_NO_IOWAIT) &&
-+                qatomic_read(&ctx->iowait_accounting_reqs) == 0) {
-+                flags |= IORING_ENTER_NO_IOWAIT;
-+            }
-+
-+            ret = io_uring_enter(ctx->fdmon_io_uring.ring_fd, 0, wait_nr,
-+                                 flags, NULL);
-+        }
-     } while (ret == -EINTR ||
-              (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)));
- 
--- 
-2.47.3
-
-
+> +{
+> +    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
+> +    mshv_clock_init();
+> +    return 0;
+> +}
+> 
+> -- 
+> 2.45.4
 
