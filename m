@@ -1,119 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A72606A325
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE81606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 11:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=YZXEAHq6;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nU04oZmi
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UKakejyE;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gZwLwJjg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU0Tr-0001GH-GA; Thu, 19 Nov 2026 06:39:07 -0500
+	id 1xU0Ws-00024X-OM; Thu, 19 Nov 2026 06:42:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xU0Tp-0001Fn-QP
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:39:05 -0500
-Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xU0Wq-00024E-RH
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:42:12 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xU0To-0005Pn-6b
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:39:05 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 9C6B4140015A
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 06:39:03 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Thu, 19 Nov 2026 06:39:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
- cc:cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1795088343; x=
- 1795174743; bh=kxl5VqFhETPbowQwMfsHbs5FzK5r6p3tPtjRWm7fr9s=; b=Y
- ZXEAHq6rtG537alRu287k5g6g0jOvTr4vCAvyof40eQrvhNALFMm2Q+ONHJtYyee
- 5at/7UkU/WiusTAQpLYAoo8y0tz0mn2ZJ2FAUQxRRFJzeMU9ccm7e4xVApHGxqwe
- NPqqAkaJaiCn5rF3fsy/kAWoOO5S/0ZzgJn42/u7GWhaof0NNz6Nn4BS9Ve19CdP
- yZ/+D/+ZmJ5pHyx1SsIJ3NvvdYLomf6K8/9cRppbyqylip9TjtpeKqQ3742hhPyp
- nCCWlNN5Jx6I9MCqniwTEsdYwRMHaBRGfYwZNTG/8x2eBgcsrstLW5h6vKxGhisu
- M196i4Y1cnNu4PKJ/ZFFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:mime-version:references:reply-to
- :subject:subject:to:to:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; t=1795088343; x=1795174743; bh=kxl5VqFhETPbo
- wQwMfsHbs5FzK5r6p3tPtjRWm7fr9s=; b=nU04oZmi9mknBxWFtbjZDMhDXwVDE
- c8CGx0J2mENjv8KBg8pAJHSDR+C+Fn8Jh9dlcZLb7/gtoHLCT/rsMDaYj6I1ZRQ6
- 8gb2UVVgippEy0lxypvWoZeT/UsRQw9UiN4i1B2qd2GPw2eOxjSY/5Xrc+/O3LZb
- 29fr9Tkb5jLte18tlboSo+QkYUaSpfEuJEulsMrBUe9SiM0aqVQtTju3E98mp1o9
- Q6Lgc3yJt9WlBjpKDTpTEpm86HuBiag00cgQHlU3GyQgeNtCmqw3Ul6tEJ9i80O3
- DQ/yUkRvxx5E4nyk78VA1kALQPyG+pRFiGDjXu+1kHiMaRLHEDjNgJBNw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=defmacro.it a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795088343; d=defmacro.it;
- mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:MkYN9pohQy/VsOAyLNeusNRUMxkq8xGp8+puCuC6Q9Ud7ul
- yBrJ0A93b/E1AD8Vm0ZuND03EXilSd5wmCidldIYfISstohlwVA42r8fbSxVMxV2
- 3dYBb3e9iPw+i1XmSeWCOJuPA1nyTRjpDUXou4YJZ4uTus43ee6StYVeNAdp1PJ1
- amW/OEGqt8diVeiPIK9zBm7au2WqDp/2LlCW1v6OjYC61Fs/tKyoqPTHpo3omwCn
- zOkfTJaNLF62l7aiazUobaDe5fpjrT1KHQBGXBRLKkM30pYg2yDeQ/bKP7/yfYDo
- 8y+Z6U2kqA35Jc03OubUIPmaYr9v9rCKo1ODu7Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=12;
- hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
- mime-version,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:4YqTKX3lkJJDu1/NaIv6x0YFOehTecOP/s3t55kz+YA=:UmZIffjbskhLQg58nwkyDHS6iCMBKCUT8kH5khNkhws=;
-X-ME-Sender: <xms:19_-auYU93aqc95kivI2MPdsWXz22GpNQstvVrGWst0bzbR34d_23A>
- <xme:19_-aqXj_l-eovrKSgILCI6qZ9YRLZAbZdivsMg1WOpaDrsCiSt89PxhCskhqZZ8Y
- x0AV7XihoI3E79lhDpBZeX_YGCFyLVhhlwhk9wCGg8LtkGhPkA5b08>
-X-ME-Received: <xmr:19_-akhzYihKxr0-hkXzPPOtJEKIwm-PdMG5Yr-OWeIiQqNZUqt7JYvBomO4sY_TjhFhA5bOrDybf_txt2ExZyg9DA>
-X-ME-Proxy-Cause: dmFkZTEQhxo9ViB0OCTboLOlvqVMtsCUzFkRHIeWnYdXLzJBJCajDab5jRBJ0JXNsH+1c1
- lgpAipp/0X/VviB8ICMZbf4ifFrtM2JeOdbMkcaBULfw5VOUPShGt9Lqf9jcmDdck4hrE0
- tg/8NcuiJFUbfEOS4a5EYbEPMmoPzDIUQL/lnos5TQADkoiK7/zrvi3Nw9sBZgJzWDVux8
- y0+C/XiHaChegMHGDiPnB5EfJXkOLAVYPhu3HRqvDx8W4BbamRi0c3G+Bed9+PUiKqlUo4
- 3jUsQXMib9TTpSza2WX0idg9pc16c+I4pEbfoF0H7h55MzKyHleL2pjFsrv8Y2xwTZkJtZ
- YLQg9oFO/Bc4TTSof6KgT0A7GlrUsqV+5X7gk6+MoVbif1ActUxoWNVIxBcyAD4m3FRyZX
- cghmSdl9tI3lgtiI3Jf2o3wTIrYAQ4kEDtJ45Z9waPZuysnHmEpqtUV7hTd9w2yboqlDN3
- wfXigzqlUyBHAE2wV1iwjA1rgdcl0XILBBtYg1dDXxLx5voRKPZjc88Xdi312aKBtNqAGT
- OXWczGG1HMz+IqdX2p/lNLX0LHCLqSbzB3Uevw1mqdF2CWZv3wDsVTndzPicWuDWmIdBBr
- 5o83gkhbsFAH/UlPEwlMTjsQfmr09mE1Ia2TNFNy1CUXrl45/PB+7OO0AqXg
-X-ME-Proxy: <xmx:19_-agsHT1Oqia5VgySLGNBaXl3xrF5RrWz5bYPb9cT_6FaQNl6FpA>
- <xmx:19_-al484clyqWqzZ0qUDfgBEVHdu1lLCGQf-FVWFOgvTtoGE3grYg>
- <xmx:19_-asOXuF9fO3GJNyDj4lp5wAHkJ74dYi_WKbOJC_mb_qqWDwkg0g>
- <xmx:19_-ajufKwLRVMlKddTn_Lw_iDRNqo5bo6rgaae10tjiKjM1IQ5xyA>
- <xmx:19_-ak-yjlEDJSVQWbP4PC60apbXvtAUmR0rELvJI_iOKojK7LMPTKX->
-Feedback-ID: ic0014905:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 06:39:01 -0500 (EST)
-Date: Thu, 19 Nov 2026 11:38:43 +0000
-From: Jesper Wendel Devantier <foss@defmacro.it>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
- qemu-block@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH 2/3] hw/nvme: bound zrwa flush by the write area and zone
- write boundary
-Message-ID: <20261119123843.4-foss@defmacro.it>
-In-Reply-To: <20261118-fix-4520-v1-2-dfa182213376@samsung.com>
-References: <20261118-fix-4520-v1-0-dfa182213376@samsung.com>
- <20261118-fix-4520-v1-2-dfa182213376@samsung.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xU0Wo-0000s1-T2
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 06:42:12 -0500
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AJAuUK5598474
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:42:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 0qdQ/YS0Xp1vHAS0W1gnr/rAZdnyyK45oJIz8r5yfVE=; b=UKakejyE8rJyT5ES
+ MNeGy0c2CqFoUjFqWjEqibe8o8sJwjQUdjGM9Qm2J8+aZbrJw8TvTWXMgqqQLvsu
+ NGJfLjpoe3bYm/UsfKUUeLiqa6H3P7pxL0XbNZqegHlkRUIBiUmLynscQE8tpBUT
+ xfu+XzRrDaVjieCOaBiR1Ug41CrkPX5+7rgnkZA6f7+qMr5F+dIABnHME4ZoIFVr
+ SoXWGQb8PzRBLaXJoen4lJ0vKUWEASAYqUBZkEP7b7CddMMm6aljGjVRC5AT9k0t
+ a6v5ts81WU/AmOq/SLmXA4BmQglyvFikzwy9AF9WiDQqsmEoRh/qS+2oRoK+RaW5
+ +yUUDQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1x708mpy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:42:08 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-949b0d322fcso84994085a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 03:42:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1795088528; x=1795693328; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0qdQ/YS0Xp1vHAS0W1gnr/rAZdnyyK45oJIz8r5yfVE=;
+ b=gZwLwJjg0U2x4jmuRTKZT4uPqoX7NlVLBSr+Th4T4OWd1BsPUxV/QeyUOkqery9vUb
+ wLqlaQKx80NJF7MS5kpe5+go8C4NJ2M5sgUMAlrCkjap4PRekBaKdTi9R3doAdtID8/d
+ 2rSvTvg5HNUDZSkjGOfotrRToVCrIA6OJd1GFLqZjBg6G1lIcJnTJEIPu0ebmBW+YAHg
+ Dl3iWHIdzQNEl1th/JmMPRi7pO/mprXao/fIVnu2Z0wILzHRyDfzVviWyS85X6ShgItL
+ GMRS1npGJrb8+5+vnd4U4wkkwUkygNKtmmKfucYgKXKvB+/xgNKyQQGrBje+UB9AX7ry
+ pXiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795088528; x=1795693328;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0qdQ/YS0Xp1vHAS0W1gnr/rAZdnyyK45oJIz8r5yfVE=;
+ b=UBTet51y3g7Md5VxjCvQRwFUefUalyAgda2wm8qsUrCMmV3/0xJd/w141RYL+9C8PL
+ WPkKT6gnwBSVkJb0yJBiCgl4N7hFrsYo64iEoGZ7fuCeQPFAmG1WtTTiLi8hqkV2kUhi
+ yw/68A9Z60GYOfRiyGrcVXxuxO0Bih8Fc8te65G71ZDz7tUDUY0p3Ywe8Fpk4bJGScou
+ IRBKjrKdI57LGc0yyy+vX1jRYTxMJFDAEe0aUBjVxvB4Zig7Xu71HpvKhw9Flz1YZG51
+ L58+qpn5UH48S5s7SbMZ54h0LSyVzS3RAwHv9aeMDrEqSCDtriCryYaTrfqAaY0ye5Jh
+ Fy5w==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHptStcg1wai8o982x2B5T0TYHwE4pxhI1Bi08abJrbJ8wxsY8gkD4Lw8NGt+wNEX4PJ3LYahA5ch6b@nongnu.org
+X-Gm-Message-State: APuU4Z9N3liwHNumvZrB7GZx6ugtIggHMuHGq1o0XWf2bq/V70YcPUZq
+ 1SCD2zjSC7p06hwt6S31Ou9+q7z7jklsAhd39QwEpXw46RjkGiEFeG4RE1/b22wTw084+wtbvWB
+ HFEzyWRxL5DXDEO6z+xVIYjNFg1nbEmPZ61MKpEYzg0fCZbY7G6x69HYjfQ==
+X-Gm-Gg: AYBFou2AgMvqVdA5D5Kmec8VysZIPfif8TqvkHq6F+S1uBAQWmk/jtMGtYjCGH2hZX3
+ 25uLlU6OLQgsXZvyDmwn9EYQjxkCRJ39QKkk9AdIONiVKYCqqS5HBIPpJ/YjrQvfoeyKu8pFw7c
+ yD4/RWR8P/rOG+iYVjCzdl59+cPloPJkOsJOcWPvd76jjxXDoCObkq7mK//pjTRkNqW3jWjgfvX
+ Gzx0gWqD0arSBQyfeo5+1j6QXTWTxLQkoR4dLkuwv+khe+a/TIdef3QfgpMqh469LdaAYXIlhjG
+ 9ArVYOvzmCTj5P/NknXgp4D0UDDGLdJFa0MgsDqLUstHo4wxEFSBN0nxQzigMEP0/1MHPMrBFyO
+ zRrdmAaVdDPpZOW2jT4Q3TcyInPfyoeDQGe1wyVCrZtLFE80PAGrSCJScc1pM7Xsve4cI
+X-Received: by 2002:a05:620a:1b99:b0:945:d7a2:4b58 with SMTP id
+ af79cd13be357-9499960586fmr876476285a.65.1795088528115; 
+ Thu, 19 Nov 2026 03:42:08 -0800 (PST)
+X-Received: by 2002:a05:620a:1b99:b0:945:d7a2:4b58 with SMTP id
+ af79cd13be357-9499960586fmr876474485a.65.1795088527659; 
+ Thu, 19 Nov 2026 03:42:07 -0800 (PST)
+Received: from [192.168.0.4] ([79.127.134.54])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4a65560ab70sm11135922f8f.30.2026.11.19.03.42.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Nov 2026 03:42:06 -0800 (PST)
+Message-ID: <18e8c852-9870-4232-aae7-66db4672fdd9@oss.qualcomm.com>
+Date: Thu, 19 Nov 2026 12:42:04 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0
-X-Mailer: neolore
-X-OriginalDate: 2026-11-19T12:38:43+01:00
-Received-SPF: pass client-ip=103.168.172.157; envelope-from=foss@defmacro.it;
- helo=fhigh-a6-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 for-11.2] hostmem: allow building without KVM support
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20261119113309.1205353-1-mjt@tls.msk.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261119113309.1205353-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: sWbBKSpIbDRmoidDeWuxY9PqKIndGkc-
+X-Authority-Analysis: v=2.4 cv=RdgFmFtv c=1 sm=1 tr=0 ts=6afee090 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=dMDxPF1GtEdq01UuaR/ERg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=9qUTvQc-AAAA:8 a=EI4IS2iMIFUyLctKqVAA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=axOgMmt4Ejcwn1cqzmsR:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDA0NiBTYWx0ZWRfXwMMAt3//0mzE
+ jZ0WJSW66FZeLHkTBdMhBl4Cj2uCtJKhXyo/eWqPAOW3o53yLx0HO6OVbwrlQNHXmt26xTAcC5M
+ wVi95VHPbqUKMTEnDt7XkgTC83CEnA0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDA0NiBTYWx0ZWRfXz1CVwLH2ovUh
+ NjiIDYZRz0V9quQ6iWq/PRSjxs6gMnEN+Aw/OjFmftPAa4ctEyg5V4+sRNQRF2vh9amRDxXEKy5
+ 4y+O0zSMaEz0Di3RCg/9TCSazMPnbeNhynGcyWxGZ5nlFq52vl6FmkvfNzb3X5Bm772729j470V
+ 6iqStkICmrvPPbLjGNNV1s4f+uBIUnpp1LwKnztojfXX3Xq7Uw/tukleDs/QRjGcGa4Wjy64MpI
+ 3pq4lRyUlb7spkJh1wfHqQo1HovhpFO4WNR4ErlYtMxKe7Jxe5IznolxDX5UElIp9UAzsH3SAzQ
+ fUyBWPtq4+g7euJPmWnvBDvoIgPrYB47EOp8RXvsE6t2/lJhpUVvncbvahzLPIaboEogQ7KPvqa
+ +FrQu4Ray3lX40arTzbdnSlk2ZHAvUaRpWflE2y11U8aEnnjKnYJXgpbqvFy7WGrprEDyDSi7tt
+ GYJS0VilegUvoaORzfg==
+X-Proofpoint-GUID: sWbBKSpIbDRmoidDeWuxY9PqKIndGkc-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-19_03,2026-11-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ adultscore=0 spamscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611190046
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,56 +153,87 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-On Wed, 18 Nov 2026 13:45:35 +0100, Klaus Jensen <its@irrelevant.dk> wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
->
-> nvme_zone_mgmt_send_zrwa_flush incorrectly accepts a flush up to and
-> including one LBA past the zone random write area. Fix the comparison.
->
-> Additionally, there is no check that the last LBA to be flushed falls
-> within the zone boundary (i.e., the *capacity* of the zone). That is, if
-> a zone has a small capacity than size, the write pointer can be pushed
-> past it. Fix with a check on the zone write boundary.
->
-> Cc: qemu-stable@nongnu.org
-> Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
-> Fixes: e321b4cdc2dd ("hw/nvme: add support for zoned random write area")
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+On 2026-11-19 12:33, Michael Tokarev wrote:
+> On architectures where KVM is not available and so including <linux/kvm.h>
+> does not work, buildnig backends/hostmem-memfd.c fails since 7ca43d7ad02f:
+> 
+>   In file included from backends/hostmem-memfd.c:23:
+>   linux-headers/linux/kvm.h:16:10: fatal error: asm/kvm.h: No such file or directory
+>     16 | #include <asm/kvm.h>
+> 
+> Do not include <linux/kvm.h> because "system/kvm.h" already includes it for us
+> when KVM is enabled, and guard the actual code using memfd definitions with
+> <linux/kvm.h> too.  When using #ifdef like this, we can also provide a more
+> clear error message.
+> 
+> Fixes: 7ca43d7ad02f ("hostmem: Support fully shared guest memfd to back a VM")
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > ---
->  hw/nvme/ctrl.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 16860ccd9520..35e2c57851ae 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -4279,7 +4279,8 @@ static uint16_t nvme_zone_mgmt_send_zrwa_flush(NvmeCtrl *n, NvmeZone *zone,
->          return NVME_INVALID_FIELD | NVME_DNR;
->      }
->  
-> -    if (elba < wp || elba > wp + ns->zns.zrwas) {
-> +    if (elba < wp || elba >= wp + ns->zns.zrwas ||
-> +        elba >= nvme_zone_wr_boundary(zone)) {
->          return NVME_ZONE_BOUNDARY_ERROR | NVME_DNR;
->      }
->  
->
-> -- 
-> 2.53.0
->
->
->
+>   backends/hostmem-memfd.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> index 46489212a23..698ec930a5c 100644
+> --- a/backends/hostmem-memfd.c
+> +++ b/backends/hostmem-memfd.c
+> @@ -20,7 +20,6 @@
+>   #include "qom/object.h"
+>   #include "migration/cpr.h"
+>   #include "system/kvm.h"
+> -#include <linux/kvm.h>
 
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+OK.
+
+>   #include "qapi/qapi-type-infos-common.h"
+>   
+>   OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+> @@ -71,10 +70,15 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>               return false;
+>           }
+>   
+> +#ifdef CONFIG_KVM
+
+We prefer using runtime check (probably providing a stub):
+
+-- >8 --
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 666593ff6c..d39bc71d25 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -62,7 +62,10 @@ memfd_backend_memory_alloc(HostMemoryBackend 
+*backend, Error **errp)
+           * NOTE: guest-memfd ignores seal=on/off because it always
+           * implicitly seals the FD by definition.
+           */
+-        if (!backend->share) {
++        if (!kvm_enabled()) {
++            error_setg(errp, "guest-memfd=on requires KVM which is not 
+enabled");
++            return false;
++        } else if (!backend->share) {
+              error_setg(errp, "guest-memfd=on must be used with share=on");
+              return false;
+          } else if (m->hugetlb) {
+---
+
+>           fd = kvm_create_guest_memfd(backend->size,
+>                                       GUEST_MEMFD_FLAG_MMAP |
+>                                       GUEST_MEMFD_FLAG_INIT_SHARED,
+>                                       errp);
+> +#else
+> +        error_setg(errp, "guest-memfd=on requires KVM which is not enabled");
+> +        return false;
+> +#endif
+>       } else {
+>           fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+>                                  m->hugetlb, m->hugetlbsize, m->seal ?
 
 
