@@ -1,37 +1,39 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55C4606A326
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 14:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F28D60A260E
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 14:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ovhcloud.com header.i=@ovhcloud.com header.a=rsa-sha256 header.s=mailout header.b=IjwTBi4b
+	dkim=pass (1024-bit key) header.d=ovhcloud.com header.i=@ovhcloud.com header.a=rsa-sha256 header.s=mailout header.b=fDi8YL5A
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU3Q6-0004Tw-OT; Thu, 19 Nov 2026 09:47:26 -0500
+	id 1xU3Q6-0004Tk-N8; Thu, 19 Nov 2026 09:47:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xU3Pv-0004R3-Ai; Thu, 19 Nov 2026 09:47:17 -0500
+ id 1xU3Pv-0004R1-Ab
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:47:17 -0500
 Received: from 1.mo508.mail-out.ovh.net ([5.135.90.176])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xU3Pp-0006DA-Jo; Thu, 19 Nov 2026 09:47:13 -0500
-Received: from DAGFR11EX3.OVH.local (unknown [10.110.0.133])
- by mo508.mail-out.ovh.net (Postfix) with ESMTPS id 4jVhBS1ckDz7tDg;
- Thu, 19 Nov 2026 14:46:56 +0000 (UTC)
+ id 1xU3Pp-0006D3-6l
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 09:47:12 -0500
+Received: from DAGFR11EX3.OVH.local (unknown [10.110.58.62])
+ by mo508.mail-out.ovh.net (Postfix) with ESMTPS id 4jVhBR26w5z7tDX;
+ Thu, 19 Nov 2026 14:46:55 +0000 (UTC)
 Received: from ovhcloud.com (109.190.254.2) by DAGFR11EX3.OVH.local
  (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Thu, 19 Nov
- 2026 15:46:55 +0100
+ 2026 15:46:54 +0100
 From: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-block@nongnu.org>, <eblake@redhat.com>, <vsementsov@yandex-team.ru>, 
  <kwolf@redhat.com>, <hreitz@redhat.com>, <stefanha@redhat.com>,
  <fam@euphon.net>, Guillaume Vincke <guillaume.vincke@ovhcloud.com>
-Subject: [PATCH 3/5] block/nbd: Refresh the connection on block_resize
-Date: Thu, 19 Nov 2026 15:46:30 +0100
-Message-ID: <20261119144632.232457-4-guillaume.vincke@ovhcloud.com>
+Subject: [PATCH 1/5] block/nbd: Extract request slot access and reconnection
+Date: Thu, 19 Nov 2026 15:46:28 +0100
+Message-ID: <20261119144632.232457-2-guillaume.vincke@ovhcloud.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
 References: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
@@ -42,16 +44,16 @@ Content-Type: text/plain
 X-ClientProxiedBy: CAS2.OVH.local (172.16.1.2) To DAGFR11EX3.OVH.local
  (172.16.2.113)
 X-OVH-CORPLIMIT-SKIP: true
-x-ovh-tracer-id: 855683929345114589
+x-ovh-tracer-id: 855402457656345053
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTGOS8EGrX643+ovyXsH+QFTmB5aOgoJ08jxUdSO/s6XgvT7M/VuQQ/Ds/8vMAVUddgP1bWDSw41OV9jyN0q52MhAPgS0yoC2ODGuYv1BBob7jhQ7dDNOfGz7zhBa7QJumewrS892C6gqnCQx9qVlOOB+KxYueih+lDUybnRAI53OitkcpkFTDvwmUxZnALuqa95QZrlzfljSUx8on3qABkAFuxLMjxQP7sm7omnCeHybC2x1J2w07QRuPY6b/1YmXdD271GM23xOVXa9HL1eexNQ/d+NppEKUVhgxm4GKbkD1Pt3B/0ooUNcyKYtby1iye42fekcpfDjPqPXYgcnp0LgOl5mlkJCyQuhgCd48i0hN/s+zx3P9wyeOjFnzin8r2vniNgSKVuZx3khYp80nKt6uQhrUP7FREiOxIBZdpSMwHCo/ovPjWyWU839tM6N4IescdiLITSzZpP6Hit1mUZ5eDYBKsqNH/IkVJ8hu7VOsgMw3BwD2S4+DSgifXHVuDVTg1jOs8MVg7wGcKHlzBaG3AIgNFSc74Y4tzsfQd1nTiLDG+4o2tRV6MfcYbsIxSkz8E263CWxezyhMhifdTTWGBrB+maeFj3qusnU2OHoXPruALoAuefb3FWrfuMTxIcmvvQDJrfuEYc3igiqbM1T+MAFswTwfhY5UcbPas4iA
-DKIM-Signature: a=rsa-sha256; bh=3jEj/wqTF6rn/9Et/Rm6BzNnE8rRvY2zcwSFs49RLgE=; 
+X-VR-SPAMCAUSE: dmFkZTGNg8ZCMaeiEnm5IiUVUXzyhKI0RFBvxIMqnEJ1I1WQBifGe+C255M2IP0G0oWwZb95OrcL5+U9se63SmfHP1skwQNw0BHULBhUyMYdnupKYkpfuuR1RI2c5UPKJsDR7j/nHiZdWNolzrdPyEO5DQhbUqw9XIZodjSC+aDIVoGPaOOVVxvj7Pqs76s0IA/EFdC0FUElNYEy0+T4i10kgByx8od1JLgleLsDF7qdMs+jPuI19ToRtfq/1MPyRVV0JiTq9eQ7bqdj3CCbZQr5kSSqXcMYxKz0CpTFQ12zS0XiddxzOc6C5ovjxPdWBRPRRCfBxBreIMLVmpqeV73oSJOjp6/baUZGhQgbGbheaU84EXGdxYuY7KNdDzCgBpaaRsBUnZpNNngMKTUzSw25kLBgLxQywG6EYDCyIJurccft5E/hr6iDS8kCDz7TAPaKImuPPRCH69uhQwRs11GBjZx8UX02aD1lkvTr9VD/2SlAO2ECcmBHJsXk9i5SbqoiuPYJlcY4j49znft/zi8HnGGivS4SsNzKuQPR4jiCmWZBu7PHfKTPO1riB2v4j8HZu0OU1XTEBsS9IwZYhfo4m4qIoGMv83teMBTO6PkNLo/O+l9N2JaVkNwsSEhvF4GWdU5gH0rulwENSKbnHYEVRMjZipv8W1n16coIgETxB4pWdA
+DKIM-Signature: a=rsa-sha256; bh=pkivKi2mGSn86PSOqWBospvkalCrAdgbwZmI0PynFMg=; 
  c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
- t=1795099616; v=1; 
- b=IjwTBi4bstKlJlJQIygsHAiPEI7C9ZxoYmBBi04lepfKmtIRFKSTFWhkmwzC7MjDKJVt3tED
- PWLnQWSrzQ/v+EaA7OC0Une6MJup6jpSsajvoMJADActzFEAG8LF+PmJAZzbOxt9MwvhikrhSAh
- WeWNiS9cRupNWgmrC6atJmKw=
+ t=1795099615; v=1; 
+ b=fDi8YL5A9rDPs3Y8rWckrj5fwFzUiRnsFmvaNDo0gEGL++MHSHqJG3seNbupONGZ+U2beNeB
+ b5uZ8GuSOxzURpF17WxxwJ/EuqHtXpozqz2RV3ks9wPZkYncswZezP5ECmEnQoAd3v9JgqHqisS
+ CTd6rkFfbXSVcA1fwLfeVP8c=
 Received-SPF: pass client-ip=5.135.90.176;
  envelope-from=guillaume.vincke@ovhcloud.com; helo=1.mo508.mail-out.ovh.net
 X-Spam_score_int: -20
@@ -80,136 +82,114 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When an NBD device is resized, two steps are needed to propagate the
-information. First, as the size is only exchanged at handshake, the
-connection needs to be reset. Then, the new size needs to be updated by
-calling bdrv_co_refresh_total_sectors().
-The QMP block_resize method, by calling bdrv_co_truncate(), takes care
-of the second step but, considering the NBD connection is lazy, nothing
-deals with reconnection when the device is idle.
+The number of concurrent requests in the NBD block driver is bounded by
+MAX_NBD_REQUESTS. When reaching that level of concurrency, we park
+coroutines in a queue and, on completion, we resume the first. That
+logic is implemented in nbd_co_send_request().
+Coroutines also get queued when the channel is disconnected to make
+sure only one request triggers reconnection.
 
-This patch uses the new bdrv_co_refresh_connection() to force the
-handshake by manually starting the reconnection routine.
-It creates a clean flow to resize an NBD-backed block device on the
-server side by closing the connection and calling block_resize.
-When the node is configured with reconnect-delay=0, refreshing starts
-the reconnection but returns immediately with -EIO. The management
-application can handle this case by waiting for the connection to be
-established and re-running block_resize.
+This patch extracts nbd_co_acquire_slot(), nbd_co_release_slot() and
+nbd_co_reconnect() out of the request sending. This will help use
+nbd_reconnect_attempt() outside of the request sending logic in a later
+patch of the series.
 
-To detect disconnection, we peek the channel. This does not detect dead
-peers or disconnected TLS-secured connections. Therefore, this flow
-will not work if the server does not disconnect cleanly or if the
-communication is encrypted.
+No functional change.
 
 Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
 ---
- block/nbd.c             | 39 +++++++++++++++++++++++++++++++++++++++
- include/block/nbd.h     |  1 +
- nbd/client-connection.c |  7 +++++--
- 3 files changed, 45 insertions(+), 2 deletions(-)
+ block/nbd.c | 56 ++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
 diff --git a/block/nbd.c b/block/nbd.c
-index df72b17ade..759a6ef480 100644
+index 49f585eab5..df72b17ade 100644
 --- a/block/nbd.c
 +++ b/block/nbd.c
-@@ -2081,6 +2081,42 @@ static int coroutine_fn nbd_co_truncate(BlockDriverState *bs, int64_t offset,
-     return 0;
+@@ -510,6 +510,41 @@ err:
+     return ret;
  }
  
 +/*
-+ * Start the reconnection routine unless the node is connected and its channel
-+ * is still open. When used with a zero reconnect-delay, this function
-+ * triggers the reconnection and returns -EIO.
++ * Parks until a slot in the request queue is available or when, being the only
++ * in flight operation running, the caller is ready to run reconnection.
++ * Increments s->in_flight on return.
++ * Called with s->requests_lock held.
 + */
-+static int coroutine_fn GRAPH_RDLOCK
-+nbd_co_refresh_connection(BlockDriverState *bs, Error **errp)
++static void coroutine_fn nbd_co_acquire_slot(BDRVNBDState *s)
 +{
-+    BDRVNBDState *s = bs->opaque;
-+    int ret;
-+
-+    QEMU_LOCK_GUARD(&s->requests_lock);
-+
-+    if (s->state == NBD_CLIENT_QUIT) {
-+        error_setg(errp, "Cannot refresh a permanently unavailable NBD node");
-+        return -ECONNREFUSED;
++    while (s->in_flight == MAX_NBD_REQUESTS ||
++           (s->state != NBD_CLIENT_CONNECTED && s->in_flight > 0)) {
++        qemu_co_queue_wait(&s->free_sema, &s->requests_lock);
 +    }
-+
-+    if (s->state == NBD_CLIENT_CONNECTED) {
-+        if (!nbd_channel_is_closed(s->ioc)) {
-+            return 0;
-+        }
-+        /* A connection closed by its peer is treated as an error */
-+        nbd_channel_error_locked(s, -EIO);
-+    }
-+
-+    nbd_co_acquire_slot(s);
-+    ret = nbd_co_reconnect(s);
-+    nbd_co_release_slot(s);
-+
-+    if (ret < 0) {
-+        error_setg(errp, "Failed to reconnect NBD node");
-+    }
-+    return ret;
++    s->in_flight++;
 +}
 +
- static int64_t coroutine_fn nbd_co_getlength(BlockDriverState *bs)
- {
-     BDRVNBDState *s = bs->opaque;
-@@ -2205,6 +2241,7 @@ static BlockDriver bdrv_nbd = {
-     .bdrv_co_pdiscard           = nbd_client_co_pdiscard,
-     .bdrv_refresh_limits        = nbd_refresh_limits,
-     .bdrv_co_truncate           = nbd_co_truncate,
-+    .bdrv_co_refresh_connection = nbd_co_refresh_connection,
-     .bdrv_co_getlength          = nbd_co_getlength,
-     .bdrv_refresh_filename      = nbd_refresh_filename,
-     .bdrv_co_block_status       = nbd_client_co_block_status,
-@@ -2233,6 +2270,7 @@ static BlockDriver bdrv_nbd_tcp = {
-     .bdrv_co_pdiscard           = nbd_client_co_pdiscard,
-     .bdrv_refresh_limits        = nbd_refresh_limits,
-     .bdrv_co_truncate           = nbd_co_truncate,
-+    .bdrv_co_refresh_connection = nbd_co_refresh_connection,
-     .bdrv_co_getlength          = nbd_co_getlength,
-     .bdrv_refresh_filename      = nbd_refresh_filename,
-     .bdrv_co_block_status       = nbd_client_co_block_status,
-@@ -2261,6 +2299,7 @@ static BlockDriver bdrv_nbd_unix = {
-     .bdrv_co_pdiscard           = nbd_client_co_pdiscard,
-     .bdrv_refresh_limits        = nbd_refresh_limits,
-     .bdrv_co_truncate           = nbd_co_truncate,
-+    .bdrv_co_refresh_connection = nbd_co_refresh_connection,
-     .bdrv_co_getlength          = nbd_co_getlength,
-     .bdrv_refresh_filename      = nbd_refresh_filename,
-     .bdrv_co_block_status       = nbd_client_co_block_status,
-diff --git a/include/block/nbd.h b/include/block/nbd.h
-index 15ddec91ac..b459788534 100644
---- a/include/block/nbd.h
-+++ b/include/block/nbd.h
-@@ -508,6 +508,7 @@ NBDClientConnection *nbd_client_connection_new(const SocketAddress *saddr,
-                                                QCryptoTLSCreds *tlscreds,
-                                                const char *tlshostname);
- void nbd_client_connection_release(NBDClientConnection *conn);
-+bool nbd_channel_is_closed(QIOChannel *ioc);
++/* Called with s->requests_lock held. */
++static void coroutine_fn nbd_co_release_slot(BDRVNBDState *s)
++{
++    s->in_flight--;
++    qemu_co_queue_next(&s->free_sema);
++}
++
++/* Called with s->requests_lock held. */
++static int coroutine_fn GRAPH_RDLOCK nbd_co_reconnect(BDRVNBDState *s)
++{
++    if (nbd_client_connecting(s)) {
++        nbd_reconnect_attempt(s);
++        qemu_co_queue_restart_all(&s->free_sema);
++    }
++    if (s->state != NBD_CLIENT_CONNECTED) {
++        return -EIO;
++    }
++    return 0;
++}
++
+ static int coroutine_fn GRAPH_RDLOCK
+ nbd_co_send_request(BlockDriverState *bs, NBDRequest *request,
+                     QEMUIOVector *qiov)
+@@ -518,19 +553,10 @@ nbd_co_send_request(BlockDriverState *bs, NBDRequest *request,
+     int rc, i = -1;
  
- QIOChannel *coroutine_fn
- nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
-diff --git a/nbd/client-connection.c b/nbd/client-connection.c
-index 78caea3c37..e6e346d9fc 100644
---- a/nbd/client-connection.c
-+++ b/nbd/client-connection.c
-@@ -296,8 +296,11 @@ void nbd_client_connection_release(NBDClientConnection *conn)
+     qemu_mutex_lock(&s->requests_lock);
+-    while (s->in_flight == MAX_NBD_REQUESTS ||
+-           (s->state != NBD_CLIENT_CONNECTED && s->in_flight > 0)) {
+-        qemu_co_queue_wait(&s->free_sema, &s->requests_lock);
+-    }
+-
+-    s->in_flight++;
++    nbd_co_acquire_slot(s);
+     if (s->state != NBD_CLIENT_CONNECTED) {
+-        if (nbd_client_connecting(s)) {
+-            nbd_reconnect_attempt(s);
+-            qemu_co_queue_restart_all(&s->free_sema);
+-        }
+-        if (s->state != NBD_CLIENT_CONNECTED) {
+-            rc = -EIO;
++        rc = nbd_co_reconnect(s);
++        if (rc != 0) {
+             goto err;
+         }
      }
- }
+@@ -573,8 +599,7 @@ err:
+         if (i != -1) {
+             s->requests[i].coroutine = NULL;
+         }
+-        s->in_flight--;
+-        qemu_co_queue_next(&s->free_sema);
++        nbd_co_release_slot(s);
+         qemu_mutex_unlock(&s->requests_lock);
+     }
+     return rc;
+@@ -1085,8 +1110,7 @@ static bool coroutine_fn nbd_reply_chunk_iter_receive(BDRVNBDState *s,
+ break_loop:
+     qemu_mutex_lock(&s->requests_lock);
+     nbd_request_by_cookie(s, cookie, &error_abort)->coroutine = NULL;
+-    s->in_flight--;
+-    qemu_co_queue_next(&s->free_sema);
++    nbd_co_release_slot(s);
+     qemu_mutex_unlock(&s->requests_lock);
  
--/* Only true when the peer closed the channel. Does not detect if dead. */
--static bool nbd_channel_is_closed(QIOChannel *ioc)
-+/*
-+ * Only true when the peer closed the channel. Always returns false for TLS
-+ * channels. Does not detect if dead.
-+ */
-+bool nbd_channel_is_closed(QIOChannel *ioc)
- {
-     char data;
-     struct iovec iov = { .iov_base = &data, .iov_len = 1 };
+     return false;
 -- 
 2.43.0
 
