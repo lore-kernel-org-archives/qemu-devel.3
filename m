@@ -1,126 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E089606A32A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 07:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZeGkt63v;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=CKJ5ty1b
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF35606A32C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 07:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTwX4-0004Hk-Kk; Thu, 19 Nov 2026 02:26:10 -0500
+	id 1xTwoq-0006xX-Ev; Thu, 19 Nov 2026 02:44:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1xTwWz-00047j-Tj
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 02:26:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1xTwWy-0007Vz-6c
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 02:26:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795073162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u5RwmKytxv5XTXrXB+ZhuOXD3hvS9jkfRBPAqrNvQHc=;
- b=ZeGkt63voGVkoVqJg4kHniwTm0geeu5eNN9xGzkg0/hLHYbzE4TwbBjQTigGfDx4czAYSi
- lQLe2DDAQjZY3LGfb57KUCsWyGd8J+8WLyvuYC/Kyp/vzsVjTINVIxwvizzfx2UmG+rN+w
- 3soCtwXM3/2LiCxqloWqlUD7XbyTI7E=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-GGosIbPBNRuHgK_GzKudzQ-1; Thu, 19 Nov 2026 02:25:58 -0500
-X-MC-Unique: GGosIbPBNRuHgK_GzKudzQ-1
-X-Mimecast-MFC-AGG-ID: GGosIbPBNRuHgK_GzKudzQ_1795073157
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-5c1af1ee7c0so491015e87.1
- for <qemu-devel@nongnu.org>; Wed, 18 Nov 2026 23:25:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795073157; cv=none;
- d=google.com; s=arc-20260327;
- b=N6npig6aYQHghS48w5t0txqqvrW+N92HD5RFja828ZfoUETwmNlwWLcJ3QXS8Ye6xi
- 8j2bgkCpRAkLbUyeZUW6aI/JBd6JYj5kWjSghozW06R+WaUOuqJZl9pxL1BdIMitl9eU
- oSPF2/bLom9WdM2ClC8IBu3sXhSUwggFI4v1XdGJMh4SYOE7bjUzoIvZ0qLHCDn/STuX
- Qu6LdQZto0na9vhYmTq0veoXYY+biVgjYqldkv5oYE7OC6bZCMOAqZqWu4w4zD16SF5t
- Qc0L2xWYBl+DTeWqw/Wzncc+2mMO9n/KnfDjXLbncyAccM7pJkMuugy6drKxSZPP/n3+
- pvuQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=u5RwmKytxv5XTXrXB+ZhuOXD3hvS9jkfRBPAqrNvQHc=;
- fh=vGW0x/LIyq+JGE/jf62yfLKeIt/+RvVMH51dc4quSPk=;
- b=VCaiQOWF2JK6Yj01NJtNb2dT+tkt7WQN4B1QQpQ1x0+dIzq0HRnlGYCRW8qPONZK+z
- hHA+AI8UBWi5BcwHyVg64Vyx6KhVu6Cm2W9kUudLd1+FPlIixyn3tupg2bzSSsaLqaP3
- /3tDoB7xyR73Mdy0vITq79YKKi2djVumFvsXtb6lDb96NlPWMHw4rWK8iTNEuI3Uc9Ec
- ODU+PmkUNL05XWDfpNmmuAA5eYxXn1KyDXjNSMmMBk47Wu8KEilUeayT5FqsSFu4xl+k
- aJzytP8y5XTISXi4PaaZ/fwnZD2HUs6g/rrIm9i3Zfd+ZlS2/93H0jkzn5Efr/K/YOOa
- vRVA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795073157; x=1795677957; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=u5RwmKytxv5XTXrXB+ZhuOXD3hvS9jkfRBPAqrNvQHc=;
- b=CKJ5ty1bmvDBgQZkWY+pTX5ldzFr5MRGo8JyB9aiqAD/3oj/6lmKUlhKoAkMstnN5L
- phbg9TTfxDF0LE73RauTu+F7MmG4YWaQH1ukvLuh5lEFjvH/MfxkyMC/lfQWF6jSXFQg
- iXbViq+NeBz6gGAFlHgsAXL//oLFgwrcuwSeUfc6sA3exYppKavB6o3A3pGVh0gyqUoo
- ljW9/o/5bCrbNQPfPxHUlzIo5vAMWS30uLpJKzTLRk5tkOkUfRH+euON0U4voMdSLuzx
- IOI6FNEC3ZLFWiFToZawJwbWLcyubWfxlBTC/qkX1mCzErO3YHO29fEKaC6rKWU0ZDr5
- fnJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795073157; x=1795677957;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=u5RwmKytxv5XTXrXB+ZhuOXD3hvS9jkfRBPAqrNvQHc=;
- b=B9nNZu8lZVIgltuOI0vLRem740UWEuqRl9dOBxKkx2V6Fdxs9DdPG8+8y05OJw8Vg1
- GnFeb+LlftbP8xYYFpWeS8ach12/yCGl5gjfCTgNBs3jDKkEkmFj3vX+rOW9zGAe+89B
- GleeZ2LHOL2l2K/9S+j62j16nsYVVlq7KEC4PcbdADo4DE4NeV53d9sRD952TL1wm7B7
- SZLCz19OxalEqu8NryP7ytIijlgawBEvTyQ3ZCQ5PFgsUfuh8L7gxmwZkd1sMxekfNuY
- LJG1QZKpkG89q1JrRD1VUrCPGfCwuk1YoPS/rwleW7aWgSTZO48JlagxpEWbRDnsQJIU
- Q79Q==
-X-Gm-Message-State: APuU4Z82I07Kc0vPgBv3SESE5w3AyIYXpW86we5tC8aOtKNRNuj0Hmcf
- 5J26a2pyedTHLxNmTnJWv6OwEfHPNdzahLwkXcBdGT4EQXGP7ckovePqbCo68RMWiH7p61f0/pK
- 0M/D09lvL02qrHlIY6kMahLq7D9d3bBqIJRSkgHGdtkaeaTPSSuZA9QoaMdG9KUg9AdzTSNXkWH
- H3j0PlGZuMadnAbU5Te+3gtJLEwnNZNLM=
-X-Gm-Gg: AYBFou3UjY8OOniZMHjldHiavesQZWnUGF64mIk2G+b4YCL8U9F9WfYNyvl6htGSgT5
- kbj4kQaZNqcR6PZEhPf8hHhz+p2nKUAjlheokXq3WXWStJQ+/N+bQYScMZWqo6oFR7848FBA/kv
- zEp5/inE4B7bbQifx9eqrVZpbl41JDERf4zMnlfO+TZ43UtQ/+R083KVTN2Y3lUcwiZjkiK8tG8
- hy8wEZCxq/2D0iQxBQ=
-X-Received: by 2002:a05:6512:3c9f:b0:5bf:b996:d8ee with SMTP id
- 2adb3069b0e04-5c1a9c285c0mr1578045e87.47.1795073157233; 
- Wed, 18 Nov 2026 23:25:57 -0800 (PST)
-X-Received: by 2002:a05:6512:3c9f:b0:5bf:b996:d8ee with SMTP id
- 2adb3069b0e04-5c1a9c285c0mr1578033e87.47.1795073156795; Wed, 18 Nov 2026
- 23:25:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
+ id 1xTwoT-0006ub-Hn; Thu, 19 Nov 2026 02:44:11 -0500
+Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
+ id 1xTwoP-0001ip-C4; Thu, 19 Nov 2026 02:44:09 -0500
+Received: from xiaoou-ubuntu-01 (unknown [36.110.52.2])
+ by APP-05 (Coremail) with SMTP id zQCowABX8LW1qP5qLIlyAQ--.23889S3;
+ Thu, 19 Nov 2026 15:44:00 +0800 (CST)
+From: Molly Chen <xiaoou@iscas.ac.cn>
+To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, Chao Liu <chao.liu@processmission.com>
+Cc: nutty.liu@hotmail.com, max.chou@sifive.com, xiaoou@iscas.ac.cn,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Yin Zhang <zhangyin2018@iscas.ac.cn>,
+ Dajun Huang <djhuang_1@std.uestc.edu.cn>,
+ Zhiyuan Yang <zhiyuan.plct@isrc.iscas.ac.cn>
+Subject: [PATCH v4 01/20] target/riscv: Add packed SIMD extension state
+Date: Thu, 19 Nov 2026 07:43:21 +0000
+Message-ID: <20261119074345.866125-2-xiaoou@iscas.ac.cn>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261119074345.866125-1-xiaoou@iscas.ac.cn>
+References: <20261119074345.866125-1-xiaoou@iscas.ac.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261118080610.1322669-1-eashurov@redhat.com>
- <87pkw1cppj.fsf@pond.sub.org>
-In-Reply-To: <87pkw1cppj.fsf@pond.sub.org>
-From: Elizabeth Ashurov <eashurov@redhat.com>
-Date: Thu, 19 Nov 2026 09:25:45 +0200
-X-Gm-Features: AclHuK92RYpM9rSPB8t93u6JbuxvLtfetcaA6xuLHkp0CcfKme1tXr9xw6pZMR8
-Message-ID: <CAK957kEjJwY4oVLP37Xz6SaXcnM1eimAEMfRRW-BcrQHWT06dg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/2] qga: Add Windows driver information commands
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com, 
- dholler@redhat.com, fdeutsch@redhat.com, yvugenfi@redhat.com, 
- kramdoss@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000db694a06609c09b7"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eashurov@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowABX8LW1qP5qLIlyAQ--.23889S3
+X-Coremail-Antispam: 1UD129KBjvJXoW3Ar4xtryfWry8Jw1DAFW3GFg_yoWDGF15pr
+ 4DG39xGry8Jas7Zws3tF15WF15Ww1kG3ySkws7Ww4IqFW5JrW5GFn7t347ZFn8GFZ5Zr43
+ uF48CryDZr4UAFDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUmF14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+ x26xkF7I0E14v26r4j6ryUM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+ Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+ 8EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS
+ 0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2
+ IY67AKxVWUtVWrXwAv7VC2z280aVAFwI0_Gr1j6F4UJwAm72CE4IkC6x0Yz7v_Jr0_Gr1l
+ F7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2
+ IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+ 6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26ryj6F1UMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+ KfnxnUUI43ZEXa7VUj4lkDUUUUU==
+X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
+Received-SPF: pass client-ip=159.226.251.25; envelope-from=xiaoou@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.993,
+ HK_RANDOM_FROM=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,42 +74,310 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000db694a06609c09b7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Model vxsat with separate Vector/Zve and P-only control paths.  When
+Zve* is present, vxsat follows mstatus.VS/vsstatus.VS; when P is
+implemented without Zve*, stateen0.VXSAT controls access instead.
 
-I've rebased the series onto current master and sent v5. Please take a look
-at v5.
+Record the P-only stateen result in TB flags so cached translations
+preserve both instruction legality and the illegal-vs-virtual exception
+class.
 
-On Thu, Nov 19, 2026 at 8:14=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+Co-authored-by: Yin Zhang <zhangyin2018@iscas.ac.cn>
+Co-authored-by: Dajun Huang <djhuang_1@std.uestc.edu.cn>
+Co-authored-by: Zhiyuan Yang <zhiyuan.plct@isrc.iscas.ac.cn>
 
-> Doesn't apply for me.  What's your base?
->
->
+Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+---
+ target/riscv/cpu.c         |  5 ++--
+ target/riscv/cpu.h         |  8 +++++++
+ target/riscv/cpu_bits.h    |  2 ++
+ target/riscv/machine.c     | 19 +++++++++++++++
+ target/riscv/tcg/csr.c     | 39 +++++++++++++++++++++++++++++--
+ target/riscv/tcg/tcg-cpu.c | 48 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 117 insertions(+), 4 deletions(-)
 
---000000000000db694a06609c09b7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p>I&#39;ve rebased the series onto current master and sen=
-t v5. Please take a look at v5.</p></div><br><div class=3D"gmail_quote gmai=
-l_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Nov 19, 20=
-26 at 8:14=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat=
-.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">Doesn&#39;t apply for me.=C2=A0 What&#39;s your base=
-?<br>
-<br>
-</blockquote></div>
-
---000000000000db694a06609c09b7--
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 15c27f4ce4..755e1dd19b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -50,7 +50,7 @@
+ /* RISC-V CPU definitions */
+ static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
+ const uint32_t misa_bits[] = {RVI, RVE, RVM, RVA, RVF, RVD, RVV,
+-                              RVC, RVS, RVU, RVH, RVG, RVB, 0};
++                              RVC, RVS, RVU, RVH, RVG, RVB, RVP, 0};
+ #define RISCV_CPU_MVENDORID 0
+ #define RISCV_CPU_MIMPID 0
+ /*
+@@ -1621,7 +1621,8 @@ static const MISAExtInfo misa_ext_info_arr[] = {
+     MISA_EXT_INFO(RVH, "h", "Hypervisor"),
+     MISA_EXT_INFO(RVV, "v", "Vector operations"),
+     MISA_EXT_INFO(RVG, "g", "General purpose (IMAFD_Zicsr_Zifencei)"),
+-    MISA_EXT_INFO(RVB, "b", "Bit manipulation (Zba_Zbb_Zbs)")
++    MISA_EXT_INFO(RVB, "b", "Bit manipulation (Zba_Zbb_Zbs)"),
++    MISA_EXT_INFO(RVP, "x-p", "Packed-SIMD instructions")
+ };
+ 
+ static void riscv_cpu_validate_misa_mxl(RISCVCPUClass *mcc)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 49a1186bdb..a5f42d2066 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -70,6 +70,7 @@ typedef struct CPUArchState CPURISCVState;
+ #define RVG RV('G')
+ #define RVB RV('B')
+ #define RVX RV('X')
++#define RVP RV('P')
+ 
+ extern const uint32_t misa_bits[];
+ const char *riscv_get_misa_ext_name(uint32_t bit);
+@@ -783,6 +784,13 @@ FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
+ FIELD(EXT_TB_FLAGS, BIG_ENDIAN, 33, 1)
+ /* sdext single-step needs a TB flag to build 1-insn TBs */
+ FIELD(EXT_TB_FLAGS, SDEXT_STEP, 34, 1)
++FIELD(EXT_TB_FLAGS, P_VXSAT_EXCP, 35, 2)
++
++enum {
++    P_VXSAT_EXCP_NONE,
++    P_VXSAT_EXCP_ILLEGAL,
++    P_VXSAT_EXCP_VIRTUAL,
++};
+ 
+ #ifdef TARGET_RISCV32
+ #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 3579789a1f..79b9a08f7a 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -355,6 +355,8 @@
+ #define SMSTATEEN0_CS       (1ULL << 0)
+ #define SMSTATEEN0_FCSR     (1ULL << 1)
+ #define SMSTATEEN0_JVT      (1ULL << 2)
++/* Packed-SIMD draft: enable access to vxsat when misa.V = 0. */
++#define SMSTATEEN0_VXSAT    (1ULL << 3)
+ #define SMSTATEEN0_CTR      (1ULL << 54)
+ #define SMSTATEEN0_P1P13    (1ULL << 56)
+ #define SMSTATEEN0_HSCONTXT (1ULL << 57)
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 0de06e9588..020df9b8b1 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -160,6 +160,24 @@ static const VMStateDescription vmstate_vector = {
+     }
+ };
+ 
++static bool p_vxsat_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++
++    return riscv_has_ext(&cpu->env, RVP) && !cpu->cfg.ext_zve32x;
++}
++
++static const VMStateDescription vmstate_p_vxsat = {
++    .name = "cpu/p-vxsat",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = p_vxsat_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT8(env.vxsat, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool pointermasking_needed(void *opaque)
+ {
+     return false;
+@@ -638,6 +656,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_pmp,
+         &vmstate_hyper,
+         &vmstate_vector,
++        &vmstate_p_vxsat,
+         &vmstate_pointermasking,
+         &vmstate_rv128,
+ #ifdef CONFIG_KVM
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index af444e3e6f..68c0b6112e 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -109,6 +109,24 @@ static RISCVException vs(CPURISCVState *env, int csrno)
+     return RISCV_EXCP_ILLEGAL_INST;
+ }
+ 
++/* vxsat is also architectural state when P is implemented without Zve*. */
++static RISCVException vxsat(CPURISCVState *env, int csrno)
++{
++    if (riscv_cpu_cfg(env)->ext_zve32x) {
++        return vs(env, csrno);
++    }
++
++    if (riscv_has_ext(env, RVP)) {
++#if !defined(CONFIG_USER_ONLY)
++        return smstateen_acc_ok(env, 0, SMSTATEEN0_VXSAT);
++#else
++        return RISCV_EXCP_NONE;
++#endif
++    }
++
++    return RISCV_EXCP_ILLEGAL_INST;
++}
++
+ static RISCVException ctr(CPURISCVState *env, int csrno)
+ {
+     if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
+@@ -1016,7 +1034,12 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
+                                   target_ulong val, uintptr_t ra)
+ {
+ #if !defined(CONFIG_USER_ONLY)
+-    env->mstatus |= MSTATUS_VS;
++    if (riscv_cpu_cfg(env)->ext_zve32x) {
++        env->mstatus |= MSTATUS_VS;
++        if (env->virt_enabled) {
++            env->mstatus_hs |= MSTATUS_VS;
++        }
++    }
+ #endif
+     env->vxsat = val & BIT(0);
+     return RISCV_EXCP_NONE;
+@@ -3711,6 +3734,10 @@ static RISCVException write_mstateen0(CPURISCVState *env, int csrno,
+                                       target_ulong new_val, uintptr_t ra)
+ {
+     uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
++
++    if (riscv_has_ext(env, RVP) && !riscv_cpu_cfg(env)->ext_zve32x) {
++        wr_mask |= SMSTATEEN0_VXSAT;
++    }
+     if (!riscv_has_ext(env, RVF)) {
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
+@@ -3834,6 +3861,10 @@ static RISCVException write_hstateen0(CPURISCVState *env, int csrno,
+ {
+     uint64_t wr_mask = SMSTATEEN_STATEEN | SMSTATEEN0_HSENVCFG;
+ 
++    if (riscv_has_ext(env, RVP) && !riscv_cpu_cfg(env)->ext_zve32x) {
++        wr_mask |= SMSTATEEN0_VXSAT;
++    }
++
+     if (!riscv_has_ext(env, RVF)) {
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
+@@ -3963,6 +3994,10 @@ static RISCVException write_sstateen0(CPURISCVState *env, int csrno,
+ {
+     uint64_t wr_mask = 0;
+ 
++    if (riscv_has_ext(env, RVP) && !riscv_cpu_cfg(env)->ext_zve32x) {
++        wr_mask |= SMSTATEEN0_VXSAT;
++    }
++
+     if (!riscv_has_ext(env, RVF)) {
+         wr_mask |= SMSTATEEN0_FCSR;
+     }
+@@ -6155,7 +6190,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_FCSR]     = { "fcsr",     fs,     read_fcsr,    write_fcsr   },
+     /* Vector CSRs */
+     [CSR_VSTART]   = { "vstart",   vs,     read_vstart,  write_vstart },
+-    [CSR_VXSAT]    = { "vxsat",    vs,     read_vxsat,   write_vxsat  },
++    [CSR_VXSAT]    = { "vxsat",    vxsat,  read_vxsat,   write_vxsat  },
+     [CSR_VXRM]     = { "vxrm",     vs,     read_vxrm,    write_vxrm   },
+     [CSR_VCSR]     = { "vcsr",     vs,     read_vcsr,    write_vcsr   },
+     [CSR_VL]       = { "vl",       vs,     read_vl                    },
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 5834ec1524..3b3cb52c84 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -159,6 +159,8 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+     fs = EXT_STATUS_DIRTY;
+     vs = EXT_STATUS_DIRTY;
+ #else
++    RISCVException p_vxsat_excp;
++
+     flags = FIELD_DP32(flags, TB_FLAGS, PRIV, env->priv);
+ 
+     flags |= riscv_env_mmu_index(env, 0);
+@@ -181,6 +183,23 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+              ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
+     }
+ 
++    /*
++     * Without Zve*, all P instructions in the OP-32 and OP-IMM-32
++     * spaces are controlled by stateen0.VXSAT.  Preserve the exception
++     * class in the TB flags so translated code can distinguish an illegal
++     * instruction from a virtual-instruction exception.
++     */
++    p_vxsat_excp = smstateen_acc_ok(env, 0, SMSTATEEN0_VXSAT);
++    if (riscv_has_ext(env, RVP) && !riscv_cpu_cfg(env)->ext_zve32x) {
++        if (p_vxsat_excp == RISCV_EXCP_VIRT_INSTRUCTION_FAULT) {
++            ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, P_VXSAT_EXCP,
++                                   P_VXSAT_EXCP_VIRTUAL);
++        } else if (p_vxsat_excp != RISCV_EXCP_NONE) {
++            ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, P_VXSAT_EXCP,
++                                   P_VXSAT_EXCP_ILLEGAL);
++        }
++    }
++
+     if ((cpu->cfg.debug || cpu->cfg.ext_sdtrig)
+         && !icount_enabled()) {
+         flags = FIELD_DP32(flags, TB_FLAGS, ITRIGGER, env->itrigger_enabled);
+@@ -559,6 +578,28 @@ static void riscv_cpu_validate_b(RISCVCPU *cpu)
+     }
+ }
+ 
++static void riscv_cpu_validate_p(RISCVCPU *cpu, Error **errp)
++{
++    CPURISCVState *env = &cpu->env;
++
++    if (!riscv_has_ext(env, RVP)) {
++        return;
++    }
++
++    if (riscv_cpu_mxl(env) != MXL_RV32 &&
++        riscv_cpu_mxl(env) != MXL_RV64) {
++        error_setg(errp, "P extension requires RV32 or RV64");
++        return;
++    }
++
++    if (!(cpu->cfg.ext_zmmul && cpu->cfg.ext_zba && cpu->cfg.ext_zbb &&
++          cpu->cfg.ext_zbkb)) {
++        error_setg(errp, "P extension requires zmmul, zba, zbb and zbkb "
++                         "extensions");
++        return;
++    }
++}
++
+ /*
+  * Check consistency between chosen extensions while setting
+  * cpu->cfg accordingly.
+@@ -641,6 +682,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
+ 
++    riscv_cpu_validate_p(cpu, &local_err);
++    if (local_err != NULL) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
+     riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+     if (local_err != NULL) {
+         error_propagate(errp, local_err);
+@@ -1455,6 +1502,7 @@ static const RISCVCPUMisaExtConfig misa_ext_cfgs[] = {
+     MISA_CFG(RVV, false),
+     MISA_CFG(RVG, false),
+     MISA_CFG(RVB, false),
++    MISA_CFG(RVP, false),
+ };
+ 
+ /*
+-- 
+2.53.0
 
 
