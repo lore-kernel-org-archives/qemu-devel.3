@@ -1,97 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A8F606A330
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 18:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB2760A2607
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 19:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=j6Y7DRLR
+	dkim=pass (2048-bit key, unprotected) header.d=kernel-dk.20260707.gappssmtp.com header.i=@kernel-dk.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=rA4trIYj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU7Im-0007HV-Jy; Thu, 19 Nov 2026 13:56:08 -0500
+	id 1xU7Mo-0007qA-BT; Thu, 19 Nov 2026 14:00:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xU7Ij-0007Gw-DC
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:56:05 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1xU7Ml-0007pQ-PE
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 14:00:15 -0500
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xU7Ih-0008IM-T6
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 13:56:05 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8b4c8b51b58so97298b3a.1
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 10:56:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1xU7Mi-0001Yh-90
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 14:00:15 -0500
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-703be215729so35367eaf.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 11:00:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795114562; x=1795719362; darn=nongnu.org;
+ d=kernel-dk.20260707.gappssmtp.com; s=20260707; t=1795114808; x=1795719608;
+ darn=nongnu.org; 
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=GYB1dTOmJBuh3HO8sbLhiXZWRlkdiO237Pd86QmoAGk=;
- b=j6Y7DRLRYxKHGFUuntRNGBu3C6oWAfzRV0djUpB0T5jDBz/r0M//SQ7FA0DM7iD3NW
- bxfNVAQlp40Rpb6uYnk+JY6lPRvRNlzCA8qa3+Jz3Hgr9dbslgQ6eErEbkfvtID8DN2x
- mKAspjbAIxjDg901SzFgGa87tQAkq7+t4yzSUK0D5PUxebSgAc5flBVXbvsUTk5Qz2P/
- xy0gzr8+gOPlKkeu+7xF3lmHgCgiDHrvwhD5Z0O5Mc663uwncAwkm0ZtxoE4P8eYBttT
- oWqzsgJKNjlXfPBq5W21KcIi5o/boB1uYa9/AZh71CqavvBQ4yd5lgNeD1w7+Jb4kF3d
- rGHA==
+ bh=yKtrPYySzVpg8srBQPpNto74Mks9LdrvipSbyL58qpI=;
+ b=rA4trIYjtWk3RSQ8G+peczusKaCBUD53d5winxpce2SKQljgCFddM4SFvnd+7Zm1/I
+ 3ZM0hoOfvONYbGlcfvC9eWwd76IqHIMLPS6Zsfe645Knphgvm7vpggrluw6g8DoJjJ6g
+ v+T3U+8FT5zYSHO6ZJpn7+ZPBCZXdMJzdyOuRDGEmQZkw8XDJi+O9o96swwWJrIOqg3J
+ n8JtA+yQ4A52T7jA9T4IG27ZTNn1HNUEPV4a/P0UM4MYHFhXeD8Bd8ZWlwBQljPUrAhw
+ S02bRskJTrvdVfFD8yxRlv1caPOIo9tee8pcY/vMTfmHQb/bAJmhcyuoiabPzNYc+Nnq
+ wDAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795114562; x=1795719362;
+ d=1e100.net; s=20260707; t=1795114808; x=1795719608;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=GYB1dTOmJBuh3HO8sbLhiXZWRlkdiO237Pd86QmoAGk=;
- b=PUScQcoDwum1bHTpfe+8o3f8itLUMB/dGqIwNcog3P3i1DPO43qzWLEvLk6IW2mzKj
- dXQJLT8ksuiAzfaJwihpTYH4wSVF5H/nv9UP2aWUtCXwqXC3nmTElVItA9D5nKp9XPgl
- CwN/ypaRL5t/2C2IkN+QshVjxx5QtLcu7aOuy6QLLmgwke0K17sdfTSI9Nvm/o2OUUf3
- Tg/NVVf72PmKiyIdqcFfWTmXx1+/DWtlnqq7taFGBkyZaQ7KYCue+Ud6UfDlil3gpLUg
- hvFCV/rod+5m+mwWNiCMsiJ/Hv3G/MchmILSc01M6qWV0ndM0QKayiCu4BMow8kMifmV
- vcOw==
+ bh=yKtrPYySzVpg8srBQPpNto74Mks9LdrvipSbyL58qpI=;
+ b=LuJs1ZLU2G6/1pAYGIWEg0wBRxuPKQ2CbBLYsZPWac9+JYgw9hkNRZBvIR7JosKL6X
+ HfsA8BQxIVXs32YDOFfLWeoE4nhzkKAG17ywnUfpdhaXpbS4+lTs0ih2tkvWOCZBJ2M+
+ 26chclO5oEz1AygS+XO2OHvR+a2ekKaEFlRQt2UhggT0WUOMNxZsyGXzsMK11wSj8+Dc
+ ytvFEScb/r9wVHu+y2Ooq5cVueSanQK+BdbuAChOyjCD181cAOHLLNBs+Zqdx+2AZ+q7
+ nNm8+mi5Xoo2skkuHomtjTLvvfcl/1QT/REc2HtAv6szEN2tI4c1hwE/1KQBNtReQmOm
+ xN6w==
 X-Forwarded-Encrypted: i=1;
- AL+hErGRiZur7XPIcfuC48n3o1iiT3OOZbI4cnzFry1AhrucJ0kv+mGKC0X0jTBuLvmaIKawzms9GapK3kgO@nongnu.org
-X-Gm-Message-State: APuU4Z/NgXPcazOBC9hfgyd5cT5pIfHC6jN+dtL4m7EWIifJ4phEwdnF
- Gg2jqmpFOusDA8UojCTiqSZZeEIXAHinTloxLzixcgdntDtuwufZb7bFbQBC0MxTeT0=
-X-Gm-Gg: AYBFou3FCzVm5q4eBKJ5vFjkjxO89n87f8kDjENHk+D5TnOvF9SqAOJaGcuO7oG3OGs
- fbX19foJo/PX3QUB8DR/QEIQbDmHKr/Xwek8UKnmiIAyiFqBepWqnmh1x1gbsjC2cHKYaJKFQtR
- 3XeRjKjnpUJcZ7mVGcO2bjSb4x+BqAHAefXy8srS2CB2uq6kb7xq0KASSOScN8S1Afe2t4ETkC6
- mXu8bq3/XMzmNBHg1y8laejQ95FgNbJgTKrClr3jpChiSfj4b5e/TN7yvaR4hyYNbpzFqzqeUAd
- 2/F1t5B8Hqm4nH25JOrjLTio1Odet+HKHRNs3tr/98EVJZqlOuD8ai+/fCB8LhdeBUk3WeqJZzO
- OdpvpyYAhs/gO41BWAvwVfmYNIU0wZ++ktr4RX2xhgPAm02O4BDa2OtpStscWRcDoA9LLm1Ez7V
- x85BwJIy8ngxvemmq9McF6DjflOB6jT3UECZnVhNRysJ1PCkcGiBwznN8EqWmID718+mJO2d6T/
- KQBgyV9odZnAVE0YP40Zj6KBuSp9YL7HrQhgPjXzDGAZPA/jDXQE4fI/xVVqrXs3UrxFvrYbHaF
- GBY5Nj2e4s6PU5x2FSO1ZFij6pb+JkqqcVXjrlmeG0DUzyrCVptXUgBqGGnMRhXt7svwdEs=
-X-Received: by 2002:a05:6a00:f86:b0:89e:9084:b02c with SMTP id
- d2e1a72fcca58-8c87d02544fmr515635b3a.48.1795114561683; 
- Thu, 19 Nov 2026 10:56:01 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ AL+hErEWiw0Zlcq//yZDPBFc4hC/GdzY8eRStMjUaisZBzZFvIg2FO965uiDzgjjMH0/WlaSzJJLeirDmtus@nongnu.org
+X-Gm-Message-State: APuU4Z9J/PP2PmVXQ4yxBMSoeuYV9j/Fe57Y0vLqqWJCzontp3NiXjYJ
+ erYHX+G0CyVxjF52mZkRJE2mzb82RzC2WZtsXqn+l6rWkx51wV4ixkCprzWDVwIR9a0=
+X-Gm-Gg: AYBFou0Q2P/uEUrutJghY8M3DchIzbFMDffvHZuzvXzCqOl5Z9KNwocM4zuGmyCxBYd
+ /I9EPoh3MllKMBZqiF6+zwWptBlEoZUwAWBmJE0i/aBuRua2nJ7tXnRoI24/vnV4FPffu5rjY72
+ 82gXas4pvLFWacprsBslY27/fY9mcfoLjXFbgfHbEV4nhKuh12OIaQfz/LIN1rZxV70SUMKNfg8
+ T2KQD5FXDBkRUhuAnAwsKBmkB8lfuEdZWiNaKGS+1bofDZQYZ+66SSnXAv7tffJvE8lELelt1S9
+ eDNcoPGYY9RazLknxlRE+1BPyDX8xh13Jw5CT4rLDy/X/+yxM7ciB+iC/4S1mae7XGBVBDHp9Vo
+ ubaeScppzUAep19ZS9ZxctU3bYGP+VP+y6C0jka5WQQycFEB4JRpbl0GHG+r3K055Kmav/svEFI
+ wo1YvA/b/dx7tzAKVkOrPkjGcYOnkBwLhLIEjzAGo6Ia9c2cIj2pPgz4pPiS2xdQ5Qe97iK4MwL
+ uKBC4WyGfRsZf9or2Dr1kT/nbDcWn79FNIVTz5t87XL3jBKKfZMABmzSWgHo2sSQUuMPa30aPnj
+ tbwewmQ92YJZso2b+uRGdrJWtcNlFldef1fiz/9qqgz//fa2hUvSNLTS1jNMqmNKbRGrhtNuSlD
+ zdbtFzhFvOsFNIneCK+VQ9gkwaCwg+K1S2nn6lWYin07ZH3oJeqBxfAkcD3K2Yzw0Z33I
+X-Received: by 2002:a05:6820:a703:20b0:70a:549:292e with SMTP id
+ 006d021491bc7-71b394384b9mr383671eaf.28.1795114808197; 
+ Thu, 19 Nov 2026 11:00:08 -0800 (PST)
+Received: from [192.168.0.102] ([96.43.243.2])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8c87285c15asm325734b3a.20.2026.11.19.10.56.01
+ 46e09a7af769-863168bdba0sm321908a34.7.2026.11.19.11.00.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Nov 2026 10:56:01 -0800 (PST)
-Message-ID: <b2516ddb-9e26-43ca-b06b-197b6e6feb7e@linaro.org>
-Date: Thu, 19 Nov 2026 10:55:59 -0800
+ Thu, 19 Nov 2026 11:00:07 -0800 (PST)
+Message-ID: <43e84530-660f-4414-acac-5b0a02c43732@kernel.dk>
+Date: Thu, 19 Nov 2026 12:00:06 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/cpu: mark CPU properties as const
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- kvm@vger.kernel.org, Marcelo Tosatti <mtosatti@redhat.com>
-References: <20261119180859.1044425-1-jsnow@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+From: Jens Axboe <axboe@kernel.dk>
+To: John Maguire <jmaguire2013@gmail.com>, stefanha@redhat.com
+Cc: f.ebner@proxmox.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com, 
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, t.lamprecht@proxmox.com
+References: <4EF13FE7-E6F3-42E2-83F9-635310B028DE@gmail.com>
+ <3069e3f8-2cbf-436f-bf35-303fc90001ce@kernel.dk>
 Content-Language: en-US
-In-Reply-To: <20261119180859.1044425-1-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <3069e3f8-2cbf-436f-bf35-303fc90001ce@kernel.dk>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=axboe@kernel.dk; helo=mail-oo1-xc2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,30 +103,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/19/26 10:08, John Snow wrote:
-> Currently, these large property tables are loaded in the read-write
-> `.data` segment; by marking them as const they can be loaded as part
-> of `.rodata` instead, where these tables can be shared between multiple
-> instances of QEMU as RssFile memory instead of RssAnon memory.
+On 11/18/26 8:58 AM, Jens Axboe wrote:
+> On 11/15/26 4:05 PM, John Maguire wrote:
+>> On Tue, Jun 02, 2026, Stefan Hajnoczi wrote:
+>>> Pinging Jens: io_uring accounts POLL_ADD SQEs as blocking I/O activity
+>>> whereas select(2)/poll(2)/epoll_wait(2) do not. Would it make sense to
+>>> follow the same accounting as the syscalls for this operation since that
+>>> is probably expected?
+>>
+>> Hello,
+>>
+>> I run Incus on two hosts and see misleading iowait and IO pressure on
+>> both since Incus 7.6, which puts virtio disks on a dedicated iothread by
+>> default. Incus users now hit this without opting into iothreads.
+>>
+>> Host 1: Arch Linux, stock QEMU 11.1.3, kernel 6.18.62, 16 CPUs, five
+>> VMs. /proc/pressure/io shows about 80% "some" and 75% "full", with
+>> 20-30% iowait. The disks are lightly loaded (under 15% util), there are
+>> no D-state tasks, the pressure is confined to the cgroup holding the
+>> QEMU processes, and each QEMU process has one thread in io_cqring_wait.
+>> It started the day I upgraded from Incus 7.5.1 to 7.6; QEMU 11.1.x had
+>> been in use on this host since late September without it.
+>>
+>> Host 2: Debian 13, kernel 6.12.116, 56 CPUs, four VMs, Zabbly's Incus
+>> packages. These bundle QEMU 11.1.3 with the pve-qemu patch
+>> "fdmon-io_uring: avoid idle event loop being accounted as IO wait".
+>> Pressure is about 68% "some" and 65% "full" with disks under 1% util,
+>> and again one thread per QEMU process in io_cqring_wait. This kernel
+>> does not advertise IORING_FEAT_NO_IOWAIT (added in 6.15), so the patch
+>> has no effect there.
+>>
+>> So the downstream patch only helps on 6.15+ kernels, and distros
+>> shipping unpatched QEMU get these numbers by default.
+>>
+>> Is there a preferred way forward? Fiona offered to submit the Proxmox
+>> workaround to qemu-devel, and Stefan asked whether io_uring should
+>> instead account POLL_ADD the way poll(2) does. Either would fix this
+>> for users on distro packages.
 > 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   target/i386/cpu-internal.h |  2 +-
->   target/i386/cpu-system.c   |  2 +-
->   target/i386/cpu.c          | 30 +++++++++++++++---------------
->   target/i386/kvm/tdx.c      |  2 +-
->   4 files changed, 18 insertions(+), 18 deletions(-)
+> We can just queue up the patches for stable so they bubble back to
+> older versions, I think that's the cleanest approach and gets us
+> a unified interface across supported kernel versions.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I've prepared and tested patches for this for 6.12-stable, 6.6-stable,
+and 6.1-stable. I'll send them in with the next batch. Once they are in,
+all current and supported stable series will advertise
+IORING_FEAT_NO_IOWAIT.
 
-r~
-
+-- 
+Jens Axboe
 
