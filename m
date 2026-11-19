@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F60606A324
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DC8606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU1zh-0006eg-BB; Thu, 19 Nov 2026 08:16:06 -0500
+	id 1xU1zn-0006fi-Qk; Thu, 19 Nov 2026 08:16:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zY-0006au-Jd; Thu, 19 Nov 2026 08:15:56 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.34])
+ id 1xU1za-0006cW-35; Thu, 19 Nov 2026 08:15:58 -0500
+Received: from mxct.zte.com.cn ([183.62.165.209])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zU-0005Sm-1J; Thu, 19 Nov 2026 08:15:56 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ id 1xU1zV-0005St-01; Thu, 19 Nov 2026 08:15:57 -0500
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jVf990HzKz4yjjT;
- Thu, 19 Nov 2026 21:15:41 +0800 (CST)
-Received: from szxlzmapp03.zte.com.cn ([10.5.231.207])
- by mse-fl1.zte.com.cn with SMTP id 6AJDFZp1080040;
- Thu, 19 Nov 2026 21:15:35 +0800 (+08)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4jVf963sFMz52Rpk;
+ Thu, 19 Nov 2026 21:15:38 +0800 (CST)
+Received: from szxl2zmapp06.zte.com.cn ([10.1.32.108])
+ by mse-fl2.zte.com.cn with SMTP id 6AJDFYrS060268;
+ Thu, 19 Nov 2026 21:15:34 +0800 (+08)
  (envelope-from gong.shuai@sanechips.com.cn)
 Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:38 +0800
-X-Zmail-TransId: 3e816afef67a02f-556d2
+ by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:37 +0800
+X-Zmail-TransId: 3e816afef67802f-556b8
 X-Zmail-LocalSMTP: 1
 X-Zmail-RealSender: gong.shuai@sanechips.com.cn
 From: Gong Shuai <gong.shuai@sanechips.com.cn>
@@ -43,10 +43,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Wu Fei <wu.fei9@sanechips.com.cn>,
  Qingye Zhao <zhao.qingye@sanechips.com.cn>,
  Gong Shuai <gong.shuai@sanechips.com.cn>
-Subject: [RFC PATCH v3 05/15] hw/riscv/riscv-iommu: Split device context fetch
- from cache lookup
-Date: Thu, 19 Nov 2026 21:15:14 +0800
-Message-ID: <20261119131524.395861-6-gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v3 03/15] hw/riscv/riscv-iommu: Allow PCI IOMMU ops to be
+ overridden
+Date: Thu, 19 Nov 2026 21:15:12 +0800
+Message-ID: <20261119131524.395861-4-gong.shuai@sanechips.com.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
 References: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
@@ -54,20 +54,20 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 6AJDFZp1080040
+X-MAIL: mse-fl2.zte.com.cn 6AJDFYrS060268
 X-TLS: YES
 X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 19 Nov 2026 21:15:41 +0800
+X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Nov 2026 21:15:38 +0800
 X-CLEAN: YES
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AFEF67D.000/4jVf990HzKz4yjjT
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Fangmail-MID-QID: 6AFEF67A.000/4jVf963sFMz52Rpk
+Received-SPF: pass client-ip=183.62.165.209;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,127 +82,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The device context lookup mixes parsing the DC from guest memory with
-cache management and FQ fault reporting, which does not fit the command
-path. Export riscv_iommu_ctx_fetch() to parse a DC straight from guest
-memory without cache or fault side effects, and rename riscv_iommu_ctx()
-to riscv_iommu_ctx_lookup() to reflect its translation-path role.
+From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
+Add an iommu_ops field to RISCVIOMMUState and use it when
+registering the IOMMU on a PCI bus, falling back to the default
+riscv_iommu_ops when unset. This lets callers install custom PCI
+IOMMU ops without changing existing behaviour.
+
 Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
+Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
 ---
- hw/riscv/riscv-iommu.c | 31 ++++++++++++++++---------------
- hw/riscv/riscv-iommu.h |  5 +++++
- 2 files changed, 21 insertions(+), 15 deletions(-)
+ hw/riscv/riscv-iommu.c | 5 ++++-
+ hw/riscv/riscv-iommu.h | 3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 986921dd5e..10f81f8bdf 100644
+index 0e6970773a..6381986265 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -1154,13 +1154,13 @@ out:
- }
- 
- /*
-- * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
-+ * RISC-V IOMMU Device Context Fetch - Device Directory Tree Walk
-  *
-- * @s         : IOMMU Device State
-- * @ctx       : Device Translation Context with devid and process_id set.
-- * @return    : success or fault code.
-+ * Parse the device context for (devid, process_id) from guest memory
-+ * into @ctx. Returns 0 on success or a fault code.
-  */
--static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-+int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, unsigned devid,
-+                          unsigned process_id, RISCVIOMMUContext *ctx)
- {
-     const uint64_t ddtp = s->ddtp;
-     unsigned mode = get_field(ddtp, RISCV_IOMMU_DDTP_MODE);
-@@ -1172,6 +1172,9 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-     int depth;
-     uint64_t de;
- 
-+    ctx->devid = devid;
-+    ctx->process_id = process_id;
-+
-     switch (mode) {
-     case RISCV_IOMMU_DDTP_MODE_OFF:
-         return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
-@@ -1425,10 +1428,10 @@ static void riscv_iommu_ctx_inval(RISCVIOMMUState *s, GHFunc func,
- }
- 
- /* Find or allocate translation context for a given {device_id, process_id} */
--static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
--                                          unsigned devid, unsigned process_id,
--                                          IOMMUAccessFlags perm, uint64_t iova,
--                                          void **ref)
-+static RISCVIOMMUContext *riscv_iommu_ctx_lookup(RISCVIOMMUState *s,
-+                                                 unsigned devid, unsigned process_id,
-+                                                 IOMMUAccessFlags perm, uint64_t iova,
-+                                                 void **ref)
- {
-     GHashTable *ctx_cache;
-     RISCVIOMMUContext *ctx;
-@@ -1452,10 +1455,8 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
-     }
- 
-     ctx = g_new0(RISCVIOMMUContext, 1);
--    ctx->devid = devid;
--    ctx->process_id = process_id;
- 
--    int fault = riscv_iommu_ctx_fetch(s, ctx);
-+    int fault = riscv_iommu_ctx_fetch(s, devid, process_id, ctx);
-     if (!fault) {
-         if (mode != RISCV_IOMMU_DDTP_MODE_BARE) {
-             if (g_hash_table_size(ctx_cache) >= LIMIT_CACHE_CTX) {
-@@ -2260,7 +2261,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
-         return;
-     }
- 
--    ctx = riscv_iommu_ctx(s, devid, pid, perm, iova, &ref);
-+    ctx = riscv_iommu_ctx_lookup(s, devid, pid, perm, iova, &ref);
-     if (ctx == NULL) {
-         riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE,
-                                  RISCV_IOMMU_TR_RESPONSE_FAULT |
-@@ -2619,7 +2620,7 @@ static MemTxResult riscv_iommu_trap_write(void *opaque, hwaddr addr,
-     /* FIXME: PCIe bus remapping for attached endpoints. */
-     devid |= s->bus << 8;
- 
--    ctx = riscv_iommu_ctx(s, devid, 0, IOMMU_RW, addr, &ref);
-+    ctx = riscv_iommu_ctx_lookup(s, devid, 0, IOMMU_RW, addr, &ref);
-     if (ctx == NULL) {
-         res = MEMTX_ACCESS_ERROR;
+@@ -3007,7 +3007,10 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+         RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
+         QLIST_INSERT_AFTER(last, iommu, iommus);
+     } else if (!bus->iommu_ops && !bus->iommu_opaque) {
+-        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
++        if (!iommu->iommu_ops) {
++            iommu->iommu_ops = &riscv_iommu_ops;
++        }
++        pci_setup_iommu(bus, iommu->iommu_ops, iommu);
      } else {
-@@ -2927,7 +2928,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
-     };
-     uint32_t devid = riscv_iommu_space_devid(as);
- 
--    ctx = riscv_iommu_ctx(as->iommu, devid, iommu_idx, flag, addr, &ref);
-+    ctx = riscv_iommu_ctx_lookup(as->iommu, devid, iommu_idx, flag, addr, &ref);
-     if (ctx == NULL) {
-         /* Translation disabled or invalid. */
-         iotlb.addr_mask = 0;
+         error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
+             pci_bus_num(bus));
 diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 099faa9480..3e10647975 100644
+index 403d10b321..cf2904c118 100644
 --- a/hw/riscv/riscv-iommu.h
 +++ b/hw/riscv/riscv-iommu.h
-@@ -142,6 +142,11 @@ struct RISCVIOMMUContext {
-     uint64_t msiptp;            /* MSI redirection page table pointer */
+@@ -24,6 +24,7 @@
+ #include "system/dma.h"
+ #include "hw/riscv/iommu.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
++#include "hw/pci/pci.h"
+ 
+ typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
+ 
+@@ -97,6 +98,8 @@ struct RISCVIOMMUState {
+     /* HPM event counters */
+     GHashTable *hpm_event_ctr_map; /* Mapping of events to counters */
+     uint8_t hpm_cntrs;
++
++    const PCIIOMMUOps *iommu_ops;
  };
  
-+/* Resolve {devid, process_id} straight from guest memory. Returns 0 or a
-+ * RISCV_IOMMU_FQ_CAUSE_* code. */
-+int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, unsigned devid,
-+                          unsigned process_id, RISCVIOMMUContext *ctx);
-+
- /* private helpers */
- 
- /* Register helper functions */
+ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
 -- 
 2.53.0
 
