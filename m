@@ -1,66 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7AE606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 16:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353A4606A33A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 16:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=CdTizZPd
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bz1Dm0Gg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU4p4-0000fg-Rl; Thu, 19 Nov 2026 11:17:22 -0500
+	id 1xU4s2-0001py-Uj; Thu, 19 Nov 2026 11:20:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xU4nu-0000Pi-5x; Thu, 19 Nov 2026 11:16:11 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xU4nr-0004W8-7S; Thu, 19 Nov 2026 11:16:04 -0500
-Received: from example.com (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 788BF20B7169;
- Thu, 19 Nov 2026 08:15:54 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 788BF20B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795104957;
- bh=0G5fuYdCNK/rfg54tr6QJ2nnjuAg/gwKeq+nN0ZqCYY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=CdTizZPdBWnk0FEnrICCZ0rj3/6Jip33V12P2KDf9ls/+O+mRGXg0gx3GYGKn+10h
- vaeIE63RwjyQzIZOCnz0afkdhQk2lzOZqLW6/7dtLNDzXbqqVvYxkxYKc3TXwp6x1G
- ZUg7NPIgAmaTpamqfOcRe1biKw4Vf58vYx6tXX2Y=
-Date: Thu, 19 Nov 2026 17:15:53 +0100
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 05/14] target/arm/mshv: implement vcpu state
- operations for ARM64
-Message-ID: <av8guV6yQkrfIjFZ@example.com>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-5-aefe5e76a0e3@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xU4s0-0001pM-Jd
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 11:20:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1xU4ry-0007tj-JA
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 11:20:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795105216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=V9AmFpKii5Kis4THF2EJNXf/b+YdWpDyc6ERXpAsj7k=;
+ b=bz1Dm0GgmpV9EjfEzvlRGySQ4WYpRtTckwLeClB9a9k9jcNi0XqH+o8iGwkb5Y6O9mcMi3
+ J1DA+8UsxKzu3YeMwZiOhhRTuQxdZp2TIpRwPW4+7nK4cNThsjsMn3yeaMo8aom3CX5jrX
+ DggCzPD2/m9Uon8BJy01rM8y86Kn/9M=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-kRyujPasNOyW-WaCvysGrg-1; Thu,
+ 19 Nov 2026 11:20:14 -0500
+X-MC-Unique: kRyujPasNOyW-WaCvysGrg-1
+X-Mimecast-MFC-AGG-ID: kRyujPasNOyW-WaCvysGrg_1795105213
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8DE731800589; Thu, 19 Nov 2026 16:20:12 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 64D2C3000223; Thu, 19 Nov 2026 16:20:09 +0000 (UTC)
+Date: Thu, 19 Nov 2026 10:20:06 -0600
+From: Eric Blake <eblake@redhat.com>
+To: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com,
+ stefanha@redhat.com, fam@euphon.net, nbd@other.debian.org
+Subject: Re: [PATCH 0/5] block/nbd: Fix block resize on idle device
+Message-ID: <av8d_ufYpxKMw4qk@redhat.com>
+References: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-5-aefe5e76a0e3@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
+User-Agent: NeoMutt/20260616
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,245 +80,80 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 01, 2026 at 10:52:50AM +0000, Aastha Rawat wrote:
-> Add support for reading and writing ARM64 CPU registers in the MSHV
-> accelerator. This includes functions to set and get registers,
-> initialize and destroy VCPU state, and manage register state
-> synchronization between QEMU and hypervisor.
-> 
-> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> ---
->  include/hw/hyperv/hvgdk_mini.h |  42 +++++++++++++++
->  target/arm/mshv/mshv-all.c     | 119 +++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 161 insertions(+)
-> 
-> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> index a5527d49cf..b5bcea353a 100644
-> --- a/include/hw/hyperv/hvgdk_mini.h
-> +++ b/include/hw/hyperv/hvgdk_mini.h
-> @@ -32,6 +32,46 @@ typedef enum hv_register_name {
->      HV_REGISTER_PENDING_EVENT0       = 0x00010004,
->      HV_REGISTER_PENDING_EVENT1       = 0x00010005,
->  
-> +#if defined(__aarch64__)
+[cc NBD list for a protocol discussion]
 
-do we need those ifdefs here (they create a checkpatch warning)? Since
-they have a clear prefix and all values are explicitly assigned we
-might not run into a conflict.
-
-> +    HV_ARM64_REGISTER_XZR   = 0x0002FFFE,
-> +    HV_ARM64_REGISTER_X0    = 0x00020000,
-> +    HV_ARM64_REGISTER_X1    = 0x00020001,
-> +    HV_ARM64_REGISTER_X2    = 0x00020002,
-> +    HV_ARM64_REGISTER_X3    = 0x00020003,
-> +    HV_ARM64_REGISTER_X4    = 0x00020004,
-> +    HV_ARM64_REGISTER_X5    = 0x00020005,
-> +    HV_ARM64_REGISTER_X6    = 0x00020006,
-> +    HV_ARM64_REGISTER_X7    = 0x00020007,
-> +    HV_ARM64_REGISTER_X8    = 0x00020008,
-> +    HV_ARM64_REGISTER_X9    = 0x00020009,
-> +    HV_ARM64_REGISTER_X10   = 0x0002000A,
-> +    HV_ARM64_REGISTER_X11   = 0x0002000B,
-> +    HV_ARM64_REGISTER_X12   = 0x0002000C,
-> +    HV_ARM64_REGISTER_X13   = 0x0002000D,
-> +    HV_ARM64_REGISTER_X14   = 0x0002000E,
-> +    HV_ARM64_REGISTER_X15   = 0x0002000F,
-> +    HV_ARM64_REGISTER_X16   = 0x00020010,
-> +    HV_ARM64_REGISTER_X17   = 0x00020011,
-> +    HV_ARM64_REGISTER_X18   = 0x00020012,
-> +    HV_ARM64_REGISTER_X19   = 0x00020013,
-> +    HV_ARM64_REGISTER_X20   = 0x00020014,
-> +    HV_ARM64_REGISTER_X21   = 0x00020015,
-> +    HV_ARM64_REGISTER_X22   = 0x00020016,
-> +    HV_ARM64_REGISTER_X23   = 0x00020017,
-> +    HV_ARM64_REGISTER_X24   = 0x00020018,
-> +    HV_ARM64_REGISTER_X25   = 0x00020019,
-> +    HV_ARM64_REGISTER_X26   = 0x0002001A,
-> +    HV_ARM64_REGISTER_X27   = 0x0002001B,
-> +    HV_ARM64_REGISTER_X28   = 0x0002001C,
-> +    HV_ARM64_REGISTER_FP    = 0x0002001D,
-> +    HV_ARM64_REGISTER_LR    = 0x0002001E,
-> +    HV_ARM64_REGISTER_PC    = 0x00020022,
-> +
-> +    /* AArch64 System Register Descriptions: General system control registers */
-> +    HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
-> +    HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
-> +
-> +#elif defined(__x86_64__)
->      /* X64 User-Mode Registers */
->      HV_X64_REGISTER_RAX     = 0x00020000,
->      HV_X64_REGISTER_RCX     = 0x00020001,
-> @@ -188,6 +228,8 @@ typedef enum hv_register_name {
->      /* Other MSRs */
->      HV_X64_REGISTER_MSR_IA32_MISC_ENABLE = 0x000800A0,
->  
-> +#endif
-> +
->      /* Misc */
->      HV_X64_REGISTER_HYPERCALL       = 0x00090001,
->      HV_REGISTER_GUEST_OS_ID         = 0x00090002,
-> diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> index 00c54f5d66..29dd45a123 100644
-> --- a/target/arm/mshv/mshv-all.c
-> +++ b/target/arm/mshv/mshv-all.c
-> @@ -10,17 +10,128 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include <sys/ioctl.h>
-> +
-> +#include "qemu/error-report.h"
-> +#include "qemu/memalign.h"
->  #include "hw/arm/virt.h"
-> +
-> +#include "system/cpus.h"
-> +#include "target/arm/cpu.h"
-> +
->  #include "system/mshv.h"
->  #include "system/mshv_int.h"
-> +#include "hw/hyperv/hvgdk_mini.h"
-> +
-> +static const enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
-> +    HV_ARM64_REGISTER_X0,
-> +    HV_ARM64_REGISTER_X1,
-> +    HV_ARM64_REGISTER_X2,
-> +    HV_ARM64_REGISTER_X3,
-> +    HV_ARM64_REGISTER_X4,
-> +    HV_ARM64_REGISTER_X5,
-> +    HV_ARM64_REGISTER_X6,
-> +    HV_ARM64_REGISTER_X7,
-> +    HV_ARM64_REGISTER_X8,
-> +    HV_ARM64_REGISTER_X9,
-> +    HV_ARM64_REGISTER_X10,
-> +    HV_ARM64_REGISTER_X11,
-> +    HV_ARM64_REGISTER_X12,
-> +    HV_ARM64_REGISTER_X13,
-> +    HV_ARM64_REGISTER_X14,
-> +    HV_ARM64_REGISTER_X15,
-> +    HV_ARM64_REGISTER_X16,
-> +    HV_ARM64_REGISTER_X17,
-> +    HV_ARM64_REGISTER_X18,
-> +    HV_ARM64_REGISTER_X19,
-> +    HV_ARM64_REGISTER_X20,
-> +    HV_ARM64_REGISTER_X21,
-> +    HV_ARM64_REGISTER_X22,
-> +    HV_ARM64_REGISTER_X23,
-> +    HV_ARM64_REGISTER_X24,
-> +    HV_ARM64_REGISTER_X25,
-> +    HV_ARM64_REGISTER_X26,
-> +    HV_ARM64_REGISTER_X27,
-> +    HV_ARM64_REGISTER_X28,
-> +    HV_ARM64_REGISTER_FP,
-> +    HV_ARM64_REGISTER_LR,
-> +    HV_ARM64_REGISTER_PC,
-> +};
-> +
-> +static int set_standard_regs(const CPUState *cpu)
-> +{
-> +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-> +    struct hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)] = {};
-> +    int ret;
-> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> +    CPUARMState *env = &arm_cpu->env;
-> +
-> +    for (size_t i = 0; i < n_regs - 1; i++) {
-> +        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-> +        assocs[i].value.reg64 = env->xregs[i];
-> +    }
-> +
-> +    /* Last register is the program counter */
-> +    assocs[n_regs - 1].name = STANDARD_REGISTER_NAMES[n_regs - 1];
-> +    assocs[n_regs - 1].value.reg64 = env->pc;
-> +
-> +    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
-> +    if (ret < 0) {
-> +        error_report("failed to set standard registers");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int get_standard_regs(CPUState *cpu)
-> +{
-> +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-> +    struct hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)] = {};
-> +    int ret;
-> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> +    CPUARMState *env = &arm_cpu->env;
-> +
-> +    for (size_t i = 0; i < n_regs; i++) {
-> +        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-> +    }
-> +    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-> +    if (ret < 0) {
-> +        error_report("failed to get standard registers");
-> +        return -1;
-> +    }
-> +
-> +    for (size_t i = 0; i < n_regs - 1; i++) {
-> +        env->xregs[i] = assocs[i].value.reg64;
-> +    }
-> +    env->pc = assocs[n_regs - 1].value.reg64;
-> +
-> +    return 0;
-> +}
->  
->  static int load_regs(CPUState *cpu)
->  {
-> +    int ret;
-> +
-> +    ret = get_standard_regs(cpu);
-> +    if (ret < 0) {
-> +        error_report("Failed to load standard registers");
-> +        return -1;
-> +    }
-> +
->      return 0;
->  }
->  
->  static int store_regs(const CPUState *cpu)
->  {
-> +    int ret;
-> +
-> +    ret = set_standard_regs(cpu);
-> +    if (ret < 0) {
-> +        error_report("Failed to store standard registers");
-> +        return -1;
-> +    }
-> +
->      return 0;
->  }
->  
-> @@ -41,12 +152,20 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
->  
->  void mshv_arch_init_vcpu(CPUState *cpu)
->  {
-> +    AccelCPUState *state = cpu->accel;
->  
-> +    mshv_setup_hvcall_args(state);
->  }
->  
->  void mshv_arch_destroy_vcpu(CPUState *cpu)
->  {
-> +    AccelCPUState *state = cpu->accel;
-> +
-> +    if (state->hvcall_args.base) {
-> +        qemu_vfree(state->hvcall_args.base);
-> +    }
->  
-> +    state->hvcall_args = (MshvHvCallArgs){0};
->  }
->  
->  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+On Thu, Nov 19, 2026 at 03:46:27PM +0100, Guillaume Vincke wrote:
+> When using an NBD backed device, the size is exchanged during
+> handshake. Therefore, when a volume gets resized on the target, it
+> closes its clients' connections to force a new handshake. Then,
+> management like OpenStack calls the block_resize QMP command to update
+> the node size.
+> This method works on active devices but, considering the NBD client
+> reconnection is lazy, the handshake does not happen on idle ones which
+> leads to a "Cannot grow NBD nodes" error when calling block_resize.
 > 
-> -- 
-> 2.45.4
+> This patchset adds a function to manually trigger reconnection on an
+> NBD device and calls it in the block_resize QMP command to make sure
+> the new size gets exchanged before trying to update the device
+> internals. It also implements the refresh callback in the raw and luks
+> drivers, which forward it to their file child.
+
+Before I even review this series, I wonder if it is time to consider
+reviving discussion on the upstream NBD protocol mailing list about an
+extension to allow NBD to optionally support resize messages.
+
+If I recall the last time it was discussed several years ago, there
+are competing needs: some scenarios want resize to be driven by the
+server (for example, in response to a high-water write event done by
+the client, the server detects that storage should grow; now the
+server needs to advertise to the client that the exported volume is
+larger); and some want it to be driven by the client (the client wants
+to specifically ask the server for the export size to grow; the server
+may or may not be able to comply).  NBD is normally client-driven, so
+a client asking the server for a new size is easy to implement by
+documenting a new NBD_CMD_RESIZE (in fact, opcode 8 is already
+reserved for this in the NBD protocol document).
+
+But the server being able to advertise a new size to the client is an
+event-driven task, not client-driven.  Here, structured commands and
+the fact that the protocol allows out-of-order responses appears to
+provide a nice solution - the idea was that a new command initiated by
+the client requests an open-ended registration of resize events, and
+the server can reply with as many chunks as wanted over a long length
+of time reusing the client's cookie, and not using the
+NBD_REPLY_FLAG_DONE flag to end the stream of reply chunks until the
+client deregisters from the request (either two new NBD_CMD to
+register/deregister, or one command with a client flag to request
+registration or deregistration).
+
+Ultimately, having NBD able to support live resizes will be even nicer
+than forcing client reconnections just to learn a new server size.
+That said, your series probably still has merit, because even if we
+extend the NBD protocol to allow live resize, it may take a while
+before both client and server ends are upgraded to understand the new
+protocol extension, while this reconnection should work with older
+protocol.
+
+> 
+> Based-on: <20261105164124.249395-1-guillaume.vincke@ovhcloud.com>
+> Needed to detect if the channel was closed by the server.
+> 
+> Based-on: <20261113140852.702959-1-guillaume.vincke@ovhcloud.com>
+> Needed to implement a deterministic test.
+
+Based on the dependencies, this is definitely qemu 12.0 material, not
+11.2; but that shouldn't stop me from starting review now.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
