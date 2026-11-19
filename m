@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3211A606A333
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23492606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU1za-0006dC-TX; Thu, 19 Nov 2026 08:15:58 -0500
+	id 1xU1zz-0006pO-EY; Thu, 19 Nov 2026 08:16:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zW-0006ZM-JQ; Thu, 19 Nov 2026 08:15:54 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.34])
+ id 1xU1zd-0006eM-DX; Thu, 19 Nov 2026 08:16:01 -0500
+Received: from mxct.zte.com.cn ([183.62.165.209])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zT-0005Sn-4q; Thu, 19 Nov 2026 08:15:54 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ id 1xU1za-0006Oa-3T; Thu, 19 Nov 2026 08:16:00 -0500
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jVf983YCyz4yjjR;
- Thu, 19 Nov 2026 21:15:40 +0800 (CST)
-Received: from szxl2zmapp07.zte.com.cn ([10.1.32.52])
- by mse-fl1.zte.com.cn with SMTP id 6AJDFYeJ080019;
- Thu, 19 Nov 2026 21:15:34 +0800 (+08)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4jVf9B3t0vz52SG8;
+ Thu, 19 Nov 2026 21:15:42 +0800 (CST)
+Received: from szxl2zmapp06.zte.com.cn ([10.1.32.108])
+ by mse-fl2.zte.com.cn with SMTP id 6AJDFbJT060282;
+ Thu, 19 Nov 2026 21:15:37 +0800 (+08)
  (envelope-from gong.shuai@sanechips.com.cn)
 Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:38 +0800
-X-Zmail-TransId: 3e816afef67902f-556c5
+ by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:41 +0800
+X-Zmail-TransId: 3e816afef67c02f-55716
 X-Zmail-LocalSMTP: 1
 X-Zmail-RealSender: gong.shuai@sanechips.com.cn
 From: Gong Shuai <gong.shuai@sanechips.com.cn>
@@ -43,10 +43,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Wu Fei <wu.fei9@sanechips.com.cn>,
  Qingye Zhao <zhao.qingye@sanechips.com.cn>,
  Gong Shuai <gong.shuai@sanechips.com.cn>
-Subject: [RFC PATCH v3 04/15] hw/riscv/riscv-iommu: Expose RISCVIOMMUSpace and
- split its helpers
-Date: Thu, 19 Nov 2026 21:15:13 +0800
-Message-ID: <20261119131524.395861-5-gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v3 09/15] hw/riscv/riscv-iommu-accel: Implement
+ get_viommu_flags() callback
+Date: Thu, 19 Nov 2026 21:15:18 +0800
+Message-ID: <20261119131524.395861-10-gong.shuai@sanechips.com.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
 References: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
@@ -54,20 +54,20 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 6AJDFYeJ080019
+X-MAIL: mse-fl2.zte.com.cn 6AJDFbJT060282
 X-TLS: YES
 X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 19 Nov 2026 21:15:40 +0800
+X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Nov 2026 21:15:42 +0800
 X-CLEAN: YES
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AFEF67C.000/4jVf983YCyz4yjjR
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Fangmail-MID-QID: 6AFEF67E.001/4jVf9B3t0vz52SG8
+Received-SPF: pass client-ip=183.62.165.209;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,147 +87,53 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Move the per-device IOMMU address space structure (RISCVIOMMUSpace)
-into the public header and split its allocation into separate
-lookup and init helpers, so the space management can be reused by
-other devices without code duplication. No behavioural change.
+From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
+For accelerated IOMMU, we need nested parent domain creation. Add the
+callback support so that VFIO can create a nested parent.
+
+This follows the approach of the ARM SMMUv3.
+
 Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
+Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
 ---
- hw/riscv/riscv-iommu.c | 68 ++++++++++++++++++++++--------------------
- hw/riscv/riscv-iommu.h | 16 ++++++++++
- 2 files changed, 51 insertions(+), 33 deletions(-)
+ hw/riscv/riscv-iommu-accel.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 6381986265..986921dd5e 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -44,17 +44,6 @@
+diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
+index 7bb725d957..2bafbfa5e0 100644
+--- a/hw/riscv/riscv-iommu-accel.c
++++ b/hw/riscv/riscv-iommu-accel.c
+@@ -10,6 +10,7 @@
+ #include "hw/pci/pci_bridge.h"
+ #include "hw/pci-host/gpex.h"
+ #include "hw/vfio/pci.h"
++#include "hw/core/iommu.h"
  
- typedef struct RISCVIOMMUEntry RISCVIOMMUEntry;
- 
--/* Device assigned I/O address space */
--struct RISCVIOMMUSpace {
--    IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
--    AddressSpace iova_as;       /* IOVA address space for attached device */
--    RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
--    PCIBus *bus;                /* PCI bus of the requester */
--    uint8_t devfn;              /* Requester identifier, AKA device_id */
--    bool notifier;              /* IOMMU unmap notifier enabled */
--    QLIST_ENTRY(RISCVIOMMUSpace) list;
--};
--
- typedef enum RISCVIOMMUTransTag {
-     RISCV_IOMMU_TRANS_TAG_BY,  /* Bypass */
-     RISCV_IOMMU_TRANS_TAG_SS,  /* Single Stage */
-@@ -1527,9 +1516,31 @@ static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
+ #include "riscv-iommu.h"
+ #include "riscv-iommu-accel.h"
+@@ -134,9 +135,21 @@ static AddressSpace *riscv_iommu_accel_find_as(PCIBus *bus, void *opaque,
      }
  }
  
--/* Find or allocate address space for a given device */
--static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
--                                            int devfn)
-+void riscv_iommu_init_space(RISCVIOMMUState *s, RISCVIOMMUSpace *as,
-+                            PCIBus *bus, int devfn)
++static uint64_t riscv_iommu_accel_get_viommu_flags(void *opaque)
 +{
-+    char name[64];
-+
-+    as->iommu = s;
-+    as->bus = bus;
-+    as->devfn = devfn;
-+
-+    snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
-+        pci_bus_num(bus), PCI_SLOT(devfn), PCI_FUNC(devfn));
-+
-+    /* IOVA address space, untranslated addresses */
-+    memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
-+        TYPE_RISCV_IOMMU_MEMORY_REGION,
-+        OBJECT(s), "riscv_iommu", UINT64_MAX);
-+    address_space_init(&as->iova_as, MEMORY_REGION(&as->iova_mr), name);
-+
-+    QLIST_INSERT_HEAD(&s->spaces, as, list);
-+
-+    trace_riscv_iommu_new(s->parent_obj.id, pci_bus_num(bus),
-+            PCI_SLOT(devfn), PCI_FUNC(devfn));
++    /*
++     * We return VIOMMU_FLAG_WANT_NESTING_PARENT to inform VFIO core to create a
++     * nesting parent which is required for accelerated riscv iommu support.
++     * The real HW nested support should be reported from host riscv iommu and if
++     * it doesn't, the nesting parent allocation will fail anyway in VFIO core.
++     */
++    return VIOMMU_FLAG_WANT_NESTING_PARENT;
 +}
 +
-+RISCVIOMMUSpace *riscv_iommu_get_space(RISCVIOMMUState *s, PCIBus *bus, int devfn)
- {
-     RISCVIOMMUSpace *as;
+ static const PCIIOMMUOps riscv_iommu_accel_ops = {
+     .supports_address_space = riscv_iommu_accel_supports_as,
+     .get_address_space = riscv_iommu_accel_find_as,
++    .get_viommu_flags = riscv_iommu_accel_get_viommu_flags,
+ };
  
-@@ -1539,27 +1550,18 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
-         }
-     }
- 
--    if (as == NULL) {
--        char name[64];
--        as = g_new0(RISCVIOMMUSpace, 1);
--
--        as->iommu = s;
--        as->bus = bus;
--        as->devfn = devfn;
--
--        snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
--            pci_bus_num(bus), PCI_SLOT(devfn), PCI_FUNC(devfn));
--
--        /* IOVA address space, untranslated addresses */
--        memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
--            TYPE_RISCV_IOMMU_MEMORY_REGION,
--            OBJECT(s), "riscv_iommu", UINT64_MAX);
--        address_space_init(&as->iova_as, MEMORY_REGION(&as->iova_mr), name);
-+    return as;
-+}
- 
--        QLIST_INSERT_HEAD(&s->spaces, as, list);
-+/* Find or allocate address space for a given device */
-+AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus, int devfn)
-+{
-+    RISCVIOMMUSpace *as;
- 
--        trace_riscv_iommu_new(s->parent_obj.id, pci_bus_num(bus),
--                PCI_SLOT(devfn), PCI_FUNC(devfn));
-+    as = riscv_iommu_get_space(s, bus, devfn);
-+    if (as == NULL) {
-+        as = g_new0(RISCVIOMMUSpace, 1);
-+        riscv_iommu_init_space(s, as, bus, devfn);
-     }
-     return &as->iova_as;
- }
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index cf2904c118..099faa9480 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -28,6 +28,17 @@
- 
- typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
- 
-+/* Device assigned I/O address space */
-+struct RISCVIOMMUSpace {
-+    IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
-+    AddressSpace iova_as;       /* IOVA address space for attached device */
-+    RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
-+    PCIBus *bus;                /* PCI bus of the requester */
-+    uint8_t devfn;              /* Requester identifier, AKA device_id */
-+    bool notifier;              /* IOMMU unmap notifier enabled */
-+    QLIST_ENTRY(RISCVIOMMUSpace) list;
-+};
-+
- struct RISCVIOMMUState {
-     /*< private >*/
-     DeviceState parent_obj;
-@@ -112,6 +123,11 @@ DeviceState *riscv_create_iommu_sys(DeviceState *mmio_irqchip,
-                                     hwaddr addr, int base_irq,
-                                     bool is_32_bit);
- 
-+void riscv_iommu_init_space(RISCVIOMMUState *s, RISCVIOMMUSpace *as,
-+                            PCIBus *bus, int devfn);
-+AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus, int devfn);
-+RISCVIOMMUSpace *riscv_iommu_get_space(RISCVIOMMUState *s, PCIBus *bus, int devfn);
-+
- typedef struct RISCVIOMMUContext RISCVIOMMUContext;
- /* Device translation context state. */
- struct RISCVIOMMUContext {
+ static void riscv_iommu_accel_as_init(RISCVIOMMUState *s)
 -- 
 2.53.0
 
