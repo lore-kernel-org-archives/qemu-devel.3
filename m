@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CB1606A325
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56948606A324
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 13:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xU1za-0006dA-Su; Thu, 19 Nov 2026 08:15:58 -0500
+	id 1xU1zn-0006fg-Cs; Thu, 19 Nov 2026 08:16:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zX-0006Zy-Bp; Thu, 19 Nov 2026 08:15:55 -0500
+ id 1xU1za-0006ca-3Z; Thu, 19 Nov 2026 08:15:58 -0500
 Received: from mxct.zte.com.cn ([183.62.165.209])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xU1zT-0005kV-HQ; Thu, 19 Nov 2026 08:15:55 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ id 1xU1zS-0005Sx-Rc; Thu, 19 Nov 2026 08:15:57 -0500
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4jVf9962zmz52Rpj;
- Thu, 19 Nov 2026 21:15:41 +0800 (CST)
-Received: from szxlzmapp04.zte.com.cn ([10.5.231.166])
- by mse-fl1.zte.com.cn with SMTP id 6AJDFc0t080074;
- Thu, 19 Nov 2026 21:15:38 +0800 (+08)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4jVf970XFsz52SG2;
+ Thu, 19 Nov 2026 21:15:39 +0800 (CST)
+Received: from szxlzmapp01.zte.com.cn ([10.5.231.85])
+ by mse-fl2.zte.com.cn with SMTP id 6AJDFaqo060269;
+ Thu, 19 Nov 2026 21:15:36 +0800 (+08)
  (envelope-from gong.shuai@sanechips.com.cn)
 Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:41 +0800
-X-Zmail-TransId: 3e816afef67d02f-55723
+ by smtp (Zmail) with SMTP; Thu, 19 Nov 2026 21:15:39 +0800
+X-Zmail-TransId: 3e816afef67a02f-556ed
 X-Zmail-LocalSMTP: 1
 X-Zmail-RealSender: gong.shuai@sanechips.com.cn
 From: Gong Shuai <gong.shuai@sanechips.com.cn>
@@ -43,10 +43,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Wu Fei <wu.fei9@sanechips.com.cn>,
  Qingye Zhao <zhao.qingye@sanechips.com.cn>,
  Gong Shuai <gong.shuai@sanechips.com.cn>
-Subject: [RFC PATCH v3 10/15] hw/riscv/riscv-iommu-accel: Add
- set/unset_iommu_device callback
-Date: Thu, 19 Nov 2026 21:15:19 +0800
-Message-ID: <20261119131524.395861-11-gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v3 06/15] hw/riscv/riscv-iommu-accel: Introduce RISC-V
+ IOMMU accel device
+Date: Thu, 19 Nov 2026 21:15:15 +0800
+Message-ID: <20261119131524.395861-7-gong.shuai@sanechips.com.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
 References: <20261119131524.395861-1-gong.shuai@sanechips.com.cn>
@@ -54,13 +54,13 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 6AJDFc0t080074
+X-MAIL: mse-fl2.zte.com.cn 6AJDFaqo060269
 X-TLS: YES
 X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 19 Nov 2026 21:15:41 +0800
+X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Nov 2026 21:15:39 +0800
 X-CLEAN: YES
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AFEF67D.000/4jVf9962zmz52Rpj
+X-Fangmail-MID-QID: 6AFEF67B.000/4jVf970XFsz52SG2
 Received-SPF: pass client-ip=183.62.165.209;
  envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
 X-Spam_score_int: -41
@@ -82,288 +82,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-Implement the VFIO/PCI callbacks to attach and detach a
-HostIOMMUDevice to the vIOMMU when accel=on, following the ARM
-SMMUv3 accel device.
-
-In accelerated mode the guest IOMMU is backed by the host IOMMU
-via IOMMUFD, a vIOMMU object provides the per-VM, isolated handle
-to the physical IOMMU, so the attach callback allocates one when
-the first device attaches. Two proxy nested HWPTs (bypass and
-abort) are pre-allocated under the vIOMMU and one is installed
-based on the DDTP mode. The detach callback re-attaches the device
-to its default stage-2 HWPT and, once the last device detaches,
-releases the proxy HWPTs and the vIOMMU.
-
-Introduce RISCVIOMMUAccelState holding the vIOMMU object, the
-bypass/abort proxy HWPT IDs, and the attached device list.
+Add an optional accel device for the RISC-V IOMMU. Its behaviour
+matches the default path so far, leaving room for upcoming
+accelerated (nested) translation. When the accel device is enabled,
+each device's address space is embedded in RISCVIOMMUAccelDevice, a
+per-device struct that will store per-device data for nested
+translation.
 
 Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
 Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
 ---
- hw/riscv/riscv-iommu-accel.c | 164 +++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu-accel.h |  18 ++++
- hw/riscv/riscv-iommu.h       |   1 +
- hw/riscv/trace-events        |   4 +
- 4 files changed, 187 insertions(+)
+ hw/riscv/Kconfig             |  5 ++++
+ hw/riscv/meson.build         |  1 +
+ hw/riscv/riscv-iommu-accel.c | 49 ++++++++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu-accel.h | 25 ++++++++++++++++++
+ hw/riscv/riscv-iommu.c       |  5 ++++
+ hw/riscv/riscv-iommu.h       |  3 +++
+ 6 files changed, 88 insertions(+)
+ create mode 100644 hw/riscv/riscv-iommu-accel.c
+ create mode 100644 hw/riscv/riscv-iommu-accel.h
 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index e2a6e9f61c..3bc98d32ec 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -1,5 +1,10 @@
++config RISCV_IOMMU_ACCEL
++    bool
++    depends on RISCV_IOMMU
++
+ config RISCV_IOMMU
+     bool
++    select RISCV_IOMMU_ACCEL if IOMMUFD
+ 
+ config RISCV_NUMA
+     bool
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index b60108787d..60aac51571 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -18,6 +18,7 @@ riscv_ss.add(when: 'CONFIG_TENSTORRENT', if_true: files('tt_atlantis.c'))
+ riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+ 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_IOMMU_ACCEL', if_true: files('riscv-iommu-accel.c'))
+ riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
+ riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
 diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
-index 2bafbfa5e0..49d52109f7 100644
---- a/hw/riscv/riscv-iommu-accel.c
+new file mode 100644
+index 0000000000..41e4d03be6
+--- /dev/null
 +++ b/hw/riscv/riscv-iommu-accel.c
-@@ -6,6 +6,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "trace.h"
- 
- #include "hw/pci/pci_bridge.h"
- #include "hw/pci-host/gpex.h"
-@@ -146,10 +147,172 @@ static uint64_t riscv_iommu_accel_get_viommu_flags(void *opaque)
-     return VIOMMU_FLAG_WANT_NESTING_PARENT;
- }
- 
-+static uint32_t riscv_iommu_accel_ddtp_hwpt(RISCVIOMMUState *s,
-+                                            RISCVIOMMUAccelState *accel)
-+{
-+    unsigned mode = get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
-+    /*
-+     * Initial proxy HWPT: with DDTP.Mode=OFF the IOMMU is
-+     * disabled and all accesses abort; any other mode (Bare or a
-+     * translation mode) starts with the bypass proxy until the guest
-+     * programs a device context.
-+     */
-+    return (mode == RISCV_IOMMU_DDTP_MODE_OFF) ?
-+               accel->abort_hwpt_id : accel->bypass_hwpt_id;
-+}
-+
-+static bool riscv_iommu_accel_alloc_viommu(RISCVIOMMUState *s,
-+                                           HostIOMMUDeviceIOMMUFD *idev,
-+                                           Error **errp)
-+{
-+    RISCVIOMMUAccelState *accel = s->accel_state;
-+    struct iommu_hwpt_riscv bypass_data = {
-+        .dc[0] = RISCV_IOMMU_DC_TC_V,
-+        .dc[3] = RISCV_IOMMU_DC_FSC_MODE_BARE,
-+    };
-+
-+    struct iommu_hwpt_riscv abort_data = {
-+        .dc[0] = 0,  /* V = 0, invalid DC aborts */
-+        .dc[3] = 0,  /* don't care */
-+    };
-+
-+    uint32_t s2_hwpt_id = idev->hwpt_id;
-+    uint32_t viommu_id, hwpt_id;
-+    IOMMUFDViommu *viommu;
-+
-+    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-+                                      IOMMU_VIOMMU_TYPE_RISCV, s2_hwpt_id,
-+                                      NULL, 0, &viommu_id, errp)) {
-+        return false;
-+    }
-+
-+    viommu = g_new0(IOMMUFDViommu, 1);
-+    viommu->viommu_id = viommu_id;
-+    viommu->s2_hwpt_id = s2_hwpt_id;
-+    viommu->iommufd = idev->iommufd;
-+    accel->viommu = viommu;
-+
-+    /*
-+     * Pre-allocate HWPTs for the S1 bypass and abort cases, to be attached
-+     * later based on a guest device context (DC) or the DDTP mode.
-+     */
-+    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, viommu_id,
-+                                    0, IOMMU_HWPT_DATA_RISCV_S1,
-+                                    sizeof(abort_data), &abort_data,
-+                                    0, &accel->abort_hwpt_id, errp)) {
-+        goto free_viommu;
-+    }
-+
-+    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, viommu_id,
-+                                    0, IOMMU_HWPT_DATA_RISCV_S1,
-+                                    sizeof(bypass_data), &bypass_data,
-+                                    0, &accel->bypass_hwpt_id, errp)) {
-+        goto free_abort_hwpt;
-+    }
-+
-+    /* Attach a HWPT based on ddtp.iommu_mode value */
-+    hwpt_id = riscv_iommu_accel_ddtp_hwpt(s, accel);
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID, hwpt_id,
-+                                               errp)) {
-+        goto free_bypass_hwpt;
-+    }
-+    return true;
-+
-+free_bypass_hwpt:
-+    iommufd_backend_free_id(idev->iommufd, accel->bypass_hwpt_id);
-+free_abort_hwpt:
-+    iommufd_backend_free_id(idev->iommufd, accel->abort_hwpt_id);
-+free_viommu:
-+    iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
-+    g_free(viommu);
-+    accel->viommu = NULL;
-+    return false;
-+}
-+
-+static bool riscv_iommu_accel_set_iommu_device(PCIBus *bus, void *opaque,
-+                                               int devfn,
-+                                               HostIOMMUDevice *hiod,
-+                                               Error **errp)
-+{
-+    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
-+    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
-+    RISCVIOMMUAccelDevice *accel_dev = riscv_iommu_accel_get_dev(s, bus, devfn);
-+
-+    if (!idev) {
-+        return true;
-+    }
-+
-+    if (accel_dev->idev) {
-+        if (accel_dev->idev != idev) {
-+            error_setg(errp, "Device already has an associated idev 0x%x",
-+                       idev->devid);
-+            return false;
-+        }
-+        return true;
-+    }
-+
-+    if (s->accel_state->viommu) {
-+        goto done;
-+    }
-+
-+    if (!riscv_iommu_accel_alloc_viommu(s, idev, errp)) {
-+        error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
-+                          idev->devid);
-+        return false;
-+    }
-+
-+done:
-+    accel_dev->idev = idev;
-+    accel_dev->accel = s->accel_state;
-+    QLIST_INSERT_HEAD(&s->accel_state->device_list, accel_dev, next);
-+    trace_riscv_iommu_accel_set_iommu_device(devfn, idev->devid);
-+    return true;
-+}
-+
-+static void riscv_iommu_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-+                                                 int devfn)
-+{
-+    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
-+    HostIOMMUDeviceIOMMUFD *idev;
-+    RISCVIOMMUAccelDevice *accel_dev;
-+    RISCVIOMMUAccelState *accel;
-+    RISCVIOMMUSpace *as;
-+
-+    as = riscv_iommu_get_space(s, bus, devfn);
-+    if (!as) {
-+        return;
-+    }
-+
-+    accel_dev = container_of(as, RISCVIOMMUAccelDevice, as);
-+    idev = accel_dev->idev;
-+    accel = accel_dev->accel;
-+    /* Re-attach the default s2 hwpt id */
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID,
-+                                               idev->hwpt_id, NULL)) {
-+        error_report("Unable to attach the default HW pagetable: idev devid "
-+                     "0x%x", idev->devid);
-+    }
-+
-+    accel_dev->idev = NULL;
-+    accel_dev->accel = NULL;
-+    QLIST_REMOVE(accel_dev, next);
-+    trace_riscv_iommu_accel_unset_iommu_device(devfn, idev->devid);
-+
-+    if (QLIST_EMPTY(&accel->device_list)) {
-+        iommufd_backend_free_id(accel->viommu->iommufd, accel->bypass_hwpt_id);
-+        iommufd_backend_free_id(accel->viommu->iommufd, accel->abort_hwpt_id);
-+        iommufd_backend_free_id(accel->viommu->iommufd, accel->viommu->viommu_id);
-+        g_free(accel->viommu);
-+        accel->viommu = NULL;
-+    }
-+}
-+
- static const PCIIOMMUOps riscv_iommu_accel_ops = {
-     .supports_address_space = riscv_iommu_accel_supports_as,
-     .get_address_space = riscv_iommu_accel_find_as,
-     .get_viommu_flags = riscv_iommu_accel_get_viommu_flags,
-+    .set_iommu_device = riscv_iommu_accel_set_iommu_device,
-+    .unset_iommu_device = riscv_iommu_accel_unset_iommu_device,
- };
- 
- static void riscv_iommu_accel_as_init(RISCVIOMMUState *s)
-@@ -170,6 +333,7 @@ static void riscv_iommu_accel_as_init(RISCVIOMMUState *s)
- 
- void riscv_iommu_accel_init(RISCVIOMMUState *s)
- {
-+    s->accel_state = g_new0(RISCVIOMMUAccelState, 1);
-     s->iommu_ops = &riscv_iommu_accel_ops;
-     riscv_iommu_accel_as_init(s);
- }
-diff --git a/hw/riscv/riscv-iommu-accel.h b/hw/riscv/riscv-iommu-accel.h
-index c69fea87dd..49d022817c 100644
---- a/hw/riscv/riscv-iommu-accel.h
-+++ b/hw/riscv/riscv-iommu-accel.h
-@@ -8,10 +8,28 @@
- #define HW_RISCV_RISCV_IOMMU_ACCEL_H
- 
- #include "hw/riscv/riscv-iommu.h"
-+#include "system/iommufd.h"
-+#ifdef CONFIG_LINUX
-+#include <linux/iommufd.h>
-+#endif
- #include CONFIG_DEVICES
- 
+@@ -0,0 +1,49 @@
 +/*
-+ * Represents an accelerated IOMMU instance backed by an iommufd vIOMMU object.
-+ * Holds bypass and abort proxy HWPT IDs used for device attachment.
++ * RISC-V IOMMU - accelerated (nested) translation support
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+typedef struct RISCVIOMMUAccelState {
-+    IOMMUFDViommu *viommu;
-+    uint32_t bypass_hwpt_id;
-+    uint32_t abort_hwpt_id;
-+    QLIST_HEAD(, RISCVIOMMUAccelDevice) device_list;
-+} RISCVIOMMUAccelState;
 +
- typedef struct RISCVIOMMUAccelDevice {
-     RISCVIOMMUSpace as;
-+    HostIOMMUDeviceIOMMUFD *idev;
-+    QLIST_ENTRY(RISCVIOMMUAccelDevice) next;
-+    RISCVIOMMUAccelState *accel;
- } RISCVIOMMUAccelDevice;
++#include "qemu/osdep.h"
++
++#include "riscv-iommu.h"
++#include "riscv-iommu-accel.h"
++
++static RISCVIOMMUAccelDevice *riscv_iommu_accel_get_dev(RISCVIOMMUState *s,
++                                                        PCIBus *bus, int devfn)
++{
++    RISCVIOMMUSpace *as;
++    RISCVIOMMUAccelDevice *accel_dev;
++
++    /* FIXME: for simplicity, assume only one iommu right now */
++    as = riscv_iommu_get_space(s, bus, devfn);
++    if (as) {
++        return container_of(as, RISCVIOMMUAccelDevice, as);
++    }
++
++    accel_dev = g_new0(RISCVIOMMUAccelDevice, 1);
++    as = &accel_dev->as;
++    riscv_iommu_init_space(s, as, bus, devfn);
++
++    return accel_dev;
++}
++
++static AddressSpace *riscv_iommu_accel_find_as(PCIBus *bus, void *opaque,
++                                               int devfn)
++{
++    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
++
++    RISCVIOMMUAccelDevice *accel_dev = riscv_iommu_accel_get_dev(s, bus, devfn);
++    RISCVIOMMUSpace *as = &accel_dev->as;
++
++    return &as->iova_as;
++}
++
++static const PCIIOMMUOps riscv_iommu_accel_ops = {
++    .get_address_space = riscv_iommu_accel_find_as,
++};
++
++void riscv_iommu_accel_init(RISCVIOMMUState *s)
++{
++    s->iommu_ops = &riscv_iommu_accel_ops;
++}
+diff --git a/hw/riscv/riscv-iommu-accel.h b/hw/riscv/riscv-iommu-accel.h
+new file mode 100644
+index 0000000000..c69fea87dd
+--- /dev/null
++++ b/hw/riscv/riscv-iommu-accel.h
+@@ -0,0 +1,25 @@
++/*
++ * RISC-V IOMMU - accelerated (nested) translation support
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_RISCV_RISCV_IOMMU_ACCEL_H
++#define HW_RISCV_RISCV_IOMMU_ACCEL_H
++
++#include "hw/riscv/riscv-iommu.h"
++#include CONFIG_DEVICES
++
++typedef struct RISCVIOMMUAccelDevice {
++    RISCVIOMMUSpace as;
++} RISCVIOMMUAccelDevice;
++
++#ifdef CONFIG_RISCV_IOMMU_ACCEL
++void riscv_iommu_accel_init(RISCVIOMMUState *s);
++#else
++static inline void riscv_iommu_accel_init(RISCVIOMMUState *s)
++{
++}
++#endif
++
++#endif /* HW_RISCV_RISCV_IOMMU_ACCEL_H */
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 10f81f8bdf..762691c8ed 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -31,6 +31,7 @@
  
- #ifdef CONFIG_RISCV_IOMMU_ACCEL
+ #include "cpu_bits.h"
+ #include "riscv-iommu.h"
++#include "riscv-iommu-accel.h"
+ #include "riscv-iommu-bits.h"
+ #include "riscv-iommu-hpm.h"
+ #include "trace.h"
+@@ -2707,6 +2708,10 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+ 
++    if (s->accel) {
++        riscv_iommu_accel_init(s);
++    }
++
+     /* Report QEMU target physical address space limits. */
+     s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS, s->pas_bits);
+ 
 diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 92eeb18386..3262213093 100644
+index 3e10647975..0bc096ba60 100644
 --- a/hw/riscv/riscv-iommu.h
 +++ b/hw/riscv/riscv-iommu.h
-@@ -114,6 +114,7 @@ struct RISCVIOMMUState {
+@@ -111,6 +111,9 @@ struct RISCVIOMMUState {
+     uint8_t hpm_cntrs;
  
-     /* nested iommu support */
-     bool accel;
-+    struct RISCVIOMMUAccelState *accel_state;
+     const PCIIOMMUOps *iommu_ops;
++
++    /* nested iommu support */
++    bool accel;
  };
  
  void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
-diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-index b50b14a654..9834f108b9 100644
---- a/hw/riscv/trace-events
-+++ b/hw/riscv/trace-events
-@@ -24,3 +24,7 @@ riscv_iommu_hpm_incr_ctr(uint64_t cntr_val) "cntr_val 0x%"PRIx64
- riscv_iommu_hpm_iocntinh_cy(bool prev_cy_inh) "prev_cy_inh %d"
- riscv_iommu_hpm_cycle_write(uint32_t ovf, uint64_t val) "ovf 0x%x val 0x%"PRIx64
- riscv_iommu_hpm_evt_write(uint32_t ctr_idx, uint32_t ovf, uint64_t val) "ctr_idx 0x%x ovf 0x%x val 0x%"PRIx64
-+
-+#riscv-iommu-accel.c
-+riscv_iommu_accel_set_iommu_device(int devfn, uint32_t devid) "devfn=0x%x (idev devid=0x%x)"
-+riscv_iommu_accel_unset_iommu_device(int devfn, uint32_t devid) "devfn=0x%x (idev devid=0x%x)"
 -- 
 2.53.0
 
