@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5EB606A32F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 06:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B36F606A338
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Nov 2026 06:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=iVZAaSq7
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=mSxr4Mjv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xTvfV-0004Le-Nw; Thu, 19 Nov 2026 01:30:49 -0500
+	id 1xTvff-0004XQ-AN; Thu, 19 Nov 2026 01:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1xTvfA-0004KV-Fu; Thu, 19 Nov 2026 01:30:30 -0500
+ id 1xTvfN-0004Oc-4e; Thu, 19 Nov 2026 01:30:49 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1xTvf7-00053M-4E; Thu, 19 Nov 2026 01:30:27 -0500
+ id 1xTvfK-0006MO-QU; Thu, 19 Nov 2026 01:30:40 -0500
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJ4jOJb1532178; Thu, 19 Nov 2026 06:30:20 GMT
+ 6AJ4jJIa1532014; Thu, 19 Nov 2026 06:30:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=cG3T2d4FX07lPqZml
- ez/V62r4bLX0XBVzdPHxbsCb+o=; b=iVZAaSq74mAZXTkmpdmoBs5sQlXN4SIG3
- 26PgXzw2uwD05cWeD3IEAgJmWHfCOYQ9rJrY+2PYG7574eRd+3+EwJU0UudlTlcm
- jSGjLNCvgUgHxqoTdAFJCUmOlWmM84/7aAV3YRObjK8nNZp0LTPdXGuEo13EqL9T
- 7iQ7OBNcG+7LdvU5BRj0E/WwvCB162qDvDYTcAyidf/pq9E2pxwZLEHeVd1kflje
- N2QM06Tj9s7Y5yyIryTdtGGc8fLQEP/QunMKwobFkM4ubNUGKV0PVTj5iHN2E8+z
- a8zKWyxMY+LA1WRgVeBRIy6boUflVKkgsfN0hp07k5KEvcMQdyAdA==
+ :mime-version:references:subject:to; s=pp1; bh=Sy7ujPk9lFoLXnzAq
+ jvU4A1ZTH7Am9KJcpoxgLgz9Ow=; b=mSxr4MjvmVRBnZ8vmLETnL11eJeLYi8pw
+ OKEktp2lDvo45GrbdaotzwYxaw46FMLUev9gzbkdZGW7wnVqJOoE//rUaGMTOlKz
+ yp0jwpHeg1Ei2ZDpsNtuIViMPdFmsYjSuU4SXS1fhm4LEoswbDRsCdafvHYEyhNK
+ iSJM8ZKLAR/fLoC3gj0hrufH1ZBgGxmw+QDaVxMyAaNoGTzh4voxNvzyGBxD1bnr
+ Xk0N4vZKpYFeF4zzJaE/HD4cnKfT4id9wfNDZuyIC8j2cMMf0SxE5infWo2RcuKo
+ Qyvg3qYp/r9WkEArn4VEym4jYRPbUX3v0lJy28jzGIw4fi59Cowdg==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105rpytx-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105rpyvu-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 06:30:17 +0000 (GMT)
+ Thu, 19 Nov 2026 06:30:36 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
  by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AJ4wopb063209; Thu, 19 Nov 2026 06:30:16 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j1hd6tkdk-1
+ 6AJ4rkL2063179; Thu, 19 Nov 2026 06:30:35 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j1hd6tkf8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Nov 2026 06:30:16 +0000 (GMT)
+ Thu, 19 Nov 2026 06:30:35 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AJ6UFbs30147236
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AJ6UYbA23593578
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 19 Nov 2026 06:30:15 GMT
+ Thu, 19 Nov 2026 06:30:34 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8CDCE58059;
- Thu, 19 Nov 2026 06:30:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 555835805F;
+ Thu, 19 Nov 2026 06:30:34 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9BC7258060;
- Thu, 19 Nov 2026 06:30:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6145A58043;
+ Thu, 19 Nov 2026 06:30:28 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.124.221.175])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 19 Nov 2026 06:30:10 +0000 (GMT)
+ Thu, 19 Nov 2026 06:30:28 +0000 (GMT)
 From: Anushree Mathur <anushree.mathur@linux.ibm.com>
 To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -66,36 +66,37 @@ Cc: Anushree Mathur <anushree.mathur@linux.ibm.com>,
  Miles Glenn <milesg@linux.ibm.com>,
  Aditya Gupta <adityag@linux.ibm.com>, misanjum@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>, Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [PATCH v2 0/4] tests/functional/ppc64: add pseries hotplug and caps
- tests
-Date: Thu, 19 Nov 2026 11:59:46 +0530
-Message-ID: <20261119062951.83498-1-anushree.mathur@linux.ibm.com>
+Subject: [PATCH v2 3/4] tests/functional/ppc64: add pseries virtio-blk hotplug
+ test
+Date: Thu, 19 Nov 2026 11:59:49 +0530
+Message-ID: <20261119062951.83498-4-anushree.mathur@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261030131025.32219-1-anushree.mathur@linux.ibm.com>
+In-Reply-To: <20261119062951.83498-1-anushree.mathur@linux.ibm.com>
 References: <20261030131025.32219-1-anushree.mathur@linux.ibm.com>
+ <20261119062951.83498-1-anushree.mathur@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: LW4DU1uPJiHCnWGM1T7qZ09FmBGlZXRq
-X-Authority-Analysis: v=2.4 cv=e8uT2qp/ c=1 sm=1 tr=0 ts=6afe977a cx=c_pps
+X-Proofpoint-GUID: _1FUfqJc0ku3ukfC4_X5BkG3BPPTuKkz
+X-Authority-Analysis: v=2.4 cv=e8uT2qp/ c=1 sm=1 tr=0 ts=6afe978d cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=wRa4uucDvQeYp0uuPlcA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX+FE+9G3ogqZg
- Z2ys77ZnQyJ7gaj1XQaiL0tLsQYj1o9nLhw2sOn3nPsHNYMmkbRCLsxT1SKp4qlEgTUZtlCUxNT
- ANP1pJAQwDv/adaQBR3s1WEWRCtGFuo=
-X-Proofpoint-ORIG-GUID: dy7uwhEPR8I63jY7DSHeJlH8ImYohU7_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX4khqRVTvyMFf
- 47HNRNEz/oJMkDKHhHewOXwMNjjTobaYpB2hMc+jZ4RnqBsGua4I+WFkcEcbeb6Ej6VLb/dw7TM
- 6M28MQly/MTr6RSJdhOnao51lxNbU3S4vRSl727wK9DZLccV+l3mPf5SR7+xDPnPnOUc8eOquIR
- 1PQTYX56aSNrCsdX8rl/w/MGuACZ0YZMWQxlsjFPBqsXu2hCvH6PxLpmVzZmU8R4TIvlDzu7Cc7
- QYrVotAtQuSRTp3Cyu+jPvhUt0UzVJMWJETEItOEINuFuKcIFZ9NRoBD3bUQI/SxhmqovUqcfyE
- QrzRrtpOr4W4tN0ZYiwpnBZhCfTKvdiBsKgd325T6XJoYxwObUtbkQGJtNByQFnKRUdNQPX6ypl
- sHPZXtNM0zxV6Szt/kXEeQiOpU1ZPM9Kf6Ldqjv0uhbZAODkIlGQJg1jSrXDjIf8Kv5h6WhYMDk
- AL1z9UvSNttJ2daztEw==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8
+ a=KdDu73rO8vtbKrPbEFUA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX6SG7oRXwo4Bb
+ pm64szCgRiDkNnzM7GrsM0igJ015/j7tvt8pk3Kp0gx3r01aJkYFcfMYbtyHsWOFz41bQVm+jTr
+ yHmzPwGkx8K+0OjCQGla25Z+9c8MyLA=
+X-Proofpoint-ORIG-GUID: 9eDXeLkzoBTy-VrT4AgDbzmUAOevZOyB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE5MDAyNSBTYWx0ZWRfX0s922QhJ3AaQ
+ OtzXcEhmOpzu13ypoHDU9m3CpCeG6i2mZefpmq06OT+DgKSeMuUloH52kWtmAMfV/tlsswOyrKn
+ D6k2QSPVn6RQeMN0OqNy8/IHhuAo6k8zyJak1tLwlSie70u199pwu6aLkRtg+ESTqjTLOqTWDaM
+ PDfRgTXMq64pLA5HZs4LqAI0uz+E+OboMG1nQoejcyBpJQj3q8gakFQs9rXplDaii2XnFZeqOjx
+ /z0u1sgQmwrsikhjeX7yAsGQTgSOy2rieOt8119rgp6VDjN9tS74bVIB1rzMxJvWWBeovru7h8V
+ 7IxRwAGqAjadiu3f4NM3dyQDEYcCZv2ge4F6pMvLtg9ZwqDTLIJJkdcSGjyTniWaYd3npvQUQxZ
+ /472Cqggo91LxvaLILJiBs9i8IAQrSaFroAV6AtmwK5Zei9tDbU/S1ifYlATqZVMRymx5J7Ot5W
+ yktn+m8fTT9z8VSdKLA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-19_01,2026-11-16_01,2025-10-01_01
@@ -125,107 +126,256 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi all,
+Add a functional test that hot-plugs and hot-unplugs a virtio-blk-pci
+disk on the pseries machine.  It runs with TCG, and also with KVM if
+KVM is enabled.
 
-This series adds three new functional tests for the pseries (sPAPR/PAPR)
-machine type and registers them in MAINTAINERS.
+On pseries a PCI device added through QMP is only enumerated by the
+guest once rtas_errd (ppc64-diag) handles the RTAS hotplug event and
+runs drmgr (powerpc-utils).  Neither is in the buildroot image used by
+the other pseries tests, so the test uses rootfs-hotplug.ext2: the same
+image with those two tools added.
 
-Patch 1 adds test_hotplug_cpu.py.  It boots a buildroot guest with one
-core (-smp 2,threads=2,cores=1,maxcpus=4), hot-adds a second core with
-QMP device_add and waits until /sys/devices/system/cpu/online changes
-from 0-1 to 0-3.  It then hot-removes the core with device_del and waits
-for the guest to be back at 0-1.  It runs with TCG and, if available,
-with KVM.
+The test boots with a second PHB (phb1) present so that the guest
+registers its slots, adds a null-co backend, hot-plugs virtio-blk-pci
+into phb1.0 and waits for /dev/vda, then unplugs it and waits for both
+the QMP DEVICE_DELETED event and /dev/vda to go away.  The root drive is
+used with snapshot=on so the cached asset is not modified by the guest.
 
-Patch 2 adds test_pseries_caps.py, a quick test that does not boot a
-guest.  QEMU is started halted (-S) and QMP is used to check that
-pseries starts with the security capability options (cap-cfpc,
-cap-sbbc, cap-ibs, cap-ccf-assist, cap-nested-hv), that pseries-7.2,
-9.2 and 10.0 can be instantiated, and that cap-hpt-max-page-size is
-visible under /machine in the QOM tree.
+Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+---
+v2: no longer RFC.  I raised the patch adding rootfs-hotplug.ext2 to
+qemu-ppc-boot (https://github.com/raphael502/qemu-ppc-boot/pull/1) and
+it has been merged, so the asset URLs now point to that repository
+(sha256 unchanged).  The vmlinux asset also points to qemu-ppc-boot, and
+the test file is now executable like the other functional tests.
 
-Patch 3 adds test_hotplug_blk.py.  It boots a similar guest with a
-second PCI host bridge (phb1), hot-adds a virtio-blk-pci disk backed by
-a null-co node with QMP device_add and waits for /dev/vda to appear in
-the guest.  It then hot-removes the disk with device_del and waits for
-the DEVICE_DELETED event and for /dev/vda to disappear.  The guest
-needs rtas_errd and drmgr to enumerate the new device, so the test uses
-a rootfs that includes them.  I raised the patch that adds this image
-(rootfs-hotplug.ext2) to qemu-ppc-boot, see
-https://github.com/raphael502/qemu-ppc-boot/pull/1.  It has been merged,
-so the test downloads the image from that repository.  The test runs
-with TCG, and also with KVM if KVM is enabled.
-
-Patch 4 adds the MAINTAINERS entries for the three tests.
-
-Testing
--------
-v1 of the CPU hotplug, caps and virtio-blk tests were run on a ppc64le
-POWER host with both TCG and KVM and passed.  The changes below do not
-touch the test logic.  checkpatch.pl reports no errors or warnings on
-any patch (apart from the expected "MAINTAINERS needs updating" notices
-on patches 1-3, resolved by patch 4), and pylint with
-tests/functional/pylintrc reports nothing for the new files.
-
-CI
---
-GitLab pipeline: https://gitlab.com/Anushree-Mathur1/qemu/-/pipelines/3084104292
-The jobs that fail are all allow_failure: Rust nightly (bitops.rs),
-tuxrun/armbian asset downloads, and aarch64 timeout/migration tests.
-None of them involve this series, which only adds ppc64 tests and
-MAINTAINERS entries.
-
-Links to v1:
-- v1 for CPU hotplug and caps tests:
-  https://lore.kernel.org/qemu-devel/20261030131025.32219-1-anushree.mathur@linux.ibm.com/
-- RFC v1 for virtio-blk hotplug test:
-  https://lore.kernel.org/qemu-devel/20261103141938.41147-1-anushree.mathur@linux.ibm.com/
-
-Changes in v2:
-- Combined the two v1 postings above into one series.
-- Patch 1: buildroot kernel and rootfs assets now point to
-  raphael502/qemu-ppc-boot instead of legoater/qemu-ppc-boot.  They are
-  the same files; the sha256 values are unchanged and were re-verified.
-  Wrapped the long URL lines to keep checkpatch quiet.
-- Patch 2: reworded the commit message to say what is actually checked
-  (the options are accepted and the machine starts), fixed docstrings
-  that did not match the code, and dropped the skipped
-  query-cpu-model-expansion placeholder test.
-- Patch 3: no longer an RFC.  v1 was an RFC because rootfs-hotplug.ext2
-  was not available yet; it is now merged in qemu-ppc-boot and the
-  asset URLs point to it (the sha256 is unchanged).  The vmlinux asset
-  also points to qemu-ppc-boot, and the test file is now executable
-  like the other functional tests.
-- Patch 4: a single MAINTAINERS patch covering all three tests
-  (previously a separate patch for the CPU and caps tests, and an
-  entry inside the virtio-blk patch).
-- Rebased on current master (6883fb508c).
-
-Anushree Mathur (4):
-  tests/functional/ppc64: add pseries CPU hotplug test
-  tests/functional/ppc64: add pseries security caps test
-  tests/functional/ppc64: add pseries virtio-blk hotplug test
-  MAINTAINERS: add pseries hotplug and caps functional tests
-
- MAINTAINERS                                 |   3 +
- tests/functional/ppc64/meson.build          |   5 +
- tests/functional/ppc64/test_hotplug_blk.py  | 188 ++++++++++++++++++++
- tests/functional/ppc64/test_hotplug_cpu.py  | 185 +++++++++++++++++++
- tests/functional/ppc64/test_pseries_caps.py | 162 +++++++++++++++++
- 5 files changed, 543 insertions(+)
+ tests/functional/ppc64/meson.build         |   2 +
+ tests/functional/ppc64/test_hotplug_blk.py | 188 +++++++++++++++++++++
+ 2 files changed, 190 insertions(+)
  create mode 100755 tests/functional/ppc64/test_hotplug_blk.py
- create mode 100755 tests/functional/ppc64/test_hotplug_cpu.py
- create mode 100755 tests/functional/ppc64/test_pseries_caps.py
 
-
-base-commit: 6883fb508cb7a93e2e7b44c0582bfd9fc2196d4d
+diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
+index d91209f041..f483ce4d76 100644
+--- a/tests/functional/ppc64/meson.build
++++ b/tests/functional/ppc64/meson.build
+@@ -2,6 +2,7 @@
+ 
+ test_ppc64_timeouts = {
+   'fadump' : 480,
++  'hotplug_blk' : 600,
+   'hotplug_cpu' : 480,
+   'hv' : 1000,
+   'mac99' : 120,
+@@ -21,6 +22,7 @@ tests_ppc64_system_quick = [
+ tests_ppc64_system_thorough = [
+   'e500',
+   'fadump',
++  'hotplug_blk',
+   'hotplug_cpu',
+   'hv',
+   'mac99',
+diff --git a/tests/functional/ppc64/test_hotplug_blk.py b/tests/functional/ppc64/test_hotplug_blk.py
+new file mode 100755
+index 0000000000..5740922977
+--- /dev/null
++++ b/tests/functional/ppc64/test_hotplug_blk.py
+@@ -0,0 +1,188 @@
++#!/usr/bin/env python3
++#
++# Functional test that hot-plugs and hot-unplugs a virtio-blk-pci disk
++# on the pseries machine type.
++#
++# Copyright (c) 2025 IBM Corporation
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import platform
++
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test import exec_command_and_wait_for_pattern
++
++
++class PseriesHotplugBlk(LinuxKernelTest):
++    """
++    Test virtio-blk-pci hotplug/unplug on the pseries machine type.
++
++    A pre-built rootfs image (based on the buildroot image used by
++    test_hotplug_cpu.py) is used as the guest OS.  The image includes
++    rtas_errd from ppc64-diag, which is required on pseries to call the
++    ibm,configure-connector RTAS function that makes a QMP-hotplugged
++    PCI device visible to the kernel.
++
++    ppc64-diag is not packaged in Alpine Linux, so the Alpine+apk
++    approach used by test_hv.py cannot be used here.  Instead a
++    self-contained rootfs with rtas_errd and drmgr (from powerpc-utils)
++    already installed is referenced as an Asset, following the same
++    pattern as test_hotplug_cpu.py.
++
++    The test is run with both TCG and KVM; the KVM variant needs a
++    ppc64 host with kvm-hv loaded and is skipped automatically otherwise.
++
++    A second spapr-pci-host-bridge (phb1, index=1) is present at VM
++    launch so the guest kernel registers its PCI slots with rpaphp
++    during boot-time PCI probe.  Runtime DLPAR hotplug of
++    virtio-blk-pci into phb1.0 then works via the rtas_errd path.
++    """
++
++    timeout = 600
++
++    ASSET_KERNEL = Asset(
++        ('https://github.com/raphael502/qemu-ppc-boot/raw/refs/heads/main/'
++         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
++         'vmlinux'),
++        'fc20d5820ad83ed514ac5f88af7e2692d47ab7f36dab290cdb137d05b98502f5')
++
++    # Pre-built rootfs based on the buildroot pseries image above, with
++    # rtas_errd (from ppc64-diag) and drmgr (from powerpc-utils) added.
++    # rtas_errd is required to process RTAS hotplug events on pseries and
++    # it execs drmgr to configure the device; without them rpaphp
++    # registers the slots but the device is never enumerated by the kernel.
++    ASSET_ROOTFS = Asset(
++        ('https://github.com/raphael502/qemu-ppc-boot/raw/refs/heads/main/'
++         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
++         'rootfs-hotplug.ext2'),
++        '01ab3421d313e7765176eb27193fdb5837281dc3c8484eed140de8a3e65908eb')
++
++    def _boot_pseries(self, accel):
++        """Boot pseries with phb1 present and rtas_errd running.
++
++        accel must be 'tcg' or 'kvm'.
++        """
++        kernel_path = self.ASSET_KERNEL.fetch()
++        rootfs_path = self.ASSET_ROOTFS.fetch()
++
++        self.set_machine('pseries')
++        if accel == 'tcg':
++            self.vm.add_args('-accel', 'tcg,thread=multi')
++        else:
++            self.vm.add_args('-accel', 'kvm')
++        self.vm.add_args('-smp', '2', '-m', '512M')
++        # Second PHB present at boot so the guest kernel registers its
++        # slots with rpaphp.  Required for runtime DLPAR hotplug of
++        # virtio-blk-pci into phb1.0.
++        self.vm.add_args('-device', 'spapr-pci-host-bridge,id=phb1,index=1')
++        # snapshot=on keeps the cached rootfs asset unmodified
++        self.vm.add_args(
++            '-drive',
++            f'file={rootfs_path},if=scsi,index=0,format=raw,snapshot=on')
++        self.vm.add_args(
++            '-kernel', kernel_path,
++            '-append', 'root=/dev/sda console=hvc0 rootwait printk.time=0',
++        )
++        self.vm.set_console()
++        self.vm.launch()
++
++        self.wait_for_console_pattern('buildroot login:')
++        exec_command_and_wait_for_pattern(self, 'root', '#')
++
++        # Start rtas_errd so that RTAS hotplug events are processed.
++        # rtas_errd daemonizes by default (no -d flag).  Run mkdir and
++        # rtas_errd unconditionally then echo a sentinel so the pattern
++        # match never depends on their exit codes.
++        exec_command_and_wait_for_pattern(
++            self,
++            'touch /var/log/platform; mkdir -p /var/log/dump;'
++            ' /usr/sbin/rtas_errd;'
++            ' echo rtas_errd_started',
++            'rtas_errd_started',
++        )
++
++    def _do_blk_hotplug(self):
++
++        # Confirm /dev/vda does not exist before hotplug.
++        exec_command_and_wait_for_pattern(
++            self,
++            'test -b /dev/vda && echo present || echo absent',
++            'absent',
++        )
++
++        # Add a null-co block backend (no image file needed).
++        self.vm.cmd(
++            'blockdev-add',
++            **{
++                'driver': 'null-co',
++                'size': 1073741824,
++                'node-name': 'testdisk',
++            },
++        )
++
++        # Hotplug virtio-blk-pci into phb1.0.  The RTAS hotplug event
++        # (type 229) is delivered to the guest; rtas_errd calls
++        # ibm,configure-connector, the kernel enumerates the device and
++        # udev creates /dev/vda.
++        self.vm.cmd(
++            'device_add',
++            driver='virtio-blk-pci',
++            drive='testdisk',
++            id='hotblk0',
++            bus='phb1.0',
++            addr='0x0',
++        )
++
++        # Poll until /dev/vda appears.  Use a shell variable sentinel so
++        # the string 'vda_present' never appears in the typed command,
++        # avoiding a false match on the echoed command text.
++        exec_command_and_wait_for_pattern(
++            self,
++            'until test -b /dev/vda; do sleep 0.2; done'
++            '; R=present; echo vda_$R',
++            'vda_present',
++        )
++
++        # Unplug the device and wait for the QMP deletion event.
++        self.vm.cmd('device_del', id='hotblk0')
++        self.vm.event_wait(
++            'DEVICE_DELETED',
++            match={'data': {'device': 'hotblk0'}},
++        )
++
++        # Poll until /dev/vda disappears.
++        exec_command_and_wait_for_pattern(
++            self,
++            'while test -b /dev/vda; do sleep 0.2; done'
++            '; R=absent; echo vda_$R',
++            'vda_absent',
++        )
++
++    def test_pseries_hotplug_blk_tcg(self):
++        """Hotplug then unplug a virtio-blk-pci device on pseries (TCG)."""
++        self.require_accelerator('tcg')
++        self._boot_pseries('tcg')
++        self._do_blk_hotplug()
++
++    def test_pseries_hotplug_blk_kvm(self):
++        """Hotplug then unplug a virtio-blk-pci device on pseries (KVM).
++
++        Requires a ppc64 host with kvm-hv loaded; skipped automatically
++        on other hosts.
++        """
++        self.require_accelerator('kvm')
++        # On ppc64 the base kvm module can be loaded (and /dev/kvm created)
++        # without kvm-hv, so checking /dev/kvm alone is not sufficient.
++        if platform.machine() in ('ppc64le', 'ppc64'):
++            try:
++                with open('/proc/modules', encoding='utf-8') as f:
++                    if not any(line.split()[0] == 'kvm_hv' for line in f):
++                        self.skipTest('kvm-hv module is not loaded')
++            except OSError:
++                pass
++        self._boot_pseries('kvm')
++        self._do_blk_hotplug()
++
++
++if __name__ == '__main__':
++    PseriesHotplugBlk.main()
 -- 
 2.55.0
 
