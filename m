@@ -1,146 +1,152 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2558E606A335
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 06:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0877606A521
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 06:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JxmFAUg0;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BsbYgnQw
+	dkim=pass (2048-bit key, unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=c5OICtaU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUHip-00065e-M6; Fri, 20 Nov 2026 01:03:43 -0500
+	id 1xUHmF-0006fV-Dg; Fri, 20 Nov 2026 01:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xUHin-00065D-L4
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 01:03:41 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xUHmD-0006fH-Vg; Fri, 20 Nov 2026 01:07:13 -0500
+Received: from mail-japaneastazolkn190130003.outbound.protection.outlook.com
+ ([2a01:111:f403:d405::3] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xUHim-0004ur-26
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 01:03:41 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AK4r3BB734576
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 06:03:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2Xh4N2hLQjInk8ORhlWdQU31/zHngSDkfxM4hHLSiuE=; b=JxmFAUg0sUggEM23
- mLrVW7PJH2fcEcwkOdqakpea9VLF8LXhlbmJkSyuSP1G0s2XxINOZtDanuvtb8gR
- Es3qRwVe5edpVMoEb5Zj/w0LiJDEeB83ibKIH0V73sw4zHA50D6KBnWMm4DNIzkT
- mxnVaFtbDN3KRsKSnGT7oOH64H/PvcnmxHdJxJHkeODOzN0LlSpCY4rKp7mv3eVH
- qkhbOJkNSzEHi1qU8pqTdtBkH28f8Dv5nJOzlg8cWHUbklPIXE/iyZymoRmFofpX
- H0y7No19eIcJFKfLfOl2CQZOTmBBgcnP0++65NA4MH0Ups2d0Ymg1VSXYS8f/dFx
- rcFH1Q==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j2fjtr8f4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 06:03:37 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-92114c39cadso12182236d6.2
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 22:03:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795154617; x=1795759417; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2Xh4N2hLQjInk8ORhlWdQU31/zHngSDkfxM4hHLSiuE=;
- b=BsbYgnQwLsy3HClWfWffsgsaKZ8+4AHW1gJR794vjsQC9ogvjUT+XhZ2QVRLndF4FP
- 92Cc9A5oxCt0tm4TABA5bRI90wgEhLgJc+Q3bLwFfw8re0WOtfS+YROhySe8WBxE2b7N
- QouWhdfbL8gxz72b0NVL4CtD3c1QZXtc2BoN0MEDFYmTw3eMslZIDdbpjgP+UHns7EnR
- R0q0Y+xhXzLxYbvyItgM1MxEnvp768EhbXa0W533pmeYgSFDl8jze6hRVHQvsaxZfLUy
- BBq+3fLC/Jxo4Kn5PnKZf+XU7kRCirYiqDMRsPQe/nUaSh9749WZrJwScozXDr2mEafH
- jBSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795154617; x=1795759417;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2Xh4N2hLQjInk8ORhlWdQU31/zHngSDkfxM4hHLSiuE=;
- b=FuR65dW+sK36+h8EBRMMfDnwoZ93oCZ4wmWWhR+8rAf5e7hbBrQXkSd1bcARjZygyu
- x8PQRyFjrMYi9Pb/Ie7i4l+VH42U/uNJ8GWZ6AEm/5xxnQOf6EOmBO/eLLxjRtcmFAmt
- D64L7LOWz/mat6Pe90NawuKyGut0sBiwfh3oz5eI9R64WQhcqa37RQ1X78Hdz9mBO9px
- Cm+zz989UrIg6yxc7J/53DKCXyxTnmqZIfBI7enwAUp3xfO1XGimeNeevIVngQczGQ9G
- 7xy3arWjJ7ovBxLRIa+1L2BFwA3ThiVmyjyXSEvtG7JL/XAAMxfc7CBDh5n19G9OSx3t
- GuIw==
-X-Gm-Message-State: APuU4Z+eEAjrhUA1hEk14FPkdQEze3LAO78mC6Dclixq8zAFjeMc7hY0
- eVLeqXs0qg42jMncfMDcS1eSTuEwIqY0FTWxJaIecOyOJXkFeh2GHItZYj/murnF6EtCXFZKrj7
- HS0oFkUS4uzKzugRVqC+FwNcFHxnfVKpw1YsrVEAPMub5Bm611QAM3ZiTAd1za5jMIL/G
-X-Gm-Gg: AYBFou1Vc4ZiXvxgKQ+D7c1hKKfFqokDLSA75yIndQnaoLlIedc4Px9OTaUcBSp1bN/
- aycjtT0tRpYlnRKE8G/UanNBLNNTfHDSNpcIjiUaHHgipKsAIs2FgDDwBSSk57+F07F1a4PsMXc
- hdw12WY9clbiFYBJ0Z/IdHec3GE28dJ6dX1UC9qae7IoYrDHvt1iNY1ty1+ohkvIdpDnYPFugCp
- NiwfxFu/l0O4n7kAOHxizqYRGemGlh1rdHG5Rtm2FcyYyA8BRU/tWQAsSyYXKxtc/f5ufzLzE2m
- l0iD5BxeAX/31Iq17ZN8tEez4lKsoC2sGjMLWs17kzq2KpyRWMqr8i61bHXIpqziHXYOI2BD4il
- bBtvk59w3XGQA1hlHI0TPaV956/p35PYGp6Q0lu75y8OZCVBYLk88SloVG7/BqDLLTgSljGgg1T
- B9j5RxonI=
-X-Received: by 2002:a05:620a:4403:b0:93c:7f48:8f46 with SMTP id
- af79cd13be357-949ba7e2b4dmr354593385a.4.1795154617263; 
- Thu, 19 Nov 2026 22:03:37 -0800 (PST)
-X-Received: by 2002:a05:620a:4403:b0:93c:7f48:8f46 with SMTP id
- af79cd13be357-949ba7e2b4dmr354590185a.4.1795154616772; 
- Thu, 19 Nov 2026 22:03:36 -0800 (PST)
-Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab69bf629dsm3240037f8f.9.2026.11.19.22.03.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Nov 2026 22:03:36 -0800 (PST)
-Message-ID: <0a1ac3d2-b0ca-4f7c-90b7-0b6eea794b79@oss.qualcomm.com>
-Date: Fri, 20 Nov 2026 07:03:35 +0100
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xUHmA-00065N-Uv; Fri, 20 Nov 2026 01:07:12 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KZJr+VnClENrTaOCw9j6n6qEZLT7ZsqP8R6iYFGpVMuArc8Qa4Y9YRH+td4H6BByvZ+06/VvulKIcEOMx+jc15VRPUiE9NuFgt5TJYMoeR6NQocl+M4FTFHXQA2S2uY+lSCi8UW1avUbmLQe3ZB1L2Gm+6O0PQizshw8mZWEzPOmmuWiD2FsFgnLG71IQS8+hm9PyymMYg/tpn90I8PUaMZ6j/+9feI9BDOwnuxfZFK7rauZHCDiEtQQgCVM5f1IqaYc3+1NYtVeaVf4fPO79cTHqUgQ6DtYRxNoBrPfmrqEPWLPzQuNM2ELkQKJE6CSzL/fL9tAlIeK67RfkjxyXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IJr8WCrEsu7pUxD395lM7Oy2OvnWyYQpoa7OjVRlL48=;
+ b=XziKtbxq/hPY/Ek/O1jDHvAv5tTSOFVRaAQ92clggYDhQ6McuxVHw4F3QsopCIc/+Yt+8og7cwfVIoSGmjMfjMzqa7F0x+TsyUc3OruYhDSgW2jHUAUutc/1wOMAmiigWtAXaCGnDvh2G2rZd7CivHQYn/dqOBcq5b32GlVr3PVohpGXw3pPL3CqIk866nM2Bh9goa7c86+sDbetq6WmjNfhpn7tkG21TkAF/gEIX3otLooxNPs6I6civzsLpUrr1pmQkjDL0vSpRQnDejOZveLa8Ifn9GLba3YKKRkFC8BMKp2MOeVzKgljAkCRwn989szgXoz/3/0fJk3VgELVfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IJr8WCrEsu7pUxD395lM7Oy2OvnWyYQpoa7OjVRlL48=;
+ b=c5OICtaU4k+VhgUf5xJhEWUjs7111g6Twmf+vxbqYZS8zfoCtM8e/ozX3JLA8MsAzqPY9C1eqL+exI2S/2O1PVdjWWxLpxsUh4MaU1iQt/tXIjnmuEylpZuzM99/w954h3jv8UNVjSw5p0twnqUXjRLW/F5YXbZ8xYoXYEu5zLvkMDdMzC67ux9wCRzdoMF6USgLbskLJWLznOz3zjPnv8Rc2rxbPSzzwhjyqkoKCAadcOLuJFQZfupnksmT1tCONY4FIYNsOwSV8VF+FOCFP/K8G2g1Feyn4Oi45IFns4oTEuzMGYcsDTjLJEPJCg6fjmmZnKktt72lPIWJXMUUyQ==
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com (2603:1096:405:40::7)
+ by PUZPR04MB6557.apcprd04.prod.outlook.com (2603:1096:301:f3::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
+ 2026 06:07:03 +0000
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230]) by TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230%3]) with mapi id 15.21.0639.011; Fri, 20 Nov 2026
+ 06:07:03 +0000
+Message-ID: <TYZPR04MB749116F7D4039F3C2E5AFAC2F3782@TYZPR04MB7491.apcprd04.prod.outlook.com>
+Date: Fri, 20 Nov 2026 14:06:57 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] hw/riscv: allow machines to set 'hpm-counters' for
+ riscv-iommu-sys
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20261119082356.1264726-1-daniel.barboza@oss.qualcomm.com>
+ <20261119082356.1264726-2-daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20261119082356.1264726-2-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI1PR02CA0018.apcprd02.prod.outlook.com
+ (2603:1096:4:1f4::7) To TYZPR04MB7491.apcprd04.prod.outlook.com
+ (2603:1096:405:40::7)
+X-Microsoft-Original-Message-ID: <c71a7f88-3243-41d4-b398-b06c1db78ba9@hotmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/2] util/qemu-timer: Honor sub-ms poll timeouts on
- Darwin
-Content-Language: en-US
-To: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, Joelle van Dyne <j@getutm.app>
-References: <20261119233451.47453-1-philmd@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261119233451.47453-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 4gykKILYI0CFI4ytvI0jwG2_Yv1ej4pz
-X-Proofpoint-GUID: 4gykKILYI0CFI4ytvI0jwG2_Yv1ej4pz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDAyMyBTYWx0ZWRfX3+dOO2tHgZYg
- 9ibZi+WDKSCi4sqivkH1+++O+l5lEOTEVOhnfY0lrGrADdsY53/o37HZJum3sQ8JR/8jen/llH1
- E4iDBBNenFyWRqPBPQfeHYqN4b/KlbyrPfI+DYRsLAAGXTMSKdcryIy2JUf/8/1EmiEmoN2zO+s
- zLyovZZBoZRqfPM0cmvSfwdwx0vn0cLIWk4nvS7WxGFO+tTr8M9KDcwJyW/G1mqc36CpjcNrY8D
- EYRUzz/keLBWG6sGRmkPmgNMxwmMxSAh3FQGXy6qQ5QdErX+ZJqcWaVhzFsuBHa/yMdtXoiTpoo
- Q5xEvWyJIMtMxU1cY3qqjycK0QBNZJyHuQVH5XmOgCow9dUSAgA2voZ2EYR+1pCKAJ4NdtsMYL5
- TnVhcFh++35NPJ5/quB37eYqx9WBurgbYP1nZOWMAQ0hRN0o5b2wYQIyQomJ1AW4lnYZFlNrqos
- i7+AaFpJedFpB4tmetA==
-X-Authority-Analysis: v=2.4 cv=XcccX455 c=1 sm=1 tr=0 ts=6affe2b9 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=seKwgcqWBtyr1Y5faxwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDAyMyBTYWx0ZWRfXxC6nsBC+VXDT
- Gtfq2NpPlE2XUfeVzuD0+/GbM6lSHBMZFGkFQfvY5VMDAx9Ty9ZRs47/4U6K6qsvnrGJTclvwGp
- 5c+14AwxmHjBiFSx0ihd5m+U8LlrEmA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-20_02,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 malwarescore=0 adultscore=0 spamscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611200023
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR04MB7491:EE_|PUZPR04MB6557:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3cb69ec1-25e4-49d7-9367-08df46cc7ec6
+X-MS-Exchange-SLBlob-MailProps: Om8TgR6f4EDKwbHiBQa7ExePO6wqvFC1aPNPFw7RJdhboyqZJq3NNztwgfJx7HOrb0tXsTQPjPEAChW3lqnjwGEZh2Kila2yGf4CIDUpzKiEzRH84D2+BwxagiDj7LIc6/QE7zhjzXtFirzaBPoojcgxSHJQo7X5ltcmYVWB9gwWk7/VycE/GRBesnwauRY6saNdX651gy5tj1y93eqxPtpxhzoMDdKxxCVpPv/LhNKHjAOAsL9NFQMbBvtaU90JgwUBxg+vUS7YqFY/uPVi1GMiATOuFtPp9j3QDG2e33s1XqHzpE4OPtMhZszt+MTIiBqfxk/oLS8aLfJlzv9rmRvM1z1G5WptkDj1NI+QLcFXPoPzsZKBFrS/XwrBYXK0dcyXU7adhgRvm23Ak46kSD9hXHMM9BVosEdYWYtl9McQgALzb84zZfbVH+O0Bs0se4pnn71utoCzUiS64BjhuC3SijggEgMF6p364jjD+I52NHtY7Z5Uv95ParhdOQ2ZpBWv1tpB/NylZ5QZYrz019c6puQnZCktEcLalu3zHGWkrTQt2vMfw2zTQkJRVPchihxZCwxzCIEOVAwCU2Z6c8Vx95xCyF41qN25oCZye9dAtRbN/YNKU4Gg9GcIFhyXbp0NkO/Lq/T4r32fGx/2oOqk28Ke5UvBvZswkG6OKeGJiFMMhlAqZNCZVk6Jf19crkP1TT7unWikXINJh2P8CEqBNRLQs19kZpV6G5cfMBQB2QIrFhAFlnu0bNx8JJOt9qBCswYeSdyDdklJ8Fi/pBdbRziCmdZWMHenJMAJQuB8ipACpCymVASIKRjklmE4A48antFCsv0M0Y+QUtnh43xuPKgINqOq
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|24121999003|23021999003|22091999003|15080799012|5072599009|6090799003|41001999006|51005399006|25010399006|4140399003|19110799012|8060799015|19101099003|55001999006|440099028|3412199025|10035399007|40105399003;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?d0h5NktkMWFlNXAxK240VXBUTFdDbm1temlESTY1N2pLRFZDTSs4dTFOS2li?=
+ =?utf-8?B?U0hkaHdGNStpQnBic0RQMFg5dHIrRGRXN1orWFc4cEljQVd6UVFybmdEZUds?=
+ =?utf-8?B?SzJmTHJlMjJvZExKVTMwczZ2SGtwVW1DaTczRnRRaW4rNS9BcFVuNEZ3bnY1?=
+ =?utf-8?B?WGVpVUttN1VyeGRWblFLbEFvalVIemNvYTU2T0xqSzMxOEk3NDhKL0hlTGN6?=
+ =?utf-8?B?WGhQS2ZZUzNzckl1TTVHME1JQW4wY0NQbTNDMytOVmxUR0pTbkcxZVMrd2x2?=
+ =?utf-8?B?bFVpTUNZL1dua3k1MW5YbjdkdDIrblppNEV1VkZKWWs4Nitpc0ZISFh3OTFC?=
+ =?utf-8?B?TjRueGJMcXR2YWZ4K1p0bzBscDVyUlNTUFQrMW44RlNKeWRPRzFLWDBxb2R2?=
+ =?utf-8?B?ckZiV2cxL2p4QWJJa2NmWjNYVTdROS91TUJvaDRXd1dWblE4RFNTaEJqd201?=
+ =?utf-8?B?cjJ1ZTNKUjRWNTJmVEQ2NXQ0OXhqcE81aVlpdVlraFUyYzVJVCtvWEgrRVVj?=
+ =?utf-8?B?V0ZzVDUvWCtHU1JEL3VpMTJvakplY3J6bDNwMTBsM29QWlBXRlhNVklwR1Jw?=
+ =?utf-8?B?ZXRndjFDWWR5UU01dUxOcVhZNWFoT0R3WW1pVHRhL3ZlZkVOZVAzb0kvaERi?=
+ =?utf-8?B?YlZsbWtHVDZvNit0VFhTNExFSDM0OUplQ2lKR3FuelZ6Z0t5NjAxWWFxelA0?=
+ =?utf-8?B?b0NlS2ZuOGVWbzZlWG9CZjE2amRrTTQwc0RrVmVyc2cvb1NoaFhYQ0R5Y1JF?=
+ =?utf-8?B?OFlXa0NrQk5tQmJBMGR5V3FXWGxVQVdwTkdKUzlLRU9VckhEY0NNMTBHbmZC?=
+ =?utf-8?B?S2ZnMEtiUEhLQzh6cDkxYXlpRjNsTlRNUUgzRUV2Q1FlYm1yR1A1dFNUcXZs?=
+ =?utf-8?B?VHR0VzdGU0daZWRvVVpnT2dSa3JRd05xcGErNlY5Nndyb1pyT0o0cmIxT2l6?=
+ =?utf-8?B?U2dXRnJ1ODlyRDRpOHIyVU15WjMzSmFaZFJ6c2NSbVZucW9IaFVQS0FWMmt3?=
+ =?utf-8?B?SXViUHV6aXcxSTJXRldzaWRmczdjQzNGV09iMXZPbkRVUW9SQTlrSWZBM1Ja?=
+ =?utf-8?B?Ung0MTc5aFc0WUZLMmJXcDFvWVdDMjVDdUZtOHloTDJyUEpMOW5BKzlNaHNI?=
+ =?utf-8?B?S3BjMXVIRUJSc3dOZEN3Wndpa2ExdmI5enVxc0ZTVXNGcGhpcWI3b0tEUzBq?=
+ =?utf-8?B?L250aG9odFh2NkVwSDNyZXJIdDJWOEtsSzN0SXZPaGRtNWdsaG9YZEV0K3Nx?=
+ =?utf-8?B?dnhRcnZIUytJQXp5THNoTjRpWG5oSE9ZdDQ4TjdIOFBRNTl3cHVaOWJHWkR1?=
+ =?utf-8?B?aTR3MnNzUXZFY29BN1BNK3lHUmxkOS9BZ1c5eHRmOFhLeFVXNUtPb0xNRWFG?=
+ =?utf-8?B?R2krbm5FNEpsOGluR3NrMlZ4OFNwNDVFRk9veGhSVUtYRVdHZzFWdzUvRi9K?=
+ =?utf-8?B?RWM0UkRKaDFsdlBjRzRXTkppTDQvWGR2Z2ZFSnNRPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OUoyYncvRUNoQ01YWWc5OTF4QkNzaTM1dmtpeUYrdVdzN2dINFhMWDhMZHEv?=
+ =?utf-8?B?RnlIKzd4UGozaDJIZzJyMDhjY3FwWGswSEJtWVpPUWpQcjFrTWtpWE85Yjcv?=
+ =?utf-8?B?YkQ0T1BWS0hoelJUdkpTckpMY0xWV1JLd1ZSVzVGWStiTXFRK3dyRE9yMjI1?=
+ =?utf-8?B?TDRkN2ZialZNMytPOG5hVU9LQmNNcjAyNUJQNDc5Znl2NlZvWC9yNlV6eWkz?=
+ =?utf-8?B?MWJpdTk4bkhUaCtXM0ZwVlV4T1BDbldWUk9MVGMxNTVjZmt5Yi9jdUZDWjM1?=
+ =?utf-8?B?MUozNm5USWZUYjRPWVFweGpqc0p6UmN0SUhSWDBGL2VFQVUwV2RZZFRPYktH?=
+ =?utf-8?B?SnFWL3ZUV2xvM05NZnB0QS9RT3Rtd29NMU5WVWxUTy9mN3ZxMVlhWjF5N3NI?=
+ =?utf-8?B?ZzNtYVdSVm4zQ0dvVHRTc0ZWMU9waWMzbUVxWEh6Zzc4c05rTW43OVJRSDdv?=
+ =?utf-8?B?VXRBTDhCN0hCUmZOWmllL20xbElhZDYzby9CUHVkK2I1NDdyOE1QcjV0YXpq?=
+ =?utf-8?B?cGpyd2FzY2F0OGswTmpTdWVsbnZObm5rSGQ1SVp4dkM3aWVFYW1FUTZaak00?=
+ =?utf-8?B?TUYyMzFnMU85Z3UvSEdlYnM5NFNWVHhmenVNR2o2L014WEZyaGNPTmlXR3dI?=
+ =?utf-8?B?aHpBTFh5SFUzMVYzTlpVc3RsVDg0T0FwMzZGSlFNd2pvc0dkbU0zOHV0TkZa?=
+ =?utf-8?B?Yjlnc0lEWTk4MHJ0NHBKL3hNOE96d2ZwVk1sOGtQQUc2RlpOOHhUeEo5UWxL?=
+ =?utf-8?B?YnBmTGVuWE5aVXIvMHo3dC81elAwS0F4MFV0RkVBdlpMTUlYSGF1Qk5CUW5T?=
+ =?utf-8?B?dlBDMTYvdWFVVzdBVWlHZmdwQUI3elhORFhjREw1RGw4VHk3b3oxeGtMUWxz?=
+ =?utf-8?B?NE5haUdKSVFLM2pMWUFTRHkveXozYVdkOWlBZXlSTmI1dVlKb1lUZnlWVk1n?=
+ =?utf-8?B?QzRUVDBSVDJOY1M0Q0hkY3ovTmlvekgxajltSVArMmtqcStqKzg3N2ZtQWNr?=
+ =?utf-8?B?YzZlckVSaW0vQXg2QUt1Uk13eGd6MmYzdXRPUnlXS3F4NjIrUzA4WTZscWRo?=
+ =?utf-8?B?WFdsRys4RmczUEtQWS81YTdNVTJHMTRUTjNRc01NK0h0dTRBRmNvVTVlTU1H?=
+ =?utf-8?B?dGlpblFXRWNCdWlkTVk3bmZrTTJUSDBGcmdFb2EyRVRGWlpOYm9DeldHMWsv?=
+ =?utf-8?B?R05iNzR4UGpVUXE3OUg2UXg0c3hOSXBYR3JzSlZtWWQrT2tpem96VkZwVUNL?=
+ =?utf-8?B?N3ZOUjM4REFGQ3lmTk1MdkJhNVo3dCtNeEd0Y3dqb2lVNkhLVkUwaFA4VHA5?=
+ =?utf-8?B?RHhQc2EvY2kvbXpPMXdOczV4cG1SMVhtcnozSmx0bHVicVBBTFRZbW9KRHlR?=
+ =?utf-8?B?OGZicGpRcWE5WWl5aUVJdWNLdWRqUWhOZVZrZEk2a3RCbTRzMjlJRm1zMVlC?=
+ =?utf-8?B?NDR2MDRFRVJoSGlnd29yK2tmaXVqVk5QTC9CT29haHpxb3g3WVJSZkhaZ2Ny?=
+ =?utf-8?B?L0thUHovMjBMSnp5Y1hucngyTzFUYkJqTElLYXpwMG5Tb1B2VEpiK3hwMFo1?=
+ =?utf-8?B?SGx4elNVVzVQWEFwd3dQcnhWMDZEbk1BSkJWQmE3YklWTDJtTk1IeUFwSVdz?=
+ =?utf-8?B?S2ZuSnI5YmtYbWVHZG9ON1FIQTBVelY5MTZlaG96UG5ZaENQT0tPRUZTcG43?=
+ =?utf-8?B?UFoxVHU5NkE2ZU5uUUdnN3FGYURMdmdKVitabCtJL3JtbVF5NWV3QWZEbU5B?=
+ =?utf-8?B?SElUOTFpbW9QUG0rVzlTMXFKQndnMGwzQmdISFdXQktjVXJWby9XdTVJL2F6?=
+ =?utf-8?B?aUo4V0J5YnhuNjNqRHRlQWlDRDlpd09NWGtXYmxLaFN0WkFoelEzTzJUNG9R?=
+ =?utf-8?Q?qyE8HjJ7iCejL?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3cb69ec1-25e4-49d7-9367-08df46cc7ec6
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB7491.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 06:07:03.1475 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR04MB6557
+Received-SPF: pass client-ip=2a01:111:f403:d405::3;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,37 +158,115 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-(forgot to Cc Akihiko)
+On 11/19/2026 4:23 PM, Daniel Henrique Barboza wrote:
+> The riscv server soc requirements [1] dictates in rule "IOM_200" that
+> the IOMMU must have at least 4 event counters.  As it stands today we're
+> creating an iommu-sys device with RISCV_IOMMU_IOCOUNT_NUM (31) counters.
+>
+> Following the design of setting just the minimal spec requirements, set
+> hpm-counters to 4.  We're doing that by adding a new argument in
+> riscv_create_iommu_sys().  In case more IOMMU parameters need to tweaked
+> in the device we might consider a different approach, but for now this
+> suffices.
+>
+> The hpm-counters value used in the 'virt' board is default val from
+> riscv-iommu, i.e. there's no change in 'virt' board configuration with
+> this patch.
+>
+> Note that the 'Fixes' tag points to the riscv-server-ref initial commit
+> because the IOM_200 rule should have been there from the start.  There's
+> nothing inherently wrong with the initial commit for
+> riscv_create_iommu_sys().
+>
+> [1] https://docs.riscv.org/reference/server-soc/v1.0/server_soc_requirements.html
+>
+> Fixes: c2fa4320803b ("hw/riscv: server platform reference machine")
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
-On 20/11/26 00:34, Philippe Mathieu-DaudÃ© wrote:
-> This series corrects a long-standing platform limitation:
-> qemu_poll_ns() promises nanosecond timeouts, but Darwin’s
-> g_poll() fallback rounds up to milliseconds, making sub-ms
-> virtual timers fire late. Fixes the observable behavior.
-> 
-> Add a Darwin-only microbenchmark used to compare wait
-> primitives and justify the chosen approach.
-> 
-> During the final sub-ms sleep, descriptors are not polled,
-> so fd readiness can be delayed by up to <1 ms. This is still
-> much better than whole-ms timer overshoot and avoids busy-waiting.
-> 
-> Philippe Mathieu-Daudé (2):
->    tests/bench: Add macos-pollbench
->    util/qemu-timer: Honor sub-ms poll timeouts on Darwin
-> 
->   tests/bench/macos-pollbench.c | 290 ++++++++++++++++++++++++++++++++++
->   util/qemu-timer.c             |  27 ++++
->   tests/bench/meson.build       |   6 +
->   3 files changed, 323 insertions(+)
->   create mode 100644 tests/bench/macos-pollbench.c
-> 
-
+Thanks,
+Nutty
+> ---
+>   hw/riscv/riscv-iommu-sys.c     | 4 ++++
+>   hw/riscv/riscv-iommu.h         | 1 +
+>   hw/riscv/server_platform_ref.c | 2 ++
+>   hw/riscv/virt.c                | 3 ++-
+>   4 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+> index 258c171efd..3a9e22080a 100644
+> --- a/hw/riscv/riscv-iommu-sys.c
+> +++ b/hw/riscv/riscv-iommu-sys.c
+> @@ -219,6 +219,7 @@ static void riscv_iommu_sys_init(Object *obj)
+>   
+>   DeviceState *riscv_create_iommu_sys(DeviceState *mmio_irqchip,
+>                                       hwaddr addr, int base_irq,
+> +                                    int hpm_counters,
+>                                       bool is_32_bit)
+>   {
+>       DeviceState *iommu_sys = qdev_new(TYPE_RISCV_IOMMU_SYS);
+> @@ -237,6 +238,9 @@ DeviceState *riscv_create_iommu_sys(DeviceState *mmio_irqchip,
+>                                is_32_bit ? 34 : 56,
+>                                &error_fatal);
+>   
+> +    object_property_set_int(OBJECT(iommu_sys), "hpm-counters",
+> +                            hpm_counters, &error_abort);
+> +
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+>   
+>       return iommu_sys;
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index 403d10b321..0f755b0992 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -107,6 +107,7 @@ void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
+>   void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev);
+>   DeviceState *riscv_create_iommu_sys(DeviceState *mmio_irqchip,
+>                                       hwaddr addr, int base_irq,
+> +                                    int hpm_counters,
+>                                       bool is_32_bit);
+>   
+>   typedef struct RISCVIOMMUContext RISCVIOMMUContext;
+> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
+> index 22b3149ee8..fb770cf6fb 100644
+> --- a/hw/riscv/server_platform_ref.c
+> +++ b/hw/riscv/server_platform_ref.c
+> @@ -67,6 +67,7 @@
+>   #define SYSCON_POWEROFF                        0x2
+>   
+>   #define RVSERVER_PLATFORM_BUS_NUM_IRQS         8
+> +#define RVSERVER_IOMMU_HPM_COUNTERS            4
+>   
+>   #define TYPE_RISCV_SERVER_REF_MACHINE MACHINE_TYPE_NAME("riscv-server-ref")
+>   OBJECT_DECLARE_SIMPLE_TYPE(RISCVServerRefMachineState, RISCV_SERVER_REF_MACHINE)
+> @@ -641,6 +642,7 @@ static void rvserver_ref_machine_init(MachineState *machine)
+>       }
+>   
+>       riscv_create_iommu_sys(mmio_irqchip, s->memmap[RVSERVER_IOMMU_SYS].base,
+> +                           RVSERVER_IOMMU_HPM_COUNTERS,
+>                              IOMMU_SYS_IRQ, false);
+>   
+>       s->machine_done.notify = rvserver_ref_machine_done;
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index dceb3ff55e..016003d73d 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -962,7 +962,8 @@ static void virt_machine_init(MachineState *machine)
+>   
+>       if (virt_is_iommu_sys_enabled(s)) {
+>           riscv_create_iommu_sys(mmio_irqchip, s->memmap[VIRT_IOMMU_SYS].base,
+> -                               IOMMU_SYS_IRQ, riscv_is_32bit(&s->soc[0]));
+> +                               IOMMU_SYS_IRQ, RISCV_IOMMU_IOCOUNT_NUM,
+> +                               riscv_is_32bit(&s->soc[0]));
+>       }
+>   
+>       s->machine_done.notify = virt_machine_done;
 
