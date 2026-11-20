@@ -1,81 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C38606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D6060A2606
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=M1uhsK/2
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Btfmtyct
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUROG-0004C1-88; Fri, 20 Nov 2026 11:23:08 -0500
+	id 1xURRE-0005CR-0V; Fri, 20 Nov 2026 11:26:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xUROD-0004AP-QB
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:23:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xUROC-0000mZ-1J
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:23:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795191782;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3oiKmH3vjsES5PK2aW4HiJue2/qlsBNvWLKNdgghVBc=;
- b=M1uhsK/21Q/4tTIe8k5x+q2CHC51pWukmemNhNLRcEZIUjlWhdq2dukvY0bzqkCwhs0sNW
- zHmQ24Tg7S+4/kg0H8fG8JkqDqQaHPx5nSSRozvB74xJ5aVE+L16RLblrAa0NfORA+gwIL
- cdEUr73HpRcHmf2+vHQRfek2cSgbpAo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-ikglE_BvM0a27S1_qJ9Rcw-1; Fri,
- 20 Nov 2026 16:22:56 +0000
-X-MC-Unique: ikglE_BvM0a27S1_qJ9Rcw-1
-X-Mimecast-MFC-AGG-ID: ikglE_BvM0a27S1_qJ9Rcw_1795191773
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6FF0C195605E; Fri, 20 Nov 2026 16:22:53 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD79F30000E3; Fri, 20 Nov 2026 16:22:51 +0000 (UTC)
-Date: Fri, 20 Nov 2026 16:22:48 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xURR9-0005BX-NO; Fri, 20 Nov 2026 11:26:08 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xURR5-0001MV-V7; Fri, 20 Nov 2026 11:26:07 -0500
+Received: from example.com (unknown [167.220.208.76])
+ by linux.microsoft.com (Postfix) with ESMTPSA id D3E9A20B716B;
+ Fri, 20 Nov 2026 08:25:55 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D3E9A20B716B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795191959;
+ bh=10aP81BLI+DtakKFv8JFwm+/+Xq6Q7OLUXnjthRVg4o=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BtfmtyctNge+LWbOcNIYmo9w9b1C78kq2qYocrGTl3NlxOH7AE+4eurKTV+X3lNbr
+ Nt4nHS+WSwagJLEKqcqYRIJHiHYpw0LcyX1XVr+hCyBmCOlLagOPfSK/q0w8WHQoct
+ syhvp4HhnVrlDcxbNhMeFIGiDAtgX7jedM6hkXBE=
+Date: Fri, 20 Nov 2026 17:25:55 +0100
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Aastha Rawat <aastharawat@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 0/10] system: add a watchdog for the Big QEMU Lock
-Message-ID: <awBz2AP3W6-XNQ9U@redhat.com>
-References: <20260915203455.580999-1-den@openvz.org>
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 13/14] hw/intc,target/arm/mshv: add MSHV vGICv3
+ implementation
+Message-ID: <awB0k/A4En4wsz5H@example.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-13-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915203455.580999-1-den@openvz.org>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-13-aefe5e76a0e3@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,113 +72,473 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Sep 15, 2026 at 10:34:44PM +0200, Denis V. Lunev wrote:
-> A vCPU thread reacquires the BQL on every exit that needs userspace. A
-> holder that keeps it for tens of seconds stops every vCPU, the guest
-> reports a soft lockup or panics, and qemu itself records nothing. The
-> guest log is the only evidence, and it cannot say whether the hypervisor
-> held the lock or the guest wedged on its own.
+On Thu, Oct 01, 2026 at 10:52:58AM +0000, Aastha Rawat wrote:
+> From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
 > 
-> This series adds a BQL watchdog. A sampler thread watches a sequence
-> counter that bql_update_status() advances on every acquire and release.
-> One odd value across the whole window means one owner held the lock for
-> the whole window. On expiry the watchdog names the holder and prints the
-> state of every other thread:
+> Add in-kernel GICv3 support for the MSHV accelerator, following the
+> same approach as the KVM and WHPX vGIC backends. The implementation
+> handles IRQ injection via the HVCALL_ASSERT_VIRTUAL_INTERRUPT hypercall.
 > 
->   qemu-system-x86_64: 2026-09-15T15:53:57Z BQL held for more than 100 ms by thread 168146
->     168146  qemu-system-x86  S
->         pc 0x785a4dbcb884 liburing.so.2+0x2884
->         wchan io_cqring_wait
->     168147  call_rcu         S
->         pc 0x785a4d534acb syscall+0x1b
->         wchan futex_do_wait
->     168148  IO mon_iothread  S
->         pc 0x785a4d4ac802 libc.so.6+0xac802
->         wchan poll_schedule_timeout.constprop.0
+> Introduce mshv_arch_pre_init_vm(), an arch-specific hook called after
+> VM creation but before VM initialization, used on arm64 to configure
+> GIC partition properties (GICD base, ITS translater base, timer and PMU
+> PPI numbers). The x86 side provides a no-op stub.
 > 
-> With CAP_SYS_ADMIN the wchan line becomes the kernel stack. The pc line
-> comes from signalling each thread and reading the program counter out of
-> its signal frame, which is what tells a thread spinning in userspace
-> from one asleep in a syscall.
+> Update the virt machine to treat MSHV like WHPX for GIC version
+> selection (GICv3 only) and MSI controller finalization (no ITS support).
 > 
-> The watchdog is off by default and stays quiet under a debugger. Two
-> machine properties drive it: bql-watchdog-ms sets the deadline, on the
-> command line or over qom-set at any time, and bql-watchdog-abort turns
-> the report into a core dump for hosts where the answer is worth more
-> than the guest.
+> Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+> ---
+>  accel/mshv/mshv-all.c              |   5 +
+>  hw/arm/virt.c                      |   8 +-
+>  hw/intc/arm_gicv3_common.c         |   3 +
+>  hw/intc/arm_gicv3_mshv.c           | 181 +++++++++++++++++++++++++++++++++++++
+>  hw/intc/meson.build                |   2 +
+>  include/hw/hyperv/hvgdk_mini.h     |   2 +
+>  include/hw/hyperv/hvhdk_mini.h     |   6 ++
+>  include/hw/intc/arm_gicv3_common.h |   1 +
+>  include/system/mshv_int.h          |   1 +
+>  target/arm/mshv/mshv-all.c         |  61 +++++++++++++
+>  target/i386/mshv/mshv-all.c        |   5 +
+>  11 files changed, 273 insertions(+), 2 deletions(-)
 > 
-> Patches 1 to 6 are the pieces: a fix for bql_locked across the timed
-> condvar wait, a debugger check, the per-thread state reader and its
-> kernel stack and program counter extensions, and the signal reserved for
-> the latter. Patches 7 to 9 are the watchdog itself. Patch 10 is a
-> functional test that holds the BQL through an HMP qemu-io write to a
-> null-co node with a latency longer than the deadline.
-> 
-> The program counter lives at a host specific offset in the signal frame,
-> so patch 6 reads it through a host/include header. The Linux headers for
-> aarch64, ppc64, riscv64, s390x and loongarch64 repeat what linux-user's
-> host-signal.h already knows about those frames, but only the x86_64 one
-> has been compiled here, and the Windows half of patch 1 has not been
-> compiled either.
-> 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Cc: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> 
-> Denis V. Lunev (10):
->   util/qemu-thread: track bql_locked across the timed condvar wait
->   oslib: add qemu_debugger_attached()
->   oslib: add qemu_thread_states()
->   oslib: report kernel stacks in qemu_thread_states()
->   util/qemu-thread: reserve a signal for thread introspection
->   oslib: report each thread's program counter
->   system/cpus: report a BQL held past a deadline
->   system/cpus: hold off the BQL watchdog under a debugger
->   system/cpus: add bql-watchdog-abort
->   tests/functional: cover the BQL watchdog
-> 
->  host/include/aarch64/host/signal-pc.h         |  20 ++
->  host/include/generic/host/signal-pc.h         |  11 +
->  host/include/loongarch64/host/signal-pc.h     |  20 ++
->  host/include/ppc64/host/signal-pc.h           |  22 ++
->  host/include/riscv64/host/signal-pc.h         |  20 ++
->  host/include/s390x/host/signal-pc.h           |  20 ++
->  host/include/x86_64/host/signal-pc.h          |  20 ++
->  hw/core/machine.c                             |  44 +++
->  include/qemu/osdep.h                          |  29 ++
->  include/system/cpus.h                         |   8 +
->  meson.build                                   |   2 +
->  qemu-options.hx                               |  11 +
->  system/cpus.c                                 | 143 ++++++++
->  tests/functional/generic/meson.build          |   1 +
->  tests/functional/generic/test_bql_watchdog.py |  60 ++++
->  util/oslib-posix.c                            | 316 ++++++++++++++++++
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 9603f0360e1..e1264952873 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -279,6 +279,11 @@ static int create_vm(int mshv_fd, int *vm_fd)
+>          return -1;
+>      }
+>  
+> +    ret = mshv_arch_pre_init_vm(*vm_fd);
+> +    if (ret < 0) {
+> +        return -1;
+> +    }
+> +
+>      ret = initialize_vm(*vm_fd);
+>      if (ret < 0) {
+>          return -1;
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index ee03a85f482..67a1f19190b 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2706,7 +2706,7 @@ static void finalize_gic_version(VirtMachineState *vms)
+>          /* KVM w/o kernel irqchip can only deal with GICv2 */
+>          gics_supported |= VIRT_GIC_VERSION_2_MASK;
+>          accel_name = "KVM with kernel-irqchip=off";
+> -    } else if (whpx_enabled()) {
+> +    } else if (whpx_enabled() || mshv_enabled()) {
+>          gics_supported |= VIRT_GIC_VERSION_3_MASK;
+>      } else if (hvf_enabled()) {
+>          if (!hvf_irqchip_in_kernel()) {
+> @@ -2760,7 +2760,7 @@ static void finalize_msi_controller(VirtMachineState *vms)
+>      if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
+>          if (vms->gic_version == VIRT_GIC_VERSION_2) {
+>              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+> -        } else if (whpx_enabled()) {
+> +        } else if (whpx_enabled() || mshv_enabled()) {
+>              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+>          }  else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+>              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+> @@ -2790,6 +2790,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
+>              error_report("ITS not supported on WHPX.");
+>              exit(1);
+>          }
+> +        if (mshv_enabled()) {
+> +            error_report("ITS not supported on MSHV.");
+> +            exit(1);
+> +        }
+>          if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+>              error_report("ITS not supported on HVF when using the hardware vGIC.");
+>              exit(1);
+> diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+> index f7ba74e6d52..fb34b6a942d 100644
+> --- a/hw/intc/arm_gicv3_common.c
+> +++ b/hw/intc/arm_gicv3_common.c
+> @@ -34,6 +34,7 @@
+>  #include "system/kvm.h"
+>  #include "system/whpx.h"
+>  #include "system/hvf.h"
+> +#include "system/mshv.h"
+>  
+>  
+>  static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
+> @@ -662,6 +663,8 @@ const char *gicv3_class_name(void)
+>          return TYPE_WHPX_GICV3;
+>      } else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+>          return TYPE_HVF_GICV3;
+> +    } else if (mshv_enabled()) {
+> +        return TYPE_MSHV_GICV3;
+>      } else {
+>          if (kvm_enabled()) {
+>              error_report("Userspace GICv3 is not supported with KVM");
+> diff --git a/hw/intc/arm_gicv3_mshv.c b/hw/intc/arm_gicv3_mshv.c
+> new file mode 100644
+> index 00000000000..a87819a5ba3
+> --- /dev/null
+> +++ b/hw/intc/arm_gicv3_mshv.c
 
-As a general point that doesn't fit any single patch, IMHO
-it is undesirable to be putting all this logic into the
-oslib-posix.c file.
+this is a new file that we should add to MAINTAINERS
 
-It likely justifies being put into a standalone file eg a
-new 'debug.c'
+> @@ -0,0 +1,181 @@
+> +/*
+> + * ARM Generic Interrupt Controller using MSHV in-kernel support
+> + *
+> + * Copyright Microsoft, Corp. 2026
+> + * Based on vGICv3 KVM code by Pavel Fedin
+> + *
+> + * Authors:
+> + *      Aastha Rawat <aastharawat@microsoft.com>
+> + *      Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/error-report.h"
+> +#include "hw/intc/arm_gicv3_common.h"
+> +#include "migration/blocker.h"
+> +#include "target/arm/cpregs.h"
+> +#include "hw/hyperv/hvgdk_mini.h"
+> +#include "system/mshv.h"
+> +#include "system/mshv_int.h"
+> +
+> +struct MSHVARMGICv3Class {
+> +    ARMGICv3CommonClass parent_class;
+> +    DeviceRealize parent_realize;
+> +    ResettablePhases parent_phases;
+> +};
+> +
+> +OBJECT_DECLARE_TYPE(GICv3State, MSHVARMGICv3Class, MSHV_GICV3)
+> +
+> +static void mshv_gicv3_get(GICv3State *s)
+> +{
+> +}
+> +
+> +static void mshv_gicv3_put(GICv3State *s)
+> +{
+> +}
+> +
+> +static void mshv_gicv3_reset_hold(Object *obj, ResetType type)
+> +{
+> +    GICv3State *s = ARM_GICV3_COMMON(obj);
+> +    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
+> +
+> +    if (mgc->parent_phases.hold) {
+> +        mgc->parent_phases.hold(obj, type);
+> +    }
+> +
+> +    mshv_gicv3_put(s);
+> +}
+> +
+> +static void mshv_gicv3_set_irq(void *opaque, int irq, int level)
+> +{
+> +    int ret;
+> +    GICv3State *s = (GICv3State *)opaque;
+> +    int vm_fd = mshv_state->vm;
+> +    struct hv_input_assert_virtual_interrupt arg = {0};
+> +    struct mshv_root_hvcall args = {0};
+> +    union hv_interrupt_control control = {
+> +        .interrupt_type = HV_ARM64_INTERRUPT_TYPE_FIXED,
+> +        .rsvd1 = 0,
+> +        .asserted = level,
+> +        .rsvd2 = 0
+> +    };
+> +
+> +    if (irq >= s->num_irq) {
 
+I think we also need to consider the SGI + PPI range here:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+if (irq >= s->num_irq - GIC_INTERNAL)
 
+> +        return;
+> +    }
+> +
+> +    arg.control = control;
+> +    arg.vector = GIC_INTERNAL + irq;
+> +
+> +    args.code   = HVCALL_ASSERT_VIRTUAL_INTERRUPT;
+> +    args.in_sz  = sizeof(arg);
+> +    args.in_ptr = (uint64_t)&arg;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set GICv3 IRQ %d to level %d", irq, level);
+> +    }
+> +}
+> +
+> +static void mshv_gicv3_realize(DeviceState *dev, Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +    GICv3State *s = MSHV_GICV3(dev);
+> +    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
+> +    int i, ret;
+> +
+> +    mgc->parent_realize(dev, errp);
+> +    if (*errp) {
+> +        return;
+> +    }
+> +
+> +    if (s->revision != 3) {
+> +        error_setg(errp, "unsupported GIC revision %d for platform GIC",
+> +                   s->revision);
+> +        return;
+> +    }
+> +
+> +    if (s->security_extn) {
+> +        error_setg(errp, "the platform vGICv3 does not implement the "
+> +                   "security extensions");
+> +        return;
+> +    }
+> +
+> +    if (s->nmi_support) {
+> +        error_setg(errp, "NMI is not supported with the platform GIC");
+> +        return;
+> +    }
+> +
+> +    if (s->nb_redist_regions > 1) {
+> +        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
+> +                   "supported by MSHV");
+> +        error_append_hint(errp, "A maximum of %d VCPUs can be used",
+> +                          s->redist_region_count[0]);
+> +        return;
+> +    }
+> +
+> +    gicv3_init_irqs_and_mmio(s, mshv_gicv3_set_irq, NULL);
+> +
+> +    for (i = 0; i < s->num_cpu; i++) {
+> +        CPUState *cpu_state = qemu_get_cpu(i);
+> +
+> +        hv_register_assoc gicr_base = {
+> +            .name = HV_ARM64_REGISTER_GICR_BASE_GPA,
+> +            .value = {
+> +                .reg64 = 0x080A0000 + (GICV3_REDIST_SIZE * i)
+> +            }
+> +        };
+> +
+> +        ret = mshv_set_generic_regs(cpu_state, &gicr_base, 1);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to set GICR base for CPU %d", i);
+> +            return;
+> +        }
+> +    }
+> +
+> +    if (s->maint_irq) {
+> +        error_setg(errp,
+> +               "Nested virtualisation not currently supported by MSHV");
+> +        return;
+> +    }
+> +
+> +    error_setg(&s->migration_blocker,
+> +        "Live migration disabled because GIC state save/restore not supported on MSHV");
+> +    if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
+> +        error_report_err(*errp);
+
+err_report_err() will consume/free errp. AFAIU the call site owns the
+error, and we can just return here. otherwise we will probably have a
+double free of the error somewhere up in the callchain.
+
+> +    }
+> +}
+> +
+> +static void mshv_gicv3_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+> +    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
+> +    MSHVARMGICv3Class *mgc = MSHV_GICV3_CLASS(klass);
+> +
+> +    agcc->pre_save = mshv_gicv3_get;
+> +    agcc->post_load = mshv_gicv3_put;
+> +
+> +    device_class_set_parent_realize(dc, mshv_gicv3_realize,
+> +                                    &mgc->parent_realize);
+> +    resettable_class_set_parent_phases(rc, NULL, mshv_gicv3_reset_hold, NULL,
+> +                                       &mgc->parent_phases);
+> +}
+> +
+> +static const TypeInfo mshv_arm_gicv3_info = {
+> +    .name = TYPE_MSHV_GICV3,
+> +    .parent = TYPE_ARM_GICV3_COMMON,
+> +    .instance_size = sizeof(GICv3State),
+> +    .class_init = mshv_gicv3_class_init,
+> +    .class_size = sizeof(MSHVARMGICv3Class),
+> +};
+> +
+> +static void mshv_gicv3_register_types(void)
+> +{
+> +    type_register_static(&mshv_arm_gicv3_info);
+> +}
+> +
+> +type_init(mshv_gicv3_register_types)
+> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+> index 0620b0792a1..e0047ab1c0f 100644
+> --- a/hw/intc/meson.build
+> +++ b/hw/intc/meson.build
+> @@ -49,6 +49,8 @@ specific_ss.add(when: ['CONFIG_WHPX', 'CONFIG_ARM_GICV3'], if_true: files('arm_g
+>  specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
+>  stub_ss.add(files('arm_gicv3_hvf_stub.c'))
+>  specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
+> +specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
+> +specific_ss.add(when: ['CONFIG_MSHV', 'TARGET_AARCH64'], if_true: files('arm_gicv3_mshv.c'))
+
+Do we need 'CONFIG_ARM_GIC' here (like KVM)?
+
+>  arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
+>  specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
+>  specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
+> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> index d81c9816e7f..2b4b1406ab0 100644
+> --- a/include/hw/hyperv/hvgdk_mini.h
+> +++ b/include/hw/hyperv/hvgdk_mini.h
+> @@ -85,6 +85,8 @@ typedef enum hv_register_name {
+>      HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
+>      HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
+>  
+> +    HV_ARM64_REGISTER_GICR_BASE_GPA       = 0x00063000,
+> +
+>  #elif defined(__x86_64__)
+>      /* X64 User-Mode Registers */
+>      HV_X64_REGISTER_RAX     = 0x00020000,
+> diff --git a/include/hw/hyperv/hvhdk_mini.h b/include/hw/hyperv/hvhdk_mini.h
+> index 9c2f3cf5aee..4d78fa06777 100644
+> --- a/include/hw/hyperv/hvhdk_mini.h
+> +++ b/include/hw/hyperv/hvhdk_mini.h
+> @@ -62,6 +62,12 @@ enum hv_partition_property_code {
+>      HV_PARTITION_PROPERTY_ISOLATION_POLICY                       = 0x00050014,
+>      HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION               = 0x00050017,
+>      HV_PARTITION_PROPERTY_SEV_VMGEXIT_OFFLOADS                   = 0x00050022,
+> +    HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS                      = 0x00050028,
+> +    HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS           = 0x00050029,
+> +    HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS                    = 0x0005002A,
+> +    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV   = 0x0005002B,
+> +    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTP   = 0x0005002C,
+> +    HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT = 0x0005002D,
+>  
+>      /* Compatibility properties */
+>      HV_PARTITION_PROPERTY_PROCESSOR_VENDOR              = 0x00060000,
+> diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+> index 03ab3e8f2ff..2ed456e654a 100644
+> --- a/include/hw/intc/arm_gicv3_common.h
+> +++ b/include/hw/intc/arm_gicv3_common.h
+> @@ -316,6 +316,7 @@ DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
+>  /* Types for GICv3 kernel-irqchip */
+>  #define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
+>  #define TYPE_HVF_GICV3 "hvf-arm-gicv3"
+> +#define TYPE_MSHV_GICV3 "mshv-arm-gicv3"
+>  
+>  struct ARMGICv3CommonClass {
+>      /*< private >*/
+> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> index 31d2f4381c7..2dcfd11d8df 100644
+> --- a/include/system/mshv_int.h
+> +++ b/include/system/mshv_int.h
+> @@ -107,6 +107,7 @@ void mshv_arch_amend_proc_features(
+>  void mshv_arch_disable_partition_proc_features(
+>       union hv_partition_processor_features *disabled_features);
+>  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
+> +int mshv_arch_pre_init_vm(int vm_fd);
+>  int mshv_arch_post_init_vm(int vm_fd);
+>  void mshv_setup_hvcall_args(AccelCPUState *state);
+>  int mshv_arch_migration_init(MshvState *s);
+> diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+> index 786d815312b..8fa497c9a89 100644
+> --- a/target/arm/mshv/mshv-all.c
+> +++ b/target/arm/mshv/mshv-all.c
+> @@ -288,6 +288,67 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+>      state->hvcall_args = (MshvHvCallArgs){0};
+>  }
+>  
+> +static int set_partition_prop(int vm_fd, uint32_t prop_code,
+> +                                uint64_t prop_value)
+> +{
+> +    int ret;
+> +    struct hv_input_set_partition_property in = {0};
+> +    in.property_code = prop_code;
+> +    in.property_value = prop_value;
+> +
+> +    struct mshv_root_hvcall args = {0};
+> +    args.code = HVCALL_SET_PARTITION_PROPERTY;
+> +    args.in_sz = sizeof(in);
+> +    args.in_ptr = (uint64_t)&in;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set partition property code %u", prop_code);
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +int mshv_arch_pre_init_vm(int vm_fd)
+> +{
+> +    int ret;
+> +    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
+> +
+> +    ret = set_partition_prop(vm_fd,
+> +                            HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS,
+> +                            vms->memmap[VIRT_GIC_DIST].base);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    ret = set_partition_prop(vm_fd,
+> +                        HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS,
+> +                        vms->memmap[VIRT_GIC_ITS].base);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    ret = set_partition_prop(vm_fd,
+> +                        HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS,
+> +                        0);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    ret = set_partition_prop(vm_fd,
+> +                        HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV,
+> +                        ARCH_TIMER_VIRT_IRQ);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    ret = set_partition_prop(vm_fd,
+> +                        HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT,
+> +                        VIRTUAL_PMU_IRQ);
+> +
+> +    return ret;
+> +}
+>  
+>  static uint32_t mshv_arm_get_ipa_bit_size(int mshv_fd)
+>  {
+> diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+> index 968fe2a4494..85dbacf98ff 100644
+> --- a/target/i386/mshv/mshv-all.c
+> +++ b/target/i386/mshv/mshv-all.c
+> @@ -39,6 +39,11 @@ int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+>      return 0;
+>  }
+>  
+> +int mshv_arch_pre_init_vm(int vm_fd)
+> +{
+> +    return 0;
+> +}
+> +
+>  /*
+>   * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+>   * fault to the guest if it tries to access it. It is possible to override
+> 
+> -- 
+> 2.45.4
 
