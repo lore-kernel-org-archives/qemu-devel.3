@@ -1,66 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3C7606A325
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 01:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF37606A32C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 01:23:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUDKt-0006p2-AJ; Thu, 19 Nov 2026 20:22:43 -0500
+	id 1xUDKt-0006p4-AA; Thu, 19 Nov 2026 20:22:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xUDKp-0006nP-Q0
+ id 1xUDKp-0006nK-J7
  for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:39 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xUDKl-0007S5-Oh
+ (envelope-from <maobibo@loongson.cn>) id 1xUDKm-0007SF-Mv
  for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:39 -0500
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8BxrtLXoP9q_2EhAA--.30580S3;
- Fri, 20 Nov 2026 09:22:31 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxXdDaoP9qDGIhAA--.2361S3;
+ Fri, 20 Nov 2026 09:22:34 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJAx3c7WoP9qtgs2AA--.42580S2;
- Fri, 20 Nov 2026 09:22:30 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxlMzaoP9qtws2AA--.15398S2;
+ Fri, 20 Nov 2026 09:22:34 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 04/16] target/loongarch: Move field definition of some CSR
- register to cpu-csr.h
-Date: Fri, 20 Nov 2026 09:23:44 +0800
-Message-ID: <20261120012356.2656317-5-maobibo@loongson.cn>
+Subject: [PATCH v2 08/16] target/loongarch: Set register CSR_MSGIS as read-only
+Date: Fri, 20 Nov 2026 09:23:48 +0800
+Message-ID: <20261120012356.2656317-9-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261120012356.2656317-1-maobibo@loongson.cn>
 References: <20261120012356.2656317-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx3c7WoP9qtgs2AA--.42580S2
+X-CM-TRANSID: qMiowJAxlMzaoP9qtws2AA--.15398S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGw13XF4DtFy3Jr1rtrWUtrc_yoW5AF47pr
- 43CrWkKryjq3y2k3WrXa98G3W3Xr4xCwsrXay3JrWxtF1UZ340yrZ7tanYgFy5ArZ5Gr18
- ur1rA3yj93W5JFbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrWUtry7GFWkAr4UJr15KFX_yoW8XFWkpr
+ 43W398KrWrXF97Zr9rJay3K3W3Wr95W347tw47CryrAay8JrnYgFyrKa4agFnxJFyfXrWU
+ ZFy0yr1UAFsrG3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0xBIdaVrnRJUUUk0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
  Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
  8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv67AK
  xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
  vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
  jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
- x0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
- 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jOdb8UUUUU=
+ x0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcCD7UUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,110 +72,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,UPPERCASE_50_75,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The field definition of CSR_CRMD/CSR_MSGIS is in file cpu.h, here
-move them to file cpu-csr.h, so that all CSR register and field
-definition are put together.
-
-There is no function change, and it is only code movement.
+According LoongArch manual, register CSR_MSGIS is read only. Here
+add read only flag with register CSR_MSGIS and CSR_MSGIR.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu-csr.h | 16 ++++++++++++++++
- target/loongarch/cpu.h     | 17 -----------------
- 2 files changed, 16 insertions(+), 17 deletions(-)
+ target/loongarch/csr.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index fd56193888..8ae7f9a4f4 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -14,6 +14,13 @@
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 42a69f6786..207d00e78e 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -13,14 +13,15 @@
+         .flags  = FL                                       \
+     }
  
- /* Basic CSRs */
- #define LOONGARCH_CSR_CRMD           0x0 /* Current mode info */
-+FIELD(CSR_CRMD, PLV, 0, 2)
-+FIELD(CSR_CRMD, IE, 2, 1)
-+FIELD(CSR_CRMD, DA, 3, 1)
-+FIELD(CSR_CRMD, PG, 4, 1)
-+FIELD(CSR_CRMD, DATF, 5, 2)
-+FIELD(CSR_CRMD, DATM, 7, 2)
-+FIELD(CSR_CRMD, WE, 9, 1)
+-#define CSR_OFF_ARRAY(NAME, N)                             \
++#define CSR_OFF_ARRAY_FLAGS(NAME, N, FL)                   \
+     [LOONGARCH_CSR_##NAME(N)] = {                          \
+         .name   = (stringify(NAME##N)),                    \
+         .offset = CSR_OFFSET(CSR_##NAME[N]),               \
+-        .flags  = CSRFL_BASIC                              \
++        .flags  = FL                                       \
+     }
  
- #define LOONGARCH_CSR_PRMD           0x1 /* Prev-exception mode info */
- FIELD(CSR_PRMD, PPLV, 0, 2)
-@@ -182,8 +189,16 @@ FIELD(CSR_TLBRPRMD, PPLV, 0, 2)
- FIELD(CSR_TLBRPRMD, PIE, 2, 1)
- FIELD(CSR_TLBRPRMD, PWE, 4, 1)
+ #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, CSRFL_BASIC)
++#define CSR_OFF_ARRAY(NAME, N)    CSR_OFF_ARRAY_FLAGS(NAME, N, CSRFL_BASIC)
  
-+/*Msg interrupt registers */
-+#define N_MSGIS                      4
- #define LOONGARCH_CSR_MSGIS(N)       (0xa0 + N)
-+FIELD(CSR_MSGIS, IS, 0, 63)
-+
- #define LOONGARCH_CSR_MSGIR               0xa4
-+FIELD(CSR_MSGIR, INTNUM, 0, 8)
-+FIELD(CSR_MSGIR, ACTIVE, 31, 1)
-+
-+FIELD(CSR_MSGIE, PT, 0, 8)
+ static CSRInfo csr_info[] = {
+     CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+@@ -117,11 +118,11 @@ static CSRInfo csr_info[] = {
+     CSR_OFF_ARRAY(PERFCNTR, 14),
+     CSR_OFF_ARRAY(PERFCTRL, 15),
+     CSR_OFF_ARRAY(PERFCNTR, 15),
+-    CSR_OFF_ARRAY(MSGIS, 0),
+-    CSR_OFF_ARRAY(MSGIS, 1),
+-    CSR_OFF_ARRAY(MSGIS, 2),
+-    CSR_OFF_ARRAY(MSGIS, 3),
+-    CSR_OFF(MSGIR),
++    CSR_OFF_ARRAY_FLAGS(MSGIS, 0, CSRFL_READONLY),
++    CSR_OFF_ARRAY_FLAGS(MSGIS, 1, CSRFL_READONLY),
++    CSR_OFF_ARRAY_FLAGS(MSGIS, 2, CSRFL_READONLY),
++    CSR_OFF_ARRAY_FLAGS(MSGIS, 3, CSRFL_READONLY),
++    CSR_OFF_FLAGS(MSGIR, CSRFL_READONLY),
+ };
  
- /* Direct map windows CSRs*/
- #define LOONGARCH_CSR_DMW(N)         (0x180 + N)
-@@ -197,6 +212,7 @@ FIELD(CSR_DMW_32, VSEG, 29, 3)
- FIELD(CSR_DMW_64, VSEG, 60, 4)
- 
- /* Performance Counter registers */
-+#define MAX_PERF_EVENTS              16
- #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
- #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
- 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 8dae4e12cf..c770ad2abd 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -226,15 +226,6 @@ FIELD(CPUCFG20, L3IU_WAYS, 0, 16)
- FIELD(CPUCFG20, L3IU_SETS, 16, 8)
- FIELD(CPUCFG20, L3IU_SIZE, 24, 7)
- 
--/*CSR_CRMD */
--FIELD(CSR_CRMD, PLV, 0, 2)
--FIELD(CSR_CRMD, IE, 2, 1)
--FIELD(CSR_CRMD, DA, 3, 1)
--FIELD(CSR_CRMD, PG, 4, 1)
--FIELD(CSR_CRMD, DATF, 5, 2)
--FIELD(CSR_CRMD, DATM, 7, 2)
--FIELD(CSR_CRMD, WE, 9, 1)
--
- extern const char * const regnames[32];
- extern const char * const fregnames[32];
- 
-@@ -243,7 +234,6 @@ extern const char * const fregnames[32];
- #define IRQ_IPI     12
- #define INT_DMSI    14
- 
--#define MAX_PERF_EVENTS        16
- #define LOONGARCH_STLB         2048 /* 2048 STLB */
- #define LOONGARCH_MTLB         64   /* 64 MTLB */
- #define LOONGARCH_TLB_MAX      (LOONGARCH_STLB + LOONGARCH_MTLB)
-@@ -256,13 +246,6 @@ FIELD(TLB_MISC, ASID, 1, 10)
- FIELD(TLB_MISC, VPPN, 13, 35)
- FIELD(TLB_MISC, PS, 48, 6)
- 
--/*Msg interrupt registers */
--#define N_MSGIS                4
--FIELD(CSR_MSGIS, IS, 0, 63)
--FIELD(CSR_MSGIR, INTNUM, 0, 8)
--FIELD(CSR_MSGIR, ACTIVE, 31, 1)
--FIELD(CSR_MSGIE, PT, 0, 8)
--
- #define LSX_LEN    (128)
- #define LASX_LEN   (256)
- 
+ CSRInfo *get_csr(unsigned int csr_num)
 -- 
 2.54.0
 
