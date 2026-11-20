@@ -1,95 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D90606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE400606A339
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Fqx1CQ0h;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=EkKdylSZ
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=a6a5tJXV;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=PhZLDCSp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUO3h-0000rc-8A; Fri, 20 Nov 2026 07:49:41 -0500
+	id 1xUO3c-0000pK-2F; Fri, 20 Nov 2026 07:49:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3g-0000rP-2j
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:40 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3a-0000oi-AO
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3e-0004lx-8m
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:39 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3Y-0004l4-N6
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795178977;
+ s=mimecast20190719; t=1795178972;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uSwHL3vuTndJi148C85zSTNoHuO+rSDLC00laMooOgM=;
- b=Fqx1CQ0hZkM+yKmh7skZWdwBm4RuSYsvclYiOJiD+8tlU/CfYhbf8lwfJ03VQABjm03fEP
- xsm3YsMspViGF0clY77wllOc+IBOZorsVpdw3gq+U5JUAjOkde63rPOvQaliRqeRaeq8tc
- 5noOOwex1KRVO5C6jCpgtbRPwQ6Nmwg=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IqKxOcavRdkss7CvBdIIjsxzaXmG9yDTO0yKuff2+/I=;
+ b=a6a5tJXVWL+spm8KIEV693gWduwR3J2W6d5geuUCX8Ts8dRZwPM2R4zi5Ey6Xu1YqKQ2rj
+ yV7AF4lJFUlGNrFklISCjGwu5j7A8fTghn+LhXhWCSf2/5gsx73V+fCABefSdBwYENk6w2
+ WIXhZOSSzUU/taQVkwVeWauCQME6gEQ=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-br9mhsXZPPSaZ4J_2FtCgQ-1; Fri, 20 Nov 2026 12:49:35 +0000
-X-MC-Unique: br9mhsXZPPSaZ4J_2FtCgQ-1
-X-Mimecast-MFC-AGG-ID: br9mhsXZPPSaZ4J_2FtCgQ_1795178975
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-94961ed97d6so152878885a.1
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:35 -0800 (PST)
+ us-mta-653-3R4TBKBPP6-fqihDxwM8XA-1; Fri, 20 Nov 2026 12:49:30 +0000
+X-MC-Unique: 3R4TBKBPP6-fqihDxwM8XA-1
+X-Mimecast-MFC-AGG-ID: 3R4TBKBPP6-fqihDxwM8XA_1795178969
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-53661e036a2so17300531cf.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795178975; x=1795783775; darn=nongnu.org;
+ d=redhat.com; s=google; t=1795178969; x=1795783769; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=uSwHL3vuTndJi148C85zSTNoHuO+rSDLC00laMooOgM=;
- b=EkKdylSZyJviwBy+aAW03cK+jwkZBKIIgZ83DSzRcgMY+jG1tnsurrg2k7lszc0VXM
- PwZbV1TNr51VqppfllR2R6mZID7pGcDPYHrzLLhGl0xaxCC/MlLtajTh4VMRWsKlU3B3
- oUEon8P8nzJoxJ4W51j8AhLCZrHmNNcAcGYXhiHdBSR+m3KvaoMnakSVHh0ep06IQlX8
- GV+yzEf5MqR1Sr1gf1G/nExG6wtSwX/7ZPvHsJSBRkdaVNLrbDHKgPCqmKL6+FrGg+do
- MqhbwiXIDkbtmP20TNrywUs5IumyBLFbkwNmeKwn1ZGRxjxI1x+UeiN2ux5KIwc2KyeY
- oRCQ==
+ bh=IqKxOcavRdkss7CvBdIIjsxzaXmG9yDTO0yKuff2+/I=;
+ b=PhZLDCSp2NhWsUVOF7LjOeAci/m0VyAbuH8RlLB9dzRZuuKNWs56COQPQrkFkJu0np
+ KTbfBLImxqs/S5y2Fr9Thw4YyayexVE+xheoi5JxKVODv8ARR1v2gsQqb+yyHTAZcybP
+ 9Nzl5d14Y8KKiOv+XlwRa1pLpExp/m+FZv2M/OUkxFoqSIFO/d9T8t9IqIlyD+k48npE
+ dZlTd1e3Qc3hJcgfF+AzCB9t+by51MsWm4u6MCEk4KrPTxlQ6+VNj2TXCNKNFDEUvQyQ
+ 82vOX+1SAmxHGFMXtom03NmD/DiQl0KquqaEc8LP4KZ4zicZ/FPw0Zpsq9C5oby+55tm
+ IcEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795178975; x=1795783775;
+ d=1e100.net; s=20260707; t=1795178969; x=1795783769;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=uSwHL3vuTndJi148C85zSTNoHuO+rSDLC00laMooOgM=;
- b=08ATgqZ2tOrKxPYV94sLMSv1d/7a9Mk5Jye82KVvCgfj9kT3cR8kroUU0s1m18pd6V
- QJL3diAgxQ9nJz2+udwWdwLBwOJ7Dcy+THZNY1RtQ6PiIXc1eDWFOQcsdUbI/ncTXwwU
- yJaV0QkATCfrcWu9QaY77GnepDoHHd/sWKAcRF1CRA8YyaiiNUW130zpjIsVXPbaSq9V
- BJFwI6XcT22NXQpCdXU7/9w01Mw8KfHmmKkW+k+BwogwDn61o0TIW18fq3HbrQqFC+ku
- JSRueFchC+wjzJ607hrhDLOTGGP1FI+fSI50rGZUmQCk3MnyGpVV+/FC7LjI4/aczkiX
- tMxQ==
-X-Gm-Message-State: APuU4Z9Ep2VjLsnvcZRhpUh0V0zkfB9dh0MDe1vdmpasXPaMiC64mzYu
- S/qedgqSMGKBMWjCUxBTDk630OLqxycfD0u5iNB/mokTQYdPZPj4e8uzS0NxlCFevuw5+VF5ZcD
- 7cdWe52yH7ygWYhIA+G9KJqiasN512ZTAFP21fWrOdZJ4X0+CRKXHnoHpWocYLUZVFPwqXMc4mW
- 0SaUHPAldTqyZQ3OlxEuPi2jie0fMU0itjzjdASQ==
-X-Gm-Gg: AYBFou0FJM4cL9X2iNSguZrLmqkazPsSmabGTmwZifgESOIq5vRPJjos1XYQdKTQB6d
- mVlmCvKX9M2yPty6F0d/nE27sOC86k74aNXbq6AbTkRFAqjFYuGSTFbVdP6EMebuUL18QfQtfNG
- JP9xNPsPq0706aljklj+0AO0l0OjNvOmNKI84JliU6wXlicW68ufeoep4IRJAIi7QQxcodje/Ga
- GjEmKW22NPkbNpvVWjjUGzTLEd29+E2IjQEtJYOA3ghgOlOtPBFM+3BI/3jC8NqLhlooOy6IVsT
- n9Ut1wpzNFnW51H9b0JDCt01QiG7GSsGent827N9BAqyeFkLlLVAjiT+acMEKkxHnBAIepm0H1r
- oWsZjst+zsb/eJqaEEetP5UHwWpZ5tYt/oZmY7kdFlL30
-X-Received: by 2002:a05:620a:372b:b0:949:70c5:c0ce with SMTP id
- af79cd13be357-949b35ac8e0mr694767285a.19.1795178974914; 
- Fri, 20 Nov 2026 04:49:34 -0800 (PST)
-X-Received: by 2002:a05:620a:372b:b0:949:70c5:c0ce with SMTP id
- af79cd13be357-949b35ac8e0mr694762985a.19.1795178974274; 
- Fri, 20 Nov 2026 04:49:34 -0800 (PST)
+ bh=IqKxOcavRdkss7CvBdIIjsxzaXmG9yDTO0yKuff2+/I=;
+ b=fl0onUAInw6U1vnrZLryeIS+bd7203NYsDCMVz/yM+VRxt13UI1KohaUaoEYY2tUk9
+ t5Kv1wB8MF+6fYrNWWOlkO9ER52kKHRaMDcf45UzZJ9Fk0t6bhwAyjrEC2+R587Pzngj
+ mVuckoxC6km/yf+vHNN5qaxXmlrOz8IP4ynfQmIbChondoTwhk7mHdSrQo7ieSvU/Bn1
+ 5pyPfo16M4BB6PMzU6N27CPZ0IGhf7WOD+uzoIG0mr4hvRpAg4oDQnGzuDmRz8BlEasv
+ XSLXkwC8Tb3ssFPHiQrLig3ozXzNv5TRpbfxQfJ8hGDI9eVYRXFkMbc7nDP263buHGHr
+ ozvQ==
+X-Gm-Message-State: APuU4Z8ioawe/ZSbEIUG6aUXzy0UJX6sfyRsv3e6B6CXWDsZqEnqJnt+
+ vIl4BkkA8ObF3wKyDeBkGiDaGRis038Xv5p4KqsWf+LPc0pfkLE6KcYaLngwfoks4TbMUCvILRL
+ UfLHX+eEtrwd+2fk1qpl0QOA7ICgIDhp+zjikQWZP/Kkgdyalgq7wPUs1c9NoSSj+aFjTPrmdmu
+ rA/LS1dFz27Y2TaTB+Fi/ZDYekP78oraX1hB031A==
+X-Gm-Gg: AZFdTZe+I+XKIVBhF30tkv4dRtQ/b8mlnTl0nAs5MSLDLP4BxJFTJtPbU5a+UfiV3Tj
+ wDe9+wS2yvPxGrJtB7feYALt/54QtnSKbvnzxzHyzt3tw5csgdXG7RkX8kkLdwumWtHzOylVFt/
+ Dj4eYH5MK1UscqAydwOC1flVnYgf3NdIgNUNwkm56G33a8Kt3t3Cv6JaD0EivkKCuJ1NlVwhSgp
+ fyZbz/LBYmuQ6DxlGyoOKhVtIadlXBzz/AmFP+qJMrmE6x7daWPWodawTdnr9eteBoJAlfgBh8+
+ SjXslANwkPzUGPjYqOs70F7Rve4AGI85YTQqMO3pOlMqIP4t+stMe1S+sy+PzLQzpdn0p6rPB7d
+ o4gqGDUddJjzcsY/cFQht/o0wPgx55OGnPk/nIC8gqIK+
+X-Received: by 2002:a05:622a:1f89:b0:55b:8a74:cfc4 with SMTP id
+ d75a77b69052e-55d76b5e88cmr50298651cf.76.1795178969439; 
+ Fri, 20 Nov 2026 04:49:29 -0800 (PST)
+X-Received: by 2002:a05:622a:1f89:b0:55b:8a74:cfc4 with SMTP id
+ d75a77b69052e-55d76b5e88cmr50298231cf.76.1795178968832; 
+ Fri, 20 Nov 2026 04:49:28 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949bb397b4bsm181805685a.21.2026.11.20.04.49.32
+ d75a77b69052e-55d7c654585sm13759661cf.5.2026.11.20.04.49.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 04:49:33 -0800 (PST)
+ Fri, 20 Nov 2026 04:49:27 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-rust@nongnu.org
-Subject: [PATCH for-12.0 5/6] rust: Replace vmstate_validate with post_load
-Date: Fri, 20 Nov 2026 07:49:22 -0500
-Message-ID: <20261120124923.1656220-6-peterx@redhat.com>
+ peterx@redhat.com, qemu-arm@nongnu.org
+Subject: [PATCH for-12.0 2/6] hw/gpio/zaurus: Move VMSTATE_VALIDATE() check
+ into post_load_errp()
+Date: Fri, 20 Nov 2026 07:49:19 -0500
+Message-ID: <20261120124923.1656220-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261120124923.1656220-1-peterx@redhat.com>
 References: <20261120124923.1656220-1-peterx@redhat.com>
@@ -123,182 +122,92 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-We dropped all of that in C, drop that in Rust too.  The goal is to remove
-the VMSTATE_VALIDATE() together with VMS_MUST_EXIST.
+To pave way for removing VMSTATE_VALIDATE(), remove the use in this file by
+moving it into the post_load_errp().
 
-Use post_load instead for the check.
-
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-rust@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs  |  9 ++--
- rust/migration/src/prelude.rs     |  1 -
- rust/migration/src/vmstate.rs     | 17 -------
- rust/tests/tests/vmstate_tests.rs | 77 -------------------------------
- 4 files changed, 5 insertions(+), 99 deletions(-)
+ hw/gpio/zaurus.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 89ba7a5c4d..da0540f528 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -934,10 +934,14 @@ fn pre_save(&self) -> Result<(), migration::Infallible> {
-         Ok(())
-     }
+diff --git a/hw/gpio/zaurus.c b/hw/gpio/zaurus.c
+index 3cf626a550..a60f4d4393 100644
+--- a/hw/gpio/zaurus.c
++++ b/hw/gpio/zaurus.c
+@@ -23,6 +23,7 @@
+ #include "qemu/module.h"
+ #include "qemu/log.h"
+ #include "qom/object.h"
++#include "qapi/error.h"
  
--    fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-+    fn post_load(&self, version_id: u8) -> Result<(), migration::InvalidError> {
-         let mut regs = self.regs.borrow_mut();
-         let cnt = regs.counter;
+ /* SCOOP devices */
  
-+        if !self.validate_num_timers(version_id) {
-+            return Err(migration::InvalidError);
-+        }
+@@ -188,12 +189,24 @@ static void scoop_init(Object *obj)
+     sysbus_init_mmio(sbd, &s->iomem);
+ }
+ 
+-static int scoop_post_load(void *opaque, int version_id)
++static bool vmstate_scoop_validate(ScoopInfo *s)
++{
++    return !(s->prev_level & 0xffff0000) &&
++        !(s->gpio_level & 0xffff0000) &&
++        !(s->gpio_dir & 0xffff0000);
++}
 +
-         for tn_regs in regs.tn_regs.iter_mut().take(self.num_timers) {
-             tn_regs.update_cmp64(cnt);
-             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-@@ -1082,8 +1086,6 @@ fn restore_migrated_state(
++static bool scoop_post_load(void *opaque, int version_id, Error **errp)
+ {
+     ScoopInfo *s = (ScoopInfo *) opaque;
+     int i;
+     uint32_t level;
  
- impl_vmstate_struct!(HPETTimerMigration, VMSTATE_HPET_TIMER);
++    if (!vmstate_scoop_validate(s)) {
++        error_setg(errp, "irq levels are not 16-bits");
++        return false;
++    }
++
+     level = s->gpio_level & s->gpio_dir;
  
--const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
--
- // HPETRegistersMigration is generated by ToMigrationState macro.
- impl_vmstate_struct!(
-     HPETRegistersMigration,
-@@ -1109,7 +1111,6 @@ fn restore_migrated_state(
-         .fields(vmstate_fields! {
-             vmstate_of!(HPETState, regs),
-             vmstate_of!(HPETState, num_timers_save),
--            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
-             vmstate_of!(HPETState, timers[0 .. num_timers_save], HPETState::validate_num_timers).with_version_id(0),
-         })
-         .subsections(vmstate_subsections!(
-diff --git a/rust/migration/src/prelude.rs b/rust/migration/src/prelude.rs
-index 797e7ec59d..e2cbbda43e 100644
---- a/rust/migration/src/prelude.rs
-+++ b/rust/migration/src/prelude.rs
-@@ -16,4 +16,3 @@
- pub use crate::vmstate_of;
- pub use crate::vmstate_subsections;
- pub use crate::vmstate_unused;
--pub use crate::vmstate_validate;
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 5ed061f2ab..0c8b92f9d6 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -372,23 +372,6 @@ macro_rules! vmstate_fields {
-     }}
+     for (i = 0; i < 16; i++) {
+@@ -202,7 +215,7 @@ static int scoop_post_load(void *opaque, int version_id)
+ 
+     s->prev_level = level;
+ 
+-    return 0;
++    return true;
  }
  
--#[doc(alias = "VMSTATE_VALIDATE")]
--#[macro_export]
--macro_rules! vmstate_validate {
--    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
--        $crate::bindings::VMStateField {
--            name: ::std::ffi::CStr::as_ptr($test_name),
--            field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),
--            flags: $crate::bindings::VMStateFlags(
--                $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
--                    | $crate::bindings::VMStateFlags::VMS_NO_STATE.0,
--            ),
--            num: 0, // 0 elements: no data, only run test_fn callback
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--}
--
- /// Helper macro to allow using a struct in [`vmstate_of!`]
- ///
- /// # Safety
-diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-index 6578d54b37..f4db02abac 100644
---- a/rust/tests/tests/vmstate_tests.rs
-+++ b/rust/tests/tests/vmstate_tests.rs
-@@ -406,80 +406,3 @@ fn test_vmstate_macro_array_of_pointer_wrapped() {
-     // The last VMStateField in VMSTATE_FOOC.
-     assert_eq!(foo_fields[4].flags, VMStateFlags::VMS_END);
+ static bool is_version_0(void *opaque, int version_id)
+@@ -210,27 +223,17 @@ static bool is_version_0(void *opaque, int version_id)
+     return version_id == 0;
  }
+ 
+-static bool vmstate_scoop_validate(void *opaque, int version_id)
+-{
+-    ScoopInfo *s = opaque;
 -
--// =========================== Test VMSTATE_FOOD ===========================
--// Test the use cases of the vmstate macro, corresponding to the following C
--// macro variants:
--//   * VMSTATE_FOOD:
--//     - VMSTATE_VALIDATE
--
--// Add more member fields when vmstate_of support "test" parameter.
--struct FooD;
--
--impl FooD {
--    fn validate_food_0(&self, _version_id: u8) -> bool {
--        true
--    }
--
--    fn validate_food_1(_state: &FooD, _version_id: u8) -> bool {
--        false
--    }
+-    return !(s->prev_level & 0xffff0000) &&
+-        !(s->gpio_level & 0xffff0000) &&
+-        !(s->gpio_dir & 0xffff0000);
 -}
 -
--fn validate_food_2(_state: &FooD, _version_id: u8) -> bool {
--    true
--}
--
--static VMSTATE_FOOD: VMStateDescription<FooD> = VMStateDescriptionBuilder::<FooD>::new()
--    .name(c"foo_d")
--    .version_id(3)
--    .minimum_version_id(1)
--    .fields(vmstate_fields! {
--        vmstate_validate!(FooD, c"foo_d_0", FooD::validate_food_0),
--        vmstate_validate!(FooD, c"foo_d_1", FooD::validate_food_1),
--        vmstate_validate!(FooD, c"foo_d_2", validate_food_2),
--    })
--    .build();
--
--#[test]
--fn test_vmstate_validate() {
--    let foo_fields: &[VMStateField] =
--        unsafe { slice::from_raw_parts(VMSTATE_FOOD.as_ref().fields, 4) };
--    let mut foo_d = FooD;
--    let foo_d_p = std::ptr::addr_of_mut!(foo_d).cast::<c_void>();
--
--    // 1st VMStateField in VMSTATE_FOOD
--    assert_eq!(
--        unsafe { CStr::from_ptr(foo_fields[0].name) }.to_bytes_with_nul(),
--        b"foo_d_0\0"
--    );
--    assert_eq!(foo_fields[0].offset, 0);
--    assert_eq!(foo_fields[0].num_indirect.size, 0);
--    assert!(foo_fields[0].info.is_null());
--    assert_eq!(foo_fields[0].version_id, 0);
--    assert_eq!(foo_fields[0].size, 0);
--    assert_eq!(foo_fields[0].num, 0);
--    assert_eq!(
--        foo_fields[0].flags.0,
--        VMStateFlags::VMS_NO_STATE.0 | VMStateFlags::VMS_MUST_EXIST.0
--    );
--    assert!(foo_fields[0].vmsd.is_null());
--    assert!(unsafe { foo_fields[0].field_exists.unwrap()(foo_d_p, 0) });
--
--    // 2nd VMStateField in VMSTATE_FOOD
--    assert_eq!(
--        unsafe { CStr::from_ptr(foo_fields[1].name) }.to_bytes_with_nul(),
--        b"foo_d_1\0"
--    );
--    assert!(!unsafe { foo_fields[1].field_exists.unwrap()(foo_d_p, 1) });
--
--    // 3rd VMStateField in VMSTATE_FOOD
--    assert_eq!(
--        unsafe { CStr::from_ptr(foo_fields[2].name) }.to_bytes_with_nul(),
--        b"foo_d_2\0"
--    );
--    assert!(unsafe { foo_fields[2].field_exists.unwrap()(foo_d_p, 2) });
--
--    // The last VMStateField in VMSTATE_FOOD.
--    assert_eq!(foo_fields[3].flags, VMStateFlags::VMS_END);
--}
+ static const VMStateDescription vmstate_scoop_regs = {
+     .name = "scoop",
+     .version_id = 1,
+     .minimum_version_id = 0,
+-    .post_load = scoop_post_load,
++    .post_load_errp = scoop_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT16(status, ScoopInfo),
+         VMSTATE_UINT16(power, ScoopInfo),
+         VMSTATE_UINT32(gpio_level, ScoopInfo),
+         VMSTATE_UINT32(gpio_dir, ScoopInfo),
+         VMSTATE_UINT32(prev_level, ScoopInfo),
+-        VMSTATE_VALIDATE("irq levels are 16 bit", vmstate_scoop_validate),
+         VMSTATE_UINT16(mcr, ScoopInfo),
+         VMSTATE_UINT16(cdr, ScoopInfo),
+         VMSTATE_UINT16(ccr, ScoopInfo),
 -- 
 2.56.0
 
