@@ -1,120 +1,167 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99F9606A325
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 15:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D329C606A326
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 15:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gbdUTyB+;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=UmPujqkF
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=e03jsXD6;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=l0Q10CZc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUQJT-0004MN-Pn; Fri, 20 Nov 2026 10:14:09 -0500
+	id 1xUQMp-000534-8j; Fri, 20 Nov 2026 10:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUQJR-0004M0-Mw
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:14:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xUQMk-00052K-FB
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:17:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUQJP-0005aZ-MT
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:14:05 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xUQMh-0002ya-UZ
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:17:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795187642;
+ s=mimecast20190719; t=1795187834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EdhKmXOPvykwg5q5sb3W4v1ljwlwcoPvRP2NiQ3jeew=;
- b=gbdUTyB+YSOtS1Q+S5SzLc+aiUBacjBR9t/Wk1IskNAPZsWHE5bGq2FE9M8RHali/AvFxI
- UTWTjgzhOo+e+x/RbQvjlYB2BeoD9th0ADqCnpen9TPcNlb5ZI3mWfepVoTkmOoHXRFEeo
- iMsMBbcFAdzQ0P+qrU4YapThbHLYWf0=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wTbN3DLoeaQc5y1LNj/HpO8rP9YvFAuIJ+1gNXMtsxg=;
+ b=e03jsXD6Q2fcT3Mu2h+mp4doiMGUzZkY/uV9J1RY1Amzv6JIzWkWNWdl4FVN0ZqMjUvdBT
+ nfDHcCk7iHAN06tzefRUn+LA7K01Gd7CRxNjNH8A7O2IirsagnPWbURFfJ2Y01WWoDWYOu
+ Y3GxKjIzNAks4kLGeJJyxs85OOwZqfU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-FXHXtNHOMkGn31oqrYWwgA-1; Fri, 20 Nov 2026 15:13:58 +0000
-X-MC-Unique: FXHXtNHOMkGn31oqrYWwgA-1
-X-Mimecast-MFC-AGG-ID: FXHXtNHOMkGn31oqrYWwgA_1795187638
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-542fc619afaso13677441cf.2
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 07:13:58 -0800 (PST)
+ us-mta-299-Zcv8DSOvNTWu6Wuch6dY1Q-1; Fri, 20 Nov 2026 15:17:10 +0000
+X-MC-Unique: Zcv8DSOvNTWu6Wuch6dY1Q-1
+X-Mimecast-MFC-AGG-ID: Zcv8DSOvNTWu6Wuch6dY1Q_1795187830
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48e0ef019a4so595969f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 07:17:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795187638; x=1795792438; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=EdhKmXOPvykwg5q5sb3W4v1ljwlwcoPvRP2NiQ3jeew=;
- b=UmPujqkF2UhQ51gwCAadkQlvXC5GgyiANIB+lhgC3LSxed6AG9rJIW+wr6HRq5PWVT
- UsOYotfYGiwU49A73uu+z29xfZ6xYD1yYS+aAIOnNWAaBhbjlXCZkmo9g9xIuI4JMPpa
- 6uZMahvK2XF8Mh3EXeJ0qgbX1K47TXbrFv0fV+7f9K0jzaIpTeScw8O8qjUHfMOnIH6r
- Xt4KISub/nHBlNKFVNUdABwlwgoH2YmggQx8SZ8bJYov9Xs+QumfMrFac2d3tXTOtgWk
- xBWlQvSHeYZ7sXrnSj9hLWAzdHpr4Bev+Qq2y4GzRGvFvhsgHacNYEmJpUmctYG1ChOg
- 2lPA==
+ d=redhat.com; s=google; t=1795187830; x=1795792630; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=wTbN3DLoeaQc5y1LNj/HpO8rP9YvFAuIJ+1gNXMtsxg=;
+ b=l0Q10CZc2Na9Dv1DQKRcZnuSCmQSW+umI9fUa5UC/92H5No0Rxic71VuavDtYC2RTD
+ cBnlIuYMf54q8HNiFGMzpnDzswx7sZ/l9/WVSEilZTrP8pQ+5XdBNR8Pu0DMPC7DHXUJ
+ zd/vHv4zAGJuQgos08gGd1WojIUjI2TxOzHQhw/Zkx1ciXzvWyXgZptGPgjYXvoqiDtl
+ T4myJLDFWBFUVCBBcMcZ0wssyr1s7qjlRwVc36tCue6lwwNOi0XciD9XsES8VOXN5vbP
+ xglJuYa+Zc92lwc4w1g/FwpEmOr+80HknXuOZk8Pd/WjINPcOiSwdhZjUswap9RtE9dQ
+ dwSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795187638; x=1795792438;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EdhKmXOPvykwg5q5sb3W4v1ljwlwcoPvRP2NiQ3jeew=;
- b=UsZ1lCTrL33onaS2plAuL9nwvqt0v5OMtn8w3I1mnCIm47wr+G/LaQk4MmRnoag2Nx
- nN9mEUlhpCpC3TKc7F9HYVm4OsBQ6SgqsSx3KIo4euarvcRyjGwrMNoSNzpl93bz/hVh
- yJgHwudcpSNUHyHM7XzieQcfkCRV1GO+1+udjYc354RnLuWdKz3WnxMQ2f0feWexklm4
- gnlLEAebhO9sc8jpWkpgkZ+KUUhnhAtpKyuhi146aSRx48vs0al5YunJnkJwUMS2WR39
- Eg0FVI8fvJAToxR9mtXpLMkm78iUZqo0U9HjTJi5KO9uz9IDWb8FDr4UGS3R+JCwhV6R
- lgHw==
+ d=1e100.net; s=20260707; t=1795187830; x=1795792630;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=wTbN3DLoeaQc5y1LNj/HpO8rP9YvFAuIJ+1gNXMtsxg=;
+ b=U5yjQN0MIWWvT28r/fJQv64HRi6msamIFGu7v2TnbqqDrm36+vmQ0hvB1E354PMCjb
+ eTgPBWK1yjbefuTharTxlXCYnuz7bW1qtxg05o5ugUp1AUO7n6EkdTzK0oHKpo+Oa1b7
+ jWIhrYaWLtMQ8oi+wL2zDAH4sOmxsoRxUanH4qzbwJaVNZ2Ht++zpf/Z0372wdklZALT
+ rbwECdZMh3Y5VajXfKEECKjTym64Tu6c8j79UBfKbtd7VcZYIqMztQUpV7pD3uR5ijxx
+ pZdX36BFVc7Tqk1lLzs+xzwEcIRm6XucIc9rVzu94fFPfwtg7JZjBu3qwBMoClIcimc/
+ HHFg==
 X-Forwarded-Encrypted: i=1;
- AL+hErH9GA15+FHaaX2g0iX/jfiZNBuNpdh8Oo0g/OG142oliKJ5a5jhbgKCEcNtPvkXTudt/ZbC6I/+ePwu@nongnu.org
-X-Gm-Message-State: APuU4Z/mI+BXdCpc61lF/mGXQOujBUjshWxtlTQcJfieKzgyaUfWu0Lv
- m/B5bnr2pV9D+Zw8TIGU1hagoOKUlTDb4WOhCIEVL40xOf0TiGZepQbJpjFiAALyCYRtNyKv7d3
- 7f/emrgzNqaZJRQd1JqKpwgJj6tIsC7E5+1XNgXvu5N4pYWanU3V9wbCC
-X-Gm-Gg: AZFdTZcP01O6TNhgOHIkkzlgsvpcs9rzNYZqTY1QIZ6+4aV1BAGX2f9R1ZK9QQiMhwg
- dcskh0lzb3QXidgfqKA5fXR1mp/xKYcg/jmdXfQzFr7R4riEnvNvK6XKC0vfITA0nusg4Nn272L
- yJEM44+yGCzR16sA6lmswk9AU22akTUQb8toDRq/ydzF/PB0dULFyrZ1nfxXs6QDX6FDalCszo4
- nVTStsjR5H+FRGlZwGXIeZOPccknPXPnNPzPxMZPrLPWi5we5AB33gUUCQWTxLnKcAI0h6oww/P
- cKdRuzokwivtVCCPG1uFgEpEz2FzuKQGkLyjJQE20TCrNkoFOPzTjtwqVQmSB5BqGQNvy8C5AMP
- VuiJE6/aFC98vVS7nY0PVn5AQfxto44Qqexq+9e3eUnsQvg==
-X-Received: by 2002:a05:622a:2609:b0:55b:d65c:665e with SMTP id
- d75a77b69052e-55d7688cd55mr67217021cf.5.1795187637908; 
- Fri, 20 Nov 2026 07:13:57 -0800 (PST)
-X-Received: by 2002:a05:622a:2609:b0:55b:d65c:665e with SMTP id
- d75a77b69052e-55d7688cd55mr67216181cf.5.1795187637262; 
- Fri, 20 Nov 2026 07:13:57 -0800 (PST)
-Received: from localhost ([2605:8d80:6d65:87a7:10d7:f219:658f:435a])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d7c654585sm16693861cf.5.2026.11.20.07.13.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 07:13:56 -0800 (PST)
-Date: Fri, 20 Nov 2026 10:13:54 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, qemu-stable@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/2] hostmem: fix cpr-exec of VMs with bound guest memory
-Message-ID: <awBb-wKu6j8JqP1V@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260924125800.4188406-1-den@openvz.org>
- <20260924125800.4188406-2-den@openvz.org>
- <cd0292cf-2a87-4716-a8c9-d87853949c76@maciej.szmigiero.name>
- <asZaCerfcnfmAlIw@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <6144855c-f231-41a4-ac6e-b47760b7c8ce@virtuozzo.com>
- <asaPlV0HAyfQm_PS@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <20261105180146.2959656-1-den@openvz.org>
+ AL+hErHKJuh5rv11p8MAr9EFBgjSrV2YxtlxGXdPwGVTl62+Ii/dE4uy3EjWqcIxiTolyOhpkBvIRarrngsA@nongnu.org
+X-Gm-Message-State: APuU4Z+m5aYgFUjTpbNnk92Mh0AEvWwzCgifVpQkElLFofUOEDe3x152
+ caK2TSWoCdK7nznPB+yiooGDPT9BSareUCT8N4ot8Ux1YlgP7kjgXIYCJQBxqA9Qx0EhO1CL4e8
+ a3cmS6lP4B7fPYFWSiTsiXbVjPcPr/XkMSAeVBXqSMiRN1XF8GogCU9zN
+X-Gm-Gg: AZFdTZf0/ZTn0sGlixfrwSQ98Yh5+acIIlx0jq6J2auKDn/Iyub6iuuSVSoflN6sbFK
+ M6PDkN2Hm7Z3+vOtf38cl8rHwBOF4FhJKegmQbaEdR/kdWH93mHsvchy+ATM0Q3yC6pozlsvGkT
+ 6jkOB1DLV/LAa63upYkyPqz1izVbefvT4aK1jbvpHcNdewz4lEv10ACp41FuT66TU9NrZ5pM999
+ cOdW34XC2OsfzeLUWXHnhbMMDFPOGilwJnybYfU6lfUNMB/tqlBPZI9MRsQhMFlWWr7dTGS2mVb
+ qHhbg0X+FEUPPo7UNDwUvxKvsfv+I5iKEmEYO/oI67fO2HQsDxhm88TtzKo+GEXtDB9JPwDKG2W
+ xEVjYemcqNwajJaZJeUZYpuX8Hwe+sWUH5XTyxzvYYJaX
+X-Received: by 2002:a05:6000:250e:b0:492:7efe:3fc4 with SMTP id
+ ffacd0b85a97d-4abb4b86685mr7272805f8f.21.1795187829788; 
+ Fri, 20 Nov 2026 07:17:09 -0800 (PST)
+X-Received: by 2002:a05:6000:250e:b0:492:7efe:3fc4 with SMTP id
+ ffacd0b85a97d-4abb4b86685mr7272764f8f.21.1795187829411; 
+ Fri, 20 Nov 2026 07:17:09 -0800 (PST)
+Received: from [192.168.0.9] ([47.65.243.90]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab69bf62f7sm6613552f8f.13.2026.11.20.07.17.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Nov 2026 07:17:08 -0800 (PST)
+Message-ID: <0699737f-26cd-4edc-a872-fa9e90593d9e@redhat.com>
+Date: Fri, 20 Nov 2026 16:17:06 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261105180146.2959656-1-den@openvz.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/12] tests/functional: update to newer sunxi kernel
+ package
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Thomas Huth <th.huth+qemu@posteo.eu>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, Eric Farman <farman@linux.ibm.com>
+References: <20261120121458.3723625-1-berrange@redhat.com>
+ <20261120121458.3723625-2-berrange@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20261120121458.3723625-2-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,122 +173,26 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 05, 2026 at 07:01:45PM +0100, Denis V. Lunev wrote:
-> On Wed, Oct 07, 2026 at 02:29:41PM -0400, Peter Xu wrote:
-> > One thing I can think of that we need host-nodes= is when different
-> > backends may be bound to different numa node, but since the current use
-> > case already enabled memcg and looks like it can shift to completely
-> > different numa nodes, it doesn't seem to be the case.
+Am 20.11.26 um 13:14 schrieb Daniel P. Berrangé:
+> The version we currently reference has been deleted from the
+> the apt.armbian.com host. 6.6.44 is the next oldest build
+> that is available.
 > 
-> That is how these VMs start: libvirt turns the guest NUMA topology it
-> gets from OpenStack into one backend per guest node, each with its own
-> host-nodes. The cpuset is moved later, and not by libvirt, which
-> refuses to change the nodeset of a running domain in strict mode. I
-> agree that host-nodes plus a moving cpuset is not a setup to
-> recommend, but it is what the stack gives us.
-
-[sorry for a delay on respond]
-
-> 
-> > So it looks like a real issue and also looks severe, but it's a matter of
-> > whether it should be fixed in qemu. If we want to fix it in QEMU, we
-> > should have some solid reasoning.
-> 
-> QEMU never asks the kernel for a static binding. It calls mbind()
-> with MPOL_MF_STRICT | MPOL_MF_MOVE and without MPOL_F_STATIC_NODES.
-> Without that flag the kernel contract is that the nodemask follows the
-> cpuset: when cpuset.mems changes, the policy is rebound to the new
-> nodes (Documentation/admin-guide/mm/numa_memory_policy.rst, the
-> MPOL_F_STATIC_NODES section), and on cgroup v2 the pages are migrated
-> with it (cgroup-v2.rst, cpuset.mems). By the time of the update the
-> running QEMU had its policy rebound and its pages on the new nodes,
-> and the guest ran fine.
-
-True.
-
-However also since QEMU uses STRICT+MOVE, it means mbind() is also expected
-to fail and ask qemu to bail out early if it can't move them at least when
-QEMU boots.  This patch will change that behavior, even if only for
-cpr-exec.
-
-> 
-> The incoming CPR QEMU is the only one that objects. It takes the
-> nodemask from the command line and re-applies it to memory it did not
-> allocate and the kernel has already moved. host-nodes no longer
-> intersects cpuset.mems, so mbind() fails with EINVAL before it looks
-> at a single page, and QEMU exits. The EINVAL itself is documented
-> kernel behaviour. What QEMU adds on top is a lost guest.
-> 
-> A normal migration destination never sees this: it is a fresh process
-> which the management layer places before it starts. With CPR the new
-> process inherits memory that has a history. Steve fixed the same class
-> of problem for ROM contents (b42f28111e), pflash (e56ba1878f), PCI and
-> vfio-pci reset (24c156dcd9, 031fbb7110) and IOMMU mappings
-> (6ff4cccd13): realize must not redo what the old process already did
-> to state that CPR preserved. 2b7e9739fa made the backends inherit
-> their fd, but the mbind() and prealloc tail of
-> host_memory_backend_memory_complete() still treats the memory as new.
-
-At that time, Steve was pretty advanced on the design, and it's a huge
-piece of work so likely we didn't really have enough resources to fully
-review and discuss all details.  But I think we should not take that as a
-reason to say we can keep adding cpr-exec check into more places: we'll pay
-at some point, I have that feeling.
-
-One example, the iommufd change it hid the check into map/unmap, it smells
-hackish on its own: IMO it's saner if we can skip all map/unmap completely
-from top when cpr-exec dest QEMU boots, if the fd will be preserved.
-
-Another: I don't know why ROMs needs to be skipped either, logically with
-aux-ram-share=on it should apply to all such MRs, if not it sounds to me we
-should fix that instead of hacking rom code to bypass a memset.
-
-I confess I didn't read anything yet into depth. But these are
-pre-this-patch questions, feel free to ignore too and we can focus on this
-one.  I just want to say some of them may not stand on its own so I also
-don't want to use that as reason to merge more of such.
-
-> 
-> Prealloc, when enabled, is the same story. It runs MADV_POPULATE_WRITE
-> over the whole inherited guest RAM while the guest is stopped. That is
-> downtime growing with the RAM size, spent on pages that already exist.
-> 
-> Maciej is right about extra backends. A backend the old QEMU did not
-> have gets a fresh fd because cpr_find_fd() finds nothing for it, yet
-> cpr_is_incoming() is true, so v1 would skip its binding too. v2
-> decides per backend, by whether its fd was inherited. For an inherited
-> backend it still calls mbind(), reports a failure with warn_report()
-> naming the backend, as Maciej suggested, and skips prealloc.
-> Continuing after a failed mbind() is safe: at fault time the kernel
-> ignores a bind policy with no node in the cpuset and allocates from
-> the cpuset. Backends created fresh in the new process keep today's
-> behaviour.
-> 
-> Peter, would that work for you? I would rather agree on the direction
-> before sending v2.
-
-So the cpuset is decided from the top, it was broadcasted to qemu in form
-of host-nodes=, then if the top changes decision, it should notify qemu or
-they're inconsistent.  It's almost by design..
-
-We either shouldn't do it, or we should notify to qemu or at least libvirt
-on the change, so that libvirt should know what to do.
-
-At very minimum if such notification is hard: do you still think it's still
-feasible fixing your mgmt code to not attach host-nodes= at all for
-cpr-exec targets (aka, cpr-exec-command), assuming that doesn't make much
-sense if all RAMs are persisted?
-
-Thanks,
-
--- 
-Peter Xu
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/arm/test_bpim2u.py     | 19 ++++++++++---------
+>   tests/functional/arm/test_cubieboard.py | 15 ++++++++-------
+>   tests/functional/arm/test_orangepi.py   | 19 ++++++++++---------
+>   tests/functional/arm/test_replay.py     | 12 ++++++------
+>   4 files changed, 34 insertions(+), 31 deletions(-)
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
