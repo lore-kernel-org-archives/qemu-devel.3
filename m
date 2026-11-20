@@ -1,72 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AF6606A6F5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3067606A6FC
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 20:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=eXcKwQ1W
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=snOtzcs3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUUrP-00018f-Ct; Fri, 20 Nov 2026 15:05:27 -0500
+	id 1xUUri-0001BE-Kw; Fri, 20 Nov 2026 15:05:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUUrI-00017h-Cc
+ id 1xUUrI-00017j-DC
  for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:20 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUUrE-0001rt-FB
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:18 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4bb6ba3b244so12305165e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 12:05:16 -0800 (PST)
+ id 1xUUrD-0001rm-Sy
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:17 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-48dfc0421d9so1256339f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 12:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795205115; x=1795809915; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=oyzbPI743iRy9+Ha5OOjVC6jUktBEiVSMrlt36AxKx8=;
- b=eXcKwQ1WT+jYT9I0zEBDySAocwvv/nuQJIXTeBZofMX/Ia9Nftl06SxhFlKXQRAmxg
- 4MUJ/jS1kWBn6du//x2MlurtC8Hn9jw8LwIMiFa+dpQXWT3WCNIXMAZ450BxM459ulAg
- T25f7Jd0Nb0BlNlDEu2Z4kBGr55hEKsuinHjNHW+A7moPLruBAscNuHtMHc3iqbypFkb
- jSkh438Q7/kFeR5rZ1ST3nssKKomRKKGp7/isUEwNbtzkRig7yzmMb94DUq9GWpcOuOe
- KQoFCsoJp/PzKzqKVdEKBczIWdev2iaJSrNEC0jIKGJjUG193u4suINLAl1rbRES1syw
- A93Q==
+ d=linaro.org; s=google; t=1795205113; x=1795809913; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ifxOWI38pqFVNlpUdfEySqZ3Bxhw7VQg2EgZQ4sXqpo=;
+ b=snOtzcs3dBopr3wHqj66Ysak83TSrGlHYN+XxxpW6l4ThxXl0IOzzMRGtU7VZFxKcp
+ eM5oghfDhu23m5zBvueDM1nnXOb0GGWPHIMhsHe/wcUxHglQNvMfTTkkJ+BaM/HXB44J
+ fPdEMbn4AmFVObkmw5rtV0iZcjpvC9Jg/ECAVF8h8lAqbEQHBketu7i/muM2JBPQwe+q
+ SYejXUWBR3SGVo8WvgqG/BI7e0WuOYLrV+WuXfIy5iWf6VVlnE3rwrMD1u3ULdvQSEvM
+ sc3j752otqNmqs/nLhxLGqCKz29OeHxbDLfIkko032SFHrCa9sOeHyUmeL32E1ivrIqY
+ 04ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795205115; x=1795809915;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=oyzbPI743iRy9+Ha5OOjVC6jUktBEiVSMrlt36AxKx8=;
- b=jSP9fWNhVkTXTZr1HSRJ5ZLr7UniKA+viEsibAA3N42gp/Ob/JyXmMYMmnOJ34VlGk
- XbXE/bkMnHyCgb+TUmc9huUUcDh3oFUOZtH7NIOoxSoY+iGM+3Iu2tZvQJzYinn0vb7D
- t79Kh1sN1X8kJwjBrj6Z4EQjMn7XBNly1CN9JRNKY0txaUVaxlnmqak/kQUxYCSwKLwS
- Vnl0z3fDtCcUcCAYn32ewoyM46bMn/X3xAgQQRIA6Q8Q4piLTlJTdh+ttRHwWWvyf7Iy
- u3hcqlMec4rYXFYTkuPbKqpxmtslD3iBCvcrLfpUyTOadFvuZAQM8wNZNUUxttnsmxuu
- VHGw==
-X-Gm-Message-State: APuU4Z8gL75lz7zf+Vr0RO6qSeRGN/3j829IFBgS98dLx1Xe9vzR5MVt
- GJjs40P4/5llqxZhekabdEjAcA8Xk038EeBWgrVgjxzbzjfwc3XjCvHiOVS03NnuVqI=
-X-Gm-Gg: AYBFou1skyu6Ij7Tb+k2fvlR+0eofB5oPu6KWficAsXSdLhNpEG8azex1oTU3m4Qw89
- GNtgHWKJoNC6si1KnRUEotTPlFjVYAQL5zsKiFd8bGY6Wk8QHBwhBe4q6B7QeoQa3PbJa+OwQQ2
- 5CzxJflBahWAg80Ry1ibk4X4PdWzJ66Gog1FFr8ODWhr9WjYbYqG78shrENGEYKjCv9xIdTmcql
- 8KNbKeN1SExrdN1PIKc+OBMzM0gDjCSuc+4BgUgSb4cMWM9MvXhZdK8ydQL8N6Ga4MGflVIYK9y
- m3Q8LMzNuvJAsMmHgKD6RY86OTzI+Wibb96RpkV/sJUGn5Aep9yCF7D910qnUXIBhGOjAAcwZiZ
- Bp5uD8ndm6Czt5UTxMBgM8cR6mqIcE38TGKuOQzYHp4cEGt2+0Wda6ge9UyQDBp09nLhZdAIAMY
- r0Bf2k2lHyCMyPugjZx7guIxeH/JYyhzYzJVBdWz0+6pPuA48P52DWLWevtV3ELLO+O1IWbrylC
- gyHCWH691/JcKInapKH7SRhcRv5rZvmvYSQwv1XJpHzHenKiFUqPyMiF6UOfqcFVj+7g3Bfmo9s
- L9pqjk4ktAWd9xijEIEHXZ6Mb3GI
-X-Received: by 2002:a05:600c:848a:b0:4a1:fbd2:f689 with SMTP id
- 5b1f17b1804b1-4bb8880993amr93679535e9.7.1795205114983; 
- Fri, 20 Nov 2026 12:05:14 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb9067a0e6sm7096495e9.4.2026.11.20.12.05.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20260707; t=1795205113; x=1795809913;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ifxOWI38pqFVNlpUdfEySqZ3Bxhw7VQg2EgZQ4sXqpo=;
+ b=txTeNLvjtd9ZgeXtFoy+WK6EFJRg9WfTX+ZeQc9cn+oV41JTrnOVCJuHUD2lj+jKUG
+ 19hZQBsFt7CVR8LmlsiUmURlovIkaBX8Qwkpv0jEpw5of3/77nWxihp9Ed0JkOX/6uqt
+ PZpbsSgEDIeXlO8g/SOJrPid0PCyVXU6/lsIAcD+GCb9wOCMqRcr2ublhZl+7VSoc1Pu
+ rZlZc1CtTQ8xsNLBCkBo95K7akcvC60GwQ4hlkVYPuEnqLn8HpqS59OGid9PoABYdtFp
+ N8xpkXMQtH6U4OcZHZ4wL9h+IV3oG53QAV+lKgXMYY81XCiwyNOr1DFkbJ4ZSuTbftb9
+ TPsg==
+X-Gm-Message-State: APuU4Z/dndmAPuvL/MfJrRYFfYOb1tNLToSQ6KL11MyzgHQv0Bs3f6KU
+ VRsKNBAwzOCYRuGpkAf6rMnczLos5kj4xhaG5k3IlyZPFCYBMqiriY5QN3l9uCiQfsI=
+X-Gm-Gg: AZFdTZfdm+X6Mb382iqCENHygntqpPB4ZtC3bS5rwI52UtodzOtC7wENzUKM2/IeEjd
+ D/OQMZsX11PmZgRbmZBqK2bExC89DLqpiN1URnj/jkoJROrrDaWEzSpjqxGvf3stTPFPqpcikBz
+ 7b9RfMqsii/pMKy1o2YGntln6NFohq2/XL4t/O5CcAyeTACkFGnZTyJn1CthWSpYmi/rqZvH3vU
+ 9Xj1HaZl2qV+mhEDaQceIVY2nYJbawpWhVCK2TeIt3g21dyov8ejzg+neOQoxyzyLpUgKtcWYtm
+ Hc9dw/jlINnRbq5sDLL0qqYFwxzGT77tCV0sZzCOvqgyYfZrAEjCbG4q7AtcQrwn3e37laVqEyo
+ cW/xhrD/4cRx06m+IAF0EvhoYJrFeRk6K7pwIuiybk8Q3Bvm3kwCLRDw1VJlVOsWDYCSXcsNoLl
+ Ihn46GDEIu8gMQTBPFBicO7Wy9aA7tSKRi3vX2yQd/gKM0nMHP05X8uYTrjKrEZltjs0hNe4bGe
+ iCEYyfxIFd8ZjkL1MkvE2/DE9m6a4cgYTA4Kw4xqFUer/vD3/ypiDiZDrCQ3Lm58J+tun9jim6s
+ 02UWTJoVOVRr0CeiZ3TCFP7zz5bQ
+X-Received: by 2002:a05:6000:250e:b0:492:7efe:3fc4 with SMTP id
+ ffacd0b85a97d-4abb4b86685mr9204284f8f.21.1795205113259; 
  Fri, 20 Nov 2026 12:05:13 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab69bf629dsm6907611f8f.9.2026.11.20.12.05.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Nov 2026 12:05:12 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D48815FA2D;
+ by draig.lan (Postfix) with ESMTP id 7B0035F7FE;
  Fri, 20 Nov 2026 20:05:11 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,18 +72,16 @@ Cc: John Snow <jsnow@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH 04/22] scripts/get_maintainer.py: add support for -f
-Date: Fri, 20 Nov 2026 20:04:52 +0000
-Message-ID: <20261120200511.822573-5-alex.bennee@linaro.org>
+Subject: [PATCH 00/22] MAINTAINER updates and get_maintainer.py
+Date: Fri, 20 Nov 2026 20:04:48 +0000
+Message-ID: <20261120200511.822573-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261120200511.822573-1-alex.bennee@linaro.org>
-References: <20261120200511.822573-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,97 +100,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Now we have our sections we can add support for checking each file
-against the maintainer list and gathering the ones we want. Finally we
-can print the list out.
+I continued to update my port of get_maintainers.py and it grew a few
+new options which I used in my recent talk. These are:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+  --validate
+  --list-maintainers
+  --list-absent-maintainers-since
 
----
-v3
-  - Path and match are expensive checks
----
- scripts/get_maintainer.py | 45 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+I also added the git and roles flags for compatibility with the way
+the perl script is invoked by the git's cccmd.
 
-diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
-index dcf132856cc..8a018042952 100755
---- a/scripts/get_maintainer.py
-+++ b/scripts/get_maintainer.py
-@@ -134,6 +134,32 @@ def __init__(self, section, entries):
-             else:
-                 raise UnhandledTag(f"'{tag}' is not understood.")
- 
-+    def __str__(self) -> str:
-+        entries = []
-+
-+        for m in self.maintainers:
-+            entries.append(f"{m.name} <{m.email}> (maintainer: {self.section})")
-+
-+        for r in self.reviewers:
-+            entries.append(f"{r.name} <{r.email}> (reviewer: {self.section})")
-+
-+        for l in self.lists:
-+            entries.append(f"{l} (open list: {self.section})")
-+
-+        return "\n".join(entries)
-+
-+    def is_file_covered(self, filename):
-+        "Is filename covered by this maintainer section"
-+
-+        for fx in self.files_exclude:
-+            if filename.match(fx):
-+                return False
-+
-+        for f in self.files:
-+            if filename.match(f):
-+                return True
-+
-+        return False
- 
- 
- 
-@@ -274,6 +300,11 @@ def parse_args():
- 
-     return parser.parse_args()
- 
-+
-+def main():
-+
-+    args = parse_args()
-+
-     try:
-         # Now we start by reading the MAINTAINERS file
-         maint_sections = read_maintainers(args.src)
-@@ -285,9 +316,19 @@ def parse_args():
-         print(f"loaded {len(maint_sections)} from MAINTAINERS")
-         sys.exit(0)
- 
--def main():
-+    files = []
-+
-+    if args.file:
-+        files.extend(args.file)
-+
-+    for f in files:
-+        rf = f.relative_to(Path(args.src))
-+        relevent_maintainers = [ms for ms in maint_sections if
-+                                ms.is_file_covered(rf)]
-+
-+        for rm in relevent_maintainers:
-+            print(f"{rf}, {rm.section}")
- 
--    args = parse_args()
- 
- if __name__ == '__main__':
-     main()
+There is now an ancillary script to plot maintainer experience so we
+can see the distribution of experience in our maintainer pool.
+
+On the way I found more inconsistencies in MAINTAINERS so I cleaned
+those up while I was at it.
+
+Alex.
+
+Alex Bennée (22):
+  scripts/get_maintainer.py: minimal argument parsing
+  scripts/get_maintainer.py: resolve the source path
+  scripts/get_maintainer.py: initial parsing of MAINTAINERS
+  scripts/get_maintainer.py: add support for -f
+  scripts/get_maintainer.py: add support reading patch files
+  scripts/get_maintainer.py: add keyword (K:) support
+  scripts/get_maintainer.py: implement basic git fallback support
+  scripts/get_maintainer.py: add --list-[maintained|reviewed]-by
+  scripts/get_maintainer.py: add --file-summary option
+  scripts/get_maintainer.py: optimise glob matching with Paths
+  scripts/get_maintainer.py: add support for gitlab handles
+  scripts/get_maintainer.py: implement --noroles/--norolestats
+  scripts/get_maintainer.py: expand --validate output to CSV summary
+  scripts/get_maintainer.py: add --list-maintainers
+  scripts/get_maintainer.py: add --list-absent-maintainers-since
+  scripts/maintainer: add plot-maintainer-experience.py
+  gitlab: add a check-maintainers task
+  MAINTAINERS: update Daniel's entries to be consistent
+  MAINTAINERS: make Collin's entries consistent with .mailmap
+  MAINTAINERS: make LIU's entries consistent
+  MAINTAINERS: use consistent capitalisation for Alistair
+  MAINTAINERS: update security reporting links
+
+ MAINTAINERS                                   |  48 +-
+ .gitlab-ci.d/static_checks.yml                |   9 +
+ .mailmap                                      |   1 +
+ scripts/get_maintainer.py                     | 886 ++++++++++++++++++
+ .../maintainers/plot-maintainer-experience.py | 163 ++++
+ 5 files changed, 1082 insertions(+), 25 deletions(-)
+ create mode 100755 scripts/get_maintainer.py
+ create mode 100755 scripts/maintainers/plot-maintainer-experience.py
+
 -- 
 2.47.3
 
