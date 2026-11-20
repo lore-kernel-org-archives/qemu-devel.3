@@ -1,110 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29C7606A695
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 21:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCA2606A6A1
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 21:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=H3w4Yd76;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ZUk0Mj8z
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=dKsQYTEZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUWRf-0000BV-BH; Fri, 20 Nov 2026 16:46:59 -0500
+	id 1xUWYl-0001kU-DI; Fri, 20 Nov 2026 16:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUWRb-0000Ah-DK
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 16:46:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUWRZ-00050v-HA
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 16:46:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795211212;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zAQhrz6OmD79icoD8jWObu4yTfg/NVSUFc54Y+xMqg8=;
- b=H3w4Yd76VL6+CC8OcLzcjgX3DxlIucWVhEd6HkCmkotrqZMpPtfQxUX5tUKdxRSnKM6Uic
- N/ovFuReu9C7EhU1u1KGsXLezm1zfGaCJd+ureBvVyXNDTYnuaalWEp2mBdkTdt8psTpg2
- lzIKFw3GTrFqsyaTSHbYivhJx0woark=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-BTvnB9A9NMemeT8NDL1XPA-1; Fri, 20 Nov 2026 21:46:50 +0000
-X-MC-Unique: BTvnB9A9NMemeT8NDL1XPA-1
-X-Mimecast-MFC-AGG-ID: BTvnB9A9NMemeT8NDL1XPA_1795211210
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-55d7544d113so30138951cf.1
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 13:46:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xUWYj-0001jk-8U
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 16:54:17 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xUWYh-0001b6-HO
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 16:54:16 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2f03920c477so12081125ad.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 13:54:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795211210; x=1795816010; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zAQhrz6OmD79icoD8jWObu4yTfg/NVSUFc54Y+xMqg8=;
- b=ZUk0Mj8zcZtXSDv1cxtUnYJ60nSHKOFbWq/xzDfozan5fCWt2oABsjBC4hQzi0wsY4
- Mf/pNQvNMZcW9drMNJig4OKKcrcIm8L57h+huLF2HlkeXBujxo8g/gm9s0kjAMSXpTNJ
- rmT6qxhTUIxfna1d3BpuQ5+GaCqPZwW8CLtUc/pWk/Mvrq9CI/Y6NNY7OOIyAXg8dhsM
- 0v0m7hrLSzciihFoseZhNkrHdUwWL6OeFxshYOzcdnoT1Fl2S4r6Fxf2XLKGnXKMYrJe
- Tq06GnKtMTxL144dYi/CF7yc6bcQj3rSYLzoGyyYHMOPJYT7K5clWVjajZUdAKjyfOj+
- PUGQ==
+ d=linaro.org; s=google; t=1795211654; x=1795816454; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iWSaC+pg/A3a4vuwu14hR5LGl0fhGTephnxBE0x/52U=;
+ b=dKsQYTEZ7IihnWqsZ9IYyUHtaQE9YIJO5E+xfYshRZ38A0qGCIhmD0UxLMGVQTPGUS
+ FUh1ievwEQ67RNa1ym2y/bjNBUCCMGkpyJprtRO3Org6EpZ/IK+RMvRvCAEPqNG47tI7
+ ZnNmHZgvF1zoWRsUAfPpDNHoR23p2zUDA8ULLbf/enazNnH+z7xsZ/US9IZcQE8NACDz
+ 4ROfmHuQdIBkBrkqv69ZsBrZotl19ZJoU4HFhwSqgj+tSADqFWVvEyx9/FPwwGeleXbG
+ Z902YAkwse+Z1NcC5fK0MOVkfCXzzOtbMnRueVscldErCKmdHwZNK2to5wBcYqQrFySF
+ zttg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795211210; x=1795816010;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zAQhrz6OmD79icoD8jWObu4yTfg/NVSUFc54Y+xMqg8=;
- b=fQx9LvV6fGWK4Rl4DIQk88QzL90BuuGc4crrQBsUJ2h5obmL67G8gCj+4BqnD5k3ZL
- TojL/NC+opiNkShmP4XPVP4mz42nMDEtg64dEpu+90sfcMJOR1ZzAni5PGR0qpfn7wiN
- 62NA9Zt1W0vee2NVpLGrTrMksStkxS7SFeR54WytwJc0lmbxnkCAyuueUMs6xCn39VBD
- wo1UzsgteKqA/SU3LuJvKZ3nYi/9HfAyHQO91KzrHYv5+eybp/eavWbMcew9hHJzXg4X
- kKAFM8e5JLQa43OznJHRlwIri4MX8EKWuz9mpd6spd8uDHivSVvTMlR2E95Yor4BGSxC
- Mgzg==
-X-Gm-Message-State: APuU4Z+zpWhCzf0VQsIIVbVV1DmdZdxtf+q0Q6THBcnFZ2PIk6t/4563
- 1HfsvZmseDyxsNu+/5MtCQU2Hpcr9UAn5ZRPMyJ4PaDSq0QTb9rKMJIwjA347QVSJtt6btZQjuQ
- 6HrcEsXQ3iNzGTZ5WD98iYuOdx9pITgGcRhpmrfQNGpZYNsNnAiblTGcy
-X-Gm-Gg: AYBFou0FxavLiOXEClKJgLTe6zAMYWxOsQ5XaDnxIahVMvAKCzHKRX891nf/tP13+oz
- 4UPCtTHvCuSmdlAhAveYyGbFIKLW4b/aMAJhFEFV+UAzJ1Dc4GrY8evl9np0hmZNlbJ4wC3TIne
- iXFlM7++45D20aDPtkbCTEADscJTpVKk0ZACDbLPJqu1fx5eR7f5FPCLoPZwiAC7Hw5tVh+uTP2
- 3G4ZLnYKyz7d1mgNy5qTPOCJasBYI3Xdp2nMQTseIIGf9IJ1WyeoZuD0hM895NBIfTRSuEygPcC
- JDLogLmsEjFsHZUj+iiZW+LVVIdGyLZpjVEsZy0wzwZXcWWTpGJM+VFbOVAWO9X59jiiY4E2x3q
- vWudU4X9W0MA8fATg0lfetueedGPGK6TLq9DgK/Iu7tKL
-X-Received: by 2002:a05:622a:64f:b0:537:5488:a633 with SMTP id
- d75a77b69052e-55d76aec896mr77754641cf.70.1795211209772; 
- Fri, 20 Nov 2026 13:46:49 -0800 (PST)
-X-Received: by 2002:a05:622a:64f:b0:537:5488:a633 with SMTP id
- d75a77b69052e-55d76aec896mr77754371cf.70.1795211209302; 
- Fri, 20 Nov 2026 13:46:49 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d7888fb27sm32585641cf.25.2026.11.20.13.46.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 13:46:48 -0800 (PST)
-Date: Fri, 20 Nov 2026 16:46:48 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Subject: Re: [PATCH for-12.0] coroutine: Make yield_until_fd_readable()
- detach fd handler always
-Message-ID: <awC_yIo72p5CfjSV@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261119145311.1144878-1-peterx@redhat.com>
- <awB9TbgTzxvPBeVk@redhat.com>
+ d=1e100.net; s=20260707; t=1795211654; x=1795816454;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iWSaC+pg/A3a4vuwu14hR5LGl0fhGTephnxBE0x/52U=;
+ b=a3kPuRUbk9UjWkrUiVMvtBlyXQo4JYqdKC3NZXdAPHYhIhNF63JbigxO6FNtx7E8Ws
+ 72qL5PmrVShhWiFad6YE8KQU/8+mAYSxtT6PDAk9CYLSjaczXBPcF5ucd0XlgbaUec/2
+ K7T3biHqqwrKh2beMO1DOwJbK+uWQuvWyLWLJVMqhqmoLQ0lIqbIIVpbI3MA0W4QrIo0
+ ZFy4ST0RWZag6IxPCERLshvOjtCtpGDZT7qvJFCmiPvEJD/TyUbAxMAbDGrDF4lmKDoo
+ ZVXn39Y+W7PmMhaEIf4VMaXc+8XOKA+/oIx9Z1aUlmanNW7q9OoKmWPc9KUHQTN9XmsX
+ Bf6g==
+X-Gm-Message-State: APuU4Z/KsWfGnj6a24mcF489zuPrQ65vZA6o0qKGz5Tuyo8rTSNC0/Uz
+ rbV/gFv00KR1uzzPpVSXNZaFyhuqBGLnk01xVUtbRLJMAwRImjKZ0zZzZRHP3aXfP9U=
+X-Gm-Gg: AZFdTZd07lcSrVNp6A1fdEOQ7uAB/yBMTv2Kn6qTjN9llOEvyHFGloSsazLMgS8LeBq
+ Y2xJHov8HykH2wBgpGz5nVn1uux0G/bNhVvxQiBvTFMdCnMNjCbMy3t3wvsPvb4fYRF2Tg60Kji
+ zasCNn2znhYiQjv88AJ0j1YDJyrsGRYXA0nHETh3ki2nIJ5c2baqGyg0Oergr2w48eRRvbJj1Y5
+ SMXcXM9+7TA01r4j/T4hvV4osiT+7kZhkpI+z1Cx47R7q8qUMfHcogowq57KszWdgEmiMVgQM3o
+ NVeGwwO5osU2ERDuN0gi2helHUOaZbs3MjZJEFNMYmvvRuoGN7q5pvqG2EACzB6Y2Cj+E6cR7H4
+ 3zktH8PSz+LmiPktcKPexxEExuooEqbpYVqGUbgrMA3ly2jgsIGwQro2+BTkkeP6xm39TOb0B64
+ wNvCdyJe+Ue2k0hAihjj9jOJQctZG8DXsQ3FC41hJPFsOl/R6uAcH5f6zapXx8C2aRhMbOMPdyZ
+ zNMIYOhLN+rkK0cKds/UtJkfwYMSqWVac9WPgq8JCh8rWZ1CXPV1JrFG7GCi2pHC4Vh7bydfICo
+ n52Oq9jCY76fLz+yF7Urog+ops/UcWsMfMaDPYaEyTd2btQzSN8EBc3bVXdvn+szqO70Cio=
+X-Received: by 2002:a17:902:e845:b0:2ed:379:159f with SMTP id
+ d9443c01a7336-2f03f0fcd59mr43071795ad.20.1795211653538; 
+ Fri, 20 Nov 2026 13:54:13 -0800 (PST)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2f03f0dc4f2sm19815255ad.30.2026.11.20.13.54.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Nov 2026 13:54:12 -0800 (PST)
+Message-ID: <114d8912-4aee-4312-9527-69dce1b8d5e0@linaro.org>
+Date: Fri, 20 Nov 2026 13:54:10 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <awB9TbgTzxvPBeVk@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/12] tests/functional: update sha digests for tuxrun
+ kernels
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Thomas Huth <th.huth+qemu@posteo.eu>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, Eric Farman <farman@linux.ibm.com>
+References: <20261120121458.3723625-1-berrange@redhat.com>
+ <20261120121458.3723625-3-berrange@redhat.com>
+ <CAJ+F1C+eBx6qUmtLGw2vSgk+Pp=Zpt92_tokyyGsrCREaE45gQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAJ+F1C+eBx6qUmtLGw2vSgk+Pp=Zpt92_tokyyGsrCREaE45gQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,47 +115,27 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 20, 2026 at 06:03:09PM +0100, Kevin Wolf wrote:
-> Am 19.11.2026 um 15:53 hat Peter Xu geschrieben:
-> > Hongyan reported a possible use-after-free of RDMA migration code:
-> > 
-> > https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
-> > 
-> > The issue seems real, while this patch is a proposal to fix it in a simpler
-> > way, meanwhile it should be a problem to the yield_until_fd_readable()
-> > helper in general, so it should make more sense to be fixed there too.
-> > 
-> > The problem is about the use of the stack allocated FDYieldUntilData where
-> > we must make sure after yield_until_fd_readable() returns it's not used
-> > anywhere.  If the coroutine yielded can be entered from outside of this
-> > helper (fd_coroutine_enter()), then the aio handler might be installed even
-> > after yield_until_fd_readable() returns, and that makes the stack variable
-> > accessible by aio codd, even if stack gone.
-> > 
-> > Fix it by moving the aio handler removal outside the handler.
-> > 
-> > Reported-by: Hongyan Xu <getshell@seu.edu.cn>
-> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> > Cc: Kevin Wolf <kwolf@redhat.com>
-> > Cc: Fabiano Rosas <farosas@suse.de>
-> > Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-> > Cc: Hongyan Xu <getshell@seu.edu.cn>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
+On 11/20/26 04:23, Marc-André Lureau wrote:
+> On Fri, Nov 20, 2026 at 4:16 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>
+>> The images appear to have been regenerated since the recorded
+>> digests no longer match
+>>
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > 
-> The fix looks right to me, however now FDYieldUntilData has two unused
-> fields. I suppose you could get rid of it entirely now and pass the
-> coroutine pointer as opaque.
+> See also
+> https://patchew.org/QEMU/20261112133320.418012-2-marcandre.lureau@redhat.com/
 
-Indeed, I'll respin, thanks both for reviewing!
+Indeed, Marc's use of dated urls should avoid some of the issues, until 
+the url is removed due to age.
 
--- 
-Peter Xu
 
+r~
 
