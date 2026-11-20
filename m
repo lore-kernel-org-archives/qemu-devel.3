@@ -1,82 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A5E606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Bm+K24/I
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3468D606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xURSw-000676-Lg; Fri, 20 Nov 2026 11:27:59 -0500
+	id 1xURTg-0006zQ-Ob; Fri, 20 Nov 2026 11:28:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xURSu-00065O-Cd
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:27:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1xURTe-0006zI-4w
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:28:42 -0500
+Received: from [115.124.28.63] (helo=out28-63.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xURSs-0001QN-Gn
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:27:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795192073;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U8+VjHdHYzMDMZWrnPJV8acexpfYiqOeAAxT87GbAB8=;
- b=Bm+K24/I45cU8WubWq1ICYCfXSyiYlcadc8sQLrsKIfqeIhxf0u3mueeRhckM1gEXvaui5
- b2w22YZPy0w2iMYyrZFs5yCNVAaGKTNItq+C86cVZgGOfQMoTO75ctSVL6Rmm3wLFfRES/
- CbQgnad88G8nm6S58HFyVFpceD9P738=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-Q-PvJwaANo6epMPVSh_Rqg-1; Fri,
- 20 Nov 2026 16:27:50 +0000
-X-MC-Unique: Q-PvJwaANo6epMPVSh_Rqg-1
-X-Mimecast-MFC-AGG-ID: Q-PvJwaANo6epMPVSh_Rqg_1795192069
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FAE21955BEF; Fri, 20 Nov 2026 16:27:48 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 549381956049; Fri, 20 Nov 2026 16:27:46 +0000 (UTC)
-Date: Fri, 20 Nov 2026 16:27:43 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Stefan Weil <sw@weilnetz.de>
-Subject: Re: [PATCH 02/10] oslib: add qemu_debugger_attached()
-Message-ID: <awB0_96HZmwfiYNd@redhat.com>
-References: <20260915203455.580999-1-den@openvz.org>
- <20260915203455.580999-3-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1xURTb-0001NU-Rs
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:28:41 -0500
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.5102722|-1; CH=green; DM=|CONTINUE|false|;
+ DS=CONTINUE|ham_system_inform|0.00777389-0.00183146-0.990395;
+ FP=7954384019212824274|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033037006180;
+ MF=mail@jiesong.me; NM=1; PH=DS; RN=7; RT=7; SR=0;
+ TI=SMTPD_---.k6lCHAf_1795191629; 
+Received: from Moon.localdomain(mailfrom:mail@jiesong.me
+ fp:SMTPD_---.k6lCHAf_1795191629 cluster:ay29) by smtp.aliyun-inc.com;
+ Sat, 21 Nov 2026 00:21:11 +0800
+From: Jie Song <mail@jiesong.me>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, peterx@redhat.com, farosas@suse.de,
+ avihaih@nvidia.com, Jie Song <songjie_yewu@cmss.chinamobile.com>
+Subject: [PATCH] vfio/migration: Use qemu_put_buffer_async to avoid an extra
+ copy
+Date: Sat, 21 Nov 2026 00:20:26 +0800
+Message-ID: <20261120162026.31245-1-mail@jiesong.me>
+X-Mailer: git-send-email 2.48.1
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915203455.580999-3-den@openvz.org>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.63 (deferred)
+Received-SPF: pass client-ip=115.124.28.63; envelope-from=mail@jiesong.me;
+ helo=out28-63.mail.aliyun.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,127 +54,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,UNPARSEABLE_RELAY,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Sep 15, 2026 at 10:34:46PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> Code that watches for a hang has to tell a hang apart from a debugger
-> stop, because under a debugger every thread stops and whatever liveness
-> signal the watcher samples stops changing with them.
-> 
-> Linux reports the tracer in /proc/self/status and Windows has
-> IsDebuggerPresent(). Answer false elsewhere, which leaves the caller
-> behaving as it did before the check.
-> 
-> Match the Linux field at the start of a line. The Name: line holds
-> fifteen characters of comm, enough to spell the field name and appear
-> ahead of the real one.
-> 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Cc: Zhao Liu <zhao1.liu@intel.com>
-> Cc: Stefan Weil <sw@weilnetz.de>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> ---
->  include/qemu/osdep.h |  9 +++++++++
->  util/oslib-posix.c   | 22 ++++++++++++++++++++++
->  util/oslib-win32.c   |  5 +++++
->  3 files changed, 36 insertions(+)
-> 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index 1ec5b42230..96afe09632 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -658,6 +658,15 @@ bool qemu_write_pidfile(const char *pidfile, Error **errp);
->  
->  int qemu_get_thread_id(void);
->  
-> +/**
-> + * qemu_debugger_attached:
-> + *
-> + * Returns true if a debugger is currently tracing this process. Meant for
-> + * code that would otherwise mistake a debugger stop for a hang, and false
-> + * on hosts where this cannot be determined.
-> + */
-> +bool qemu_debugger_attached(void);
-> +
->  /**
->   * qemu_kill_thread:
->   * @tid: thread id.
-> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> index dc001da66d..4eb6a40628 100644
-> --- a/util/oslib-posix.c
-> +++ b/util/oslib-posix.c
-> @@ -112,6 +112,28 @@ int qemu_get_thread_id(void)
->  #endif
->  }
->  
-> +bool qemu_debugger_attached(void)
-> +{
-> +#ifdef CONFIG_LINUX
-> +    static const char key[] = "TracerPid:";
-> +    g_autofree char *status = NULL;
-> +    const char *p = NULL;
-> +
-> +    if (!g_file_get_contents("/proc/self/status", &status, NULL, NULL)) {
-> +        return false;
-> +    }
-> +    while ((p = strstr(p ? p : status, key))) {
-> +        if (p == status || p[-1] == '\n') {
-> +            return atoi(p + sizeof(key) - 1) > 0;
-> +        }
-> +        p += sizeof(key) - 1;
-> +    }
+From: Jie Song <songjie_yewu@cmss.chinamobile.com>
 
-Do we need a loop for this ?  IIUC, "TracerPid:" can only
-be present in the file once, so a single strstr + atoi
-(or realy qemu_strtoi) would be sufficient.
+Replace qemu_put_buffer with qemu_put_buffer_async + qemu_fflush in
+vfio_save_block to avoid an unnecessary memcpy of device state data
+through QEMUFile's 32 KiB internal buffer.
 
-> +    return false;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
->  int qemu_kill_thread(int tid, int sig)
->  {
->  #if defined(__linux__)
-> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-> index 5f3e8f4d98..6663d83151 100644
-> --- a/util/oslib-win32.c
-> +++ b/util/oslib-win32.c
-> @@ -228,6 +228,11 @@ int qemu_get_thread_id(void)
->      return GetCurrentThreadId();
->  }
->  
-> +bool qemu_debugger_attached(void)
-> +{
-> +    return IsDebuggerPresent();
-> +}
-> +
->  char *
->  qemu_get_local_state_dir(void)
->  {
-> -- 
-> 2.53.0
-> 
-> 
+With qemu_put_buffer_async, the data_buffer pointer is added directly
+to the iov array. Since the next read overwrites the same buffer,
+flush immediately so that the channel has consumed the data before
+the buffer is reused.
 
-With regards,
-Daniel
+Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
+---
+ hw/vfio/migration.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 69d50cebdd..e363250b79 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -476,7 +476,8 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
+ 
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
+     qemu_put_be64(f, data_size);
+-    qemu_put_buffer(f, migration->data_buffer, data_size);
++    qemu_put_buffer_async(f, migration->data_buffer, data_size, false);
++    qemu_fflush(f);
+     vfio_migration_add_bytes_transferred(data_size);
+ 
+     trace_vfio_save_block(migration->vbasedev->name, data_size);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.48.1
 
 
