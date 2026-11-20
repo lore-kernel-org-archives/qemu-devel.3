@@ -1,67 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B8D60A6F6A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 14:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAE0606A334
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 15:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GRQ6LRo1
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=dNUjingl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUQ4Y-0001hn-Q7; Fri, 20 Nov 2026 09:58:42 -0500
+	id 1xUQEd-0003CT-Dm; Fri, 20 Nov 2026 10:09:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xUQ4V-0001gV-39; Fri, 20 Nov 2026 09:58:39 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xUQ4S-00018j-MR; Fri, 20 Nov 2026 09:58:37 -0500
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id CA31660F33;
- Fri, 20 Nov 2026 14:58:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73821F000D3;
- Fri, 20 Nov 2026 14:58:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795186712;
- bh=zDIF/ZcqoMcZWkJd7MOeBdNQ7mEKz0kwiIr5vVGXBH8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=GRQ6LRo1/tWtBznURkNDM2G8MtKJLJhNxjH4rt0yvkaeu91Wg6CKBYcizQh01Uhzw
- tvIf5arYfrP1ss4VgexRo+/afVyFGjCc0c84MtdBPtVUouKbCOOHqrHi9X0UxoTe2I
- FHtJzD1AL5jpTtP1sDyXevXwjZEAoNIFiW1q6SvmthO1hVvUhp5c+Go5EgkGj+fgaX
- UITMjV7oim7f2xpjZQOvevTewThwlSxM48+fjjf031PhX1NO/K8Id7OCPhUDmIJ7XA
- 7A2hpVvRrU9RI8I3JmEKzJ/IUOqb1na3C7vmbRjVLXuUwv0x86wgF3RaSmLTUbQFpF
- kI1bviHXNAqJw==
-Date: Fri, 20 Nov 2026 15:58:26 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Damien Le Moal <dlemoal@kernel.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, Sam Li <faithilikerun@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Jeuk Kim <jeuk20.kim@samsung.com>,
- Daejun Park <daejun7.park@samsung.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v17 0/9] Add full zoned storage emulation to the qcow2
- driver
-Message-ID: <awBgEvaATwrbgIc6@ryzen>
-References: <20261112114918.1269168-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xUQEb-0003By-8B
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:09:05 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xUQEZ-00059P-BC
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:09:04 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4bb606491faso5367175e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 07:09:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795187341; x=1795792141; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=pyrl78n7bHsVMKlsaLuGRoC+y4O6xpU/t0dLHZZBseo=;
+ b=dNUjinglbGAMUzjOKEebub3nrT3/XhcbS8XcWd+sUia6mAupKAyTL6d+RukkUPczlO
+ H4CRCL0cNm7F8g5xBrrkW0kPDvuGwMv8mYIJERG8At7ZFcxvvaSNTrqJh40I58VUtbxd
+ aVeZqyqWASKEDOjytzRuXyRsOf8CEhZBxBsU8iD+zSn0/nHIT+sxd33vTyCYRTOZUzh8
+ BTnWCYJRACj6jjNt/QTenMQ9EIXO2FNEZFZ5HsGCKdM8pqG5fmH6lTXqrAQMtxVF7HP7
+ 3r1R6At9bWy/bfkU7sUqTEf7dynLjy8YZzdMBJ2PmB2YiFMnAwT8zXHtSH9h6pxVaDls
+ EuDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795187341; x=1795792141;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pyrl78n7bHsVMKlsaLuGRoC+y4O6xpU/t0dLHZZBseo=;
+ b=Bn/eM1abyhL69/HjhOlA3mu0GcT3n1zttKN+U1oPmZDW/kabJ6XU2qItfnCLd9SoVm
+ Pn3cZ1i7x0Ht+oE8/UvjK6q3emJ6kd8UuQk0qwl1qpm2a5pHqFKXYPxXNmTkQ8jiM4A+
+ 1gFnTzPG761NqV/xdqgMfq2k/d4W7dKitBhST2cwwxp/SrQRcfKx6feUf+HDnY4d+dqR
+ ExvbpDUF7NAHZY3VBo2y5+oD+C5Kzzj5jmJQlxxPL/QkgWEib9SASm9dGFxO6s4xE9qn
+ LsFkhURvjgTYA4NWnGmpVv2UBMCbveUj5siQx/mSCwO4QQ7rWdW546Q/eXbYm4ijQs5w
+ F81w==
+X-Gm-Message-State: APuU4Z9KVtccrw3H9VCDmMmdeSd3duVJcp6ZUo9+Q6TuPdb51t+e1sq1
+ hlX6h2sM/AbyLu0/J1Unm1CaUOlMLeg2+CUezJgEGLMMlGfBIme9c5g6WNS34xlh3TI=
+X-Gm-Gg: AYBFou2R/JSOrVVQUM5viUZi2n/0KTLXDuU+KOb4EK4I2D1q5XsGx2Ef4+LGVn9Z0BO
+ ISUj+xUvivmdzrR22fbMZEk3DTqcUBoCQ85qLgsMq83NCryYkAqoYhvMLcCDMHBobJBTnprbGoB
+ eEfyPTEpqGr4hxSNJETfxTMXtb01pz/qoy82o5QdAGS9yBkU36dp0esRlDwAOZxzKARSkeW4CaX
+ CX/BWLylHcnOjQwOxZmLwpZZZ0ng+hDKdrTQ2wYujKTXfv8ZJThDnWvQ7M8UkQAtxhkt4A0cSUh
+ +01rVbPhk35FoOOnu5+pR4wsOANVxb7vxOi6l7pRx3GztIoHtDV8vofnDcE2cC27aIn/LjhNuPU
+ C9f5z2PrU0d1WC1dD5MEzzCz51vE3b+UckBHrogMn62PQobcaOVwbBWaajC02UX4qUsrtf5OxNR
+ 1LxqvRz1H1k2qClKUOcR6C6rvGKzlTGdCHVZ5QqPvKlfDVH7R9R3z/ES/p//kqq8b3lkqojhseD
+ IanPhqI6i8B/EeDar3yVAIJEVf4XNQrIipWL2ENyOWQEuCF1gV/FUU2KqV496Sv9BQPcGS3yKmm
+ kOy4hqbLzpPsoARHMyYAVg6qRFqG
+X-Received: by 2002:a05:600c:4515:b0:4bb:659c:b8db with SMTP id
+ 5b1f17b1804b1-4bb88813b27mr80286765e9.12.1795187341324; 
+ Fri, 20 Nov 2026 07:09:01 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb884911e3sm107978155e9.6.2026.11.20.07.09.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Nov 2026 07:09:00 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 868325F7FE;
+ Fri, 20 Nov 2026 15:08:59 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nagendran Jairam <nagendranjairam52@gmail.com>
+Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  philmd@linaro.org,
+ daan.j.demeyer@gmail.com,  peter.maydell@linaro.org,  Alistair
+ <alistair@alistair23.me>
+Subject: Re: [PATCH v3] hw/core/loader.c: Add Extended Tektronix HEX file
+ support
+In-Reply-To: <CAEAkEp7jbv=uZS61Yd6V-zfNr6cp-MjgHBStC08ft3qROfE2bA@mail.gmail.com>
+ (Nagendran Jairam's message of "Fri, 20 Nov 2026 19:39:50 +0530")
+References: <20261112184949.1042-1-nagendranjairam52@gmail.com>
+ <87ik1r673b.fsf@draig.linaro.org>
+ <CAEAkEp7jbv=uZS61Yd6V-zfNr6cp-MjgHBStC08ft3qROfE2bA@mail.gmail.com>
+User-Agent: mu4e 1.14.5-pre1; emacs 30.1
+Date: Fri, 20 Nov 2026 15:08:59 +0000
+Message-ID: <87cxrz5ylw.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261112114918.1269168-1-cassel@kernel.org>
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,55 +107,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 12, 2026 at 12:49:09PM +0100, Niklas Cassel wrote:
-> This patch series adds a new extension - zoned format - to the
-> qcow2 driver, allowing full zoned storage emulation on a qcow2
-> image file. A user can attach such an image to a guest and have
-> it appear as a host-managed zoned block device.
-> 
-> The zoned format is opt-in through a new qcow2 header extension
-> that pins the zone geometry. Behind the extension is a dedicated
-> zoned metadata region that stores one 8-byte write pointer (WP)
-> per zone. The extension is gated by an incompatible bit, so an
-> older qcow2 implementation cannot accidentally open the image.
+Nagendran Jairam <nagendranjairam52@gmail.com> writes:
 
-[...]
+> On Fri, Nov 20, 2026, 17:35 Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+>  Nagendran K <nagendranjairam52@gmail.com> writes:
+>
+>  > Add support for loading Extended Tektronix HEX files through the
+>  > generic loader.
+>  >
+>  > The loader parses Extended Tektronix records, validates their
+>  > checksums, and loads the data at the addresses specified in the file.
+>  >
+>  > This allows Extended Tektronix files to be loaded directly without
+>  > manual conversion to another supported format.
+>  >
+>  > Tested by loading an Extended Tektronix file containing a simple UART
+>  > application on the RealView EB machine. The application executed
+>  > successfully and produced the expected UART output.
+>  >
+>  > Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
+>
+>  Ok before you send another version you should consider:
+>
+>    - split whitespace and comment updates into their own patches
+>    - include a test case for the loader to show its use
+>    - verify the whole series applies and builds cleanly on upstream's mas=
+ter branch
+>
+>  And the cover letter for the series should also include what changes
+>  you've made between each iteration. You can also include a summary of
+>  updates under the --- in the commit messages.
+>
+>  --=20
+>  Alex Benn=C3=A9e
+>  Virtualisation Tech Lead @ Linaro
+>
+>    Ok sure, but where do I upload cover letter and testcase means the bar=
+emetal build through which I tested or just overall summary
+> of how did I test?
 
+The cover letter is part of a multi-patch series, there is tooling you
+can use to help prepare a series:
 
-Hi Kevin, Hanna, Stefan,
+  https://www.qemu.org/docs/master/devel/submitting-a-patch.html#submitting=
+-your-patches
 
+For the testcase you can either publish a binary asset somewhere and
+write a functional test:
 
-It would be great to get some guidance on what is needed to get this
-series accepted. It is now at v17. Is there anything I can do to help
-get it merged?
+  https://www.qemu.org/docs/master/devel/testing/functional.html
 
-Almost all of the new code is only used by images created with the new
-zoned feature, so the risk for existing users should be very low.
+Or work out how to build one of the tcg tests and package it up as a hex
+file and add a run to test it.
 
-The only changes in code that every qcow2 image goes through are:
+>      Nagendran=20
 
-- Writes now go through qcow2_co_pwv_part(), but outside the zoned
-  branches the code is the same as the old qcow2_co_pwritev_part().
-
-- The additions to qcow2_refresh_limits(), qcow2_inactivate() and
-  qcow2_do_close() only have an effect when the image has zoned
-  metadata.
-
-- qcow2_cache_set_dependency() now returns early when the dependency is
-  already set, which avoids a redundant flush, without changing the
-  write ordering. I could move this to a separate patch if you prefer.
-
-Apart from one more entry in the feature name table of newly written
-images, images that don't use the new zoned feature are unaffected.
-
-
-Thanks,
-Niklas
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
