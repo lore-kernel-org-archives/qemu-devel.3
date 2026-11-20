@@ -1,141 +1,134 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B620E60A2608
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4B4606A335
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=yNC5DwCZ
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=xTFvF38a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xURBL-0001OJ-9n; Fri, 20 Nov 2026 11:09:47 -0500
+	id 1xURGO-0002PY-HM; Fri, 20 Nov 2026 11:15:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1xURBI-0001NV-Gx; Fri, 20 Nov 2026 11:09:44 -0500
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xURG7-0002On-5t
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:14:45 -0500
 Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1xURBG-0007zR-7I; Fri, 20 Nov 2026 11:09:44 -0500
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xURG4-0008Rc-Js
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:14:42 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Yzx4tFKTYl5TfYFw3UR8JpdFGX0cv7M4yul4tUSPx3sTueemgCbtTa9/1iVUU/1yxV2tRIbXVWhW5GYpx9m3fzb1ERr4W16JwOeFNWyyP76LaFYbo3p7w2lu4UwRDg0j/A3r+xdwgy9Z7XwBNH/o3TTT9B4V69K4YKw8ChSgHGv+txSv7Fds7fuQ2LMcQ1ye5IrmxcpRYoLwv3dDYQXS0vF8gECMBki/Upvs0MGRoQVHGHowXlcHhHFvv+xwef8V2blEZZN6Hs8PWh+IE962fpMHm80iDBmbl2UiACYApgWiN7ZUf+9VmvtbxkIklAslbbkhNUcQSc/c2Txx3svBZg==
+ b=PocoScsSgpEsvlGkIZ446qpgMAWVFNKX0JynzVJkkXwiqFYrFsFPo97V2+PWQD46v/uolTtaekOjHeuTtfo/ECNa6S5XV6O96HFWKpz9YiyUqBvmZUG4jnYseRIztUVvDn5I27MpS1ox3S8X0DdBr2Rqga7z7xMusQFR9rpTjMz+yNFk9KMJy6txo1C8MWU/aXUio2bOHK5bofhKraA+lkw5ZeaP9vTP1J+4JDBdKyY4xL+kfMNOy2paslgUxvGg1jGy1xj0hMnNNEpMFoXzd4P9o515CrOmD2FydH3iWy51dLZ6dpLYWVcS52tyN7RYTIkpkxmacsBZb9sItkRbrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=srKyheyjfZMIdf3qnD9Kn1oi2YaX64rzmtyyTMNMS7w=;
- b=SJczF+DT/bXGVNEgpzh1lCCPO9+wvbjKkmVcBxH+aNAZVD1bnTkmUwzhM2yKhLMJln38hdiWhmVMzkJXDjPEFDdDTtzJNA8BOml2TlliWWtTLO4OseoJ5tb+HiOpQevE6Jx+If6S7uD1yWFPuAQmXADDOPJg4wPT/fLcWb+q9PTjfuM4C1hH3DO4K2RM+RA+sDAQqACakdxEdgx38fFaI3f0kU3JQ8zvYnRMGCawZa6HlCf6SV5voB6y58Kg3vYXYEDhYS+yDfj1tVzpn9nL+pzpCuSsgDQgijzELL89Hv6Ybp0jmvsjT+1Px/UmCTCUOvX4t7PjKoSv7ly30KeiJQ==
+ bh=nppYohK9H0y1yYfWYNcJ+kBWzJveUHvD1bGUK7WWuaM=;
+ b=L0HlcUGFBUyJ48/YvzT5j/ErF23xVzTeeTZe6WzUjm8YF6Qov4ULqYNf0K3wTkLxHpTtVs3F8I8L/dcvUsWovKwTE3/ONwQzdJGOG03uvNEHfnNe3d63L4sAKe9EcKgTuZXsGvHQPczfJ2js0kh+2XUbcRCJ2rOqShiP+hbfEKfk9Lg60CgZN4pfIWrVs3Zbene5NsG/Mj75RzpwSZy7BWA21n4O9lrWxaHcddMflxu7V9EL6D056Bxig7d+nOrDdcGSYB2QZqrwIjH29Q3+Kj4g4Z0yB351na/K1jkPZb0EnZ9ZkuAQ4qAo/lFYq4YPNgALHiYFaBZJ7CbURDCLfg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=srKyheyjfZMIdf3qnD9Kn1oi2YaX64rzmtyyTMNMS7w=;
- b=yNC5DwCZLAICcFZUKQoa3kCF9lC65EDsgGCWcd6iYa73/FY1/np1UkKNISQx3bn5XusekVvqNR5pkVdSjD50lDeIJVVq4dzf4cO4UIbHYZKc8ElNxbO4iofCpQZxzjkRcJWrDj5JxomQtx23AzAmpAOVVJqPkrNqscWHpk78gNGUYZVUKtbzV/e3zsKmo7Y8XMUvWPm5ISwMtNmYwlJRuHzni8aR/dcXxOkEGLu7ujNerhuCmNRrYqJHYakUPWNAxE51eOeUZNoAdnsMwgH7TsgxY6rPdFoGPlHsBz+w1u7yyhai9XNtkdKgjdbILLX+8mX77MxPBF8i4EA/HWbkEQ==
+ bh=nppYohK9H0y1yYfWYNcJ+kBWzJveUHvD1bGUK7WWuaM=;
+ b=xTFvF38asS4PdX4ZLTFHhWVzzto4CAvihxz9+AfPm0F3/H+afnfKsQ4EwrMS5WDX1r/x+6DC/Wo3a1mkQnJPaFSQaJuWpz3oxepmuzuI3hIX8uFzCLYevIg/hIHwGapqh5JFc0LZ5nIJZyrtCnef0EsdtTEJdxwVxTwK02lHnpQO4CkXFemepCLaHRrWR9Mg2O6Eq/HDddl51YhZoFh4MFCzLbuMdkZILbiZsyIBxibo11Pjse7dMhuy1eF6Tt7ebvYMAKO4maEjyRQ7GR6YJhndUF3pbpIuEFR1cIUhSgO+GcsCO+iO4NW4kO+qNv9b+Suo0MC8vFyn20kA+itw9w==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
  by DU2PR08MB10230.eurprd08.prod.outlook.com (2603:10a6:10:46e::18)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 16:09:37 +0000
+ 2026 16:14:37 +0000
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd%5]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
- 16:09:36 +0000
-Message-ID: <e326053c-acc7-4484-b814-e1cd4375cac1@virtuozzo.com>
-Date: Fri, 20 Nov 2026 17:09:35 +0100
+ 16:14:37 +0000
+Message-ID: <531ee1e9-eeb8-49d3-ad23-609c82d42ed3@virtuozzo.com>
+Date: Fri, 20 Nov 2026 17:14:36 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hostmem: fix cpr-exec of VMs with bound guest memory
-To: Peter Xu <peterx@redhat.com>, "Denis V. Lunev" <den@openvz.org>
-Cc: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, qemu-stable@nongnu.org,
+Subject: Re: [PATCH 04/10] oslib: report kernel stacks in qemu_thread_states()
+To: Fabiano Rosas <farosas@suse.de>, "Denis V. Lunev" <den@openvz.org>,
  qemu-devel@nongnu.org
-References: <20260924125800.4188406-1-den@openvz.org>
- <20260924125800.4188406-2-den@openvz.org>
- <cd0292cf-2a87-4716-a8c9-d87853949c76@maciej.szmigiero.name>
- <asZaCerfcnfmAlIw@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <6144855c-f231-41a4-ac6e-b47760b7c8ce@virtuozzo.com>
- <asaPlV0HAyfQm_PS@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <20261105180146.2959656-1-den@openvz.org>
- <awBb-wKu6j8JqP1V@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260915203455.580999-1-den@openvz.org>
+ <20260915203455.580999-5-den@openvz.org> <87h5hfs4v1.fsf@suse.de>
 Content-Language: en-US
 From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <awBb-wKu6j8JqP1V@zhexu-thinkpadt14gen5.rmtcaon.csb>
+In-Reply-To: <87h5hfs4v1.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIYP296CA0003.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:29d::9) To AM9PR08MB5892.eurprd08.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VIYP296CA0010.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:29d::14) To AM9PR08MB5892.eurprd08.prod.outlook.com
  (2603:10a6:20b:2dd::16)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DU2PR08MB10230:EE_
-X-MS-Office365-Filtering-Correlation-Id: 37cc0c7d-b0c4-4135-c642-08df4720ac57
+X-MS-Office365-Filtering-Correlation-Id: 33c4ec4d-3a5e-40f5-d06e-08df47215fb5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|23010399003|10070799003|22082099003|18002099003|4143699003|56012099006|5023799004|261028144727099003|261026121527099003|261026140227099003|261021123027099003|261102123227099003|261021121427099003|261022105027099003|261009223027099003|10067099003;
-X-Microsoft-Antispam-Message-Info: pFBkZ+2xaaipOuugUUlGBLBcKMvdl5cROIYz3v9qSKoZL07WRR6QRIHc3sBfBWZb2fNrNpf+CUU6Od4Wy25YAb/pkg/UBKuyK9H8Ld4VaBhq4cXVChvC0rvDjTI6oK0uv+Of22ZBKn9DX5NsBOGbEccwbbiuVljbw4oi2BNGTHzJt8Nnxd6ytru6TjKSozXKvGMYZP0+v+0LiTRDXj78FL1adRaozREOKlcYfs5bo5lEWmS6sIdcITyvsPcwX95kyFIY330nDQcvcxXvwWSb22D5j+h00FM6rVuuUkWVbyefXgagNSQxttWHr/51D3BB++RFJBm+oY1ZRgyiRogzgalE/N/IhlSbgMCyhu02u9P0LMn8bihM0se2yRuTgDOFFpRJMvQdQ1gZE2cYEsIUDlL7j5VRRF+4L7puiEJ9qZaohPxj2O3AIxpBnlIhSbZuTyRIHYZI3/ugfveBtePS6TewA8LJrbGQu/bGY8RBTmQFXhY+6M+82r5Ir4c4A7feE8LHV4KcuzrLsxycV4QbNWNAE5v6ooIv1IHCL4gcPDAMJaz6FeFK/+TST3UKKm+0slvUhbDGfo5y/D3PWRLIIvCNv6s0vCEo9H72ocvM26Y9i77nmL7JiuKoeYg3S67SBHOFrfEMqwDC+Bjv8INmD8CiPf5HhJPn+xvKyJvj0RU=
+ ARA:13230040|366016|376014|1800799024|23010399003|10070799003|6133799003|22082099003|18002099003|4143699003|56012099006|261028144727099003|261026121527099003|261026140227099003|261102123227099003|261022075727099003|261021135927099003|261021121427099003|261022105027099003|261009223027099003|10067099003;
+X-Microsoft-Antispam-Message-Info: RW/6ci9WyYpsXgfakxOJ9gwkqgLalfpjAcifje369xIs2OgtNSU3cpB8Efj4BAaJVUDnn2nqW0Pf9KQqc7ljJMWzz3QT78aDj/iHn6/WDG7zWNTcG+wIWGgqHJ3nL/ukW0MoEuHj1T+YsACA7ue2ydIIUep3dR178HxyDbFNXquMny+yl6qr7rO2b6LvhzVMhYtuLJ9Ch73T4ChP8CJFqeM3FdjIePLroxhkKugo9nBUV4HTpKrm1KpiLJjqtPE1dm0japK0e76DzHPyHy/mcsY7zPWo5WpNffvAk3j++SP81n2SYl0PKCsUWzP2UoOWv+/SVWcORb4Y4Ou5dOAk2ZwQlvw95PUYFjbMRq4GCawuDDbVULG27gt1k67qVtp6qNf9+vlNLJejXD8e6hqGMpHSO7GJ07hsEuXL42ybQJKlOBa8uCzPG2SuleujWk5zYRtNe3hrmlX0SpWQwG0/WJdSYJwtC6h0OkstAhdPjBbwtiBz1GmRmN6TwQEz4p0+163A2AmKJGT0nwJRmjAw6s04vSMyWN9+StKb8Vd9Jh6wlKRywmzY2gjl8HkyZkuwB3XHfHJzNiFO6uxR6jKxm1y0CF/dCyUL3H+dVfVxZhkUNjnYwiZ/sEmTIjaK1epRJ0y9g3IGae3FtCjPLDpu56bLzQLam5+EJ7bhm6zNwsI=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(23010399003)(10070799003)(22082099003)(18002099003)(4143699003)(56012099006)(5023799004)(261028144727099003)(261026121527099003)(261026140227099003)(261021123027099003)(261102123227099003)(261021121427099003)(261022105027099003)(261009223027099003)(10067099003);
+ SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10070799003)(6133799003)(22082099003)(18002099003)(4143699003)(56012099006)(261028144727099003)(261026121527099003)(261026140227099003)(261102123227099003)(261022075727099003)(261021135927099003)(261021121427099003)(261022105027099003)(261009223027099003)(10067099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WjU0Vk1PdEpaUDR6bGVyRUhzcXBhekRmM05PZXlwZVZ1Y3VUblZaaXpnRG0w?=
- =?utf-8?B?TmY3cGRydWtyWlJkV1ZSTUcyMzJncG5ZNndsdnBnbjYyY0V4WGtpTzVmNFRJ?=
- =?utf-8?B?VE5kZTlKU0k3ejdqMFZRSllyblJqaGtpTDZuUjhYTWhHdlJlL2xkOFIvSXBO?=
- =?utf-8?B?ODM3N3lmMjlsaU02Wlo4S01PMmdQOXhGb2h5eW83dml3ejdPL1dSMFJEdEhE?=
- =?utf-8?B?VkxjR05aemtMc1IwaXhJMzZ6S0pKZTc2M3RVNzVBZnpaMUt0WmJtSnNOQWky?=
- =?utf-8?B?WnV4a3hyT05zMFE2dFhlZ2xUZDNGejBuV1MxZmpRVFRHYlltS1Vmc21qN3k3?=
- =?utf-8?B?YWl3dk1iQW1aQTdiVkpqSWNWdnpmdzhTMzRDczdDN2NDbEJsVFZ4eHJqaFU2?=
- =?utf-8?B?WWpDVXp2TlRWK1RZSm9TM2d4dnM4d2xPQzB6RzZEOGhwK0VwMTNRaDV2SDg3?=
- =?utf-8?B?VDk3eDd0M0NVTkdKWS9xMGUvVXU3WmhFMHFzMGlMYUlJczlLc1JVNTRGalZC?=
- =?utf-8?B?NEIyWjJHNi95VE9RV25GRTRXdDBneXo4Um00TGpiUlZ1MTBaNG9sVjVaTnBw?=
- =?utf-8?B?c0ZVdEhmcHRwTjVpc3RwWUZaM1JGSG9LbkNudVhRYnBBeVF0QW8vYmxSajZl?=
- =?utf-8?B?aHIzV3d1VWk4L2t2M2tpellURWpHUTdOUXJLbmZ6dENLY0J5YzhHYnBZdk1i?=
- =?utf-8?B?QU9LWTJLRFNoR0R3S0NwaG1rQ2krRmVTZkdNTWdteDk3QmpHU0Izd3dDRm8r?=
- =?utf-8?B?RUh5NzhvUk9XQjMvRWdWUXFQN1pqRnRqclFuMDhNVTQ1TDBDTDAveW9QOHdp?=
- =?utf-8?B?eUx1YzNlZXE0eElhWklPUEh6M2JSYjFFWFZxYTRNbzdudkpORGdkQVBWZktN?=
- =?utf-8?B?UTlWQ25IZnlvazdHd21VdkFNUm1PS0owL0FybHI4OHduRXdYcElYS2h4MHpk?=
- =?utf-8?B?Q0poaitjRFFJQlFIWk1VeTcwdGpLZmpsRUNFVEQ0bHNpZkVYdGJYRUhVK1Y4?=
- =?utf-8?B?c3pBdUZsY2M5RzBaanp3TGE5OHE2Wmo3cDVZRXBpMHFIMnB4RlVSbkYwei9J?=
- =?utf-8?B?ZWpQN1Q2MlZsd3RNM29TSm9yY3FmVkV5aWdDc0ZUZzZIOWdMTytWdmRpWVBG?=
- =?utf-8?B?dTJUWHlsRDFLU0RNTC8wVUIyQ1lQY0k4eitLQ3hGT2ZicHdSODIxZW5teEdS?=
- =?utf-8?B?WTY5Zmg3ZVJWd0JUMFM2cm81UFpROVhWNmhnT2g1M1JKb21NUC9VWW9ROGwy?=
- =?utf-8?B?WEJWckFFZjF5QjFxczFLSkJxaWhyV1A1Q0dRalpaV3ppVzRjdlFTM2EvMStN?=
- =?utf-8?B?Y1hLR1ZWWld4SlNKMVAyZ0JkVEZMNUxEdXBJSzluaXRWK3hONURWakRZMm9I?=
- =?utf-8?B?SUZ6MFpLUG93Q29KSmZyYnVPeDZYOGdRS2pTVGVRTU5WelFFRVh2R1hCSWxX?=
- =?utf-8?B?NVhKVUVTUG5YeklEcHd0RG0vc3NPS2hzYXhDQzh4bEZPbDh3K1ZwUkdpTHJx?=
- =?utf-8?B?S1ZVODd2VndwcTlYMG5vNTRKZk04YWFuSytid2VEOENNVGNhaGVVQUFTcFlx?=
- =?utf-8?B?S0tCTzhaYXhPZVk0RURUQ2hVa2kwaTFvMFEyM09qa0dGblE5T1V5NU8wRWhm?=
- =?utf-8?B?MCszOFptWTBTS3ZxOGFNRzhYd29tQ2NmZU11NEs1NndIaExiVWxLdXd5TEJC?=
- =?utf-8?B?a3ZBWEd1QWZyNFVVdm9ZNmdOMTZ4ZVRxVnd0S0wvWHJaZ0U5NXJwUTRHYklQ?=
- =?utf-8?B?THZGSHBwS0U4M0ZiZnplMWRlQng2VFFDcTBabkZrb3BKbHhmOHd2d3JBTHds?=
- =?utf-8?B?c2kyTnhVd3M2N0lGM05ITU94NDJvOTgxTnZONDh0SjJiUHRCQjd5YVM0TUZD?=
- =?utf-8?B?aFBXZjdYeFh3UGNQMGVHTnZxc0xFYm82MThWSWRMYWYrMHVvcGFBNEVIeDE2?=
- =?utf-8?B?bUJXeWFSeXJXTmdYcldmdUFQVGRoa3d6WmxJdEFBU3pJaHJQeEZqV1RoNzEr?=
- =?utf-8?B?ODZRYjJqdHNCQTc5UTh4c3BKQXlzOUhYR3UvbjBiT210TlJxZzVXN1ZnMis0?=
- =?utf-8?B?b3hGK1FkdXZFcjJiaFRRYkx4VEhqRU5mRHVrYys2SjVuV2U0VFFMdUVpMmpz?=
- =?utf-8?B?NzBJSGsrcllrcTF3bERtbm9FM2ZkcFJrdWtpUWllT1NBRUM4aU5LRnFXbW9k?=
- =?utf-8?B?cUpkTHQ0cWN6Vml2cmVXTVQxelBhTFZkdE54V1hVM3ErRTNqclFsTFNkemo4?=
- =?utf-8?B?R2tRYUV0NTc2ZVZieDByRzYwVGw2ZC9kTkdnY29jODVQTTU2SWtjdk1CSFI2?=
- =?utf-8?B?dE5zY3FaaVFNaGNsYmtvVFJDSExzcG9wUUJYbklQWTRzdC9ZazVFNHpCSEt6?=
- =?utf-8?Q?v+MNTvSZaa13etCmP/DAQR0+alcWcuTTYOmLdLdd9jBGz?=
-X-MS-Exchange-AntiSpam-MessageData-1: pbY+32jaG9MQag==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MWVNNWlvdW45bGFZT29wMUttNXU0QU9ZU0NITmxMK3dFdHIvSXhZWVFPVDMx?=
+ =?utf-8?B?QWFIa1hkWGJHekY0eG44a0RkWkFOamR3YnNaZzBOQVVZb2RpaERhMWdxRFcv?=
+ =?utf-8?B?S240M3preFlEU2V0b1grdTlzRTRmV2o0bktQQ3hHVTMwbDNXSXI1RDBqdkFF?=
+ =?utf-8?B?L0dBb2N5dmZnaXQ2WUZCQ1R2UXZ6K1E4c0hYZXRGNUk1UzBmMDE2eUlzZ3Jr?=
+ =?utf-8?B?eEhSWnQreWZGRU1VZW5yTkEzSFl1NTl4K3VDWmY2eERUZXVZMjY3TnJLa3BK?=
+ =?utf-8?B?bGVmWVpDY01RNVU3THBLelpYNi9sZ0hTQ00wOTlVbGNueHdxenNJWEpTVURV?=
+ =?utf-8?B?bm50REhoOGJOMldnL1FzSDUrQVY4bU4zR24rNVRXL1JTbHZteXJacXVlLzls?=
+ =?utf-8?B?SEUvNTlGS0VMQzNob2V2UkFodW1NcHVzQ3l6TWpxMmUwem9pVTVqZnZKMEdN?=
+ =?utf-8?B?K1RaUVdZTFJBRmM0Z2dHRFdzN1U5Y2ZPdDFJWHAyQUxkM3BtcWZUQ24yRTZ0?=
+ =?utf-8?B?cS94MWdkbHRhL3BZaE1uZGFUQzlISXlkaWN3NndTa0Y2dWtKZDN1bjBVZ0h1?=
+ =?utf-8?B?d1ZQVDNIeUU4V2o5U1dKanQ1UUJkdC9PT1FxeVdYdEF0ZHh6N25ncUtOdWZW?=
+ =?utf-8?B?eXBkTTMyamc2M3dUNVVYRG5DS2ljVVZPZ21TcHhIaXhESVhZYWxhVUNTcGd1?=
+ =?utf-8?B?MnpPNm1pTUIrMVQxQWc5eUkzdUpxSEZLdHFUMngreEdBdlpKeVkrVi9tZUYy?=
+ =?utf-8?B?cEFXczg0L0ZGVXBoT0dwalZ2L2RmKy8xOFBPTmR3YTFsWFRHZk5iS0hQYXB0?=
+ =?utf-8?B?dFMvQlZvTmtWVXVkNGtQSEhEVU45bjN0TjRLWlZSYzUxMmVuaXgxdlVQZ0Jv?=
+ =?utf-8?B?Um1DZWVrMTRqUWNiUEQyM2YzNm9Gc3ordzE4bXdNaytyZVFCMW1sZzk0Uk5r?=
+ =?utf-8?B?bnJLVnFlVVlFYm1GcHZ2ZUxXRy85RWh1NkhxaGZGcW1HYWdIejF6bFo3NWVp?=
+ =?utf-8?B?WXdZdk5jQjlCNFJtL2N2L216VCtteUNVaHEzSm15S3hjcGdJOUkwS0VhNVVB?=
+ =?utf-8?B?d2h5ekRrdTVlMTV0RFdHeW9pS01EZFlTU09zZU04TWFLTlNjUisycGtuVjJo?=
+ =?utf-8?B?ZEFaWmUxRVhjSnlFbWNUM2lpNHEyYVROak1SQlhJTmZYL0xmVDQyNkRJbTRP?=
+ =?utf-8?B?WXhqa080d2xtRk0weDZ1c0xORkViUmNQbEJhSWNDaHE5Y05LU0hRcEtsajNB?=
+ =?utf-8?B?MCs4Rk5MMG1FckRIOW9vZkc2Uk02bnBSL1k1OGgrSW1VSjlZb3VmdHVlOWcw?=
+ =?utf-8?B?cXlGVFNYaVFuYXVrUHJWNFVJNlZybTV4WTBCZDl5MUNDTE8wZjdMeWo0aWZO?=
+ =?utf-8?B?Y1orOUFPVENPK1YwdGJHVXdiTElXaHJ4LzB0NG0waUNFMFpKK05NYWhXQ2xm?=
+ =?utf-8?B?T3FidjYvTHZ0WERSdFFrL2ROdlJLajV3VTB3MzdGRGJGd1A3d2Ztck9UUXEz?=
+ =?utf-8?B?aEV2My9FQ0NRa3c0STd0REdNOHN1MjA2WlViWHo0VGxxTkV4ZmRuSnlXeGNP?=
+ =?utf-8?B?S1RteXM3blZsMU00WStISXdyeXUzYjlUWjJjZE1vaHJVMUp0Yk9GaDhCS1RQ?=
+ =?utf-8?B?K25YOTVhMzhMbFB0YmxjWGJuOHJRMjAzVk5SQjFFb29vQUllYWRJWWszb0cz?=
+ =?utf-8?B?SmU3K2JRWG1yTk02OTd4RWE0RVhRRUZoVW10MjBnZHpZQnI1V2dyT0p1RFpT?=
+ =?utf-8?B?TERTUkxobjZ3UHI2dWxRYmEveXIxaGNrUWVqZjJsalFwUGhQOVduMnhXVjd4?=
+ =?utf-8?B?cFNoeFh2QlU2bFYxa1VPUzhiN1pIUHdMNUdla04rR2hZQWlyN2dWeDRCMndQ?=
+ =?utf-8?B?bDNVNkJyZENTdW9xUDhmTjRKZEhyWFdtclljMitOWm85SUlsalBpaGhCWEU0?=
+ =?utf-8?B?RUNZa3VGa2xUNmxRLzR4Z2lLRFlsOEdRNWZjdG1FaUxoUmtMT3NrMU8rbkJU?=
+ =?utf-8?B?aWx6ZUZJdmJlLzFFMWl3ODR4L3poVVQxQmFpOXJERk9VQVF0eFJqMzZPZkgv?=
+ =?utf-8?B?dC8rajJ2aWE5aHBydkc3N3FCMXdPK1VWVmlwWE5Qc3AyeXA1RGRnMWlIbURG?=
+ =?utf-8?B?dHNPNElBUXdWTG9aakhrYTNPQVc2UDlCY3lpZVVvZFJUM2Zmc25YaEk0SUNP?=
+ =?utf-8?B?ZDVEam5UL1VUTldCZlhWUGptOG1Ib1hwanJsUkhaNDFhdWNUT3l0UDZ4SDJC?=
+ =?utf-8?B?OVVoZWh2UDJNZFdGWDR5c1VBS1Y3RFVvWmZnU05zYzByNXFFQnZ2UkxrMjFs?=
+ =?utf-8?B?Q1VJdXhsZUU1Qmt1Q2lWTFF4VExXcmVoZ21QY3RIQStWWEorM0NjczJidWxs?=
+ =?utf-8?Q?+eLA3KDMefpdsE4SfxcOFDZetFvx0SSys02L5GH+Uzx1l?=
+X-MS-Exchange-AntiSpam-MessageData-1: MmfU481jh5Jntg==
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37cc0c7d-b0c4-4135-c642-08df4720ac57
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33c4ec4d-3a5e-40f5-d06e-08df47215fb5
 X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 16:09:36.7160 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 16:14:37.6973 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6xFIGw26FZQ157T3T06pPsVIFewo0lR+5AkymXtKSIJOlAQIdQSeYqW7XzgnafyvGCb75DGY15CMZnARyVxqPQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: M5bAkQSw/9wkIfr2opsIauVElELeC0EpjQ3l3XYmPKRsGzt6YFZ3dY39QqYeAzalE5HJQsFKfsDe21S8OAlNgw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR08MB10230
 Received-SPF: pass client-ip=2a01:111:f403:c201::1;
  envelope-from=den@virtuozzo.com;
@@ -165,113 +158,70 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/20/26 16:13, Peter Xu wrote:
-> On Thu, Nov 05, 2026 at 07:01:45PM +0100, Denis V. Lunev wrote:
->> On Wed, Oct 07, 2026 at 02:29:41PM -0400, Peter Xu wrote:
->>> One thing I can think of that we need host-nodes= is when different
->>> backends may be bound to different numa node, but since the current use
->>> case already enabled memcg and looks like it can shift to completely
->>> different numa nodes, it doesn't seem to be the case.
->> That is how these VMs start: libvirt turns the guest NUMA topology it
->> gets from OpenStack into one backend per guest node, each with its own
->> host-nodes. The cpuset is moved later, and not by libvirt, which
->> refuses to change the nodeset of a running domain in strict mode. I
->> agree that host-nodes plus a moving cpuset is not a setup to
->> recommend, but it is what the stack gives us.
-> [sorry for a delay on respond]
+On 11/17/26 19:13, Fabiano Rosas wrote:
+> "Denis V. Lunev" <den@openvz.org> writes:
 >
->>> So it looks like a real issue and also looks severe, but it's a matter of
->>> whether it should be fixed in qemu. If we want to fix it in QEMU, we
->>> should have some solid reasoning.
->> QEMU never asks the kernel for a static binding. It calls mbind()
->> with MPOL_MF_STRICT | MPOL_MF_MOVE and without MPOL_F_STATIC_NODES.
->> Without that flag the kernel contract is that the nodemask follows the
->> cpuset: when cpuset.mems changes, the policy is rebound to the new
->> nodes (Documentation/admin-guide/mm/numa_memory_policy.rst, the
->> MPOL_F_STATIC_NODES section), and on cgroup v2 the pages are migrated
->> with it (cgroup-v2.rst, cpuset.mems). By the time of the update the
->> running QEMU had its policy rebound and its pages on the new nodes,
->> and the guest ran fine.
-> True.
->
-> However also since QEMU uses STRICT+MOVE, it means mbind() is also expected
-> to fail and ask qemu to bail out early if it can't move them at least when
-> QEMU boots.  This patch will change that behavior, even if only for
-> cpr-exec.
->
->> The incoming CPR QEMU is the only one that objects. It takes the
->> nodemask from the command line and re-applies it to memory it did not
->> allocate and the kernel has already moved. host-nodes no longer
->> intersects cpuset.mems, so mbind() fails with EINVAL before it looks
->> at a single page, and QEMU exits. The EINVAL itself is documented
->> kernel behaviour. What QEMU adds on top is a lost guest.
+>> From: Denis V. Lunev <den@openvz.org>
 >>
->> A normal migration destination never sees this: it is a fresh process
->> which the management layer places before it starts. With CPR the new
->> process inherits memory that has a history. Steve fixed the same class
->> of problem for ROM contents (b42f28111e), pflash (e56ba1878f), PCI and
->> vfio-pci reset (24c156dcd9, 031fbb7110) and IOMMU mappings
->> (6ff4cccd13): realize must not redo what the old process already did
->> to state that CPR preserved. 2b7e9739fa made the backends inherit
->> their fd, but the mbind() and prealloc tail of
->> host_memory_backend_memory_complete() still treats the memory as new.
-> At that time, Steve was pretty advanced on the design, and it's a huge
-> piece of work so likely we didn't really have enough resources to fully
-> review and discuss all details.  But I think we should not take that as a
-> reason to say we can keep adding cpr-exec check into more places: we'll pay
-> at some point, I have that feeling.
->
-> One example, the iommufd change it hid the check into map/unmap, it smells
-> hackish on its own: IMO it's saner if we can skip all map/unmap completely
-> from top when cpr-exec dest QEMU boots, if the fd will be preserved.
->
-> Another: I don't know why ROMs needs to be skipped either, logically with
-> aux-ram-share=on it should apply to all such MRs, if not it sounds to me we
-> should fix that instead of hacking rom code to bypass a memset.
->
-> I confess I didn't read anything yet into depth. But these are
-> pre-this-patch questions, feel free to ignore too and we can focus on this
-> one.  I just want to say some of them may not stand on its own so I also
-> don't want to use that as reason to merge more of such.
->
->> Prealloc, when enabled, is the same story. It runs MADV_POPULATE_WRITE
->> over the whole inherited guest RAM while the guest is stopped. That is
->> downtime growing with the RAM size, spent on pages that already exist.
+>> A wait channel names the primitive a thread is parked on but not the
+>> path that got it there, and for a thread wedged in a syscall that path
+>> is the answer.
 >>
->> Maciej is right about extra backends. A backend the old QEMU did not
->> have gets a fresh fd because cpr_find_fd() finds nothing for it, yet
->> cpr_is_incoming() is true, so v1 would skip its binding too. v2
->> decides per backend, by whether its fd was inherited. For an inherited
->> backend it still calls mbind(), reports a failure with warn_report()
->> naming the backend, as Maciej suggested, and skips prealloc.
->> Continuing after a failed mbind() is safe: at fault time the kernel
->> ignores a bind policy with no node in the cpuset and allocates from
->> the cpuset. Backends created fresh in the new process keep today's
->> behaviour.
->>
->> Peter, would that work for you? I would rather agree on the direction
->> before sending v2.
-> So the cpuset is decided from the top, it was broadcasted to qemu in form
-> of host-nodes=, then if the top changes decision, it should notify qemu or
-> they're inconsistent.  It's almost by design..
+> Talking internally with other people that also deal with these kinds of
+> issues I got the impression (and that's my opinion as well) that having
+> the warning message and wchan is already very useful. I wonder if we
+> should separate the other "secondary" sources of data somehow so the
+> user can opt out of them.
 >
-> We either shouldn't do it, or we should notify to qemu or at least libvirt
-> on the change, so that libvirt should know what to do.
+> For instance, the stack information will most likely never be available
+> in a production setup, so that could be behind a knob. Likewise, the PC
+> addition in patch 6 is nice, but slightly invasive.
 >
-> At very minimum if such notification is hard: do you still think it's still
-> feasible fixing your mgmt code to not attach host-nodes= at all for
-> cpr-exec targets (aka, cpr-exec-command), assuming that doesn't make much
-> sense if all RAMs are persisted?
-This can be done, sure thing and this will put burden to
-management.
+> One other passing thought is about large hosts with many CPUs. There's
+> probably a sweet spot of workload vs. amount of cpus vs. watchdog_ms
+> that would trigger a long sequence of processing and printing stacks
+> that the admin might not even spot in the logs if the VM operation
+> continues apparently unaffected.
+>
+> I wonder whether the above might lead to the feature just being off all
+> the time.
+>
+> Maybe putting a precedence to the information we print and providing a
+> bql-watchdog-level=[1-5] option so a more conservative environment could
+> just enable the warning message, then wchan, and so on. Just a thought,
+> I actually like the simplicity of having just _ms and _abort.
+Charming!
 
-Anyway, I get to your position and understand it. In reality
-the amount of kludges ahead is enormous according to what
-I see right now in our downstream (released to public).
+>> Read /proc/tid/stack when the report is built, and keep the wait
+>> channel for when it cannot be. The file is restricted to CAP_SYS_ADMIN
+>> in the init namespace, so ask once rather than failing per thread, and
+>> say why the report came back thinner. Skip a running thread, which has
+>> no settled stack to unwind, and cap the frames, because the deep end of
+> What this "settled stack" statement means in practice? I think having
+> even a partial view of the stack up to a point would already be
+> elucidative, even if the last few frames are bogus.
+>
+> For example, I see a few:
+>
+>   1822761 CPU 0/KVM        R
+>       pc 0x7fb3bbcfae0f ioctl+0x41
+>       wchan 0
+>
+> whereas something like this looks more interesting:
+>
+>   1821448 CPU 0/KVM        R
+>       pc 0x7fbe91119e0f ioctl+0x41
+>       [<0>] preempt_schedule_thunk+0x16/0x30
+>       [<0>] srcu_gp_start_if_needed+0x38d/0x520
+>       [<0>] __synchronize_srcu.part.0+0x7d/0xb0
+>       [<0>] kvm_swap_active_memslots+0x133/0x180 [kvm]
+>       [<0>] kvm_set_memslot+0x47f/0x600 [kvm]
+>       [<0>] kvm_vm_ioctl+0x1113/0x16e0 [kvm]
+>       [<0>] __x64_sys_ioctl+0x97/0xc0
+>       [<0>] do_syscall_64+0x7d/0x160
+>       [<0>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
+This seems reasonable.
 
-This is not a priority item, the functionality should jump
-in first. Once done we will have a chance to re-discus.
+Thanks
 
-Thank you for you time,
-    Den
 
