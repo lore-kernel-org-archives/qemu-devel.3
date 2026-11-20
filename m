@@ -1,103 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C87E60A2631
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 11:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91815606A326
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 11:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=HAVJ4nXt
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xbKDHKhm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUMWe-0001ZF-0Z; Fri, 20 Nov 2026 06:11:28 -0500
+	id 1xUMYl-0001xU-2B; Fri, 20 Nov 2026 06:13:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xUMWb-0001Yu-Nt
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:11:25 -0500
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xUMYi-0001xE-Eh
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:13:36 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xUMWZ-00065y-Qo
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:11:25 -0500
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-67be4f2f4d4so945632d50.2
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:11:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795173080; cv=none;
- d=google.com; s=arc-20260327;
- b=f3KhYIcQIky1/ClOicgzB56UlZlZyVAAw6YYB/vT5nsWtdQ77sTVO7tlT19RYnm/Lp
- YXHau6F2s2H2ZVcg24u1QW8Z0qVExSJcYA6UZdKRrrxy/lvNh0bqJU7k3WK2ICso2/zo
- 04xHo6qdR9T+K1r2HHKpqCLd92e2FH0XnY3Ufrvp0xwfB6wdvX3Eayo8zx+khkri83Ym
- PwnlUs0iHP20AgnAPck217a8UBP0AZXZGR0QLfzPaS03rXqylFmnN2jsbsvG5GgocJcC
- 1ZnsVzE5M1frB3qrx8SVnHqzpEr6r05VmNhNpMaxyAtEzF+2VUCv16W5VleFn4NJ2uBK
- UgDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=JlbbXh3veM9/VvkJ/1Iw5pgFvYguw2fNEos3kNnkPLE=;
- fh=jis90ebI1LXbWlN2f/uPaYiR3/160S3+nBo5cgb+Jhw=;
- b=cG1tzOlt3uSkUWl3iF0W8yf6L83el+TSR7Af9pR9eztMZVO2goQYhqv4uElSJnrJ4i
- fkoAXATkWI7GDemW58SQRktpsjCqL+Jesl9aQ2PvUQvQsC4Gm0dWCY8gVky+tee9e1AN
- LXmjruObQPefRGhMLTLLngJ9ZAcjyEplocTQ1ZNtwGVpeStlup7xrjmSVppKhuNXnMYZ
- 6jTEJT6vbA7qlOvxoO+39EQcBUuZrPTc0gEiRUT0yNSDbRhC7pLoZhYhgfkExWYaZQu3
- vzNLRXZh4cAG17j36toSDfkcGt0RfDruBdLsLy1ie6xZn7X859IEu9WPiEdgx2qjaXfn
- 8QxA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xUMYf-0001Lo-Ez
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:13:34 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a3517554f7so7570165e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:13:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795173080; x=1795777880; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=JlbbXh3veM9/VvkJ/1Iw5pgFvYguw2fNEos3kNnkPLE=;
- b=HAVJ4nXtEymNk8BEM4q3ovLAX9vu9fbYGmAGfkqJj4sBbaAYYdh4nwC2K34G1EchNJ
- 7Ba5yAfmRHaTvEJe1gI9dlwo18A+j0ruC1HFqB41idw5Ic5D7fRAL7sxnxxgzYAjui7G
- G0lachKKZFs8T7lhWv3jObxIHz20i8262S6gvUYZuAd+SLZMVa3TkyAyA6zprAD+Ba+E
- jJ6ROMETj5lRhgIK8qHkY++MsDFCMw+BW4qf8kiQ24GJO0ULYf6uaC5Czl5Hc8dIixnj
- 7uDd3GtMzWQyzUM0X3JAACpJM2ZdDzejWf9uaUfhct0gyPjdfnl8sWlMcUNMI0zZCgud
- RMrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795173080; x=1795777880;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1795173210; x=1795778010; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=JlbbXh3veM9/VvkJ/1Iw5pgFvYguw2fNEos3kNnkPLE=;
- b=iczSA/wLKfeDOaGuW9DKDS5UrM6GDFHJiEVplG7iqLStSNZt5f64h6Jso+OxXOXRxP
- ygzPiBapZR+Z5JAeTFnl7mECA9V5Uv9w6RsArfB8q/AZI41ErOPePa3prboTbBX/OXHw
- 2saXB/NQQxfcJYsPzaGhbG18QVC2zXkKA2yKIDiIdKz3y8DgQ1LdqhMIGFcsxCgY+R8P
- RMbaYhGEo+NWhaVhOrcq8+xpeTw6Y1ZCsR5ZZ3ffrOyyTO5oH0dpiRAV7W7Ryk4F3oWy
- fSVIP+QuhEkfCTAXT1uKbmvaWwHf4SgmoyOtk0H0/We4ARx6MqS+Uu/LsMxVkQSBtJkk
- vOZg==
-X-Gm-Message-State: APuU4Z+5KL1aTUQIukOQgvigNFpw4mjzEhUCFMf6G0W6rDH0ZwVPLs8R
- n9wt/HX4ElMFJCZHANZHFILGo7pQlIbKfXyaOnsCsiEqBkXh/tQcm6RX0R8/JSAefEo+FxKosaR
- gQV9/PtGPi7quJq/AnKwdTI9/vQ8B2GfD0NExCw8yfw==
-X-Gm-Gg: AZFdTZdj6ULfBSHT7x32sB5ZNPMYIzHtpfS3MCJ39a/voy6fpBhdzzJ6ZljQ+ovf910
- PVKDmeoic1QNS94ylwFLFXj636d/SXd5SMNIADuf0RV+E6Jjy4J+kt9VUudTRYzWEcNEVLxKLvX
- bA3f+UN+Fv4fesQEL+wsTF7xuGGEzdHgbhfOfOfUzuUvhbkJSCAQL69S7QdPMaCGTB7LMLctC4g
- TctNyCZOTphS0NpVaGDqMomqvvZYTvA2ab6ptl5M7ak/uRCmRuo4jX+RK4Fdx+r2GOifi2uWic8
- ZOckxQbPdo7PGUYyoxKA4DUKplGO+iFdYUxp3Wt1yCs0kb3S/iKa4UGZRnmxCCHeV3UWIMeQCjE
- X4c/JOQr0wZiGthBx2RkFm7xbwyv85wPYcSMQD8wI68OttVtjhxdmpsHrhG39yQ1cbSEyqLMAiZ
- EFDBUZBhG+BpXmkXeR2HVD
-X-Received: by 2002:a05:690e:408f:b0:67d:9fef:d60c with SMTP id
- 956f58d0204a3-67df9015306mr666883d50.17.1795173080241; Fri, 20 Nov 2026
- 03:11:20 -0800 (PST)
+ bh=JnB6nPyXa3AHkTb6PkGaLhxzVpYZhdAodrXxGcl6foY=;
+ b=xbKDHKhmKVQDfovBSvxNFLvQvp4BQtHJk10AUaCv0zJmh9Wi1sHmCdbNy/02Q93/JE
+ J3bQGUSaGoarutUu0vHfzE/NcE9972wzT5POOg3r02cZhknIk/XM3McUQrT9zhzmTi3C
+ ZvRMVwny711lGRRNhxEIij7mgorSbOmzOsDNh5hKIIQjzS8bETFblNky3OiRcsFnRB/9
+ xukq3g2niZT6WfC75LfBjp9R2gozfQKeLYkZRDA6fGJrkhSjI0NBndXrwHqZV9Oljh5H
+ yTqYHW6xgJMXNN0mENqjjVL08LOCV+EpkGloNxi5NrTDdkLKCmEOdf4aNkTEA3UQCCJm
+ fblg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795173210; x=1795778010;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=JnB6nPyXa3AHkTb6PkGaLhxzVpYZhdAodrXxGcl6foY=;
+ b=1HNT2mEn+RiOPTRd2KksCo4Bkivuzsi6Nc1vprK8ST0pCEpbEEzyoyrU76wNqYLMOZ
+ mXxG6UituYXdX6cXh9Das/ql8FdTJTDEzVBvysHRsu2LZhwL2o4MJ4ubLjOYbmAOGYGi
+ F2/avFBhoguWLlm3UcPp8Qs0Bx9XjKmOdROn3PgL1lrEP6yUgWfAAVQUQuhAaxicp0nh
+ NJLHVwtFo+Zf3Yk8uoQWBGFN24ShNKJ1iX//JJ9Jv17SM6I3jB/FeuEX388I4gaBv3fl
+ gw8aTS6yHwel5OzMkTXWtCjeB10h2qz2ska3Vgn+8V1MTGZTtJPjKBmxCiUsA0ankJ6b
+ xmIw==
+X-Gm-Message-State: APuU4Z+IR5SjrJ2XGODmXyY6MrB1qCJFM48KEh2WkTMI/zB3C5iQQ1BQ
+ 5FopbC5k1EoDBXfigaQoamLm9a05uyl8gNW+u0ICRVJUqk/PQk9yHruQrszbWvJ5eOo=
+X-Gm-Gg: AYBFou2GBhsg6zwJ1EuoFuYeZCGzP+7fQAnJyH03shz0KzzHv1NTMUJE5eq8Lm3MkP/
+ W4v97U7MrCc2UyZbesYbjw5V9ICHVfrYmV/JqOKZdkgi9PLVNynPa8OmOe1kgVXAICaCEBKrd48
+ G/v6HyUxtpjIKNvPCDJa6PfnI51soNLNUIy0QBftFI7PWlQ2FvFQrpe1jWHxXifMKGWa9pSzDuE
+ nFrNwAYXvZHQ/dFovqaIwfz5nBlQy8jztlUOFqajB8lL5aGwktVzUcBorkxFKAC6PI9lOYVZWVG
+ mkR9pjRXbJnJDZ2p7IL/tTnDKvlLy9neC64ZXFYEU2kQu0hCyznedm2neNSloJRQhLxgsPkyavL
+ XIZmASpOADIBoysJXFqf5GCZZ9a43EgUAB6hz4FAQuegLn9AAD6TuAadzaWcrzuyoCNa6ryWwct
+ 41Y0FRYe/b2ZFbTEnlbhkeOpuYquY9S/CHxVneiMWLTdLPOhWARf+r9O+l07I68BNZRoSDEF9Mp
+ rGBZCIdSYrC1DBy4+GcCjF7iTeQ8RtyBD2IzT4bt8t2FnUi5dRrpmaJ3xl0IGkA8fGI+a94Fft9
+ wOz69QqsOR+XmyXkI3aLPM5+V00s
+X-Received: by 2002:a05:600c:1d29:b0:4a9:2a92:231f with SMTP id
+ 5b1f17b1804b1-4bb88804d4dmr66648035e9.7.1795173209767; 
+ Fri, 20 Nov 2026 03:13:29 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb8849e598sm69252825e9.8.2026.11.20.03.13.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Nov 2026 03:13:28 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6FE3A5F7FE;
+ Fri, 20 Nov 2026 11:13:27 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org,  Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: Re: [PULL 3/6] MAINTAINERS: Step up as maintainer for PPC KVM CPUs
+In-Reply-To: <20261119113207.79328-11-harshpb@linux.ibm.com> (Harsh Prateek
+ Bora's message of "Thu, 19 Nov 2026 17:02:11 +0530")
+References: <20261119113207.79328-8-harshpb@linux.ibm.com>
+ <20261119113207.79328-11-harshpb@linux.ibm.com>
+User-Agent: mu4e 1.14.5-pre1; emacs 30.1
+Date: Fri, 20 Nov 2026 11:13:27 +0000
+Message-ID: <87o6bj69ig.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <CAFEAcA-iAdTGc0M4ZV5LYXscVVj2oEr7FN+Ac=oBo2_oxuygzg@mail.gmail.com>
- <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAFEAcA_8EAke9-dk-2HfkQ5BJyuODtcSK+DUcmYKRSKgEf=Wnw@mail.gmail.com>
- <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAFEAcA8UWw+CpaS8wyy0A_MSeXhJ3NzJGcLm-iHkzmw5t9Cd_w@mail.gmail.com>
- <av9be5IWLpQJu-F_@zhexu-thinkpadt14gen5.rmtcaon.csb>
-In-Reply-To: <av9be5IWLpQJu-F_@zhexu-thinkpadt14gen5.rmtcaon.csb>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 20 Nov 2026 11:11:07 +0000
-X-Gm-Features: AclHuK-aqZifpGg_fdzCYPkzxjQPw1L5MRDMO__qUJQGxk7sxhclZ7jtaY-H_Ns
-Message-ID: <CAFEAcA-fmyi6iWBbXmUUWkf=-9duEySHyPE_ELz8FLgcrhcGAQ@mail.gmail.com>
-Subject: Re: VMSTATE_VALIDATE failures on outbound migration
-To: Peter Xu <peterx@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,108 +110,44 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 19 Nov 2026 at 20:26, Peter Xu <peterx@redhat.com> wrote:
+Harsh Prateek Bora <harshpb@linux.ibm.com> writes:
+
+> From: Amit Machhiwal <amachhiw@linux.ibm.com>
 >
-> On Thu, Nov 19, 2026 at 06:53:19PM +0000, Peter Maydell wrote:
-> > I don't think you can deal with the pcie_aer usage this way though,
-> > can you ?
+> Update entry for PPC KVM CPUs: move from Reviewer (R:) to Maintainer
+> (M:) and reflect the improved coverage by changing status from
+> "Odd Fixes" to "Maintained".
 >
-> Attached a patch for that, please have a look.
->
-> IMHO it's a matter of if we think VMSTATE_VALIDATE() useful.  At least for
-> the current form, I don't like it, especially hijacking the field_exists().
-> I hope post_load_errp() is enough.
->
-> Thanks,
->
-> ===8<===
-> From d92c2548ea084091d3baf51682b150dd4e0f2316 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Thu, 19 Nov 2026 14:53:47 -0500
-> Subject: [PATCH] pcie/aer: Remove the usage of VMSTATE_VALIDATE()
->
-> Paving way removing it.  We can replace it with a post_load_errp() instead.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> Link:
+> https://lore.kernel.org/qemu-devel/20261112164617.85849-2-amachhiw@linux.=
+ibm.com
+
+You should check your tooling as these should be Message-id: tags.
+
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 > ---
->  hw/pci/pcie_aer.c | 40 +++++++++++++++++++++++++++++++++++-----
->  1 file changed, 35 insertions(+), 5 deletions(-)
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
-> index 43b14c1f22..87248556d4 100644
-> --- a/hw/pci/pcie_aer.c
-> +++ b/hw/pci/pcie_aer.c
-> @@ -807,21 +807,51 @@ static const VMStateDescription vmstate_pcie_aer_err = {
->      }
->  };
->
-> -static bool pcie_aer_state_log_num_valid(void *opaque, int version_id)
-> -{
-> -    PCIEAERLog *s = opaque;
-> +typedef struct {
-> +    uint16_t v;
-> +} tmp_u16;
->
-> +static bool pcie_aer_state_log_num_valid(PCIEAERLog *s)
-> +{
->      return s->log_num <= s->log_max;
->  }
->
-> +static bool pcie_aer_state_log_num_post_load(void *opaque, int version,
-> +                                             Error **errp)
-> +{
-> +    PCIEAERLog *s = container_of(opaque, PCIEAERLog, log_num);
-> +
-> +    if (!pcie_aer_state_log_num_valid(s)) {
-> +        error_setg(errp, "PCIe AER log num too big: log_num > log_max");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static const VMStateDescription vmstate_pcie_aer_log_num = {
-> +    .name = "PCIE_AER_ERROR_LOG/NUM",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .post_load_errp = pcie_aer_state_log_num_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT16(v, tmp_u16),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  const VMStateDescription vmstate_pcie_aer_log = {
->      .name = "PCIE_AER_ERROR_LOG",
->      .version_id = 1,
->      .minimum_version_id = 1,
->      .fields = (const VMStateField[]) {
-> -        VMSTATE_UINT16(log_num, PCIEAERLog),
-> +        /*
-> +         * Only to use STRUCT for a post_load_errp().  New code should try
-> +         * to use something look better, e.g. subsections in order.
-> +         */
-> +        VMSTATE_STRUCT(log_num, PCIEAERLog, 1,
-> +                       vmstate_pcie_aer_log_num, uint16_t),
->          VMSTATE_UINT16_EQUAL(log_max, PCIEAERLog),
-> -        VMSTATE_VALIDATE("log_num <= log_max", pcie_aer_state_log_num_valid),
->          VMSTATE_STRUCT_VARRAY_POINTER_UINT16(log, PCIEAERLog, log_num,
->                                vmstate_pcie_aer_err, PCIEAERErr),
->          VMSTATE_END_OF_LIST()
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index dcfdecedcf..0492190107 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -515,9 +515,9 @@ F: tests/functional/aarch64/test_kvm.py
+>=20=20
+>  PPC KVM CPUs
+>  M: Nicholas Piggin <npiggin@gmail.com>
+> +M: Amit Machhiwal <amachhiw@linux.ibm.com>
+>  R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> -R: Amit Machhiwal <amachhiw@linux.ibm.com>
+> -S: Odd Fixes
+> +S: Maintained
+>  F: target/ppc/kvm.c
+>=20=20
+>  S390 KVM CPUs
 
-This seems to me to be worse -- instead of a macro that clearly
-and fairly succinctly says "we're validating something here",
-we now are using VMSTATE_STRUCT not because there's actually a
-struct in the migration data, but for its side effects in having
-a post_load function, and we have to create a dummy struct type
-as well. If we want to be able to have the validate check
-set an Error, I think I'd rather that we changed the API
-of the validate function to take an Error**.
-
-I don't think "validate, and it happens that I need a custom
-function to do that" should be this much more complicated than
-"validate using one of the standard checks like
-VMSTATE_UINT16_EQUAL".
-
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
