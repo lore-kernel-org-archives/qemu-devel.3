@@ -1,95 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F3B606A33E
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1C560A2629
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Aslv5Y7J;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=J2rGzI6W
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eVURTqlp;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Wytc0oII
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUO3e-0000qw-Jn; Fri, 20 Nov 2026 07:49:38 -0500
+	id 1xUO3j-0000sg-Lf; Fri, 20 Nov 2026 07:49:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3c-0000pe-CE
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:36 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3h-0000ri-Ls
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3a-0004lM-Oa
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:36 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3f-0004m7-PE
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795178974;
+ s=mimecast20190719; t=1795178979;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
- b=Aslv5Y7JbuWRgJFrBHh3xcu7LDa8LasVi1JZuhZaX8FBi8OQEgUF8B/rMlQou0sAMF7U4X
- dV13puS3rlvsueSAkRT4bRVT4NppcJJwkZFrcQRnRXfkt6XKX89gHL8Z+syVUjYw4gSjkJ
- rUUko7l+rEQ+bRj8yMQeoL0T/SIQsmg=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TEp351wB5GQySx79Zc08YPzzjN27Sn3CHKUChdROs60=;
+ b=eVURTqlp8490EpdS1u/A03JFRnIqz1EUVXruTrDRv/nofU1qKfCKHBESFRd+UX05se2HaA
+ RMPu0u8zgxURP0vB0WfTHu3gcBhpacgekBdzu0qPN41HilKgCh65HvUWO0CqDpEHRxayZy
+ bonT2e/D2+Ulym/qEsH5lIcibCTKIUg=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-UW3JAVUFP1OuUTBNPXBw4g-1; Fri, 20 Nov 2026 12:49:31 +0000
-X-MC-Unique: UW3JAVUFP1OuUTBNPXBw4g-1
-X-Mimecast-MFC-AGG-ID: UW3JAVUFP1OuUTBNPXBw4g_1795178971
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-55d846fd50aso2703211cf.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:31 -0800 (PST)
+ us-mta-36-PLd15TT6OcK1HkM-YA9r0g-1; Fri, 20 Nov 2026 12:49:37 +0000
+X-MC-Unique: PLd15TT6OcK1HkM-YA9r0g-1
+X-Mimecast-MFC-AGG-ID: PLd15TT6OcK1HkM-YA9r0g_1795178976
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-55d7544d113so19566341cf.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795178971; x=1795783771; darn=nongnu.org;
+ d=redhat.com; s=google; t=1795178976; x=1795783776; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
- b=J2rGzI6WpaJkLwI0HdyIORdbmEVGyvHt+uraX7dNoE2LHais/xDuI+JMIDTsB9rEJk
- iV1MPrWJEVEjMAhJ5A/xN3EVtB8uqAK47efTe7Fc3ldEBSr5iW0fxt58uEDu1zX1z29a
- +kIvBl/vUAufvTrq7pivcliukFP3BpmL7dx03/RMzO3TpaNDqtTXnATv4MQ5Nd2/g/No
- 8Qn4lwu82jmsdjOike1qibdrz5YRotUvdUKkoSTAQ7+bo1tDviISnvglTAZ9WYX8ciaP
- 896duw8jVsoIEvozsLkWMondmHIINeu7LUGYBCwrZ7vIBYtoFw4D6DER6nUaIjHdUcKp
- 5Qrw==
+ bh=TEp351wB5GQySx79Zc08YPzzjN27Sn3CHKUChdROs60=;
+ b=Wytc0oIIRdr8pqkLVJjJ87myPhCclX0fSp0zsu0yChmyJNcS7aYJpTCuvSDJClRKSP
+ dVhEZt66Y3Nq14IRLfUpt+Ra2JldA0WomJ4Mkq/qaKZrh8Hf4oiCJuKKQqRKP6c97+YN
+ CZ2/sMg6xFMl9K47YfAjIsmTGEuf7i+B1KOFOHYO/p5d68Lt55mvjcaNaapVZH9KPj/E
+ mr15aAFs/lQoOzqevk/45B5ms5UKTz66q/ggvE2qyKkfF4NFihQFKHqLRWbXCl3K6OSP
+ xOfFBAowyPscCya5u9Z1oulDTq+ifWiKNHxlozqwNdI/VZRmJ2LndYFhBlVR33RSV/6L
+ 9q+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795178971; x=1795783771;
+ d=1e100.net; s=20260707; t=1795178976; x=1795783776;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
- b=RmpCLiNfCmiMt1nriZDlC8TcZsu377OhTziqlnnA9eEFQw8Eu9yKDGET+iVStGuA78
- HLuTz7kfjXS3DT1kRu3q1DL97ZSjEe2U8T/hv/gcTxutoOguBmVcLOR0ISthsrr1Mhy/
- 2hCB/UcgdphlLBBzot63hjvRramHhQW7bOfRzGI/nWlkLh3QVV/o2llFgDuoVKao/z1w
- J8iDOtTQ6aMT+fiym8a5ahrWaKMgkhBkYd+YjMzrQhrokUDmJPLxQh7YLBRNWt/bkbev
- uLYltEzOWE1OsGRIUAjUKTVL7AD9qoQGHzQWpP5GvZBPb0daikN9/bHpUNZdLdlUEd31
- gk+w==
-X-Gm-Message-State: APuU4Z9+g/vBUtdm1KpMN7O53TIUDsyfcIbRFoEaIrfuhfF+ecGeagZw
- Ut7ENl8O9F7Yk3U4XZ52TUCUcCiM+8lK5gljssPrB8bM8DZxenTHtG7DdYtNEuJt2zK+n/pPpbo
- yjiZIIH5Nx9hMKC4nD4oSYbvp+RELmHN/aCiDl9zaWqKoQztxovpSbvMcjDceNeWow/K789hrf5
- wXA6smwntwmEVlURUXfPZMz88KPX5jQuAd+N/czg==
-X-Gm-Gg: AYBFou1Xzl2PKQbhISSzGvcCVejCjgHHrXsp4by9fA5NZ4IQ5nOvtl3d6IZF7cnufGx
- 5EpDxA33JmJ/hwxnPp3Wpyf4YVEpV/c4Tul9pZrauz3k2afE4njdCop1ToXfMukz9K5ITPgy/tr
- bWq/C5LBnaOSbujHAC8A1XJycbe9Bn8mq+KdPpv2CAqxW8A7gXi+atSenKe9JqVjS8trh600XWc
- sXXmiMUAPyYnDyq3v3IxxOlmH9r0vl58qS/1ohEJto6cHj4I7Q86SQvK20K8v8AzbnbFSdg5bjg
- p5QHkYD/fVW0RbmQXG3efKf72Zpb/U1NGfR+BpA5j+L37EChYpQtCckQD8loFKyQaeVliwBV1p6
- k/IJ3lahPvgD4tXtghRGX9q0hXYLoWtUjHSKlrIfpnAOf
-X-Received: by 2002:a05:622a:60e:b0:535:a5f7:d588 with SMTP id
- d75a77b69052e-55d76a811d3mr49713391cf.66.1795178970882; 
- Fri, 20 Nov 2026 04:49:30 -0800 (PST)
-X-Received: by 2002:a05:622a:60e:b0:535:a5f7:d588 with SMTP id
- d75a77b69052e-55d76a811d3mr49712991cf.66.1795178970345; 
- Fri, 20 Nov 2026 04:49:30 -0800 (PST)
+ bh=TEp351wB5GQySx79Zc08YPzzjN27Sn3CHKUChdROs60=;
+ b=WsmpXxglYC9WatLPLfC9fF/bRURC8QeHeOrYstThCFgwLiO++cLqIuKrqC1+t8bBVt
+ wZ3yOGIg2krGC2L2izUWpuxivWPMEzXx6cyV+fMWHIZMEN91myMDDnUVnO30KfYqQ4i2
+ dykS7kl1ULKzSfboZG6ELm2vu4FtfgP71qyxcif0L0sOW/SyfZlgn6S9gKxJU3PpQUPM
+ O1u3/klyUt32DjYixe2D6huopLFufkgV4WzhEO9GQ81x6c4iqkD5vg8rpXXDj5pCaTGi
+ plmEn+v3/v7vnf7ZuWMmpIWJj2TRTVQDwcS+URtnZ419iBHO/MxxdN1Q+McMWZ2vTn7o
+ fD0w==
+X-Gm-Message-State: APuU4Z/4ZP0WCVXgh3zttPVQO/A57/oK6cYdPctgqFdK72WSR0uSpl6X
+ 7bG2WUS0aTOq4Njj6uUGfqopE6XfC2YG48Mkvm8C9Gy6Ki0Ls6Eow75dI7J1uUgjq8/gbfFmS3G
+ 1OIGBsDf2v/8N183PbDqlnspe81WAjJ2XwhfZTAWH176lP2dp5CUVNwAmfxdPk5rO0z00jz8jD2
+ C9Nt0oiKp0kknlZ3jnN7d79en6pCbKpDTop1+oWw==
+X-Gm-Gg: AZFdTZduypssCJlZ9qnYxKp4MjfYd2Vxy7j02oOItxnAoRHXW0lIK2g666A8w0VywZP
+ wJldNwxPYIkNAmsbOAKMz7hCi6XRWMxhDlrkAuFzULZjiq2qNIsk9eX4oxm3sdeNtda82OlDDV1
+ DHDl0W9bANr7PNd3judcOe5hgi/kPpK3TwokSIi+PMbCPiSl44z+2bp+hxOqvnAn8c8UTkZSjys
+ awtcGqrl4ZqPee2C20d7l90k5OOK+k9HGcmJAS30KDeMPweYZu4RgTLZZilBwqP2kV1W0q6NYYH
+ e9O4ZBYCtsqCOfiQsoKDhyOokORl6Gg/c2kcPZuabLMNCs+/ZawwYeSnDHhJQ1R3zud/+WTcNFl
+ DlhHo/okBM0NHXMhCOA/e5mGk9Rn8LLz5lvbAhQWIKAOq
+X-Received: by 2002:a05:622a:178f:b0:531:172f:79e7 with SMTP id
+ d75a77b69052e-55d76a6595bmr52765781cf.39.1795178976406; 
+ Fri, 20 Nov 2026 04:49:36 -0800 (PST)
+X-Received: by 2002:a05:622a:178f:b0:531:172f:79e7 with SMTP id
+ d75a77b69052e-55d76a6595bmr52765431cf.39.1795178975823; 
+ Fri, 20 Nov 2026 04:49:35 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d7882ea2dsm21610551cf.15.2026.11.20.04.49.29
+ d75a77b69052e-55d788074desm21715581cf.7.2026.11.20.04.49.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 04:49:29 -0800 (PST)
+ Fri, 20 Nov 2026 04:49:35 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH for-12.0 3/6] hpet: Move VMSTATE_VALIDATE() check into
- post_load
-Date: Fri, 20 Nov 2026 07:49:20 -0500
-Message-ID: <20261120124923.1656220-4-peterx@redhat.com>
+ peterx@redhat.com
+Subject: [PATCH for-12.0 6/6] migration: Drop VMSTATE_VALIDATE() and
+ VMS_MUST_EXIST
+Date: Fri, 20 Nov 2026 07:49:23 -0500
+Message-ID: <20261120124923.1656220-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261120124923.1656220-1-peterx@redhat.com>
 References: <20261120124923.1656220-1-peterx@redhat.com>
@@ -123,72 +122,97 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-To pave way for removing VMSTATE_VALIDATE(), move the usage of hpet into
-post_load.  To make it safer, loading the timers with the num_timers, then
-only check against the wire number at last.
+We have moved all users to other API, now they're never used.
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/timer/hpet.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ include/migration/vmstate.h | 11 -----------
+ migration/savevm.c          |  5 -----
+ migration/vmstate.c         | 12 ------------
+ 3 files changed, 28 deletions(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 42285cff76..85cd26a454 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -254,25 +254,28 @@ static int hpet_pre_save(void *opaque)
-     return 0;
- }
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 2901877308..de7a957140 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -130,10 +130,6 @@ enum VMStateFlags {
+      * allocated. Only valid in combination with VMS_VBUFFER. */
+     VMS_MULTIPLY         = 0x200,
  
--static bool hpet_validate_num_timers(void *opaque, int version_id)
-+static bool hpet_validate_num_timers(HPETState *s)
- {
--    HPETState *s = opaque;
+-    /* Fail loading the serialised VM state if this field is missing
+-     * from the input. */
+-    VMS_MUST_EXIST       = 0x1000,
 -
-     return s->num_timers == s->num_timers_save;
+     /* When loading serialised VM state, allocate memory for the
+      * (entire) field. Only valid in combination with
+      * VMS_POINTER. Note: Not all combinations with other flags are
+@@ -458,13 +454,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+     .offset       = vmstate_offset_value(_state, _field, _type),     \
  }
  
--static int hpet_post_load(void *opaque, int version_id)
-+static bool hpet_post_load(void *opaque, int version_id, Error **errp)
- {
-     HPETState *s = opaque;
-     int i;
- 
-+    if (!hpet_validate_num_timers(s)) {
-+        error_setg(errp, "num_timers must match");
-+        return false;
-+    }
-+
-     for (i = 0; i < s->num_timers; i++) {
-         HPETTimer *t = &s->timer[i];
-         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
-         t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
+-/* Validate state using a boolean predicate. */
+-#define VMSTATE_VALIDATE(_name, _test) { \
+-    .name         = (_name),                                         \
+-    .field_exists = (_test),                                         \
+-    .flags        = VMS_MUST_EXIST | VMS_NO_STATE,                   \
+-}
+-
+ #define VMSTATE_POINTER(_field, _state, _version, _info, _type) {    \
+     .name       = (stringify(_field)),                               \
+     .version_id = (_version),                                        \
+diff --git a/migration/savevm.c b/migration/savevm.c
+index fe94ba96e4..e4f614cc86 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -622,11 +622,6 @@ static void dump_vmstate_vmsd(FILE *out_file,
+         fprintf(out_file, ",\n%*s\"Fields\": [\n", indent, "");
+         first = true;
+         while (field->name != NULL) {
+-            if (field->flags & VMS_MUST_EXIST) {
+-                /* Ignore VMSTATE_VALIDATE bits; these don't get migrated */
+-                field++;
+-                continue;
+-            }
+             if (!first) {
+                 fprintf(out_file, ",\n");
+             }
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 24004565bf..7734caab06 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -116,8 +116,6 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
+         n_elems = field->num;
+     } else if (field->flags & VMS_VARRAY) {
+         n_elems = vmstate_read_from_offset(&field->num_indirect, opaque);
+-    } else if (field->flags & VMS_MUST_EXIST && field->flags & VMS_NO_STATE) {
+-        n_elems = 0;
+     } else {
+         n_elems = 1;
      }
- 
--    return 0;
-+    return true;
- }
- 
- static bool hpet_offset_needed(void *opaque)
-@@ -332,14 +335,13 @@ static const VMStateDescription vmstate_hpet = {
-     .version_id = 2,
-     .minimum_version_id = 2,
-     .pre_save = hpet_pre_save,
--    .post_load = hpet_post_load,
-+    .post_load_errp = hpet_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64(config, HPETState),
-         VMSTATE_UINT64(isr, HPETState),
-         VMSTATE_UINT64(hpet_counter, HPETState),
-         VMSTATE_UINT8(num_timers_save, HPETState),
--        VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
--        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
-+        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
-                                     vmstate_hpet_timer, HPETTimer),
-         VMSTATE_END_OF_LIST()
-     },
+@@ -430,10 +428,6 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+                     return false;
+                 }
+             }
+-        } else if (field->flags & VMS_MUST_EXIST) {
+-            error_setg(errp, "Input validation failed: %s/%s version_id: %d",
+-                       vmsd->name, field->name, vmsd->version_id);
+-            return false;
+         }
+         field++;
+     }
+@@ -810,12 +804,6 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     vmdesc_loop = NULL;
+                 }
+             }
+-        } else {
+-            if (field->flags & VMS_MUST_EXIST) {
+-                error_report("Output state validation failed: %s/%s",
+-                        vmsd->name, field->name);
+-                assert(!(field->flags & VMS_MUST_EXIST));
+-            }
+         }
+         field++;
+     }
 -- 
 2.56.0
 
