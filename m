@@ -1,83 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FDF606A6E8
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 20:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E489606A6E9
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 20:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vOjigwHB
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=SHCejFkh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUUrv-0001LN-V6; Fri, 20 Nov 2026 15:06:01 -0500
+	id 1xUUri-0001Jn-TO; Fri, 20 Nov 2026 15:05:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUUrP-0001AA-LV
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:31 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xUUrK-00018H-50
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:23 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUUrM-0001tk-RK
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:26 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4bb64ef5a00so10527305e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 12:05:24 -0800 (PST)
+ id 1xUUrG-0001s5-6Y
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:21 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48dfc0421d9so1256374f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 12:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795205123; x=1795809923; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795205116; x=1795809916; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=fnmqKdmm58bKwG+wkVcI14sV7PN4tzLg6CI/lKCm1QU=;
- b=vOjigwHBJoCBL/FluVoeLE8in5JwABWnTlj1iMzU5MWCvh1o6tMw7GxdFyuhlo9xrZ
- uEOuuAkW9kMZkEZ8WuefIvsnI2cnkVZYI9T5wiSsZpwJD4bglnI/QX/Pg/d5FjCN3mn2
- lQHqPMM3AQRMiBZGBYt/zaMX/Thvft1xM3EE33rTG9d9xP4PDL585cI81Neynzvi+vw0
- JT1lADLzFFeCUaRJd1UiM3LEhVb/SnVSy50wzM34NOA7cE0VJ/n81C7jT+Fcgdud6XuM
- ehf9RY8mvRtG7eM64g2JYRmILMSqC6fsT7TKNBsIlg8cu/lnOKSn5+mDM0FUt9+DuD/N
- /daA==
+ bh=+vY10cC3QN7kEcVd1hwXNxFZPVHdyt2YGh8opEu0YvU=;
+ b=SHCejFkhYViYNeB04YK480qG66YThnUdHu1JRztvHIKaTNVUHon6mvsjv0QrzDNFjR
+ S0WBwaGiaJGNdJur4/XAHyE62CTPhT6hal2B4M1/1IRb/sl79CP6T0NR+Yl6dE27RJEO
+ 8PO+AXKS8Pf19Cgz9pkxJwv02uq5kNYvZAkAcDiyXr8NAOAwEE7EzAYeRsjV84zt4PNr
+ 6J8mLDJerx4V5NWTU2ymbHBP+yj7sj4ctFCri6MHboU9I5ddizWtPreQ05CU+IpdOr77
+ e1uM7P+/5mywz1Crgum5ztsF6mX9H3PLVnFnKSAR9nrdeWUYklUrolIBHJzXVNWz7GAM
+ WbPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795205123; x=1795809923;
+ d=1e100.net; s=20260707; t=1795205116; x=1795809916;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fnmqKdmm58bKwG+wkVcI14sV7PN4tzLg6CI/lKCm1QU=;
- b=JgiLCv2suTS8/tNfDFTO7vQbQEmsVFg/AfrlBGfCzoihQXXr89CDqaNKAko+fm4IgU
- JlUGJKOMPyMOkEhT9749FahJDZiIqTaqPPnVmKbOe9C1FT3C9g4dgODfTe92f/QDnmn+
- oAXqpqjYHTYqKsRR3hXGW9wzApITSXZqztx8WH8vbp6bmGArxBiQ9ELQApxtcPFSJa27
- +dzzbalNv4u3cMUDPIO/+/uogf71afNRootCA/e84bqz0pTkRCVTKzYwPUSacCXpOYSe
- qqaYEgaa12f88mcAhdC26+H4NJ2v8KdaPNfALroWv5IjvhB9FJuJLY7adFQolAQZ7RCp
- JVHQ==
-X-Gm-Message-State: APuU4Z+Xp7BQUVMOCpp+ulFSXvd48zlBqsbhnC6gi40a1QCkQKGFIRXH
- N9TAPIsQnynzxHUKS0u0zzbu4P5qlQHZ5YgzwBVwVXKszB+Dk5qwXHXr0hWos0mOYMtkwIAJcda
- IsuXZ
-X-Gm-Gg: AYBFou1p9xYgeyote+n0t3kgYn/LQcyVOO8eaBKj69b+0bm5Em8Q0mRGiSAO7Ak/kqD
- /BwURvbRjvFznEOJvDuPQPNr9SX0Y1jyciz8wiIRhE4oocLXayDRtaT2XktdsyzVRkF2m3wP41U
- CWtU5D96BpNqpYJsIyBLwdLSGizFeh8V+tIJ9PYq1rGqOJ5lfQachJ1AnvUm96zqN7ew65iR172
- XREh/Dv0WSUuakH00v9PdAgTpIBvNwVfSiliokKr/NThC00sZHbY/IenB3erZYwKPxrVp4kBTfN
- ExjUX39au/P8cjmP8nxqSPAwd5ZB6e8znChRJNdReWAt706uTTpkz8vj/l1zCaeKniu1N0Jrl+a
- UgrgTl/PFjlIJW9bNqHCqN6BYfbhMvDNU46nf1s86VU0+0yUTVX4G4H9HmVOPCx8GsgSX41jjxA
- yPeyO4oF0X5kSvSpPcjAVMepmMdGJq7P31Btn7lncVfhx3619AzRF99ORV2CsK4K7f3N9neqWjq
- 3T3/jnNu41ChDlGiQddEcrqN0DPmgeoHDg9XU2gDzmrR8TcstOhubbRcfk+8F1PCVkZ91R+WPXA
- H3d7DwXZ6bGqM8XypL+LRQpFPQI+
-X-Received: by 2002:a05:600c:154f:b0:4bb:6842:66ef with SMTP id
- 5b1f17b1804b1-4bb8893a963mr92679415e9.30.1795205123150; 
- Fri, 20 Nov 2026 12:05:23 -0800 (PST)
+ bh=+vY10cC3QN7kEcVd1hwXNxFZPVHdyt2YGh8opEu0YvU=;
+ b=saXMHrGMs85showwG/KOX54gYOMhVapdE511+G0tlM6smZArya9ULWoZKaB9o6rG6z
+ UWZ48rLdYdLfSrYi2WAgcGcs4HbCFDpxyfP/m8RMfmaDYP82AkwhZ/lClYXffFNeHGtg
+ kCln1tzN4iP/MTfNsyoqprYDgT3jRVZvgWKaB/b7ZxhJb2Tp65gcrAlIYdoJNWWLg5Sh
+ tVYUuLde46D29J+HX1vfZ+Ie8Zdm6XGX4w4uIuHbhVLovOS9BSZqlV3fgIvLuCLCc3oJ
+ Ft4prsIczlb/qcPYOKVVhPU3bdiBMGrnN280mdTU+1IPlB3oQgzIYBoeHe36DHFGnp+4
+ T2Bw==
+X-Gm-Message-State: APuU4Z/+S4BQ6eG5Wxxd8BimagusmjnpRyDgNftPa2hdhs669vkSy+su
+ OwA0UusQwcLrEML1KOHMRyvtzsZMWkb2QZqsMk7JELMwnlIncxgkEYpY1s1C/y0MIUQ=
+X-Gm-Gg: AYBFou2UePNXHtiBQNJykjb7OwOcFmFgkx1aNmWrnxkqv2OXL58KpQPWuUhSbTyWyfU
+ UK8RJJ1vkvL/TBmjIM1vRAhuITg/RrbG6SAzuHJqMVpFcCl9Sp1TdFsSoN1XTFrIUPF4PQ3ZeyN
+ bAzhJa/xs3n+6reGGonIWRZlSpLuZCLgkjj/82PIvelNgJQrCW9nBQ42vrn6kBS9XEwu3jQ9XlD
+ W5/IeZppKE+HbZzZRYmTsvv1KhK+p27vtr2tM9uWpUsYLmybJQZ5E+M9vk73ki9fWiQfkZZ76W4
+ 5l8Pn4OgdhZM+aikRrDW9Y6jDXJaY+brdxqDIdlF9yryaqby+V9iGACtxiKxoHiNSbB5pOhJsCh
+ i5id6QeDXSC4oFMnhJ5DgPhBWPtjF9rt6cRx+D5xvJR7/JpzIl/ssJ+dRgCseLGPRtJPv9HBqCN
+ 8XfFy7Rl37pP9J2ihGBA9ns+j9gFiShRsMF+NALlIfuYClEXNx2IZN/ti7STy2HHRt3I4D0kMNc
+ QZ4U5TCQtahcGuTxKfTw4JcB7ukcwQwjSKCji4jRIgjniXDrCMg6v/gA1/di6JKVlSk7hAEb9az
+ 836l+kDRMV9rvTqDenieOir7agHL5AlPO6SYrWzlSLKhPilJVQ==
+X-Received: by 2002:a05:600c:1993:b0:4bb:8711:fcb9 with SMTP id
+ 5b1f17b1804b1-4bb88941bcemr90158275e9.33.1795205116075; 
+ Fri, 20 Nov 2026 12:05:16 -0800 (PST)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb853c9170sm155069345e9.14.2026.11.20.12.05.17
+ ffacd0b85a97d-4ab69bf680fsm8412145f8f.14.2026.11.20.12.05.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 12:05:20 -0800 (PST)
+ Fri, 20 Nov 2026 12:05:14 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 36DED5FC4B;
- Fri, 20 Nov 2026 20:05:13 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0DD945FA3D;
+ Fri, 20 Nov 2026 20:05:12 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH 18/22] MAINTAINERS: update Daniel's entries to be consistent
-Date: Fri, 20 Nov 2026 20:05:06 +0000
-Message-ID: <20261120200511.822573-19-alex.bennee@linaro.org>
+Subject: [PATCH 06/22] scripts/get_maintainer.py: add keyword (K:) support
+Date: Fri, 20 Nov 2026 20:04:54 +0000
+Message-ID: <20261120200511.822573-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261120200511.822573-1-alex.bennee@linaro.org>
 References: <20261120200511.822573-1-alex.bennee@linaro.org>
@@ -85,8 +84,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,156 +104,116 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When testing my get_maintainers.py I was shocked to see:
-
-  ➜  ./scripts/get_maintainer.py --list-absent-maintainers-since "2 years ago"
-  Maintainer              Last Seen   Email(s)                        Subsystems
-  ------------------------------------------------------------------------------
-  ...
-  Daniel P. Berrange      2024-06-10  berrange@redhat.com             QOM, QDev, Seccomp, Cryptography, Buffers, I/O Channels, User authorization, Sockets, File monitor, Functional testing framework, Build system architecture, Meson, GIT submodules
-
-Which is of course incorrect but tripped up by the fact we have been
-utf-8 clean for some time. There are some entries that are correct so
-fix up the rest in solidarity with my fellow utf-8 using hackers ;-)
+We use the regex module to stay compatible with the Perl compatible
+regex used in the MAINTAINERS file.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- MAINTAINERS | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ scripts/get_maintainer.py | 38 ++++++++++++++++++++++++++++----------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e2bd501f18e..031183706a5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3748,7 +3748,7 @@ T: git https://github.com/kostyanf14/qemu.git qga-win32
+diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
+index 597db64ea16..443fbf8e875 100755
+--- a/scripts/get_maintainer.py
++++ b/scripts/get_maintainer.py
+@@ -17,6 +17,7 @@
+ from enum import StrEnum, auto
+ from re import compile as re_compile
+ from re import sub as re_sub
++from regex import compile as prec_compile
  
- QOM
- M: Paolo Bonzini <pbonzini@redhat.com>
--R: Daniel P. Berrange <berrange@redhat.com>
-+R: Daniel P. Berrangé <berrange@redhat.com>
- S: Supported
- F: docs/devel/qom.rst
- F: include/qom/
-@@ -3763,7 +3763,7 @@ F: tests/qtest/qom-test.c
+ #
+ # Subsystem MAINTAINER entries
+@@ -126,7 +127,8 @@ def __init__(self, section, entries):
+             elif tag == 'W':
+                 self.web.append(data)
+             elif tag == 'K':
+-                self.keywords.append(data)
++                match = prec_compile(data)
++                self.keywords.append(match)
+             elif tag == 'T':
+                 self.trees.append(data)
+             elif tag == 'X':
+@@ -162,6 +164,15 @@ def is_file_covered(self, filename):
  
- QDev
- M: Paolo Bonzini <pbonzini@redhat.com>
--R: Daniel P. Berrange <berrange@redhat.com>
-+R: Daniel P. Berrangé <berrange@redhat.com>
- S: Supported
- F: docs/qdev-device-use.txt
- F: hw/core/qdev*
-@@ -3996,14 +3996,14 @@ F: tests/qtest/dbus*
- F: scripts/xml-preprocess*
+         return False
  
- Seccomp
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Odd Fixes
- F: system/qemu-seccomp.c
- F: include/system/seccomp.h
- F: tests/unit/test-seccomp.c
++    def patch_contains_keyword(self, patch_lines):
++        "Does patch contain keyword covered by this maintainer section"
++
++        for l in patch_lines:
++            for k in self.keywords:
++                if k.findall(l):
++                    return True
++
++        return False
  
- Cryptography
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Maintained
- F: crypto/
- F: include/crypto/
-@@ -4024,20 +4024,20 @@ F: include/qemu/coroutine*
- F: tests/unit/test-coroutine.c
  
- Buffers
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Odd Fixes
- F: util/buffer.c
- F: include/qemu/buffer.h
+ def read_maintainers(src):
+@@ -201,18 +212,22 @@ def read_maintainers(src):
+ #
+ # Helper functions for dealing with patch files
+ #
++
++
+ patchfile_re = re_compile(r"\+\+\+\s+(\S+)")
  
- I/O Channels
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Maintained
- F: io/
- F: include/io/
- F: tests/unit/test-io-*
+-#TODO: also return a list of keyword hits for K:?
+-def extract_filenames_from_patch(patchfile):
++
++def process_patch_file(patchfile):
+     """
+-    Read a patchfile and return a list of files which are modified by
+-    the patch.
++    Read a patchfile and return the message as a string and a list
++    of files which are modified by the patch.
+     """
+     file_list = []
++    msg = []
  
- User authorization
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Maintained
- F: authz/
- F: qapi/authz.json
-@@ -4045,14 +4045,14 @@ F: include/authz/
- F: tests/unit/test-authz-*
+     with open(patchfile, 'r', encoding='utf-8') as f:
+         for line in f:
++            msg.append(line)
+             m = patchfile_re.match(line)
+             if m:
+                 # strip leading [ab]/
+@@ -220,7 +235,7 @@ def extract_filenames_from_patch(patchfile):
+                 as_path = Path(path.abspath(stripped))
+                 file_list.append(as_path)
  
- Sockets
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Maintained
- F: include/qemu/sockets.h
- F: util/qemu-sockets.c
- F: qapi/sockets.json
+-    return file_list
++    return (msg, file_list)
  
- File monitor
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Odd Fixes
- F: util/filemonitor*.c
- F: include/qemu/filemonitor.h
-@@ -4190,7 +4190,7 @@ F: docs/specs/fsi.rst
- F: tests/qtest/aspeed_fsi-test.c
+ #
+ # Helper functions for dealing with the source path
+@@ -345,13 +360,16 @@ def main():
+     if args.file:
+         files.extend(args.file)
  
- Firmware schema specifications
--R: Daniel P. Berrange <berrange@redhat.com>
-+R: Daniel P. Berrangé <berrange@redhat.com>
- R: Kashyap Chamarthy <kchamart@redhat.com>
- S: Orphan
- F: docs/interop/firmware.json
-@@ -4691,7 +4691,7 @@ F: tests/vm/freebsd
- Functional testing framework
- M: Thomas Huth <th.huth+qemu@posteo.eu>
- R: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
--R: Daniel P. Berrange <berrange@redhat.com>
-+R: Daniel P. Berrangé <berrange@redhat.com>
- S: Odd Fixes
- F: docs/devel/testing/functional.rst
- F: scripts/clean_functional_cache.py
-@@ -4723,7 +4723,7 @@ F: .gitlab-ci.d/custom-runners/debian-13-ppc64le.yml
- Documentation
- -------------
- Build system architecture
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Odd Fixes
- F: docs/devel/build-system.rst
++    # unique set of maintainer sections
++    maintained: set[MaintainerSection] = set()
++
+     if args.patch:
+         for p in args.patch:
+-            pfiles = extract_filenames_from_patch(p)
++            (msg, pfiles) = process_patch_file(p)
+             files.extend(pfiles)
+-
+-    # unique set of maintainer sections
+-    maintained: set[MaintainerSection] = set()
++            kmaint = [ms for ms in maint_sections if ms.patch_contains_keyword(msg)]
++            for m in kmaint:
++                maintained.add(m)
  
-@@ -4753,7 +4753,7 @@ Build System
- Meson
- M: Paolo Bonzini <pbonzini@redhat.com>
- R: Marc-André Lureau <marcandre.lureau@redhat.com>
--R: Daniel P. Berrange <berrange@redhat.com>
-+R: Daniel P. Berrangé <berrange@redhat.com>
- R: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- S: Maintained
- F: meson.build
-@@ -4785,7 +4785,7 @@ F: hw/*/Kconfig*
- F: target/*/Kconfig*
- 
- GIT submodules
--M: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrangé <berrange@redhat.com>
- S: Odd Fixes
- F: scripts/git-submodule.sh
- 
+     for f in files:
+         rf = f.relative_to(Path(args.src))
 -- 
 2.47.3
 
