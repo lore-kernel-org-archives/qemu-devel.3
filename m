@@ -1,183 +1,119 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC48606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58252606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=proofpoint20171006 header.b=yRmzkKlt;
-	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=selector1 header.b=GGS9dzvQ
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hr4BE8Dv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xULos-0000iX-TP; Fri, 20 Nov 2026 05:26:16 -0500
+	id 1xULsc-0001I0-22; Fri, 20 Nov 2026 05:30:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xULon-0000ha-BF
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:26:09 -0500
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
+ id 1xULsa-0001Hl-5T; Fri, 20 Nov 2026 05:30:04 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1xULol-0000Y5-AI
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:26:09 -0500
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AK7g6b01177472; Fri, 20 Nov 2026 02:26:01 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=ySGRahwBh8tNNwU/6eVKBe9S0+cSkCC4PtGhfxSh6
- HM=; b=yRmzkKltq2KzKXZF8e8+8twwCZZbeIWTKK2Ph8SKOqsGPg6n+SV0lJpdj
- UbNCjiLjCXuwmevBBWRxjAtx9cvALz36ewsEk4dNXpMKIdKf8Gelb9tNUJR0BAje
- JDZEzGHm25VFFtGDBlUwHWv2I8/Xa96QvK7B8JT6OKYJvGxXxkBKUnW2RkKupGgw
- gYKIAX0QnNiDOAegcEHGTjZWqS2yrOvv4woa2FbjpiJ9bzxJUyXw39VdSPXU4JHV
- 1p4/ogpYTcK1p+Ke97pzUkUB069h13ATsUqUoxmQ+zsWQbYDWhXWz5cAtV4AZlRX
- xwFZTrieaO0Tp/CoyCIwjujrtMETg==
-Received: from bl0pr03cu003.outbound.protection.outlook.com
- (mail-eastusazon11022143.outbound.protection.outlook.com [52.101.53.143])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4j2498j9c6-1
+ (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
+ id 1xULsY-0005Hs-DJ; Fri, 20 Nov 2026 05:30:03 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AK7wVSZ2487000; Fri, 20 Nov 2026 10:30:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=9uKEeD
+ 5BZoWcKfV1kSpeDkX6+aA2NyERUiBFHs5Flk4=; b=hr4BE8DvlwIIiLwiP/tZB3
+ RCWMNz32ZmIQwcLP+Eu2+Ng1z014dIKmrn/B1NzSMLzpt73WE7Pr1F0YZdGDPfEf
+ 9EHhknL0o3Yh7P6ryasQGQ6jGoCNu1p3UO+4IHwUA2rMMp67SMKW8KuZZja9IArp
+ XYCjIBx40Kw7Gra5IjPWb8RFC7pnuDQQgHkTVq6Cknvf5SClisvxxBZxaRyI5UgX
+ wmmBjyqHALWVLOYiMDWZ1U+F9u/2jpjP1OshkMcN9S5Xbxo5+bScJRZffvfysH8u
+ B5wvPRSDlMsbbSdtEcJkxWjjKDcW7XXeHhy16eLF9I/aygqEEkN0D0iFKNE9FJEA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105x7dek-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 20 Nov 2026 02:26:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J615K0dhHxATAikgVv3AMCzNpctLmrraMy0LTR5N8XZDbob4g8U1ZBVG5zNNHMjsi8K7NbDWxL5DT6JWV37mFu+IyLbnm/aTSKh/rKgtcmoub7COxuFnSw8X5qDnjLNdM0BMBZFco9P734C2HGQVdrFOrmpEEKP46T5VxPqz5g3nzLDvcYkim/rFlgRiz3JJZ5A36w5JzaFWEm0iYTumkdqDAorlWjRNuDGGkkfRZVm+KcYgdr5hb5VJtU86h3ZjrOvlv+0ZLaR1n1JbU6SOgB7S09pu5W4BkUlvbyi1hCo7k8vmLH+kKUsar0uv1dpCruZILeWB0geknj5rERw8gw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ySGRahwBh8tNNwU/6eVKBe9S0+cSkCC4PtGhfxSh6HM=;
- b=Qg0pXucpr2ivyE4XPXAoHEKTSFhdwguwTBXq0OYAfLSE00abYyFiiHtQfqLQSkpxvKT0n3z/8XlL5PIPEj30TVWlJvQeOCivK9/Pq3Kxu5TPX7nkntvl/rRTBXpqZjKBmqcjhTShsMy+g6d6bgJHCvW1S0dsZPAwPsKizMHEjwbAYWP6nVCI1aGVj9jJoXQNyS+jyTY2aZ1/5v7Ugfzu7fvhQK0pWP17mmmvcnxb7Ic5AN8gFa536wKHUHR7Mh56Z0PdTZKpNwrAeGuvrmZIC8kFrllup/nsSE41QScca1AnZrWxnDnWzWzKcMe9tkNnOSHTdxjsTk65n3bLX9bwyA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ySGRahwBh8tNNwU/6eVKBe9S0+cSkCC4PtGhfxSh6HM=;
- b=GGS9dzvQHGDAQ1K2OQPCX+FfE/xBPZ4Vzo1c2C8PluGNw1oF2bc8i1ByfMbb+WI77SNXksHanVUU+UDBrQSSkKoHHmOeK4c1shAL5BwWXzaayl9Ds9CJMkQJX2b1MUtZS/K+cYULD3M/C0IBPDGZPKVxwl50wrLppz17WqabOIaStRJYstG3x85yStKIWhkF9WD1TI8qMVpVCBtk2bJ27IReG5kxrQJ/+7oJFiyWiNcGk3a0N/Aith7tbNXSN3PtllrVNNxSmkeycbLDr4H9f2j/c8K/cmVMn3q4P8bxF2OL5Yc0foQ4pvPH7ia4SBlZR5QwAZoHUQWUZ8HIyGCGBg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by CC6PR02MB501100.namprd02.prod.outlook.com (2603:10b6:170:205::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Fri, 20 Nov
- 2026 10:25:58 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%5]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
- 10:25:58 +0000
-Message-ID: <6431a291-a22e-45a4-b707-ba1daf6c0eb0@nutanix.com>
-Date: Fri, 20 Nov 2026 10:25:54 +0000
-User-Agent: Mozilla Thunderbird
-Subject: Re: rust build dependency ?
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
-References: <f1471b2e-fcff-40a5-9bf8-077d3294cf6e@gmx.de>
- <09c45745-553b-4acf-bb76-6b36df221764@nutanix.com>
-Content-Language: en-US
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <09c45745-553b-4acf-bb76-6b36df221764@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PA7P264CA0147.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:377::7) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ Fri, 20 Nov 2026 10:30:00 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AK7o4kW896150; Fri, 20 Nov 2026 10:29:59 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j1bb5kjy4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Nov 2026 10:29:59 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AKATw1w33096336
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 20 Nov 2026 10:29:58 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7083958052;
+ Fri, 20 Nov 2026 10:29:58 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C4A258056;
+ Fri, 20 Nov 2026 10:29:52 +0000 (GMT)
+Received: from [9.39.22.205] (unknown [9.39.22.205])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 20 Nov 2026 10:29:51 +0000 (GMT)
+Message-ID: <d74c4a1f-15af-4765-8ea5-ff507ee8f50a@linux.ibm.com>
+Date: Fri, 20 Nov 2026 15:59:49 +0530
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CC6PR02MB501100:EE_
-X-MS-Office365-Filtering-Correlation-Id: 00ef8950-b543-416a-0787-08df46f0aaa4
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|4143699003|261009221227099003|261009223027099003|56012099006|261026140227099003|261022075727099003|261028144727099003|261022105027099003|261026121527099003|261021123027099003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: CxlHwOdJZpIdTlWEIjB5hQ/SWeBTpAKI/QMmncNRhq37vbrsM6235ezOLkPYbnvAYAC0VA6jxaUaYqtnNIsTykX7h/kO2CYJRWRMCZnEzhlot1kT/yLnyz6UAlFc4uJibzqQ9U0mfXIlxqUPO2vM2KU7y/IpoPq/l8XT9HD4QznmizxQqd/A+dpZXEgoPFwI0J3DWPl1t82BkCq9bzFTdWK7dMoFNFq1o4ha27+BsYHKG29MYSd4t8HmY/fXcrU8z5h8DhIPGauO2iIUWfEpdTWl5nWxmh1KoUI0iPewdHj3uZRdEJJGMuJQ/n0ue2Ihk+gbukSGLtdjnFye/qbaEuJUi5qN2kpUXOfEMeGJu08/lDL20M1rKLd6xKfY+pIGci9MXTjGWIp1rJG8CSwMQRQyA1CuEeFzMVau5ihQrvKeHpnEv040Echk2ktJzt/xM68v9aVOoZcEIAnDbJ+NiejRZ+K0iA5W6URekZ8ZNvZ3ywnj5N8GVJNq9lB7uc3nuHbOvkTgQu7NaUjJ141vitYFzVXYEj/6WHHADCM23SBGe6ggu13ISc41gAHmOFovN1rPtqXP77C64cR0VK2g0OxuklYMX/QMpJ5Rknpq6Z/xkIpr1LmgBc9rEGuUHbpag8fxrcWSMHs9oCwi6FK6w5rmNRRRGyhyJ7QCYJnv1K0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(4143699003)(261009221227099003)(261009223027099003)(56012099006)(261026140227099003)(261022075727099003)(261028144727099003)(261022105027099003)(261026121527099003)(261021123027099003)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z1c5SGljZDRTdWpXZUt1alVLQzcwVFlnelRUR3BGWU1wVU9rYktmRWtiUGFF?=
- =?utf-8?B?Sit1NWhoK1drR003dWd1M0Eva1E3TWFkRUt5cS9lczJZRzVzRkZITE1UMGdF?=
- =?utf-8?B?UmVzMGRYUjRrc01QN0Z4alFhTG9IWXZJaHlIK2hoQWFlUUd4bDJra2FMU3VR?=
- =?utf-8?B?UXVCaWFLR3E2ZzBNTCt6cFR5TGlGOFlkTmVzSUVDM2xzdUw2Y21WempCalFT?=
- =?utf-8?B?ektFeUJTcFVmWHFRRUNKZG53aXlkS1BWUVNrL0ZGRUlFdDBFL1VET1IwT1dD?=
- =?utf-8?B?RkdiNUxieW9DNEJ1eFNxNThDc3dyRktvVy80ZUZCcEtxTzFBOE5tRm14TS85?=
- =?utf-8?B?dW1xNzlQY041YlhWMDEyNWhRVmwyMG4xZmgyN2NKTlpnbmFGY3JEUDhzSkFL?=
- =?utf-8?B?YTllWFdteU5KZmltQW83R3VSRlNwa1hUUXM5bUhIR1RFalV0MnBuOVgvaG5S?=
- =?utf-8?B?MjFIZTZzVzZuV1M4STJDWHRnRHlaZnc0cmNoV2o1L0tlWkFlallGQmtsL1py?=
- =?utf-8?B?RVFNcFd4MzgwR1NvMS83NjhDampMVDlLNm96WTViaHFweGN5cGg1d1NPbnI4?=
- =?utf-8?B?T0xzQnY4MVo1aENnR01JQWhTb1pUY3BpV2NQbHBEN2xKV2sra3lsQTUyTENH?=
- =?utf-8?B?ZGE2TmVBN0lkRGVUeFEzYklRbksvYUFhUFR4QTZCdjN3N052Wi9ZRkNKL2JP?=
- =?utf-8?B?R0NEQmpENVpBR25XRWVJZ1EwRkdjbzRmZ1Q4a3A5NlN5ZU92c0p2MWU0aExM?=
- =?utf-8?B?RStGd3ZNS0pQb1ZVdnprK0pkZ2swMEs4WWwxNzBYMll1UnNIMTM2di8wM1JD?=
- =?utf-8?B?U094bWw0Z0xsQUZDQytHVVNZRjZEWS85aFdxdWZBUHN3R0U2dVV6TG95aVVy?=
- =?utf-8?B?azZXNEJaV2xNSEpzUExDczFNWlRteUNDWlk4eFRwSkRUa1huSkVlb0FjczJP?=
- =?utf-8?B?NUJORFg5UWJPKzROaFBEQnVqeDV0Y3BTZHFpQytTa1EzV21BcmN4OERYaXdp?=
- =?utf-8?B?bDg2MHcwTVZtRk45YW1VUWN0MS9IU2pLV081T2JpSGNuRVB6UStmRDUyUGVH?=
- =?utf-8?B?djRVV2lIZUZsTU5FMitIYlhNb0lvNytIVDVjMHNhRE5wcWl0QVV2cE9hSkl6?=
- =?utf-8?B?clRxWi81RWdodFdIYnIyMXFGR3RrZkJrMFNNRk90anllUjF5NW1MaWZXOFBl?=
- =?utf-8?B?SkVnYzQ3USsrNnBSS0l0Uk5EZmVUT2VUT2J2VTNqd1lLV3REQTlzV0xqSFcx?=
- =?utf-8?B?QkJBcStyNDAzTWo5Y0ZJdHdUMXZyK2NhckNNN1dueWd4ZHV1dGVncmt6cEVB?=
- =?utf-8?B?NWNmSzg5NWxVRUlJZTQyMjkxZUd3VE83UTdGSHRicTVsSlZPeG5LMmdZSVpD?=
- =?utf-8?B?ZlllNURvZ3NtcUt3NVNVOWIyTUdOaW9EZVNEZmVhQnNoajUrUHRJNVlnRFpw?=
- =?utf-8?B?QlZPbmZ4eVlQS0tiN0pwb3NnTDNzS1hHTDZNTURuRmFuLzVRUDRKdk0yY3ZX?=
- =?utf-8?B?U21NT1BZTVBuSmZka2U3RHpvOEpIV0VnNkdRMmNLdUxQSHhLVGlmd2FGQ2s5?=
- =?utf-8?B?TGE2eVcybEVZTVdQTlkrQ2dZdmNHUzJwckxLVWVMbUQ3M1JxNnJnSzNVVHB6?=
- =?utf-8?B?VDUvWjJSSmdOWUFNNEJKcE9uTmI5Mi9WT1NmTTRBdlNwYXVTNmJVWjJ6bTVG?=
- =?utf-8?B?c1Fsa25ycTJsUEF4TGhPV0k4Vm1kS0tXVGxrck4xdjZkS3RhOHlMUndhVlBj?=
- =?utf-8?B?aEEzRXhDZ1R0UVZ4bCtqekJjck1YUlBaTm93MHRMM0tlOUhvVUFFckFoek1H?=
- =?utf-8?B?ODJUT3YrcWNESGM0d3RLalBnVnIydHgxVm03cUpLQVhiVDJTUXEvMER5K2p6?=
- =?utf-8?B?UCt1bkU4ZllueDlMcE5IRDNRL2lkSkdKb0ZZVVRyVkJlSWxqejVGTmdXd1dk?=
- =?utf-8?B?N2NqclhIVUtnZCtMdDdQNDIxaFdjRnh0OHRxdEJ2YWxmVzhrYWlrQmRhajFp?=
- =?utf-8?B?NCtBbXRWNDM1b3Y5RjVOeEkxR1JZb0owRDJRV3p1RXdzNWJmT29xMTV1Ukwr?=
- =?utf-8?B?VWpLQWlZc0I5ek9iaWR5UUFsekZSYmlqSldsWlFVS3hUT29DYWl2QUV4VHVo?=
- =?utf-8?B?NElGOHlFRm5zNWRlMENaNHJrSUprUnJGQ0xBYkc4U2J5azd3bnhYVU9Ha0Jh?=
- =?utf-8?B?QnlFUzZUenVJZXMyOHFsZm9KT2pCVUVNWEN6VktGU3RoY2dnRE80dS8rSk5l?=
- =?utf-8?B?bXYxZWcwNXJJbWdQbG1HM0ZuODZvUUdLU3NLM2dkdkVKdEgwQVNJL25WUk9M?=
- =?utf-8?B?U2Q4c3UrSGdKckg1UnRmdER3R0xEUWduZnFPZTB0UnAyaWxoRExXVWErM3Jw?=
- =?utf-8?Q?prXPXs3qDuAerJH4=3D?=
-X-Exchange-RoutingPolicyChecked: UHfYr/v06CcA15LHKZuTNFAjixv4EfjQ+Zw+dUTDiS/ucTeTnB36Su+egey7TgRiuq4wwBTwslorOXNTigH+CJuTNFfnRxKxHkMTlhzsLwYUTgMln1B/VADpfrSplkJlAW8h9DweLK9BPklMgA9gTwOTTNgZfGKFIKrHrFseoPAZuTFHjHpZVvHXQlBYrgjhN1xLQrNpCuMRgTKsc5nmIkKK/q9L3Ule8xxa9MNrGBfXnc2oD4OLfA7Z+TSBpgwWYZ+SqazllpvzG84lmZENgjWxliylxp/lWPVaWIcEQk9kIOsRqrpk0ldoEo04a5lbVE4joB4KLW7zHpszlTewwA==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 00ef8950-b543-416a-0787-08df46f0aaa4
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 10:25:58.1262 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zsP0gSYxGUPfxyIG41iRveDLhoo5QOjl4PRKColrULi3beWZZVB34SjRm8abY6IyYh7xcv2mCLN8dQKaGUq7A40UuKew0UM/l+lvpcmyVr8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CC6PR02MB501100
-X-Proofpoint-GUID: w_HFh_dq2Y8xcRZaroKSOjkytB3ckW8F
-X-Authority-Analysis: v=2.4 cv=DfOCOftW c=1 sm=1 tr=0 ts=6b002039 cx=c_pps
- a=taCrSF+MhsyXuYDq+ZG44w==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
- a=TUyoIWao4XuEdTyYnvwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA0MSBTYWx0ZWRfX9SRvA5RwxXDf
- 9wMZIYTJK5CRfFHxL0qe4kN7x7vg1ZYldd9KjOB3bxatQJ2rdsgrJNI6EXq5wLmZMjTQafBG3j1
- kDZ0WxkfSds5qNRZEa/71P/vcRQHZMOl8fPELOxa0lck8iwa/wWBJGFH8eH8D5DxsbzTFlr4vmm
- x+oyMK+Tc7vPnADv/18tllSDzt1rLvrepTfbresV1uua4bmAU0mEBjnBXa/Ryq6tQyeQ5U1ST+q
- OjRRoWFudWjaplbpUB+JuDrudoIkrXlwfTOI9x+a3PqL6zn2voCblodMIIKNss7Ln5ui1nYHQ50
- +gqhOkevil8mKynGO87A0dELpxL5wkqEcHu10Is48CClxL5RaKN81/g4xVYmh8poQ0CQTzEpeVg
- OjDYgTzjfddL7/vA5XgaNAwEZ7tVh5tU33vlZiYFnAwlLTSF/IS82l2itDYJldgY1qAtcMOw/nI
- Pvr6YBVt98q0D+8w5Fw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA0MSBTYWx0ZWRfX87i+o6TfuJPr
- L8PKDb3yJraHQ8L6qKaIouXu7j2EAGtP9NNMLdDCo5SLVa2HgpmaEzSVvPKq93KiJyeaYtfsIA3
- artmoBKLbGYhNF6XSVXMLgTLpBOyTyk=
-X-Proofpoint-ORIG-GUID: w_HFh_dq2Y8xcRZaroKSOjkytB3ckW8F
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] tests/functional/ppc64: pin machine types for
+ hypervisor tests
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, peterx@redhat.com,
+ farosas@suse.de, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, harshpb@linux.ibm.com, rathc@linux.ibm.com,
+ anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com,
+ gautam@linux.ibm.com, thuth@redhat.com, amachhiw@linux.ibm.com
+References: <20261120095854.35941-7-asahu1x@linux.ibm.com>
+ <20261120095854.35941-9-asahu1x@linux.ibm.com> <awAbwZ_w992RXUDY@redhat.com>
+Content-Language: en-US
+From: Aniket Sahu <asahu1x@linux.ibm.com>
+In-Reply-To: <awAbwZ_w992RXUDY@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: GsdPBNDC9y-TiMGj_VleIoLyLQIwtVOZ
+X-Proofpoint-GUID: QjU4JpHlBbTT6mV__59_cr040Pjrr0KC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA0MSBTYWx0ZWRfXx7BQh402d0n2
+ bHMtcLuXabLyRUvL7DmtTbA3C+8TtP7nCpZM6vVx5E2UygQI+Ta65PtZm3Z0lvXMndTwQGKPXHf
+ 0KrbabO5difcM9rf6lUgu8q8gcsZN0pSlV6KiUcV3J228bgi6twt3I8hFCcI+SvHOFBfPRU5glr
+ r0QfhvXSLEzHyR/6gyO6oJZkdCZvnuJ1gmVFSgyaxkzDe9FGjuxWjnd8U27ugzZrx4a0pVU1Fys
+ CHRukEN0R/BpCR7L1widLOpeA4Ek02QwsgTvQWdGnVI4RouYegJs/uTkPVM69iMEt0i2E348UJz
+ A3a/Y4L6Cei8PuEhpsu1W4ra/hH5nSoM+qRe0Z1L2y+xDf8pJ+3EGNqG2hIzcMxTuSsfIHZ7aXG
+ Ce8H+HPYPKpoNn9E7IvgG9ikhqzdWWRbxhvXwl/Mq3+8hF/n3Voy9eOTNEkRRjUP/maO7ssR1QK
+ zEwwG/VusjXWX1BLBiA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA0MSBTYWx0ZWRfX58l3LiNoIW5c
+ ZHoXhUsQSo09kIXVKTQmmx1f0hVGypqYPSCpD/Y+qoY2vEmYkCT1z11uY5gsHFQdJCzWqN+JKrR
+ 6uaLEghNWFv/EAyu1JwhcBUEdwOc2aw=
+X-Authority-Analysis: v=2.4 cv=K+m3jCWI c=1 sm=1 tr=0 ts=6b002128 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=1eOxSAtIvkPYLxiDPXsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-20_03,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611200041
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=asahu1x@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -190,64 +126,99 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 20/11/2026 09:20, Mark Cave-Ayland wrote:
+Hi Daniel,
 
-(added Paolo on CC)
+Thanks for the review!
 
-> On 19/11/2026 22:25, Helge Deller wrote:
-> 
->> With git head, I'm suddenly facing a dependency on rust, which wasn't 
->> the case before.
->> Am I doing something wrong, or was it somehow just added? I'm on 
->> Fedora 42.
+On 20/11/26 3:36 PM, Daniel P. Berrangé wrote:
+> On Fri, Nov 20, 2026 at 03:28:55PM +0530, Aniket Sahu wrote:
+>> Pin machine types to avoid CPU compatibility issues:
+>> - Use pseries-8.2 (POWER9) for pseries tests instead of generic 'pseries'
+>>    alias which resolves to pseries-11.2 (power11_v2.0)
+>> - Use powernv9 for powernv test to ensure consistent PCIe topology
+>> - Fix test_hv_pseries_kvm to use TCG accelerator (L1 runs under TCG,
+>>    L2 uses KVM inside L1)
 >>
->> deller@p100:/home/cvs/qemu/qemu-build$ make
->> /home/cvs/qemu/qemu-build/pyvenv/bin/meson introspect --buildoptions / 
->> home/cvs/qemu/qemu/meson.build | /home/cvs/qemu/qemu-build/pyvenv/bin/ 
->> python3 -B \
->>    scripts/meson-buildoptions.py > /home/cvs/qemu/qemu/scripts/meson- 
->> buildoptions.sh.tmp && mv /home/cvs/qemu/qemu/scripts/meson- 
->> buildoptions.sh.tmp /home/cvs/qemu/qemu/scripts/meson-buildoptions.sh
->> Failure in scripts/meson-buildoptions.py parsing stdin as json
+>> The generic 'pseries' alias now resolves to a machine whose default CPU
+>> (power11) is not known to the qemu-system-ppc64 packaged by Alpine,
+>> causing the L2 guest to fail with "Register sync failed" error.
 >>
->> ../qemu/meson.build:96:12: ERROR: Unknown compiler(s): [['rustc']]
->> The following exception(s) were encountered:
->> Running `rustc --version` gave "[Errno 2] No such file or directory: 
->> 'rustc'"
+>> Signed-off-by: Misbah Anjum N <misanjum@linux.ibm.com>
+>> Signed-off-by: Aniket Sahu <asahu1x@linux.ibm.com>
+>> ---
+>>   tests/functional/ppc64/test_hv.py | 20 +++++++++++++++-----
+>>   1 file changed, 15 insertions(+), 5 deletions(-)
 >>
->> make: *** [Makefile:134: /home/cvs/qemu/qemu/scripts/meson- 
->> buildoptions.sh] Error 1
-> 
-> I had exactly this yesterday, even after destroying my build directory 
-> and re-running configure/make.
-> 
-> In the end to try and diagnose the issue I checked out a much older 
-> version of QEMU, attempted configure/make which worked but then aborted 
-> the build. I then checked master back out and it started working again...
-I can reproduce the same problem here again this morning on a Debian 13 
-VM (meson 1.7.0) as below:
+>> diff --git a/tests/functional/ppc64/test_hv.py b/tests/functional/ppc64/test_hv.py
+>> index 8a1fca2cb1..d977038271 100755
+>> --- a/tests/functional/ppc64/test_hv.py
+>> +++ b/tests/functional/ppc64/test_hv.py
+>> @@ -125,7 +125,12 @@ def do_test_kvm(self, hpt=False):
+>>       def test_hv_pseries(self):
+>>           self.require_accelerator("tcg")
+>>           self.require_netdev('user')
+>> -        self.set_machine('pseries')
+>> +        # Pin to pseries-8.2 (default CPU power9_v2.2) so that kvm-hv.ko inside
+>> +        # the L1 Alpine guest sees a POWER9 register set.  The generic 'pseries'
+>> +        # alias resolves to pseries-11.2 (power11_v2.0) which Alpine's packaged
+>> +        # qemu-system-ppc64 does not recognise, causing the L2 "Register sync
+>> +        # failed" error.  The L2 script passes '-cpu POWER9' to match.
+>> +        self.set_machine('pseries-8.2')
+> If the guest needs POWER9, why not add a "-cpu POWER9" flag to the L1
+> QEMU here, instead of making assumptions about what the machine type
+> exposes.
+>
+> Using old versioned machine types in functional tests is undesirable
+> as we automatically delete versioned machines after 6 years, at
+> which point we'll need to address the CPU model choice anyway.
+Noted - will take care of this in V2.
+>
+>>           self.vm.add_args("-accel", "tcg,thread=multi")
+>>           self.vm.add_args('-device', 'nvme,serial=1234,drive=drive0')
+>>           self.vm.add_args("-machine", "x-vof=on,cap-nested-hv=on")
+>> @@ -135,10 +140,13 @@ def test_hv_pseries(self):
+>>           self.do_stop_alpine()
+>>   
+>>       def test_hv_pseries_kvm(self):
+>> -        self.require_accelerator("kvm")
+>> +        # L1 runs under TCG; L2 is launched with accel=kvm inside L1
+>> +        # (see do_test_kvm).
+>> +        self.require_accelerator("tcg")
+>>           self.require_netdev('user')
+>> -        self.set_machine('pseries')
+>> -        self.vm.add_args("-accel", "kvm")
+>> +        # Same CPU pinning rationale as test_hv_pseries above.
+>> +        self.set_machine('pseries-8.2')
+>> +        self.vm.add_args("-accel", "tcg,thread=multi")
+>>           self.vm.add_args('-device', 'nvme,serial=1234,drive=drive0')
+>>           self.vm.add_args("-machine", "x-vof=on,cap-nested-hv=on,cap-ccf-assist=off")
+>>           self.do_start_alpine()
+>> @@ -149,7 +157,9 @@ def test_hv_pseries_kvm(self):
+>>       def test_hv_powernv(self):
+>>           self.require_accelerator("tcg")
+>>           self.require_netdev('user')
+>> -        self.set_machine('powernv')
+>> +        # Pin to powernv9 so the PCIe topology matches (pcie.0, pcie.2) and
+>> +        # kvm-hv.ko runs with the POWER9 CPU model.
+>> +        self.set_machine('powernv9')
+>>           self.vm.add_args("-accel", "tcg,thread=multi")
+>>           self.vm.add_args('-device', 'nvme,bus=pcie.2,addr=0x0,serial=1234,drive=drive0',
+>>                            '-device', 'e1000e,netdev=net0,mac=C0:FF:EE:00:00:02,bus=pcie.0,addr=0x0',
+>> -- 
+>> 2.52.0
+>>
+>>
+> With regards,
+> Daniel
 
-# Switch back to earlier checkout
-rm -rf build/ && git checkout f71afb409a87c4ecd0f9d63a5963eb645dfab780 
-&& ./configure --target-list=x86_64-softmmu && make
-
-# Switch back to master
-rm -rf build/ && git checkout 08c9bbb825148dec9669f5184ecf18823bb6d631 
-&& ./configure --target-list=x86_64-softmmu && make
-
-# Keep trying to rebuild master (as many times as you like)
-./configure --target-list=x86_64-softmmu && make
-
-
-ATB,
-
-Mark.
+Regards,
+Aniket.
 
 
