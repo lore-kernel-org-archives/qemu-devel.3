@@ -1,90 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91815606A326
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 11:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854BE60A260A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 11:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xbKDHKhm
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zbCV0zNY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUMYl-0001xU-2B; Fri, 20 Nov 2026 06:13:40 -0500
+	id 1xUN1j-0005wc-Tu; Fri, 20 Nov 2026 06:43:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUMYi-0001xE-Eh
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:13:36 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xUN1i-0005w5-CW
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:43:34 -0500
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUMYf-0001Lo-Ez
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:13:34 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a3517554f7so7570165e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:13:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xUN1g-0005LV-7x
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:43:33 -0500
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-67db23d8892so950930d50.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:43:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795175010; cv=none;
+ d=google.com; s=arc-20260327;
+ b=arl5o27o2e4wHpm9EEFayDSfktiV8YADt6V4p1bEJkZXGRnKkqNZVMMaLGFBAnzOTz
+ bQQB7aXNxsbs/iEoxE6NJonPsIXT8mTVQTbm1QsAtMXgSfrKtdfBJJzERoZGQDk8vQ5h
+ iiBXLx2c/GBJjDqt/Nkg632aIiuL7dliZ/Pwk9aYwotJK/t5ykAwyUqLDa/o+KAj1Cn1
+ ySZzsikSnRPBuTN9caLsm7HbouZeTO/TaN7L9uDXq/hNYfGjI4IpFpeOQvROm7IymOer
+ pOnmC/zCaPpeuteYKVY1f4Wr6YNfgTV2cRHWNfzFq5VsXzBXXzhk3aKeLMUr41hf1SHb
+ aDWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=rIAhL2QRLoNu8jSsk6OmKcyR2LzJ9Hd6xE+H84MiAK4=;
+ fh=TLo6s5XeOncfV0CLBzAL1V3ipuhH5vok4YhERA9AYMQ=;
+ b=g4cKb0a6zWkgZba1+S/hZ8ZHns+M+tZZvmS4As8T374QyY6rp/czts88MIoY/QDgzK
+ WNZaoMFggAuyQdgKMTVSBbGBaKuHYuM/fARg62jmj49sm4ZTxEiTVamH9uMOJXAjRsYk
+ cw8rTfgTzMW3sz9emQgAun6e6yY+V7+3jcm6zqc562IunQw73o/RUoM6O7jq8O6a9y/9
+ hN1BUgi6oLTov/T5ShFvnz40Qas53RH9I1G8zZQp9gm7ZieVobsTc34ajee9RkjIyk8J
+ H/SB7XWoKE0eUnhO6OyaRnVwT+F2W8nMx6uNiM7gOzfs2xY+o/O12uvnkiQZ66tBR/Bl
+ mT7g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795173210; x=1795778010; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=JnB6nPyXa3AHkTb6PkGaLhxzVpYZhdAodrXxGcl6foY=;
- b=xbKDHKhmKVQDfovBSvxNFLvQvp4BQtHJk10AUaCv0zJmh9Wi1sHmCdbNy/02Q93/JE
- J3bQGUSaGoarutUu0vHfzE/NcE9972wzT5POOg3r02cZhknIk/XM3McUQrT9zhzmTi3C
- ZvRMVwny711lGRRNhxEIij7mgorSbOmzOsDNh5hKIIQjzS8bETFblNky3OiRcsFnRB/9
- xukq3g2niZT6WfC75LfBjp9R2gozfQKeLYkZRDA6fGJrkhSjI0NBndXrwHqZV9Oljh5H
- yTqYHW6xgJMXNN0mENqjjVL08LOCV+EpkGloNxi5NrTDdkLKCmEOdf4aNkTEA3UQCCJm
- fblg==
+ d=linaro.org; s=google; t=1795175010; x=1795779810; darn=nongnu.org;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rIAhL2QRLoNu8jSsk6OmKcyR2LzJ9Hd6xE+H84MiAK4=;
+ b=zbCV0zNYLSJyalgViQ3jmuOVcH9hDZl4fPfOomTUQQzw8YYxA8SOt4s/1XCWFRZZgY
+ CWx8og2UNAwD+ksVRHs0Ntyi3+4boQrp7O2IpdHxPSvkCnezDPcQYDCY3DfynBwM5Hdl
+ jf+RwMsfV86YmAGLpmvrFwp4kGn3NHOKr8iOSZqEMseEWrfBcvBR8yL9nG3QRruIn83Z
+ +6lGfMeU1B29qR3dCzHpUdfjThq0CxR46vlGLjD/HPAl5XLVnrXwh2jxgU0JAMaMDWtH
+ mXDoqkRTZO34B1jx2jSolPH/Kxt6DHYadcAyY2bsKQ2FZ0xNKqWsJ9p713L0tiSTfPbB
+ msCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795173210; x=1795778010;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=JnB6nPyXa3AHkTb6PkGaLhxzVpYZhdAodrXxGcl6foY=;
- b=1HNT2mEn+RiOPTRd2KksCo4Bkivuzsi6Nc1vprK8ST0pCEpbEEzyoyrU76wNqYLMOZ
- mXxG6UituYXdX6cXh9Das/ql8FdTJTDEzVBvysHRsu2LZhwL2o4MJ4ubLjOYbmAOGYGi
- F2/avFBhoguWLlm3UcPp8Qs0Bx9XjKmOdROn3PgL1lrEP6yUgWfAAVQUQuhAaxicp0nh
- NJLHVwtFo+Zf3Yk8uoQWBGFN24ShNKJ1iX//JJ9Jv17SM6I3jB/FeuEX388I4gaBv3fl
- gw8aTS6yHwel5OzMkTXWtCjeB10h2qz2ska3Vgn+8V1MTGZTtJPjKBmxCiUsA0ankJ6b
- xmIw==
-X-Gm-Message-State: APuU4Z+IR5SjrJ2XGODmXyY6MrB1qCJFM48KEh2WkTMI/zB3C5iQQ1BQ
- 5FopbC5k1EoDBXfigaQoamLm9a05uyl8gNW+u0ICRVJUqk/PQk9yHruQrszbWvJ5eOo=
-X-Gm-Gg: AYBFou2GBhsg6zwJ1EuoFuYeZCGzP+7fQAnJyH03shz0KzzHv1NTMUJE5eq8Lm3MkP/
- W4v97U7MrCc2UyZbesYbjw5V9ICHVfrYmV/JqOKZdkgi9PLVNynPa8OmOe1kgVXAICaCEBKrd48
- G/v6HyUxtpjIKNvPCDJa6PfnI51soNLNUIy0QBftFI7PWlQ2FvFQrpe1jWHxXifMKGWa9pSzDuE
- nFrNwAYXvZHQ/dFovqaIwfz5nBlQy8jztlUOFqajB8lL5aGwktVzUcBorkxFKAC6PI9lOYVZWVG
- mkR9pjRXbJnJDZ2p7IL/tTnDKvlLy9neC64ZXFYEU2kQu0hCyznedm2neNSloJRQhLxgsPkyavL
- XIZmASpOADIBoysJXFqf5GCZZ9a43EgUAB6hz4FAQuegLn9AAD6TuAadzaWcrzuyoCNa6ryWwct
- 41Y0FRYe/b2ZFbTEnlbhkeOpuYquY9S/CHxVneiMWLTdLPOhWARf+r9O+l07I68BNZRoSDEF9Mp
- rGBZCIdSYrC1DBy4+GcCjF7iTeQ8RtyBD2IzT4bt8t2FnUi5dRrpmaJ3xl0IGkA8fGI+a94Fft9
- wOz69QqsOR+XmyXkI3aLPM5+V00s
-X-Received: by 2002:a05:600c:1d29:b0:4a9:2a92:231f with SMTP id
- 5b1f17b1804b1-4bb88804d4dmr66648035e9.7.1795173209767; 
- Fri, 20 Nov 2026 03:13:29 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb8849e598sm69252825e9.8.2026.11.20.03.13.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 03:13:28 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6FE3A5F7FE;
- Fri, 20 Nov 2026 11:13:27 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org,  Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: Re: [PULL 3/6] MAINTAINERS: Step up as maintainer for PPC KVM CPUs
-In-Reply-To: <20261119113207.79328-11-harshpb@linux.ibm.com> (Harsh Prateek
- Bora's message of "Thu, 19 Nov 2026 17:02:11 +0530")
-References: <20261119113207.79328-8-harshpb@linux.ibm.com>
- <20261119113207.79328-11-harshpb@linux.ibm.com>
-User-Agent: mu4e 1.14.5-pre1; emacs 30.1
-Date: Fri, 20 Nov 2026 11:13:27 +0000
-Message-ID: <87o6bj69ig.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1795175010; x=1795779810;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rIAhL2QRLoNu8jSsk6OmKcyR2LzJ9Hd6xE+H84MiAK4=;
+ b=DT5FCMDCvw3GcqU5eSxI5bfje16HJ+MjlO933hkuOdF15M0HWhJCEC4v4J1pXk/Gme
+ zH88unn8YLUrQ+aEb6dpYkiTtvEV/6dfvmDHZtNcGPieKu1uRpfYUR+613ExXgEauu2M
+ 1tUR+rE5J7u8W+jRrwoSZ9gxDDB9rN7rKsSf8CKm+hfX6wxI7Abof/PBCHpnZnNHy6Ky
+ 7UGnPHNgxYW5OAruZcbUKmPGeOeNk7eVrSzptD6DN/IabQ9huldZNTYeNUP09iXpEO0n
+ MhOLwDsQV5Jv5+ecx+jKAZok+GBtiBgBNZYw7iPGKjkzubryLQbXWcebjnplCyTTzma6
+ t2fA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGryFNl8X9QCk5neZgvNQqElHAqLmYi8/ih4trDvoAvvgIgMT9OYAsbBiSsIhfuRbdEMz2AvI7rGU8l@nongnu.org
+X-Gm-Message-State: APuU4Z/Vi02SmOUeSe/4Lj8tjKqavucUvqbvXXUB7Puoia19tlLRlGAD
+ SkScLVbeqI/cDs05v2qEFtVoV6vZT/rMlw060qJM07vTdhQw+z5UQ6y8wLCkZJ2XnYtUUFUYKI3
+ laRr++kHDzVH7oQincFyDavPgl9cI1wwUFhXwskk5nNAYn/+EBAGqClk=
+X-Gm-Gg: AZFdTZen6iy7IK2IAX57znUglVIjJfGfUKmKI9WwWr/0DC6V5MpFFDLP3sZKvVrmDYd
+ ql9CCrgb/aI4iTDRC2aS+39jeYhq9v/KKZOHigLrPeDm35AMVz00qSRqMwumQ6vJcNbxYSWqlKN
+ TMJPoS+R96AtFG/7QLMuCx5ZIt4F+mYoaw8pu1LlEJpkPdpuyzUGxlSk8/bYJ+X4XUVMAv/sOns
+ KSEsCpSRNtuW2if3aetcVC9GQUNGCisxrA6dCuwxVg8yntt+WBv5iy3XjF99ejiTsYwClsLMBCQ
+ ycllt1KTWavulK2HLOM7giO/NDaxE3JJmrf/8L0dZ9w7e4Cyynuo9ZtckH2+aoiNGfRw7R6Qr2a
+ nEhdxw41hxWzZN2wuvgDBf/J6xSRkVqU4qu9UvUHMVCOw5m2jKReNcXe6wxixxwyUnSb2HzUEVg
+ UD6OPWGYZqig9hTfwWwCSH
+X-Received: by 2002:a05:690e:439b:b0:67d:b729:eee6 with SMTP id
+ 956f58d0204a3-67df448e155mr932899d50.85.1795175010397; Fri, 20 Nov 2026
+ 03:43:30 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+References: <20261013083933.1024405-1-peter.maydell@linaro.org>
+In-Reply-To: <20261013083933.1024405-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 20 Nov 2026 11:43:17 +0000
+X-Gm-Features: AclHuK8RBBchCvZA2BhzAKeH08qHmMqRGGesUMJD8ZwQAs0IQ_PH0soEx9Ls3HQ
+Message-ID: <CAFEAcA_He4P=0n2j_DL7P+gDd14jXgba3jRmE_1uBC976iFPTw@mail.gmail.com>
+Subject: Re: [PATCH 00/86] hw/intc/arm_gicv5: Implement virtualization support
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,51 +112,48 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Harsh Prateek Bora <harshpb@linux.ibm.com> writes:
-
-> From: Amit Machhiwal <amachhiw@linux.ibm.com>
+On Tue, 13 Oct 2026 at 09:39, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> Update entry for PPC KVM CPUs: move from Reviewer (R:) to Maintainer
-> (M:) and reflect the improved coverage by changing status from
-> "Odd Fixes" to "Maintained".
+> This patchset adds virtualization support to our GICv5 model, and lets
+> the "virt" board use -machine gic-version=x-5,virtualization=on.
 >
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> Link:
-> https://lore.kernel.org/qemu-devel/20261112164617.85849-2-amachhiw@linux.=
-ibm.com
-
-You should check your tooling as these should be Message-id: tags.
-
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> ---
->  MAINTAINERS | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Virtualization in the GICv5 is more complicated than it is in GICv3.
+> This is because in GICv3 virtualization is mostly delegated to software,
+> and only the CPU interface has hardware virtualization support. In
+> GICv5 the hardware does a lot more of the work, so virtualization
+> support is needed in both the CPU interface and the IRS.
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index dcfdecedcf..0492190107 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -515,9 +515,9 @@ F: tests/functional/aarch64/test_kvm.py
->=20=20
->  PPC KVM CPUs
->  M: Nicholas Piggin <npiggin@gmail.com>
-> +M: Amit Machhiwal <amachhiw@linux.ibm.com>
->  R: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> -R: Amit Machhiwal <amachhiw@linux.ibm.com>
-> -S: Odd Fixes
-> +S: Maintained
->  F: target/ppc/kvm.c
->=20=20
->  S390 KVM CPUs
+> I've structured this patchset as:
+>  * initial preparatory and bug-fixing patches
+>  * add virt support to the cpu interface
+>  * add virt support to the IRS
+>  * remove the check in virt that stops the user enabling virt
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> Peter Maydell (86):
+>   hw/intc/arm_gicv5: Make IRS_IDR0 reads return actual value, not 0
+>   hw/intc/arm_gicv5: Ignore low bits in IRS_IST_BASER.ADDR
+>   hw/intc/arm_gicv5: Ignore low bits in L1_ISTE.L2_ADDR
+>   hw/intc/arm_gicv5: Regularize spacing in config_readl() switch
+>   hw/intc/arm_gicv5: Use cached IRS_IST_BASER.VALID state
+>   hw/intc/arm_gicv5: Free memory in finalize
+>   target/arm: GICv5 cpuif: Use arm_cpu_set_irq() to set IRQ/FIQ status
+>   target/arm: Only allow GICv5 on CPUs without AArch32 at EL1..3
+>   hw/intc/arm_gicv5: Pass CPU index to CPU interface
+>   hw/intc/arm_gicv5: Pass cpuidx rather than iaffid in gicv5_get_hppi()
+>   hw/intc/arm_gicv5: Use correct type for value in lpi_cache_get_hppi()
+>   hw/intc/arm_gicv5: Relax QEMU_GICV5_MIN_LPI_ID_BITS to 0
+
+Just a note that these first twelve patches are all now upstream. I
+think the rest of the series is still fit for further review, but I'm
+happy to do a respin of the series if that's helpful for anybody.
+
+thanks
+-- PMM
 
