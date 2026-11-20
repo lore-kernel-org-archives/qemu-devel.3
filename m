@@ -1,85 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCCF606A335
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A354606A334
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vjtpXCRE
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=M/rpv6tQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUM7C-0004Ny-LI; Fri, 20 Nov 2026 05:45:10 -0500
+	id 1xUM6z-0004Fk-DD; Fri, 20 Nov 2026 05:44:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xUM6t-0004FU-PR
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:44:53 -0500
-Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
+ id 1xUM6o-0004Eu-Um
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:44:47 -0500
+Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xUM6q-0007kB-53
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:44:51 -0500
-Received: by mail-pl1-x642.google.com with SMTP id
- d9443c01a7336-2efddf749e5so8613935ad.1
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 02:44:47 -0800 (PST)
+ id 1xUM6n-0007ji-EG
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:44:46 -0500
+Received: by mail-pj1-x1044.google.com with SMTP id
+ 98e67ed59e1d1-3ae1b34e0d2so1151890a91.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 02:44:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795171486; x=1795776286; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795171484; x=1795776284; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1vAa4V9vRNqpSisBQGqrQkZGdeuhu9WYpEbk6ziOLZY=;
- b=vjtpXCREvzHRgzh3na/XV+YNKgey4Cd4HD/z/ZYfTBhvG4S7NB4jmnP5yAF29qJuV4
- hC8H0mALKwKB8ODVmaLKds89aZPRUJEktjJNdhXo6FL8+ZTuI/ORKWrP7xgAusf0AdRp
- sxwWFPjyxi+BcP35YM2DQ5CzAq9qU6MuxtZUA3vdDhHqcsI479b2e9YWEWpWr5/mNiYu
- AvSVtO9pHyhm6v1VVN+djTEdTfU3E24RVqTJcbOci7avSTSjJmDgizJXqRLW3BtNe73E
- epM6K0LQyuYlzuDBo6bogWVfnn0atCAQCP9MNPQ5tytQCKU3z+LDfttD1OPYPBjOCGQx
- zTxA==
+ bh=HkHhYkPvRYzpmxeD5z1O5pwdDg/dr3/spBsYEEDgr38=;
+ b=M/rpv6tQBPF49rNTu1NtrC2n3EThN1Q95D+yuuVcEHp4GYdrIxE+MAzlTuCmFCfNfU
+ GvU4NYAd1uroUT+n8bkAtGGWOcnnCmV+xrPNZ9DSpqH1XMqZQH3bWXcLDZyD84Ghi503
+ IQFIt3pgWYiDlHYMai5uAfK9MLlqBLHlnAJAQGvFIzawR9CDtAWaZ8FyBebwuZG4635t
+ 6Z/l10fUg4HCE0vkq8YN1Uf+komhoflSDL3bsHv1XGNxGxdSn+tfoml0sgYvBZ+8RuNx
+ MsBF4KQ/aUORToCC4ePMxdbfHC3gvhvjNLmPPlyITJDoP9ZfaWGEb2UqlzB9Ps7uqJ2e
+ DpbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795171486; x=1795776286;
+ d=1e100.net; s=20260707; t=1795171484; x=1795776284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1vAa4V9vRNqpSisBQGqrQkZGdeuhu9WYpEbk6ziOLZY=;
- b=iLoFa+Oe40naaIP43rTze74erNjjdSgMRtkZkb25a15OH+FW3d89Miad2JPvjiVKcV
- OtyqkVbvbpE+Vx2YLaqKzR9zfXOAnHfkzA7/lLa7ARlDrF55q1OuttYDTtQp/twrjiFZ
- Xc82I3FAaGBIf394uHc16vt7uzmEX5ztHRZ6MK9eX5Jtv2lk4fREiCS6peTPbCWATneZ
- DFF/4smgGkTw/jZhX2xcxuFMacbnfPfSvJW2AlLmeqf8VJYHiZ4iok9DmEuE9nDJLtXD
- 0NNDsWcbMw73q6N4CCAX7o1OWmL1rNAF76iV4ofWDwQLw+QAl2RKF30UDIC/AMeB/YPW
- ho0w==
-X-Gm-Message-State: APuU4Z8c+HS09ooQpya0WxFYtzVn5I6zaynBWYQlCmjUIujlD2kSGlVh
- i6EL+ndLIb2Ekw9N0hesydBUAg+rAtxAYwFYHT46lgrycHgn4W9VRfH9emqBA193
-X-Gm-Gg: AZFdTZccPTjfparvwewCbnR1n2t3aBLqIH9XfMKH/yCTRBiOdkSiwdkUWexX9zsJ2ap
- +ZI4NkKvWB0I95hSvft9lbcX0kU5L2QA+28N2vqx3UVOUkM5/5yXiqVQTzv6FmjEy/1Zr9eMJsy
- dntGubcizGrtJXII7QVC4MnASIBXiq3lmUi5LBruxe18x3WwL5MxM8ShL9eyyk6xUsksft82wrW
- br3uQxj1UrCph7SqEliVTRyXDR3TpioVVWcmMttifGV+Ag8+OvNFOjFtN8qCYRvwzNS7etf+g0J
- guFE1vGGC9tVvg3Nu23ZRzjKEMydwlzc4RtMDG2IcvwDrddY7ohQP72uipUHySSKkQoxG0UErFv
- i0aNpRrWPlAjj92EmlrvB5Xa28R9ZbC2Mm6QHBW32ifhb5lEbpPsIn+7v7eXc/MQs8LSu+Adn18
- 51xtK667ePG0+TVqzkmNQh+rUJjmYfk9vNHK9+MdZC5IBEsik1wLsEGf3/lPdzoWEaj6DODvDC7
- qqDFPBE9JNeHsZT26YpsW4fNFtJJ9hXi2uJexl8H9YaBqt8VfEHzQBATgefohLHOuXFTTs81eHW
- HBvKgh1fCIBSP6WVvetAx0wlqvpBEtc=
-X-Received: by 2002:a17:90b:2648:b0:3a7:a485:9d38 with SMTP id
- 98e67ed59e1d1-3b409eb9517mr2981478a91.5.1795171486189; 
- Fri, 20 Nov 2026 02:44:46 -0800 (PST)
+ bh=HkHhYkPvRYzpmxeD5z1O5pwdDg/dr3/spBsYEEDgr38=;
+ b=K3uOdYgN087RAJK0CoLhYf4Qci543ZHLkhId7o9QylAdiffBZhnhhSC4qGPTtqUc+g
+ qk4K8jGjJvqUYByQg9KAPU+WL1TT4a/RmtOua7bDkTjdq5Z/aR9EqPqxpgfKSPX1R35c
+ MST6CuqZn0Tb1kOq2KZFIK1PsrLQ2GnR9IWUDCaurOqQWZJwqBhFphAsHtaGtVeykr7q
+ 21Pg4h7V7cS3GjJ+mV2pQh3tgsBL+uofl6RqUoJBc26CdFDgUN4/hCI1YB5Z4O/cBsM7
+ c2MfSijecLL6EOFZEoSpSXJnc4xBRuZSYCQAQuyHYJSgeCqURhLPR6U6gHoqjIkZIhVg
+ 1e6Q==
+X-Gm-Message-State: APuU4Z95d8Kvvi3q/sIolTa51m18k5O1uVp84CKK3kqf3y6uAk9nSRFe
+ 9BIZB+XqIJNO96ZjQ3dnQaUtGFEbHbBx4HeYMxXRTtIS1eQoI02DV/dAS46DcU4qqXQ=
+X-Gm-Gg: AZFdTZfy5S6jJYTZxbqZixk8h80iODM+JEbDArHdUpF4is42rqliBsOvwzaINhcvSVg
+ u5vGFQhXmmbia9pnl0xWLq2PSirqfsFeEL9I7hGSeXMI3n2tSrn5ib1nILyTjp+Z1ZzPoqyC50J
+ ygfxKFJ0W1Agj8VzETkKUCgXt+t0E2+bOXVdquWxgN2LnNH69PNM+c1PSnjChIJZce1/6rB+ZD2
+ ormXfiFb6ufqFl76n3+AYNxr87biTJauR5zEo3lANwb2xY7Ry4kpnlXLhqMLQ28zw61gyeTu/YA
+ FQB0S3p+tFGNVt7mWAt8ltqyU1ooEsKdsmtdXPyLZ2biXN4QXDijqx2yS6znKat8SE6AgFjARE1
+ SCD2ImpK2MWs6iVFBQn8p8Uj88iBsRHtS3p/Kyuf/KbncaAf0osMoMRS5t1uetB7UFZ4sefFfcl
+ TyrPFX+IXlfrwIwtVEotKVmMcgP3qVlhr6HRpDALJEJWQMlJJPdvmBHifmbj5kM2iG3JNlBXlA0
+ nxMOH4OCEFo7T4Q8ZvKtE/58J0chbeRUTAU9pNJeI/O8PpvdJxVyJkUsnsUX7ZWshmdKz5pbH1M
+ /KE96NsePQXGl8CzKEd06giSraD75Bg=
+X-Received: by 2002:a17:90b:4a51:b0:3b3:b8dc:5dfa with SMTP id
+ 98e67ed59e1d1-3b40a5a46bdmr3327838a91.10.1795171483551; 
+ Fri, 20 Nov 2026 02:44:43 -0800 (PST)
 Received: from computer ([2604:3d09:98d:800:cd94:7b9e:bb89:3491])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cde6cfc80d4sm1151506a12.6.2026.11.20.02.44.45
+ 41be03b00d2f7-cde6cfc80d4sm1151506a12.6.2026.11.20.02.44.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 02:44:45 -0800 (PST)
+ Fri, 20 Nov 2026 02:44:43 -0800 (PST)
 From: Tim <mdspan.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, zhao1.liu@intel.com,
  Tim <mdspan.github@gmail.com>
-Subject: [PATCH v2 5/5] tests/tcg/x86_64: add a LAM system test
-Date: Fri, 20 Nov 2026 10:44:31 +0000
-Message-ID: <20261120104431.733136-6-mdspan.github@gmail.com>
+Subject: [PATCH v2 2/5] accel/tcg: compare large pages under the flush mask
+Date: Fri, 20 Nov 2026 10:44:28 +0000
+Message-ID: <20261120104431.733136-3-mdspan.github@gmail.com>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261120104431.733136-1-mdspan.github@gmail.com>
 References: <20261120104431.733136-1-mdspan.github@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
- envelope-from=mdspan.github@gmail.com; helo=mail-pl1-x642.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
+ envelope-from=mdspan.github@gmail.com; helo=mail-pj1-x1044.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,893 +106,39 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Test LAM_U57, LAM_U48, and LAM_SUP at CPL 0: tagged aliases, the
-canonical checks on the masked address, CR2 on #PF, TLB flushes on
-CR3 and CR4.LAM_SUP writes and on INVLPG of an untagged 4 KiB or
-2 MiB page, helpers and atomics, and instruction fetches through
-tagged addresses.
+tlb_flush_range_locked() flushes entries whose address matches the
+range under @mask, the low @bits of the address.  Its large page
+check, however, compares the range end with the recorded large page
+in all bits.  If the large page was entered under an address that
+differs from the flushed range above @bits, the check fails, and the
+large page is not flushed.
 
-The test runs with 4-level paging and with 5-level paging, for which
-boot.S gains an LA57 option, each with and without LAM in CPUID.
-Each run has its own build, which fails unless CPUID reports LAM
-exactly when expected.  The identity map uses 4 KiB pages, which
-leaves the 2 MiB test page as the only large page in the TLB.
+Compare under @mask as well.  This matters for the x86 LAM emulation
+in a later patch, which installs TLB entries under tagged addresses
+and flushes every tagged alias on INVLPG of the untagged address with
+tlb_flush_page_bits_by_mmuidx().
 
 Signed-off-by: Tim <mdspan.github@gmail.com>
 ---
- tests/tcg/x86_64/system/boot.S      |  14 +
- tests/tcg/x86_64/system/lam.c       | 797 ++++++++++++++++++++++++++++
- tests/tcg/x86_64/system/meson.build |  16 +
- 3 files changed, 827 insertions(+)
- create mode 100644 tests/tcg/x86_64/system/lam.c
+ accel/tcg/cputlb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/tcg/x86_64/system/boot.S b/tests/tcg/x86_64/system/boot.S
-index 7213aec6..4ab554d4 100644
---- a/tests/tcg/x86_64/system/boot.S
-+++ b/tests/tcg/x86_64/system/boot.S
-@@ -91,6 +91,10 @@ _start:
- 	/* Enable PAE mode (bit 5). */
- 	mov %cr4, %eax
- 	btsl $5, %eax
-+#ifdef LA57
-+	/* Enable 5-level paging (bit 12). */
-+	btsl $12, %eax
-+#endif
- 	mov %eax, %cr4
- 
- #define MSR_EFER		0xc0000080 /* extended feature register */
-@@ -102,7 +106,11 @@ _start:
- 	wrmsr
- 
- 	/* Enable paging */
-+#ifdef LA57
-+	mov $.Lpml5, %ecx
-+#else
- 	mov $.Lpml4, %ecx
-+#endif
- 	mov %ecx, %cr3
- 
- 	mov %cr0, %eax
-@@ -272,3 +280,9 @@ i = 0
- .align 4096
- .Lpml4:
-         .quad .Lpdp + 7 /* 0-512 GB */
-+
-+#ifdef LA57
-+.align 4096
-+.Lpml5:
-+        .quad .Lpml4 + 7
-+#endif
-diff --git a/tests/tcg/x86_64/system/lam.c b/tests/tcg/x86_64/system/lam.c
-new file mode 100644
-index 00000000..299119ab
---- /dev/null
-+++ b/tests/tcg/x86_64/system/lam.c
-@@ -0,0 +1,797 @@
-+/*
-+ * Linear Address Masking (LAM) test, run at CPL 0.  LA57 selects
-+ * 5-level paging, and EXPECT_LAM whether CPUID must report LAM.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdint.h>
-+#include <minilib.h>
-+
-+#define CR3_LAM_U57     (1ULL << 61)
-+#define CR3_LAM_U48     (1ULL << 62)
-+#define CR4_LA57        (1ULL << 12)
-+#define CR4_LAM_SUP     (1ULL << 28)
-+
-+#define PTE_P           0x001ULL
-+#define PTE_W           0x002ULL
-+#define PTE_U           0x004ULL
-+#define PTE_PS          0x080ULL
-+#define PTE_FLAGS       (PTE_P | PTE_W | PTE_U)
-+
-+#define VEC_NONE        (-1)
-+#define VEC_GP          13
-+#define VEC_PF          14
-+
-+/* Identity map of the first 128 MiB with 4 KiB pages. */
-+#define ID_PAGES        (128 * 256)
-+
-+/* User-half test region: PML4 entry 1. */
-+#define VA_BASE         0x0000008000000000ULL
-+/* Supervisor-half test region: PML4 entry 256, same tables as VA_BASE. */
-+#define VA_SUP          0xffff800000000000ULL
-+/* Pages 0-2 are present, page 3 is not. */
-+#define VA_PAGE(n)      (VA_BASE + (n) * 4096ULL)
-+/* A 2 MiB page after the 4 KiB pages. */
-+#define VA_LP           (VA_BASE + 0x200000ULL)
-+
-+#define LP0_PHYS        0x04000000ULL
-+#define LP1_PHYS        0x06000000ULL
-+
-+/* Tags in the metadata bits of each LAM width. */
-+#define TAG57(t)        ((uint64_t)(t) << 57)
-+#define TAG48(t)        ((uint64_t)(t) << 48)
-+
-+/* VA_SUP with tag @t.  SUP_BAD masks to a non-canonical address. */
-+#ifdef LA57
-+#define STAG(t)         ((VA_SUP & ~TAG57(0x3f)) | TAG57(t))
-+#define SUP_BAD         ((1ULL << 63) | TAG57(0x2a) | 0x1000)
-+#else
-+#define STAG(t)         ((1ULL << 63) | TAG48(t) | \
-+                         (VA_SUP & ((1ULL << 48) - 1)))
-+#define SUP_BAD         ((1ULL << 63) | TAG48(0x5a5a) | 0x1000)
-+#endif
-+
-+/* Vector for an address that is non-canonical only with 4-level paging */
-+#ifdef LA57
-+#define VEC_NC4         VEC_PF
-+#else
-+#define VEC_NC4         VEC_GP
-+#endif
-+
-+#define MARK(n)         (0x1111111111111111ULL * (n))
-+
-+static uint64_t pml5[512] __attribute__((aligned(4096)));
-+static uint64_t pml4[512] __attribute__((aligned(4096)));
-+static uint64_t pdpt_id[512] __attribute__((aligned(4096)));
-+static uint64_t pd_id[512] __attribute__((aligned(4096)));
-+static uint64_t pt_id[ID_PAGES] __attribute__((aligned(4096)));
-+static uint64_t pdpt_t[512] __attribute__((aligned(4096)));
-+static uint64_t pd_t[512] __attribute__((aligned(4096)));
-+static uint64_t pt_t[512] __attribute__((aligned(4096)));
-+static uint8_t frames[4][4096] __attribute__((aligned(4096)));
-+
-+#ifdef LA57
-+/* VA_BASE with bit 48 set: PML5 entry 1, mapped to frames[2]. */
-+#define VA_HIGH         (VA_BASE | (1ULL << 48))
-+static uint64_t pml4_h[512] __attribute__((aligned(4096)));
-+static uint64_t pdpt_h[512] __attribute__((aligned(4096)));
-+static uint64_t pd_h[512] __attribute__((aligned(4096)));
-+static uint64_t pt_h[512] __attribute__((aligned(4096)));
-+#endif
-+
-+struct idt_gate {
-+    uint16_t off0;
-+    uint16_t sel;
-+    uint8_t ist;
-+    uint8_t type;
-+    uint16_t off1;
-+    uint32_t off2;
-+    uint32_t zero;
-+} __attribute__((packed));
-+
-+static struct idt_gate idt[32] __attribute__((aligned(16)));
-+
-+/* Written by the exception stubs. */
-+volatile uint64_t fault_vec, fault_err, fault_rip, fault_cr2, fixup_rip;
-+
-+/* Exception stubs: record the fault, then resume at fixup_rip, or stop if 0. */
-+asm(".text\n"
-+    ".irp v, 0,1,2,3,4,5,6,7,9,15,16,18,19,20,22,23,24,25,26,27,28,31\n"
-+    "isr_\\v:\n"
-+    "    pushq $0\n"
-+    "    pushq $\\v\n"
-+    "    jmp isr_common\n"
-+    ".endr\n"
-+    ".irp v, 8,10,11,12,13,14,17,21,29,30\n"
-+    "isr_\\v:\n"
-+    "    pushq $\\v\n"
-+    "    jmp isr_common\n"
-+    ".endr\n"
-+    "isr_common:\n"
-+    /* stack: rax, vector, error code, rip, cs, rflags, rsp, ss */
-+    "    pushq %rax\n"
-+    "    movq 8(%rsp), %rax\n"
-+    "    movq %rax, fault_vec(%rip)\n"
-+    "    movq 16(%rsp), %rax\n"
-+    "    movq %rax, fault_err(%rip)\n"
-+    "    movq 24(%rsp), %rax\n"
-+    "    movq %rax, fault_rip(%rip)\n"
-+    "    movq %cr2, %rax\n"
-+    "    movq %rax, fault_cr2(%rip)\n"
-+    "    movq fixup_rip(%rip), %rax\n"
-+    "    testq %rax, %rax\n"
-+    "    jz 1f\n"
-+    "    movq %rax, 24(%rsp)\n"
-+    "    movq $0, fixup_rip(%rip)\n"
-+    "    popq %rax\n"
-+    "    addq $16, %rsp\n"
-+    "    iretq\n"
-+    "1:  andq $-16, %rsp\n"
-+    "    call unexpected_exception\n"
-+    "2:  hlt\n"
-+    "    jmp 2b\n"
-+    ".data\n"
-+    ".align 8\n"
-+    "isr_table:\n"
-+    ".irp v, 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,"
-+    "16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31\n"
-+    "    .quad isr_\\v\n"
-+    ".endr\n"
-+    ".text\n");
-+
-+static int passes, failures;
-+static uint64_t base_cr3;
-+
-+void unexpected_exception(void)
-+{
-+    ml_printf("FAIL: unexpected exception %llu, error %llx, rip %llx, "
-+              "cr2 %llx\n", fault_vec, fault_err, fault_rip, fault_cr2);
-+    asm volatile("outw %w0, $0xf4" : : "a"(0x7f));
-+    for (;;) {
-+        asm volatile("hlt");
-+    }
-+}
-+
-+static const char *vec_name(long long vec)
-+{
-+    switch (vec) {
-+    case VEC_NONE:
-+        return "none";
-+    case VEC_GP:
-+        return "#GP";
-+    case VEC_PF:
-+        return "#PF";
-+    default:
-+        return "other";
-+    }
-+}
-+
-+static void check(int ok, const char *what)
-+{
-+    if (ok) {
-+        passes++;
-+    } else {
-+        failures++;
-+        ml_printf("FAIL: %s\n", what);
-+    }
-+}
-+
-+static uint64_t read_cr3(void)
-+{
-+    uint64_t v;
-+
-+    asm volatile("mov %%cr3, %0" : "=r"(v));
-+    return v;
-+}
-+
-+static uint64_t read_cr4(void)
-+{
-+    uint64_t v;
-+
-+    asm volatile("mov %%cr4, %0" : "=r"(v));
-+    return v;
-+}
-+
-+static void write_cr2(uint64_t v)
-+{
-+    asm volatile("mov %0, %%cr2" : : "r"(v) : "memory");
-+}
-+
-+/* try_*: one operation, returning the vector it raised or VEC_NONE. */
-+#define TRY_BEGIN                               \
-+    "leaq 1f(%%rip), %%rax\n\t"                 \
-+    "movq %%rax, fixup_rip(%%rip)\n\t"
-+#define TRY_END                                 \
-+    "1:\n\t"                                    \
-+    "movq $0, fixup_rip(%%rip)\n\t"
-+
-+static long long try_load(uint64_t addr, uint64_t *val)
-+{
-+    uint64_t v = 0;
-+
-+    fault_vec = VEC_NONE;
-+    asm volatile(TRY_BEGIN
-+                 "movq (%[a]), %[v]\n\t"
-+                 TRY_END
-+                 : [v] "+r"(v) : [a] "r"(addr) : "rax", "memory");
-+    *val = v;
-+    return (long long)fault_vec;
-+}
-+
-+static long long try_store(uint64_t addr, uint64_t val)
-+{
-+    fault_vec = VEC_NONE;
-+    asm volatile(TRY_BEGIN
-+                 "movq %[v], (%[a])\n\t"
-+                 TRY_END
-+                 : : [v] "r"(val), [a] "r"(addr) : "rax", "memory");
-+    return (long long)fault_vec;
-+}
-+
-+static long long try_write_cr3(uint64_t v)
-+{
-+    fault_vec = VEC_NONE;
-+    asm volatile(TRY_BEGIN
-+                 "mov %[v], %%cr3\n\t"
-+                 TRY_END
-+                 : : [v] "r"(v) : "rax", "memory");
-+    return (long long)fault_vec;
-+}
-+
-+static long long try_write_cr4(uint64_t v)
-+{
-+    fault_vec = VEC_NONE;
-+    asm volatile(TRY_BEGIN
-+                 "mov %[v], %%cr4\n\t"
-+                 TRY_END
-+                 : : [v] "r"(v) : "rax", "memory");
-+    return (long long)fault_vec;
-+}
-+
-+static long long try_invlpg(uint64_t addr)
-+{
-+    fault_vec = VEC_NONE;
-+    asm volatile(TRY_BEGIN
-+                 "invlpg (%[a])\n\t"
-+                 TRY_END
-+                 : : [a] "r"(addr) : "rax", "memory");
-+    return (long long)fault_vec;
-+}
-+
-+/* Jump to an exec stub at @addr.  *ran is its EAX, or 0 if none ran. */
-+static long long try_exec(uint64_t addr, int *ran)
-+{
-+    uint64_t r;
-+
-+    fault_vec = VEC_NONE;
-+    asm volatile("leaq 1f(%%rip), %%rdx\n\t"
-+                 "movq %%rdx, fixup_rip(%%rip)\n\t"
-+                 "xorl %%eax, %%eax\n\t"
-+                 "jmp *%[a]\n\t"
-+                 "1:\n\t"
-+                 "movq $0, fixup_rip(%%rip)\n\t"
-+                 : "=&a"(r) : [a] "r"(addr) : "rdx", "memory");
-+    *ran = r;
-+    return (long long)fault_vec;
-+}
-+
-+/* movl $0x1234, %eax; jmp *%rdx, and the same with $0x2222 */
-+static const uint8_t exec_stub[] = {
-+    0xb8, 0x34, 0x12, 0x00, 0x00, 0xff, 0xe2
-+};
-+#ifdef LA57
-+static const uint8_t exec_stub2[] = {
-+    0xb8, 0x22, 0x22, 0x00, 0x00, 0xff, 0xe2
-+};
-+#endif
-+#define EXEC_OFF        0x800
-+
-+static void expect_load(const char *what, uint64_t addr, long long vec,
-+                        uint64_t val)
-+{
-+    uint64_t v;
-+    long long got = try_load(addr, &v);
-+
-+    if (got == vec && (vec != VEC_NONE || v == val)) {
-+        passes++;
-+        return;
-+    }
-+    failures++;
-+    ml_printf("FAIL: %s: load %llx: exception %s, value %llx; "
-+              "expected exception %s, value %llx\n",
-+              what, addr, vec_name(got), v, vec_name(vec), val);
-+}
-+
-+static void expect_store(const char *what, uint64_t addr, long long vec,
-+                         uint64_t val)
-+{
-+    long long got = try_store(addr, val);
-+
-+    if (got == vec) {
-+        passes++;
-+        return;
-+    }
-+    failures++;
-+    ml_printf("FAIL: %s: store %llx: exception %s, expected %s\n",
-+              what, addr, vec_name(got), vec_name(vec));
-+}
-+
-+static void expect_fault(const char *what, long long got, long long vec)
-+{
-+    if (got == vec) {
-+        passes++;
-+        return;
-+    }
-+    failures++;
-+    ml_printf("FAIL: %s: exception %s, expected %s\n",
-+              what, vec_name(got), vec_name(vec));
-+}
-+
-+static void set_lam_cr3(uint64_t bits)
-+{
-+    long long v = try_write_cr3(base_cr3 | bits);
-+
-+    if (v != VEC_NONE) {
-+        ml_printf("FAIL: MOV to CR3 with %llx: exception %s\n",
-+                  bits, vec_name(v));
-+        failures++;
-+    }
-+}
-+
-+static void set_lam_sup(int on)
-+{
-+    uint64_t cr4 = read_cr4();
-+    long long v;
-+
-+    cr4 = on ? cr4 | CR4_LAM_SUP : cr4 & ~CR4_LAM_SUP;
-+    v = try_write_cr4(cr4);
-+    if (v != VEC_NONE) {
-+        ml_printf("FAIL: MOV to CR4 with LAM_SUP=%d: exception %s\n",
-+                  on, vec_name(v));
-+        failures++;
-+    }
-+}
-+
-+static uint64_t *phys(uint64_t pa)
-+{
-+    return (uint64_t *)pa;
-+}
-+
-+static void setup_idt(void)
-+{
-+    struct {
-+        uint16_t limit;
-+        uint64_t base;
-+    } __attribute__((packed)) idtr = { sizeof(idt) - 1, (uint64_t)idt };
-+    const uint64_t *isr_table;
-+
-+    asm("leaq isr_table(%%rip), %0" : "=r"(isr_table));
-+    for (int i = 0; i < 32; i++) {
-+        uint64_t h = isr_table[i];
-+
-+        idt[i].off0 = h;
-+        idt[i].sel = 0x8;
-+        idt[i].ist = 0;
-+        idt[i].type = 0x8e;
-+        idt[i].off1 = h >> 16;
-+        idt[i].off2 = h >> 32;
-+        idt[i].zero = 0;
-+    }
-+    asm volatile("lidt %0" : : "m"(idtr));
-+}
-+
-+static void setup_paging(void)
-+{
-+    for (int i = 0; i < 512; i++) {
-+        pml5[i] = pml4[i] = pdpt_id[i] = pd_id[i] = 0;
-+        pdpt_t[i] = pd_t[i] = pt_t[i] = 0;
-+    }
-+    for (int i = 0; i < ID_PAGES; i++) {
-+        pt_id[i] = (uint64_t)i * 4096 | PTE_FLAGS;
-+    }
-+    for (int i = 0; i < ID_PAGES / 512; i++) {
-+        pd_id[i] = (uint64_t)&pt_id[i * 512] | PTE_FLAGS;
-+    }
-+    pdpt_id[0] = (uint64_t)pd_id | PTE_FLAGS;
-+    pml4[0] = (uint64_t)pdpt_id | PTE_FLAGS;
-+
-+    for (int i = 0; i < 3; i++) {
-+        pt_t[i] = (uint64_t)frames[i] | PTE_FLAGS;
-+    }
-+    pd_t[0] = (uint64_t)pt_t | PTE_FLAGS;
-+    pd_t[1] = LP0_PHYS | PTE_PS | PTE_FLAGS;
-+    pdpt_t[0] = (uint64_t)pd_t | PTE_FLAGS;
-+    pml4[1] = (uint64_t)pdpt_t | PTE_FLAGS;
-+    pml4[256] = (uint64_t)pdpt_t | PTE_FLAGS;
-+
-+    for (int i = 0; i < 4; i++) {
-+        for (int j = 0; j < 4096 / 8; j++) {
-+            ((uint64_t *)frames[i])[j] = MARK(i + 1) + j;
-+        }
-+    }
-+    *phys(LP0_PHYS) = 0xaaaaaaaaaaaaaaaaULL;
-+    *phys(LP0_PHYS + 0x5000) = 0xaaaaaaaaaaaa5000ULL;
-+    *phys(LP1_PHYS) = 0xbbbbbbbbbbbbbbbbULL;
-+    *phys(LP1_PHYS + 0x5000) = 0xbbbbbbbbbbbb5000ULL;
-+    for (int i = 0; i < (int)sizeof(exec_stub); i++) {
-+        frames[0][EXEC_OFF + i] = exec_stub[i];
-+    }
-+
-+#ifdef LA57
-+    for (int i = 0; i < 512; i++) {
-+        pml4_h[i] = pdpt_h[i] = pd_h[i] = pt_h[i] = 0;
-+    }
-+    pt_h[0] = (uint64_t)frames[2] | PTE_FLAGS;
-+    pd_h[0] = (uint64_t)pt_h | PTE_FLAGS;
-+    pdpt_h[0] = (uint64_t)pd_h | PTE_FLAGS;
-+    pml4_h[1] = (uint64_t)pdpt_h | PTE_FLAGS;
-+    for (int i = 0; i < (int)sizeof(exec_stub2); i++) {
-+        frames[2][EXEC_OFF + i] = exec_stub2[i];
-+    }
-+    pml5[0] = (uint64_t)pml4 | PTE_FLAGS;
-+    pml5[1] = (uint64_t)pml4_h | PTE_FLAGS;
-+    pml5[511] = (uint64_t)pml4 | PTE_FLAGS;
-+    base_cr3 = (uint64_t)pml5;
-+#else
-+    base_cr3 = (uint64_t)pml4;
-+#endif
-+    asm volatile("mov %0, %%cr3" : : "r"(base_cr3) : "memory");
-+}
-+
-+static void restore_frames(void)
-+{
-+    pt_t[0] = (uint64_t)frames[0] | PTE_FLAGS;
-+    pd_t[1] = LP0_PHYS | PTE_PS | PTE_FLAGS;
-+    for (int j = 0; j < 4096 / 8; j++) {
-+        ((uint64_t *)frames[0])[j] = MARK(1) + j;
-+    }
-+    for (int i = 0; i < (int)sizeof(exec_stub); i++) {
-+        frames[0][EXEC_OFF + i] = exec_stub[i];
-+    }
-+}
-+
-+static int cpu_has_lam(void)
-+{
-+    uint32_t a, b, c, d;
-+
-+    asm volatile("cpuid" : "=a"(a), "=b"(b), "=c"(c), "=d"(d)
-+                 : "a"(7), "c"(1));
-+    return (a >> 26) & 1;
-+}
-+
-+static void test_no_lam_cpu(void)
-+{
-+    expect_load("no LAM: tagged load", VA_PAGE(0) | TAG57(1), VEC_GP, 0);
-+}
-+
-+static void test_lam_off(void)
-+{
-+    set_lam_cr3(0);
-+    set_lam_sup(0);
-+    write_cr2(0xdead000);
-+    expect_load("LAM off: untagged", VA_PAGE(0), VEC_NONE, MARK(1));
-+    expect_load("LAM off: tag 62:57", VA_PAGE(0) | TAG57(0x2a), VEC_GP, 0);
-+    check(fault_cr2 == 0xdead000, "LAM off: #GP left CR2 unchanged");
-+    expect_load("LAM off: tag 56:48", VA_PAGE(0) | TAG48(0x10), VEC_NC4, 0);
-+    expect_load("LAM off: supervisor tag", VA_SUP & ~(1ULL << 60), VEC_GP,
-+                0);
-+}
-+
-+static void test_cr3_readback(void)
-+{
-+    set_lam_cr3(CR3_LAM_U57);
-+    check(read_cr3() == (base_cr3 | CR3_LAM_U57), "CR3 reads back LAM_U57");
-+    set_lam_cr3(CR3_LAM_U48);
-+    check(read_cr3() == (base_cr3 | CR3_LAM_U48), "CR3 reads back LAM_U48");
-+    set_lam_cr3(0);
-+}
-+
-+static void test_u57(void)
-+{
-+    uint64_t a = VA_PAGE(0) | TAG57(0x2a);
-+    uint64_t b = VA_PAGE(0) | TAG57(0x15);
-+    uint64_t v;
-+
-+    set_lam_cr3(CR3_LAM_U57);
-+
-+    expect_load("U57: untagged", VA_PAGE(0), VEC_NONE, MARK(1));
-+    expect_load("U57: tag 0x2a", a, VEC_NONE, MARK(1));
-+    expect_load("U57: tag 0x3f", VA_PAGE(0) | TAG57(0x3f), VEC_NONE,
-+                MARK(1));
-+    expect_load("U57: tag 0x2a, page 1", VA_PAGE(1) | TAG57(0x2a) | 0x18,
-+                VEC_NONE, MARK(2) + 3);
-+
-+    /* Aliases share memory, also when they alternate in one TLB slot. */
-+    for (int i = 0; i < 8; i++) {
-+        uint64_t w = i & 1 ? a : b;
-+        uint64_t r = i & 1 ? b : a;
-+
-+        expect_store("U57: alias store", w + 8, VEC_NONE, 0x5150 + i);
-+        expect_load("U57: alias load", r + 8, VEC_NONE, 0x5150 + i);
-+        expect_load("U57: untagged load", VA_PAGE(0) + 8, VEC_NONE,
-+                    0x5150 + i);
-+    }
-+
-+    /* Bit 56, and with 4-level paging bits 55:47, must equal bit 63. */
-+    expect_load("U57: bit 56 set", VA_PAGE(0) | (1ULL << 56), VEC_GP, 0);
-+    expect_load("U57: tag and bit 56 set", a | (1ULL << 56), VEC_GP, 0);
-+    expect_load("U57: bit 52 set", VA_PAGE(0) | (1ULL << 52), VEC_NC4, 0);
-+    expect_load("U57: tag and bit 49 set", a | (1ULL << 49), VEC_NC4, 0);
-+    expect_load("U57: bit 47 set", VA_PAGE(0) | (1ULL << 47), VEC_NC4, 0);
-+
-+    /* The supervisor half is not masked without LAM_SUP. */
-+    expect_load("U57: supervisor untagged", VA_SUP, VEC_NONE, MARK(1));
-+    expect_load("U57: supervisor tagged", VA_SUP & ~TAG57(0x3f), VEC_GP, 0);
-+
-+    /* #PF through a tagged address reports the masked address in CR2. */
-+    expect_load("U57: #PF load", VA_PAGE(3) | TAG57(0x2a) | 0x40, VEC_PF,
-+                0);
-+    check(fault_cr2 == (VA_PAGE(3) | 0x40), "U57: #PF load CR2 is masked");
-+    check(fault_err == 0, "U57: #PF load error code");
-+    expect_store("U57: #PF store", VA_PAGE(3) | TAG57(0x2a) | 0x48, VEC_PF,
-+                 0);
-+    check(fault_cr2 == (VA_PAGE(3) | 0x48), "U57: #PF store CR2 is masked");
-+    check(fault_err == 2, "U57: #PF store error code");
-+
-+    /* Accesses that cross a page boundary. */
-+    {
-+        uint64_t want, cr2;
-+
-+        try_load(VA_PAGE(1) - 4, &want);
-+        expect_load("U57: cross-page load", (VA_PAGE(1) - 4) | TAG57(9),
-+                    VEC_NONE, want);
-+        expect_load("U57: cross-page #PF untagged", VA_PAGE(3) - 4, VEC_PF,
-+                    0);
-+        cr2 = fault_cr2;
-+        expect_load("U57: cross-page #PF", (VA_PAGE(3) - 4) | TAG57(9),
-+                    VEC_PF, 0);
-+        check(fault_cr2 == cr2, "U57: cross-page #PF CR2");
-+    }
-+
-+    /* Helpers and atomics. */
-+    {
-+        uint64_t p = VA_PAGE(2) | TAG57(0x11);
-+        uint64_t src = VA_PAGE(0) | TAG57(0x22);
-+        uint64_t dst = (VA_PAGE(2) + 0x300) | TAG57(0x33);
-+        uint64_t n = 64;
-+        uint64_t old = 5, lo = 1, hi = 2;
-+        uint8_t ok;
-+
-+        try_store(p + 0x100, 40);
-+        asm volatile("lock xaddq %0, (%1)" : "+r"(old) : "r"(p + 0x100)
-+                     : "memory");
-+        check(old == 40, "U57: lock xadd old value");
-+        expect_load("U57: lock xadd result", VA_PAGE(2) + 0x100, VEC_NONE,
-+                    45);
-+
-+        try_store(VA_PAGE(2) + 0x200, 1);
-+        try_store(VA_PAGE(2) + 0x208, 2);
-+        asm volatile("lock cmpxchg16b (%[p])\n\tsetz %[ok]"
-+                     : "+a"(lo), "+d"(hi), [ok] "=q"(ok)
-+                     : [p] "r"(p + 0x200), "b"(0x33ULL), "c"(0x44ULL)
-+                     : "memory");
-+        check(ok, "U57: cmpxchg16b succeeded");
-+        expect_load("U57: cmpxchg16b low", VA_PAGE(2) + 0x200, VEC_NONE,
-+                    0x33);
-+        expect_load("U57: cmpxchg16b high", VA_PAGE(2) + 0x208, VEC_NONE,
-+                    0x44);
-+
-+        asm volatile("rep movsb" : "+S"(src), "+D"(dst), "+c"(n)
-+                     : : "memory");
-+        expect_load("U57: rep movsb", VA_PAGE(2) + 0x300 + 16, VEC_NONE,
-+                    MARK(1) + 2);
-+
-+        try_store(VA_PAGE(2) + 0x400, 0);
-+        asm volatile("fninit\n\tfxsave64 (%0)" : : "r"(p + 0x400)
-+                     : "memory");
-+        try_load(VA_PAGE(2) + 0x400, &v);
-+        check((v & 0xffff) == 0x37f, "U57: fxsave64 FCW");
-+    }
-+
-+    /* Instruction fetches are not masked. */
-+    {
-+        uint64_t code = VA_PAGE(0) + EXEC_OFF;
-+        int ran;
-+
-+        expect_fault("U57: exec untagged", try_exec(code, &ran), VEC_NONE);
-+        check(ran == 0x1234, "U57: exec untagged ran");
-+
-+        set_lam_cr3(CR3_LAM_U57);
-+        expect_fault("U57: exec tagged, empty TLB",
-+                     try_exec(code | TAG57(0x2a), &ran), VEC_GP);
-+        check(!ran, "U57: exec tagged, empty TLB, did not run");
-+
-+        set_lam_cr3(CR3_LAM_U57);
-+        expect_load("U57: data load before exec", code | TAG57(0x2a),
-+                    VEC_NONE, *(uint64_t *)&frames[0][EXEC_OFF]);
-+        expect_fault("U57: exec tagged after data load",
-+                     try_exec(code | TAG57(0x2a), &ran), VEC_GP);
-+        check(!ran, "U57: exec tagged after data load did not run");
-+    }
-+
-+    /* Turning LAM off flushes entries for tagged addresses. */
-+    expect_load("U57: before CR3 write", a, VEC_NONE, MARK(1));
-+    set_lam_cr3(0);
-+    expect_load("U57: after LAM_U57 cleared", a, VEC_GP, 0);
-+}
-+
-+static void test_u48(void)
-+{
-+    uint64_t a = VA_PAGE(0) | TAG48(0x1234);
-+    uint64_t b = VA_PAGE(0) | TAG48(0x7fff);
-+
-+    set_lam_cr3(CR3_LAM_U48);
-+    expect_load("U48: tag 0x1234", a, VEC_NONE, MARK(1));
-+    expect_load("U48: tag 0x7fff", b, VEC_NONE, MARK(1));
-+    expect_store("U48: alias store", a + 16, VEC_NONE, 0x4848);
-+    expect_load("U48: alias load", b + 16, VEC_NONE, 0x4848);
-+    expect_load("U48: bit 47 set", VA_PAGE(0) | (1ULL << 47), VEC_GP, 0);
-+    expect_load("U48: tag and bit 47 set", a | (1ULL << 47), VEC_GP, 0);
-+    expect_load("U48: #PF", VA_PAGE(3) | TAG48(0x77) | 8, VEC_PF, 0);
-+    check(fault_cr2 == (VA_PAGE(3) | 8), "U48: #PF CR2 is masked");
-+
-+    /* LAM_U57 takes precedence over LAM_U48. */
-+    set_lam_cr3(CR3_LAM_U57 | CR3_LAM_U48);
-+    expect_load("U57+U48: tag 62:57", VA_PAGE(0) | TAG57(5), VEC_NONE,
-+                MARK(1));
-+    expect_load("U57+U48: bit 50", VA_PAGE(0) | (1ULL << 50), VEC_NC4, 0);
-+    set_lam_cr3(0);
-+}
-+
-+static void test_sup(void)
-+{
-+    uint64_t a = STAG(0x1a);
-+    uint64_t b = STAG(0x01);
-+    uint64_t user = VA_PAGE(0) | TAG57(1);
-+    uint64_t x = STAG(0x2e) & ~(1ULL << 50);
-+
-+    set_lam_cr3(0);
-+    set_lam_sup(1);
-+    check(read_cr4() & CR4_LAM_SUP, "CR4.LAM_SUP reads back");
-+    expect_load("SUP: untagged", VA_SUP, VEC_NONE, MARK(1));
-+    expect_load("SUP: tagged", a, VEC_NONE, MARK(1));
-+    expect_store("SUP: alias store", b + 24, VEC_NONE, 0x5555);
-+    expect_load("SUP: alias load", a + 24, VEC_NONE, 0x5555);
-+    expect_load("SUP: highest address bit clear", SUP_BAD, VEC_GP, 0);
-+    expect_load("SUP: user half not masked", user, VEC_GP, 0);
-+    expect_load("SUP: #PF", STAG(0x22) + 3 * 4096 + 0x10, VEC_PF, 0);
-+    check(fault_cr2 == (VA_SUP + 3 * 4096 + 0x10), "SUP: #PF CR2 is masked");
-+
-+    /*
-+     * Bit 50 is metadata with 4-level paging.  With 5-level paging it
-+     * selects PML5 entry 0x1fb, which is not present.
-+     */
-+#ifdef LA57
-+    expect_load("SUP: bit 50 clear", x, VEC_PF, 0);
-+    check(fault_cr2 == (VA_SUP & ~(1ULL << 50)), "SUP: bit 50 clear CR2");
-+#else
-+    expect_load("SUP: bit 50 clear", x, VEC_NONE, MARK(1));
-+#endif
-+
-+    /* Turning LAM_SUP off flushes entries for tagged addresses. */
-+    expect_load("SUP: before CR4 write", a, VEC_NONE, MARK(1));
-+    set_lam_sup(0);
-+    expect_load("SUP: after LAM_SUP cleared", a, VEC_GP, 0);
-+}
-+
-+#ifdef LA57
-+/*
-+ * With LAM_U48, fetches from VA_HIGH reach frames[2] and data accesses
-+ * reach frames[0], in either order.
-+ */
-+static void test_u48_la57_split(void)
-+{
-+    uint64_t data = VA_HIGH, code = VA_HIGH + EXEC_OFF;
-+    int ran;
-+
-+    set_lam_cr3(0);
-+    expect_load("U48 LA57: LAM off, data", data, VEC_NONE, MARK(3));
-+
-+    set_lam_cr3(CR3_LAM_U48);
-+    expect_fault("U48 LA57: fetch first", try_exec(code, &ran), VEC_NONE);
-+    check(ran == 0x2222, "U48 LA57: fetch first ran frames[2]");
-+    expect_load("U48 LA57: data after fetch", data, VEC_NONE, MARK(1));
-+    expect_fault("U48 LA57: fetch after data", try_exec(code, &ran),
-+                 VEC_NONE);
-+    check(ran == 0x2222, "U48 LA57: fetch after data ran frames[2]");
-+    expect_load("U48 LA57: data after second fetch", data, VEC_NONE,
-+                MARK(1));
-+
-+    set_lam_cr3(CR3_LAM_U48);
-+    expect_load("U48 LA57: data first", data, VEC_NONE, MARK(1));
-+    expect_fault("U48 LA57: fetch after data first", try_exec(code, &ran),
-+                 VEC_NONE);
-+    check(ran == 0x2222, "U48 LA57: fetch after data first ran frames[2]");
-+
-+    set_lam_cr3(0);
-+}
-+#endif
-+
-+/* INVLPG of the untagged address must flush every tagged alias. */
-+static void test_invlpg_4k(const char *what, uint64_t lam, int sup,
-+                           uint64_t base, uint64_t a, uint64_t b)
-+{
-+    restore_frames();
-+    set_lam_cr3(lam);
-+    set_lam_sup(sup);
-+
-+    expect_load(what, a, VEC_NONE, MARK(1));
-+    expect_load(what, b, VEC_NONE, MARK(1));
-+    expect_load(what, base, VEC_NONE, MARK(1));
-+
-+    pt_t[0] = (uint64_t)frames[3] | PTE_FLAGS;
-+    expect_fault(what, try_invlpg(base), VEC_NONE);
-+
-+    expect_load(what, a, VEC_NONE, MARK(4));
-+    expect_load(what, b, VEC_NONE, MARK(4));
-+    expect_load(what, base, VEC_NONE, MARK(4));
-+
-+    /* INVLPG of a tagged operand is a no-op and does not fault. */
-+    expect_fault(what, try_invlpg(a), VEC_NONE);
-+
-+    restore_frames();
-+    set_lam_cr3(0);
-+    set_lam_sup(0);
-+}
-+
-+/* The same for a 2 MiB page, with INVLPG of a different 4 KiB part. */
-+static void test_invlpg_2m(void)
-+{
-+    uint64_t t = TAG57(0x2a);
-+
-+    restore_frames();
-+    set_lam_cr3(CR3_LAM_U57);
-+
-+    expect_load("INVLPG 2M: before", (VA_LP + 0x5000) | t, VEC_NONE,
-+                0xaaaaaaaaaaaa5000ULL);
-+    pd_t[1] = LP1_PHYS | PTE_PS | PTE_FLAGS;
-+    expect_fault("INVLPG 2M: invlpg", try_invlpg(VA_LP + 0x1000),
-+                 VEC_NONE);
-+    expect_load("INVLPG 2M: after, other 4K part", (VA_LP + 0x5000) | t,
-+                VEC_NONE, 0xbbbbbbbbbbbb5000ULL);
-+    expect_load("INVLPG 2M: after, first 4K part", VA_LP | t, VEC_NONE,
-+                0xbbbbbbbbbbbbbbbbULL);
-+
-+    restore_frames();
-+    set_lam_cr3(0);
-+}
-+
-+int main(void)
-+{
-+    int lam;
-+
-+    setup_idt();
-+    setup_paging();
-+
-+#ifdef LA57
-+    check(read_cr4() & CR4_LA57, "CR4.LA57 is set");
-+#endif
-+    lam = cpu_has_lam();
-+    check(lam == EXPECT_LAM,
-+          EXPECT_LAM ? "CPUID reports LAM" : "CPUID reports no LAM");
-+    if (!lam) {
-+        ml_printf("CPUID reports no LAM\n");
-+        test_no_lam_cpu();
-+    } else {
-+        ml_printf("CPUID reports LAM\n");
-+        test_lam_off();
-+        test_cr3_readback();
-+        test_u57();
-+        test_u48();
-+        test_sup();
-+        test_invlpg_4k("INVLPG U57", CR3_LAM_U57, 0, VA_PAGE(0),
-+                       VA_PAGE(0) | TAG57(0x2a), VA_PAGE(0) | TAG57(0x15));
-+        test_invlpg_4k("INVLPG U48", CR3_LAM_U48, 0, VA_PAGE(0),
-+                       VA_PAGE(0) | TAG48(0x1234),
-+                       VA_PAGE(0) | TAG48(0x42));
-+        test_invlpg_4k("INVLPG SUP", 0, 1, VA_SUP, STAG(0x1a), STAG(0x05));
-+        test_invlpg_2m();
-+#ifdef LA57
-+        test_u48_la57_split();
-+#endif
-+    }
-+
-+    ml_printf("%d passed, %d failed\n", passes, failures);
-+    return failures ? 1 : 0;
-+}
-diff --git a/tests/tcg/x86_64/system/meson.build b/tests/tcg/x86_64/system/meson.build
-index 46a35d22..2bc470ae 100644
---- a/tests/tcg/x86_64/system/meson.build
-+++ b/tests/tcg/x86_64/system/meson.build
-@@ -48,6 +48,22 @@ tests += {
-   }
- }
- 
-+# The LAM test takes exceptions on the current stack, without CR4.OSFXSR.
-+lam_cflags = cflags + ['-mno-red-zone', '-mgeneral-regs-only']
-+foreach paging, extra: {'': [], '-la57': ['-DLA57']}
-+  foreach suffix, cpu: {'': 'max', '-off': 'max,lam=off'}
-+    lam_test = {
-+      'cflags': lam_cflags + extra +
-+                ['-DEXPECT_LAM=' + (suffix == '' ? '1' : '0')],
-+      'qemu_args': ['-cpu', cpu] + qemu_def_args,
-+    }
-+    if paging + suffix != ''
-+      lam_test += {'exe_name': 'lam' + paging + suffix}
-+    endif
-+    tests += {'lam.c': lam_test}
-+  endforeach
-+endforeach
-+
- if 'qemu-system-x86_64' in emulators
-   tcg_tests += {
-     'x86_64-softmmu': {
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index dc83f3ba..ad2a5aa1 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -691,8 +691,10 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
+      * Check if we need to flush due to large pages.
+      * Because large_page_mask contains all 1's from the msb,
+      * we only need to test the end of the range.
++     * Compare under @mask, ignoring bits above @bits.
+      */
+-    if (((addr + len - 1) & d->large_page_mask) == d->large_page_addr) {
++    if (((addr + len - 1) & d->large_page_mask & mask) ==
++        (d->large_page_addr & mask)) {
+         tlb_debug("forcing full flush midx %d ("
+                   "%016" VADDR_PRIx "/%016" VADDR_PRIx ")\n",
+                   midx, d->large_page_addr, d->large_page_mask);
 -- 
 2.47.3
 
