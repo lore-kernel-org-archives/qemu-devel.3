@@ -1,132 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8273D606A326
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 11:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C87E60A2631
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 11:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VC8SYPzR;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=HO+LtACf
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=HAVJ4nXt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUMM6-000065-UA; Fri, 20 Nov 2026 06:00:34 -0500
+	id 1xUMWe-0001ZF-0Z; Fri, 20 Nov 2026 06:11:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1xUMM5-00005l-Nd
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:00:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1xUMM3-0000qc-Tg
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:00:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795172429;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uPAId5lZKbw1zDWb3K3gUUhylVwg90AOuquEeBNzZGA=;
- b=VC8SYPzRnEwbq2usQwA6BHwMPT5TI2qjwOJZaRpd+FBNpNQI+NDHu0JiJ7vd4YPKnxXu0+
- cTR4Yu6ejpohjDqeu1jaun/MEaAU9MbU3s+yuDeVlr+0aR54b5VdYaVAP5818T33j4JlYE
- GVHtl1oF8xCZrWAxJK0UfUAJ9U3Kbpg=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-3fGBVfLgOSaBBUwdUexq4A-1; Fri, 20 Nov 2026 11:00:27 +0000
-X-MC-Unique: 3fGBVfLgOSaBBUwdUexq4A-1
-X-Mimecast-MFC-AGG-ID: 3fGBVfLgOSaBBUwdUexq4A_1795172427
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-677c4ca2265so1394968d50.2
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:00:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795172427; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xUMWb-0001Yu-Nt
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:11:25 -0500
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xUMWZ-00065y-Qo
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 06:11:25 -0500
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-67be4f2f4d4so945632d50.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:11:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795173080; cv=none;
  d=google.com; s=arc-20260327;
- b=AOcpScPhmtVn5dYgBoeS7RyUQbxUD7MdrpwZwNcEAAGH1N/1yFI9+JyyVzBpgC0JrW
- 5ENynWxJsvN8yumTmAUvUiGqFOfMmws3yrKULopXFBNQ31OcE+1al5TaVacbfBSCBOU7
- DKBQIA8LUQRXqetyhHAFWw4JeJxcj5Pk0VCgP7q8PJ7o/AEoAM6NkR6AL09eBvi3Sg2h
- 2hRI+ZO4GhyUkh9A3C4hw2BCyyM/X6TEGo4aKMAe6HLnNxSR8jIqvfgRDJPJhWuvWNw5
- E3de2gYweWWEMJWs0i8xCvQ+Gzg3yUmwsQOUMQWxDk51la4uvmsl9+65NCg4Dq5AxXWm
- Zaww==
+ b=f3KhYIcQIky1/ClOicgzB56UlZlZyVAAw6YYB/vT5nsWtdQ77sTVO7tlT19RYnm/Lp
+ YXHau6F2s2H2ZVcg24u1QW8Z0qVExSJcYA6UZdKRrrxy/lvNh0bqJU7k3WK2ICso2/zo
+ 04xHo6qdR9T+K1r2HHKpqCLd92e2FH0XnY3Ufrvp0xwfB6wdvX3Eayo8zx+khkri83Ym
+ PwnlUs0iHP20AgnAPck217a8UBP0AZXZGR0QLfzPaS03rXqylFmnN2jsbsvG5GgocJcC
+ 1ZnsVzE5M1frB3qrx8SVnHqzpEr6r05VmNhNpMaxyAtEzF+2VUCv16W5VleFn4NJ2uBK
+ UgDw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=uPAId5lZKbw1zDWb3K3gUUhylVwg90AOuquEeBNzZGA=;
- fh=xg//tmfYhU4RsZeBdbfJl6ssYnXBM6cRDXSJRvxcV/U=;
- b=fwKApcPVhYgoid5FFFXb/Hoet6aWAaJjP0TtjDkzUM9zz1gyU+Ya0Sb13kQEmOEofl
- rbdN3sQ1aF2F1mOGvDtkGMFDe8A4GNA5Oifog+dh3DOZ1KClX5ToS/WWJ2hI0ZejtJV+
- Rf+1tRMK+NYo5sG48FHmYpOO+7pmSCtfQuEmnuvB4mugDbpEful2f9waf/xEatrKJoY+
- lf03r56hz4OPNc6M/ilnZvsMkX7DVu1rLvcwSU5vK5lYE8F5VNUmVqertl90kWkBrmCT
- gwc5UdzpVeujBX5kR9xDu2Cr8rPJLlK1KB2JYRYXHALBcnqgUQbkE8DI3rgV89Mcxxkz
- L23Q==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=JlbbXh3veM9/VvkJ/1Iw5pgFvYguw2fNEos3kNnkPLE=;
+ fh=jis90ebI1LXbWlN2f/uPaYiR3/160S3+nBo5cgb+Jhw=;
+ b=cG1tzOlt3uSkUWl3iF0W8yf6L83el+TSR7Af9pR9eztMZVO2goQYhqv4uElSJnrJ4i
+ fkoAXATkWI7GDemW58SQRktpsjCqL+Jesl9aQ2PvUQvQsC4Gm0dWCY8gVky+tee9e1AN
+ LXmjruObQPefRGhMLTLLngJ9ZAcjyEplocTQ1ZNtwGVpeStlup7xrjmSVppKhuNXnMYZ
+ 6jTEJT6vbA7qlOvxoO+39EQcBUuZrPTc0gEiRUT0yNSDbRhC7pLoZhYhgfkExWYaZQu3
+ vzNLRXZh4cAG17j36toSDfkcGt0RfDruBdLsLy1ie6xZn7X859IEu9WPiEdgx2qjaXfn
+ 8QxA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795172427; x=1795777227; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=uPAId5lZKbw1zDWb3K3gUUhylVwg90AOuquEeBNzZGA=;
- b=HO+LtACfzo5G74ahgBoh5BPtOSoUXCK62auUXdoVZPn2MPJkma2lnJm+oNuzo858pT
- 1oEK/+6PuT4f8CO35DiOTe34Xie+YKnQ00h12fjjI1RX5mUhupNIcO7W+rVaCA7u2hXU
- pIjFPj42dBOdVm02ton+htivCFdfMoQp0qdJiKyWHArUWmu903im2A3R2YLBzK1KX9gK
- A6+E670BvDya7oONVUP8sUfjjTOJzBHXPEjwk3NsSIg2LGgic1lq2yObD5U/hY7pVXFz
- 84uJoqlWWWOoNFkDgfJyGi9mQv1BbPdB70Y9AsqXqxYCzpq3tLop1FFdaqK5C1D9MdsD
- SwPw==
+ d=linaro.org; s=google; t=1795173080; x=1795777880; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=JlbbXh3veM9/VvkJ/1Iw5pgFvYguw2fNEos3kNnkPLE=;
+ b=HAVJ4nXtEymNk8BEM4q3ovLAX9vu9fbYGmAGfkqJj4sBbaAYYdh4nwC2K34G1EchNJ
+ 7Ba5yAfmRHaTvEJe1gI9dlwo18A+j0ruC1HFqB41idw5Ic5D7fRAL7sxnxxgzYAjui7G
+ G0lachKKZFs8T7lhWv3jObxIHz20i8262S6gvUYZuAd+SLZMVa3TkyAyA6zprAD+Ba+E
+ jJ6ROMETj5lRhgIK8qHkY++MsDFCMw+BW4qf8kiQ24GJO0ULYf6uaC5Czl5Hc8dIixnj
+ 7uDd3GtMzWQyzUM0X3JAACpJM2ZdDzejWf9uaUfhct0gyPjdfnl8sWlMcUNMI0zZCgud
+ RMrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795172427; x=1795777227;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=uPAId5lZKbw1zDWb3K3gUUhylVwg90AOuquEeBNzZGA=;
- b=HNR/pZrfN5Fn/hlRCSW1b2FS4U4ceggSK0AbV7sx2bdknhTgqglg/Ex0R2SiEuEOSg
- ijdBSUkGchQxHzFcuAn9aOpPPI5YrpOQ4Y2nHDRqVFnPcNI6uR6gLRIvyYtmp3ls+u99
- UChlLiLiYkOxa4c4dH1AE0DuhHVZH2+Oc0kK1X0SqjypD8KalRNaiieHXw4nDlUx9sqN
- rlNUOAjcwhhmpH/TCW3nOWj+9gckgiN+lnXTaZbGceMqHkG3YaLazRe0KeAZBbI9X2mp
- Sxvr5v3t6Yof4ueoFfcQjRaQY2WzFL/N5ipKaYrJyD2BeQe+p8Q/6Z97h+mdZ2ccjT1z
- emOg==
-X-Forwarded-Encrypted: i=1;
- AL+hErHk1deN5anbOQxuEg8XnkY1XKhwSwffM9YFrYHT17+RUC0nI/jVKF79feJJnlvg8ppuWfV4KLxFc5iO@nongnu.org
-X-Gm-Message-State: APuU4Z+GQCmcEF+iv0OSHend2+UTaK6MxR0s42yLVXq7FjafY/34nMjj
- 8+dRSAnbWC2qi3wXfCJXYgoehO0dEh+5RObOe09xSATnR14UNBbKr0yqq0IhNl3rQUQqapWddVc
- sXhyZab8AizMd7tzdANb1bnKOzDdl49l0Qr5RzdLd9bytP/MRweJdF2q1RVs0z4b3jzqXaAruFR
- w9SDROa9GGkhGdF+qM2fXpUAJAiTZqkzA=
-X-Gm-Gg: AZFdTZd1l+UlLwMrhs0Ygs/ZkdKwGzS1K2KLNSoCAaf5Dbh58T95Z2xVTOCNMgiraGS
- cTP8HLU0BnrsW61vcFWzmawmigCeo+dujUBHRfVTizRCF7/Iw3A/dIjaOM8dDGEPeV2PJ/ZWBpD
- pgyTHc4ipoTjqXuIrimfuu3o+oSwt888McU+qsnO8uYJVia3mlzBis8dzpKWxvEd7uTC3Uq0VVu
- 2B76xMwtD1jxRcZ0dSWswsD8tZmmrt4XIb2sRs93jEarxJ02HrGLtu3GSg=
-X-Received: by 2002:a05:690e:1512:b0:67d:eb6d:7451 with SMTP id
- 956f58d0204a3-67df4422c68mr933668d50.33.1795172427097; 
- Fri, 20 Nov 2026 03:00:27 -0800 (PST)
-X-Received: by 2002:a05:690e:1512:b0:67d:eb6d:7451 with SMTP id
- 956f58d0204a3-67df4422c68mr933660d50.33.1795172426439; Fri, 20 Nov 2026
- 03:00:26 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795173080; x=1795777880;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=JlbbXh3veM9/VvkJ/1Iw5pgFvYguw2fNEos3kNnkPLE=;
+ b=iczSA/wLKfeDOaGuW9DKDS5UrM6GDFHJiEVplG7iqLStSNZt5f64h6Jso+OxXOXRxP
+ ygzPiBapZR+Z5JAeTFnl7mECA9V5Uv9w6RsArfB8q/AZI41ErOPePa3prboTbBX/OXHw
+ 2saXB/NQQxfcJYsPzaGhbG18QVC2zXkKA2yKIDiIdKz3y8DgQ1LdqhMIGFcsxCgY+R8P
+ RMbaYhGEo+NWhaVhOrcq8+xpeTw6Y1ZCsR5ZZ3ffrOyyTO5oH0dpiRAV7W7Ryk4F3oWy
+ fSVIP+QuhEkfCTAXT1uKbmvaWwHf4SgmoyOtk0H0/We4ARx6MqS+Uu/LsMxVkQSBtJkk
+ vOZg==
+X-Gm-Message-State: APuU4Z+5KL1aTUQIukOQgvigNFpw4mjzEhUCFMf6G0W6rDH0ZwVPLs8R
+ n9wt/HX4ElMFJCZHANZHFILGo7pQlIbKfXyaOnsCsiEqBkXh/tQcm6RX0R8/JSAefEo+FxKosaR
+ gQV9/PtGPi7quJq/AnKwdTI9/vQ8B2GfD0NExCw8yfw==
+X-Gm-Gg: AZFdTZdj6ULfBSHT7x32sB5ZNPMYIzHtpfS3MCJ39a/voy6fpBhdzzJ6ZljQ+ovf910
+ PVKDmeoic1QNS94ylwFLFXj636d/SXd5SMNIADuf0RV+E6Jjy4J+kt9VUudTRYzWEcNEVLxKLvX
+ bA3f+UN+Fv4fesQEL+wsTF7xuGGEzdHgbhfOfOfUzuUvhbkJSCAQL69S7QdPMaCGTB7LMLctC4g
+ TctNyCZOTphS0NpVaGDqMomqvvZYTvA2ab6ptl5M7ak/uRCmRuo4jX+RK4Fdx+r2GOifi2uWic8
+ ZOckxQbPdo7PGUYyoxKA4DUKplGO+iFdYUxp3Wt1yCs0kb3S/iKa4UGZRnmxCCHeV3UWIMeQCjE
+ X4c/JOQr0wZiGthBx2RkFm7xbwyv85wPYcSMQD8wI68OttVtjhxdmpsHrhG39yQ1cbSEyqLMAiZ
+ EFDBUZBhG+BpXmkXeR2HVD
+X-Received: by 2002:a05:690e:408f:b0:67d:9fef:d60c with SMTP id
+ 956f58d0204a3-67df9015306mr666883d50.17.1795173080241; Fri, 20 Nov 2026
+ 03:11:20 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261104020053.2548-1-lirongqing@baidu.com>
- <c50d636e-a719-4d1c-bb7d-3b2549bd5cfb@tls.msk.ru>
-In-Reply-To: <c50d636e-a719-4d1c-bb7d-3b2549bd5cfb@tls.msk.ru>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 20 Nov 2026 11:59:50 +0100
-X-Gm-Features: AclHuK8B_vAy7Tqen1jy6StXijD61zLNfZzFI9tZ736yYtD60WcGD0spFZ_oD0U
-Message-ID: <CAJaqyWcQJQH-PBLEJb2P33vMsjmPA4itAcwA0Ctn2vDN+pU_vg@mail.gmail.com>
-Subject: Re: [PATCH] virtio: Reset free_head on shadow virtqueue start
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: lirongqing <lirongqing@baidu.com>, mst@redhat.com, 
- Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org, 
- QEMU Stable <qemu-stable@nongnu.org>
+References: <CAFEAcA-iAdTGc0M4ZV5LYXscVVj2oEr7FN+Ac=oBo2_oxuygzg@mail.gmail.com>
+ <av8k8oiG8lRh5bVI@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA_8EAke9-dk-2HfkQ5BJyuODtcSK+DUcmYKRSKgEf=Wnw@mail.gmail.com>
+ <av9D4pVMM989xNcE@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA8UWw+CpaS8wyy0A_MSeXhJ3NzJGcLm-iHkzmw5t9Cd_w@mail.gmail.com>
+ <av9be5IWLpQJu-F_@zhexu-thinkpadt14gen5.rmtcaon.csb>
+In-Reply-To: <av9be5IWLpQJu-F_@zhexu-thinkpadt14gen5.rmtcaon.csb>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 20 Nov 2026 11:11:07 +0000
+X-Gm-Features: AclHuK-aqZifpGg_fdzCYPkzxjQPw1L5MRDMO__qUJQGxk7sxhclZ7jtaY-H_Ns
+Message-ID: <CAFEAcA-fmyi6iWBbXmUUWkf=-9duEySHyPE_ELz8FLgcrhcGAQ@mail.gmail.com>
+Subject: Re: VMSTATE_VALIDATE failures on outbound migration
+To: Peter Xu <peterx@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,69 +116,115 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 20, 2026 at 9:13=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
+On Thu, 19 Nov 2026 at 20:26, Peter Xu <peterx@redhat.com> wrote:
 >
-> On 11/4/26 05:00, lirongqing wrote:
-> > From: Li RongQing <lirongqing@baidu.com>
-> >
-> > free_head tracks the index of the next free descriptor in the SVQ
-> > descriptor ring.  It is used by vhost_svq_vring_write_descs() to
-> > choose where to place new descriptors, and is updated as descriptors
-> > are allocated and recycled.
-> >
-> > free_head is zero-initialized when the SVQ is created through
-> > vhost_svq_new() (g_new0), but it is not reset in vhost_svq_start().
-> > The start function already resets the rest of the ring state
-> > (shadow_avail_idx, shadow_used_idx, last_used, last_used_idx and
-> > num_free), yet free_head is left untouched.
-> >
-> > Since an SVQ can be stopped and restarted on the same object, for
-> > example across vDPA device migration or control virtqueue processing,
-> > a stale free_head from the previous run survives into the new one.
-> > This causes new descriptors to be written at the wrong position of
-> > the SVQ descriptor ring, corrupting it.
-> >
-> > Reset free_head to 0 in vhost_svq_start() so that descriptor
-> > allocation always begins from the head of a fresh ring.
-> >
-> > Fixes: 100890f7cad5 ("vhost: Shadow virtqueue buffers forwarding")
-> > Signed-off-by: Li RongQing <lirongqing@baidu.com>
-> > ---
-> >   hw/virtio/vhost-shadow-virtqueue.c | 1 +
-> >   1 file changed, 1 insertion(+)
+> On Thu, Nov 19, 2026 at 06:53:19PM +0000, Peter Maydell wrote:
+> > I don't think you can deal with the pcie_aer usage this way though,
+> > can you ?
 >
-> That smells like a qemu-stable material, is it not?
+> Attached a patch for that, please have a look.
 >
-
-Right, thanks for noticing that!
-
+> IMHO it's a matter of if we think VMSTATE_VALIDATE() useful.  At least for
+> the current form, I don't like it, especially hijacking the field_exists().
+> I hope post_load_errp() is enough.
+>
 > Thanks,
 >
-> /mjt
+> ===8<===
+> From d92c2548ea084091d3baf51682b150dd4e0f2316 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 19 Nov 2026 14:53:47 -0500
+> Subject: [PATCH] pcie/aer: Remove the usage of VMSTATE_VALIDATE()
 >
-> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
-w-virtqueue.c
-> > index c97bd9f..462c86d 100644
-> > --- a/hw/virtio/vhost-shadow-virtqueue.c
-> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> > @@ -857,6 +857,7 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, Vir=
-tIODevice *vdev,
-> >       svq->shadow_used_idx =3D 0;
-> >       memset(&svq->batch_last, 0, sizeof(svq->batch_last));
-> >       svq->last_used =3D 0;
-> > +    svq->free_head =3D 0;
-> >       svq->last_used_idx =3D 0;
-> >       svq->vdev =3D vdev;
-> >       svq->vq =3D vq;
+> Paving way removing it.  We can replace it with a post_load_errp() instead.
 >
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  hw/pci/pcie_aer.c | 40 +++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 35 insertions(+), 5 deletions(-)
 >
+> diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
+> index 43b14c1f22..87248556d4 100644
+> --- a/hw/pci/pcie_aer.c
+> +++ b/hw/pci/pcie_aer.c
+> @@ -807,21 +807,51 @@ static const VMStateDescription vmstate_pcie_aer_err = {
+>      }
+>  };
+>
+> -static bool pcie_aer_state_log_num_valid(void *opaque, int version_id)
+> -{
+> -    PCIEAERLog *s = opaque;
+> +typedef struct {
+> +    uint16_t v;
+> +} tmp_u16;
+>
+> +static bool pcie_aer_state_log_num_valid(PCIEAERLog *s)
+> +{
+>      return s->log_num <= s->log_max;
+>  }
+>
+> +static bool pcie_aer_state_log_num_post_load(void *opaque, int version,
+> +                                             Error **errp)
+> +{
+> +    PCIEAERLog *s = container_of(opaque, PCIEAERLog, log_num);
+> +
+> +    if (!pcie_aer_state_log_num_valid(s)) {
+> +        error_setg(errp, "PCIe AER log num too big: log_num > log_max");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static const VMStateDescription vmstate_pcie_aer_log_num = {
+> +    .name = "PCIE_AER_ERROR_LOG/NUM",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .post_load_errp = pcie_aer_state_log_num_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT16(v, tmp_u16),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  const VMStateDescription vmstate_pcie_aer_log = {
+>      .name = "PCIE_AER_ERROR_LOG",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+>      .fields = (const VMStateField[]) {
+> -        VMSTATE_UINT16(log_num, PCIEAERLog),
+> +        /*
+> +         * Only to use STRUCT for a post_load_errp().  New code should try
+> +         * to use something look better, e.g. subsections in order.
+> +         */
+> +        VMSTATE_STRUCT(log_num, PCIEAERLog, 1,
+> +                       vmstate_pcie_aer_log_num, uint16_t),
+>          VMSTATE_UINT16_EQUAL(log_max, PCIEAERLog),
+> -        VMSTATE_VALIDATE("log_num <= log_max", pcie_aer_state_log_num_valid),
+>          VMSTATE_STRUCT_VARRAY_POINTER_UINT16(log, PCIEAERLog, log_num,
+>                                vmstate_pcie_aer_err, PCIEAERErr),
+>          VMSTATE_END_OF_LIST()
 
+This seems to me to be worse -- instead of a macro that clearly
+and fairly succinctly says "we're validating something here",
+we now are using VMSTATE_STRUCT not because there's actually a
+struct in the migration data, but for its side effects in having
+a post_load function, and we have to create a dummy struct type
+as well. If we want to be able to have the validate check
+set an Error, I think I'd rather that we changed the API
+of the validate function to take an Error**.
+
+I don't think "validate, and it happens that I need a custom
+function to do that" should be this much more complicated than
+"validate using one of the standard checks like
+VMSTATE_UINT16_EQUAL".
+
+-- PMM
 
