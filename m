@@ -1,146 +1,183 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388BD606A326
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC48606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=ffWLUONG
+	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=proofpoint20171006 header.b=yRmzkKlt;
+	dkim=pass (2048-bit key, unprotected) header.d=nutanix.com header.i=@nutanix.com header.a=rsa-sha256 header.s=selector1 header.b=GGS9dzvQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xULmA-00081w-0P; Fri, 20 Nov 2026 05:23:26 -0500
+	id 1xULos-0000iX-TP; Fri, 20 Nov 2026 05:26:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ar.semenov@outlook.com>)
- id 1xULm6-00081c-No; Fri, 20 Nov 2026 05:23:22 -0500
-Received: from mail-centralusazolkn190100000.outbound.protection.outlook.com
- ([2a01:111:f403:d107::] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xULon-0000ha-BF
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:26:09 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ar.semenov@outlook.com>)
- id 1xULm4-0004Ow-QP; Fri, 20 Nov 2026 05:23:22 -0500
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xULol-0000Y5-AI
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:26:09 -0500
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AK7g6b01177472; Fri, 20 Nov 2026 02:26:01 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=ySGRahwBh8tNNwU/6eVKBe9S0+cSkCC4PtGhfxSh6
+ HM=; b=yRmzkKltq2KzKXZF8e8+8twwCZZbeIWTKK2Ph8SKOqsGPg6n+SV0lJpdj
+ UbNCjiLjCXuwmevBBWRxjAtx9cvALz36ewsEk4dNXpMKIdKf8Gelb9tNUJR0BAje
+ JDZEzGHm25VFFtGDBlUwHWv2I8/Xa96QvK7B8JT6OKYJvGxXxkBKUnW2RkKupGgw
+ gYKIAX0QnNiDOAegcEHGTjZWqS2yrOvv4woa2FbjpiJ9bzxJUyXw39VdSPXU4JHV
+ 1p4/ogpYTcK1p+Ke97pzUkUB069h13ATsUqUoxmQ+zsWQbYDWhXWz5cAtV4AZlRX
+ xwFZTrieaO0Tp/CoyCIwjujrtMETg==
+Received: from bl0pr03cu003.outbound.protection.outlook.com
+ (mail-eastusazon11022143.outbound.protection.outlook.com [52.101.53.143])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4j2498j9c6-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 20 Nov 2026 02:26:01 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ViesNpH3qeZv0ymKg47rLFRE+RjGHMezVd3KTzbZ0kVFNZu86rjDhxo6Awz2tUozP3w6yCMUeHt+QgB8qxcMJXgJPQtsa0XBtcMq69QaR0/rymUbGxBiSD++0o/UCXISUMXpdo0wiPXnuAf8JZ/YB99Sh4Ut7GMVdMFwgztvHOY2LpAlfDLOPUbg5SEMW8x6PwtQEpALDq7AvSGstwbXiG1/TnlHYKZDRkrqFIjXkEzis+WTTahHTGgJBIRyVJ+ONkZyXwdfVSnKHj6FUN2O4WOH9pd/WH36THg9N2I2KJXCy1DC+ARBrz+n5OtbWjxByGzbLkCx2dnX3jr0Ykclcg==
+ b=J615K0dhHxATAikgVv3AMCzNpctLmrraMy0LTR5N8XZDbob4g8U1ZBVG5zNNHMjsi8K7NbDWxL5DT6JWV37mFu+IyLbnm/aTSKh/rKgtcmoub7COxuFnSw8X5qDnjLNdM0BMBZFco9P734C2HGQVdrFOrmpEEKP46T5VxPqz5g3nzLDvcYkim/rFlgRiz3JJZ5A36w5JzaFWEm0iYTumkdqDAorlWjRNuDGGkkfRZVm+KcYgdr5hb5VJtU86h3ZjrOvlv+0ZLaR1n1JbU6SOgB7S09pu5W4BkUlvbyi1hCo7k8vmLH+kKUsar0uv1dpCruZILeWB0geknj5rERw8gw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VeKBt0qtNMI4PKvUNlqSwNulDRDqKOhyvmY6osIvP6k=;
- b=nArwKpvIj7hVW5k45SH/woeJjkBVGB/bP8p1Gin94xfP+DRNW5iINBdIxS5idfT7w6zI2kBWaW28tm53LeWzyxrrNaJ5ovULW+r5E6atkjmpw2CnSvaK6YBOocL0KH1HLo/9a+YvGmVUb6AAmx33xBFWggqT+fwo8Rtbp7Y69ixe2mPbkdEgwUadDqST6Dz90D0jOOdWkZ3O2mRjL3dCtjY6HVLS4UVo4IzFD+E7mz2/HYGrwvYno0cVxbMi3WqPcouWbq2gO0xTT1j5VbnKcD3C+NPgONp7g16ifl6rrqwwvgFKASmSpuWOHotCnEpxz89WhYlygIbPJIcxKkANjg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ bh=ySGRahwBh8tNNwU/6eVKBe9S0+cSkCC4PtGhfxSh6HM=;
+ b=Qg0pXucpr2ivyE4XPXAoHEKTSFhdwguwTBXq0OYAfLSE00abYyFiiHtQfqLQSkpxvKT0n3z/8XlL5PIPEj30TVWlJvQeOCivK9/Pq3Kxu5TPX7nkntvl/rRTBXpqZjKBmqcjhTShsMy+g6d6bgJHCvW1S0dsZPAwPsKizMHEjwbAYWP6nVCI1aGVj9jJoXQNyS+jyTY2aZ1/5v7Ugfzu7fvhQK0pWP17mmmvcnxb7Ic5AN8gFa536wKHUHR7Mh56Z0PdTZKpNwrAeGuvrmZIC8kFrllup/nsSE41QScca1AnZrWxnDnWzWzKcMe9tkNnOSHTdxjsTk65n3bLX9bwyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VeKBt0qtNMI4PKvUNlqSwNulDRDqKOhyvmY6osIvP6k=;
- b=ffWLUONGMp1NmFIWGWtpzfnLddr5j9l4xIP2CbA273wb5a0a4hXSoC8lSEwLDjuMwM+PpqjgoX9SyHA+sO16VeIs+rsSflyTLcnmcTYAEdIt8Is8ZnLB5obZT+e64QdsiwYDK+yRRfbDLBy9bQebyEgXuSBr0xeHtQ+KMAZe5HM8ORzIraeNNi1T/lvOJsDTb70bE0qX3bVjGB/m20wCEL1ExdkHmOvXLriFBkpuajifjsjSnK+2Ya7uSetiIppZ5NhlpbpQK4uw2mAz+v8J+0cV9bb8rZvLGIZgsQ2NNx8XwhTInYjOmgnFYgZ6GtgIMAgLuiAboKQya5qX7TnSVg==
-Received: from CH3PR11MB7346.namprd11.prod.outlook.com (2603:10b6:610:152::12)
- by PH3PPF6E8D29981.namprd11.prod.outlook.com (2603:10b6:518:1::d2d)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Fri, 20 Nov
- 2026 10:18:15 +0000
-Received: from CH3PR11MB7346.namprd11.prod.outlook.com
- ([fe80::89d:2e3f:86f3:48e4]) by CH3PR11MB7346.namprd11.prod.outlook.com
- ([fe80::89d:2e3f:86f3:48e4%6]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
- 10:18:15 +0000
-From: Arseniy Semenov <ar.semenov@outlook.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "palmer@dabbelt.com" <palmer@dabbelt.com>, "alistair.francis@wdc.com"
- <alistair.francis@wdc.com>, "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>, "cosmos.xu@synclite.com"
- <cosmos.xu@synclite.com>, "qemu-security@nongnu.org"
- <qemu-security@nongnu.org>, "antikostya2@gmail.com" <antikostya2@gmail.com>
-Subject: [PATCH v2] target/riscv: add support for the hcontext CSR
-Thread-Topic: [PATCH v2] target/riscv: add support for the hcontext CSR
-Thread-Index: AQHdeNhQhsWmOXAAGkCGT+xcUTJTxQ==
-Date: Fri, 20 Nov 2026 10:18:14 +0000
-Message-ID: <335b83ef-aec7-4345-a95c-6eb669d48a66@outlook.com>
-References: <>
-In-Reply-To: <>
-Accept-Language: en-US
+ bh=ySGRahwBh8tNNwU/6eVKBe9S0+cSkCC4PtGhfxSh6HM=;
+ b=GGS9dzvQHGDAQ1K2OQPCX+FfE/xBPZ4Vzo1c2C8PluGNw1oF2bc8i1ByfMbb+WI77SNXksHanVUU+UDBrQSSkKoHHmOeK4c1shAL5BwWXzaayl9Ds9CJMkQJX2b1MUtZS/K+cYULD3M/C0IBPDGZPKVxwl50wrLppz17WqabOIaStRJYstG3x85yStKIWhkF9WD1TI8qMVpVCBtk2bJ27IReG5kxrQJ/+7oJFiyWiNcGk3a0N/Aith7tbNXSN3PtllrVNNxSmkeycbLDr4H9f2j/c8K/cmVMn3q4P8bxF2OL5Yc0foQ4pvPH7ia4SBlZR5QwAZoHUQWUZ8HIyGCGBg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nutanix.com;
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by CC6PR02MB501100.namprd02.prod.outlook.com (2603:10b6:170:205::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Fri, 20 Nov
+ 2026 10:25:58 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%5]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
+ 10:25:58 +0000
+Message-ID: <6431a291-a22e-45a4-b707-ba1daf6c0eb0@nutanix.com>
+Date: Fri, 20 Nov 2026 10:25:54 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: rust build dependency ?
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
+References: <f1471b2e-fcff-40a5-9bf8-077d3294cf6e@gmx.de>
+ <09c45745-553b-4acf-bb76-6b36df221764@nutanix.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-exchange-imapappendstamp: CH3PR11MB7346.namprd11.prod.outlook.com
- (15.21.0639.000)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR11MB7346:EE_|PH3PPF6E8D29981:EE_
-x-ms-office365-filtering-correlation-id: 264b3049-588b-4f82-e1f4-08df46ef96c3
-x-microsoft-antispam: BCL:0;
- ARA:14566002|4140399003|8062599012|19110799012|15030799006|51005399006|8060799015|2604031031799003|15080799012|36102599003|31061999003|22091999003|24121999003|12121999013|6050399003|41001999006|40105399003|26121999007|3430499035|102099032|440099028|3412199025;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?70eJ2vREV42RBgrbKXocFb0nuYZpEtNW4CIOdOugrj+bSCPs/K4QcRQ2e1?=
- =?iso-8859-1?Q?xJDwq4bqRJu/ban+SMzHDZ5ZMi4gp6Lymu9b8Kok39GlzgXbteCwSsYhTJ?=
- =?iso-8859-1?Q?T0vqmu/od1KikSoXUu56AscSgv52bZ1QDpob8MO4NnMDxCIPDsMevzwfH7?=
- =?iso-8859-1?Q?H8CAOK40u8A00ShJBTJTjVPhlETzvhO470hxA0h1zq1+caH3fMTP549FqY?=
- =?iso-8859-1?Q?CDL4O0mOL58xhAfkDaK8MiybVol0NWEYz+syzKjJ234dPCj9Khbe4FNriH?=
- =?iso-8859-1?Q?3GNVIaT995oPIqYr4P8OKlNeBE1QdPG5CI54ALHpBQWWGgnBs/q8KN8c4q?=
- =?iso-8859-1?Q?Q3QDshwkZNpOwBil9mTHPyqmAtuEkuj0E6IYPYPIeJCRo/s2jishE5GtQ+?=
- =?iso-8859-1?Q?EEAGbwNJS4OS9SqwDOjt3Xx6kAUhQHUG1RJS3fC+DaQiJBBVeVXQ8EBVQu?=
- =?iso-8859-1?Q?m04TDvwGwAwGNCpHIBkHxcckgGRiWi9cSNKZv1S4Bh4xcggFSZQHKDP6cq?=
- =?iso-8859-1?Q?OcYkhVybgv07MBJKsqLU1BAJzTeujS0Sf3Nve73+r24tV5s4e0ngooYvZI?=
- =?iso-8859-1?Q?Wc0zsvcKAv/MyhvAzC4tKz+WaqZIftfI7x5ne5n9IuU9A8Xiby/QnV30ND?=
- =?iso-8859-1?Q?ZR9Bvkh63xEh+qjpTYEu2GC8yi4dGfgJttIrSRG9S6Bt1o60uRFXFtxeTX?=
- =?iso-8859-1?Q?MINhGT4lJWiX35R7kCIdxEK4ECg/L9fLRjBvVHVuHO17sGLU+aDXCR6hLm?=
- =?iso-8859-1?Q?BWW3ctY+p5WW/ik/elS/ogMNddW5QbqfOnqCU2dDrUHv5DCo4xdjOqrG/B?=
- =?iso-8859-1?Q?ChCUleo9zvCshLqcvkhiuqZeo2JpC5hOCWAm3cDrfpjMmzoTsFh+kNGMOB?=
- =?iso-8859-1?Q?XOgjpXYfEqJGW67TjTUPEl84UpbHhStLFlTwBA+oTivffww39dtFwEgLlx?=
- =?iso-8859-1?Q?9iJf28jlKmgUgstNS6qEzwK1JdoxdODruCfMps862rdHf+P6sGI7nxpVRH?=
- =?iso-8859-1?Q?+NOKrVSLSjHyn25kNfbbKZepPxJaW4lUOMbbrde9jTlwooAyoR6gUY7vP/?=
- =?iso-8859-1?Q?kuITYkUhEnOXnSultchRHcUbMKtfrF8um0I5F/0ZsyVJf3hoB+phm1JyJC?=
- =?iso-8859-1?Q?uzoOHHDhfJih65YvX2RHuAAtRYL5gnp8BMzx/hAeZweWsVSaSCwa+hBg89?=
- =?iso-8859-1?Q?R1wzt6Uro/spsnNZj9Q2hvC+6Z0GJpF9ZOs=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?HqrRFMoNhFxuGeRqymsYXY+FbTgWVs5EfDtPqG1P7w73/XHZwuxoT7SA2/?=
- =?iso-8859-1?Q?SblopJNXPJI186dNlS9AgKM2m+djrkaG99DPZiugKabjUpeF9J2vWiln8V?=
- =?iso-8859-1?Q?ds2ZFUozukVTQIX9WkXdnhB1kDsHG2iU51IuHmGfLQu7Vtg+jQcUKjJd7B?=
- =?iso-8859-1?Q?4RXM1qxYYhDdY8eTu+2ioxZxfPJmxOSDuO4k3SUqQH5rhTPRsI34juVzOu?=
- =?iso-8859-1?Q?d6G0YvHAxVqrR9weZBhplymUjICeH5SGZb/w1zKTDHmrzM4mzsFHQ0Qxov?=
- =?iso-8859-1?Q?YTGyaUTby9rsa5Arz6nBIeMdHI4UTDmLqndNj6TPYO9JBgDe0d9jC/nRDM?=
- =?iso-8859-1?Q?/UjEfqFOEoyLYaADLKtL7D/GFMfD0iPV+WEHawe6+COsIActvdT6MnFZME?=
- =?iso-8859-1?Q?m0p2ekmPMPSVe/3o2TdU12fuDlUL8r9JyGXa5ISFHRIZTS2X6jFBcxuZ2d?=
- =?iso-8859-1?Q?h38wkv2S2RmhfRT4nzEcGiLnEOGR4SrpPuRI6elyxTWKy0JoUm0XwHrD90?=
- =?iso-8859-1?Q?zrXEgdTPoJuIFES1PcPRZb6z7tFye0DGcF77FNVthxWH+Li2fYsFoAC6yc?=
- =?iso-8859-1?Q?l95D0VrVScFr0SZDaP1h2GBxa6bsJQCu6vUVx121TiElUdCJUkUc9xm9Oz?=
- =?iso-8859-1?Q?ryGT/dkglGz5VQDjjoaH129xh2qTpy2KlXGWNdvIF0qDM2ybrlIJZqSAQj?=
- =?iso-8859-1?Q?uqmmfnpVszqB5lAE8cj2+xKlG7xDTnmFkRLwDryFudJTAQ/Tnr/4UYZ5Db?=
- =?iso-8859-1?Q?5Z3/t7NXT9Bnwzy06rvXkN+7BuMMvU/7sB7jtJ+CdSeADYh3mO4Z3B7LBu?=
- =?iso-8859-1?Q?AXrsi89hRqTX9rTxcMI3JsyoNF4TX1Hz37JT3+IikDrD89cDW7Ilg4cU9f?=
- =?iso-8859-1?Q?sIf6n1S9uPa+Dik3nUPUny8AYbS/XTUz31E70kiUe2tH6OfjEOatSQIbar?=
- =?iso-8859-1?Q?rNwlAA6R7vWVgKJnoyO7IAbWYO+73LwSHhc5eQ9/oYRgwDTpmmh0ab3S5B?=
- =?iso-8859-1?Q?VM9WMyDhWd7+PNYCAOeZKbcOMxxWcLzgufyuUTb9RtwF9yAtsKIXpU8fiK?=
- =?iso-8859-1?Q?zrKkvp4/S4gr/qRNFM321v7pjNMrNYVpq/FcIF7kATx6GW7bCI6vmd5NkY?=
- =?iso-8859-1?Q?RiTvAYDI7V1YL29d0gjnIPGRLPc+q0aKYK41nTtzJwbdgr2m8MIGFy9x8l?=
- =?iso-8859-1?Q?LndCPRG18ENMKble04IWE+IxLLdaav0yMqL/Gghs1gcdDfwscGFOFYhP9S?=
- =?iso-8859-1?Q?/DE9HAp61GMx6OogtN602doniFADv3LJs3h3Ba1oysVQoSIQYSmiNyvmeE?=
- =?iso-8859-1?Q?G0ARXLfv96td+afDcl8vaR0TwVDc9bdAsq9FOhhMYeLJhmOZPaN5MFdE1N?=
- =?iso-8859-1?Q?WRDdk2YAJ+QCXdJlhDmUHT2wJNouuK04FvV8TQESc6/zAOUZvr398=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-ID: <48687595232E084FAA043052CBD44374@sct-15-20-9412-4-msonline-outlook-a6b68.templateTenant>
-Content-Transfer-Encoding: quoted-printable
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <09c45745-553b-4acf-bb76-6b36df221764@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PA7P264CA0147.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:377::7) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CC6PR02MB501100:EE_
+X-MS-Office365-Filtering-Correlation-Id: 00ef8950-b543-416a-0787-08df46f0aaa4
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|23010399003|4143699003|261009221227099003|261009223027099003|56012099006|261026140227099003|261022075727099003|261028144727099003|261022105027099003|261026121527099003|261021123027099003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: CxlHwOdJZpIdTlWEIjB5hQ/SWeBTpAKI/QMmncNRhq37vbrsM6235ezOLkPYbnvAYAC0VA6jxaUaYqtnNIsTykX7h/kO2CYJRWRMCZnEzhlot1kT/yLnyz6UAlFc4uJibzqQ9U0mfXIlxqUPO2vM2KU7y/IpoPq/l8XT9HD4QznmizxQqd/A+dpZXEgoPFwI0J3DWPl1t82BkCq9bzFTdWK7dMoFNFq1o4ha27+BsYHKG29MYSd4t8HmY/fXcrU8z5h8DhIPGauO2iIUWfEpdTWl5nWxmh1KoUI0iPewdHj3uZRdEJJGMuJQ/n0ue2Ihk+gbukSGLtdjnFye/qbaEuJUi5qN2kpUXOfEMeGJu08/lDL20M1rKLd6xKfY+pIGci9MXTjGWIp1rJG8CSwMQRQyA1CuEeFzMVau5ihQrvKeHpnEv040Echk2ktJzt/xM68v9aVOoZcEIAnDbJ+NiejRZ+K0iA5W6URekZ8ZNvZ3ywnj5N8GVJNq9lB7uc3nuHbOvkTgQu7NaUjJ141vitYFzVXYEj/6WHHADCM23SBGe6ggu13ISc41gAHmOFovN1rPtqXP77C64cR0VK2g0OxuklYMX/QMpJ5Rknpq6Z/xkIpr1LmgBc9rEGuUHbpag8fxrcWSMHs9oCwi6FK6w5rmNRRRGyhyJ7QCYJnv1K0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(4143699003)(261009221227099003)(261009223027099003)(56012099006)(261026140227099003)(261022075727099003)(261028144727099003)(261022105027099003)(261026121527099003)(261021123027099003)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z1c5SGljZDRTdWpXZUt1alVLQzcwVFlnelRUR3BGWU1wVU9rYktmRWtiUGFF?=
+ =?utf-8?B?Sit1NWhoK1drR003dWd1M0Eva1E3TWFkRUt5cS9lczJZRzVzRkZITE1UMGdF?=
+ =?utf-8?B?UmVzMGRYUjRrc01QN0Z4alFhTG9IWXZJaHlIK2hoQWFlUUd4bDJra2FMU3VR?=
+ =?utf-8?B?UXVCaWFLR3E2ZzBNTCt6cFR5TGlGOFlkTmVzSUVDM2xzdUw2Y21WempCalFT?=
+ =?utf-8?B?ektFeUJTcFVmWHFRRUNKZG53aXlkS1BWUVNrL0ZGRUlFdDBFL1VET1IwT1dD?=
+ =?utf-8?B?RkdiNUxieW9DNEJ1eFNxNThDc3dyRktvVy80ZUZCcEtxTzFBOE5tRm14TS85?=
+ =?utf-8?B?dW1xNzlQY041YlhWMDEyNWhRVmwyMG4xZmgyN2NKTlpnbmFGY3JEUDhzSkFL?=
+ =?utf-8?B?YTllWFdteU5KZmltQW83R3VSRlNwa1hUUXM5bUhIR1RFalV0MnBuOVgvaG5S?=
+ =?utf-8?B?MjFIZTZzVzZuV1M4STJDWHRnRHlaZnc0cmNoV2o1L0tlWkFlallGQmtsL1py?=
+ =?utf-8?B?RVFNcFd4MzgwR1NvMS83NjhDampMVDlLNm96WTViaHFweGN5cGg1d1NPbnI4?=
+ =?utf-8?B?T0xzQnY4MVo1aENnR01JQWhTb1pUY3BpV2NQbHBEN2xKV2sra3lsQTUyTENH?=
+ =?utf-8?B?ZGE2TmVBN0lkRGVUeFEzYklRbksvYUFhUFR4QTZCdjN3N052Wi9ZRkNKL2JP?=
+ =?utf-8?B?R0NEQmpENVpBR25XRWVJZ1EwRkdjbzRmZ1Q4a3A5NlN5ZU92c0p2MWU0aExM?=
+ =?utf-8?B?RStGd3ZNS0pQb1ZVdnprK0pkZ2swMEs4WWwxNzBYMll1UnNIMTM2di8wM1JD?=
+ =?utf-8?B?U094bWw0Z0xsQUZDQytHVVNZRjZEWS85aFdxdWZBUHN3R0U2dVV6TG95aVVy?=
+ =?utf-8?B?azZXNEJaV2xNSEpzUExDczFNWlRteUNDWlk4eFRwSkRUa1huSkVlb0FjczJP?=
+ =?utf-8?B?NUJORFg5UWJPKzROaFBEQnVqeDV0Y3BTZHFpQytTa1EzV21BcmN4OERYaXdp?=
+ =?utf-8?B?bDg2MHcwTVZtRk45YW1VUWN0MS9IU2pLV081T2JpSGNuRVB6UStmRDUyUGVH?=
+ =?utf-8?B?djRVV2lIZUZsTU5FMitIYlhNb0lvNytIVDVjMHNhRE5wcWl0QVV2cE9hSkl6?=
+ =?utf-8?B?clRxWi81RWdodFdIYnIyMXFGR3RrZkJrMFNNRk90anllUjF5NW1MaWZXOFBl?=
+ =?utf-8?B?SkVnYzQ3USsrNnBSS0l0Uk5EZmVUT2VUT2J2VTNqd1lLV3REQTlzV0xqSFcx?=
+ =?utf-8?B?QkJBcStyNDAzTWo5Y0ZJdHdUMXZyK2NhckNNN1dueWd4ZHV1dGVncmt6cEVB?=
+ =?utf-8?B?NWNmSzg5NWxVRUlJZTQyMjkxZUd3VE83UTdGSHRicTVsSlZPeG5LMmdZSVpD?=
+ =?utf-8?B?ZlllNURvZ3NtcUt3NVNVOWIyTUdOaW9EZVNEZmVhQnNoajUrUHRJNVlnRFpw?=
+ =?utf-8?B?QlZPbmZ4eVlQS0tiN0pwb3NnTDNzS1hHTDZNTURuRmFuLzVRUDRKdk0yY3ZX?=
+ =?utf-8?B?U21NT1BZTVBuSmZka2U3RHpvOEpIV0VnNkdRMmNLdUxQSHhLVGlmd2FGQ2s5?=
+ =?utf-8?B?TGE2eVcybEVZTVdQTlkrQ2dZdmNHUzJwckxLVWVMbUQ3M1JxNnJnSzNVVHB6?=
+ =?utf-8?B?VDUvWjJSSmdOWUFNNEJKcE9uTmI5Mi9WT1NmTTRBdlNwYXVTNmJVWjJ6bTVG?=
+ =?utf-8?B?c1Fsa25ycTJsUEF4TGhPV0k4Vm1kS0tXVGxrck4xdjZkS3RhOHlMUndhVlBj?=
+ =?utf-8?B?aEEzRXhDZ1R0UVZ4bCtqekJjck1YUlBaTm93MHRMM0tlOUhvVUFFckFoek1H?=
+ =?utf-8?B?ODJUT3YrcWNESGM0d3RLalBnVnIydHgxVm03cUpLQVhiVDJTUXEvMER5K2p6?=
+ =?utf-8?B?UCt1bkU4ZllueDlMcE5IRDNRL2lkSkdKb0ZZVVRyVkJlSWxqejVGTmdXd1dk?=
+ =?utf-8?B?N2NqclhIVUtnZCtMdDdQNDIxaFdjRnh0OHRxdEJ2YWxmVzhrYWlrQmRhajFp?=
+ =?utf-8?B?NCtBbXRWNDM1b3Y5RjVOeEkxR1JZb0owRDJRV3p1RXdzNWJmT29xMTV1Ukwr?=
+ =?utf-8?B?VWpLQWlZc0I5ek9iaWR5UUFsekZSYmlqSldsWlFVS3hUT29DYWl2QUV4VHVo?=
+ =?utf-8?B?NElGOHlFRm5zNWRlMENaNHJrSUprUnJGQ0xBYkc4U2J5azd3bnhYVU9Ha0Jh?=
+ =?utf-8?B?QnlFUzZUenVJZXMyOHFsZm9KT2pCVUVNWEN6VktGU3RoY2dnRE80dS8rSk5l?=
+ =?utf-8?B?bXYxZWcwNXJJbWdQbG1HM0ZuODZvUUdLU3NLM2dkdkVKdEgwQVNJL25WUk9M?=
+ =?utf-8?B?U2Q4c3UrSGdKckg1UnRmdER3R0xEUWduZnFPZTB0UnAyaWxoRExXVWErM3Jw?=
+ =?utf-8?Q?prXPXs3qDuAerJH4=3D?=
+X-Exchange-RoutingPolicyChecked: UHfYr/v06CcA15LHKZuTNFAjixv4EfjQ+Zw+dUTDiS/ucTeTnB36Su+egey7TgRiuq4wwBTwslorOXNTigH+CJuTNFfnRxKxHkMTlhzsLwYUTgMln1B/VADpfrSplkJlAW8h9DweLK9BPklMgA9gTwOTTNgZfGKFIKrHrFseoPAZuTFHjHpZVvHXQlBYrgjhN1xLQrNpCuMRgTKsc5nmIkKK/q9L3Ule8xxa9MNrGBfXnc2oD4OLfA7Z+TSBpgwWYZ+SqazllpvzG84lmZENgjWxliylxp/lWPVaWIcEQk9kIOsRqrpk0ldoEo04a5lbVE4joB4KLW7zHpszlTewwA==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00ef8950-b543-416a-0787-08df46f0aaa4
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7346.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 264b3049-588b-4f82-e1f4-08df46ef96c3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2026 10:18:15.0160 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPF6E8D29981
-Received-SPF: pass client-ip=2a01:111:f403:d107::;
- envelope-from=ar.semenov@outlook.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 10:25:58.1262 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zsP0gSYxGUPfxyIG41iRveDLhoo5QOjl4PRKColrULi3beWZZVB34SjRm8abY6IyYh7xcv2mCLN8dQKaGUq7A40UuKew0UM/l+lvpcmyVr8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CC6PR02MB501100
+X-Proofpoint-GUID: w_HFh_dq2Y8xcRZaroKSOjkytB3ckW8F
+X-Authority-Analysis: v=2.4 cv=DfOCOftW c=1 sm=1 tr=0 ts=6b002039 cx=c_pps
+ a=taCrSF+MhsyXuYDq+ZG44w==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
+ a=TUyoIWao4XuEdTyYnvwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA0MSBTYWx0ZWRfX9SRvA5RwxXDf
+ 9wMZIYTJK5CRfFHxL0qe4kN7x7vg1ZYldd9KjOB3bxatQJ2rdsgrJNI6EXq5wLmZMjTQafBG3j1
+ kDZ0WxkfSds5qNRZEa/71P/vcRQHZMOl8fPELOxa0lck8iwa/wWBJGFH8eH8D5DxsbzTFlr4vmm
+ x+oyMK+Tc7vPnADv/18tllSDzt1rLvrepTfbresV1uua4bmAU0mEBjnBXa/Ryq6tQyeQ5U1ST+q
+ OjRRoWFudWjaplbpUB+JuDrudoIkrXlwfTOI9x+a3PqL6zn2voCblodMIIKNss7Ln5ui1nYHQ50
+ +gqhOkevil8mKynGO87A0dELpxL5wkqEcHu10Is48CClxL5RaKN81/g4xVYmh8poQ0CQTzEpeVg
+ OjDYgTzjfddL7/vA5XgaNAwEZ7tVh5tU33vlZiYFnAwlLTSF/IS82l2itDYJldgY1qAtcMOw/nI
+ Pvr6YBVt98q0D+8w5Fw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA0MSBTYWx0ZWRfX87i+o6TfuJPr
+ L8PKDb3yJraHQ8L6qKaIouXu7j2EAGtP9NNMLdDCo5SLVa2HgpmaEzSVvPKq93KiJyeaYtfsIA3
+ artmoBKLbGYhNF6XSVXMLgTLpBOyTyk=
+X-Proofpoint-ORIG-GUID: w_HFh_dq2Y8xcRZaroKSOjkytB3ckW8F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-20_03,2026-11-19_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,150 +189,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: "b8da8748-a668-4481-b483-66f333a0614b@oss.qualcomm.com"
- <b8da8748-a668-4481-b483-66f333a0614b@oss.qualcomm.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-=0A=
-Implement the hcontext register described in=0A=
-"The RISC-V Debug Specification" Version 1.0. The hcontext CSR is=0A=
-accessible from H and M mode, gated by the Smstateen HSCONTXT bit.=0A=
-=0A=
-Changes from v1:=0A=
-- The Smstateen HSCONTXT check is now only applied when the access is=0A=
-   made from HS-mode, as required by the Sdtrig spec.=0A=
-=0A=
-Signed-off-by: Arseniy Semenov <ar.semenov@outlook.com>=0A=
----=0A=
-This series adds emulation support for the hypervisor context (hcontext)=0A=
-register, as specified in "The RISC-V Debug Specification" Version 1.0.=0A=
-=0A=
-The hcontext CSR (0x6a8) is a read/write register accessible from H and M=
-=0A=
-mode, whose value is derived from the mcontext register.  Accesses are=0A=
-gated behind the Smstateen HSCONTXT enable bit and writes are masked to=0A=
-the xlen-dependent width defined by the spec.=0A=
-=0A=
-No behaviour change occurs when the H extension is not enabled.=0A=
----=0A=
-   diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h=0A=
-   index 3579789a1f..bfa10afca8 100644=0A=
-   --- a/target/riscv/cpu_bits.h=0A=
-   +++ b/target/riscv/cpu_bits.h=0A=
-   @@ -456,6 +456,7 @@=0A=
-    #define CSR_MNSTATUS        0x744=0A=
-    =0A=
-    /* Debug/Trace Registers (shared with Debug Mode) */=0A=
-   +#define CSR_HCONTEXT        0x6a8=0A=
-    #define CSR_TSELECT         0x7a0=0A=
-    #define CSR_TDATA1          0x7a1=0A=
-    #define CSR_TDATA2          0x7a2=0A=
-   diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c=0A=
-   index 063590f56a..e817b8383e 100644=0A=
-   --- a/target/riscv/tcg/csr.c=0A=
-   +++ b/target/riscv/tcg/csr.c=0A=
-   @@ -814,6 +814,16 @@ static RISCVException debug(CPURISCVState *env, int=
- csrno)=0A=
-        return RISCV_EXCP_ILLEGAL_INST;=0A=
-    }=0A=
-    =0A=
-   +static RISCVException hmode_debug(CPURISCVState *env, int csrno)=0A=
-   +{=0A=
-   +    if (riscv_has_ext(env, RVH) &&=0A=
-   +        (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig)) =
-{=0A=
-   +        return RISCV_EXCP_NONE;=0A=
-   +    }=0A=
-   +=0A=
-   +    return RISCV_EXCP_ILLEGAL_INST;=0A=
-   +}=0A=
-   +=0A=
-    static RISCVException rnmi(CPURISCVState *env, int csrno)=0A=
-    {=0A=
-        RISCVCPU *cpu =3D env_archcpu(env);=0A=
-   @@ -5703,6 +5713,52 @@ static RISCVException write_mcontext(CPURISCVStat=
-e *env, int csrno,=0A=
-        return RISCV_EXCP_NONE;=0A=
-    }=0A=
-    =0A=
-   +/*=0A=
-   + * Returns true if we are in HS-mode, the only mode where the=0A=
-   + * Smstateen HSCONTXT bit gates access to the hcontext CSR.  M-mode=0A=
-   + * and Debug mode must have access regardless of Smstateen.=0A=
-   + */=0A=
-   +static bool hmode_hcontext_smstateen(CPURISCVState *env)=0A=
-   +{=0A=
-   +    return riscv_has_ext(env, RVH) && env->priv =3D=3D PRV_S &&=0A=
-   +           !env->virt_enabled;=0A=
-   +}=0A=
-   +=0A=
-   +static RISCVException read_hcontext(CPURISCVState *env, int csrno,=0A=
-   +                                    target_ulong *val)=0A=
-   +{=0A=
-   +    RISCVException ret;=0A=
-   +=0A=
-   +    if (hmode_hcontext_smstateen(env)) {=0A=
-   +        ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSCONTXT);=0A=
-   +        if (ret !=3D RISCV_EXCP_NONE) {=0A=
-   +            return ret;=0A=
-   +        }=0A=
-   +    }=0A=
-   +=0A=
-   +    *val =3D env->mcontext;=0A=
-   +=0A=
-   +    return RISCV_EXCP_NONE;=0A=
-   +}=0A=
-   +=0A=
-   +static RISCVException write_hcontext(CPURISCVState *env, int csrno,=0A=
-   +                                     target_ulong val, uintptr_t ra)=0A=
-   +{=0A=
-   +    bool rv32 =3D riscv_cpu_mxl(env) =3D=3D MXL_RV32;=0A=
-   +    target_ulong mask =3D rv32 ? MCONTEXT32_HCONTEXT : MCONTEXT64_HCONT=
-EXT;=0A=
-   +=0A=
-   +    if (hmode_hcontext_smstateen(env)) {=0A=
-   +        RISCVException ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSCO=
-NTXT);=0A=
-   +        if (ret !=3D RISCV_EXCP_NONE) {=0A=
-   +            return ret;=0A=
-   +        }=0A=
-   +    }=0A=
-   +=0A=
-   +    env->mcontext =3D val & mask;=0A=
-   +=0A=
-   +    return RISCV_EXCP_NONE;=0A=
-   +}=0A=
-   +=0A=
-    static RISCVException read_mnscratch(CPURISCVState *env, int csrno,=0A=
-                                         target_ulong *val)=0A=
-    {=0A=
-   @@ -6620,6 +6676,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {=
-=0A=
-        [CSR_TDATA3]    =3D  { "tdata3",   debug, read_tdata,    write_tdat=
-a    },=0A=
-        [CSR_TINFO]     =3D  { "tinfo",    debug, read_tinfo,    write_igno=
-re   },=0A=
-        [CSR_MCONTEXT]  =3D  { "mcontext", debug, read_mcontext, write_mcon=
-text },=0A=
-   +    [CSR_HCONTEXT]  =3D  { "hcontext", hmode_debug,=0A=
-   +                         read_hcontext, write_hcontext },=0A=
-    #if !defined(CONFIG_USER_ONLY)=0A=
-        [CSR_DCSR]      =3D  { "dcsr",      sdext, read_dcsr,     write_dcs=
-r },=0A=
-        [CSR_DPC]       =3D  { "dpc",       sdext, read_dpc,      write_dpc=
- },=0A=
----=0A=
-base-commit: a19f59a72d96056d9a8f48cf6c77f5787491e414=0A=
-change-id: 20261019-hcontext-e8e8f54989a4=0A=
-=0A=
-Best regards,=0A=
---=0A=
-Arseniy Semenov <ar.semenov@outlook.com>=0A=
+On 20/11/2026 09:20, Mark Cave-Ayland wrote:
+
+(added Paolo on CC)
+
+> On 19/11/2026 22:25, Helge Deller wrote:
+> 
+>> With git head, I'm suddenly facing a dependency on rust, which wasn't 
+>> the case before.
+>> Am I doing something wrong, or was it somehow just added? I'm on 
+>> Fedora 42.
+>>
+>> deller@p100:/home/cvs/qemu/qemu-build$ make
+>> /home/cvs/qemu/qemu-build/pyvenv/bin/meson introspect --buildoptions / 
+>> home/cvs/qemu/qemu/meson.build | /home/cvs/qemu/qemu-build/pyvenv/bin/ 
+>> python3 -B \
+>>    scripts/meson-buildoptions.py > /home/cvs/qemu/qemu/scripts/meson- 
+>> buildoptions.sh.tmp && mv /home/cvs/qemu/qemu/scripts/meson- 
+>> buildoptions.sh.tmp /home/cvs/qemu/qemu/scripts/meson-buildoptions.sh
+>> Failure in scripts/meson-buildoptions.py parsing stdin as json
+>>
+>> ../qemu/meson.build:96:12: ERROR: Unknown compiler(s): [['rustc']]
+>> The following exception(s) were encountered:
+>> Running `rustc --version` gave "[Errno 2] No such file or directory: 
+>> 'rustc'"
+>>
+>> make: *** [Makefile:134: /home/cvs/qemu/qemu/scripts/meson- 
+>> buildoptions.sh] Error 1
+> 
+> I had exactly this yesterday, even after destroying my build directory 
+> and re-running configure/make.
+> 
+> In the end to try and diagnose the issue I checked out a much older 
+> version of QEMU, attempted configure/make which worked but then aborted 
+> the build. I then checked master back out and it started working again...
+I can reproduce the same problem here again this morning on a Debian 13 
+VM (meson 1.7.0) as below:
+
+# Switch back to earlier checkout
+rm -rf build/ && git checkout f71afb409a87c4ecd0f9d63a5963eb645dfab780 
+&& ./configure --target-list=x86_64-softmmu && make
+
+# Switch back to master
+rm -rf build/ && git checkout 08c9bbb825148dec9669f5184ecf18823bb6d631 
+&& ./configure --target-list=x86_64-softmmu && make
+
+# Keep trying to rebuild master (as many times as you like)
+./configure --target-list=x86_64-softmmu && make
+
+
+ATB,
+
+Mark.
+
 
