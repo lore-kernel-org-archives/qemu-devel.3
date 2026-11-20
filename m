@@ -1,46 +1,46 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B21606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A084E606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=univ-grenoble-alpes.fr header.i=@univ-grenoble-alpes.fr header.a=rsa-sha256 header.s=2020 header.b=oQ5yURNO
+	dkim=pass (2048-bit key) header.d=univ-grenoble-alpes.fr header.i=@univ-grenoble-alpes.fr header.a=rsa-sha256 header.s=2020 header.b=rxqk1g80
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUNiY-0007QW-CK; Fri, 20 Nov 2026 07:27:50 -0500
+	id 1xUNiX-0007Pr-Li; Fri, 20 Nov 2026 07:27:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1xUNiW-0007PA-7b; Fri, 20 Nov 2026 07:27:48 -0500
+ id 1xUNiV-0007P4-W3; Fri, 20 Nov 2026 07:27:48 -0500
 Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1xUNiT-0001sr-Pn; Fri, 20 Nov 2026 07:27:47 -0500
+ id 1xUNiT-0001rl-NN; Fri, 20 Nov 2026 07:27:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=univ-grenoble-alpes.fr; s=2020; t=1795177663;
- bh=JVtaRwl/JnoGFEJiYpnWZOcM95itPku7oGfUkJR9Tco=;
+ bh=HpEAwMAk+BNDyv+85ccpf+d6FYmp6oK9imFWf9dSmAM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oQ5yURNOTFlsB9f5lv5kYCD3myvuP5REtByckjSp/wEFDzASFW/x8SQdBpVCRhCZw
- aEOVc4RiaxKj5xIkD+C3kR7Z0bg43sJYGp/KEZ24Ac/9pf/sIjdCsiVdfWkIMu0KDB
- 0Wff2SZ3Jhh0AwcZLb/39MPIKcQOj2iSwsY0ir4OciqVN3aN1zI5abuEqiV2gA0ry1
- qydMn+SHLV4AUDkbdhU+8cSs7LcMad2v0BBzDCMrc2Ttgv14YPhEPXQbPEEx7E3hs4
- 2Wl41Hy4CSH2/JJfw42In/xx0rv2d4BLFUJ+eALAQUXkEiR4wfqf382a7amT+PTPof
- h6okIKbKifCow==
+ b=rxqk1g80kfMEvuMAQ7DBlknrgtKqFV6xz2ciEqD1uj6u88etXpkmTUjtgYy1whmAR
+ yX+0T5tqYsOIS2paxiztMOGMKmjBY/9gvNSzPtc1pvDm3ArI66p9oLCGMbB3sewK8C
+ 2HqoQbG2sS1RMrMfAqs+yCeag1cAmhM54gNg4vfz1W8LEjrfuoUIvIAg3qoNgA25fa
+ xFXMl74dU7sZzZyksi7QtlIWi1YWec2bmhJ2Ak4EZRBBWfmTFFemhJ9XXS3R+jMDAm
+ gAworYMHLfhLLGU1oerNoftNYUmV5Gj7F+EDUGHG9aNYdIoY4K28wAB1oYs6oxHgVc
+ wtdIjlTS7tDQA==
 Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 85A69402A8;
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 54CC6402D1;
  Fri, 20 Nov 2026 13:27:43 +0100 (CET)
 Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
- by mailhub-1.u-ga.fr (Postfix) with ESMTP id 81B22FF853;
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id 4FD3CFF856;
  Fri, 20 Nov 2026 13:27:43 +0100 (CET)
 Received: from naga.tima.u-ga.fr (naga.tima.u-ga.fr [147.171.132.150])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 5444414009A;
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 2324814009A;
  Fri, 20 Nov 2026 13:27:43 +0100 (CET)
 From: frederic.petrot@univ-grenoble-alpes.fr
 To: qemu-devel@nongnu.org
@@ -49,10 +49,9 @@ Cc: alistair.francis@wdc.com, peter.maydell@linaro.org,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  qemu-riscv@nongnu.org, =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
  <frederic.petrot@univ-grenoble-alpes.fr>
-Subject: [PATCH v5 2/4] target/riscv: fix riscv_cpu_do_interrupt sanitize
- error for x-rv128
-Date: Fri, 20 Nov 2026 13:27:39 +0100
-Message-ID: <20261120122741.33727-3-frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH v5 1/4] target/riscv: fix pmp sanitize error for x-rv128
+Date: Fri, 20 Nov 2026 13:27:38 +0100
+Message-ID: <20261120122741.33727-2-frederic.petrot@univ-grenoble-alpes.fr>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261120122741.33727-1-frederic.petrot@univ-grenoble-alpes.fr>
 References: <20261120122741.33727-1-frederic.petrot@univ-grenoble-alpes.fr>
@@ -93,268 +92,146 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-UndefinedBehaviorSanitizer reports an undefined behavior when setting
-the Interrupt flag (msb) in the [ms]cause registers due to an out of
-bounds shift.
+UndefinedBehaviorSanitizer reports an undefined behavior due to shifts
+larger than type in the handling of the pmp configuration registers for the
+x-rv128 cpu.
+Adding an "i128" version for the functions accessing the pmpcfg registers
+to properly handle the 128-bit case, and make sure only legal accesses to
+these pmp registers can take place.
 
-To prevent this, we introduce fields to hold the interrupt flag in
-all "versions" of the cause register and build the expected
-values on the fly by oring it with the proper cause.
-Handling of vscause assumes it has the same xlen than cause.
-
-Fixes: 58597bfeab45 ("target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU")
+Fixes: 444cffd37b69 ("target/riscv: Extend PMP region up to 64")
 Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 ---
- target/riscv/cpu.c            |  1 +
- target/riscv/cpu.h            |  4 ++
- target/riscv/tcg/cpu_helper.c | 20 +++++++--
- target/riscv/tcg/csr.c        | 79 +++++++++++++++++++++++++++++++----
- 4 files changed, 93 insertions(+), 11 deletions(-)
+ target/riscv/tcg/csr.c | 16 +++++++++++-----
+ target/riscv/tcg/csr.h |  3 +++
+ target/riscv/tcg/pmp.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 52 insertions(+), 5 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 15c27f4ce4..3e2f739c4e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1021,6 +1021,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
-     env->mstatus = set_field(env->mstatus, MSTATUS_SBE, cpu->cfg.big_endian);
-     env->mstatus = set_field(env->mstatus, MSTATUS_UBE, cpu->cfg.big_endian);
-     env->mcause = 0;
-+    env->mcause_int = 0;
-     env->miclaim = MIP_SGEIP;
-     env->pc = env->resetvec;
-     env->bins = 0;
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 49a1186bdb..e7fe1102c3 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -354,10 +354,12 @@ struct CPUArchState {
-     uint64_t stvec;
-     uint64_t sepc;
-     uint64_t scause;
-+    uint64_t scause_int;
- 
-     uint64_t mtvec;
-     uint64_t mepc;
-     uint64_t mcause;
-+    uint64_t mcause_int;
-     uint64_t mtval;  /* since: priv-1.10.0 */
- 
-     uint64_t mctrctl;
-@@ -417,6 +419,7 @@ struct CPUArchState {
-     uint64_t vsscratch;
-     uint64_t vsepc;
-     uint64_t vscause;
-+    uint64_t vscause_int;
-     uint64_t vstval;
-     uint64_t vsatp;
- 
-@@ -431,6 +434,7 @@ struct CPUArchState {
-     uint64_t sscratch_hs;
-     uint64_t sepc_hs;
-     uint64_t scause_hs;
-+    uint64_t scause_int_hs;
-     uint64_t stval_hs;
-     uint64_t satp_hs;
-     uint64_t mstatus_hs;
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 58e98e975c..a3ba7e9c42 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -585,7 +585,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
-         env->sepc = env->sepc_hs;
- 
-         env->vscause = env->scause;
-+        env->vscause_int = env->scause_int;
-         env->scause = env->scause_hs;
-+        env->scause_int = env->scause_int_hs;
- 
-         env->vstval = env->stval;
-         env->stval = env->stval_hs;
-@@ -608,7 +610,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
-         env->sepc = env->vsepc;
- 
-         env->scause_hs = env->scause;
-+        env->scause_int_hs = env->scause_int;
-         env->scause = env->vscause;
-+        env->scause_int = env->vscause_int;
- 
-         env->stval_hs = env->stval;
-         env->stval = env->vstval;
-@@ -2375,7 +2379,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         }
-         env->mstatus = s;
-         sxlen = 16 << riscv_cpu_sxl(env);
--        env->scause = cause | ((target_ulong)async << (sxlen - 1));
-+        env->scause = cause;
-+        if (riscv_cpu_sxl(env) != MXL_RV128) {
-+            env->scause_int = (target_ulong)async << (sxlen - 1);
-+        } else {
-+            env->scause_int = (target_ulong)async << 63;
-+        }
-         env->sepc = env->pc;
-         env->stval = tval;
-         env->htval = htval;
-@@ -2447,9 +2456,14 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-             s = set_field(s, MSTATUS_MDT, 1);
-         }
-         env->mstatus = s;
--        env->mcause = cause | ((target_ulong)async << (mxlen - 1));
-+        env->mcause = cause;
-+        if (riscv_cpu_mxl(env) != MXL_RV128) {
-+            env->mcause_int = (target_ulong)async << (mxlen - 1);
-+        } else {
-+            env->mcause_int = (target_ulong)async << 63;
-+        }
-         if (smode_double_trap) {
--            env->mtval2 = env->mcause;
-+            env->mtval2 = env->mcause_int | env->mcause;
-             env->mcause = RISCV_EXCP_DOUBLE_TRAP;
-         } else {
-             env->mtval2 = mtval2;
 diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index c3ef16cf1a..9549f5e6c5 100644
+index af444e3e6f..c3ef16cf1a 100644
 --- a/target/riscv/tcg/csr.c
 +++ b/target/riscv/tcg/csr.c
-@@ -3234,14 +3234,37 @@ static RISCVException write_mepc(CPURISCVState *env, int csrno,
- static RISCVException read_mcause(CPURISCVState *env, int csrno,
-                                   target_ulong *val)
- {
--    *val = env->mcause;
-+    *val = env->mcause_int | env->mcause;
-     return RISCV_EXCP_NONE;
+@@ -775,10 +775,12 @@ static RISCVException pmp(CPURISCVState *env, int csrno)
+         if (csrno <= max_pmpcfg) {
+             uint32_t reg_index = csrno - CSR_PMPCFG0;
+ 
+-            /* TODO: RV128 restriction check */
+             if ((reg_index & 1) && (riscv_cpu_mxl(env) == MXL_RV64)) {
+                 return RISCV_EXCP_ILLEGAL_INST;
+             }
++            if ((reg_index & 3) && (riscv_cpu_mxl(env) == MXL_RV128)) {
++                return RISCV_EXCP_ILLEGAL_INST;
++            }
+         }
+ 
+         return RISCV_EXCP_NONE;
+@@ -6508,11 +6510,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     /* Physical Memory Protection */
+     [CSR_MSECCFG]    = { "mseccfg",   have_mseccfg, read_mseccfg, write_mseccfg,
+                          .min_priv_ver = PRIV_VERSION_1_11_0           },
+-    [CSR_PMPCFG0]    = { "pmpcfg0",   pmp, read_pmpcfg,  write_pmpcfg  },
++    [CSR_PMPCFG0]    = { "pmpcfg0",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128 },
+     [CSR_PMPCFG1]    = { "pmpcfg1",   pmp, read_pmpcfg,  write_pmpcfg  },
+     [CSR_PMPCFG2]    = { "pmpcfg2",   pmp, read_pmpcfg,  write_pmpcfg  },
+     [CSR_PMPCFG3]    = { "pmpcfg3",   pmp, read_pmpcfg,  write_pmpcfg  },
+-    [CSR_PMPCFG4]    = { "pmpcfg4",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG4]    = { "pmpcfg4",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+     [CSR_PMPCFG5]    = { "pmpcfg5",   pmp, read_pmpcfg,  write_pmpcfg,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+@@ -6520,7 +6524,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+     [CSR_PMPCFG7]    = { "pmpcfg7",   pmp, read_pmpcfg,  write_pmpcfg,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG8]    = { "pmpcfg8",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG8]    = { "pmpcfg8",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+     [CSR_PMPCFG9]    = { "pmpcfg9",   pmp, read_pmpcfg,  write_pmpcfg,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+@@ -6528,7 +6533,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+     [CSR_PMPCFG11]   = { "pmpcfg11",  pmp, read_pmpcfg,  write_pmpcfg,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG12]   = { "pmpcfg12",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG12]   = { "pmpcfg12",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+     [CSR_PMPCFG13]   = { "pmpcfg13",  pmp, read_pmpcfg,  write_pmpcfg,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+diff --git a/target/riscv/tcg/csr.h b/target/riscv/tcg/csr.h
+index 53ba3b4a4d..40396bafdb 100644
+--- a/target/riscv/tcg/csr.h
++++ b/target/riscv/tcg/csr.h
+@@ -91,6 +91,9 @@ extern const RISCVCSR mips_csr_list[];
+ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+                       target_ulong val);
+ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
++void pmpcfg_csr_write_i128(CPURISCVState *env, uint32_t reg_index,
++                           Int128 val);
++Int128 pmpcfg_csr_read_i128(CPURISCVState *env, uint32_t reg_index);
+ 
+ void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
+ uint64_t mseccfg_csr_read(CPURISCVState *env);
+diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+index 04df53c234..7ca60bf854 100644
+--- a/target/riscv/tcg/pmp.c
++++ b/target/riscv/tcg/pmp.c
+@@ -564,6 +564,28 @@ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+     }
  }
  
-+static uint64_t cause_int_mask(RISCVMXL xl)
++void pmpcfg_csr_write_i128(CPURISCVState *env, uint32_t reg_index,
++                           Int128 val)
 +{
-+    g_assert(xl != MXL_RV128);
-+    return 1ULL << ((16 << xl) - 1);
++    int i;
++    uint8_t cfg_val;
++    int pmpcfg_nums = 2 << riscv_cpu_mxl(env);
++    bool modified = false;
++
++    trace_pmpcfg_csr_write(env->mhartid, reg_index, int128_getlo(val));
++    trace_pmpcfg_csr_write(env->mhartid, reg_index, int128_gethi(val));
++
++    for (i = 0; i < pmpcfg_nums; i++) {
++        cfg_val = int128_getlo(int128_rshift(val, 8 * i)) & 0xff;
++        modified |= pmp_write_cfg(env, (reg_index * 4) + i, cfg_val);
++    }
++
++    /* If PMP permission of any addr has been changed, flush TLB pages. */
++    if (modified) {
++        pmp_update_rule_nums(env);
++        tlb_flush(env_cpu(env));
++    }
 +}
-+
- static RISCVException write_mcause(CPURISCVState *env, int csrno,
-                                    target_ulong val, uintptr_t ra)
- {
--    env->mcause = val;
-+    env->mcause = val & (cause_int_mask(riscv_cpu_xlen(env)) - 1);
-+    env->mcause_int = val & cause_int_mask(riscv_cpu_xlen(env));
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_mcause_i128(CPURISCVState *env, int csrno,
-+                                       Int128 *val)
-+{
-+    *val = int128_make128(env->mcause, env->mcause_int);
-+
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_mcause_i128(CPURISCVState *env, int csrno,
-+                                        Int128 val)
-+{
-+    env->mcause = int128_getlo(val);
-+    env->mcause_int = int128_gethi(val);
-     return RISCV_EXCP_NONE;
+ 
+ /*
+  * Handle a read from a pmpcfg CSR
+@@ -584,6 +606,22 @@ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index)
+     return cfg_val;
  }
  
-@@ -4494,14 +4517,31 @@ static RISCVException write_sepc(CPURISCVState *env, int csrno,
- static RISCVException read_scause(CPURISCVState *env, int csrno,
-                                   target_ulong *val)
- {
--    *val = env->scause;
-+    *val = env->scause_int | env->scause;
-     return RISCV_EXCP_NONE;
- }
- 
- static RISCVException write_scause(CPURISCVState *env, int csrno,
-                                    target_ulong val, uintptr_t ra)
- {
--    env->scause = val;
-+    env->scause = val & (cause_int_mask(riscv_cpu_sxl(env)) - 1);
-+    env->scause_int = val & cause_int_mask(riscv_cpu_sxl(env));
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_scause_i128(CPURISCVState *env, int csrno,
-+                                       Int128 *val)
++Int128 pmpcfg_csr_read_i128(CPURISCVState *env, uint32_t reg_index)
 +{
-+    *val = int128_make128(env->scause, env->scause_int);
++    int i;
++    Int128 cfg_val = int128_zero();
++    target_ulong val = 0;
++    int pmpcfg_nums = 2 << riscv_cpu_mxl(env);
 +
-+    return RISCV_EXCP_NONE;
++    for (i = 0; i < pmpcfg_nums; i++) {
++        val = pmp_read_cfg(env, (reg_index * 4) + i);
++        cfg_val = int128_or(cfg_val, int128_lshift(int128_make64(val), i * 8));
++    }
++    trace_pmpcfg_csr_read(env->mhartid, reg_index, int128_getlo(cfg_val));
++    trace_pmpcfg_csr_read(env->mhartid, reg_index, int128_gethi(cfg_val));
++
++    return cfg_val;
 +}
-+
-+static RISCVException write_scause_i128(CPURISCVState *env, int csrno,
-+                                        Int128 val)
-+{
-+    env->scause = int128_getlo(val);
-+    env->scause_int = int128_gethi(val);
-     return RISCV_EXCP_NONE;
- }
  
-@@ -5532,14 +5572,16 @@ static RISCVException write_vsepc(CPURISCVState *env, int csrno,
- static RISCVException read_vscause(CPURISCVState *env, int csrno,
-                                    target_ulong *val)
- {
--    *val = env->vscause;
-+    *val = env->vscause_int | env->vscause;
-     return RISCV_EXCP_NONE;
- }
- 
- static RISCVException write_vscause(CPURISCVState *env, int csrno,
-                                     target_ulong val, uintptr_t ra)
- {
--    env->vscause = val;
-+    /* Assumes vxlen == sxlen */
-+    env->vscause = val & (cause_int_mask(riscv_cpu_sxl(env)) - 1);
-+    env->vscause_int = val & cause_int_mask(riscv_cpu_sxl(env));
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -5632,6 +5674,24 @@ static RISCVException write_pmpcfg(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException read_pmpcfg_i128(CPURISCVState *env, int csrno,
-+                                       Int128 *val)
-+{
-+    uint32_t reg_index = csrno - CSR_PMPCFG0;
-+
-+    *val = pmpcfg_csr_read_i128(env, reg_index);
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_pmpcfg_i128(CPURISCVState *env, int csrno,
-+                                        Int128 val)
-+{
-+    uint32_t reg_index = csrno - CSR_PMPCFG0;
-+
-+    pmpcfg_csr_write_i128(env, reg_index, val);
-+    return RISCV_EXCP_NONE;
-+}
-+
- static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
-                                    target_ulong *val)
- {
-@@ -6227,7 +6287,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     [CSR_MSCRATCH] = { "mscratch", any,  read_mscratch, write_mscratch,
-                        NULL, read_mscratch_i128, write_mscratch_i128   },
-     [CSR_MEPC]     = { "mepc",     any,  read_mepc,     write_mepc     },
--    [CSR_MCAUSE]   = { "mcause",   any,  read_mcause,   write_mcause   },
-+    [CSR_MCAUSE]   = { "mcause",   any,  read_mcause,   write_mcause,
-+                        NULL, read_mcause_i128, write_mcause_i128      },
-     [CSR_MTVAL]    = { "mtval",    any,  read_mtval,    write_mtval    },
-     [CSR_MIP]      = { "mip",      any,  NULL,    NULL, rmw_mip        },
- 
-@@ -6362,7 +6423,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     [CSR_SSCRATCH] = { "sscratch", smode, read_sscratch, write_sscratch,
-                        NULL, read_sscratch_i128, write_sscratch_i128    },
-     [CSR_SEPC]     = { "sepc",     smode, read_sepc,     write_sepc     },
--    [CSR_SCAUSE]   = { "scause",   smode, read_scause,   write_scause   },
-+    [CSR_SCAUSE]   = { "scause",   smode, read_scause,   write_scause,
-+                       NULL, read_scause_i128, write_scause_i128        },
-+
-     [CSR_STVAL]    = { "stval",    smode, read_stval,    write_stval    },
-     [CSR_SIP]      = { "sip",      smode, NULL,    NULL, rmw_sip        },
-     [CSR_STIMECMP] = { "stimecmp", sstc, read_stimecmp, write_stimecmp,
+ /*
+  * Handle a write to a pmpaddr CSR
 -- 
 2.43.0
 
