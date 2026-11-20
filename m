@@ -1,82 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78718606A6C0
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 20:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B422606A6D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 20:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pJU1Dz/K
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tKKp6jJe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUUsY-0001RW-VN; Fri, 20 Nov 2026 15:06:42 -0500
+	id 1xUUsY-0001RV-VW; Fri, 20 Nov 2026 15:06:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUUrI-00017k-DM
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:20 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1xUUrO-00018v-BX
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:27 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUUrE-0001ro-0n
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:18 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4a2000d5fb1so7642285e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 12:05:15 -0800 (PST)
+ id 1xUUrJ-0001sf-Tg
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 15:05:26 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-48e09aa5264so724373f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 12:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795205114; x=1795809914; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795205119; x=1795809919; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=KNVSdZ0AXBHzjmT6EZIpKKKmzaZoj2AtIwXKa7oDaf4=;
- b=pJU1Dz/KWVVPzZcH95jC3QU7Tu/XFjxZnvDVDnA3EFO/VRULXmaQ7EnL0pXKq6R7H2
- pMNRqW8GGddWT9bjpqzVKKMzrG0fmjrm8nubhxNUZSHz9M95TstOfxQz6dgD2YlK2Jdi
- k+ylb/Y3nxw3pLRxM783XMDys3D/ISI8LQmiOBFEwAItWNfmxIHWQgNhvh7ZSR1fNbOX
- DjrAjSo9ulYY+Baa+bBo6RVCTElRaX0rT3Uoc66C3xTkCuUOql7WUOOBM2hE+dRY8hj/
- Iv37pWSIm/G+yyQ58Q+3uG9zyV7VmQQFptx1R3TCTqqSekt2qnfsYNaMEV3PvUOyAS6P
- Z/8g==
+ bh=8sj3XM3juFxRlzwk37qD2+Hj895MXW4UVML2Y9WgI8c=;
+ b=tKKp6jJetxyxS3fZw/z+a2HiLc3sGjLoxym3mnRa4EZi5Zce9tDpkwj825wsR1jr5S
+ Yoa9CkjFrgzxt1FxByhmuLmyY+2ox+t+65TdKYHxaFGOnAJWYvnZQNdeb5WqvN26FMN7
+ dU5kMhfJmF14pjQvnunOxnsnDuhj9mr2pyuLBf3N2z61d6sKy4H8TiLbZ2ve03JvXRgc
+ 1thiLSf67y2u1qjKFa4O8spoDV5CPOWBMkfgLUBhIqxCIdSBlLo0AwblQlwESvOIyZMT
+ EajZwMhwkeS8X+GQuwPvY5okF8IidmT0r5s7fp2wta+Jp8xDpM33USsA0ycZsVirZBJB
+ TPOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795205114; x=1795809914;
+ d=1e100.net; s=20260707; t=1795205119; x=1795809919;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=KNVSdZ0AXBHzjmT6EZIpKKKmzaZoj2AtIwXKa7oDaf4=;
- b=zS9BmemGp+138DTDrbGle8rygJLGYHCplQ7tSoPZXUsE3YRnN6XXNhrlxGpP38o5tz
- EhQYoFWn0Cue4q/BkZNRjV4wTvyu9EV393mDzVERjRUO5MlHRYhu3AdhOiLP4BMpD7wj
- unr19tliRqk+yJVc9P8BxJ6wNAfpDoMWhJZ0ibbnxUrhG6SQFIyrbnq+GksLh5evI2TP
- XnQahUXvmkkp66dXPs9jlITIzQ4NSxyO7pzVtzNX6d09rphEQagOKeokuzB2THuHo/TZ
- aVohMIS2GSjW+SmUZ2udiuEk41K2d4ROa4VMoCUGhzQ+D3t0b1ez360zROuwzQmuaLqm
- R7cw==
-X-Gm-Message-State: APuU4Z9bCiQuQ/JgaKs1bO9vu0hu+l2FM2ZtO+zp4PI2LLk7dqZjXVKG
- pUkXBuS8Kq/FnzO0fijsyyrGtinWz/kAntU2Bcfxy6nbdgLQyphAUQG0v8/G7xe4Cuc=
-X-Gm-Gg: AYBFou3W0OEucKscPCpWM3n4+0zWmNhebdLhOQO6TpjT46wS5FQQQOBh6+gkrYRz1ZY
- AJppHiKJko6Wcm3O97JINCIBpF4VOvfbwK2oqZW9NXUrhwdhr7Fy79uX2ERoDEHmzpRbP+8jnvz
- Mflrw1XU3PGzZwbzfia4BrxWOMaPUCYXdNkTUsgVJeTmTcIgu/0dwzn5R3QeR47fbPTEwko592m
- SFGWlKNzQxGHT089d8USGwHASX5UP40kRx0MeONapHkVMf2oN/9aDl+igecM0ep6DYkhjN1fw/N
- dsbsbpwR6DkY/dd+G3iVBD0Tw8j/ZytAhEM6MzG+cjprxw5IFllqkYMCBVLQZvetXr0pdn2hlC3
- xBFEI14ZxLBdZntFJj3tK5qp4pgP50YxyH7JCyJ1j96Whd68tx+iNATyBYq0TLTPrSlJCiyk2Aa
- clQ5vXD555Z9jVGWwWmLWqd+WgBtPj0Qf3QbUJYXJvM4Uh+YkOFc+CEUnah2kbWy1WCRxxknGKp
- V3XafWBcQLz8od/mjs1ib5BGRQebr0IJPMxL6ktbkkzt0cgrAWftY6rOa12Gasf2ZV13BPOvqUD
- gsoioNt1aETSWFvhYKXrBmTZZSVB
-X-Received: by 2002:a05:600c:a08b:b0:4bb:6651:9eda with SMTP id
- 5b1f17b1804b1-4bb88922ca4mr88343765e9.14.1795205114197; 
- Fri, 20 Nov 2026 12:05:14 -0800 (PST)
+ bh=8sj3XM3juFxRlzwk37qD2+Hj895MXW4UVML2Y9WgI8c=;
+ b=WegFzWsoSCdoFPjBc3p43IlhzLOtagzZWaaNkA4aldl9YNCpR1g8OZGzENRaUkNBfx
+ 8g6rjuE0mVGc8EmuNdNbn+xvWuwLBG8gNXTyilv8fXhNboQr6w/OLtjxc6f7vMEJ8awU
+ 473fKsinWjZgBobX+dP7yWsL/rSae6fFX6zmXtHheJKer1dOfvae7Xcf6xhrgCbKo8b/
+ Rtp9OpDEAesrdH6MYILGgmxlMyDknGAUTzgE/IYo9dwB1sJfon+hwnCxCsETzvzA3585
+ /sQauCQuiWBS5B1S6EI+qlm/gKwFOLSeQS/Dr9I+TtTULJoQt5AySog7gvPAtLVnn6Or
+ BNqQ==
+X-Gm-Message-State: APuU4Z+t/QsHcI/yVLImleDSWreTQl6xBRX4ADFMpqBYlqviOpcIxD2J
+ HnPJgFY37DCUndoeXRrMXcthAreIocto/rx77FcocGhw+/LXZ6M2Hb7PzTxS6b3I2yo=
+X-Gm-Gg: AZFdTZfbvr98o+9E83AjvGbM+qQqLwqUyQy2ZvDtSz7+1RRbQkHJOhrspm8EDtmmrR2
+ 5A381hQ60eA/bhxCRSW5tXLXICjqROglDP6BsMbHVjLe1ouTpPF2zGQ5p6w8TdODXJooP4ILr1A
+ VoLarNnCeOY9QVIwPOTq8yX2LtgvHc5feJ4vokem8tNDCkrKUiHMb3Bq8QgjJhwv05YxFqidEhF
+ nwowSo7Sw2vNX+IL6pew+JoxMwwrAPBOm4b/vZN122uDvCPKDS4XTti5mu8LWZHjvdVhttliU6X
+ 0eHqnQyUckhz4kwkrXzhcd9dogbU1SyfJU6nJPf3eafRwHhhzJoc1ZwLZe3Vt4WJG7u5tMBkQoY
+ phgytvkZeJYFRq5h/iWnH7M5Anipqpz5EFImGUOGFn8/zFi9ErFl+xydxwPXcXneU/V8SCrJgPD
+ tAhaIoy9zq3viGIyUWShjGYG0SjDF4HywcUKP4513JtNsD91OZGrLPO8lTp+ICTHd9HpW6tRkgq
+ dvl1rGjcWyScPKMziIcd9J7xT1yN7AYRwm7W4utN8H26sojc+AGUu1/M30zA4aImmGtRfJtq8t/
+ urWkn8FXTRb7bNibIHv/oECWfr6g
+X-Received: by 2002:a05:6000:4705:b0:48d:f851:ee5f with SMTP id
+ ffacd0b85a97d-4abb225e5f9mr9218847f8f.24.1795205119460; 
+ Fri, 20 Nov 2026 12:05:19 -0800 (PST)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb8538b3a7sm159376295e9.3.2026.11.20.12.05.12
+ ffacd0b85a97d-4ab6bc8ce06sm7379746f8f.47.2026.11.20.12.05.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 12:05:12 -0800 (PST)
+ Fri, 20 Nov 2026 12:05:19 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8F0D65F9D0;
- Fri, 20 Nov 2026 20:05:11 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id CAD4D5FBA6;
+ Fri, 20 Nov 2026 20:05:12 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH 01/22] scripts/get_maintainer.py: minimal argument parsing
-Date: Fri, 20 Nov 2026 20:04:49 +0000
-Message-ID: <20261120200511.822573-2-alex.bennee@linaro.org>
+Subject: [PATCH 14/22] scripts/get_maintainer.py: add --list-maintainers
+Date: Fri, 20 Nov 2026 20:05:02 +0000
+Message-ID: <20261120200511.822573-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261120200511.822573-1-alex.bennee@linaro.org>
 References: <20261120200511.822573-1-alex.bennee@linaro.org>
@@ -84,8 +84,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,74 +111,216 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+This option will dump a list of maintainers in a CSV format together
+with some useful information including:
 
+  - Name
+  - gitlab handle
+  - the date they first became a maintainer
+  - the date they first become a reviewer
+  - the date of their first contribution (commit or on list)
+  - the date of the last contribution
+  - how many sub-systems they maintain
+
+The idea being we can feed this information into a graphing tool to
+get an idea of the demographics of our maintainers.
+
+The last contribution date will hopefully replace custom scripts when
+we are cleaning up the MAINTAINERS file for those no longer active in
+development.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
-v3
-  - treat dir as valid as well (as git ls-files lists it)
-  - move arg parse into own function (parse_args)
-  - set files nargs as + for more flexibility
-  - use python3
----
- scripts/get_maintainer.py | 49 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
- create mode 100755 scripts/get_maintainer.py
+ scripts/get_maintainer.py | 155 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 154 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
-new file mode 100755
-index 00000000000..47673a5013f
---- /dev/null
+index 154f2650f72..f164e2c5c55 100755
+--- a/scripts/get_maintainer.py
 +++ b/scripts/get_maintainer.py
-@@ -0,0 +1,49 @@
-+#!/usr/bin/env python3
+@@ -22,7 +22,7 @@
+ from re import IGNORECASE
+ from regex import compile as prec_compile
+ from git import Repo
+-from collections import Counter
++from collections import Counter, defaultdict
+ from csv import writer as csv_writer
+ 
+ #
+@@ -429,6 +429,149 @@ def find_src_root():
+ 
+     return None
+ 
 +#
-+# get_maintainer.py: Print selected MAINTAINERS information
++# Helpers for maintainer statistics
 +#
-+# usage: scripts/get_maintainer.py [OPTIONS] <patch>
-+#        scripts/get_maintainer.py [OPTIONS] -f <file>
++# We assume the current state of MAINTAINERS as parsed from the
++# working tree is the authoritative source for who is currently a
++# maintainer, as well as their canonical name spelling and primary
++# email address. Historical commits or older MAINTAINERS revisions
++# with alternate name transliterations or older email addresses are
++# mapped back onto these current canonical maintainer names.
 +#
-+# (c) 2025, Alex Bennée <alex.bennee@linaro.org>
-+#           based on get_maintainers.pl
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from argparse import ArgumentParser, ArgumentTypeError
-+from os import path
-+from pathlib import Path
 +
 +
-+def valid_file_path(arg):
++def get_maintainer_since(repo, maintainers, email_to_maint):
 +    """
-+    Checks if arg exists and is a regular file or raises ArgumentTypeError.
++    Scan git history of MAINTAINERS to determine the earliest date
++    each maintainer was added as a maintainer (M:) or reviewer (R:).
++    Returns (maintainer_since, reviewer_since) dictionaries.
 +    """
-+    if not path.exists(arg):
-+        raise ArgumentTypeError(f"File '{arg}' does not exist.")
-+    if not path.isfile(arg) and not path.isdir(arg):
-+        raise ArgumentTypeError(f"Path '{arg}' is not a regular file.")
-+    return Path(path.abspath(arg))
++    maintainer_since = {}
++    reviewer_since = {}
++    current_date = None
++
++    tag_re = re_compile(r'^\+\s*([MR]):\s*([^<]+?)\s*<([^>]+)>')
++
++    log_output = repo.git.log('-p', '--format=COMMIT %as', '--', 'MAINTAINERS')
++    for line in log_output.splitlines():
++        if line.startswith('COMMIT '):
++            current_date = line[7:17]
++        elif line.startswith('+') and not line.startswith('+++'):
++            m = tag_re.match(line)
++            if m:
++                tag, name, email = m.group(1), m.group(2), m.group(3)
++                target = (name if name in maintainers
++                          else email_to_maint.get(email))
++                if target:
++                    since_dict = (maintainer_since if tag == 'M'
++                                  else reviewer_since)
++                    if (target not in since_dict or
++                            current_date < since_dict[target]):
++                        since_dict[target] = current_date
++    return maintainer_since, reviewer_since
 +
 +
-+def parse_args():
++def get_contributor_dates(repo, maintainers, email_to_maint):
 +    """
-+    Create and parse the arguments.
++    Scan git history for author and committer dates, as well as review/ack
++    trailers, to determine the first and last contribution dates for
++    maintainers.
++
++    Trailers are dated by the author date, as are MAINTAINERS entries in
++    get_maintainer_since(), so a patch adding its own maintainer lines
++    doesn't appear to predate the maintainer's involvement.
++
++    Returns (first_contrib, last_contrib) dictionaries mapping maintainer
++    canonical names to ISO date strings.
 +    """
-+    parser = ArgumentParser(description='Extract maintainer information. ')
++    trailer_keys = [
++        'Signed-off-by',
++        'Co-developed-by',
++        'Reviewed-by',
++        'Tested-by',
++        'Acked-by',
++    ]
++    trailer_args = ','.join(f'key={k}' for k in trailer_keys)
++    log_format = (
++        '%as|%aN|%aE|%cs|%cN|%cE|'
++        f'%(trailers:{trailer_args},valueonly,unfold,separator=|)'
++    )
 +
-+    # We can either specify patches or an individual file
-+    group = parser.add_mutually_exclusive_group()
-+    group.add_argument('patch', nargs='*', type=valid_file_path,
-+                       help='path to patch file')
-+    group.add_argument('-f', '--file', type=valid_file_path, nargs = "+",
-+                       help='path to source file(s)')
++    first_contrib = {}
++    last_contrib = {}
 +
-+    return parser.parse_args()
++    def record_date(name, email, date):
++        target = name if name in maintainers else email_to_maint.get(email)
++        if target:
++            first_contrib[target] = min(first_contrib.get(target, date), date)
++            last_contrib[target] = max(last_contrib.get(target, date), date)
 +
-+def main():
++    for line in repo.git.log(f'--format={log_format}').splitlines():
++        if not line:
++            continue
++        parts = line.split('|')
++        a_date, a_name, a_email, c_date, c_name, c_email = parts[:6]
 +
-+    args = parse_args()
++        record_date(a_name, a_email, a_date)
++        record_date(c_name, c_email, c_date)
 +
-+if __name__ == '__main__':
-+    main()
++        for trailer in parts[6:]:
++            m = person_re.match(trailer.strip())
++            if m:
++                record_date(m.group('name'), m.group('email'), a_date)
++
++    return first_contrib, last_contrib
++
++
++def dump_maintainers_csv(src, maint_sections):
++    """
++    Dump a CSV summary of maintainer statistics to stdout.
++    """
++    maintainers = defaultdict(lambda: {'subsystems': 0, 'emails': set()})
++    for s in maint_sections:
++        if s.status not in (Status.ORPHAN, Status.OBSOLETE):
++            for m in s.maintainers:
++                maintainers[m.name]['subsystems'] += 1
++                maintainers[m.name]['emails'].add(m.email)
++
++    email_to_maint = {}
++    for name, data in maintainers.items():
++        for email in data['emails']:
++            email_to_maint[email] = name
++
++    name_to_handle = load_gitlab_handles(src)
++    repo = Repo(src)
++
++    maintainer_since, reviewer_since = get_maintainer_since(
++        repo, maintainers, email_to_maint
++    )
++    first_contrib, last_contrib = get_contributor_dates(
++        repo, maintainers, email_to_maint
++    )
++
++    writer = csv_writer(sys.stdout)
++    headers = [
++        "Maintainer Name",
++        "gitlab handle",
++        "Subsystems Maintained",
++        "Maintainer Since",
++        "Reviewer Since",
++        "Contributor Since",
++        "Date of last contribution",
++    ]
++    writer.writerow(headers)
++    for name in sorted(maintainers.keys()):
++        writer.writerow([
++            name,
++            name_to_handle.get(name, ""),
++            maintainers[name]["subsystems"],
++            maintainer_since.get(name, ""),
++            reviewer_since.get(name, ""),
++            first_contrib.get(name, ""),
++            last_contrib.get(name, ""),
++        ])
++
+ #
+ # Argument validation
+ #
+@@ -480,6 +623,12 @@ def parse_args():
+     parser.add_argument('--list-reviewed-by', metavar='REGEX',
+                         help='List sections where reviewer matches REGEX')
+ 
++    # List maintainers
++    parser.add_argument('--list-maintainers',
++                        action=BooleanOptionalAction,
++                        default=False,
++                        help="Dump maintainers summary as CSV")
++
+     # We need to know or be told where the root of the source tree is
+     src = find_src_root()
+ 
+@@ -556,6 +705,10 @@ def main():
+                              len(ms.files), len(ms.keywords), len(ms.trees)])
+         sys.exit(0)
+ 
++    if args.list_maintainers:
++        dump_maintainers_csv(args.src, maint_sections)
++        sys.exit(0)
++
+     # Build array of Path objects representing the files
+     if args.list_maintained_by or args.list_reviewed_by:
+         if args.list_maintained_by:
 -- 
 2.47.3
 
