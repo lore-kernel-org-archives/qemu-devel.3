@@ -1,108 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE400606A339
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F3B606A33E
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=a6a5tJXV;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=PhZLDCSp
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Aslv5Y7J;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=J2rGzI6W
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUO3c-0000pK-2F; Fri, 20 Nov 2026 07:49:36 -0500
+	id 1xUO3e-0000qw-Jn; Fri, 20 Nov 2026 07:49:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3a-0000oi-AO
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3c-0000pe-CE
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3Y-0004l4-N6
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:34 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3a-0004lM-Oa
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795178972;
+ s=mimecast20190719; t=1795178974;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IqKxOcavRdkss7CvBdIIjsxzaXmG9yDTO0yKuff2+/I=;
- b=a6a5tJXVWL+spm8KIEV693gWduwR3J2W6d5geuUCX8Ts8dRZwPM2R4zi5Ey6Xu1YqKQ2rj
- yV7AF4lJFUlGNrFklISCjGwu5j7A8fTghn+LhXhWCSf2/5gsx73V+fCABefSdBwYENk6w2
- WIXhZOSSzUU/taQVkwVeWauCQME6gEQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
+ b=Aslv5Y7JbuWRgJFrBHh3xcu7LDa8LasVi1JZuhZaX8FBi8OQEgUF8B/rMlQou0sAMF7U4X
+ dV13puS3rlvsueSAkRT4bRVT4NppcJJwkZFrcQRnRXfkt6XKX89gHL8Z+syVUjYw4gSjkJ
+ rUUko7l+rEQ+bRj8yMQeoL0T/SIQsmg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-3R4TBKBPP6-fqihDxwM8XA-1; Fri, 20 Nov 2026 12:49:30 +0000
-X-MC-Unique: 3R4TBKBPP6-fqihDxwM8XA-1
-X-Mimecast-MFC-AGG-ID: 3R4TBKBPP6-fqihDxwM8XA_1795178969
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-53661e036a2so17300531cf.1
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:30 -0800 (PST)
+ us-mta-414-UW3JAVUFP1OuUTBNPXBw4g-1; Fri, 20 Nov 2026 12:49:31 +0000
+X-MC-Unique: UW3JAVUFP1OuUTBNPXBw4g-1
+X-Mimecast-MFC-AGG-ID: UW3JAVUFP1OuUTBNPXBw4g_1795178971
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-55d846fd50aso2703211cf.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795178969; x=1795783769; darn=nongnu.org;
+ d=redhat.com; s=google; t=1795178971; x=1795783771; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IqKxOcavRdkss7CvBdIIjsxzaXmG9yDTO0yKuff2+/I=;
- b=PhZLDCSp2NhWsUVOF7LjOeAci/m0VyAbuH8RlLB9dzRZuuKNWs56COQPQrkFkJu0np
- KTbfBLImxqs/S5y2Fr9Thw4YyayexVE+xheoi5JxKVODv8ARR1v2gsQqb+yyHTAZcybP
- 9Nzl5d14Y8KKiOv+XlwRa1pLpExp/m+FZv2M/OUkxFoqSIFO/d9T8t9IqIlyD+k48npE
- dZlTd1e3Qc3hJcgfF+AzCB9t+by51MsWm4u6MCEk4KrPTxlQ6+VNj2TXCNKNFDEUvQyQ
- 82vOX+1SAmxHGFMXtom03NmD/DiQl0KquqaEc8LP4KZ4zicZ/FPw0Zpsq9C5oby+55tm
- IcEQ==
+ bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
+ b=J2rGzI6WpaJkLwI0HdyIORdbmEVGyvHt+uraX7dNoE2LHais/xDuI+JMIDTsB9rEJk
+ iV1MPrWJEVEjMAhJ5A/xN3EVtB8uqAK47efTe7Fc3ldEBSr5iW0fxt58uEDu1zX1z29a
+ +kIvBl/vUAufvTrq7pivcliukFP3BpmL7dx03/RMzO3TpaNDqtTXnATv4MQ5Nd2/g/No
+ 8Qn4lwu82jmsdjOike1qibdrz5YRotUvdUKkoSTAQ7+bo1tDviISnvglTAZ9WYX8ciaP
+ 896duw8jVsoIEvozsLkWMondmHIINeu7LUGYBCwrZ7vIBYtoFw4D6DER6nUaIjHdUcKp
+ 5Qrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795178969; x=1795783769;
+ d=1e100.net; s=20260707; t=1795178971; x=1795783771;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IqKxOcavRdkss7CvBdIIjsxzaXmG9yDTO0yKuff2+/I=;
- b=fl0onUAInw6U1vnrZLryeIS+bd7203NYsDCMVz/yM+VRxt13UI1KohaUaoEYY2tUk9
- t5Kv1wB8MF+6fYrNWWOlkO9ER52kKHRaMDcf45UzZJ9Fk0t6bhwAyjrEC2+R587Pzngj
- mVuckoxC6km/yf+vHNN5qaxXmlrOz8IP4ynfQmIbChondoTwhk7mHdSrQo7ieSvU/Bn1
- 5pyPfo16M4BB6PMzU6N27CPZ0IGhf7WOD+uzoIG0mr4hvRpAg4oDQnGzuDmRz8BlEasv
- XSLXkwC8Tb3ssFPHiQrLig3ozXzNv5TRpbfxQfJ8hGDI9eVYRXFkMbc7nDP263buHGHr
- ozvQ==
-X-Gm-Message-State: APuU4Z8ioawe/ZSbEIUG6aUXzy0UJX6sfyRsv3e6B6CXWDsZqEnqJnt+
- vIl4BkkA8ObF3wKyDeBkGiDaGRis038Xv5p4KqsWf+LPc0pfkLE6KcYaLngwfoks4TbMUCvILRL
- UfLHX+eEtrwd+2fk1qpl0QOA7ICgIDhp+zjikQWZP/Kkgdyalgq7wPUs1c9NoSSj+aFjTPrmdmu
- rA/LS1dFz27Y2TaTB+Fi/ZDYekP78oraX1hB031A==
-X-Gm-Gg: AZFdTZe+I+XKIVBhF30tkv4dRtQ/b8mlnTl0nAs5MSLDLP4BxJFTJtPbU5a+UfiV3Tj
- wDe9+wS2yvPxGrJtB7feYALt/54QtnSKbvnzxzHyzt3tw5csgdXG7RkX8kkLdwumWtHzOylVFt/
- Dj4eYH5MK1UscqAydwOC1flVnYgf3NdIgNUNwkm56G33a8Kt3t3Cv6JaD0EivkKCuJ1NlVwhSgp
- fyZbz/LBYmuQ6DxlGyoOKhVtIadlXBzz/AmFP+qJMrmE6x7daWPWodawTdnr9eteBoJAlfgBh8+
- SjXslANwkPzUGPjYqOs70F7Rve4AGI85YTQqMO3pOlMqIP4t+stMe1S+sy+PzLQzpdn0p6rPB7d
- o4gqGDUddJjzcsY/cFQht/o0wPgx55OGnPk/nIC8gqIK+
-X-Received: by 2002:a05:622a:1f89:b0:55b:8a74:cfc4 with SMTP id
- d75a77b69052e-55d76b5e88cmr50298651cf.76.1795178969439; 
- Fri, 20 Nov 2026 04:49:29 -0800 (PST)
-X-Received: by 2002:a05:622a:1f89:b0:55b:8a74:cfc4 with SMTP id
- d75a77b69052e-55d76b5e88cmr50298231cf.76.1795178968832; 
- Fri, 20 Nov 2026 04:49:28 -0800 (PST)
+ bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
+ b=RmpCLiNfCmiMt1nriZDlC8TcZsu377OhTziqlnnA9eEFQw8Eu9yKDGET+iVStGuA78
+ HLuTz7kfjXS3DT1kRu3q1DL97ZSjEe2U8T/hv/gcTxutoOguBmVcLOR0ISthsrr1Mhy/
+ 2hCB/UcgdphlLBBzot63hjvRramHhQW7bOfRzGI/nWlkLh3QVV/o2llFgDuoVKao/z1w
+ J8iDOtTQ6aMT+fiym8a5ahrWaKMgkhBkYd+YjMzrQhrokUDmJPLxQh7YLBRNWt/bkbev
+ uLYltEzOWE1OsGRIUAjUKTVL7AD9qoQGHzQWpP5GvZBPb0daikN9/bHpUNZdLdlUEd31
+ gk+w==
+X-Gm-Message-State: APuU4Z9+g/vBUtdm1KpMN7O53TIUDsyfcIbRFoEaIrfuhfF+ecGeagZw
+ Ut7ENl8O9F7Yk3U4XZ52TUCUcCiM+8lK5gljssPrB8bM8DZxenTHtG7DdYtNEuJt2zK+n/pPpbo
+ yjiZIIH5Nx9hMKC4nD4oSYbvp+RELmHN/aCiDl9zaWqKoQztxovpSbvMcjDceNeWow/K789hrf5
+ wXA6smwntwmEVlURUXfPZMz88KPX5jQuAd+N/czg==
+X-Gm-Gg: AYBFou1Xzl2PKQbhISSzGvcCVejCjgHHrXsp4by9fA5NZ4IQ5nOvtl3d6IZF7cnufGx
+ 5EpDxA33JmJ/hwxnPp3Wpyf4YVEpV/c4Tul9pZrauz3k2afE4njdCop1ToXfMukz9K5ITPgy/tr
+ bWq/C5LBnaOSbujHAC8A1XJycbe9Bn8mq+KdPpv2CAqxW8A7gXi+atSenKe9JqVjS8trh600XWc
+ sXXmiMUAPyYnDyq3v3IxxOlmH9r0vl58qS/1ohEJto6cHj4I7Q86SQvK20K8v8AzbnbFSdg5bjg
+ p5QHkYD/fVW0RbmQXG3efKf72Zpb/U1NGfR+BpA5j+L37EChYpQtCckQD8loFKyQaeVliwBV1p6
+ k/IJ3lahPvgD4tXtghRGX9q0hXYLoWtUjHSKlrIfpnAOf
+X-Received: by 2002:a05:622a:60e:b0:535:a5f7:d588 with SMTP id
+ d75a77b69052e-55d76a811d3mr49713391cf.66.1795178970882; 
+ Fri, 20 Nov 2026 04:49:30 -0800 (PST)
+X-Received: by 2002:a05:622a:60e:b0:535:a5f7:d588 with SMTP id
+ d75a77b69052e-55d76a811d3mr49712991cf.66.1795178970345; 
+ Fri, 20 Nov 2026 04:49:30 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d7c654585sm13759661cf.5.2026.11.20.04.49.27
+ d75a77b69052e-55d7882ea2dsm21610551cf.15.2026.11.20.04.49.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 04:49:27 -0800 (PST)
+ Fri, 20 Nov 2026 04:49:29 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, qemu-arm@nongnu.org
-Subject: [PATCH for-12.0 2/6] hw/gpio/zaurus: Move VMSTATE_VALIDATE() check
- into post_load_errp()
-Date: Fri, 20 Nov 2026 07:49:19 -0500
-Message-ID: <20261120124923.1656220-3-peterx@redhat.com>
+ peterx@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH for-12.0 3/6] hpet: Move VMSTATE_VALIDATE() check into
+ post_load
+Date: Fri, 20 Nov 2026 07:49:20 -0500
+Message-ID: <20261120124923.1656220-4-peterx@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261120124923.1656220-1-peterx@redhat.com>
 References: <20261120124923.1656220-1-peterx@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,92 +123,72 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-To pave way for removing VMSTATE_VALIDATE(), remove the use in this file by
-moving it into the post_load_errp().
+To pave way for removing VMSTATE_VALIDATE(), move the usage of hpet into
+post_load.  To make it safer, loading the timers with the num_timers, then
+only check against the wire number at last.
 
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/gpio/zaurus.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ hw/timer/hpet.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/hw/gpio/zaurus.c b/hw/gpio/zaurus.c
-index 3cf626a550..a60f4d4393 100644
---- a/hw/gpio/zaurus.c
-+++ b/hw/gpio/zaurus.c
-@@ -23,6 +23,7 @@
- #include "qemu/module.h"
- #include "qemu/log.h"
- #include "qom/object.h"
-+#include "qapi/error.h"
- 
- /* SCOOP devices */
- 
-@@ -188,12 +189,24 @@ static void scoop_init(Object *obj)
-     sysbus_init_mmio(sbd, &s->iomem);
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 42285cff76..85cd26a454 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -254,25 +254,28 @@ static int hpet_pre_save(void *opaque)
+     return 0;
  }
  
--static int scoop_post_load(void *opaque, int version_id)
-+static bool vmstate_scoop_validate(ScoopInfo *s)
-+{
-+    return !(s->prev_level & 0xffff0000) &&
-+        !(s->gpio_level & 0xffff0000) &&
-+        !(s->gpio_dir & 0xffff0000);
-+}
-+
-+static bool scoop_post_load(void *opaque, int version_id, Error **errp)
+-static bool hpet_validate_num_timers(void *opaque, int version_id)
++static bool hpet_validate_num_timers(HPETState *s)
  {
-     ScoopInfo *s = (ScoopInfo *) opaque;
-     int i;
-     uint32_t level;
+-    HPETState *s = opaque;
+-
+     return s->num_timers == s->num_timers_save;
+ }
  
-+    if (!vmstate_scoop_validate(s)) {
-+        error_setg(errp, "irq levels are not 16-bits");
+-static int hpet_post_load(void *opaque, int version_id)
++static bool hpet_post_load(void *opaque, int version_id, Error **errp)
+ {
+     HPETState *s = opaque;
+     int i;
+ 
++    if (!hpet_validate_num_timers(s)) {
++        error_setg(errp, "num_timers must match");
 +        return false;
 +    }
 +
-     level = s->gpio_level & s->gpio_dir;
- 
-     for (i = 0; i < 16; i++) {
-@@ -202,7 +215,7 @@ static int scoop_post_load(void *opaque, int version_id)
- 
-     s->prev_level = level;
+     for (i = 0; i < s->num_timers; i++) {
+         HPETTimer *t = &s->timer[i];
+         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
+         t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
+     }
  
 -    return 0;
 +    return true;
  }
  
- static bool is_version_0(void *opaque, int version_id)
-@@ -210,27 +223,17 @@ static bool is_version_0(void *opaque, int version_id)
-     return version_id == 0;
- }
- 
--static bool vmstate_scoop_validate(void *opaque, int version_id)
--{
--    ScoopInfo *s = opaque;
--
--    return !(s->prev_level & 0xffff0000) &&
--        !(s->gpio_level & 0xffff0000) &&
--        !(s->gpio_dir & 0xffff0000);
--}
--
- static const VMStateDescription vmstate_scoop_regs = {
-     .name = "scoop",
-     .version_id = 1,
-     .minimum_version_id = 0,
--    .post_load = scoop_post_load,
-+    .post_load_errp = scoop_post_load,
+ static bool hpet_offset_needed(void *opaque)
+@@ -332,14 +335,13 @@ static const VMStateDescription vmstate_hpet = {
+     .version_id = 2,
+     .minimum_version_id = 2,
+     .pre_save = hpet_pre_save,
+-    .post_load = hpet_post_load,
++    .post_load_errp = hpet_post_load,
      .fields = (const VMStateField[]) {
-         VMSTATE_UINT16(status, ScoopInfo),
-         VMSTATE_UINT16(power, ScoopInfo),
-         VMSTATE_UINT32(gpio_level, ScoopInfo),
-         VMSTATE_UINT32(gpio_dir, ScoopInfo),
-         VMSTATE_UINT32(prev_level, ScoopInfo),
--        VMSTATE_VALIDATE("irq levels are 16 bit", vmstate_scoop_validate),
-         VMSTATE_UINT16(mcr, ScoopInfo),
-         VMSTATE_UINT16(cdr, ScoopInfo),
-         VMSTATE_UINT16(ccr, ScoopInfo),
+         VMSTATE_UINT64(config, HPETState),
+         VMSTATE_UINT64(isr, HPETState),
+         VMSTATE_UINT64(hpet_counter, HPETState),
+         VMSTATE_UINT8(num_timers_save, HPETState),
+-        VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
+-        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
++        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
+                                     vmstate_hpet_timer, HPETTimer),
+         VMSTATE_END_OF_LIST()
+     },
 -- 
 2.56.0
 
