@@ -1,104 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182E3606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4244F606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=onAEi++a;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dGtvfN59
+	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm2 header.b=gJPrdaPe;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FP5FxAJf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUNl1-0001l7-UZ; Fri, 20 Nov 2026 07:30:24 -0500
+	id 1xUNkz-0001ey-Lt; Fri, 20 Nov 2026 07:30:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xUNkg-0001Gv-2v
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:30:07 -0500
-Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xUNkm-0001NQ-3o
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:30:13 -0500
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xUNkc-0007ks-Lb
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:30:00 -0500
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xUNkj-0007yJ-Gy
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:30:07 -0500
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.stl.internal (Postfix) with ESMTP id ABBFA7A0363
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 07:29:55 -0500 (EST)
+ by mailfout.stl.internal (Postfix) with ESMTP id C38111D00396
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 07:30:04 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Fri, 20 Nov 2026 07:29:55 -0500
+ by phl-compute-03.internal (MEProxy); Fri, 20 Nov 2026 07:30:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm2; t=1795177795; x=1795264195; bh=5WNLtDu4Dx
- zxZHiobINTfwZc8r59nSfFcOVofMz7YR0=; b=onAEi++aFUkOW8WprnbXQFZKRK
- jQrQmBMjeWAICAgYCfPrgr2Z0ECo8pxBVW9BguyDTqdXdJMblkpYIy0RB7csTv4j
- 6gh2nci0yzNVHsPk95tR3wXwTkis4jCGRGzaSGhrGl4MyJK3LXb64hVL4CjvjlCO
- s4JGBHs0Ey0Xqb0gbG02NzNcKUg/ahfdqfweO40qoLc4O+z5ZOPpczX4fue+lInT
- Vb0aCA8IDOMV1ub6nmZ88YAFutim2sfz7Kn19gfKIytvZLiPq+1MglkNr4ra70ZY
- l098P1rOf589UimYKPQ3VoX7c/MEmXfuN4ZKWL75GRzclQhNt4iBX4q4Uk6Q==
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1795177804; x=
+ 1795264204; bh=aQipEKZMpKTAwW3KNIdry1hSneNyBPVb9HlZnJ//kcQ=; b=g
+ JPrdaPecFehJjH25yIPhZaWglFY7AMnUiMhzDcmlvIqEco7QufOxFiqreTjT3kea
+ drIYSJHu1qCwSPYxPJTVrsK2jh10sJ3KhP74DK5bTuX6jde8XcRVP4He21sUc1Da
+ y8wc4b+q3rHtJ3QoyAtLghs2mGBmkZgkUFXviGnVsoOr7gZXCZbRAbRIXGHrpmnr
+ 2jVap1TKGHYFf/EYLXAPpLzfKtWBSaRNrfuEfiIJjwvTcwK9Hm8lXtMfgXQKZSem
+ /Icv0LjRc6x7GtqE94aAl0crbDccLg9Iw0RdVOhiSxYu96VHmbb037Td3BEyqvRa
+ JvN08rsNBrFIjhujkLh4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1795177795; x=1795264195; bh=5WNLtDu4DxzxZHiobINTfwZc8r59nSfFcOV
- ofMz7YR0=; b=dGtvfN59gcYesUsak8Q74rtC6JTeglKSLGU8kgIb6WGG7Fd7Js9
- qbCkH2ndz7wt0U2wx+L6Hg5Xu7y4FwJecY5Xz34hVtDGPCjXL62mGiREIRb3JmWH
- qi/Ks5gCffLD2XgReSNhbOP/BMd9KCt8W03t+YUvG+bahB9l4OtGoffKUXTvV4fk
- FFqtPp9CgHPkYg4FYXeMlizfkELKIPnmPQPEfOa7ATM/WvJ1Ql5vW+z9bWrQOjkf
- LjCTTn+dz47ukoBXe0w/QsfeuYYu2/Rzr6boGBwO22EdH0WdWRRJCwj919l/pzqs
- yxUm7OUmVcPykrAl0Bfbl737DsTPGqJL8RA==
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1795177804; x=1795264204; bh=a
+ QipEKZMpKTAwW3KNIdry1hSneNyBPVb9HlZnJ//kcQ=; b=FP5FxAJfj7Su5t1Rc
+ H+CFnTpHQ8dAaKEmyvwdgIWKJyYYU4Xq7XNX9O9NH1/NvzGH6+Ag01zja65Or46J
+ 1ubtqS+PBYmZldhpaNStg7tqDdD2KhJpyTA33jilcyAyP9B6MCI1Afi2MTiA3G03
+ Vl3uW3XukSDV/ZZ1BnnzRLYsx8EFbWN1ia7rFskUM/SJbGK/nL5o9/fkpr00IZg7
+ RHo4PmI4hoQmVplHCxfzyQmjeJ6yO1yg8gb4wrBnAQXavTe2cjjZDvXCWuGrWp80
+ pUqaN/B8iR6J0IeRBMd9JuVtX4jfUYhoAS8mO4rPdrCQPmX7tO/oSoY86iLjRQEK
+ Qm6Zw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795177795; d=irrelevant.dk;
+DKIM2-Signature: i=1; m=1; t=1795177804; d=irrelevant.dk;
  mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:VfuUhMq9jZS51rk+/GjJEI/8i4bhnyjw1Emnm+4XDNJinGa
- DB5j3EPQuccw9w6heH59qfCMb6UDr9VKEQeWjMPnj4bW/noWxj3G+sbIINA6/nFH
- L9XKl+DeBM6X5AbTfkDOUM/mXSpHzKONneZSbPpdAujnyz9d/brMzyWJV3Rs73G0
- AyE1TteU4REpxYgaDNV/4NhVBa2wdX8PDO82NW+xvsPDt2ticNZZBlkwX0q24pQr
- /Ru1kwH/MmNS3I4X+DGA7oQQe9h5+V4O4e0qGWn0lYKdeJU1qb7QYVY0MDEBvv/6
- p3ZnCCxZeSsSq4iCmThjhOQFXfLCZKmZL4Z81Vg==;
+ s=fm2:rsa-sha256:Ju7Omh/kPD7Hrs0fYHTASurAKhKFdLVyoe7kE/FHzKISLCD
+ 41r5EQhzIYkMpB3JltNw2rfD1T+amoyvGe2P6jf3M8G8B2jCWuR+yFZUkei8mWgj
+ ZCmXXgDwIAfkJ2I2H4irH1XMKYhQRpsBHnrnZoMaDA/xQKE1A0XVSItRz6CulG3D
+ lnQevLQ3HJ1/PgWpa1wsqt2/WRPkZQ4dyIcDqt1kcTs6xHxpAYemTL2bSASeqq20
+ n4XBiJAbzBEzustOyMeVBjXL1czrKy79MWF2ejWMP5wT4R5QFstW8DX4yLwp5nq9
+ qwnjKSNMUfKHL98hxMyXIv4k4R8xqMxN16KIk2g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=9;
+ action=mi-m=1; hc=11;
  hn=cc,content-transfer-encoding,date,feedback-id,from,
- message-id,mime-version,subject,to;
+ in-reply-to,message-id,mime-version,references,subject,to;
 Message-Instance: m=1;
- h=sha256:Cn50KVeQ7rhwHysOZHrzPzoF4qaViYHwimyySi9qxSg=:0xWjFG0F2qnirOoaSVFD/dXmbUOF6v6GGELhvPvI3Kw=;
-X-ME-Sender: <xms:Qj0Aa9ovVaTuA6oOP-c1IKqGzJ6TGVBz_FCxtumdlnilX0D8GzITQw>
- <xme:Qj0Aaz8n00c1Bt_IlP2jT7dPsl03uARh5jhshXybvDtbGpmA5FiJfdEsIFj8An3Ju
- dFK7Ww7ZTOxCQraj2eHgSlTvfw5C3y1aXozCgikS575ZBuaouEGu8THlw>
-X-ME-Received: <xmr:Qj0Aa5UC0_Wuj70B4YAzJspiX84a_V3-JUIgVPnPI1MyhEZ5w1eqipMwDoscQg2yKX0QnhjkgHEnc9XdPeLhFAHB81Sr_BOSGHz2dYxskHM4paN8dcwG72xCog>
-X-ME-Proxy-Cause: dmFkZTGkgz+MHBpcIOd9ImX2wDtfhP+/Q4NpBhtSTTafSS1g7Cn65+77gl9YgeQQg0SFXr
- NETgrFdmS4k7DtPhUgbc6OeVY4yzgtgreKxKxAoawo6MBE1KrlppZO0Llwvsj1SXA9lAEc
- tI8HeaAmjksSIekPCEw2JWciHIOXJ5JddJNMl+9VI+zfPEUR2jn4PUKXrEQMs5rpXXFGSp
- t7+TnuIAkD09rf4hJ/p/HKyyuGXjqT0VachPa1KKEqpqh66alKDILHjo1dlYNCIcpemjVq
- AV9L7uuvdM1o0VMGP2LEbR41yCrflxt1aI/OET1Jsf8RJHqi5R12HAkjXfEINpvLqKLmOy
- X5DIkPMoiTAQ8b3tZJ+uU8sndLz8cUvZWQTD7bgaCAf6HplWpRIrlqt37h091XfFL0zhyo
- Ch3uxJf7VrER0H1sEUDmo1e/HzyZUoOpF7PTgaCv8kYKaqo47XXALbGTxsWBx3XUSX+MMv
- lPF2RJGBpdf4/Us4lXbX5rUaxtRc2w857/zVYyDH16FdoQNNJwrUxDYljXy0C+/YplqBF5
- 9CG6qJljaFVCcC7rDILsmw5y6b73Q69zM68fIbSviw7DMpOi2xwOcbIixNouJhW/HMiUjS
- nRnyK6PL7FwnwWFxp4gAzWVOPUnEKMYfjwWmJ8I+ucWa1S+GGJhMnLGwVUpg
-X-ME-Proxy: <xmx:Qj0AaxDvV4jWPHow1U5S6EOENfOIP6K81ln-jOscXxpZ66nbsYowlw>
- <xmx:Qj0Aaywyd4VLdxfBmZS9B-vwU_0g6l-RGhSxGPcTaYodxZ1AzuOrkA>
- <xmx:Qj0Aa2BoLjzV6eUn9_mYadwcFXblqDBhtNBmc2w0JCTBaUsgI5XFAQ>
- <xmx:Qj0Aa3YsajSl1R2RRgmZ98mtrOy39ATC4DnkOu1rRMhPJkK_-hnreA>
- <xmx:Qz0Aa9OQCfKHEIzd5v_g77tGWFKOWOgfMqEEkz4Z5pOAgdNoEHlTtgUo>
+ h=sha256:OK4We5emm/fGyedBDp2HgtTGclDc6LGm9HKl/LyGygs=:XiwQjiCBjMo6TDIEHyREAyLWo343krnwedmxA4bIYyU=;
+X-ME-Sender: <xms:TD0Aa3WcOVxeRhffAK2wlY7KRRSzj8C6Zu6aTqjMfS-_Tdh83BHcKQ>
+ <xme:TD0Aa5obQguw6WraSAAFN-pg1-n__yMlyZmWeZjN7qgytNWzrFqkt4wmbrhdAp9Iy
+ 7YGHaZfiurHvsZNqxjpLck0L6lk6O3T5nCc4lWi3yVVpY4-G6LIK9g>
+X-ME-Received: <xmr:TD0AazR4xKE5v6Mk5QyL615L8AmIPuYIXe4S3PkESrEawIA5VfBw3OlNyEU7rk__RS03LSmDQdxAVwpUVVcx34cBfjN_EbqicpnMJo6GE9ig_yjHsFdImC9mbw>
+X-ME-Proxy-Cause: dmFkZTFExTPYgg8rgO42EmNi083fhhkydGLyZE921u8lzGuruqpOi7Ge9E8B6a/id363MM
+ M8BuWLLMO4fVvHkeGeOvWlpeoA6GU35EKJN3DgbiBVzuwXF8r2cHQLJg8fU0rGl2E0dOeO
+ s+Nw2MlKxrILceBWhs3BK1ffPSR4HqonM4K29WT+QrvPJ096TStn1G84JjDR/oel6TQubk
+ pyaFkaRhqF5OW/axUdI48bq8biSN19b82iagHYFTHVCw0Gkg9xAKDwvCK7KO0j7WxrJBUI
+ ZB+43jhea1ublyYSN1UTeSHfOMWuASCGqIz4XcJ9chfm7jLNIur7l8entiBUQTObBo0PdH
+ PjlFWipGkjgIJPq4TsqlP8xAxENKazdtS5T1VBxu3zFZtZN2cpx8rewXm7lCZZ84lcpzGs
+ uphbH4AzQrIpd8uS+09koAQAGKk4VR7pyFit/zU8N520ALDLKp2d6DMKBLlPM8CFuWoRxl
+ 24KjUZbbJsJUJpPl2ixeJZQdxJZ36Ek+DM4v12YRH4V3wXEQw2kv+SGPUWownARxlL0yWp
+ Wp/AGfOjyi4L2LIAEBn4KEdMe38iWDy8NvRRJG45zgJO/kGIN+Q805bOrh47d3EE8RqujS
+ SDCzH5HVScJBitF4XqDvuI7ZV2CEOW3VRZcBmCDSkIV03IdS0vHuFY+p93uw
+X-ME-Proxy: <xmx:TD0Aaz3h_to2O9dQIE4VyHwn5KzNlJAyOy5LvAl-Qb_gjGH4qizu0g>
+ <xmx:TD0Aa_Byq1qnx2Fn-u1OgH9LRrsz28kFuXpeqTZWEoRCRPP-wHPsng>
+ <xmx:TD0Aa_itbC4-4CtP-jafOKiDLofxvpQefbjStJa4UFTV0weivZ81lQ>
+ <xmx:TD0AaxNxcQESrPvD3h4Ph4zB1oO0v9vBBLVBrAMpC9APKNkVPFyQvQ>
+ <xmx:TD0Aa4dnz3t-zLy9oBCvABhnZP65prjGCuDDBPGyhGszI3BAztyXBCSb>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 07:29:53 -0500 (EST)
+ 20 Nov 2026 07:30:02 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/5] hw/nvme fixes
-Date: Fri, 20 Nov 2026 13:29:44 +0100
-Message-ID: <20261120122949.1044-1-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ qemu-block@nongnu.org
+Subject: [PULL 3/5] hw/nvme: fix open zone zrwa allocation
+Date: Fri, 20 Nov 2026 13:29:47 +0100
+Message-ID: <20261120122949.1044-4-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261120122949.1044-1-its@irrelevant.dk>
+References: <20261120122949.1044-1-its@irrelevant.dk>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.154; envelope-from=its@irrelevant.dk;
- helo=fhigh-b3-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=its@irrelevant.dk;
+ helo=fout-b6-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,43 +125,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Hi,
+nvme_zrm_open_flags incorrectly allocates a ZRWA resource regardless of
+the zone state. A ZRWA resource shall only be allocated if
 
-The following changes since commit 08ed97c33c3818ef51a7c852347a28e9f66807b5:
+    a) there are available ZRWA resources; and
+    b) the zone is empty.
 
-  tests/tcg/i386: compile test-i386-blendv.c with -msse4.1 (2026-11-19 13:54:13 -0800)
+Fix the state machine and error out early.
 
-are available in the Git repository at:
+Cc: qemu-stable@nongnu.org
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+Fixes: e321b4cdc2dd ("hw/nvme: add support for zoned random write area")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20261120
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 5e8788a257da..16860ccd9520 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2038,10 +2038,19 @@ enum {
+ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+                                     NvmeZone *zone, int flags)
+ {
++    NvmeZoneState state = nvme_get_zone_state(zone);
++
++    bool zrwaa =
++        (flags & NVME_ZRM_ZRWA) && !(zone->d.za & NVME_ZA_ZRWA_VALID);
++
+     int act = 0;
+     uint16_t status;
+ 
+-    switch (nvme_get_zone_state(zone)) {
++    if (zrwaa && state != NVME_ZONE_STATE_EMPTY) {
++        return NVME_INVALID_ZONE_OP | NVME_DNR;
++    }
++
++    switch (state) {
+     case NVME_ZONE_STATE_EMPTY:
+         act = 1;
+ 
+@@ -2051,8 +2060,7 @@ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+         if (n->params.auto_transition_zones) {
+             nvme_zrm_auto_transition_zone(ns);
+         }
+-        status = nvme_zns_check_resources(ns, act, 1,
+-                                          (flags & NVME_ZRM_ZRWA) ? 1 : 0);
++        status = nvme_zns_check_resources(ns, act, 1, zrwaa);
+         if (status) {
+             return status;
+         }
+@@ -2080,7 +2088,7 @@ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+         /* fallthrough */
+ 
+     case NVME_ZONE_STATE_EXPLICITLY_OPEN:
+-        if (flags & NVME_ZRM_ZRWA) {
++        if (zrwaa) {
+             ns->zns.numzrwa--;
+ 
+             zone->d.za |= NVME_ZA_ZRWA_VALID;
+-- 
+2.53.0
 
-for you to fetch changes up to 7e203726411b7a28b2d020339d6267c7c7d4134e:
-
-  hw/nvme: advance zone write pointer only once the write is committed (2026-11-20 11:32:57 +0100)
-
-----------------------------------------------------------------
-nvme queue
-
-----------------------------------------------------------------
-Klaus Jensen (5):
-      hw/nvme: report data transfer error on failed dma
-      hw/nvme: fix zone descriptor extension allocation overflow
-      hw/nvme: fix open zone zrwa allocation
-      hw/nvme: bound zrwa flush by the write area and zone write boundary
-      hw/nvme: advance zone write pointer only once the write is committed
-
- hw/nvme/ctrl.c       | 48 +++++++++++++++++++++++++++++++++++-------------
- hw/nvme/ns.c         |  4 ++--
- hw/nvme/nvme.h       |  3 ++-
- hw/nvme/trace-events |  1 +
- 4 files changed, 40 insertions(+), 16 deletions(-)
 
