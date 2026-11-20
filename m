@@ -1,108 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCA2606A6A1
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 21:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=dKsQYTEZ
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29BB606A33F
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 22:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUWYl-0001kU-DI; Fri, 20 Nov 2026 16:54:19 -0500
+	id 1xUWnd-0005Yt-JE; Fri, 20 Nov 2026 17:09:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUWYj-0001jk-8U
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 16:54:17 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUWYh-0001b6-HO
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 16:54:16 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2f03920c477so12081125ad.2
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 13:54:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795211654; x=1795816454; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=iWSaC+pg/A3a4vuwu14hR5LGl0fhGTephnxBE0x/52U=;
- b=dKsQYTEZ7IihnWqsZ9IYyUHtaQE9YIJO5E+xfYshRZ38A0qGCIhmD0UxLMGVQTPGUS
- FUh1ievwEQ67RNa1ym2y/bjNBUCCMGkpyJprtRO3Org6EpZ/IK+RMvRvCAEPqNG47tI7
- ZnNmHZgvF1zoWRsUAfPpDNHoR23p2zUDA8ULLbf/enazNnH+z7xsZ/US9IZcQE8NACDz
- 4ROfmHuQdIBkBrkqv69ZsBrZotl19ZJoU4HFhwSqgj+tSADqFWVvEyx9/FPwwGeleXbG
- Z902YAkwse+Z1NcC5fK0MOVkfCXzzOtbMnRueVscldErCKmdHwZNK2to5wBcYqQrFySF
- zttg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795211654; x=1795816454;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iWSaC+pg/A3a4vuwu14hR5LGl0fhGTephnxBE0x/52U=;
- b=a3kPuRUbk9UjWkrUiVMvtBlyXQo4JYqdKC3NZXdAPHYhIhNF63JbigxO6FNtx7E8Ws
- 72qL5PmrVShhWiFad6YE8KQU/8+mAYSxtT6PDAk9CYLSjaczXBPcF5ucd0XlgbaUec/2
- K7T3biHqqwrKh2beMO1DOwJbK+uWQuvWyLWLJVMqhqmoLQ0lIqbIIVpbI3MA0W4QrIo0
- ZFy4ST0RWZag6IxPCERLshvOjtCtpGDZT7qvJFCmiPvEJD/TyUbAxMAbDGrDF4lmKDoo
- ZVXn39Y+W7PmMhaEIf4VMaXc+8XOKA+/oIx9Z1aUlmanNW7q9OoKmWPc9KUHQTN9XmsX
- Bf6g==
-X-Gm-Message-State: APuU4Z/KsWfGnj6a24mcF489zuPrQ65vZA6o0qKGz5Tuyo8rTSNC0/Uz
- rbV/gFv00KR1uzzPpVSXNZaFyhuqBGLnk01xVUtbRLJMAwRImjKZ0zZzZRHP3aXfP9U=
-X-Gm-Gg: AZFdTZd07lcSrVNp6A1fdEOQ7uAB/yBMTv2Kn6qTjN9llOEvyHFGloSsazLMgS8LeBq
- Y2xJHov8HykH2wBgpGz5nVn1uux0G/bNhVvxQiBvTFMdCnMNjCbMy3t3wvsPvb4fYRF2Tg60Kji
- zasCNn2znhYiQjv88AJ0j1YDJyrsGRYXA0nHETh3ki2nIJ5c2baqGyg0Oergr2w48eRRvbJj1Y5
- SMXcXM9+7TA01r4j/T4hvV4osiT+7kZhkpI+z1Cx47R7q8qUMfHcogowq57KszWdgEmiMVgQM3o
- NVeGwwO5osU2ERDuN0gi2helHUOaZbs3MjZJEFNMYmvvRuoGN7q5pvqG2EACzB6Y2Cj+E6cR7H4
- 3zktH8PSz+LmiPktcKPexxEExuooEqbpYVqGUbgrMA3ly2jgsIGwQro2+BTkkeP6xm39TOb0B64
- wNvCdyJe+Ue2k0hAihjj9jOJQctZG8DXsQ3FC41hJPFsOl/R6uAcH5f6zapXx8C2aRhMbOMPdyZ
- zNMIYOhLN+rkK0cKds/UtJkfwYMSqWVac9WPgq8JCh8rWZ1CXPV1JrFG7GCi2pHC4Vh7bydfICo
- n52Oq9jCY76fLz+yF7Urog+ops/UcWsMfMaDPYaEyTd2btQzSN8EBc3bVXdvn+szqO70Cio=
-X-Received: by 2002:a17:902:e845:b0:2ed:379:159f with SMTP id
- d9443c01a7336-2f03f0fcd59mr43071795ad.20.1795211653538; 
- Fri, 20 Nov 2026 13:54:13 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2f03f0dc4f2sm19815255ad.30.2026.11.20.13.54.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Nov 2026 13:54:12 -0800 (PST)
-Message-ID: <114d8912-4aee-4312-9527-69dce1b8d5e0@linaro.org>
-Date: Fri, 20 Nov 2026 13:54:10 -0800
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xUWnZ-0005Wx-Ct
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 17:09:38 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xUWnX-0003FJ-DT
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 17:09:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E7F8360E017;
+ Fri, 20 Nov 2026 23:09:29 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id IufqfFvxp0Fn; Fri, 20 Nov 2026 23:09:27 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id CC18060CCE7; Fri, 20 Nov 2026 23:09:27 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CA17313C28F;
+ Fri, 20 Nov 2026 23:09:27 +0100 (CET)
+Date: Fri, 20 Nov 2026 23:09:27 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Fam Zheng <fam@euphon.net>, Keith Monahan <keith@techtravels.org>
+Subject: Re: [RFC PATCH-for-11.2 v4 00/14] nc53c710 rewrite
+In-Reply-To: <dfbbba97-a182-4f5e-acd1-c962285ff463@oss.qualcomm.com>
+Message-ID: <6f9167e0-f043-8d36-42aa-a99201010b3a@eik.bme.hu>
+References: <20261120171235.61325-1-philmd@oss.qualcomm.com>
+ <dfbbba97-a182-4f5e-acd1-c962285ff463@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/12] tests/functional: update sha digests for tuxrun
- kernels
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
- Thomas Huth <th.huth+qemu@posteo.eu>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Eric Farman <farman@linux.ibm.com>
-References: <20261120121458.3723625-1-berrange@redhat.com>
- <20261120121458.3723625-3-berrange@redhat.com>
- <CAJ+F1C+eBx6qUmtLGw2vSgk+Pp=Zpt92_tokyyGsrCREaE45gQ@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAJ+F1C+eBx6qUmtLGw2vSgk+Pp=Zpt92_tokyyGsrCREaE45gQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-628162528-1795212567=:80696"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,27 +64,89 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/20/26 04:23, Marc-André Lureau wrote:
-> On Fri, Nov 20, 2026 at 4:16 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>
->> The images appear to have been regenerated since the recorded
->> digests no longer match
->>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> See also
-> https://patchew.org/QEMU/20261112133320.418012-2-marcandre.lureau@redhat.com/
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Indeed, Marc's use of dated urls should avoid some of the issues, until 
-the url is removed due to age.
+--3866299591-628162528-1795212567=:80696
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
+On Fri, 20 Nov 2026, Philippe Mathieu-Daudé wrote:
+> On 20/11/26 18:12, Philippe Mathieu-DaudÃ© wrote:
+>> Fourth attempt to replace the existing 53c710 driver by
+>> a new driver based on the code of the lsi53c895a.c :)
+>> 
+>> Used LLM to decompose v3 as logical / atomic changes when
+>> possible (didn't work well with the rewrite patch).
+>> 
+>> Fixes extracted first so could be merged for v11.2 (patches
+>> 1 to 5). The rest is the rewrite, so up to the maintainers
+>> (Helge, Mark) and is probably OK as hobbyist-only code.
+>> 
+>> Since v3:
+>> - header split, Suggested-by tag (Zoltan)
+>> - I couldn't figure the "hw/misc/lasi.c" change so dropped
+>>    the comment about it.
+>> - Dropped "move to COMMAND on CLEAR ACK after MESSAGE REJECT"
+>> - Split rewrite patch as separated commits:
+>>     - base engine
+>>     - asynchronous completions
+>>     - synchronous drain
+>>     - HP-UX MESSAGE REJECT quirk
+>>     - reentrancy guard and reset-time request cancel
+>> 
+>> hw/scsi/ncr53c710.c is derived from hw/scsi/lsi53c895a.c which
+>> is LGPL, the rewrite is now declared GPL-2.0-or-later.
+>> hw/scsi/lsi_scsi.h, which is moved verbatim from lsi53c895a.c,
+>> keeps the original terms: its header says "This code is licensed
+>> under the LGPL." with SPDX-License-Identifier: LGPL-2.1-or-later.
+>> 
+>> Series reviewed against the NCR 53C710 data manual but totally
+>> untested (I don't have guest code to run), thus compile-checked
+>> only. I haven't tested whether the series is bisectable.
+>
+> This is only a split experiment if Helge/Keith/Mark/Zoltan want
+> to pursue, I'm not going to respin.
 
-r~
+This helps reviewing but not perfect yet so if nobody is going to take it 
+and make a v2 then it's a dead end. I added some comments nevertheless if 
+somebody can do something about that.
+
+Regards,
+BALATON Zoltan
+
+>> Keith Monahan (9):
+>>    hw/scsi/scsi-disk: Add quirk_mode_page_no_flexible_disk, use it on the
+>>      715
+>>    hw/scsi: Move shared LSI/NCR definitions to lsi_scsi.h
+>>    hw/scsi/ncr53c710: Rewrite the 53C710 SCRIPTS engine
+>>    hw/scsi/ncr53c710: Deliver completions from bottom halves
+>>    hw/scsi/ncr53c710: Drain asynchronous transfers in the register write
+>>    hw/scsi/ncr53c710: Append SAVE DATA POINTERS after MESSAGE REJECT for
+>>      HP-UX
+>>    hw/scsi/ncr53c710: Guard SCRIPTS reentrancy and cancel requests on
+>>      soft reset
+>>    hw/scsi/lasi_ncr710: Map the full LASI SCSI module page
+>>    hw/scsi/ncr53c710: Bump the migration version
+>> 
+>> Philippe Mathieu-Daudé (5):
+>
+> Oops here author should be Keith Monahan?
+>
+>>    hw/scsi/ncr53c710: Cancel the in-flight request on soft reset
+>>    hw/scsi/ncr53c710: Do not load SBCL from DBC after a SCRIPTS phase
+>>      move
+>>    hw/scsi/lasi_ncr710: Limit max_target and max_lun to 7
+>>    hw/scsi/ncr53c710: Keep DCNTL.EA and DMODE.FC1 across an ISTAT.RST
+>>      reset
+>>    hw/scsi/ncr53c710: Document the SIGP latch deviation
+>
+>
+--3866299591-628162528-1795212567=:80696--
 
