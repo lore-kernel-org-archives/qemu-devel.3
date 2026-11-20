@@ -1,59 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343F606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 01:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C3C606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 01:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUDKu-0006pu-BC; Thu, 19 Nov 2026 20:22:44 -0500
+	id 1xUDKu-0006pt-AS; Thu, 19 Nov 2026 20:22:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xUDKp-0006nL-MT
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:39 -0500
+ id 1xUDKr-0006o4-4a
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:41 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xUDKm-0007Rn-76
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:39 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1xUDKn-0007S1-V4
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:40 -0500
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8CxPNDYoP9qAWIhAA--.2381S3;
- Fri, 20 Nov 2026 09:22:32 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxrtLUoP9q+2EhAA--.30577S3;
+ Fri, 20 Nov 2026 09:22:28 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJAx3c7WoP9qtgs2AA--.42580S5;
- Fri, 20 Nov 2026 09:22:31 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxPs_NoP9qsws2AA--.41999S4;
+ Fri, 20 Nov 2026 09:22:27 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 07/16] target/loongarch: Fix CSR.MISC being incorrectly
- marked read-only
-Date: Fri, 20 Nov 2026 09:23:47 +0800
-Message-ID: <20261120012356.2656317-8-maobibo@loongson.cn>
+Subject: [PATCH v2 02/16] target/loongarch: Remove debug exception support
+Date: Fri, 20 Nov 2026 09:23:42 +0800
+Message-ID: <20261120012356.2656317-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261120012356.2656317-1-maobibo@loongson.cn>
 References: <20261120012356.2656317-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx3c7WoP9qtgs2AA--.42580S5
+X-CM-TRANSID: qMiowJCxPs_NoP9qsws2AA--.41999S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Wr4xCr4rZw1kGw43JF4UKFX_yoW3Arg_WF
- 1fWw4kGr45X3Z7X3W7Zasavw4rXw48GFn0kF1xXr4akrWUtrZ3ZrWvvw1kZF45Wr1UX3sI
- vanFvr17uFnYvosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb7xYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07josjUUUUUU=
+X-Coremail-Antispam: 1Uk129KBj93XoWxKF1rWr1DGw17WrWxWF1DXFc_yoW7WF1rpr
+ 4S9rykKay8KFZIya4rXa90vFn8Xr4xCw42va1SyryfCrs8XrW8XF4kt39F9F15J34rJry0
+ vFn5A3yUXF4xW3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j83kZUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -79,28 +78,155 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-CSR.MISC is writable, but it was incorrectly treated as read-only.
-Update its CSR attributes so that writes to CSR.MISC are accepted as
-required by the architecture.
+The debug exception is not clear on LoongArch manual, and Linux kernel
+does not support debug exception now. Here remove debug exception
+support for the present.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/csr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/loongarch/cpu-csr.h                     | 13 +------------
+ target/loongarch/cpu.c                         |  2 +-
+ target/loongarch/csr.c                         |  3 ---
+ target/loongarch/disas.c                       |  3 ---
+ .../tcg/insn_trans/trans_privileged.c.inc      |  7 ++-----
+ target/loongarch/tcg/tcg_cpu.c                 | 18 +-----------------
+ target/loongarch/tcg/tlb_helper.c              |  4 +---
+ 7 files changed, 6 insertions(+), 44 deletions(-)
 
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index d860417af2..7830573601 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -211,17 +211,6 @@ FIELD(CSR_DMW_64, VSEG, 60, 4)
+ #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
+ #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
+ 
+-/* Debug CSRs */
+-#define LOONGARCH_CSR_DBG            0x500 /* debug config */
+-FIELD(CSR_DBG, DST, 0, 1)
+-FIELD(CSR_DBG, DREV, 1, 7)
+-FIELD(CSR_DBG, DEI, 8, 1)
+-FIELD(CSR_DBG, DCL, 9, 1)
+-FIELD(CSR_DBG, DFW, 10, 1)
+-FIELD(CSR_DBG, DMW, 11, 1)
+-FIELD(CSR_DBG, ECODE, 16, 6)
+-
+-#define LOONGARCH_CSR_DERA           0x501 /* Debug era */
+-#define LOONGARCH_CSR_DSAVE          0x502 /* Debug save */
++#define LOONGARCH_CSR_MAX            (LOONGARCH_CSR_PERFCTRL(MAX_PERF_EVENTS))
+ 
+ #endif /* LOONGARCH_CPU_CSR_H */
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 1f3022265a..83664a7c7d 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -769,7 +769,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
+     qemu_fprintf(f, "\n");
+ 
+     /* Dump all generic CSR register */
+-    for (i = 0; i < LOONGARCH_CSR_DBG; i++) {
++    for (i = 0; i < LOONGARCH_CSR_MAX; i++) {
+         csr_info = get_csr(i);
+         if (!csr_info || (csr_info->flags & CSRFL_UNUSED)) {
+             if (i == (col + 3)) {
 diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-index 987c31b69c..42a69f6786 100644
+index e474941337..89b4240fe5 100644
 --- a/target/loongarch/csr.c
 +++ b/target/loongarch/csr.c
-@@ -26,7 +26,7 @@ static CSRInfo csr_info[] = {
-     CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
-     CSR_OFF(PRMD),
-     CSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
--    CSR_OFF_FLAGS(MISC, CSRFL_READONLY),
-+    CSR_OFF(MISC),
-     CSR_OFF(ECFG),
-     CSR_OFF_FLAGS(ESTAT, CSRFL_EXITTB),
-     CSR_OFF(ERA),
+@@ -118,9 +118,6 @@ static CSRInfo csr_info[] = {
+     CSR_OFF_ARRAY(PERFCNTR, 14),
+     CSR_OFF_ARRAY(PERFCTRL, 15),
+     CSR_OFF_ARRAY(PERFCNTR, 15),
+-    CSR_OFF(DBG),
+-    CSR_OFF(DERA),
+-    CSR_OFF(DSAVE),
+     CSR_OFF_ARRAY(MSGIS, 0),
+     CSR_OFF_ARRAY(MSGIS, 1),
+     CSR_OFF_ARRAY(MSGIS, 2),
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 928b8b94c2..42ee106df0 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -103,9 +103,6 @@ static const char * const csr_names[] = {
+     CSR_NAME(DMW(1)),
+     CSR_NAME(DMW(2)),
+     CSR_NAME(DMW(3)),
+-    CSR_NAME(DBG),
+-    CSR_NAME(DERA),
+-    CSR_NAME(DSAVE),
+ };
+ 
+ static const char *get_csr_name(unsigned num)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 7d12e06b35..300361a1da 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -402,11 +402,8 @@ static bool trans_ertn(DisasContext *ctx, arg_ertn *a)
+ 
+ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
+ {
+-    if (check_plv(ctx)) {
+-        return false;
+-    }
+-    generate_exception(ctx, EXCCODE_DBP);
+-    return true;
++    /* Not implemented */
++    return false;
+ }
+ 
+ static bool trans_idle(DisasContext *ctx, arg_idle *a)
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 0549506035..0f9f34dcb5 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -54,21 +54,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     }
+ 
+     switch (cs->exception_index) {
+-    case EXCCODE_DBP:
+-        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
+-        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
+-        goto set_DERA;
+-    set_DERA:
+-        sys->CSR_DERA = env->pc;
+-        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
+-        set_pc(env, sys->CSR_EENTRY + 0x480);
+-        break;
+     case EXCCODE_INT:
+-        if (FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
+-            sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DEI, 1);
+-            goto set_DERA;
+-        }
+-        QEMU_FALLTHROUGH;
+     case EXCCODE_PIF:
+     case EXCCODE_PNX:
+     case EXCCODE_ADEF:
+@@ -203,9 +189,7 @@ static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env)
+     bool ret = 0;
+     CPUSysState *sys = env_sys(env);
+ 
+-    ret = (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE) &&
+-          !(FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)));
+-
++    ret = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE);
+     return ret;
+ }
+ 
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 5662b2c49a..f14b50a547 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -105,9 +105,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+                                         VPPN, extract64(address, 13, 19));
+         }
+     } else {
+-        if (!FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
+-            sys->CSR_BADV = address;
+-        }
++        sys->CSR_BADV = address;
+         sys->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
+    }
+ }
 -- 
 2.54.0
 
