@@ -1,59 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56797606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 01:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B46606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 01:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUDL7-00070x-PN; Thu, 19 Nov 2026 20:22:57 -0500
+	id 1xUDKs-0006os-DA; Thu, 19 Nov 2026 20:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xUDL5-0006vK-Cg
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:55 -0500
+ id 1xUDKo-0006n2-CQ
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:38 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xUDL2-0007Tv-Sw
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:54 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1xUDKl-0007RN-L1
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 20:22:38 -0500
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8CxPNLYoP9qA2IhAA--.30444S3;
- Fri, 20 Nov 2026 09:22:32 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxZ7XToP9q+WEhAA--.2343S3;
+ Fri, 20 Nov 2026 09:22:27 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJAx3c7WoP9qtgs2AA--.42580S3;
- Fri, 20 Nov 2026 09:22:30 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxPs_NoP9qsws2AA--.41999S3;
+ Fri, 20 Nov 2026 09:22:26 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 05/16] target/loongarch: Move CSR_TLBRERA FIELD definition
- next to LOONGARCH_CSR_TLBRERA
-Date: Fri, 20 Nov 2026 09:23:45 +0800
-Message-ID: <20261120012356.2656317-6-maobibo@loongson.cn>
+Subject: [PATCH v2 01/16] target/loongarch: Remove csrrd_cpuid() helper
+Date: Fri, 20 Nov 2026 09:23:41 +0800
+Message-ID: <20261120012356.2656317-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261120012356.2656317-1-maobibo@loongson.cn>
 References: <20261120012356.2656317-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx3c7WoP9qtgs2AA--.42580S3
+X-CM-TRANSID: qMiowJCxPs_NoP9qsws2AA--.41999S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7Gr4DXw4fAFy3Kr1xCFyfuFX_yoWkZrb_AF
- 97XrWkXw1kZa4vyF4Yyr97Jr1rKF4xur4a9ayxW3Z8Xryaqr4DuanIg34DZ3yj9rWUAr4a
- y39FgF93Aw1fAosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb7xYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOdb8UUUUU=
+X-Coremail-Antispam: 1Uk129KBj93XoWxGF13AF1kCF17WF1fJr13Awc_yoW5Gr4fpr
+ Wa9rW7KF48GaykA3WSq345tw1UZr4UKa12qan3t34S9a13Xrs2qr40qrnFgF1DJayUWr1F
+ q3WFyr18AFWUX3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -79,30 +78,66 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Move the FIELD definition of CSR_TLBRERA so that it is adjacent to
-LOONGARCH_CSR_TLBRERA. This is a pure code movement and introduces no
-functional change.
+CSR_CPUID is initialized to cs->cpu_index at the beginning of
+loongarch_cpu_reset_hold(), so it can be read through the generic CSR
+read path. No special helper is needed.
+
+HELPER(csrrd_cpuid) is problematic when the vCPU is in guest mode,
+whereas the generic path works correctly. Remove the csrrd_cpuid()
+helper.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu-csr.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/loongarch/tcg/csr_helper.c                      | 10 ----------
+ target/loongarch/tcg/helper.h                          |  1 -
+ target/loongarch/tcg/insn_trans/trans_privileged.c.inc |  1 -
+ 3 files changed, 12 deletions(-)
 
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index 8ae7f9a4f4..faad2bbb17 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -175,9 +175,9 @@ FIELD(CSR_LLBCTL, KLO, 2, 1)
- #define LOONGARCH_CSR_TLBRENTRY      0x88 /* TLB refill exception address */
- #define LOONGARCH_CSR_TLBRBADV       0x89 /* TLB refill badvaddr */
- #define LOONGARCH_CSR_TLBRERA        0x8a /* TLB refill ERA */
--#define LOONGARCH_CSR_TLBRSAVE       0x8b /* KScratch for TLB refill */
- FIELD(CSR_TLBRERA, ISTLBR, 0, 1)
- FIELD(CSR_TLBRERA, PC, 2, 62)
-+#define LOONGARCH_CSR_TLBRSAVE       0x8b /* KScratch for TLB refill */
- #define LOONGARCH_CSR_TLBRELO0       0x8c /* TLB refill entrylo0 */
- #define LOONGARCH_CSR_TLBRELO1       0x8d /* TLB refill entrylo1 */
- #define LOONGARCH_CSR_TLBREHI        0x8e /* TLB refill entryhi */
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 7cba8035df..07b4b25fbd 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -60,16 +60,6 @@ target_ulong HELPER(csrrd_pgd)(CPULoongArchState *env)
+     return v;
+ }
+ 
+-target_ulong HELPER(csrrd_cpuid)(CPULoongArchState *env)
+-{
+-    LoongArchCPU *lac = env_archcpu(env);
+-    CPUSysState *sys = env_sys(env);
+-
+-    sys->CSR_CPUID = CPU(lac)->cpu_index;
+-
+-    return sys->CSR_CPUID;
+-}
+-
+ target_ulong HELPER(csrrd_tval)(CPULoongArchState *env)
+ {
+     return cpu_loongarch_get_timer_ticks(env_timer(env));
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 7ee655b027..60ebf35d1f 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -96,7 +96,6 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ #ifndef CONFIG_USER_ONLY
+ /* CSRs helper */
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+-DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
+ DEF_HELPER_1(csrrd_msgir, i64, env)
+ DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 6728ce5ec9..7d12e06b35 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -80,7 +80,6 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+     SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
+     SET_CSR_FUNC(PWCH,  NULL, gen_helper_csrwr_pwch);
+-    SET_CSR_FUNC(CPUID, gen_helper_csrrd_cpuid, NULL);
+     SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
 -- 
 2.54.0
 
