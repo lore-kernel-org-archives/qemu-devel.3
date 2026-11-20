@@ -1,70 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4A7606A325
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4FC606A330
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 10:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ovhcloud.com header.i=@ovhcloud.com header.a=rsa-sha256 header.s=mailout header.b=Ru9O3iP8
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=boBOM9wB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xULbb-00069b-Ui; Fri, 20 Nov 2026 05:12:31 -0500
+	id 1xULeV-0006mV-FY; Fri, 20 Nov 2026 05:15:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xULba-00069H-1y
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:12:30 -0500
-Received: from 2.mo15.mail-out.ovh.net ([5.135.90.179])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xULeM-0006mA-2z; Fri, 20 Nov 2026 05:15:23 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xULbY-0008AY-D6
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 05:12:29 -0500
-Received: from DAGFR11EX3.OVH.local (unknown [10.109.249.176])
- by mo15.mail-out.ovh.net (Postfix) with ESMTPS id 4jWB3D5svrz3wlp;
- Fri, 20 Nov 2026 10:12:24 +0000 (UTC)
-Received: from [10.46.51.33] (109.190.254.2) by DAGFR11EX3.OVH.local
- (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Fri, 20 Nov
- 2026 11:12:24 +0100
-Message-ID: <08e2e7c2-46d4-448f-a00d-d155e173793a@ovhcloud.com>
-Date: Fri, 20 Nov 2026 11:12:23 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xULeE-0002HL-E8; Fri, 20 Nov 2026 05:15:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1795169703; bh=DRH1brrSDCG+vr0/ewnAaNZmuQnIWmyfpZfk7fAJ19s=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=boBOM9wB2fkuyNjqirYlVp2a6X/5HgGGSmzAwjpWzBaoI2oULIodw7YVAmA3liFln
+ Pzc7BPzSDVJ+y9z50WDrNSLVFqp0EdI3ceUx5tn5iKA0xYliljtz5o6QEUtkwEuuEf
+ a9NBZVHD5bGdhfx3ifmM7pt6rnCH/IeeERA4vsf1XRi/sRUeZHii43qF8ugxMf6pwr
+ IuIcq6cNsl5D85thOZoQ2t11fbY+3XH0b/EB/EVeJxz8PveB3V7IhgB8cJOxJ5HMS6
+ DAYMpL5nMsRGzFVCHds1JZ69BY4JO3a3pblk1ClORTiVWQT4GFcyW9xdWuYf7ZlP3J
+ 1yOSSTRcwNq7Q==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 41D9B1E842B;
+ Fri, 20 Nov 2026 13:15:03 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 32FB0461FAB;
+ Fri, 20 Nov 2026 13:15:03 +0300 (MSK)
+Message-ID: <1daf2d1f-e2c1-4ba8-b98e-7b6d7f18e3ea@tls.msk.ru>
+Date: Fri, 20 Nov 2026 13:15:03 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] block/nbd: Refresh the connection on block_resize
-To: <eblake@redhat.com>
-CC: <qemu-devel@nongnu.org>, <qemu-block@nongnu.org>,
- <vsementsov@yandex-team.ru>, <kwolf@redhat.com>, <hreitz@redhat.com>,
- <stefanha@redhat.com>, <fam@euphon.net>
-References: <20261119144632.232457-1-guillaume.vincke@ovhcloud.com>
- <20261119144632.232457-4-guillaume.vincke@ovhcloud.com>
- <av8ia-EWRqZXchhR@redhat.com>
-Content-Language: en-US
-From: guillaume vincke <guillaume.vincke@ovhcloud.com>
-In-Reply-To: <av8ia-EWRqZXchhR@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH] virtio-crypto: clean up every data queue
+To: zhaoguohan@kylinos.cn
+Cc: arei.gonglei@huawei.com, mst@redhat.com, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <a16d5437-dd54-49dc-b53a-c8756afab274@tls.msk.ru>
+ <20261120092817.119611-1-zhaoguohan@kylinos.cn>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20261120092817.119611-1-zhaoguohan@kylinos.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CAS2.OVH.local (172.16.1.2) To DAGFR11EX3.OVH.local
- (172.16.2.113)
-X-OVH-CORPLIMIT-SKIP: true
-x-ovh-tracer-id: 2091922027239391709
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: dmFkZTEq851oOeV52jdwUOrZfxQKGamfspV0QVqE9Sr1f4+CvIpryTEGAR2e3CWDHsu98rh7XQGbvq9hIxSMSRnLPBN0T+/S22oqjEyWveavw37chZNtqGRFiiwD7lkx9n5rwaHU45rMuynaSHaxKyuzrKSS5ip3Qdrphn42ZJV2gOlsN+btTgZ1Ln/5E2zlSA4PpZ9xaZHo2QQMunL7XV5yOVsQ3YRFsXaCDphEPmXoYBAAAmLBmA/OpyB4rKjBOiSuBwouAQivo6bLr+naq1XIGfGb1ohcXxCeQTgY8iUqFZuKwdxbqn+rtliXaC4Z1r64z3szM49UgVf3ozfcSRbH08V6p61EjEgeZKLczN3qbJyBqyFWANe/vMqKuAxgBneEHraxRltpEqy/mdjAYOOzY4SIDKLBdd/n1hTTfBtwNCt8nuSfJgWREDoOtLybDFDA7175nw+Fo6cbrgb2a1wub9y0Kjp4yD2gCNGK3V08BpJUtaRS5UD/0YdaWUn/WksY1XXH133T5ILTfmdRXfkB8BDJ4Sh5EPXLPcRggMmurBVwCKEtHkL6/l9PaEHdmCyYi2LbYmQYFMCeuyzoUHp4ui/g7bDuGXUJLcHLtTj5lxmIO0Onofik5CxziXw53m9jk0YMXMlRc67d4e1oAfs06328NPAVB9OyOq5+LAV5pYNTAA
-DKIM-Signature: a=rsa-sha256; bh=gTX/fb6PURFRiF0TALgVWdp1IxGMs4VucPAjG+lIaq4=; 
- c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
- t=1795169545; v=1; 
- b=Ru9O3iP8S24kwCxI7t701Jr+dql5lLC4P0YVccAa50FPyDyaKkZxmfbLgxSCVPzyaelgKUW1
- tjhd/8+R8319Lyq6XXrsy5dDbPwh0orkXbc2+mUnINF8ITSl3elvT5uoc7c6vGAIFBKz9l0hH+P
- tWB0ZYCcCoKXNNpAaSLf5Z9M=
-Received-SPF: pass client-ip=5.135.90.179;
- envelope-from=guillaume.vincke@ovhcloud.com; helo=2.mo15.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,36 +74,39 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/19/26 17:25, Eric Blake wrote:
-> On Thu, Nov 19, 2026 at 03:46:30PM +0100, Guillaume Vincke wrote:
->> When an NBD device is resized, two steps are needed to propagate the
->> information. First, as the size is only exchanged at handshake, the
->> connection needs to be reset. Then, the new size needs to be updated by
->> calling bdrv_co_refresh_total_sectors().
->> The QMP block_resize method, by calling bdrv_co_truncate(), takes care
->> of the second step but, considering the NBD connection is lazy, nothing
->> deals with reconnection when the device is idle.
->>
->> This patch uses the new bdrv_co_refresh_connection() to force the
->> handshake by manually starting the reconnection routine.
->> It creates a clean flow to resize an NBD-backed block device on the
->> server side by closing the connection and calling block_resize.
->> When the node is configured with reconnect-delay=0, refreshing starts
->> the reconnection but returns immediately with -EIO. The management
->> application can handle this case by waiting for the connection to be
->> established and re-running block_resize.
->>
->> To detect disconnection, we peek the channel. This does not detect dead
->> peers or disconnected TLS-secured connections. Therefore, this flow
->> will not work if the server does not disconnect cleanly or if the
->> communication is encrypted.
+On 11/20/26 12:28, zhaoguohan@kylinos.cn wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > 
-> This is problematic, since unencrypted traffic is more likely to trip
-> over denial of service CVE attacks; is there any way we can make
-> client disconnect easier to detect even for TLS clients?
+> On 11/20/26 8:25, Michael Tokarev wrote:
+>> Is it a qemu-stable material?
 > 
+> Yes, I think so.
 
-I have to admit I focused on my use case but you are right about the
-CVE risk.  I will suggest an implementation that supports TLS in v2.
+Yeah, this was my main question.  Good.
 
+>> I found this change while trying to pick up a subsequent fix in this area --
+>>
+>>    902c849979c hw/virtio/virtio-crypto: Drain in-flight operations before unrealizing (CVE-2026-50625)
+>>
+>> which touches the same place, and wonder if I should pick this one too?
+> 
+> Yes please. 902c849979c was done on top of this patch (b35d34e3ccd
+> in master), so its context won't match without it. Picking
+> b35d34e3ccd first should let both apply cleanly.
+The context is not a problem, applying the "Drain in-flight" change
+without the "clean up every queue" works just fine.  Yes, it requires
+a bit of tweaking but it's okay.
+
+My question was about this "clean up every queue" change, - it looks like
+it's a change own to pick into stable branches by its own.
+
+It's just that I found this change while trying to apply subsequent change
+in this area.
+
+So yeah, I'm applying both since both makes sense in the stable branches
+independently, and applying one on top of the other avoids back-porting.
+
+Thank you!
+
+/mjt
 
