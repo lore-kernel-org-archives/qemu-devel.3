@@ -1,58 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAB5606A326
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 13:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFFF606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 13:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=anLwe6Od
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=gi4xx+4c
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUOSh-0002tH-AO; Fri, 20 Nov 2026 08:15:31 -0500
+	id 1xUOSr-0002vS-Hi; Fri, 20 Nov 2026 08:15:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andy0x48@linux.ibm.com>)
- id 1xUOSf-0002rq-OW; Fri, 20 Nov 2026 08:15:29 -0500
+ id 1xUOSi-0002uN-02; Fri, 20 Nov 2026 08:15:33 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andy0x48@linux.ibm.com>)
- id 1xUOSd-00046a-TT; Fri, 20 Nov 2026 08:15:29 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1xUOSf-00046y-UW; Fri, 20 Nov 2026 08:15:31 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AKAu3Pc1243432; Fri, 20 Nov 2026 13:15:12 GMT
+ 6AKAuV5p2878744; Fri, 20 Nov 2026 13:15:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=eW0n7pV18Hbn5BNnk
- iS+e3OOFJ5EiWvji5sVK3/2ZVE=; b=anLwe6OdykYbu+vdzPzmCkYuHIbr6Ev1z
- fna2am06UukF+Tnknh3trZylRjyOiWad0BXz5Pdkyotf7VX0X6tO2rvu/EtJkWIc
- 9qyY6gghxLF6fOyd7lCTndd2n/Z0I4vnjSz5EQbTAyFO8V97BElCpKaFwKR1jR5g
- TrMg7q7oNTUGPTYPzzSetA3VLbGxW4zwLT4nJ93ayVjrCG126a7U/l6YDHdd6Vr7
- J10VNm425Tb8Dtamt7YuJvFQkzS15ZmSSC0udirSK4abYN3+1DaGDcZPjk/tdrj5
- P4o3xKClBQLDLUp3md2Isy0NZbrnSif2Sin/OP/03Uh9c2am39ggA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105s0j4x-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=uhH+mascWjLQkvzIcxF6xxJI5i3DzEkxFbLQYapIq
+ ec=; b=gi4xx+4ckkI2KsIESKVpGuobQs7G1tRjCW5MAe+UoZLiC2CvJQZ5WBv36
+ e0rQugDl9rgWjtB0LSAUDAbyeefoCc5ZQr02t5KQlom1briqLVHI8bYeYWDWacl4
+ nrxlbDl39Oc7SwCJUvKvV3MQ1W6/wrX/VUl0vY673HRCZcdISmOJPbRLMTxOXvK0
+ FScj/ichn6pKmoSCpfUXtxwCOd7LKkwzayHCEx5dDqmxsbeD79yQk95KDUBmMfC4
+ QGgHS9XlUIZmiUv9AOHF2rKAernj+KSpKzR9WrUqpFqb/DUyLEjZNx944Ngi0GyU
+ OEduV+dY6rlUhavjNSfMzDI5m+hiQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j105tgmds-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 20 Nov 2026 13:15:12 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AKB4oYo355190; Fri, 20 Nov 2026 13:15:11 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j23dwdum7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Fri, 20 Nov 2026 13:15:11 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AKAo3Vw1107175; Fri, 20 Nov 2026 13:15:10 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j1bb5m957-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Nov 2026 13:15:10 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
  by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AKDF7DO50397454
+ 6AKDF7U150397452
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Fri, 20 Nov 2026 13:15:07 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6943C20043;
- Fri, 20 Nov 2026 13:15:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E709A20043;
+ Fri, 20 Nov 2026 13:15:06 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01E992004B;
- Fri, 20 Nov 2026 13:15:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 81E9C2004D;
+ Fri, 20 Nov 2026 13:15:06 +0000 (GMT)
 Received: from work.ibm.com (unknown [9.111.34.217])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
  Fri, 20 Nov 2026 13:15:06 +0000 (GMT)
@@ -61,42 +61,40 @@ To: qemu-devel@nongnu.org, iii@linux.ibm.com, freude@linux.ibm.com
 Cc: qemu-s390x@nongnu.org, richard.henderson@linaro.org, david@kernel.org,
  cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  Andrew Holden <andy0x48@linux.ibm.com>
-Subject: [PATCH v2 1/3] target/s390x: export access_prepare() and byte
- accessors
-Date: Fri, 20 Nov 2026 13:14:41 +0000
-Message-ID: <20261120131443.61606-2-andy0x48@linux.ibm.com>
+Subject: [PATCH v2 0/3] Fix AES/PAES CPACF register update on faults
+Date: Fri, 20 Nov 2026 13:14:40 +0000
+Message-ID: <20261120131443.61606-1-andy0x48@linux.ibm.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261120131443.61606-1-andy0x48@linux.ibm.com>
-References: <20261120131443.61606-1-andy0x48@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: TGtsEzm-snUrLmKJXtl9VG7V3tzDHubx
-X-Authority-Analysis: v=2.4 cv=e8uT2qp/ c=1 sm=1 tr=0 ts=6b0047e0 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=IouL47/g c=1 sm=1 tr=0 ts=6b0047df cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=fzscAL0ofv0dPgwsyb0A:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA1MSBTYWx0ZWRfXxG/obV17YwNT
- ILYMtwm1FD026N/ibluD5yAehp1rg0ySd1eYVzb/oqry3IdgbnB0Avuf/wGKhj49EXvu6TdfJ+a
- w6s4WHa/vHYBhkdeaEOXkYzigueKyy4=
-X-Proofpoint-ORIG-GUID: TGtsEzm-snUrLmKJXtl9VG7V3tzDHubx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA1MSBTYWx0ZWRfX3e3lKSg6TKQg
- R91lx285tOyn/Gk39KhsN1E822h7B2VPshtj94tDEa6a9uUDC4cdwlFd1ThzRgsAYmopnCKjFIX
- MVon1L7CRrP/HBz5X4vKplImEnlTLmxUSyOJq6gfQL41rRY5C41FWCd2uI/v+ZpyxUj3/pI+l+X
- 95FM6c4LlfLP5NaNPl6PonpwKbBO3zDBAiuwWh3m3Zn23/F+qdu3y9r2ViC9ZDSJvtNnd+o4pEw
- Hqg/W/UVWEN50ssKc6yPjTHVq/V6r7mv2X+HvIYsfU5yfFdjn2IiTzH7TyryMMelk17ztYCLq4h
- fjjc3XjLiZiycVO402jjhEWPj71ulKE4KlO4JXoNExqpSqQpaqTrf4ggG9qE8P+QrJBAlzBrEf4
- 7DdmhNaGtIu68PwDKxCofpmJa92ko615iBQ6BZBBvEm2KmJdM/WbqmgStHmC1D7Ff+Szi+yVING
- RvnRQJr2fGLNSOm2bBw==
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=woak3cZVeigv11IYnT8A:9
+X-Proofpoint-ORIG-GUID: n3fIzyX6G0WBWWKo7vHhImUUHXHXwmBx
+X-Proofpoint-GUID: n3fIzyX6G0WBWWKo7vHhImUUHXHXwmBx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA1MSBTYWx0ZWRfX4HYjhD2exvWh
+ ovtFG48CtH0mwI2a5Q2tv5v4wQtFBm+M8G3ioV4yKgxvrqzAcXvWgXHrI7tXbwrU8UPE8QintZ6
+ jEUpfxb1WZRXWTgFdV0MCw4OmyFvDTE9ykU1Hku0mccyKQKxEHtxHnzVK+u5a3cOVWgAEhi5eTg
+ AU5gnUuN03WGTk8oFzaUmv11zP1o2+MO4czdsDDHqf3ddJjwSYkkombYYVh/B8JmFtWvGbksAFW
+ RECjbI19I8+TUgCWCUiepoKdszt6LC36wL5GzRNK5hBLYA+HK5Fu5PXinZBUUMdnW8jQWyyxS+q
+ wX4xCB/Vz6vf/EtqL0IDVsqOIFmzSSYwSHap6KOJ8uE9LAuvM5rzaVd83OTTqvyFSUfYB/ZlYxD
+ zKNk79cYD9QqkG/EeCvBeP/01NtPN7yOEcb4hN4aL3ZJ3FPLzgAOV9VeIedgDFCae6rspjUsqjy
+ Da164sCUJNzIlN5UnLA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA1MSBTYWx0ZWRfX1qw/VUCBSk9m
+ per44EFfdkzT03L4xwzQYaec2hf9Gp3W/4yT9mU2zxd1/qV+N6cvRt3v6aNdUsaKqWWSB1aUIFy
+ 3CNmFNQjySkxAzUqDj8oXpvZsimxoeg=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-20_04,2026-11-19_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ impostorscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
  definitions=main-2611200051
 Received-SPF: pass client-ip=148.163.156.1;
  envelope-from=andy0x48@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
@@ -118,123 +116,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The helpers are needed by CPACF AES for a partial completion fix. There
-is no functional change with this modification.
+This series fixes how the CPACF AES helpers (ECB, CBC, CTR, XTS, with
+both clear key and protected keys) behave when a guest memory access
+faults in the middle of an instruction. A fault could leave a block
+partially written, and the registers, CBC IV and XTS tweak not matching
+the completed blocks, so the instruction would not continue where it
+stopped.
 
-Signed-off-by: Andrew Holden <andy0x48@linux.ibm.com>
+Each block is now probed with access_prepare() before anything is 
+written, which applies to the source, destination, and IV/tweak. The
+registers are now updated last, so a fault leaves the block unwritten
+and a re-invocation redoes it. Block copying is handled by
+aes_read_block() and aes_write_block(), shared by the clear-key and
+prot-key functions. 
+
+The IV/tweak range is probed before the block is written, so a fault on
+this is unlikely. The data and IV stores are still two separate steps
+however. If the IV/tweak store fails after the data store, e.g. because
+another thread changed the page post-probe, a re-invocation would not
+redo the block cleanly when the source and destination overlap.
+Currently, I can't make the two stores a single operation.
+
+Testing:
+qemu-s390x and qemu-system-s390x build, with current cpacf tests
+passing, along with four fault tests written by Harald Freudenberger -
+these were built and excercised in linux-user mode, targeting the
+relevant instructions.
+
+Notes:
+  - Prot-key functions are covered by existing cpacf tests, but no fault
+    test currently exist. 
+  - Access helpers declared in s390x-internal.h - is this acceptable?
+
 ---
- target/s390x/s390x-internal.h | 25 +++++++++++++++++++++++++
- target/s390x/tcg/mem_helper.c | 33 ++++++++-------------------------
- 2 files changed, 33 insertions(+), 25 deletions(-)
+Changelog:
+v2:
+  - Probe src, dst, and IV/tweak ranges with access_prepare() before
+    writing, so a fault leaves block unwritten, incl. block that crosses
+    page boundary.
+  - Share AES w/r block helper for all functions.
+  - Extend fix to prot-key functions.
+  - Squash each cipher mode fix commits into one.
+  - Include testcases in this series
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index da60b2b1fd..c97d399c99 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -368,6 +368,31 @@ void ioinst_handle_sal(S390CPU *cpu, uint64_t reg1, uintptr_t ra);
- 
- 
- /* mem_helper.c */
-+
-+/* An access covers at most 4096 bytes and therefore at most two pages. */
-+typedef struct S390Access {
-+    vaddr vaddr1;
-+    vaddr vaddr2;
-+    void *haddr1;
-+    void *haddr2;
-+    uint16_t size1;
-+    uint16_t size2;
-+    /*
-+     * If we can't access the host page directly, we'll have to do I/O access
-+     * via ld/st helpers. These are internal details, so we store the
-+     * mmu idx to do the access here instead of passing it around in the
-+     * helpers.
-+     */
-+    int mmu_idx;
-+} S390Access;
-+
-+void access_prepare(S390Access *ret, CPUS390XState *env, vaddr vaddr,
-+                    int size, MMUAccessType access_type, int mmu_idx,
-+                    uintptr_t ra);
-+uint8_t access_get_byte(CPUS390XState *env, S390Access *access, int offset,
-+                        uintptr_t ra);
-+void access_set_byte(CPUS390XState *env, S390Access *access, int offset,
-+                     uint8_t byte, uintptr_t ra);
- void probe_write_access(CPUS390XState *env, uint64_t addr, uint64_t len,
-                         uintptr_t ra);
- 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 414e6838c8..5144f036ad 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -126,23 +126,6 @@ static inline void cpu_stsize_data_ra(CPUS390XState *env, uint64_t addr,
-     }
- }
- 
--/* An access covers at most 4096 bytes and therefore at most two pages. */
--typedef struct S390Access {
--    vaddr vaddr1;
--    vaddr vaddr2;
--    void *haddr1;
--    void *haddr2;
--    uint16_t size1;
--    uint16_t size2;
--    /*
--     * If we can't access the host page directly, we'll have to do I/O access
--     * via ld/st helpers. These are internal details, so we store the
--     * mmu idx to do the access here instead of passing it around in the
--     * helpers.
--     */
--    int mmu_idx;
--} S390Access;
--
- /*
-  * With nonfault=1, return the PGM_ exception that would have been injected
-  * into the guest; return 0 if no exception was detected.
-@@ -219,10 +202,10 @@ static int access_prepare_nf(S390Access *access, CPUS390XState *env,
-     return 0;
- }
- 
--static inline void access_prepare(S390Access *ret, CPUS390XState *env,
--                                  vaddr vaddr, int size,
--                                  MMUAccessType access_type, int mmu_idx,
--                                  uintptr_t ra)
-+void access_prepare(S390Access *ret, CPUS390XState *env,
-+                    vaddr vaddr, int size,
-+                    MMUAccessType access_type, int mmu_idx,
-+                    uintptr_t ra)
- {
-     int exc = access_prepare_nf(ret, env, false, vaddr, size,
-                                 access_type, mmu_idx, ra);
-@@ -257,8 +240,8 @@ static void access_memset(CPUS390XState *env, S390Access *desta,
-     clear_helper_retaddr();
- }
- 
--static uint8_t access_get_byte(CPUS390XState *env, S390Access *access,
--                               int offset, uintptr_t ra)
-+uint8_t access_get_byte(CPUS390XState *env, S390Access *access,
-+                        int offset, uintptr_t ra)
- {
-     vaddr vaddr = access->vaddr1;
-     void *haddr = access->haddr1;
-@@ -277,8 +260,8 @@ static uint8_t access_get_byte(CPUS390XState *env, S390Access *access,
-     }
- }
- 
--static void access_set_byte(CPUS390XState *env, S390Access *access,
--                            int offset, uint8_t byte, uintptr_t ra)
-+void access_set_byte(CPUS390XState *env, S390Access *access,
-+                     int offset, uint8_t byte, uintptr_t ra)
- {
-     vaddr vaddr = access->vaddr1;
-     void *haddr = access->haddr1;
+Links:
+v1: https://lore.kernel.org/qemu-devel/20261008154455.369004-1-andy0x48@linux.ibm.com/
+
+---
+
+Andrew Holden (2):
+  target/s390x: export access_prepare() and byte accessors
+  target/s390x/tcg: update regs and IV/tweak per block in CPACF AES/PAES
+
+Harald Freudenberger (1):
+  tests/s390x/tcg: Add cpacf clear key register update tests
+
+ target/s390x/s390x-internal.h           |  25 ++
+ target/s390x/tcg/cpacf_aes.c            | 380 ++++++++++++------
+ target/s390x/tcg/mem_helper.c           |  33 +-
+ tests/tcg/s390x/cpacf-km-ecb-fault.c    | 368 +++++++++++++++++
+ tests/tcg/s390x/cpacf-km-xts-fault.c    | 511 ++++++++++++++++++++++++
+ tests/tcg/s390x/cpacf-kmc-cbc-fault.c   | 472 ++++++++++++++++++++++
+ tests/tcg/s390x/cpacf-kmctr-ctr-fault.c | 414 +++++++++++++++++++
+ tests/tcg/s390x/cpacf.h                 | 103 +++--
+ tests/tcg/s390x/meson.build             |   4 +
+ 9 files changed, 2138 insertions(+), 172 deletions(-)
+ create mode 100644 tests/tcg/s390x/cpacf-km-ecb-fault.c
+ create mode 100644 tests/tcg/s390x/cpacf-km-xts-fault.c
+ create mode 100644 tests/tcg/s390x/cpacf-kmc-cbc-fault.c
+ create mode 100644 tests/tcg/s390x/cpacf-kmctr-ctr-fault.c
+
 -- 
 2.56.0
 
