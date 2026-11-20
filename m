@@ -1,124 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CDA606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B21606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qWHkHAY7
+	dkim=pass (2048-bit key) header.d=univ-grenoble-alpes.fr header.i=@univ-grenoble-alpes.fr header.a=rsa-sha256 header.s=2020 header.b=oQ5yURNO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUNf8-00055F-Ss; Fri, 20 Nov 2026 07:24:18 -0500
+	id 1xUNiY-0007QW-CK; Fri, 20 Nov 2026 07:27:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xUNf5-00053p-Eq
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:24:15 -0500
-Received: from mail-dy1-x1335.google.com ([2607:f8b0:4864:20::1335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xUNf1-00045Q-Vj
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:24:15 -0500
-Received: by mail-dy1-x1335.google.com with SMTP id
- 5a478bee46e88-3866a784546so230024eec.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:24:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795177450; cv=none;
- d=google.com; s=arc-20260327;
- b=XBq4T0w9xl/wfp+SLZTEBmGRRG9ik4WJwzL2WL5GoYwR2hX3g6VmWvSVZj0YSkVzHz
- XS8D5hVKwAHouGWV19AljlEGPsm5b3SNPUA0CIMZCKBznOXz6btEoZL/m1mxvMLWx3mh
- sV7JD+ht6mWb6um6qaS4JosYm571v9W0kzhDFGCp3njOUZo7pW5NHVE6zeJoo1pdxVW0
- a9bcOE7yhBBGQOVn+hpfR8LKMVfyfioAdoUQrvJXKf20JKrfCwStpBaWhliLYQTDXte4
- Wu0o0MeYGEUY6xLgGygKGWpmb8eh6bFx09V9yoI1zsjwgh4CbLj1NOvSVzth2hrOttPs
- j03Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XwgY4GGOqwuqzYcj2+EsO1wo0sF82aLszvYxn922DdI=;
- fh=nTCWLfSZ9WNOYtJmNv63RrUsHhNCrdHzjHZBQZqEHdc=;
- b=f8NIvoShCkH0n1DUoDZeCtgWitc6QmdfB6KHWO9ToQTkdNHrOurmgyS/sopZr3LArG
- BnFprZaRP2rFE0k5Os3mY5c27bHJPlz77taznzdW5yFDkN1UEjSlRayNqI7QmfnJIs4B
- zCsGvqOuYJ2lMAfyVGQ4u4n7KWFHYXoOyIR88S0zGnVM6JG4bLOl0fsDJ/6zg3H0zMLy
- zeyU0W3+xCNwMeAc9R8REdNPaC7U/zeeOa4fwgSqWB5LCuLadJRBEv6XIu6wkOJnoGi1
- C2Mcx/Py/BPyjxj4YWtjOL9fHt9caLhLW9uOFbr18tPs//sty+F8EhbZt8Ic16CKsLJo
- 0Zzg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795177450; x=1795782250; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XwgY4GGOqwuqzYcj2+EsO1wo0sF82aLszvYxn922DdI=;
- b=qWHkHAY7WCJp2KbWvGnor64HIuR+oyLZccbH4023zTow07f88qnrTdlp8TNnLyWTXj
- 5geDs12hzxrKQwUMJnZZQykjPpvN/2RDylnFLGdocTAUks+XOIdndsncHRGFF9YpZdmw
- BFV+YjWbvO+8AtQmfAtQmxgR8nGQGnXienYT/8AfHC+hXtfG5xunUHW6LmSp1I7cKP/d
- HzFO6N2ElAcGTbOsoMkgg7/34RbAHB8k2HsRXHwOnl/X0Ar1a9eqLG+8YqWwjqV4XeiV
- rWBJuuYPPS6mNudsuzgvcrmvplsq/sjMhJKAQdv7+TUk0mRjI8cww6loC2/LlpcGjQCu
- vSJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795177450; x=1795782250;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XwgY4GGOqwuqzYcj2+EsO1wo0sF82aLszvYxn922DdI=;
- b=PgDkUUvYGvs1byZsFtfl5+gH+J4VLoWoE/IVX5r/J9i4gYwyKiz5l+9ev1s/4l1dl8
- G6wxsOjIxQpoozUWvth52Ir+fWaz3dJeUo8is7acvbpjy7eiW/r79TaHhuKqEvM5E0FW
- oDfWXQZ2SphALJ5iLSjSZB2pjB9xeB0nmu/JzSQSxDVQsMuvDytOSLosAstb7XoSHmc/
- ui1mkgAy/chc2MqTJPGBl9aK5QEIUpI8LMZXkEzQ/ol9c8r/xyWoeMtuQ+xu9OI1nX+G
- BJo5lLWNVcjQnSDSdNbGMRckprmita5iJGVJy7zjkPSAjItinpshP5K/5b9CZsAtmfGw
- lZFA==
-X-Gm-Message-State: APuU4Z9wVzh9+p1zxPE/uIvWMyRQR0tfvRKR0rosmMF0BOVE5rLkLycL
- oHyEx6wQ9nevYcIPRmJOCEdpx7l2JUBmq0iSn03vYFvtjX5ztkoNlve4gGlBT+kuygqtgNqRdxc
- UfdI8KCQUkJp3lL7YN1R++ENYl88N8i4=
-X-Gm-Gg: AZFdTZdaehm04N0gc3Jj6ggNP+VYeuPoS4aVdDwxwlt+LJc8VKEhVLCsd4gDSvh8p+Y
- 2aXsDJR+VTQSjiTn2SREiG77/+gbcj9PBjjHiKKSUM+vmOo1s5Y5FKMOBXGRU+4UCJMYLYr0dZ2
- 6e5oanndNI81THjcYHk2KU5wj2+HY1JBBgkIMTb5nGbC9dpNfYeM687918/WA5s02uPQg+f7+fF
- JmedWVR2KSl02C42CfkC8zmK3anjwCOMayDu7CkWlVhjDi3tu0OCAmRf5bnsyfRzDZ4he9ieuXS
- clWc+dk+DhLnvIci7PJyxGrLhFngXJQwlLAT/5WjDy2YLTryq58VOi+ax+TloC7PPkq5x0gotI0
- F98bMlhkQdI4JiKytk1Z9+Fj5MYxMfIudOPF7pX+JLUJtaMJZxajJymKL7rHv0f6ILNfohmhUvF
- 1d/qnWatllDtEElQ==
-X-Received: by 2002:a05:7301:7e07:b0:36f:9d8:4a33 with SMTP id
- 5a478bee46e88-38570e21c39mr2680973eec.31.1795177449609; Fri, 20 Nov 2026
- 04:24:09 -0800 (PST)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1xUNiW-0007PA-7b; Fri, 20 Nov 2026 07:27:48 -0500
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1xUNiT-0001sr-Pn; Fri, 20 Nov 2026 07:27:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1795177663;
+ bh=JVtaRwl/JnoGFEJiYpnWZOcM95itPku7oGfUkJR9Tco=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=oQ5yURNOTFlsB9f5lv5kYCD3myvuP5REtByckjSp/wEFDzASFW/x8SQdBpVCRhCZw
+ aEOVc4RiaxKj5xIkD+C3kR7Z0bg43sJYGp/KEZ24Ac/9pf/sIjdCsiVdfWkIMu0KDB
+ 0Wff2SZ3Jhh0AwcZLb/39MPIKcQOj2iSwsY0ir4OciqVN3aN1zI5abuEqiV2gA0ry1
+ qydMn+SHLV4AUDkbdhU+8cSs7LcMad2v0BBzDCMrc2Ttgv14YPhEPXQbPEEx7E3hs4
+ 2Wl41Hy4CSH2/JJfw42In/xx0rv2d4BLFUJ+eALAQUXkEiR4wfqf382a7amT+PTPof
+ h6okIKbKifCow==
+Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 85A69402A8;
+ Fri, 20 Nov 2026 13:27:43 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id 81B22FF853;
+ Fri, 20 Nov 2026 13:27:43 +0100 (CET)
+Received: from naga.tima.u-ga.fr (naga.tima.u-ga.fr [147.171.132.150])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 5444414009A;
+ Fri, 20 Nov 2026 13:27:43 +0100 (CET)
+From: frederic.petrot@univ-grenoble-alpes.fr
+To: qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, peter.maydell@linaro.org,
+ daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ qemu-riscv@nongnu.org, =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH v5 2/4] target/riscv: fix riscv_cpu_do_interrupt sanitize
+ error for x-rv128
+Date: Fri, 20 Nov 2026 13:27:39 +0100
+Message-ID: <20261120122741.33727-3-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261120122741.33727-1-frederic.petrot@univ-grenoble-alpes.fr>
+References: <20261120122741.33727-1-frederic.petrot@univ-grenoble-alpes.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261120121458.3723625-1-berrange@redhat.com>
- <20261120121458.3723625-3-berrange@redhat.com>
-In-Reply-To: <20261120121458.3723625-3-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 20 Nov 2026 16:23:57 +0400
-X-Gm-Features: Aa3M54radXEOrKx4IuO7FdGMOphv7fl0y-3Td8-jQzdWKtoR_bh2xRzRTRNaE2c
-Message-ID: <CAJ+F1C+eBx6qUmtLGw2vSgk+Pp=Zpt92_tokyyGsrCREaE45gQ@mail.gmail.com>
-Subject: Re: [PATCH 02/12] tests/functional: update sha digests for tuxrun
- kernels
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Halil Pasic <pasic@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org, 
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Eric Farman <farman@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1335;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,110 +83,279 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 20, 2026 at 4:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> The images appear to have been regenerated since the recorded
-> digests no longer match
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-See also
-https://patchew.org/QEMU/20261112133320.418012-2-marcandre.lureau@redhat.co=
-m/
+UndefinedBehaviorSanitizer reports an undefined behavior when setting
+the Interrupt flag (msb) in the [ms]cause registers due to an out of
+bounds shift.
 
-> ---
->  tests/functional/aarch64/test_tuxrun.py | 4 ++--
->  tests/functional/s390x/test_tuxrun.py   | 4 ++--
->  tests/functional/x86_64/test_tuxrun.py  | 4 ++--
->  3 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/tests/functional/aarch64/test_tuxrun.py b/tests/functional/a=
-arch64/test_tuxrun.py
-> index 2ff321582d3..6c4367c8a20 100755
-> --- a/tests/functional/aarch64/test_tuxrun.py
-> +++ b/tests/functional/aarch64/test_tuxrun.py
-> @@ -18,10 +18,10 @@ class TuxRunAarch64Test(TuxRunBaselineTest):
->
->      ASSET_ARM64_KERNEL =3D Asset(
->          'https://storage.tuxboot.com/kernels/6.18.54/arm64/Image.gz',
-> -        '39f4633bbcb444267d4d829bd28d8868a287c4c160cda64b0fd23fb090571c4=
-e')
-> +        'e297f12682af7e88735a0aae38e6fbd137192b516ab5f0fc1a81c4bcc3992e8=
-0')
->      ASSET_ARM64_VMLINUX =3D Asset(
->          'https://storage.tuxboot.com/kernels/6.18.54/arm64/vmlinux.xz',
-> -        '6487eb113ef6e841aedab6cb6fa704006377d68f64dd544570aa42f462a52b8=
-5')
-> +        'aa9b984337e975528162ed873cf18a072b27be8e4f48e6cf0723e9b490c6317=
-1')
->      ASSET_ARM64_ROOTFS =3D Asset(
->          'https://storage.tuxboot.com/buildroot/20260924/arm64/rootfs.ext=
-4.zst',
->          '4ab8cec9d1e17dbb1abdf2ae1939ad4f9d0dc2466230f6a119a7c1845cdef0b=
-1')
-> diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s39=
-0x/test_tuxrun.py
-> index 1dd662aaaf0..be38fcded2e 100755
-> --- a/tests/functional/s390x/test_tuxrun.py
-> +++ b/tests/functional/s390x/test_tuxrun.py
-> @@ -18,10 +18,10 @@ class TuxRunS390xTest(TuxRunBaselineTest):
->
->      ASSET_S390X_KERNEL =3D Asset(
->          'https://storage.tuxboot.com/kernels/6.18.54/s390/bzImage',
-> -        '5efeb31754b211440e1595ab11355bb006fe78a2c0604ed0a8c55c4598b71ae=
-c')
-> +        'b5022f97e243b8ecd51fc7ce4290a15806ecc51a41edbe777fc0fcdda567269=
-e')
->      ASSET_S390X_VMLINUX =3D Asset(
->          'https://storage.tuxboot.com/kernels/6.18.54/s390/vmlinux.xz',
-> -        '5bbd4d34e0950f88053a9bfd16078896df4b1ee1696fc2ad62488e681a6bdd8=
-e')
-> +        'cd70050ddb638e81c2f1b96a4629c224aedd36bf8ae3b56b264b070e94642e2=
-5')
->      ASSET_S390X_ROOTFS =3D Asset(
->          'https://storage.tuxboot.com/buildroot/20260924/s390/rootfs.ext4=
-.zst',
->          '5ba18c4d18831c50a0c743990f7bdee1d3b520629d423c55b668d8fbbac9c6f=
-5')
-> diff --git a/tests/functional/x86_64/test_tuxrun.py b/tests/functional/x8=
-6_64/test_tuxrun.py
-> index 1a1138d16ae..efe907bed82 100755
-> --- a/tests/functional/x86_64/test_tuxrun.py
-> +++ b/tests/functional/x86_64/test_tuxrun.py
-> @@ -18,10 +18,10 @@ class TuxRunX86Test(TuxRunBaselineTest):
->
->      ASSET_X86_64_KERNEL =3D Asset(
->          'https://storage.tuxboot.com/kernels/6.18.54/x86_64/bzImage',
-> -        '24a3ade610c2cc426ff821050de8a35930b0371357d94cc2c334abac6658552=
-b')
-> +        'ba98a8a07d5f3f3e20119341059c0f0096fda499d30e30049c1ea64553b7e7c=
-2')
->      ASSET_X86_64_VMLINUX =3D Asset(
->          'https://storage.tuxboot.com/kernels/6.18.54/x86_64/vmlinux.xz',
-> -        '77bf44cca48c9c1b9c142e16a2311d58b8ae3462b61bce44bcaf9243b5f2662=
-8')
-> +        'bc8af37608753c6ba47c6fe85f4034188b5f15bb757a0cbd79672c65122278a=
-b')
->      ASSET_X86_64_ROOTFS =3D Asset(
->          'https://storage.tuxboot.com/buildroot/20260924/x86_64/rootfs.ex=
-t4.zst',
->          '8e310455b0244414ccff29c507f7ccfd4032e3587cc405e49ab0322738e3e27=
-c')
-> --
-> 2.56.1
->
->
+To prevent this, we introduce fields to hold the interrupt flag in
+all "versions" of the cause register and build the expected
+values on the fly by oring it with the proper cause.
+Handling of vscause assumes it has the same xlen than cause.
 
+Fixes: 58597bfeab45 ("target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+---
+ target/riscv/cpu.c            |  1 +
+ target/riscv/cpu.h            |  4 ++
+ target/riscv/tcg/cpu_helper.c | 20 +++++++--
+ target/riscv/tcg/csr.c        | 79 +++++++++++++++++++++++++++++++----
+ 4 files changed, 93 insertions(+), 11 deletions(-)
 
---=20
-Marc-Andr=C3=A9 Lureau
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 15c27f4ce4..3e2f739c4e 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1021,6 +1021,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     env->mstatus = set_field(env->mstatus, MSTATUS_SBE, cpu->cfg.big_endian);
+     env->mstatus = set_field(env->mstatus, MSTATUS_UBE, cpu->cfg.big_endian);
+     env->mcause = 0;
++    env->mcause_int = 0;
+     env->miclaim = MIP_SGEIP;
+     env->pc = env->resetvec;
+     env->bins = 0;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 49a1186bdb..e7fe1102c3 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -354,10 +354,12 @@ struct CPUArchState {
+     uint64_t stvec;
+     uint64_t sepc;
+     uint64_t scause;
++    uint64_t scause_int;
+ 
+     uint64_t mtvec;
+     uint64_t mepc;
+     uint64_t mcause;
++    uint64_t mcause_int;
+     uint64_t mtval;  /* since: priv-1.10.0 */
+ 
+     uint64_t mctrctl;
+@@ -417,6 +419,7 @@ struct CPUArchState {
+     uint64_t vsscratch;
+     uint64_t vsepc;
+     uint64_t vscause;
++    uint64_t vscause_int;
+     uint64_t vstval;
+     uint64_t vsatp;
+ 
+@@ -431,6 +434,7 @@ struct CPUArchState {
+     uint64_t sscratch_hs;
+     uint64_t sepc_hs;
+     uint64_t scause_hs;
++    uint64_t scause_int_hs;
+     uint64_t stval_hs;
+     uint64_t satp_hs;
+     uint64_t mstatus_hs;
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 58e98e975c..a3ba7e9c42 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -585,7 +585,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+         env->sepc = env->sepc_hs;
+ 
+         env->vscause = env->scause;
++        env->vscause_int = env->scause_int;
+         env->scause = env->scause_hs;
++        env->scause_int = env->scause_int_hs;
+ 
+         env->vstval = env->stval;
+         env->stval = env->stval_hs;
+@@ -608,7 +610,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+         env->sepc = env->vsepc;
+ 
+         env->scause_hs = env->scause;
++        env->scause_int_hs = env->scause_int;
+         env->scause = env->vscause;
++        env->scause_int = env->vscause_int;
+ 
+         env->stval_hs = env->stval;
+         env->stval = env->vstval;
+@@ -2375,7 +2379,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         }
+         env->mstatus = s;
+         sxlen = 16 << riscv_cpu_sxl(env);
+-        env->scause = cause | ((target_ulong)async << (sxlen - 1));
++        env->scause = cause;
++        if (riscv_cpu_sxl(env) != MXL_RV128) {
++            env->scause_int = (target_ulong)async << (sxlen - 1);
++        } else {
++            env->scause_int = (target_ulong)async << 63;
++        }
+         env->sepc = env->pc;
+         env->stval = tval;
+         env->htval = htval;
+@@ -2447,9 +2456,14 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             s = set_field(s, MSTATUS_MDT, 1);
+         }
+         env->mstatus = s;
+-        env->mcause = cause | ((target_ulong)async << (mxlen - 1));
++        env->mcause = cause;
++        if (riscv_cpu_mxl(env) != MXL_RV128) {
++            env->mcause_int = (target_ulong)async << (mxlen - 1);
++        } else {
++            env->mcause_int = (target_ulong)async << 63;
++        }
+         if (smode_double_trap) {
+-            env->mtval2 = env->mcause;
++            env->mtval2 = env->mcause_int | env->mcause;
+             env->mcause = RISCV_EXCP_DOUBLE_TRAP;
+         } else {
+             env->mtval2 = mtval2;
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index c3ef16cf1a..9549f5e6c5 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3234,14 +3234,37 @@ static RISCVException write_mepc(CPURISCVState *env, int csrno,
+ static RISCVException read_mcause(CPURISCVState *env, int csrno,
+                                   target_ulong *val)
+ {
+-    *val = env->mcause;
++    *val = env->mcause_int | env->mcause;
+     return RISCV_EXCP_NONE;
+ }
+ 
++static uint64_t cause_int_mask(RISCVMXL xl)
++{
++    g_assert(xl != MXL_RV128);
++    return 1ULL << ((16 << xl) - 1);
++}
++
+ static RISCVException write_mcause(CPURISCVState *env, int csrno,
+                                    target_ulong val, uintptr_t ra)
+ {
+-    env->mcause = val;
++    env->mcause = val & (cause_int_mask(riscv_cpu_xlen(env)) - 1);
++    env->mcause_int = val & cause_int_mask(riscv_cpu_xlen(env));
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException read_mcause_i128(CPURISCVState *env, int csrno,
++                                       Int128 *val)
++{
++    *val = int128_make128(env->mcause, env->mcause_int);
++
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_mcause_i128(CPURISCVState *env, int csrno,
++                                        Int128 val)
++{
++    env->mcause = int128_getlo(val);
++    env->mcause_int = int128_gethi(val);
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -4494,14 +4517,31 @@ static RISCVException write_sepc(CPURISCVState *env, int csrno,
+ static RISCVException read_scause(CPURISCVState *env, int csrno,
+                                   target_ulong *val)
+ {
+-    *val = env->scause;
++    *val = env->scause_int | env->scause;
+     return RISCV_EXCP_NONE;
+ }
+ 
+ static RISCVException write_scause(CPURISCVState *env, int csrno,
+                                    target_ulong val, uintptr_t ra)
+ {
+-    env->scause = val;
++    env->scause = val & (cause_int_mask(riscv_cpu_sxl(env)) - 1);
++    env->scause_int = val & cause_int_mask(riscv_cpu_sxl(env));
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException read_scause_i128(CPURISCVState *env, int csrno,
++                                       Int128 *val)
++{
++    *val = int128_make128(env->scause, env->scause_int);
++
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_scause_i128(CPURISCVState *env, int csrno,
++                                        Int128 val)
++{
++    env->scause = int128_getlo(val);
++    env->scause_int = int128_gethi(val);
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -5532,14 +5572,16 @@ static RISCVException write_vsepc(CPURISCVState *env, int csrno,
+ static RISCVException read_vscause(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+ {
+-    *val = env->vscause;
++    *val = env->vscause_int | env->vscause;
+     return RISCV_EXCP_NONE;
+ }
+ 
+ static RISCVException write_vscause(CPURISCVState *env, int csrno,
+                                     target_ulong val, uintptr_t ra)
+ {
+-    env->vscause = val;
++    /* Assumes vxlen == sxlen */
++    env->vscause = val & (cause_int_mask(riscv_cpu_sxl(env)) - 1);
++    env->vscause_int = val & cause_int_mask(riscv_cpu_sxl(env));
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -5632,6 +5674,24 @@ static RISCVException write_pmpcfg(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException read_pmpcfg_i128(CPURISCVState *env, int csrno,
++                                       Int128 *val)
++{
++    uint32_t reg_index = csrno - CSR_PMPCFG0;
++
++    *val = pmpcfg_csr_read_i128(env, reg_index);
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_pmpcfg_i128(CPURISCVState *env, int csrno,
++                                        Int128 val)
++{
++    uint32_t reg_index = csrno - CSR_PMPCFG0;
++
++    pmpcfg_csr_write_i128(env, reg_index, val);
++    return RISCV_EXCP_NONE;
++}
++
+ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+ {
+@@ -6227,7 +6287,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_MSCRATCH] = { "mscratch", any,  read_mscratch, write_mscratch,
+                        NULL, read_mscratch_i128, write_mscratch_i128   },
+     [CSR_MEPC]     = { "mepc",     any,  read_mepc,     write_mepc     },
+-    [CSR_MCAUSE]   = { "mcause",   any,  read_mcause,   write_mcause   },
++    [CSR_MCAUSE]   = { "mcause",   any,  read_mcause,   write_mcause,
++                        NULL, read_mcause_i128, write_mcause_i128      },
+     [CSR_MTVAL]    = { "mtval",    any,  read_mtval,    write_mtval    },
+     [CSR_MIP]      = { "mip",      any,  NULL,    NULL, rmw_mip        },
+ 
+@@ -6362,7 +6423,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_SSCRATCH] = { "sscratch", smode, read_sscratch, write_sscratch,
+                        NULL, read_sscratch_i128, write_sscratch_i128    },
+     [CSR_SEPC]     = { "sepc",     smode, read_sepc,     write_sepc     },
+-    [CSR_SCAUSE]   = { "scause",   smode, read_scause,   write_scause   },
++    [CSR_SCAUSE]   = { "scause",   smode, read_scause,   write_scause,
++                       NULL, read_scause_i128, write_scause_i128        },
++
+     [CSR_STVAL]    = { "stval",    smode, read_stval,    write_stval    },
+     [CSR_SIP]      = { "sip",      smode, NULL,    NULL, rmw_sip        },
+     [CSR_STIMECMP] = { "stimecmp", sstc, read_stimecmp, write_stimecmp,
+-- 
+2.43.0
+
 
