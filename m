@@ -1,94 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C250606A325
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D90606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=K4ieTQwl;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=rujFy4A5
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Fqx1CQ0h;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=EkKdylSZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUO3d-0000qF-Ns; Fri, 20 Nov 2026 07:49:37 -0500
+	id 1xUO3h-0000rc-8A; Fri, 20 Nov 2026 07:49:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3b-0000oz-9Q
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:35 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3g-0000rP-2j
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3Z-0004ku-4B
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:35 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3e-0004lx-8m
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795178970;
+ s=mimecast20190719; t=1795178977;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=aXGWNT0Ui94VenZfPMnzJk8edzOpaNdOc7vd8X29dhk=;
- b=K4ieTQwl7vaH8JnkQ6XRED4jbprxsuASpuFPsv01FJjj6DeJw9Ag0S8bDQ1lzAjYwYJejP
- hfyIyDAQWV2cLfeKWH9OqlQTMuIFd/3Er2oXTwCPV3pG5T6rEFulfl0dZXy6TxW/4h8ZsN
- OpzWAh/wYPvKBDGRngKKFWehF4BzxkY=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uSwHL3vuTndJi148C85zSTNoHuO+rSDLC00laMooOgM=;
+ b=Fqx1CQ0hZkM+yKmh7skZWdwBm4RuSYsvclYiOJiD+8tlU/CfYhbf8lwfJ03VQABjm03fEP
+ xsm3YsMspViGF0clY77wllOc+IBOZorsVpdw3gq+U5JUAjOkde63rPOvQaliRqeRaeq8tc
+ 5noOOwex1KRVO5C6jCpgtbRPwQ6Nmwg=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-tjIvCU7kNPiDd3uQs4UmoA-1; Fri, 20 Nov 2026 12:49:27 +0000
-X-MC-Unique: tjIvCU7kNPiDd3uQs4UmoA-1
-X-Mimecast-MFC-AGG-ID: tjIvCU7kNPiDd3uQs4UmoA_1795178966
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5363fa3d3e4so16923891cf.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:27 -0800 (PST)
+ us-mta-269-br9mhsXZPPSaZ4J_2FtCgQ-1; Fri, 20 Nov 2026 12:49:35 +0000
+X-MC-Unique: br9mhsXZPPSaZ4J_2FtCgQ-1
+X-Mimecast-MFC-AGG-ID: br9mhsXZPPSaZ4J_2FtCgQ_1795178975
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-94961ed97d6so152878885a.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795178966; x=1795783766; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=aXGWNT0Ui94VenZfPMnzJk8edzOpaNdOc7vd8X29dhk=;
- b=rujFy4A5sYBn3i5lSQDqLBwyYJfhNopQw96OvA2s6CMLacLXnSt485+m0sSOaGDHlK
- 7wS73TIKnZ0M7+n+RpwEo4CNeu8F8UsMK828jCKsMMpsjozz4aYqPi6oonejHe4OnQWv
- TpGvVUcTGu8E2w3qy5D1dLqazlTEx9swzF0fjx60f7kbcnu+a5dhf/VzR1Dd0M/pkA3h
- FVuNFwl7RIcuVJroNDJIsvPPwDSU6gaj8ywmIxeN2ndK3ZNoxnBQy4TeomtQZwjKjANf
- 4YSe0nC+CdcuafQWyWavq87c1kfiMK1rZdy6CUxTENyYHNmIBPUpo+wKmbh1mn7l7q8L
- rhcA==
+ d=redhat.com; s=google; t=1795178975; x=1795783775; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=uSwHL3vuTndJi148C85zSTNoHuO+rSDLC00laMooOgM=;
+ b=EkKdylSZyJviwBy+aAW03cK+jwkZBKIIgZ83DSzRcgMY+jG1tnsurrg2k7lszc0VXM
+ PwZbV1TNr51VqppfllR2R6mZID7pGcDPYHrzLLhGl0xaxCC/MlLtajTh4VMRWsKlU3B3
+ oUEon8P8nzJoxJ4W51j8AhLCZrHmNNcAcGYXhiHdBSR+m3KvaoMnakSVHh0ep06IQlX8
+ GV+yzEf5MqR1Sr1gf1G/nExG6wtSwX/7ZPvHsJSBRkdaVNLrbDHKgPCqmKL6+FrGg+do
+ MqhbwiXIDkbtmP20TNrywUs5IumyBLFbkwNmeKwn1ZGRxjxI1x+UeiN2ux5KIwc2KyeY
+ oRCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795178966; x=1795783766;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=aXGWNT0Ui94VenZfPMnzJk8edzOpaNdOc7vd8X29dhk=;
- b=d6pFkiHDcf0WLpPG7uOIDJsv4wVDFMYRFL2p/xiSRSPLf9NYy9DwAVWGs0W2+Ke9Rz
- GT6y9He02lCydwKtl7Ve1NSUXzc3RUVsx7zQcAUl1sfwHyJt+zYivEzUvkYPfard100L
- 1rCq4xjH0VKTlmZyTYMZ8HuzTT3B7gimulEeDRPpndoGSOpO2Mp3XURY24I0dNiB7sXm
- VPhA0BTM+Xt4qpkUtlJvqmBaxM56fVesP++ZxzLjjk1F6PYrG76OWEqAnVRO4BRL/xxZ
- MTb+MGAePQhDSmTpYqadxI3ITqb7LhInA6BaOecD1qtodSWPIX1jjRrPBGLMoCNH7mqH
- sV+g==
-X-Gm-Message-State: APuU4Z/BymZqfG2y3ApMbQP7QvPEfBiDcqGar0E19zdyG7uoUcMm5oAq
- I8mB/CgPnsMBe03y/XAJN+ZdprWqjdN5HF+uIUueOXc8hb1LofGz+mGkxtvFkAeswh+3MB3mojN
- 61M82Zsa0h/AfLwFJjp0r0QAyxUmUK73wWItwYKIOpwEVydsxRi2kPBj/oTxElzXD4cyZhg/GNw
- wAO1zA8ID1hjnFKcJgiEJh00uAVP7YnBSPcFieyw==
-X-Gm-Gg: AYBFou0qgj5S5BrPMqtx6Z8xlPj35R3Ro6p8nHJJWsHaMNDnBDwoRRqR1E1jJu3QNl7
- wPeKGMjQrXiIZnbcEUcVjn011tdCYHI6ZncuOjPWMxzNac/V1MDKK1xnkLtCDcIaNocIJYt9j3h
- 0ViN/Yup3zQKh2Hh3voCsidmUX4YLngSAX+0ckvKpknxdmjFOstjAJWhPVkvm/oamEh2W5ETMvr
- zS0LZBnPc5udUFRpQ0iaG4VkYkI/OuJYU21120ouRf974fMrWjfqPiEd4ztlcvgC+KaLdT45m6H
- lmWNpF9LKtN7DsdGL2ZOU9LgzteWq8ol++0JNNivbcsldumML591N4IDpi/UnmqRQFx7SlqnFbb
- Kh+Gx72IYlumRLKaqrNDJRRv+Ja5QPJWTqOasWpjzNuN2
-X-Received: by 2002:a05:622a:2586:b0:55c:6d3d:b688 with SMTP id
- d75a77b69052e-55d767ae63dmr51572961cf.0.1795178965982; 
- Fri, 20 Nov 2026 04:49:25 -0800 (PST)
-X-Received: by 2002:a05:622a:2586:b0:55c:6d3d:b688 with SMTP id
- d75a77b69052e-55d767ae63dmr51572471cf.0.1795178965363; 
- Fri, 20 Nov 2026 04:49:25 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795178975; x=1795783775;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=uSwHL3vuTndJi148C85zSTNoHuO+rSDLC00laMooOgM=;
+ b=08ATgqZ2tOrKxPYV94sLMSv1d/7a9Mk5Jye82KVvCgfj9kT3cR8kroUU0s1m18pd6V
+ QJL3diAgxQ9nJz2+udwWdwLBwOJ7Dcy+THZNY1RtQ6PiIXc1eDWFOQcsdUbI/ncTXwwU
+ yJaV0QkATCfrcWu9QaY77GnepDoHHd/sWKAcRF1CRA8YyaiiNUW130zpjIsVXPbaSq9V
+ BJFwI6XcT22NXQpCdXU7/9w01Mw8KfHmmKkW+k+BwogwDn61o0TIW18fq3HbrQqFC+ku
+ JSRueFchC+wjzJ607hrhDLOTGGP1FI+fSI50rGZUmQCk3MnyGpVV+/FC7LjI4/aczkiX
+ tMxQ==
+X-Gm-Message-State: APuU4Z9Ep2VjLsnvcZRhpUh0V0zkfB9dh0MDe1vdmpasXPaMiC64mzYu
+ S/qedgqSMGKBMWjCUxBTDk630OLqxycfD0u5iNB/mokTQYdPZPj4e8uzS0NxlCFevuw5+VF5ZcD
+ 7cdWe52yH7ygWYhIA+G9KJqiasN512ZTAFP21fWrOdZJ4X0+CRKXHnoHpWocYLUZVFPwqXMc4mW
+ 0SaUHPAldTqyZQ3OlxEuPi2jie0fMU0itjzjdASQ==
+X-Gm-Gg: AYBFou0FJM4cL9X2iNSguZrLmqkazPsSmabGTmwZifgESOIq5vRPJjos1XYQdKTQB6d
+ mVlmCvKX9M2yPty6F0d/nE27sOC86k74aNXbq6AbTkRFAqjFYuGSTFbVdP6EMebuUL18QfQtfNG
+ JP9xNPsPq0706aljklj+0AO0l0OjNvOmNKI84JliU6wXlicW68ufeoep4IRJAIi7QQxcodje/Ga
+ GjEmKW22NPkbNpvVWjjUGzTLEd29+E2IjQEtJYOA3ghgOlOtPBFM+3BI/3jC8NqLhlooOy6IVsT
+ n9Ut1wpzNFnW51H9b0JDCt01QiG7GSsGent827N9BAqyeFkLlLVAjiT+acMEKkxHnBAIepm0H1r
+ oWsZjst+zsb/eJqaEEetP5UHwWpZ5tYt/oZmY7kdFlL30
+X-Received: by 2002:a05:620a:372b:b0:949:70c5:c0ce with SMTP id
+ af79cd13be357-949b35ac8e0mr694767285a.19.1795178974914; 
+ Fri, 20 Nov 2026 04:49:34 -0800 (PST)
+X-Received: by 2002:a05:620a:372b:b0:949:70c5:c0ce with SMTP id
+ af79cd13be357-949b35ac8e0mr694762985a.19.1795178974274; 
+ Fri, 20 Nov 2026 04:49:34 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d7882e2d1sm21546751cf.14.2026.11.20.04.49.24
+ af79cd13be357-949bb397b4bsm181805685a.21.2026.11.20.04.49.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 04:49:24 -0800 (PST)
+ Fri, 20 Nov 2026 04:49:33 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com
-Subject: [PATCH for-12.0 0/6] migration: Remove VMSTATE_VALIDATE() and
- VMS_MUST_EXIST
-Date: Fri, 20 Nov 2026 07:49:17 -0500
-Message-ID: <20261120124923.1656220-1-peterx@redhat.com>
+ peterx@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-rust@nongnu.org
+Subject: [PATCH for-12.0 5/6] rust: Replace vmstate_validate with post_load
+Date: Fri, 20 Nov 2026 07:49:22 -0500
+Message-ID: <20261120124923.1656220-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.56.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20261120124923.1656220-1-peterx@redhat.com>
+References: <20261120124923.1656220-1-peterx@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -114,65 +118,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-CI: https://gitlab.com/peterx/qemu/-/pipelines/3091862038
+We dropped all of that in C, drop that in Rust too.  The goal is to remove
+the VMSTATE_VALIDATE() together with VMS_MUST_EXIST.
 
-This is for QEMU 12.0 material only.  I could have marked this RFC, but I
-found that I want / see this more than "request for comments", so I send it
-as formal patches.
+Use post_load instead for the check.
 
-To PeterM: I know you may still have some concern on dropping VALIDATE, but
-until now I still think this should be the right thing to do.  Let's move
-the discussion here and we can continue discussions here.
-
-===8<===
-
-Peter Maydell reported an unwanted assertion on source QEMU due to a failed
-check in VMSTATE_VALIDATE():
-
-https://lore.kernel.org/r/20261119165546.3050013-1-peter.maydell@linaro.org
-
-I decided to look at this in a slightly broader range, because I always
-thought hijacking field_exists() is very error prone and hard to follow,
-and VMSTATE_VALIDATE() is the only user of it (VMS_MUST_EXIST).  Meanwhile
-it is the only VMSTATE_*() macro that does not carry a real entity of data
-stream, so it's not really a FIELD, but some checker we added adhoc inline
-into the VMSD fields.  It might be confusing to anyone new reading VMSD
-code, including myself when reading it first time.
-
-Instead of updating the source behavior, let's directly wipe that code out.
-I think it's not making a lot of sense doing device state check in save(),
-because those sanity check should be done in emulation code, not after
-seding all RAM, which is extremely awkward.  post_load() OTOH still makes
-some sense to sanity check fields, so I moved all VALIDATE there.
-
-Any comment welcomed, thanks.
-
-Peter Xu (6):
-  pcie/aer: Remove the usage of VMSTATE_VALIDATE()
-  hw/gpio/zaurus: Move VMSTATE_VALIDATE() check into post_load_errp()
-  hpet: Move VMSTATE_VALIDATE() check into post_load
-  arm/machine: Move all VMSTATE_VALIDATE() usages into post_load
-  rust: Replace vmstate_validate with post_load
-  migration: Drop VMSTATE_VALIDATE() and VMS_MUST_EXIST
-
- include/migration/vmstate.h       | 11 -----
- hw/gpio/zaurus.c                  | 29 ++++++------
- hw/pci/pcie_aer.c                 | 40 ++++++++++++++--
- hw/timer/hpet.c                   | 18 ++++----
- migration/savevm.c                |  5 --
- migration/vmstate.c               | 12 -----
- target/arm/machine.c              | 45 ++++++++++++++++--
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-rust@nongnu.org
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
  rust/hw/timer/hpet/src/device.rs  |  9 ++--
  rust/migration/src/prelude.rs     |  1 -
  rust/migration/src/vmstate.rs     | 17 -------
  rust/tests/tests/vmstate_tests.rs | 77 -------------------------------
- 11 files changed, 106 insertions(+), 158 deletions(-)
+ 4 files changed, 5 insertions(+), 99 deletions(-)
 
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 89ba7a5c4d..da0540f528 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -934,10 +934,14 @@ fn pre_save(&self) -> Result<(), migration::Infallible> {
+         Ok(())
+     }
+ 
+-    fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
++    fn post_load(&self, version_id: u8) -> Result<(), migration::InvalidError> {
+         let mut regs = self.regs.borrow_mut();
+         let cnt = regs.counter;
+ 
++        if !self.validate_num_timers(version_id) {
++            return Err(migration::InvalidError);
++        }
++
+         for tn_regs in regs.tn_regs.iter_mut().take(self.num_timers) {
+             tn_regs.update_cmp64(cnt);
+             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
+@@ -1082,8 +1086,6 @@ fn restore_migrated_state(
+ 
+ impl_vmstate_struct!(HPETTimerMigration, VMSTATE_HPET_TIMER);
+ 
+-const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
+-
+ // HPETRegistersMigration is generated by ToMigrationState macro.
+ impl_vmstate_struct!(
+     HPETRegistersMigration,
+@@ -1109,7 +1111,6 @@ fn restore_migrated_state(
+         .fields(vmstate_fields! {
+             vmstate_of!(HPETState, regs),
+             vmstate_of!(HPETState, num_timers_save),
+-            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
+             vmstate_of!(HPETState, timers[0 .. num_timers_save], HPETState::validate_num_timers).with_version_id(0),
+         })
+         .subsections(vmstate_subsections!(
+diff --git a/rust/migration/src/prelude.rs b/rust/migration/src/prelude.rs
+index 797e7ec59d..e2cbbda43e 100644
+--- a/rust/migration/src/prelude.rs
++++ b/rust/migration/src/prelude.rs
+@@ -16,4 +16,3 @@
+ pub use crate::vmstate_of;
+ pub use crate::vmstate_subsections;
+ pub use crate::vmstate_unused;
+-pub use crate::vmstate_validate;
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 5ed061f2ab..0c8b92f9d6 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -372,23 +372,6 @@ macro_rules! vmstate_fields {
+     }}
+ }
+ 
+-#[doc(alias = "VMSTATE_VALIDATE")]
+-#[macro_export]
+-macro_rules! vmstate_validate {
+-    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
+-        $crate::bindings::VMStateField {
+-            name: ::std::ffi::CStr::as_ptr($test_name),
+-            field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),
+-            flags: $crate::bindings::VMStateFlags(
+-                $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
+-                    | $crate::bindings::VMStateFlags::VMS_NO_STATE.0,
+-            ),
+-            num: 0, // 0 elements: no data, only run test_fn callback
+-            ..::common::zeroable::Zeroable::ZERO
+-        }
+-    };
+-}
+-
+ /// Helper macro to allow using a struct in [`vmstate_of!`]
+ ///
+ /// # Safety
+diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
+index 6578d54b37..f4db02abac 100644
+--- a/rust/tests/tests/vmstate_tests.rs
++++ b/rust/tests/tests/vmstate_tests.rs
+@@ -406,80 +406,3 @@ fn test_vmstate_macro_array_of_pointer_wrapped() {
+     // The last VMStateField in VMSTATE_FOOC.
+     assert_eq!(foo_fields[4].flags, VMStateFlags::VMS_END);
+ }
+-
+-// =========================== Test VMSTATE_FOOD ===========================
+-// Test the use cases of the vmstate macro, corresponding to the following C
+-// macro variants:
+-//   * VMSTATE_FOOD:
+-//     - VMSTATE_VALIDATE
+-
+-// Add more member fields when vmstate_of support "test" parameter.
+-struct FooD;
+-
+-impl FooD {
+-    fn validate_food_0(&self, _version_id: u8) -> bool {
+-        true
+-    }
+-
+-    fn validate_food_1(_state: &FooD, _version_id: u8) -> bool {
+-        false
+-    }
+-}
+-
+-fn validate_food_2(_state: &FooD, _version_id: u8) -> bool {
+-    true
+-}
+-
+-static VMSTATE_FOOD: VMStateDescription<FooD> = VMStateDescriptionBuilder::<FooD>::new()
+-    .name(c"foo_d")
+-    .version_id(3)
+-    .minimum_version_id(1)
+-    .fields(vmstate_fields! {
+-        vmstate_validate!(FooD, c"foo_d_0", FooD::validate_food_0),
+-        vmstate_validate!(FooD, c"foo_d_1", FooD::validate_food_1),
+-        vmstate_validate!(FooD, c"foo_d_2", validate_food_2),
+-    })
+-    .build();
+-
+-#[test]
+-fn test_vmstate_validate() {
+-    let foo_fields: &[VMStateField] =
+-        unsafe { slice::from_raw_parts(VMSTATE_FOOD.as_ref().fields, 4) };
+-    let mut foo_d = FooD;
+-    let foo_d_p = std::ptr::addr_of_mut!(foo_d).cast::<c_void>();
+-
+-    // 1st VMStateField in VMSTATE_FOOD
+-    assert_eq!(
+-        unsafe { CStr::from_ptr(foo_fields[0].name) }.to_bytes_with_nul(),
+-        b"foo_d_0\0"
+-    );
+-    assert_eq!(foo_fields[0].offset, 0);
+-    assert_eq!(foo_fields[0].num_indirect.size, 0);
+-    assert!(foo_fields[0].info.is_null());
+-    assert_eq!(foo_fields[0].version_id, 0);
+-    assert_eq!(foo_fields[0].size, 0);
+-    assert_eq!(foo_fields[0].num, 0);
+-    assert_eq!(
+-        foo_fields[0].flags.0,
+-        VMStateFlags::VMS_NO_STATE.0 | VMStateFlags::VMS_MUST_EXIST.0
+-    );
+-    assert!(foo_fields[0].vmsd.is_null());
+-    assert!(unsafe { foo_fields[0].field_exists.unwrap()(foo_d_p, 0) });
+-
+-    // 2nd VMStateField in VMSTATE_FOOD
+-    assert_eq!(
+-        unsafe { CStr::from_ptr(foo_fields[1].name) }.to_bytes_with_nul(),
+-        b"foo_d_1\0"
+-    );
+-    assert!(!unsafe { foo_fields[1].field_exists.unwrap()(foo_d_p, 1) });
+-
+-    // 3rd VMStateField in VMSTATE_FOOD
+-    assert_eq!(
+-        unsafe { CStr::from_ptr(foo_fields[2].name) }.to_bytes_with_nul(),
+-        b"foo_d_2\0"
+-    );
+-    assert!(unsafe { foo_fields[2].field_exists.unwrap()(foo_d_p, 2) });
+-
+-    // The last VMStateField in VMSTATE_FOOD.
+-    assert_eq!(foo_fields[3].flags, VMStateFlags::VMS_END);
+-}
 -- 
 2.56.0
 
