@@ -1,98 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B7606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B3C606A32A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mZFMbQ8m
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VDmynHfn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUNNI-0002mv-2w; Fri, 20 Nov 2026 07:05:52 -0500
+	id 1xUNWz-0006PD-4G; Fri, 20 Nov 2026 07:15:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUNNG-0002mX-6l
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:05:50 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xUNNE-000602-Ec
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:05:49 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4bb64ef5a00so6064805e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:05:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795176347; x=1795781147; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Zm/JDQEc5EiBdmseCAYtRA2phtmc5MdPPVP6lF9h4f4=;
- b=mZFMbQ8mpMzTgTnJXvFYKCgS6D9a4aTPIiRw/eYMIwbgarq9MIPSbpPawEwl3Af89D
- KLtjL2Ahyyo5Rf5kmJVNrm+DILh9upx4Uspo4ZQ0t8ZF1m7NhZRnefCptMXs1A6Khmnu
- xLNMJdCG4Bs4M3GF/n6jT/8eNPDumOQcJKdB9qDiewKLDBrDEKZtSemReiN0T160dm5D
- VdlJK6qlsdN2QLx4Ml3KqQ4rsls7sgrky1F8S2iahhjHi/hEUy/G67+zqIFsJiD0Mez2
- f0CVnfpPK/oyrXdul6wGaiiWEOg/BupIdNbCQptoCB6SCqpgohVUu3FZE6JS1GEMCabX
- 56ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795176347; x=1795781147;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Zm/JDQEc5EiBdmseCAYtRA2phtmc5MdPPVP6lF9h4f4=;
- b=iuKc4lbARUAPhxOu93mVjYL4rFOwxpKyBOF+So0WfO2noCHRCdkP4Y0e9cU34pUktK
- W4qQWOL2dDmEU4ESYSDZarPFAzjS9kFiNrjEfuUIOaZyInzlVDk7teF14IYo2+ZGqdkW
- kRQDtwTjDobmbOLuw0rVed2TM1hsMpDRrdKIjcyFiADsmELOq3LN61hwFk4WuIGDDO0N
- Jc4GKl8na7lDyISaIIG6qLZnCxWz8AK48gqniWkIDh9YkP5quWZx/AIdeEAgiof3lSXm
- kkpGJq111u8KU1jcMWq4hL0e433WwdGgK9o+e2Gzb63dzWdpgNMSwoXGhzethrBp/DGa
- IzRA==
-X-Gm-Message-State: APuU4Z92tMvmmLn5Rxbz+3PCpm+8xtKXjzmK7UTrn6G3jkpslsaeNdsO
- QzwStk55GkQtVhWZIAL+eZpl+/+dVcirlt4PaQ0pVLP/o4SOkV2qcScbz5Pk74r/F/k=
-X-Gm-Gg: AYBFou1y02iopRR7oCqYeWvy1IU9Imp7xDaYRVbDrBCAPSyzHeiyXibGSWAIPSJx9Y6
- ZPg72jwltOGmOVfPFcag8iQwIrQbuJG4YAcGURfrMXaJAL1qsXxEBUWc7xMK+UylyO6WF8w32o3
- vAk4qKg8PYVsrXbWDi2yFTpOLFDYyGyRVXRnW4+dnXdPEKoyjIrEKRzE3Asd+7PWOLTYg19KejF
- 1X8EV1MfZPyVa3batdgnVtaklVEpAA/y2Y6/9ZM3Y9RXvzeTKuDI5Spk6UTj7ie2CMrb/P5SKgI
- ewHTHP92v7eSk5KWMFp4A76ji/F1rZuiFk0qGtt13YZrFz483jl8DaXEpSDKepsBjHOqX+B/aj7
- oaG3UEVpnGZRmXzJH5SOod6pK4uJEaJVO2SHmVlkSv8iGcuUVQYv1vWj67CbjSJPKF+2xIhE1x3
- aR9dkZrAqJy1CYHvJ/O5H8XPHCx4ncCG9N7OQF4NARFAECwanAM3sDE10+A6s2PE5CbGKTWze1o
- e/uwZEJMsE9WaP4uYB6F6jmJRkTZxDLkQQmTZ24UhT+GvxU09M4N7Xu/26YsoYiuYw5aqmmTFT6
- utxy/3GfhIb3mXGBoRVGUPqLVb0l
-X-Received: by 2002:a05:600c:3b8a:b0:4a3:59c9:a754 with SMTP id
- 5b1f17b1804b1-4bb8892da25mr62296645e9.22.1795176346822; 
- Fri, 20 Nov 2026 04:05:46 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb853b2437sm161917755e9.13.2026.11.20.04.05.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 04:05:45 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AD5DF5F7FE;
- Fri, 20 Nov 2026 12:05:44 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nagendran K <nagendranjairam52@gmail.com>
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  philmd@linaro.org,
- daan.j.demeyer@gmail.com,  peter.maydell@linaro.org, alistair@alistair23.me
-Subject: Re: [PATCH v3] hw/core/loader.c: Add Extended Tektronix HEX file
- support
-In-Reply-To: <20261112184949.1042-1-nagendranjairam52@gmail.com> (Nagendran
- K.'s message of "Fri, 13 Nov 2026 00:19:48 +0530")
-References: <20261112184949.1042-1-nagendranjairam52@gmail.com>
-User-Agent: mu4e 1.14.5-pre1; emacs 30.1
-Date: Fri, 20 Nov 2026 12:05:44 +0000
-Message-ID: <87ik1r673b.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xUNWi-0006Hu-51
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:15:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xUNWg-0006Fj-8I
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:15:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795176933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TWwT9612ZW0vbY2P/IQBX7G3/db7VfF5dQu5dZHqZWI=;
+ b=VDmynHfnOZ50UqtWzL7bQgy7WD3DtfFXLuibwU9aEOFrNFfQ2RZasTXetVVKJ1KRHyux4n
+ wt5pVFUgyould7tavkh494j52evpM+D+c1jE1TALU9HKiAwV8y0J813o7eAJYoqwn4rRUN
+ +NOTTj+t6+kGYk55YlmD4CQ9KgatqYQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-414XcubEPyGRqf7SSj1Oog-1; Fri,
+ 20 Nov 2026 12:15:28 +0000
+X-MC-Unique: 414XcubEPyGRqf7SSj1Oog-1
+X-Mimecast-MFC-AGG-ID: 414XcubEPyGRqf7SSj1Oog_1795176926
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DFCA18002CC; Fri, 20 Nov 2026 12:15:26 +0000 (UTC)
+Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C868830000E3; Fri, 20 Nov 2026 12:15:21 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH 04/12] tests/functional: add Accept header when downloading
+ assets
+Date: Fri, 20 Nov 2026 12:14:50 +0000
+Message-ID: <20261120121458.3723625-5-berrange@redhat.com>
+In-Reply-To: <20261120121458.3723625-1-berrange@redhat.com>
+References: <20261120121458.3723625-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,42 +95,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Nagendran K <nagendranjairam52@gmail.com> writes:
+elinux.org is currently triggering an Anubis challenge for requests
+to download assets. After comparing the headers that curl sends, it
+was narrowed down to the omission of an "Accept" header.
 
-> Add support for loading Extended Tektronix HEX files through the
-> generic loader.
->
-> The loader parses Extended Tektronix records, validates their
-> checksums, and loads the data at the addresses specified in the file.
->
-> This allows Extended Tektronix files to be loaded directly without
-> manual conversion to another supported format.
->
-> Tested by loading an Extended Tektronix file containing a simple UART
-> application on the RealView EB machine. The application executed
-> successfully and produced the expected UART output.
->
-> Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
+A missing "Accept" header is a rule that Anubis added a year ago
+which is known to hit python's urllib:
 
-Ok before you send another version you should consider:
+  https://github.com/TecharoHQ/anubis/issues/1346
 
-  - split whitespace and comment updates into their own patches
-  - include a test case for the loader to show its use
-  - verify the whole series applies and builds cleanly on upstream's master=
- branch
+the bug indicates the rule was removed by default at that time,
+however, rules have evolved further since then and look like they
+are hitting our downloads. Adding the header is simple & harmless.
 
-And the cover letter for the series should also include what changes
-you've made between each iteration. You can also include a summary of
-updates under the --- in the commit messages.
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/functional/qemu_test/asset.py | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 0abd89e0a38..ffa01aba2fb 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -137,7 +137,16 @@ def _try_to_fetch(self, tmp_cache_file):
+         for _retries in range(3):
+             try:
+                 with tmp_cache_file.open("xb") as dst:
+-                    with urllib.request.urlopen(self.url) as resp:
++                    req = urllib.request.Request(
++                        self.url,
++                        headers={
++                            # Workaround Anubis challenge which some sites
++                            # trigger when Accept is missing:
++                            #  https://github.com/TecharoHQ/anubis/issues/1346
++                            "Accept": "*/*",
++                        }
++                    )
++                    with urllib.request.urlopen(req) as resp:
+                         copyfileobj(resp, dst)
+                         length_hdr = resp.getheader("Content-Length")
+ 
+-- 
+2.56.1
+
 
