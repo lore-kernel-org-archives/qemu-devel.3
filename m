@@ -1,62 +1,78 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF83606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 09:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A753D606A326
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 09:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PY5y9eye
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUKvK-0002ww-4I; Fri, 20 Nov 2026 04:28:50 -0500
+	id 1xUKyl-0003nf-W3; Fri, 20 Nov 2026 04:32:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1xUKvF-0002vU-L9; Fri, 20 Nov 2026 04:28:45 -0500
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xUKyN-0003k8-49
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 04:32:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1xUKv9-0007Pz-Js; Fri, 20 Nov 2026 04:28:45 -0500
-X-UUID: baba9eaee4c411f19a56ed5b684f684d-20261120
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19, REQID:0e3c5421-8110-4db1-bc55-dc87629e925f, IP:0,
- U
- RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
- release,TS:0
-X-CID-META: VersionHash:7db8b62, CLOUDID:17265a803de0a3f137198a5f8167e3fe,
- BulkI
- D:nil,BulkQuantity:0,SF:81|82|83|102|123|136|865|898,TC:nil,Content:0|15|5
- 0|99,EDM:-3|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:
- 0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: baba9eaee4c411f19a56ed5b684f684d-20261120
-X-User: zhaoguohan@kylinos.cn
-Received: from ubuntu.. [(10.44.16.150)] by mailgw.kylinos.cn
- (envelope-from <zhaoguohan@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 748668129; Fri, 20 Nov 2026 17:28:22 +0800
-From: zhaoguohan@kylinos.cn
-To: mjt@tls.msk.ru
-Cc: arei.gonglei@huawei.com, mst@redhat.com, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, zhaoguohan@kylinos.cn
-Subject: Re: [PATCH] virtio-crypto: clean up every data queue
-Date: Fri, 20 Nov 2026 17:28:17 +0800
-Message-ID: <20261120092817.119611-1-zhaoguohan@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <a16d5437-dd54-49dc-b53a-c8756afab274@tls.msk.ru>
-References: <a16d5437-dd54-49dc-b53a-c8756afab274@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xUKyK-0000tf-Jw
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 04:31:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795167113;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ycamf+/xocvP/ZlZSY7mGGqW6W8TKX+ETjVseeNCKFU=;
+ b=PY5y9eyeGugI4tB2HQ9K8c5bwGpVQwk0jGxGP505WzSpp6yN3sTgL4ZHhzw0iTXTBA16bU
+ eBrHSDM2DbQssd1oC9C+hctDauivVp0Wr6Bj1OdKZS8yuX0wpU5tI9jSO+6NoCega2jc0T
+ y6D2g0jA/WY/xnBp86dF1og4XQrpfVs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-DAqZdsyvOSS7XrSPmVeR8A-1; Fri,
+ 20 Nov 2026 09:31:49 +0000
+X-MC-Unique: DAqZdsyvOSS7XrSPmVeR8A-1
+X-Mimecast-MFC-AGG-ID: DAqZdsyvOSS7XrSPmVeR8A_1795167108
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 357A118005BF; Fri, 20 Nov 2026 09:31:48 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73DC718004F7; Fri, 20 Nov 2026 09:31:47 +0000 (UTC)
+Date: Fri, 20 Nov 2026 09:31:44 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org, Nagendran Jairam <nagendranjairam52@gmail.com>
+Subject: Re: [PATCH] hw/core/loader: Add Extended Tektronix HEX support
+Message-ID: <awATgHU90hAWdOiv@redhat.com>
+References: <20261114112855.108-1-nagendranjairam52@gmail.com>
+ <awAOG_BGiCgjM8nE@redhat.com>
+ <CAEAkEp4N1uFczHexCAbABzYf5O-Th-o5dE-KasU1RXM_k7WKKQ@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=124.126.103.232;
- envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEAkEp4N1uFczHexCAbABzYf5O-Th-o5dE-KasU1RXM_k7WKKQ@mail.gmail.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,33 +83,357 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>=0D
+Re-adding qemu-devel - please don't drop the mailing list when
+replying to review comments.
 
-On 11/20/26 8:25, Michael Tokarev wrote:=0D
-> Is it a qemu-stable material?=0D
-=0D
-Yes, I think so.=0D
-=0D
-> I found this change while trying to pick up a subsequent fix in this area=
- --=0D
->=0D
->   902c849979c hw/virtio/virtio-crypto: Drain in-flight operations before =
-unrealizing (CVE-2026-50625)=0D
->=0D
-> which touches the same place, and wonder if I should pick this one too?=0D
-=0D
-Yes please. 902c849979c was done on top of this patch (b35d34e3ccd=0D
-in master), so its context won't match without it. Picking=0D
-b35d34e3ccd first should let both apply cleanly.=0D
-=0D
-Thanks,=0D
-GuoHan=0D
+On Fri, Nov 20, 2026 at 02:47:07PM +0530, Nagendran Jairam wrote:
+> On Fri, Nov 20, 2026, 14:38 Daniel P. Berrangé <berrange@redhat.com> wrote:
+> 
+> > On Sat, Nov 14, 2026 at 04:58:50PM +0530, Nagendran K wrote:
+> >
+> > Please provide a commit message to explain the purpose of
+> > this addition.
+> >
+>        I am sorry, I forgot to mention that this function is being called
+> in generic-loader.c
+>        The purpose is to load .tek files (binaries commonly used in Texas
+> instruments microcontrollers)  directly without worrying about raw binary
+> or hex conversion
+>         Hex and tek files have major differences and it reduces manual
+> effort for a user to convert .tek to .hex
+
+It is clearly not being called in generic-loader.c since this patch
+makes no changes to that file.
+
+
+> > > Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
+> > > ---
+> > >  hw/core/loader.c         | 231 +++++++++++++++++++++++++++++++++++++++
+> > >  include/hw/core/loader.h |  15 +++
+> > >  2 files changed, 246 insertions(+)
+> >
+> > ....this is adding a new API to common code and then not
+> > calling it from anywhere in QEMU. This is pointless
+> > and so is not likely to be accepted in isolation without
+> > a proposed usage accompanying it.
+>   This is function has a call in generic-loader.c to load .tek files
+> 
+>        Example Usecase: -device loader, file=my_test.tek, addr=0x00000000
+> 
+> >
+> >
+> > >
+> > > diff --git a/hw/core/loader.c b/hw/core/loader.c
+> > > index
+> > 5cbfba0a86d24569923c863d6ecda125ce43bceb..33ccb51d56dda1035e815479e20c2a6c793843d9
+> > 100644
+> > > --- a/hw/core/loader.c
+> > > +++ b/hw/core/loader.c
+> > > @@ -1940,3 +1940,234 @@ ssize_t load_targphys_hex_as(const char
+> > *filename, hwaddr *entry,
+> > >      g_free(hex_blob);
+> > >      return total_size;
+> > >  }
+> > > +
+> > > +typedef enum Ext_Tek_HexRecord Ext_Tek_HexRecord;
+> > > +enum Ext_Tek_HexRecord {
+> > > +    TEK_DATA_RECORD = 0,
+> > > +    TEK_TERMINATION_RECORD
+> > > +};
+> > > +
+> > > +#define DATA_FIELD_MAX_LEN 0xff
+> > > +
+> > > +typedef struct {
+> > > +    uint8_t record_length;
+> > > +    uint8_t record_type;
+> > > +    uint8_t checksum;
+> > > +    uint32_t address;
+> > > +    uint8_t data[DATA_FIELD_MAX_LEN];
+> > > +} Ext_Tek_HexLine;
+> > > +
+> > > +/* return 0 or -1 if error */
+> > > +static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line,
+> > > +                                     uint8_t *our_checksum,
+> > > +                                     const uint8_t c,
+> > > +                                     uint32_t *index,
+> > > +                                     const bool in_process)
+> > > +{
+> > > +    /*
+> > +---------+---------------+-----------+---------------+-------------+
+> > > +     * | record  |    record     |           |               |
+> >    |
+> > > +     * | length  |    type       | checksum  |   address     |   data
+> >     |
+> > > +     *
+> > +---------+---------------+-----------+---------------+-------------+
+> > > +     *     ^             ^            ^              ^            ^
+> > > +     * |1 byte   |    1 bytes    |1 byte     | 1 to N byte   | 0-255
+> > bytes |
+> > > +     */
+> > > +    uint8_t value = 0, address_len = 0;
+> > > +    uint32_t idx = *index;
+> > > +    /* ignore space */
+> > > +    if (g_ascii_isspace(c)) {
+> > > +        return true;
+> > > +    }
+> > > +    if (!g_ascii_isxdigit(c) || !in_process) {
+> > > +        return false;
+> > > +    }
+> > > +    /* still idx is computed nibble wise */
+> > > +    value = g_ascii_xdigit_value(c);
+> > > +    value = (idx & 0x1) ? (value & 0xf) : (value << 4);
+> > > +    if (idx < 2) {
+> > > +        line->record_length |= value;
+> > > +    } else if (idx == 2) {
+> > > +        line->record_type |= value;
+> > > +    } else if (2 < idx && idx <= 4) {
+> > > +        line->checksum |= value;
+> > > +    }
+> > > +    /*
+> > > +     * Extracting address length from record to fill that many no of
+> > address
+> > > +     * characters in the address field of the line structure.
+> > > +     */
+> > > +    else if (idx == 5) {
+> > > +        address_len |= value;
+> > > +    } else if (6 <= idx &&
+> > > +                   idx <= (6 + address_len)) {
+> > > +        line->address <<= address_len;
+> > > +        line->address += g_ascii_xdigit_value(c);
+> > > +    }
+> > > +    /*
+> > > +     * Checking whether index above address last char index
+> > > +     * and reaches till record length. Right shifting one divides the
+> > > +     * nibble wise index by 2 to get the byte wise index to
+> > > +     * fill the data field of the line structure
+> > > +     */
+> > > +    else if ((6 + address_len) < idx &&
+> > > +              idx <= line->record_length) {
+> > > +        line->data[(idx - (6 + address_len)) >> 1] |= value;
+> > > +    } else {
+> > > +        return false;
+> > > +    }
+> > > +    *our_checksum += value;
+> > > +    ++(*index);
+> > > +    return true;
+> > > +}
+> > > +
+> > > +typedef struct {
+> > > +    const char *filename;
+> > > +    Ext_Tek_HexLine line;
+> > > +    uint8_t *bin_buf;
+> > > +    hwaddr *start_addr;
+> > > +    int total_size;
+> > > +    uint32_t next_address_to_write;
+> > > +    uint32_t current_address;
+> > > +    uint32_t current_rom_index;
+> > > +    uint32_t rom_start_address;
+> > > +    AddressSpace *as;
+> > > +    bool complete;
+> > > +} Ext_TekHexParser;
+> > > +
+> > > +/* return size or -1 if error */
+> > > +static int handle_ext_tek_hex_record_type(Ext_TekHexParser *parser)
+> > > +{
+> > > +    Ext_Tek_HexLine *line = &(parser->line);
+> > > +    switch (line->record_type) {
+> > > +    case TEK_DATA_RECORD:
+> > > +        parser->current_address = line->address;
+> > > +        /* verify this is a contiguous block of memory */
+> > > +        if (parser->current_address != parser->next_address_to_write) {
+> > > +            if (parser->current_rom_index != 0) {
+> > > +                rom_add_blob_fixed_as(parser->filename, parser->bin_buf,
+> > > +                                      parser->current_rom_index,
+> > > +                                      parser->rom_start_address,
+> > parser->as);
+> > > +            }
+> > > +            parser->rom_start_address = parser->current_address;
+> > > +            parser->current_rom_index = 0;
+> > > +        }
+> > > +
+> > > +        /* copy from line buffer to output bin_buf */
+> > > +        /* sizeof(line->data) dynamically calculates the size of data
+> > field */
+> > > +        memcpy(parser->bin_buf + parser->current_rom_index, line->data,
+> > > +               sizeof(line->data));
+> > > +        parser->current_rom_index += sizeof(line->data);
+> > > +        parser->total_size += sizeof(line->data);
+> > > +        /* As address is absolute, we dont need to calculate next
+> > address */
+> > > +        break;
+> > > +
+> > > +    case TEK_TERMINATION_RECORD:
+> > > +        if (parser->current_rom_index != 0) {
+> > > +            rom_add_blob_fixed_as(parser->filename, parser->bin_buf,
+> > > +                                  parser->current_rom_index,
+> > > +                                  parser->rom_start_address,
+> > parser->as);
+> > > +        }
+> > > +        parser->complete = true;
+> > > +        return parser->total_size;
+> > > +
+> > > +    default:
+> > > +        return -1;
+> > > +    }
+> > > +
+> > > +    return parser->total_size;
+> > > +}
+> > > +
+> > > +/* return size or -1 if error */
+> > > +static int parse_ext_tek_hex_blob(const char *filename,
+> > > +                                  hwaddr *addr,
+> > > +                                  uint8_t *ext_tek_blob,
+> > > +                                  size_t ext_tek_blob_size,
+> > > +                                  AddressSpace *as)
+> > > +{
+> > > +    /* avoid re-enter and check whether record begin with '%' */
+> > > +        bool in_process = false;
+> > > +        uint8_t *end = ext_tek_blob + ext_tek_blob_size;
+> > > +        uint8_t our_checksum = 0;
+> > > +        uint32_t record_index = 0;
+> > > +
+> > > +        Ext_TekHexParser parser = {
+> > > +        .filename = filename,
+> > > +        .bin_buf = g_malloc(ext_tek_blob_size),
+> > > +        .start_addr = addr,
+> > > +        .as = as,
+> > > +        .complete = false
+> > > +        };
+> > > +
+> > > +        rom_transaction_begin();
+> > > +
+> > > +        for (; ext_tek_blob < end && !parser.complete; ++ext_tek_blob) {
+> > > +            switch (*ext_tek_blob) {
+> > > +            case '\r':
+> > > +            case '\n':
+> > > +                if (!in_process) {
+> > > +                    break;
+> > > +                }
+> > > +
+> > > +                in_process = false;
+> > > +                /*
+> > > +                 * record_length byte stores the number of hex
+> > characters
+> > > +                 * (nibbles) in the record and compare it directly to
+> > > +                 * the nibble index(record index).
+> > > +                 */
+> > > +                if ((parser.line.record_length != record_index) ||
+> > > +                    (our_checksum != 0)) {
+> > > +                    parser.total_size = -1;
+> > > +                    goto out;
+> > > +                }
+> > > +
+> > > +                if (handle_ext_tek_hex_record_type(&parser) == -1) {
+> > > +                    parser.total_size = -1;
+> > > +                    goto out;
+> > > +                }
+> > > +                break;
+> > > +
+> > > +            /* start of a new record. */
+> > > +            case '%':
+> > > +                memset(&parser.line, 0, sizeof(Ext_Tek_HexLine));
+> > > +                in_process = true;
+> > > +                record_index = 0;
+> > > +                break;
+> > > +
+> > > +            /* decoding lines */
+> > > +            default:
+> > > +                if (!parse_ext_tek_hex_record(&parser.line,
+> > > +                                            &our_checksum,
+> > > +                                            *ext_tek_blob,
+> > > +                                            &record_index, in_process))
+> > {
+> > > +                    parser.total_size = -1;
+> > > +                    goto out;
+> > > +                }
+> > > +                break;
+> > > +            }
+> > > +        }
+> > > +
+> > > +    out:
+> > > +        g_free(parser.bin_buf);
+> > > +        rom_transaction_end(parser.total_size != -1);
+> > > +        return parser.total_size;
+> > > +}
+> > > +
+> > > +
+> > > +/* return size or -1 if error */
+> > > +ssize_t load_targphys_ext_tek_hex_as(const char *filename,
+> > > +                                     hwaddr *entry,
+> > > +                                     AddressSpace *as)
+> > > +{
+> > > +    gsize ext_tek_blob_size;
+> > > +    gchar *ext_tek_blob;
+> > > +    int total_size = 0;
+> > > +
+> > > +    if (!g_file_get_contents(filename, &ext_tek_blob,
+> > > +                             &ext_tek_blob_size, NULL)) {
+> > > +        return -1;
+> > > +    }
+> > > +    total_size = parse_ext_tek_hex_blob(filename, entry,
+> > > +                                       (uint8_t *)ext_tek_blob,
+> > > +                                       ext_tek_blob_size, as);
+> > > +
+> > > +    g_free(ext_tek_blob);
+> > > +    return total_size;
+> > > +}
+> > > diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
+> > > index
+> > d9431e8a8d12e3b676160f70ed141f1064143ea3..c0d29b1d4456bb92984749e56f1109f8421cee51
+> > 100644
+> > > --- a/include/hw/core/loader.h
+> > > +++ b/include/hw/core/loader.h
+> > > @@ -57,6 +57,21 @@ ssize_t load_image_targphys_as(const char *filename,
+> > >  ssize_t load_targphys_hex_as(const char *filename, hwaddr *entry,
+> > >                               AddressSpace *as);
+> > >
+> > > +/**
+> > > + * load_targphys_ext_tek_as:
+> > > + * @filename: Path to the .tek file
+> > > + * @entry: Store the entry point given by the .tek file
+> > > + * @as: The AddressSpace to load the .tek file to. The value of
+> > > + *      address_space_memory is used if nothing is supplied here.
+> > > + *
+> > > + * Load a fixed .tek file into memory.
+> > > + *
+> > > + * Returns the size of the loaded .tek file on success, -1 otherwise.
+> > > + */
+> > > +ssize_t load_targphys_ext_tek_hex_as(const char *filename,
+> > > +                                     hwaddr *entry,
+> > > +                                     AddressSpace *as);
+> > > +
+> > >  /** load_image_targphys:
+> > >   * Same as load_image_targphys_as(), but doesn't allow the caller to
+> > specify
+> > >   * an AddressSpace.
+> > > --
+> > > 2.54.0.windows.1
+> > >
+> >
+> > With regards,
+> > Daniel
+> > --
+> > |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> > |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> > |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> >
+> >
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
