@@ -1,80 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42B0606A32C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 15:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D93606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 15:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eIDV1cmW
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=CvrCPqPc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUQYD-0007g8-CQ; Fri, 20 Nov 2026 10:29:21 -0500
+	id 1xUQgj-0001Wp-0b; Fri, 20 Nov 2026 10:38:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xUQYC-0007fz-KQ
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:29:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xUQXz-0002LU-Nz
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 10:29:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795188546;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z1w0cTh7kUatzc4tDKBg4Hnfy6uJLygZprT9oNWEp08=;
- b=eIDV1cmW92wgYb2rFhdpBUbyRilkHULFXrz9mzpu5G9MCvw28yxE1ydO3FrnVDt9lyuEhW
- MPJ2LVd+1VciUBiSUboodAcQok/eB1vfLRHECiR0zu6fSRiFe8fkNlQYG7lgn4BZ2ib+of
- aneG1mJSc2d9vlQwzdCbti9mC7EvLwI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-fg62HMWuMiCbE_Msr-Q1Cw-1; Fri,
- 20 Nov 2026 15:29:00 +0000
-X-MC-Unique: fg62HMWuMiCbE_Msr-Q1Cw-1
-X-Mimecast-MFC-AGG-ID: fg62HMWuMiCbE_Msr-Q1Cw_1795188539
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 907681800617; Fri, 20 Nov 2026 15:28:58 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E91281956088; Fri, 20 Nov 2026 15:28:56 +0000 (UTC)
-Date: Fri, 20 Nov 2026 15:28:54 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xUQgh-0001WC-CS; Fri, 20 Nov 2026 10:38:07 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xUQge-00078I-Tb; Fri, 20 Nov 2026 10:38:07 -0500
+Received: from example.com (unknown [167.220.208.76])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8740420B7166;
+ Fri, 20 Nov 2026 07:37:57 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8740420B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795189080;
+ bh=Tof0b1vLnQk/pO0V9aZ0KxTcdUX4iFf4/+87iPJnCDE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=CvrCPqPchBe5obwzpZ2ubCZOPnWGAVE+vgB31Fl1ownTQHiDqzG+LyZe4BRjZUzB4
+ ytb8BjhlogZJTfsIQ8oFJzisqnQngyvxAKvb7hyd2m/B9HJGcGTVNIOfOacHDbR2bY
+ RrLv8KvHUAFGdNgX5Ao3UxhelVDQ0P1ECH0UQ2us=
+Date: Fri, 20 Nov 2026 16:37:57 +0100
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Aastha Rawat <aastharawat@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 04/10] oslib: report kernel stacks in qemu_thread_states()
-Message-ID: <awBnNuLoE0MzJsLw@redhat.com>
-References: <20260915203455.580999-1-den@openvz.org>
- <20260915203455.580999-5-den@openvz.org>
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 11/14] target/arm/mshv: add vCPU run loop
+Message-ID: <awBpVDVdwuMg4CD3@example.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-11-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260915203455.580999-5-den@openvz.org>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-11-aefe5e76a0e3@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,157 +71,237 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Sep 15, 2026 at 10:34:48PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
+On Thu, Oct 01, 2026 at 10:52:56AM +0000, Aastha Rawat wrote:
+> From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
 > 
-> A wait channel names the primitive a thread is parked on but not the
-> path that got it there, and for a thread wedged in a syscall that path
-> is the answer.
+> Add the main vCPU run loop for MSHV using the MSHV_RUN_VP_IOCTL.
 > 
-> Read /proc/tid/stack when the report is built, and keep the wait
-> channel for when it cannot be. The file is restricted to CAP_SYS_ADMIN
-> in the init namespace, so ask once rather than failing per thread, and
-> say why the report came back thinner. Skip a running thread, which has
-> no settled stack to unwind, and cap the frames, because the deep end of
-> a stack is rarely the part that explains the hang.
-
-I'm not convinced that this will be useful in practice. Running
-QEMU with CAP_SYS_ADMIN is something that no one should ever do.
-
-IOW, the only scenario in which it is likely is if a developer
-is manually running QEMU as root for some debugging purpose,
-at which point why not just run under GDB ? 
-
+> Handle MMIO exits by emulating the instruction using the syndrome
+> information from ESR_EL2.
 > 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Cc: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 > ---
->  include/qemu/osdep.h |  4 ++--
->  util/oslib-posix.c   | 52 +++++++++++++++++++++++++++++++++++++++++---
->  2 files changed, 51 insertions(+), 5 deletions(-)
+>  include/hw/hyperv/hvgdk_mini.h |  44 +++++++++++++++++
+>  target/arm/mshv/mshv-all.c     | 107 +++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 151 insertions(+)
 > 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index 8039bf91b8..c15ffd7880 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -672,8 +672,8 @@ bool qemu_debugger_attached(void);
->   *
->   * Returns a newly allocated, newline terminated description of every thread
->   * in this process apart from the caller: its id, name, scheduler state and
-> - * the wait channel it is parked on, or NULL on a host that cannot report any
-> - * of that.
-> + * kernel stack, or NULL on a host that cannot report any of that. Where the
-> + * kernel stack is privileged the description falls back to a wait channel.
->   */
->  char *qemu_thread_states(void);
+> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> index 33c9e4f3e0..53dc58813e 100644
+> --- a/include/hw/hyperv/hvgdk_mini.h
+> +++ b/include/hw/hyperv/hvgdk_mini.h
+> @@ -896,6 +896,50 @@ struct hv_x64_memory_intercept_message {
+>      uint8_t instruction_bytes[16];
+>  } QEMU_PACKED;
 >  
-> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> index 79887d370c..6a683b849e 100644
-> --- a/util/oslib-posix.c
-> +++ b/util/oslib-posix.c
-> @@ -145,13 +145,39 @@ static char *read_task_file(const char *tid, const char *name)
->      return buf;
+> +union hv_arm64_vp_execution_state {
+> +    uint16_t as_uint16;
+> +    struct {
+> +        uint16_t cpl:2;
+> +        uint16_t debug_active:1;
+> +        uint16_t interruption_pending:1;
+> +        uint16_t vtl:4;
+> +        uint16_t virtualization_fault_active:1;
+> +        uint16_t reserved:7;
+> +    };
+> +};
+> +
+> +struct hv_arm64_intercept_message_header {
+> +    uint32_t vp_index;
+> +    uint8_t instruction_length;
+> +    uint8_t intercept_access_type;
+> +    union hv_arm64_vp_execution_state execution_state;
+> +    uint64_t pc;
+> +    uint64_t cpsr;
+> +};
+> +
+> +union hv_arm64_memory_access_info {
+> +    uint8_t as_uint8;
+> +    struct {
+> +        uint8_t gva_valid:1;
+> +        uint8_t gva_gpa_valid:1;
+> +        uint8_t hypercall_output_pending:1;
+> +        uint8_t reserved:5;
+> +    };
+> +};
+> +
+> +struct hv_arm64_memory_intercept_message {
+> +    struct hv_arm64_intercept_message_header header;
+> +    uint32_t cache_type; /* enum hv_cache_type */
+> +    uint8_t instruction_byte_count;
+> +    union hv_arm64_memory_access_info memory_access_info;
+> +    uint16_t reserved1;
+> +    uint8_t instruction_bytes[4];
+> +    uint32_t reserved2;
+> +    uint64_t guest_virtual_address;
+> +    uint64_t guest_physical_address;
+> +    uint64_t syndrome;
+> +};
+> +
+>  union hv_message_flags {
+>      uint8_t asu8;
+>      struct {
+> diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+> index d835614fd5..786d815312 100644
+> --- a/target/arm/mshv/mshv-all.c
+> +++ b/target/arm/mshv/mshv-all.c
+> @@ -20,6 +20,7 @@
+>  #include "target/arm/cpu.h"
+>  #include "target/arm/internals.h"
+>  #include "target/arm/mshv_arm.h"
+> +#include "target/arm/helper.h"
+>  
+>  #include "system/mshv.h"
+>  #include "system/mshv_int.h"
+> @@ -158,8 +159,114 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
+>      return store_regs(cpu);
 >  }
 >  
-> +#define THREAD_STACK_FRAMES 12
-> +
-> +/*
-> + * /proc/tid/stack is restricted to CAP_SYS_ADMIN in the init namespace, so
-> + * ask once instead of failing per thread, and say why the report is thinner.
-> + */
-> +static bool thread_stacks_readable(void)
+> +static int set_memory_info(const struct hyperv_message *msg,
+> +                           struct hv_arm64_memory_intercept_message *info)
 > +{
-> +    static int readable = -1;
-> +    g_autofree char *path = NULL;
-> +    g_autofree char *buf = NULL;
+> +    if (msg->header.message_type != HVMSG_GPA_INTERCEPT
+> +            && msg->header.message_type != HVMSG_UNMAPPED_GPA
+> +            && msg->header.message_type != HVMSG_UNACCEPTED_GPA) {
+> +        error_report("invalid message type");
+> +        return -1;
+> +    }
+> +    memcpy(info, msg->payload, sizeof(*info));
 > +
-> +    if (readable >= 0) {
-> +        return readable;
-> +    }
-> +    path = g_strdup_printf("/proc/self/task/%d/stack", qemu_get_thread_id());
-> +    readable = g_file_get_contents(path, &buf, NULL, NULL);
-> +    if (!readable) {
-> +        warn_report("kernel stacks need CAP_SYS_ADMIN, falling back to wchan");
-> +    }
-> +    return readable;
+> +    return 0;
 > +}
 > +
->  static void append_thread_state(GString *out, const char *tid)
->  {
->      g_autofree char *comm = read_task_file(tid, "comm");
->      g_autofree char *stat = NULL;
-> +    g_autofree char *stack = NULL;
->      g_autofree char *wchan = NULL;
-> +    g_auto(GStrv) lines = NULL;
->      char state = '?';
->      char *rparen;
-> +    int i;
->  
->      if (!comm) {
->          return;
-> @@ -168,9 +194,26 @@ static void append_thread_state(GString *out, const char *tid)
->      }
->      g_string_append_printf(out, "  %-7s %-16s %c\n", tid, comm, state);
->  
-> -    wchan = read_task_file(tid, "wchan");
-> -    if (wchan && wchan[0]) {
-> -        g_string_append_printf(out, "      wchan %s\n", wchan);
-> +    /* A running thread has no settled kernel stack to unwind */
-> +    if (state != 'R' && thread_stacks_readable()) {
-> +        stack = read_task_file(tid, "stack");
+> +static uint64_t mshv_mmio_get_reg(CPUState *cpu, int reg_index)
+> +{
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +    CPUARMState *env = &arm_cpu->env;
+> +    return reg_index < 31 ? env->xregs[reg_index] : 0ULL;
+> +}
+> +
+> +static void mshv_mmio_set_reg(CPUState *cpu, int reg_index, uint64_t val)
+> +{
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +    CPUARMState *env = &arm_cpu->env;
+> +    if (reg_index < 31) {
+> +        env->xregs[reg_index] = val;
 > +    }
-> +    if (!stack) {
-> +        wchan = read_task_file(tid, "wchan");
-> +        if (wchan && wchan[0]) {
-> +            g_string_append_printf(out, "      wchan %s\n", wchan);
-> +        }
-> +        return;
+> +}
+> +
+> +static int handle_unmapped_mem(int vm_fd, CPUState *cpu,
+> +                               const struct hyperv_message *msg,
+> +                               MshvVmExit *exit_reason)
+> +{
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +    CPUARMState *env = &arm_cpu->env;
+> +    struct hv_arm64_memory_intercept_message info = { 0 };
+> +    int ret;
+> +    EsrEl2 syndrome;
+> +
+> +    ret = set_memory_info(msg, &info);
+> +    if (ret < 0) {
+> +        error_report("failed to convert message to memory info");
+> +        return -1;
 > +    }
 > +
-> +    lines = g_strsplit(stack, "\n", 0);
-> +    for (i = 0; i < THREAD_STACK_FRAMES && lines[i]; i++) {
-> +        if (lines[i][0]) {
-> +            g_string_append_printf(out, "      %s\n", lines[i]);
-> +        }
+> +    syndrome.raw = info.syndrome;
+> +
+> +    ret = load_regs(cpu);
+> +    if (ret < 0) {
+> +        error_report("Failed to load registers");
+> +        return -1;
 > +    }
-> +    if (lines[i]) {
-> +        g_string_append(out, "      ...\n");
->      }
+> +
+> +    static const struct arm_emul_ops mshv_arm_emul_ops = {
+> +        .get_reg = mshv_mmio_get_reg,
+> +        .set_reg = mshv_mmio_set_reg,
+> +    };
+> +
+> +    ret = arm_emulate_mmio(cpu, syndrome, info.guest_physical_address,
+> +                           &mshv_arm_emul_ops);
+> +    if (ret < 0) {
+> +        error_report("Failed to emulate with syndrome");
+> +        return -1;
+> +    }
+> +
+> +    /* Advance PC past the faulting instruction */
+> +    env->pc += (syndrome.il == 1) ? 4 : 2;
+> +
+> +    ret = store_regs(cpu);
+> +    if (ret < 0) {
+> +        error_report("Failed to store registers");
+> +        return -1;
+> +    }
+> +
+> +    *exit_reason = MshvVmExitIgnore;
+> +
+> +    return 0;
+> +}
+> +
+>  int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+>  {
+> +    int ret;
+> +    int cpu_fd = mshv_vcpufd(cpu);
+> +
+> +    ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
+> +    if (ret < 0) {
+
+the ioctl can return EINTR after a userland kick, for x86 on master we
+handle this with a special exit:
+
+    if (ret < 0) {
+        if (errno == EINTR) {
+            *exit = MshvVmExitSpecial;
+            return 0;
+        }
+
+> +        *exit = MshvVmExitShutdown;
+> +        return ret;
+> +    }
+> +
+> +    switch (msg->header.message_type) {
+> +    case HVMSG_UNRECOVERABLE_EXCEPTION:
+> +        *exit = MshvVmExitShutdown;
+> +        break;
+> +    case HVMSG_GPA_INTERCEPT:
+> +    case HVMSG_UNMAPPED_GPA:
+
+the whpx code handles a cache maintainance exit, do we need the same
+here?
+
+	advance_pc = true;
+
+	if (vcpu->exit_ctx.MemoryAccess.Syndrome & BIT(8)) {
+		error_report("WHPX: cached access to unmapped memory"
+		"Pc = 0x%llx Gva = 0x%llx Gpa = 0x%llx",
+		vcpu->exit_ctx.MemoryAccess.Header.Pc,
+		vcpu->exit_ctx.MemoryAccess.Gpa,
+		vcpu->exit_ctx.MemoryAccess.Gva);
+		break;
+	}
+
+
+> +        ret = handle_unmapped_mem(vm_fd, cpu, msg, exit);
+> +        if (ret < 0) {
+> +            error_report("failed to handle mmio");
+> +            return -1;
+> +        }
+> +        break;
+> +    default:
+> +        error_report("Unhandled message type: 0x%x", msg->header.message_type);
+> +        return -1;
+> +    }
+> +
+>      return 0;
 >  }
 >  
-> @@ -183,6 +226,9 @@ char *qemu_thread_states(void)
->      if (!dir) {
->          return NULL;
->      }
-> +    /* Emit the permission notice ahead of the listing, not inside it */
-> +    thread_stacks_readable();
-> +
->      out = g_string_new(NULL);
->      while ((tid = g_dir_read_name(dir))) {
->          if (atoi(tid) != qemu_get_thread_id()) {
+> 
 > -- 
-> 2.53.0
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+> 2.45.4
 
