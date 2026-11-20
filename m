@@ -1,78 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A753D606A326
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 09:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C8D606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 09:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PY5y9eye
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wnRyMpc3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUKyl-0003nf-W3; Fri, 20 Nov 2026 04:32:25 -0500
+	id 1xUL5P-0004jd-Dp; Fri, 20 Nov 2026 04:39:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xUKyN-0003k8-49
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 04:32:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xUKyK-0000tf-Jw
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 04:31:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795167113;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ycamf+/xocvP/ZlZSY7mGGqW6W8TKX+ETjVseeNCKFU=;
- b=PY5y9eyeGugI4tB2HQ9K8c5bwGpVQwk0jGxGP505WzSpp6yN3sTgL4ZHhzw0iTXTBA16bU
- eBrHSDM2DbQssd1oC9C+hctDauivVp0Wr6Bj1OdKZS8yuX0wpU5tI9jSO+6NoCega2jc0T
- y6D2g0jA/WY/xnBp86dF1og4XQrpfVs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-DAqZdsyvOSS7XrSPmVeR8A-1; Fri,
- 20 Nov 2026 09:31:49 +0000
-X-MC-Unique: DAqZdsyvOSS7XrSPmVeR8A-1
-X-Mimecast-MFC-AGG-ID: DAqZdsyvOSS7XrSPmVeR8A_1795167108
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 357A118005BF; Fri, 20 Nov 2026 09:31:48 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73DC718004F7; Fri, 20 Nov 2026 09:31:47 +0000 (UTC)
-Date: Fri, 20 Nov 2026 09:31:44 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org, Nagendran Jairam <nagendranjairam52@gmail.com>
-Subject: Re: [PATCH] hw/core/loader: Add Extended Tektronix HEX support
-Message-ID: <awATgHU90hAWdOiv@redhat.com>
-References: <20261114112855.108-1-nagendranjairam52@gmail.com>
- <awAOG_BGiCgjM8nE@redhat.com>
- <CAEAkEp4N1uFczHexCAbABzYf5O-Th-o5dE-KasU1RXM_k7WKKQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1xUL5L-0004iz-B3
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 04:39:12 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1xUL5J-00058z-My
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 04:39:11 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2f03eeda984so3377375ad.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 01:39:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795167548; x=1795772348; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=2EsiLYl/myicY/QVfHbK9jOex6+7S/EmglIDVVjLfmo=;
+ b=wnRyMpc3X0j2KZkUlcLGYhKi+6bQjnr/tAfHPTKgAxrpHa9KU0IxyDPu5MoYiycAu0
+ NB1T/fa9rlbF7ElB73R84mRfjYmqq8pCbt+37rUsltTrrp30+O5Bz3OMjA/hUCWV/wc+
+ A3mzvR3bp5jeR8vOEayruF0OOZRGFKbGxtvjsRd9xRZwc79EkrS9ZtCNoNnTNbMg91KO
+ b0Dp+Ya1jjVcSq3ISLj31ivoACLe0pGeYFK592vbwljhLUfSqpfmRgKEkh6bZYYYGaQj
+ V41HK1D506iFCFf3dRz/YAl9f5AIOo9eUesPPrN50k/c9UnVAhI4wQZ1BszLzYGiZ+g6
+ svsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795167548; x=1795772348;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=2EsiLYl/myicY/QVfHbK9jOex6+7S/EmglIDVVjLfmo=;
+ b=iprqiOyRbYbxJwBL4dW5P8fM/Nj7RkX4LUQQhDpOlpwIhhX98yosueGMB6+Cn6/cG/
+ 0pWcvkg2LqGDXgd4XDILAZ7zyXERGXpkNmyBnNWVcLYALY6Utxbyhp6rh2TesypbHzx6
+ xo1fGo8KnCwo4N76lW0b/VV1//+6V6/iqgh1+tDpG2VTawhPgALRBLlcLVxvXUmQOtgm
+ LnO4xI/ajfjETJVRK3JF7ksuBZsJ36h74Km7bqhK1GJ3tsc5s4OvlVuYpYoxYv+Uo7E2
+ SU0DiPIcrxDy9IkosMkavGAzQb0OL7a/Uu4X2tCI4cFQi3exDPOhzg9W2sIwzFflZpBd
+ cunw==
+X-Gm-Message-State: APuU4Z+iDWD7dFOAr4bsjgBIZ9CE8YwyJIeoxk5kP7I+w8V7UJoQ0maK
+ 2/Q3LS05uJnNIgrSPnIPlnEFewCGOtA9xmOax1lH3aI0d1cTlQUWU+07BN7NQhZIZ21JIA==
+X-Gm-Gg: AZFdTZdPBm8oWUKSnOBvOvQ1ICQ1XB4UCB5BhRwteSlNwxgbrwLx3D6g1uVJ209rFhG
+ 39yR0Qa2oA3lmysDf1/ze50zh9QI6ou0qbmyYhv3ioWMp5YF4xR8IKVwFey3hNADQ68ZjQIY6ig
+ 89tATtPBCay12RgOAErG37/qGkuuVoju/iKP+RvC+WfLNM3qWKQbOb6Ugxrom+NgKbWgWO2UbPv
+ pjCOfmbNlP2/tBrkY1OqAlnIZsVpxPKemvJJCkUM1S7kGTDMfY1tNmfoWFJIGQ/4rrNInNey1qD
+ /Yi5XTwZHbQNagQ6FfCenyaxmPXg6qG1hBDWb0nN4FHo+5aUgAl02qBLhYLMpabq5aJ1sVG7B+/
+ MBNesT0Q9XsDXh9vSDoPxtTiQkKMcr7g+We3b3oU5kdc5SHgjNQFhIRIQoCvaC4LF0ToXa7mmN5
+ fBmcC62iI4akYLKhxvSyUHUVxf7ty+gZS7xeeTeeaETKBF88rvxWY9y3WLEYGyKSPemzQiY0RHX
+ C50GH0+TYj61IS0jt+ULtexlZliZLWVT50ofnf5e3LVOy8aZPPUiSoXaYUVhXSSIUTQgsnqNWsh
+ lbQPkQbwiFKGz7X88VgoFqpwXoO77AnT
+X-Received: by 2002:a17:902:ebd2:b0:2e9:970c:2c9 with SMTP id
+ d9443c01a7336-2f03f1c75bdmr28456465ad.42.1795167547690; 
+ Fri, 20 Nov 2026 01:39:07 -0800 (PST)
+Received: from [127.0.1.1] ([2406:da18:81e:8b00:7d1a:ab57:b89b:f45b])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2f03f0fdb1fsm11653215ad.42.2026.11.20.01.38.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Nov 2026 01:39:07 -0800 (PST)
+From: WX Chen <wxchen0913@gmail.com>
+Date: Fri, 20 Nov 2026 17:34:54 +0800
+Subject: [PATCH] Provide weaker memory ordering for RISC-V guest FENCE
+ instructions.
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEAkEp4N1uFczHexCAbABzYf5O-Th-o5dE-KasU1RXM_k7WKKQ@mail.gmail.com>
-User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261120-fix-riscv-fence-20261119-v1-1-aeb9ba142598@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAD0UAGsC/yWMQQ7CIBBFr9LM2kkYKDD1KsYF0MGyQQNJY9L07
+ qIuX/5/74AurUiH63RAk7308qwD6DJB2kJ9CJZ1MGilHZFWmMsbW+lpxyw1Cf4HWpBUmLWNnp0
+ 3MPRXk/H9pW/3wTF0wdhCTds3qFjWxSdjkmFiyZaCT2y1mX3QLEt2jpWPFs7zA7V5ra+lAAAA
+X-Change-ID: 20261120-fix-riscv-fence-20261119-10a425b78673
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Tao Tang <tangtao1634@phytium.com.cn>, WX Chen <wxchen0913@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795167538; l=2168;
+ i=wxchen0913@gmail.com; s=20260725; h=from:subject:message-id;
+ bh=JTSuK6B9MQjaASTgNs7HQ8xfVK2JLYB+GmD/5hykIn0=;
+ b=a4+yXk5xkL2+yS+8xToan7QkyBQ/HFdF5axKlUC2GyRkHx7l7+zmG+5tal/H9uUY/5xjaIe4N
+ oAsqRQX3dXEBtFbB4xfC/Lc3XUtVdW9JWYk4Ol5F3i43yWCuUgshjYz
+X-Developer-Key: i=wxchen0913@gmail.com; a=ed25519;
+ pk=FX63IRxmtz1BCNzHxOOWDPTo8L/D0YUxlIKc1WKi7wo=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=wxchen0913@gmail.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,357 +114,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Re-adding qemu-devel - please don't drop the mailing list when
-replying to review comments.
+Currently, they are implemented as full memory barriers, which may introduce stronger host barriers than the guest actually requires.
 
-On Fri, Nov 20, 2026 at 02:47:07PM +0530, Nagendran Jairam wrote:
-> On Fri, Nov 20, 2026, 14:38 Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
-> > On Sat, Nov 14, 2026 at 04:58:50PM +0530, Nagendran K wrote:
-> >
-> > Please provide a commit message to explain the purpose of
-> > this addition.
-> >
->        I am sorry, I forgot to mention that this function is being called
-> in generic-loader.c
->        The purpose is to load .tek files (binaries commonly used in Texas
-> instruments microcontrollers)  directly without worrying about raw binary
-> or hex conversion
->         Hex and tek files have major differences and it reduces manual
-> effort for a user to convert .tek to .hex
+Signed-off-by: WX Chen <wxchen0913@gmail.com>
+---
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc | 36 +++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-It is clearly not being called in generic-loader.c since this patch
-makes no changes to that file.
+diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+index 4784ea1607e74eb5b0076425a732b5d3817b3482..6e094e5886360c2f9f7c187e82e6f60da36b84e4 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+@@ -968,8 +968,40 @@ static bool trans_pause(DisasContext *ctx, arg_pause *a)
+ 
+ static bool trans_fence(DisasContext *ctx, arg_fence *a)
+ {
+-    /* FENCE is a full memory barrier. */
+-    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
++    /*
++     * FENCE.TSO orders all R/W pairs except W -> R.
++     * For TSO, the pred and succ should all be RW,
++     * otherwise it should be treated as normal FENCE.
++     */
++    if ((ctx->opcode & 0xf0000000) == 0x80000000 &&
++        a->pred == 3 && a->succ == 3) {
++        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_SC);
++        return true;
++    }
++
++    /* Reserved case, choose the strongest ordering.  */
++    if (ctx->opcode & 0xf0000000) {
++        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
++        return true;
++    }
++
++    /* Normal FENCE. I/R for BIT 3/BIT 1, O/W for BIT 2/BIT 0 */
++    TCGBar ordering = 0;
++    if ((a->pred & 0xa) && (a->succ & 0xa)) {
++        ordering |= TCG_MO_LD_LD;
++    }
++    if ((a->pred & 0xa) && (a->succ & 0x5)) {
++        ordering |= TCG_MO_LD_ST;
++    }
++    if ((a->pred & 0x5) && (a->succ & 0xa)) {
++        ordering |= TCG_MO_ST_LD;
++    }
++    if ((a->pred & 0x5) && (a->succ & 0x5)) {
++        ordering |= TCG_MO_ST_ST;
++    }
++    if (ordering) {
++        tcg_gen_mb(ordering | TCG_BAR_SC);
++    }
+     return true;
+ }
+ 
 
+---
+base-commit: 08ed97c33c3818ef51a7c852347a28e9f66807b5
+change-id: 20261120-fix-riscv-fence-20261119-10a425b78673
 
-> > > Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
-> > > ---
-> > >  hw/core/loader.c         | 231 +++++++++++++++++++++++++++++++++++++++
-> > >  include/hw/core/loader.h |  15 +++
-> > >  2 files changed, 246 insertions(+)
-> >
-> > ....this is adding a new API to common code and then not
-> > calling it from anywhere in QEMU. This is pointless
-> > and so is not likely to be accepted in isolation without
-> > a proposed usage accompanying it.
->   This is function has a call in generic-loader.c to load .tek files
-> 
->        Example Usecase: -device loader, file=my_test.tek, addr=0x00000000
-> 
-> >
-> >
-> > >
-> > > diff --git a/hw/core/loader.c b/hw/core/loader.c
-> > > index
-> > 5cbfba0a86d24569923c863d6ecda125ce43bceb..33ccb51d56dda1035e815479e20c2a6c793843d9
-> > 100644
-> > > --- a/hw/core/loader.c
-> > > +++ b/hw/core/loader.c
-> > > @@ -1940,3 +1940,234 @@ ssize_t load_targphys_hex_as(const char
-> > *filename, hwaddr *entry,
-> > >      g_free(hex_blob);
-> > >      return total_size;
-> > >  }
-> > > +
-> > > +typedef enum Ext_Tek_HexRecord Ext_Tek_HexRecord;
-> > > +enum Ext_Tek_HexRecord {
-> > > +    TEK_DATA_RECORD = 0,
-> > > +    TEK_TERMINATION_RECORD
-> > > +};
-> > > +
-> > > +#define DATA_FIELD_MAX_LEN 0xff
-> > > +
-> > > +typedef struct {
-> > > +    uint8_t record_length;
-> > > +    uint8_t record_type;
-> > > +    uint8_t checksum;
-> > > +    uint32_t address;
-> > > +    uint8_t data[DATA_FIELD_MAX_LEN];
-> > > +} Ext_Tek_HexLine;
-> > > +
-> > > +/* return 0 or -1 if error */
-> > > +static bool parse_ext_tek_hex_record(Ext_Tek_HexLine *line,
-> > > +                                     uint8_t *our_checksum,
-> > > +                                     const uint8_t c,
-> > > +                                     uint32_t *index,
-> > > +                                     const bool in_process)
-> > > +{
-> > > +    /*
-> > +---------+---------------+-----------+---------------+-------------+
-> > > +     * | record  |    record     |           |               |
-> >    |
-> > > +     * | length  |    type       | checksum  |   address     |   data
-> >     |
-> > > +     *
-> > +---------+---------------+-----------+---------------+-------------+
-> > > +     *     ^             ^            ^              ^            ^
-> > > +     * |1 byte   |    1 bytes    |1 byte     | 1 to N byte   | 0-255
-> > bytes |
-> > > +     */
-> > > +    uint8_t value = 0, address_len = 0;
-> > > +    uint32_t idx = *index;
-> > > +    /* ignore space */
-> > > +    if (g_ascii_isspace(c)) {
-> > > +        return true;
-> > > +    }
-> > > +    if (!g_ascii_isxdigit(c) || !in_process) {
-> > > +        return false;
-> > > +    }
-> > > +    /* still idx is computed nibble wise */
-> > > +    value = g_ascii_xdigit_value(c);
-> > > +    value = (idx & 0x1) ? (value & 0xf) : (value << 4);
-> > > +    if (idx < 2) {
-> > > +        line->record_length |= value;
-> > > +    } else if (idx == 2) {
-> > > +        line->record_type |= value;
-> > > +    } else if (2 < idx && idx <= 4) {
-> > > +        line->checksum |= value;
-> > > +    }
-> > > +    /*
-> > > +     * Extracting address length from record to fill that many no of
-> > address
-> > > +     * characters in the address field of the line structure.
-> > > +     */
-> > > +    else if (idx == 5) {
-> > > +        address_len |= value;
-> > > +    } else if (6 <= idx &&
-> > > +                   idx <= (6 + address_len)) {
-> > > +        line->address <<= address_len;
-> > > +        line->address += g_ascii_xdigit_value(c);
-> > > +    }
-> > > +    /*
-> > > +     * Checking whether index above address last char index
-> > > +     * and reaches till record length. Right shifting one divides the
-> > > +     * nibble wise index by 2 to get the byte wise index to
-> > > +     * fill the data field of the line structure
-> > > +     */
-> > > +    else if ((6 + address_len) < idx &&
-> > > +              idx <= line->record_length) {
-> > > +        line->data[(idx - (6 + address_len)) >> 1] |= value;
-> > > +    } else {
-> > > +        return false;
-> > > +    }
-> > > +    *our_checksum += value;
-> > > +    ++(*index);
-> > > +    return true;
-> > > +}
-> > > +
-> > > +typedef struct {
-> > > +    const char *filename;
-> > > +    Ext_Tek_HexLine line;
-> > > +    uint8_t *bin_buf;
-> > > +    hwaddr *start_addr;
-> > > +    int total_size;
-> > > +    uint32_t next_address_to_write;
-> > > +    uint32_t current_address;
-> > > +    uint32_t current_rom_index;
-> > > +    uint32_t rom_start_address;
-> > > +    AddressSpace *as;
-> > > +    bool complete;
-> > > +} Ext_TekHexParser;
-> > > +
-> > > +/* return size or -1 if error */
-> > > +static int handle_ext_tek_hex_record_type(Ext_TekHexParser *parser)
-> > > +{
-> > > +    Ext_Tek_HexLine *line = &(parser->line);
-> > > +    switch (line->record_type) {
-> > > +    case TEK_DATA_RECORD:
-> > > +        parser->current_address = line->address;
-> > > +        /* verify this is a contiguous block of memory */
-> > > +        if (parser->current_address != parser->next_address_to_write) {
-> > > +            if (parser->current_rom_index != 0) {
-> > > +                rom_add_blob_fixed_as(parser->filename, parser->bin_buf,
-> > > +                                      parser->current_rom_index,
-> > > +                                      parser->rom_start_address,
-> > parser->as);
-> > > +            }
-> > > +            parser->rom_start_address = parser->current_address;
-> > > +            parser->current_rom_index = 0;
-> > > +        }
-> > > +
-> > > +        /* copy from line buffer to output bin_buf */
-> > > +        /* sizeof(line->data) dynamically calculates the size of data
-> > field */
-> > > +        memcpy(parser->bin_buf + parser->current_rom_index, line->data,
-> > > +               sizeof(line->data));
-> > > +        parser->current_rom_index += sizeof(line->data);
-> > > +        parser->total_size += sizeof(line->data);
-> > > +        /* As address is absolute, we dont need to calculate next
-> > address */
-> > > +        break;
-> > > +
-> > > +    case TEK_TERMINATION_RECORD:
-> > > +        if (parser->current_rom_index != 0) {
-> > > +            rom_add_blob_fixed_as(parser->filename, parser->bin_buf,
-> > > +                                  parser->current_rom_index,
-> > > +                                  parser->rom_start_address,
-> > parser->as);
-> > > +        }
-> > > +        parser->complete = true;
-> > > +        return parser->total_size;
-> > > +
-> > > +    default:
-> > > +        return -1;
-> > > +    }
-> > > +
-> > > +    return parser->total_size;
-> > > +}
-> > > +
-> > > +/* return size or -1 if error */
-> > > +static int parse_ext_tek_hex_blob(const char *filename,
-> > > +                                  hwaddr *addr,
-> > > +                                  uint8_t *ext_tek_blob,
-> > > +                                  size_t ext_tek_blob_size,
-> > > +                                  AddressSpace *as)
-> > > +{
-> > > +    /* avoid re-enter and check whether record begin with '%' */
-> > > +        bool in_process = false;
-> > > +        uint8_t *end = ext_tek_blob + ext_tek_blob_size;
-> > > +        uint8_t our_checksum = 0;
-> > > +        uint32_t record_index = 0;
-> > > +
-> > > +        Ext_TekHexParser parser = {
-> > > +        .filename = filename,
-> > > +        .bin_buf = g_malloc(ext_tek_blob_size),
-> > > +        .start_addr = addr,
-> > > +        .as = as,
-> > > +        .complete = false
-> > > +        };
-> > > +
-> > > +        rom_transaction_begin();
-> > > +
-> > > +        for (; ext_tek_blob < end && !parser.complete; ++ext_tek_blob) {
-> > > +            switch (*ext_tek_blob) {
-> > > +            case '\r':
-> > > +            case '\n':
-> > > +                if (!in_process) {
-> > > +                    break;
-> > > +                }
-> > > +
-> > > +                in_process = false;
-> > > +                /*
-> > > +                 * record_length byte stores the number of hex
-> > characters
-> > > +                 * (nibbles) in the record and compare it directly to
-> > > +                 * the nibble index(record index).
-> > > +                 */
-> > > +                if ((parser.line.record_length != record_index) ||
-> > > +                    (our_checksum != 0)) {
-> > > +                    parser.total_size = -1;
-> > > +                    goto out;
-> > > +                }
-> > > +
-> > > +                if (handle_ext_tek_hex_record_type(&parser) == -1) {
-> > > +                    parser.total_size = -1;
-> > > +                    goto out;
-> > > +                }
-> > > +                break;
-> > > +
-> > > +            /* start of a new record. */
-> > > +            case '%':
-> > > +                memset(&parser.line, 0, sizeof(Ext_Tek_HexLine));
-> > > +                in_process = true;
-> > > +                record_index = 0;
-> > > +                break;
-> > > +
-> > > +            /* decoding lines */
-> > > +            default:
-> > > +                if (!parse_ext_tek_hex_record(&parser.line,
-> > > +                                            &our_checksum,
-> > > +                                            *ext_tek_blob,
-> > > +                                            &record_index, in_process))
-> > {
-> > > +                    parser.total_size = -1;
-> > > +                    goto out;
-> > > +                }
-> > > +                break;
-> > > +            }
-> > > +        }
-> > > +
-> > > +    out:
-> > > +        g_free(parser.bin_buf);
-> > > +        rom_transaction_end(parser.total_size != -1);
-> > > +        return parser.total_size;
-> > > +}
-> > > +
-> > > +
-> > > +/* return size or -1 if error */
-> > > +ssize_t load_targphys_ext_tek_hex_as(const char *filename,
-> > > +                                     hwaddr *entry,
-> > > +                                     AddressSpace *as)
-> > > +{
-> > > +    gsize ext_tek_blob_size;
-> > > +    gchar *ext_tek_blob;
-> > > +    int total_size = 0;
-> > > +
-> > > +    if (!g_file_get_contents(filename, &ext_tek_blob,
-> > > +                             &ext_tek_blob_size, NULL)) {
-> > > +        return -1;
-> > > +    }
-> > > +    total_size = parse_ext_tek_hex_blob(filename, entry,
-> > > +                                       (uint8_t *)ext_tek_blob,
-> > > +                                       ext_tek_blob_size, as);
-> > > +
-> > > +    g_free(ext_tek_blob);
-> > > +    return total_size;
-> > > +}
-> > > diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
-> > > index
-> > d9431e8a8d12e3b676160f70ed141f1064143ea3..c0d29b1d4456bb92984749e56f1109f8421cee51
-> > 100644
-> > > --- a/include/hw/core/loader.h
-> > > +++ b/include/hw/core/loader.h
-> > > @@ -57,6 +57,21 @@ ssize_t load_image_targphys_as(const char *filename,
-> > >  ssize_t load_targphys_hex_as(const char *filename, hwaddr *entry,
-> > >                               AddressSpace *as);
-> > >
-> > > +/**
-> > > + * load_targphys_ext_tek_as:
-> > > + * @filename: Path to the .tek file
-> > > + * @entry: Store the entry point given by the .tek file
-> > > + * @as: The AddressSpace to load the .tek file to. The value of
-> > > + *      address_space_memory is used if nothing is supplied here.
-> > > + *
-> > > + * Load a fixed .tek file into memory.
-> > > + *
-> > > + * Returns the size of the loaded .tek file on success, -1 otherwise.
-> > > + */
-> > > +ssize_t load_targphys_ext_tek_hex_as(const char *filename,
-> > > +                                     hwaddr *entry,
-> > > +                                     AddressSpace *as);
-> > > +
-> > >  /** load_image_targphys:
-> > >   * Same as load_image_targphys_as(), but doesn't allow the caller to
-> > specify
-> > >   * an AddressSpace.
-> > > --
-> > > 2.54.0.windows.1
-> > >
-> >
-> > With regards,
-> > Daniel
-> > --
-> > |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> > |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> > |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-> >
-> >
-
-With regards,
-Daniel
+Best regards,
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+WX Chen <wxchen0913@gmail.com>
 
 
