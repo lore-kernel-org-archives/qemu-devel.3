@@ -1,34 +1,34 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE71E606A325
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 13:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128B2606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 13:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=CuHxs7I3
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=FWrCqY88
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUOmI-0000eM-Uj; Fri, 20 Nov 2026 08:35:47 -0500
+	id 1xUOz4-0003T9-N8; Fri, 20 Nov 2026 08:48:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xUOmG-0000dm-Qm; Fri, 20 Nov 2026 08:35:44 -0500
+ id 1xUOyy-0003SV-CI; Fri, 20 Nov 2026 08:48:55 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xUOmE-0001S5-TZ; Fri, 20 Nov 2026 08:35:44 -0500
+ id 1xUOyw-0003Oe-Qx; Fri, 20 Nov 2026 08:48:52 -0500
 Received: from example.com (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id E362E20B7166;
- Fri, 20 Nov 2026 05:35:35 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E362E20B7166
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9A4E720B7166;
+ Fri, 20 Nov 2026 05:48:42 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9A4E720B7166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795181739;
- bh=HSFASCjBbLTaR1fpBvIYjsSBRFVxcz7CsR1hA56rKm4=;
+ s=default; t=1795182525;
+ bh=zwE9s7WImEZCL0S9rQvlMuCkEN8lrR0PdvVzs8Q+YmM=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=CuHxs7I3DEisAFwlCNPUguPdbQfpon3SMsGlxn4IC0BemqI/8L1SzhMJOpNz1ax1W
- Iy4dBoTb51M0Wfr7VLb4iQDDJgyN8PlqVzMDNOl85Kz33bcxTxfgAmPjD7RtvqqF0j
- WGbf0XJ57erYm2FSMm9JJQeZn0JlncXLHKZdzDl8=
-Date: Fri, 20 Nov 2026 14:35:35 +0100
+ b=FWrCqY88yAarHsnABXXBm787oXg7PMun98vUBeNUbdczbz6eknuJhVPlBPBxj7tF/
+ P2iRtnT/2+uPRPuwKroVmyqCKljpAZ+isSlc6ddvKpaWBkhBWFOinqv0oCQAxVMK5A
+ B3WDwMBDhAqmLHk5HXP34ASJyl55J5K1JDPIR024=
+Date: Fri, 20 Nov 2026 14:48:42 +0100
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: Aastha Rawat <aastharawat@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
@@ -44,16 +44,15 @@ Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 08/14] accel/mshv: Add access_vp_regs synthetic proc
- features
-Message-ID: <awBMp+6l6DWP2EpA@example.com>
+Subject: Re: [PATCH v6 09/14] target/arm: cpu: Mark MSHV supporting PSCI 1.3
+Message-ID: <awBPuuTA9BciIKYy@example.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-8-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-9-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-8-aefe5e76a0e3@linux.microsoft.com>
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-9-aefe5e76a0e3@linux.microsoft.com>
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -26
@@ -80,170 +79,31 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 01, 2026 at 10:52:53AM +0000, Aastha Rawat wrote:
-> Enable access_vp_regs feature for regs. In arm64, this feature bit
-> allows the guest to set VP registers using hypercall. This wasn't
-> required for x86 because such registers are set using wrmsr instead of
-> hypercall.
+On Thu, Oct 01, 2026 at 10:52:54AM +0000, Aastha Rawat wrote:
+> MSHV supports PSCI 1.3. Expose this version to guests.
 > 
 > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->  accel/mshv/mshv-all.c     |  1 +
->  include/hw/hyperv/hvhdk.h | 91 ++++++++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 91 insertions(+), 1 deletion(-)
+>  target/arm/cpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index f3f1825b0b..9603f0360e 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -235,6 +235,7 @@ static int set_synthetic_proc_features(int vm_fd)
->      features.tb_flush_hypercalls = 1;
->      features.synthetic_cluster_ipi = 1;
->      features.direct_synthetic_timers = 1;
-> +    features.access_vp_regs = 1;
-
-is this safe to use on x86_64? if not/unsure we can use the
-mshv_arch_amend_proc_features to only set this bit on arm64
-
->  
->      mshv_arch_amend_proc_features(&features);
->  
-> diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-> index 9e6dcb22f6..d0adbea0c7 100644
-> --- a/include/hw/hyperv/hvhdk.h
-> +++ b/include/hw/hyperv/hvhdk.h
-> @@ -94,11 +94,16 @@ union hv_partition_synthetic_processor_features {
->           */
->          uint64_t access_partition_reference_tsc:1;
->  
-> +#if defined(__x86_64__)
-
-Maybe we can use the `HOST_x86_64/AARCH64` qemu equivalent here.
-
-> +
->          /*
->           * Partition has access to the guest idle reg. Corresponds to
->           * access_guest_idle_reg privilege.
->           */
->          uint64_t access_guest_idle_reg:1;
-> +#else
-> +        uint64_t reserved_z10:1;
-> +#endif
->  
->          /*
->           * Partition has access to frequency regs. corresponds to
-> @@ -110,11 +115,16 @@ union hv_partition_synthetic_processor_features {
->          uint64_t reserved_z13:1; /* Reserved for access_root_scheduler_reg */
->          uint64_t reserved_z14:1; /* Reserved for access_tsc_invariant_controls */
->  
-> +#if defined(__x86_64__)
-> +
->          /*
->           * Extended GVA ranges for HvCallFlushVirtualAddressList hypercall.
->           * Corresponds to privilege.
->           */
->          uint64_t enable_extended_gva_ranges_for_flush_virtual_address_list:1;
-> +#else
-> +        uint64_t reserved_z15:1;
-> +#endif
->  
->          uint64_t reserved_z16:1; /* Reserved for access_vsm. */
->          uint64_t reserved_z17:1; /* Reserved for access_vp_registers. */
-> @@ -161,13 +171,92 @@ union hv_partition_synthetic_processor_features {
->          /* HvCallRetargetDeviceInterrupt is supported. */
->          uint64_t retarget_device_interrupt:1;
->  
-> +#if defined(__x86_64__)
->          /* HvCallRestorePartitionTime is supported. */
->          uint64_t restore_time:1;
->  
->          /* EnlightenedVmcs nested enlightenment is supported. */
->          uint64_t enlightened_vmcs:1;
->  
-> -        uint64_t reserved:30;
-> +        uint64_t nested_debug_ctl:1;
-> +        uint64_t synthetic_time_unhalted_timer:1;
-> +        uint64_t idle_spec_ctrl:1;
-> +
-> +#else
-> +        uint64_t reserved_z31:1;
-> +        uint64_t reserved_z32:1;
-> +        uint64_t reserved_z33:1;
-> +        uint64_t reserved_z34:1;
-> +        uint64_t reserved_z35:1;
-> +#endif
-> +
-> +#if defined(__aarch64__)
-> +        /*
-> +         * Register intercepts supported in V1. As more registers are supported
-> +         * in future releases, new bits will be added here to prevent migration
-> +         * between incompatible hosts.
-> +         *
-> +         * List of registers supported in V1:
-> +         * 1. TPIDRRO_EL0
-> +         * 2. TPIDR_EL1
-> +         * 3. SCTLR_EL1 - Supports write intercept mask.
-> +         * 4. VBAR_EL1
-> +         * 5. TCR_EL1 - Supports write intercept mask.
-> +         * 6. MAIR_EL1 - Supports write intercept mask.
-> +         * 7. CPACR_EL1 - Supports write intercept mask.
-> +         * 8. CONTEXTIDR_EL1
-> +         * 9. PAuth keys (total 10 registers)
-> +         * 10. HvArm64RegisterSyntheticException
-> +         */
-> +        uint64_t register_intercepts_v1:1;
-> +#else
-> +        uint64_t reserved_z36:1;
-> +#endif
-> +
-> +        /* HvCallWakeVps is supported */
-> +        uint64_t wake_vps:1;
-> +
-> +        /*
-> +         * HvCallGet/SetVpRegisters is supported.
-> +         * Corresponds to AccessVpRegisters privilege.
-> +         * This feature only affects exo partitions.
-> +         */
-> +        uint64_t access_vp_regs:1;
-> +
-> +#if defined(__aarch64__)
-> +        /* HvCallSyncContext/Ex is supported. */
-> +        uint64_t sync_context:1;
-> +#else
-> +        uint64_t reserved_z39:1;
-> +#endif /* __aarch64__ */
-> +
-> +        /*
-> +         * Management VTL synic support is allowed.
-> +         * Corresponds to the ManagementVtlSynicSupport privilege.
-> +         */
-> +        uint64_t management_vtl_synic_support:1;
-> +
-> +#if defined(__x86_64__)
-> +        /*
-> +         * Hypervisor supports guest mechanism to signal pending interrupts to
-> +         * paravisor.
-> +         */
-> +        uint64_t proxy_interrupt_doorbell_support:1;
-> +#else
-> +        uint64_t reserved_z41:1;
-> +#endif
-> +
-> +#if defined(__aarch64__)
-> +        /* InterceptSystemResetAvailable is exposed. */
-> +        uint64_t intercept_system_reset:1;
-> +#else
-> +        uint64_t reserved_z42:1;
-> +#endif
-> +
-> +        /* Hypercalls for host MMIO operations are available. */
-> +        uint64_t mmio_hypercalls:1;
-> +
-> +        uint64_t reserved:20;
->      };
->  };
->  
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 8ad5e346d1..624cb72610 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1295,7 +1295,7 @@ static void arm_cpu_initfn(Object *obj)
+>      if (tcg_enabled() || hvf_enabled()) {
+>          /* TCG and HVF implement PSCI 1.1 */
+>          cpu->psci_version = QEMU_PSCI_VERSION_1_1;
+> -    } else if (whpx_enabled()) {
+> +    } else if (whpx_enabled() || mshv_enabled()) {
+>          cpu->psci_version = QEMU_PSCI_VERSION_1_3;
+>      }
+>  }
 > 
 > -- 
 > 2.45.4
+
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
