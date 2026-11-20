@@ -1,94 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B57C606A6D3
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 19:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B811A606A6CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 19:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oQ9XLYKD
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xoc+oISo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUURE-0000du-VD; Fri, 20 Nov 2026 14:38:25 -0500
+	id 1xUUSo-0001Pz-Tv; Fri, 20 Nov 2026 14:40:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUURD-0000cy-6g
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:38:23 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1xUUSl-0001OP-Gg
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:39:59 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUURB-0001KN-Li
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:38:22 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2f048476ab9so7360865ad.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 11:38:20 -0800 (PST)
+ id 1xUUSi-0001Nc-R8
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:39:59 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2f0213202fdso7518365ad.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 11:39:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795203500; x=1795808300; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795203595; x=1795808395; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Fs2cNi9kyfOFB/gS7nvdPDMv82g1W2K+mdiNT0R+w7M=;
- b=oQ9XLYKDdnrni8E6SheKbEO1ldjATykFHqmZQCuJTnYlaDfHCtxU4eG2Qdkn0cE3k5
- 6s8/vXg+m59uSLu7mGNufI/EosiCPJps+ykitr3mCRDn1z4M5+DcocAD44R9C9FBL5Fh
- ZvXbjF92/d9EP4FLA6yx3O/x1GLz2HJ3HgboJ13uAEiwARNMk8fs2OHIzPnKfJjM2EOS
- r52GkbTk25k/QcfGuebiAnKi6IUfMlJHF56xxXhUS0gOZBTSHeGri58Rvk/u/XDnS41O
- eww1IfgvjXaeIlKUTox1IQNQDUAI15cKXblucGYpuSwHgLEGmqKFmkHS2CsOfFjZBiQ/
- kWRw==
+ bh=sDqPnKYtJ7HoOWBh+GRdA7KI1/Yh+SOQRffdE50PFTw=;
+ b=xoc+oISodLgFfoNQ2O6OeNGvmRl2Umlkk3jxyJ6b5ejKpplegC3fr39UifrYCQmJx1
+ gsGgUyFy4U21Rk179sZJIt0HWxwCnLlJkAHVsFujkOK2+mD+IdvGJezgNRw6WM2IXghu
+ v5m5IJNyHUjsGq9DOI3G9K7EkPLK6MlQnYEiCbmvdtX9yH4PF+tVW2I7uvSnlsMpcbG/
+ DAo8B+ouEyPrRBBT1pn+anYcyBdT7RghA4eX0nNRy7jJ6MLaX4HK3ePKNcOzle+zLaix
+ wD08Aqw7/tzfaj9e1iwo0FKdwnQiFHGYrVZZGy4PBjfMll30dK3/MNFM9IPmw5LRA+xY
+ wVHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795203500; x=1795808300;
+ d=1e100.net; s=20260707; t=1795203595; x=1795808395;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Fs2cNi9kyfOFB/gS7nvdPDMv82g1W2K+mdiNT0R+w7M=;
- b=mZBO0RmbXyZ/SNopQX8EtvacFwd1pPTupWax2AWD31Ou4j59dLzVVXCEkeOy5goGVr
- r44YbzTK1PldNZLn4OCBJYvVHfyXjmrbiiiS5wbiW5osPn/9S36+xQroKgwh8Y+UaByx
- pdbyLtBCbxGYcXO5pQOrWZHDO0dtgsvZTa97D6vnL17f29LEwnl7v9dFCheojTHgsK3J
- qg36JDL3SPQCAhavWUNcb6xQA1ZyAnJb33wpQNchi7Q3U83f4LoA2c8zbXai91T92Ktb
- O8KEQ7M+m5UBHOZ103EvkIGEs5M8aSUoVeVvl8vye19HSRxNSUkReFVcVqIezi6WM9hq
- 4d3g==
+ bh=sDqPnKYtJ7HoOWBh+GRdA7KI1/Yh+SOQRffdE50PFTw=;
+ b=XGwkx4GvRv52juSTGgPutQ/tELwGtYxqxvUEFwxhcatbMhpI4sjlM34P52dBbfuvmk
+ FUkse6gKy5E2wAYPG5NA9Hg2A8mUGDrSfYhYzt7dJ99sjIKeEGd769ltMPXF11Z4qL6k
+ 9YIEhiHAf7KnONj03lCvhZLVUH/ifJ2tH/btkBLEa51hYiDFfnq6rDlpcyJmmXJKiSpg
+ 50gemxhBOQqRm3qt/SFkhQk4tDWul9dMT9qCAc8APFhFn/mKUT9BkG7jcu3U2wY0ZWak
+ ljCCHNRwMsfhZ8gWkaCA6EZjlS6iPX9D1SUs0hd/ETNobG8KaklJPXRMwD0zbdJA7EDf
+ TYSA==
 X-Forwarded-Encrypted: i=1;
- AL+hErGwjmr65Kt1Zc+3ZnWcyHvZXjBRqnyfULoDOmIvsi3yAahbmFXPX9THyQSY6vz7uFTh6KFeC3SPpXil@nongnu.org
-X-Gm-Message-State: APuU4Z/4dO0uWaj4syaURSmTHI24ZlRuuoM+l8HUBVZPWLVTcMqssOUs
- 2oMfKYmfGzRksLXLraMqLFB1RLjkyo5ugv5e2wEXQtyR1VxfQYsXK3+uqBPBbZqFntI=
-X-Gm-Gg: AZFdTZdgMiDEBeyy/UrnjUDZQ9noDfUyoRdif833T26UUTK7CD/0UfOlbMTz2/qdy34
- i65W4UBgZSSkDuty1yWK4D5ZbfV1kn8bmjEyFOyg0fGGxmRGQWvkoAdM9w3UY3W9jrI/xnnM8Om
- Z+ft2IjLwxJeaPKr41Ns1t/QctK+f08WSt/N21dmathe71/WYjDccQpNQosa0UqA6fi9GbRqs/h
- TAVJDbLe7AtI7fY0+TJFYaIS6PX9PeWCuyvGqzqR/1QBtsMMm6zHbyiu5DSz660Y/oTJnGAaejm
- TxjfQtndzrSQZ746gXp97VnqlO+f0IrlW2vs9kI8GgI3zxcO6B7F9kD81Nj80fK+AIy9fT6DAqO
- vLQ88m0H3rXZqFY79smflWw5ATY6q0oi00v3tWVcjaGoMNzNnw1ZgunGB8Y0RoaMQpdEw5hEhY3
- GMMpDUwLFPV0AresI4hQ7kzFVpB1O3HRoykjDfvtM8JNS3NByt8h4yMgGYwRLkFMRhLWV4bJsUh
- j9gWG8g29mxwP4hn5AX9nIPQHGrIRVYvd4/cfbKdODmYFqN/tmxg7HT1fJlIt3CcEnp4ZO9Eglu
- qG5+ok51atrL6KoIDHGx935CFLqMUWsxYhotUFbP+2BQNCoJRr8gZwSIWC4Sd56dveaJix8=
-X-Received: by 2002:a17:902:c408:b0:2f0:4df4:8985 with SMTP id
- d9443c01a7336-2f04df48cadmr22117655ad.42.1795203499693; 
- Fri, 20 Nov 2026 11:38:19 -0800 (PST)
+ AL+hErEABe71qNJEXEP/MV2i2eUv1Q/grUziZaCRbPNGGx2GHMVDK7/0G8dFdqWBK0l3TEO14ZRBNLEUFSxm@nongnu.org
+X-Gm-Message-State: APuU4Z+eor82DQpNm3IFQ3cNeySDZlSoRNPdtaZd1KUXvPePsXpVWZzR
+ l1xfTvCFFVl+ezVgoNKW9y5/El+S+bnBdVJ85VBFmie8UpvXSaeMXCLmV2ppjkRF0rco6azrVwB
+ +sFJR
+X-Gm-Gg: AZFdTZfM/T2ctaBq2D4dNygf9GxSiWsrB7TlPW+xWN0fsMrLvWUGbDANbwCMVh7utot
+ YxMNS/W8h5ww8ARqRnUumvdht9tuQvm5nGpF2CLtXLP2sICkDhJc1jn0m2SaxyAHSoHu7V9+WUT
+ lbfH0ekNWm/WH+yOqv1L8SkPBWMB4M37ifjOEW4HkiswQY4Y3lg/j4TBWADNT08ZXqgf2pMlm+s
+ LkOlzvT+rkQ6AwHC4Ge9SfctlMTvzKfb9aK1Psf+u1fOFyEevq5MRI2JCPuWUSf0j6iy9DghpNB
+ fTH7qoCXmIJkJ3zEdGGJlFWxYCnVmkkntqDnoOG8Nt6yywBKzWuL/Fjl3sglp/AwyQHe5CsQiI/
+ KvCP/GC4t1ZVsuRdNm+1zqEIt7F8neqprvgGXJm+oPTW80MqCaBB5JiWYlLoyWlvTFvZknsERjX
+ FfFEBMhsvWV/q2+syBRtBwD4qgqWP2S/H+wzDGUHO4p5N7ewss3wwidQPv5TmASha0iWTn6ZRZd
+ McufD/Ab7xLJA6zAP+NlCzf/L18JPoezC2RcPCTEe7pO82OFaFhhcl+2yWomCXKGIVN2qEKZfDZ
+ G91CPWLdFY6kmizNrthHyiG9GX1COGnb98r60LvasOi+JoKTOKfEqnk0+GhkaO6ZHJDDNuM=
+X-Received: by 2002:a17:903:2b0f:b0:2ed:2475:e40e with SMTP id
+ d9443c01a7336-2f03f211a24mr41492295ad.61.1795203594978; 
+ Fri, 20 Nov 2026 11:39:54 -0800 (PST)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2f03f14fc8csm18042615ad.74.2026.11.20.11.38.19
+ d9443c01a7336-2f03f0c42b1sm18276355ad.17.2026.11.20.11.39.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Nov 2026 11:38:19 -0800 (PST)
-Message-ID: <7cca3a47-5a9d-429e-8049-004a8f258d00@linaro.org>
-Date: Fri, 20 Nov 2026 11:38:16 -0800
+ Fri, 20 Nov 2026 11:39:54 -0800 (PST)
+Message-ID: <5ce7927f-1a9d-405b-b2e9-49cd0a30bf53@linaro.org>
+Date: Fri, 20 Nov 2026 11:39:51 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] accel/tcg: Yield round-robin execution when
- another vCPU wakes
+Subject: Re: [PATCH v2 2/4] accel/tcg: Check current CPU in icount interrupt
+ handler
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Ashish Anand
  <ashish.a6@samsung.com>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20261119225514.4080-1-philmd@oss.qualcomm.com>
- <20261119225514.4080-2-philmd@oss.qualcomm.com>
+ <20261119225514.4080-3-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261119225514.4080-2-philmd@oss.qualcomm.com>
+In-Reply-To: <20261119225514.4080-3-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,55 +111,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 11/19/26 14:55, Philippe Mathieu-Daudé wrote:
-> An interrupt or inline run_on_cpu callback can wake another CPU
-> that shares the sender's host thread. End the current slice in
-> both paths so the target can run promptly.
+> Under round-robin TCG, all vCPUs share one host thread,
+> so qemu_cpu_is_self() is true for every vCPU. The icount
+> interrupt sanity check can therefore abort when an interrupt
+> targets a different vCPU sharing the current thread.
+> Compare current_cpu with the target CPU instead.
+> 
+> Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   accel/tcg/tcg-accel-ops-icount.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Why?  Isn't this going to interfere with icount/replay?
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   accel/tcg/tcg-accel-ops.c | 3 +++
->   cpu-common.c              | 3 +++
->   2 files changed, 6 insertions(+)
-> 
-> diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-> index 61e0051b53be..ec4e3577ead1 100644
-> --- a/accel/tcg/tcg-accel-ops.c
-> +++ b/accel/tcg/tcg-accel-ops.c
-> @@ -107,6 +107,9 @@ void tcg_handle_interrupt(CPUState *cpu, int mask)
->           qemu_cpu_kick(cpu);
->       } else {
->           qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
-> +        if (current_cpu && current_cpu != cpu) {
-> +            cpu_exit(current_cpu);
-> +        }
->       }
->   }
+> diff --git a/accel/tcg/tcg-accel-ops-icount.c b/accel/tcg/tcg-accel-ops-icount.c
+> index d0f7b410fab3..0313a4d128c5 100644
+> --- a/accel/tcg/tcg-accel-ops-icount.c
+> +++ b/accel/tcg/tcg-accel-ops-icount.c
+> @@ -152,7 +152,7 @@ void icount_handle_interrupt(CPUState *cpu, int mask)
+>       int old_mask = cpu->interrupt_request;
 >   
-> diff --git a/cpu-common.c b/cpu-common.c
-> index adb76b3a786c..d518d1f40e81 100644
-> --- a/cpu-common.c
-> +++ b/cpu-common.c
-> @@ -148,6 +148,9 @@ void do_run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data,
->   
->       if (qemu_cpu_is_self(cpu)) {
->           func(cpu, data);
-> +        if (current_cpu && current_cpu != cpu) {
-> +            cpu_exit(current_cpu);
-> +        }
->           return;
->       }
->   
+>       tcg_handle_interrupt(cpu, mask);
+> -    if (qemu_cpu_is_self(cpu) &&
+> +    if (current_cpu == cpu &&
+>           !cpu->neg.can_do_io
+>           && (mask & ~old_mask) != 0) {
+>           cpu_abort(cpu, "Raised interrupt while not in I/O function");
 
 
