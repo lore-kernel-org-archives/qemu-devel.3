@@ -1,97 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C93606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C250606A325
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 12:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gUtA/0dX;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=VdUf0+rF
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=K4ieTQwl;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=rujFy4A5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUO3g-0000rO-2C; Fri, 20 Nov 2026 07:49:40 -0500
+	id 1xUO3d-0000qF-Ns; Fri, 20 Nov 2026 07:49:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3d-0000qI-Ru
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3b-0000oz-9Q
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3c-0004lj-2c
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xUO3Z-0004ku-4B
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 07:49:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795178975;
+ s=mimecast20190719; t=1795178970;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yB6UGk0PQtx1HyzaQH1q7NaL5PpeGBbOIWIpyS3oM/0=;
- b=gUtA/0dXQ32AdFUCcZ40t+pXTrwfeYMPqZrtuiGqn4MUI6vI2xMHriX0RzgLxqddIL7GzI
- RGgedJRzXQCqUARmNt2PNTheOm3TjZeSiueHHLBzN8lMmjhbozEW+XM2edSl/BLJNh13Vs
- KAvV8tXOwqQR48rMWsBuc+SJtx9fPq8=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=aXGWNT0Ui94VenZfPMnzJk8edzOpaNdOc7vd8X29dhk=;
+ b=K4ieTQwl7vaH8JnkQ6XRED4jbprxsuASpuFPsv01FJjj6DeJw9Ag0S8bDQ1lzAjYwYJejP
+ hfyIyDAQWV2cLfeKWH9OqlQTMuIFd/3Er2oXTwCPV3pG5T6rEFulfl0dZXy6TxW/4h8ZsN
+ OpzWAh/wYPvKBDGRngKKFWehF4BzxkY=
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-nayAnhBCO8-bo_xsSN8Iqw-1; Fri, 20 Nov 2026 12:49:33 +0000
-X-MC-Unique: nayAnhBCO8-bo_xsSN8Iqw-1
-X-Mimecast-MFC-AGG-ID: nayAnhBCO8-bo_xsSN8Iqw_1795178973
+ us-mta-329-tjIvCU7kNPiDd3uQs4UmoA-1; Fri, 20 Nov 2026 12:49:27 +0000
+X-MC-Unique: tjIvCU7kNPiDd3uQs4UmoA-1
+X-Mimecast-MFC-AGG-ID: tjIvCU7kNPiDd3uQs4UmoA_1795178966
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5363fa3d3e4so16925211cf.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:33 -0800 (PST)
+ d75a77b69052e-5363fa3d3e4so16923891cf.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 04:49:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795178973; x=1795783773; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yB6UGk0PQtx1HyzaQH1q7NaL5PpeGBbOIWIpyS3oM/0=;
- b=VdUf0+rF2rFJvKjuWCnYtnexIF74Xgmqx42wfIDN093AdvmqiTottiSnssOL2t18Nm
- RZudX3HM6ei6cjOuV3qt+mNn47CjP3kkGZiMeh2C8YF4TiEePyXcXkwf3BOmG0aY2tP4
- dijZ1HtFS9tMp6N6D79Baw/NPkTAkfK3KTKbNcXQgrUJ32l0nLZPOwkOcARfZOA2x04h
- r16kk32wr8Xtaw+vfZme+wlWgL4qqrgWQWEXgntxjBRIFUjCvnOjS9u0iWugRtOEZXMs
- tePGMw9fum9CLuY4CgCgziq7vCIME+A+RerZIidX/ee0DSZepVzYF6PJLBO2X4/LJ993
- a/Cg==
+ d=redhat.com; s=google; t=1795178966; x=1795783766; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=aXGWNT0Ui94VenZfPMnzJk8edzOpaNdOc7vd8X29dhk=;
+ b=rujFy4A5sYBn3i5lSQDqLBwyYJfhNopQw96OvA2s6CMLacLXnSt485+m0sSOaGDHlK
+ 7wS73TIKnZ0M7+n+RpwEo4CNeu8F8UsMK828jCKsMMpsjozz4aYqPi6oonejHe4OnQWv
+ TpGvVUcTGu8E2w3qy5D1dLqazlTEx9swzF0fjx60f7kbcnu+a5dhf/VzR1Dd0M/pkA3h
+ FVuNFwl7RIcuVJroNDJIsvPPwDSU6gaj8ywmIxeN2ndK3ZNoxnBQy4TeomtQZwjKjANf
+ 4YSe0nC+CdcuafQWyWavq87c1kfiMK1rZdy6CUxTENyYHNmIBPUpo+wKmbh1mn7l7q8L
+ rhcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795178973; x=1795783773;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yB6UGk0PQtx1HyzaQH1q7NaL5PpeGBbOIWIpyS3oM/0=;
- b=sTs1/WKbwxeaq8YPv5qxlNpItUDoP4pza+e72x5zh/xjUVye9rWBnZIvOi0InVdZCK
- kIUlkoqSDBnlOe1g1dFcqdgNKq+fN4/t68t+DtPsoEo23JSdjhKtWsnVreLYGwOTcagz
- ctjsH71sMR2NPCMDGbEm7NWCvLvA1K4V0GU9GXA3N6M44a9+tlEgKApppIDnzXG8cbh3
- XZ++hmsUitgCf6TeBpYzsqaq4exl1CAtm5L3PHrJHs9SHFI0eGlnaTS2sVTqjmWsAS/g
- RSwZk2jFyzYaoIu7q0Z0LhVwZ3q+gstEYzt39GfApDOQyv+fSnM2EK2Bwub+8s0rrRMS
- FEAg==
-X-Gm-Message-State: APuU4Z9cPrObt++gWE+NSHrTB+T5Lzcdk3Cix/sTUS32z3s3uxDHUlu6
- Xtpgi2WkdUUZuth9MqExL8zq5ZE16pJTiJHxJdgOfZygRNysi0roe0PjGCd7NXKohZITsWBIR63
- Yd0dAnrX2VJpD74rUhyo3pKv+z8TtfBgrL+hdbQ1vxeZSDfa8RF5AWpLgTzEHr8HLUzor9gVNR4
- sY6TxRtIta/wtPbNzesGLLs2IM2JEdXCQr/AQiag==
-X-Gm-Gg: AYBFou1KhC98LVbTTguVQCEmNRG1k17Yu3FESe6wcKKHU1i8/iq0BqYLqrExIv5FPEN
- Kxc4IU4euaLZdq5zIC2Dizn29Zx/iHoOEK5PcANhT6CbflFUUyHjK9vWG9FfKAWBQgYVdgboe4o
- UizY5JoAd7dAqOotvfTv6xUsn1dPI13s2kR2T74OsuM3J9yJ3c7dNuj0DbdC4MZtfDTtzmokY5m
- l60s/IdEvAfxZqNSiMj4zK3hUNxETNdWtbsZqBCEzUts1u+PPCc6+ylDV1rCxwFuOBjs6wsYdK1
- HkYWxFsvoVplzVDdjrs7q4L5+WtSfKjDlDOnIK0qhHUezExPzamnnexUS27PDoeV1K2Q2r0zbKB
- qdBURCV0GNUu+WVVU/4PDC1IUFAV+EV6iPOgWdA8AD2q/
-X-Received: by 2002:a05:622a:c18:b0:536:780e:8f48 with SMTP id
- d75a77b69052e-55d76a5d56cmr47527521cf.30.1795178972708; 
- Fri, 20 Nov 2026 04:49:32 -0800 (PST)
-X-Received: by 2002:a05:622a:c18:b0:536:780e:8f48 with SMTP id
- d75a77b69052e-55d76a5d56cmr47527281cf.30.1795178972205; 
- Fri, 20 Nov 2026 04:49:32 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795178966; x=1795783766;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=aXGWNT0Ui94VenZfPMnzJk8edzOpaNdOc7vd8X29dhk=;
+ b=d6pFkiHDcf0WLpPG7uOIDJsv4wVDFMYRFL2p/xiSRSPLf9NYy9DwAVWGs0W2+Ke9Rz
+ GT6y9He02lCydwKtl7Ve1NSUXzc3RUVsx7zQcAUl1sfwHyJt+zYivEzUvkYPfard100L
+ 1rCq4xjH0VKTlmZyTYMZ8HuzTT3B7gimulEeDRPpndoGSOpO2Mp3XURY24I0dNiB7sXm
+ VPhA0BTM+Xt4qpkUtlJvqmBaxM56fVesP++ZxzLjjk1F6PYrG76OWEqAnVRO4BRL/xxZ
+ MTb+MGAePQhDSmTpYqadxI3ITqb7LhInA6BaOecD1qtodSWPIX1jjRrPBGLMoCNH7mqH
+ sV+g==
+X-Gm-Message-State: APuU4Z/BymZqfG2y3ApMbQP7QvPEfBiDcqGar0E19zdyG7uoUcMm5oAq
+ I8mB/CgPnsMBe03y/XAJN+ZdprWqjdN5HF+uIUueOXc8hb1LofGz+mGkxtvFkAeswh+3MB3mojN
+ 61M82Zsa0h/AfLwFJjp0r0QAyxUmUK73wWItwYKIOpwEVydsxRi2kPBj/oTxElzXD4cyZhg/GNw
+ wAO1zA8ID1hjnFKcJgiEJh00uAVP7YnBSPcFieyw==
+X-Gm-Gg: AYBFou0qgj5S5BrPMqtx6Z8xlPj35R3Ro6p8nHJJWsHaMNDnBDwoRRqR1E1jJu3QNl7
+ wPeKGMjQrXiIZnbcEUcVjn011tdCYHI6ZncuOjPWMxzNac/V1MDKK1xnkLtCDcIaNocIJYt9j3h
+ 0ViN/Yup3zQKh2Hh3voCsidmUX4YLngSAX+0ckvKpknxdmjFOstjAJWhPVkvm/oamEh2W5ETMvr
+ zS0LZBnPc5udUFRpQ0iaG4VkYkI/OuJYU21120ouRf974fMrWjfqPiEd4ztlcvgC+KaLdT45m6H
+ lmWNpF9LKtN7DsdGL2ZOU9LgzteWq8ol++0JNNivbcsldumML591N4IDpi/UnmqRQFx7SlqnFbb
+ Kh+Gx72IYlumRLKaqrNDJRRv+Ja5QPJWTqOasWpjzNuN2
+X-Received: by 2002:a05:622a:2586:b0:55c:6d3d:b688 with SMTP id
+ d75a77b69052e-55d767ae63dmr51572961cf.0.1795178965982; 
+ Fri, 20 Nov 2026 04:49:25 -0800 (PST)
+X-Received: by 2002:a05:622a:2586:b0:55c:6d3d:b688 with SMTP id
+ d75a77b69052e-55d767ae63dmr51572471cf.0.1795178965363; 
+ Fri, 20 Nov 2026 04:49:25 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d78807b5fsm21591291cf.6.2026.11.20.04.49.31
+ d75a77b69052e-55d7882e2d1sm21546751cf.14.2026.11.20.04.49.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Nov 2026 04:49:31 -0800 (PST)
+ Fri, 20 Nov 2026 04:49:24 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, qemu-arm@nongnu.org
-Subject: [PATCH for-12.0 4/6] arm/machine: Move all VMSTATE_VALIDATE() usages
- into post_load
-Date: Fri, 20 Nov 2026 07:49:21 -0500
-Message-ID: <20261120124923.1656220-5-peterx@redhat.com>
+ peterx@redhat.com
+Subject: [PATCH for-12.0 0/6] migration: Remove VMSTATE_VALIDATE() and
+ VMS_MUST_EXIST
+Date: Fri, 20 Nov 2026 07:49:17 -0500
+Message-ID: <20261120124923.1656220-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261120124923.1656220-1-peterx@redhat.com>
-References: <20261120124923.1656220-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -117,143 +114,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-To pave way removing VMSTATE_VALIDATE(), move all four such uses into a
-post_load hook instead.
+CI: https://gitlab.com/peterx/qemu/-/pipelines/3091862038
 
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- target/arm/machine.c | 45 +++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 40 insertions(+), 5 deletions(-)
+This is for QEMU 12.0 material only.  I could have marked this RFC, but I
+found that I want / see this more than "request for comments", so I send it
+as formal patches.
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index c3aef3f330..ec6daf1ab9 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -11,6 +11,7 @@
- #include "migration/qemu-file-types.h"
- #include "migration/vmstate.h"
- #include "target/arm/gtimer.h"
-+#include "qapi/error.h"
- 
- static bool vfp_needed(void *opaque)
- {
-@@ -421,14 +422,24 @@ static bool m_csselr_needed(void *opaque)
-     return !arm_v7m_csselr_razwi(cpu);
- }
- 
-+static bool csselr_post_load(void *opaque, int version_id, Error **errp)
-+{
-+    if (!csselr_vmstate_validate(opaque, version_id)) {
-+        error_setg(errp, "CSSELR is invalid");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- static const VMStateDescription vmstate_m_csselr = {
-     .name = "cpu/m/csselr",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .needed = m_csselr_needed,
-+    .post_load_errp = csselr_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(env.v7m.csselr, ARMCPU, M_REG_NUM_BANKS),
--        VMSTATE_VALIDATE("CSSELR is valid", csselr_vmstate_validate),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -596,11 +607,22 @@ static bool pmsav7_rgnr_vmstate_validate(void *opaque, int version_id)
-     return cpu->env.pmsav7.rnr[M_REG_NS] < cpu->pmsav7_dregion;
- }
- 
-+static bool pmsav7_rgnr_post_load(void *opaque, int version_id, Error **errp)
-+{
-+    if (!pmsav7_rgnr_vmstate_validate(opaque, version_id)) {
-+        error_setg(errp, "rgnr is invalid");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- static const VMStateDescription vmstate_pmsav7 = {
-     .name = "cpu/pmsav7",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .needed = pmsav7_needed,
-+    .post_load_errp = pmsav7_rgnr_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_VARRAY_UINT32(env.pmsav7.drbar, ARMCPU, pmsav7_dregion, 0,
-                               vmstate_info_uint32, uint32_t),
-@@ -608,7 +630,6 @@ static const VMStateDescription vmstate_pmsav7 = {
-                               vmstate_info_uint32, uint32_t),
-         VMSTATE_VARRAY_UINT32(env.pmsav7.dracr, ARMCPU, pmsav7_dregion, 0,
-                               vmstate_info_uint32, uint32_t),
--        VMSTATE_VALIDATE("rgnr is valid", pmsav7_rgnr_vmstate_validate),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -711,11 +732,27 @@ static bool m_security_needed(void *opaque)
-     return arm_feature(env, ARM_FEATURE_M_SECURITY);
- }
- 
-+static bool m_security_post_load(void *opaque, int version_id, Error **errp)
-+{
-+    if (!s_rnr_vmstate_validate(opaque, version_id)) {
-+        error_setg(errp, "secure MPU_RNR is invalid");
-+        return false;
-+    }
-+
-+    if (!sau_rnr_vmstate_validate(opaque, version_id)) {
-+        error_setg(errp, "SAU_RNR is invalid");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- static const VMStateDescription vmstate_m_security = {
-     .name = "cpu/m-security",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .needed = m_security_needed,
-+    .post_load_errp = m_security_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(env.v7m.secure, ARMCPU),
-         VMSTATE_UINT32(env.v7m.other_ss_msp, ARMCPU),
-@@ -732,7 +769,6 @@ static const VMStateDescription vmstate_m_security = {
-         VMSTATE_VARRAY_UINT32(env.pmsav8.rlar[M_REG_S], ARMCPU, pmsav7_dregion,
-                               0, vmstate_info_uint32, uint32_t),
-         VMSTATE_UINT32(env.pmsav7.rnr[M_REG_S], ARMCPU),
--        VMSTATE_VALIDATE("secure MPU_RNR is valid", s_rnr_vmstate_validate),
-         VMSTATE_UINT32(env.v7m.mpu_ctrl[M_REG_S], ARMCPU),
-         VMSTATE_UINT32(env.v7m.ccr[M_REG_S], ARMCPU),
-         VMSTATE_UINT32(env.v7m.mmfar[M_REG_S], ARMCPU),
-@@ -744,7 +780,6 @@ static const VMStateDescription vmstate_m_security = {
-         VMSTATE_VARRAY_UINT32(env.sau.rlar, ARMCPU, sau_sregion, 0,
-                               vmstate_info_uint32, uint32_t),
-         VMSTATE_UINT32(env.sau.rnr, ARMCPU),
--        VMSTATE_VALIDATE("SAU_RNR is valid", sau_rnr_vmstate_validate),
-         VMSTATE_UINT32(env.sau.ctrl, ARMCPU),
-         VMSTATE_UINT32(env.v7m.scr[M_REG_S], ARMCPU),
-         /* AIRCR is not secure-only, but our implementation is R/O if the
-@@ -1405,7 +1440,7 @@ const VMStateDescription vmstate_arm_cpu = {
-         &vmstate_m,
-         &vmstate_thumb2ee,
-         /* pmsav7_rnr must come before pmsav7 so that we have the
--         * region number before we test it in the VMSTATE_VALIDATE
-+         * region number before we test it in the post_load_errp()
-          * in vmstate_pmsav7.
-          */
-         &vmstate_pmsav7_rnr,
+To PeterM: I know you may still have some concern on dropping VALIDATE, but
+until now I still think this should be the right thing to do.  Let's move
+the discussion here and we can continue discussions here.
+
+===8<===
+
+Peter Maydell reported an unwanted assertion on source QEMU due to a failed
+check in VMSTATE_VALIDATE():
+
+https://lore.kernel.org/r/20261119165546.3050013-1-peter.maydell@linaro.org
+
+I decided to look at this in a slightly broader range, because I always
+thought hijacking field_exists() is very error prone and hard to follow,
+and VMSTATE_VALIDATE() is the only user of it (VMS_MUST_EXIST).  Meanwhile
+it is the only VMSTATE_*() macro that does not carry a real entity of data
+stream, so it's not really a FIELD, but some checker we added adhoc inline
+into the VMSD fields.  It might be confusing to anyone new reading VMSD
+code, including myself when reading it first time.
+
+Instead of updating the source behavior, let's directly wipe that code out.
+I think it's not making a lot of sense doing device state check in save(),
+because those sanity check should be done in emulation code, not after
+seding all RAM, which is extremely awkward.  post_load() OTOH still makes
+some sense to sanity check fields, so I moved all VALIDATE there.
+
+Any comment welcomed, thanks.
+
+Peter Xu (6):
+  pcie/aer: Remove the usage of VMSTATE_VALIDATE()
+  hw/gpio/zaurus: Move VMSTATE_VALIDATE() check into post_load_errp()
+  hpet: Move VMSTATE_VALIDATE() check into post_load
+  arm/machine: Move all VMSTATE_VALIDATE() usages into post_load
+  rust: Replace vmstate_validate with post_load
+  migration: Drop VMSTATE_VALIDATE() and VMS_MUST_EXIST
+
+ include/migration/vmstate.h       | 11 -----
+ hw/gpio/zaurus.c                  | 29 ++++++------
+ hw/pci/pcie_aer.c                 | 40 ++++++++++++++--
+ hw/timer/hpet.c                   | 18 ++++----
+ migration/savevm.c                |  5 --
+ migration/vmstate.c               | 12 -----
+ target/arm/machine.c              | 45 ++++++++++++++++--
+ rust/hw/timer/hpet/src/device.rs  |  9 ++--
+ rust/migration/src/prelude.rs     |  1 -
+ rust/migration/src/vmstate.rs     | 17 -------
+ rust/tests/tests/vmstate_tests.rs | 77 -------------------------------
+ 11 files changed, 106 insertions(+), 158 deletions(-)
+
 -- 
 2.56.0
 
