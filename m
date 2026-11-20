@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB6D606A33B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 17:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2988260A2614
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 17:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=F+pEWLGQ;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Uc+zviXT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=aMzuOi1z;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=S2wgDLRx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUSAS-0002uo-Sd; Fri, 20 Nov 2026 12:12:56 -0500
+	id 1xUSAk-0002yA-10; Fri, 20 Nov 2026 12:13:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xUSAN-0002rV-Ek
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 12:12:51 -0500
+ id 1xUSAT-0002vh-V0
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 12:12:58 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xUSAL-0002ia-IV
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 12:12:51 -0500
+ id 1xUSAS-0003CQ-3J
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 12:12:57 -0500
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AKEfii52947046
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 17:12:47 GMT
+ 6AKEffUo2946995
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 17:12:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- VLr+xD3lcIgvVVDil2eTvpXN1BKFT2tB+eVaYQx5foI=; b=F+pEWLGQfaFOXAB/
- WuPw4D+mqdD+izdWAgVW/8vQ52KVxT/xjTmaZQYlFTED67mStxsDMF4LuKs6Aj6A
- /3/W/kIam0LStdyQS3dWYbAgoB4GKhqASvuoqtDtajNKwL8ddUGfPFJC9/ul+bul
- WNsGacHhzrBOCho7ayZBTkd7lwPAFQZd3The4sbbje5JjjS2wenHhjImfpyqNcox
- GPLVSeY2HAJMI4xafQhK8y5wnmbRpxbTKR7iYGTT2WkSoVkcumUtYOjgSYHY/rYH
- ce67m+cCIN5VO/hJcziez697EVNsHbcNfCO0jLKMOodRhyQlpuS8JcIFprFouWAH
- Mhkiew==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j2fjjaw57-1
+ H94EjNre9w4NR30/2zQfRAkYfSeNl9NtNJ0rW1z9QRw=; b=aMzuOi1zBbC9GTDF
+ uGCWiw83hJUUPxVg19nkkVU6RKYEjgp94wwmhFjhfo27f1kGd0u6Ngaj5Wu1+a1n
+ 2fLZfrALxhDniHNfimvQYht9qF9rxZboydf5LsB5e+0jf4TJLe+4gUok7/KOvodO
+ c1YVTqsJ8LcgikmpW1YyBRyONgGge59LMlLLARtHHLrZELDKAXN37giMyjmjUdIJ
+ eyrqwHD2FmuBAQqwkoVAoQIH2HRgzMYR2m+yo9ojFcHE4rZDRlYgrSX/VwmT62++
+ 4YV2uxsztXaojR02cxrAfMks3aenVCxS4ETJUxnk9Hxn3vLqzbQwMl9+rsZ5+uve
+ oa/jIg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j2fjjaw5s-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 17:12:47 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-5eacd2f2229so1019590e0c.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 09:12:47 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 17:12:54 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-94961ed97d6so197315485a.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 09:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795194766; x=1795799566; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795194773; x=1795799573; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=VLr+xD3lcIgvVVDil2eTvpXN1BKFT2tB+eVaYQx5foI=;
- b=Uc+zviXT9XwU9MARa6+IcSF0hJttMTtm/3w75FkmarVM4ipt4pP0zWZl5lrrqVBQ9b
- GcIeqc72BWqfOvPLzI8tNfpd/D2EcUKBkp4AkK34i+dDYHap2ss0vvfWmsXAo+O/Q+3Z
- 6/saLx2ZQADqdYyYlgx+6bdkeFk5SXR0GPaD8yF/uZSbphV6dygVFLiP5l/UA0jC8fvm
- Kpmw20Lz/AHhfDeZJLU3mvyBgL22Z9dCnekkQFtk6cXtW0tZPeKXTdatqeDtJhEOj12c
- lnROKuMC3ijF79cDkR1uCbDZZplcabsDgUIqUKjeU3bwm8jxAauTUFGS1SFjSuxDW6OG
- rtIQ==
+ bh=H94EjNre9w4NR30/2zQfRAkYfSeNl9NtNJ0rW1z9QRw=;
+ b=S2wgDLRxYVPJw5tRZx6y3cxZsUdDLSvJFlD1V+TzKlHpWJfixVtdeoPeSu4YmCWxLy
+ Bw8VFIoiEN2fTGB9BAXina7aelLguWzPeWkhBabRtgkeubgOdLLlmuWPXRP8RwvU6m3M
+ Wm1GEOZNP0jncYDshpGkKobvAGR9u/cZXl56BGSOoKJmHWwTx+VsdOHDVJWUBT4bf4zO
+ S4tmn9M4n+eumIbJQt9UmBJC34rxf02DALKkZxxsPZNPbpD4O4fad1VFDTFp1D056y8J
+ ypfrLNcnlUMypA7knQykE+3cWOpdHlieyqoHFr2RsmRzGcfY7Ydmjb0SaZ3t1u4k5y/I
+ PTpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795194766; x=1795799566;
+ d=1e100.net; s=20260707; t=1795194773; x=1795799573;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=VLr+xD3lcIgvVVDil2eTvpXN1BKFT2tB+eVaYQx5foI=;
- b=jsUhlFPvB7Nbo4mTu65x/D0/0prjGzIHbx0FgqX9kuCps0jd2SpQJQosfeXMlahF49
- WZPlcnNPJpQZsDkHvEyhwPQA3sJhQ1BHQMkEzvZzlVHGiJQm6KLIkkWjr7Y8wOkVeWFN
- +TIStqUgfEzgVdZJ0uL8Gt6DMLaXTr31XfF+kP87+7LQTtzw/rhO+XxVDUKkc6So2VVI
- wAzvlNaWwPRW/zb8xLZLopOgJiC/xtTbKn6TOt5cZ2sW40AVBELakgywiYYN+jglVzqE
- oIVx29nxWE1RFz0aekyLxjzEJYfdeacFgPL3Yreg4C7HsjwtGA+DYKpgQmhRahdf18Hq
- hbTQ==
-X-Gm-Message-State: APuU4Z8ieQ+DiuEMcyoJ7AUuUy3A29QuAs0XHD6jnm786uVi1F0bLVY2
- RZiU962DFuhKPb8RURkM110GYMqvZlbKK2g9QThXIP/XrLmxD4auu4HkWI/4iiOKbOs9xY8edJN
- Yr2QsfY5bjG3MDoPFnu1XDVkNSRr6YLrup+7CiEM8f3nWKED19pfrCN0LJGNYGCgtVA==
-X-Gm-Gg: AZFdTZfjrbNIKvnlIZCQZwkVh2QKX/WTA+rOrFRYSJq34iOXA/msEMPlF+2XqP7hK02
- /eufLrY1Nm/5G6NN0NRBL5jpIWHwwGG1JXh0ZZL87K12OCRnKy1gRYXkiApTQ50QYipB1IyMGYa
- OmHQ40y+X+jzjRlQyDyeE596KNGFjn/kUSIk0Ce3KCPK0CC7h89itvke1DmL5juQvlzPXwlfiYi
- /4t5je/88VIs8DCT5EFUyphbSuES9QvG5qsKVwPCNaab6/OSjUrXl4KAB3G3Gn4OG3hhI4S2WiF
- 4vLvOtIq/sVmAVRnERVh7YrhcJFPrapm8fHi8cAtm22xbSBSAcsA2cKgvLNDzU5GgC1WQk9FjMz
- hGl/ZXEJ6nuRJj0rABp9Y2FzVWzX2wGcesoFBMCAxewLSzGVsM2kccag3omhsW1V00nIsJXsRVS
- v8TtIHm0PDtJCLYA==
-X-Received: by 2002:a05:6122:32c6:b0:5ec:c180:e1a1 with SMTP id
- 71dfb90a1353d-5ee8adf3300mr2539583e0c.2.1795194765766; 
- Fri, 20 Nov 2026 09:12:45 -0800 (PST)
-X-Received: by 2002:a05:6122:32c6:b0:5ec:c180:e1a1 with SMTP id
- 71dfb90a1353d-5ee8adf3300mr2539564e0c.2.1795194765296; 
- Fri, 20 Nov 2026 09:12:45 -0800 (PST)
+ bh=H94EjNre9w4NR30/2zQfRAkYfSeNl9NtNJ0rW1z9QRw=;
+ b=B7v2Uoe/lKRfodMMlSetxxv8wvfPQhdkEWWUfkMAxMkb4FpUBnLequExrIS7AkWo/8
+ mUQ+icbHQ/PsY0YINvAeTZD64lt0wmHqHkY1ZExlnNmHQWxn+IEWuTDOmTWD4DzUyNMQ
+ CiJuQ2aoRjH4/AiAjcs99lS9i11K/BQElYM77wNUfVYdUjIAdzGbg1vOnrbZeh0N1EKO
+ DNzLpnx6Xq5oaoBFr2/sUaCJ8j8gIPN7DJ75ywkFgNAbWwLXiXZJ+LVI8Ad0OcEHJFxk
+ mELqwfk05AohKcZpE8li2YPUD1oqwG99RR3QZwMf55zeVotmmyRcAPxc4Na5eAurNoqe
+ 73gw==
+X-Gm-Message-State: APuU4Z8xFK1ps3t7YnnP8oDuX1fLz0X2oMBPMkRYLpT8QryTu0HVkmeK
+ EBqmdqwPj3WunrHijpYMZawjU8d5k9t+cOJEAZ3yFvWaJkXhewaQlMOqeepjuBUdoCO5kkYIW8I
+ sGA3dKHEPyMhmjLorLQCdo5oa54UnMGYFady0gNWPtbzb7uehu5f+F8CfOcalBTt03A==
+X-Gm-Gg: AYBFou1TsTgUM4DAt9jRnBcoCtDpUfHVbv1vO87ww9l4AmPBJBz/PiLJsewPITqoHQQ
+ tvndCsjWQTbh5+8/Lk/CrbGzvj71tHKdMjZWza2/bdFam7wMW2BnisoA5s5/UFZo+U9PWrkmu1n
+ X8g/gw4M6PXJn7rGRHc57XGwylo+XfvIT7mPqfEgundeqS0PDLCOoV3wROdmOfZLtJguNWGcoOV
+ V66TvtH2Bb4OSYnuD8DAVmKkkKoEa9QdrSMG8gdADJrx3AlXFIhYyw4guMJoQ+ClellTi7ipn4b
+ p8tE9qtJv2xOEtihrKyHKSrLV0e/4enezC0lh1bPmxpUJmyr3j9PUjRxn+JydUd6+JJwISLDt9R
+ zh/x092WG1vVJmizE82niA9QXad7JCMEX/G2PpPLRh1et2bwMbzwxkIPhQLJ6j13PKGal0WSB/9
+ lnSz4yfX8WuRKJRQ==
+X-Received: by 2002:a05:620a:6401:b0:93f:2571:c317 with SMTP id
+ af79cd13be357-949b36030b2mr796091685a.28.1795194772708; 
+ Fri, 20 Nov 2026 09:12:52 -0800 (PST)
+X-Received: by 2002:a05:620a:6401:b0:93f:2571:c317 with SMTP id
+ af79cd13be357-949b36030b2mr796088085a.28.1795194772314; 
+ Fri, 20 Nov 2026 09:12:52 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884c3063sm103835075e9.15.2026.11.20.09.12.44
+ 5b1f17b1804b1-4bb9067846esm474755e9.4.2026.11.20.09.12.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Nov 2026 09:12:44 -0800 (PST)
+ Fri, 20 Nov 2026 09:12:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
@@ -97,10 +97,10 @@ Cc: Helge Deller <deller@gmx.de>,
  Fam Zheng <fam@euphon.net>, Keith Monahan <keith@techtravels.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [RFC PATCH-for-11.2 v4 01/14] hw/scsi/ncr53c710: Cancel the in-flight
- request on soft reset
-Date: Fri, 20 Nov 2026 18:12:21 +0100
-Message-ID: <20261120171235.61325-2-philmd@oss.qualcomm.com>
+Subject: [RFC PATCH-for-11.2 v4 02/14] hw/scsi/ncr53c710: Do not load SBCL
+ from DBC after a SCRIPTS phase move
+Date: Fri, 20 Nov 2026 18:12:22 +0100
+Message-ID: <20261120171235.61325-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261120171235.61325-1-philmd@oss.qualcomm.com>
 References: <20261120171235.61325-1-philmd@oss.qualcomm.com>
@@ -108,25 +108,25 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=FJaOVOos c=1 sm=1 tr=0 ts=6b007f8f cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Authority-Analysis: v=2.4 cv=FJaOVOos c=1 sm=1 tr=0 ts=6b007f96 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=evIlfggg4VWQIB3UXMIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=tNoRWFLymzeba-QzToBc:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA2OCBTYWx0ZWRfX5930hcYynTKy
- wcJ2tgBsWN3qRNmK8eqcLoDRoRCve/2HAKp+zn9yW6cytnkC5ywf+yj8cF/b7w0S1Rvg81vsRw0
- wUNmX3s74subLbrznYwem28bBOMHm/Q=
-X-Proofpoint-ORIG-GUID: s8ZX3lbHwD0z0RSaviNGxTzw5nMxcEnM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA2OCBTYWx0ZWRfX3BVjwtfQCIYv
- Lq26TD1fWQJGe5gGb+u8t2nQa11Aq5QIYPezBnx+Y0EoTplcp6iptawFqaOmH3ts58/qZtOKu8s
- 91wQWwneA6sibD97mfbKlJJ4Yqn4J2jM2Hh0FlqvRjqfLuY9nlEa1YUgZWwD1scn165khEGoB84
- Fryu7y3LNrY8I/8oY7Fj9uz/ZKg1pwa3kzmFG1dSSmQtXDAfKhzKu4Ke32HlmbsNsK0qG5MeZXP
- eIkff4GzXpYKMPCkJ1S4oBQZyOCwB8M9vuTnNphRpqXUORJMph00a/uGQLcRj+UiG5EeGfIEGrO
- Zy+CIWrAU2bJga+xVcOXhD+/YxWWsz4yFH3M5O2U88EcyLQT2hOp06ZFHdx951KlCXPFcWB53Et
- VD8ICzTFgjtYgkxwJRIQvxFaLGqkKW9B7xMCg6pDLlxx4+4nIZKE+atbPiFTK8jgnR3BjM+20lo
- FIYH+zFnKPntJu45DVA==
-X-Proofpoint-GUID: s8ZX3lbHwD0z0RSaviNGxTzw5nMxcEnM
+ a=EUspDBNiAAAA:8 a=sMRSD98Anrl0H7Wvm04A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDA2OCBTYWx0ZWRfXygLa60pVpwcc
+ HG3Z3aunlNraYah6kzLah+Zy5SttvYFImzyGda3Xhg1Pw3lqYG8wqermgXUz9/OJSA4GdpOqYNo
+ AlVs4nqhscYvRJ9HZGxWc0Ws8xbL/X4=
+X-Proofpoint-ORIG-GUID: BX3PSd2QpLC0pAJ-stzxr-Cq5HCplx0G
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDA2OCBTYWx0ZWRfX8iw/iPGnYml7
+ Jl6nVjR/gb8FxewSGHvH8nidsQo+vAmqvxehvI4j4vNtbZXhRkUYe82lPpeQVFmNZPzCdj9iIcJ
+ hH7eCec/7lxt7e0IJ7lOAY2H1YjQwUf4WKw/U/EA9y6CgrZT6wt4lqCRDHBPk/6DzyUOTIC3yKc
+ gDfA0PvJcRBXdwkRYudp1Qi+uAAWuih+kYX/nU2hG11ScQtjcEMaK7Wv6LBz6Q8CM0wCnBKp6gC
+ QF+oGaPS6zo8XCHC1P4YTtul9OrcUCDzQHXbAKrZtB4X2qXSUyWiY5+hWq8jvGz77g/P8Xf21NF
+ tvnZFySMKdv90JLuwcPDCmuF6X+WJvIihROGZr2Avs5r+xp6oeUz2MLMJVvcCuKUjfEEPMAPfoR
+ Db/1GzvmhTFRKRH9f+NPfm/OXN5CknPe5BS42CA0v8NC3AT30/yxBTKyNZ8KnLjzsr2eHUc7YnD
+ YaqP+/U34kw6axM82Nw==
+X-Proofpoint-GUID: BX3PSd2QpLC0pAJ-stzxr-Cq5HCplx0G
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-20_05,2026-11-19_01,2025-10-01_01
@@ -163,39 +163,33 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-ncr710_soft_reset() drops s->current and clears the request's
-hba_private without telling the SCSI layer. The request stays queued on
-the device and, once it completes or asks for data, the HBA callbacks
-find a NULL hba_private (ncr710_transfer_data() asserts on it).
+After a SCRIPTS Block Move, ncr710_execute_script() copies DBC, the
+transfer byte count, into SBCL. SBCL (SCSI Bus Control Lines) mirrors
+the state of the SCSI bus control signals, it is not a byte counter, so
+this overwrites it with unrelated data. The preceding line already
+updates CTEST5 from the DBC bits that the chip exposes there.
 
-Cancel the request first. scsi_req_cancel() invokes
-ncr710_request_cancelled(), which releases the NCR710Request and the
-HBA's reference on the request; ncr710_clear_pending_irq() then finds
-s->current already NULL and has nothing left to do. If the request is
-not enqueued, scsi_req_cancel() does nothing and the previous behaviour
-is kept.
+Remove the assignment. The effect on guests is inferred from the
+register definition; it has not been reproduced with a failing guest.
 
 AI-used-for: Patch series decomposition (commit splitting and ordering)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/scsi/ncr53c710.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/scsi/ncr53c710.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 57967e7a84f0..10daa66e840d 100644
+index 10daa66e840d..9ea2c47744e7 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -364,6 +364,10 @@ void ncr710_soft_reset(NCR710State *s)
-     s->sidl = 0;
-     s->sfbr = 0;
-     qemu_set_irq(s->irq, 0);
-+    if (s->current && s->current->req) {
-+        /* Drops hba_private via ncr710_request_cancelled() */
-+        scsi_req_cancel(s->current->req);
-+    }
-     ncr710_clear_pending_irq(s);
-     ncr710_scsi_fifo_init(&s->scsi_fifo);
- }
+@@ -1400,7 +1400,6 @@ again:
+             BADF("Unimplemented phase %d\n", s->sstat2 & PHASE_MASK);
+         }
+         s->ctest5 = (s->ctest5 & 0xfc) | ((s->dbc >> 8) & 3);
+-        s->sbcl = s->dbc;
+         break;
+ 
+     case 1: /* IO or Read/Write instruction.  */
 -- 
 2.55.0
 
