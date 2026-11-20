@@ -1,143 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C33606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 03:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34827606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 04:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eacrrZHQ;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dEEOLy9f
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=Fz8ChfGI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUFhX-0007vA-9m; Thu, 19 Nov 2026 22:54:15 -0500
+	id 1xUGIi-000607-Q5; Thu, 19 Nov 2026 23:32:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xUFhV-0007uF-5z
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 22:54:13 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xUGIf-0005zy-VL
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 23:32:37 -0500
+Received: from qs-2002g-snip6-3.eps.apple.com ([2a01:b747:3006:207::42]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xUFhS-0000lW-TG
- for qemu-devel@nongnu.org; Thu, 19 Nov 2026 22:54:12 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AK3Uvlu3743267
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:54:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +N6kCCtYdbrjBmO9BOI/6A9WDGu6ckAEyv1A9TDjqCA=; b=eacrrZHQnAog8CWV
- usNQ7NrAqoQpSlbcGsFp5nvN+rrXMjw2eyhfxgDSsBaygZNf194+SO2C1AzQSWrV
- r9lH2jtrpxkODxQXKSp4nIG3hdHwWtqCtN9oVPcPJ5a87xQY1NJe1wRrw76+EnhA
- tWZfjrvZawoOEnmUEK/WI343nEceCn+IBEHhXgWwjAPBSMZov0jwzT7Ldr11vzSq
- c4kS+X07962C8q6rPiSZeKawyyhi13EbHjdRJIfHoL5Iafg+X6mZgp2SPGNF7t/p
- 5GCTj3BsCCHNeObeHmwR+MjQOF3xrLC4ug4/HUmVo5yD+hmimKsiGX2eHvm28HPJ
- VQFZ+A==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j1yghmubn-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 03:54:07 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1b29df78132so514039c88.1
- for <qemu-devel@nongnu.org>; Thu, 19 Nov 2026 19:54:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795146847; x=1795751647; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+N6kCCtYdbrjBmO9BOI/6A9WDGu6ckAEyv1A9TDjqCA=;
- b=dEEOLy9fZw9+7sj52OzeOHyf+Jb0Gr5+g/ZRGDEu4ORbXULR1dr9i/2jT13qHGDPPt
- omW8ufIPZlnfuh1jkkTuOwgJKTsDDyZvVLCnoACIPqVaEiEnltpkl8QcyDm5zA9SwSb3
- gYIoTVwG/stJlJhIBONt0T/arSzyyTA61t3Eu7y0VPGMaiJCcS8iD1t8tofJviSKXuIk
- Vtbj09v3gNF7aVbQ87HB40jHDoztGlCUbEmiscWy5nfVgGvFUIBYbHpxIVz3w9vbCwBv
- UHpDfQnxKaOQKHaI6wlVNS+uMKIAhbIFM0B8q8JCtXSs40fwdbDFJlAK8rNafp06/wyu
- 27UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795146847; x=1795751647;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+N6kCCtYdbrjBmO9BOI/6A9WDGu6ckAEyv1A9TDjqCA=;
- b=KzH2AeZvDYml4K0F4KKtdy01gHXbl5VoKKR9R/hKmSQ6nyHcSQHG9r8tVryc/rimFG
- up8rmy9BFhYqsUyOfEEUQxxpaRtPMMyggPksMm2YaorlxaKHfiZGdG70jQNKiUfIKfiV
- JBWUf8Ax0Z9T5Kky6q8FZ8Zfx6MmEIUPFtlMPZXY+FcZLuKvQ9kCmhUFEP3TpZIHDw/3
- IzNjGfaxiXMSDqOgO/5Mtpx7L2Hfguk/LIVMAAjy3oLfYkErJysB+zqPFOEAFe7EgHMh
- Yg2SRC8g/y1Zx31p90jst+cwKYK4ztclHWBYnbyQda8Gt0/MByo7GwSAFE5vvOD/iFOs
- cjsw==
-X-Gm-Message-State: APuU4Z9nzelJnfWieoiuVTpEhbCWFLQLyfC2ephP+JzKxi/GBoQ/M5at
- u+vYqxSucqqvyVoom+80xEfdFTymB/3Kyqfim/QGkkid6S5GxX2x5Iyk2b15TqEm7UEqO0gHP7W
- Cvu4W8yO49HIyC5rWtH43uGrJjJzS9dWIC1+VFHZBpfv4osm4mv7TtYk7ioZBb8jViw==
-X-Gm-Gg: AYBFou3b6tjD1jH9g7c5LHE4FtePtca+NJhlWqFTyseGUBCCXb4shP2juZLIaDaXAK3
- uutuqyychiKqBqp/IobYdSTSOhqkUMNwFoGaVq1KjgOMli5zh3mUSN6sSRVnKw6ZmW05Y4WbSl/
- R8QtTyv4ox2I/Y8OMYzMaXl/VJu4APPIaN15MM2I6WCimyonKS3jEFIlUFaNA4JjCIKW+FbhVJt
- sQ6pSEZ9v79xYXejVZU4Wk/rfxgp6fagPA2iBRhJ/cN+Qu06Xigql5AcyX/xFUq5vhtGooBYKj8
- sNTXfxtMOqimeuyZgRd46cP9OvjdxhG/sZQqN3zgjOqy3cju23lMtCf4uOP+vinq5lAFKd5iB9V
- vr4AUVK1FEkUrBTg+zP3afXSAR881sXAFAzBbwP3GFeIoEPjinbOn3E+/WhXFPqgYFGXl5SP0aE
- 313ODU53I4Vfs6tuqdhYKZ
-X-Received: by 2002:a05:7022:b043:10b0:1b2:471f:c4c with SMTP id
- a92af1059eb24-1b5568ce1f3mr1712607c88.19.1795146846653; 
- Thu, 19 Nov 2026 19:54:06 -0800 (PST)
-X-Received: by 2002:a05:7022:b043:10b0:1b2:471f:c4c with SMTP id
- a92af1059eb24-1b5568ce1f3mr1712593c88.19.1795146846102; 
- Thu, 19 Nov 2026 19:54:06 -0800 (PST)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-385665f21aesm3854126eec.4.2026.11.19.19.54.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Nov 2026 19:54:04 -0800 (PST)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com, Anton Johansson <anjo@rev.ng>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 5/8] target/hexagon: HLX,
- search for .new values in pair high register
-Date: Thu, 19 Nov 2026 19:53:50 -0800
-Message-Id: <20261120035353.3215703-6-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261120035353.3215703-1-brian.cain@oss.qualcomm.com>
-References: <20261120035353.3215703-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xUGId-0002ji-Hr
+ for qemu-devel@nongnu.org; Thu, 19 Nov 2026 23:32:37 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-2 (Postfix) with ESMTPS id
+ E5B9118000B3; Fri, 20 Nov 2026 04:32:31 +0000 (UTC)
+X-ICL-RepId: 01a1f73a-3d17-70e9-8f84-2b42daa5cb2e
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1795149153; x=1826685153;
+ bh=QcJapqi21SDpeDmx9SEUPZElA6KKQl+qb8kC3QImVXA=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Fz8ChfGIimjL03UFI+2tWdcVVlqn37F3BeAYfJzgvNWCh1NK5S0D3cNSbOz2JTBnza8dFoYtPpsG1LkSBkLrTL2RaxYchQovcyZzS02W991faId7ceMzDAKHgEWLMs4OdxwesH9Dn9w5n/L3F0jdzvEggN3rOv2KuGcQcxY2GKDVVuBujoaB0BAQbkuKchQNElETOu3r4Sif6XiIkkOCklYSlimDHRYjqLDX3xcZHv+n9N3hwWLZ7kubHiffRhnUVv9DIvpdLOuneXrFj6BN9E8DgUcXT2gP7PyWXwyPLIo+pjJZYAXtX+EIRqGJHXG+PbsANVmOOuXy49PXR7Lpng==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-2 (Postfix) with ESMTPSA id
+ 79CDB180013F; Fri, 20 Nov 2026 04:32:30 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDAxNSBTYWx0ZWRfXyYDOgoIqKtNB
- qovWx54c1/T5DCJolu2KWqQGUjQ0F0sPuSOfiVeiNLF8NVD0Bk5PYOi5l/XP4+STMUA+GDwJgMA
- HoTCyP1bvnfMW19gQIN4WvpVY1rmnYzyWaidqHurfLXN8TvAXzqO8mHOV873IdALnkE8yaVcV+P
- ZcT9J8Cf5QTsZkwgje6+29x8QcKgnVDzuoeJkrCtD7IWjh/xd33wiRfij7EiwYlf0sxKFG2wDDr
- TPRwLsbjwbtBH9xOsrOPCY9fHRW783Twi7EScSPJCQncCzuullfrpYQn5OtNjPVtCUWRN0L7o4P
- nUGX5yhkGqONLlQC8QcVOWIluUo7ARjArtQjN5b1ap1R0d7iRIHb+rDo6TRAo8Zv41s9sYKDwa9
- 4Hx9mS3c5jFXPYlSYB8dKt2M1OWSwQ==
-X-Authority-Analysis: v=2.4 cv=Vvi2kO2n c=1 sm=1 tr=0 ts=6affc45f cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=1xgDo0pLmBgmbGXOXkgA:9 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-GUID: HwEK3csnL41a0GXmH0_KhmCfs5T68_L4
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDAxNSBTYWx0ZWRfXzX5BnqNRigHX
- 995I8snT+WJANB5mSKTCJH+M4Mtf+zE90/x4JMvEwOH3/VzWalMP80DJLfkd91Dy1esWj3IGOpn
- x4E6iHurMompdlCWFRcvKKX0t8+ZoWw=
-X-Proofpoint-ORIG-GUID: HwEK3csnL41a0GXmH0_KhmCfs5T68_L4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-20_02,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 malwarescore=0 adultscore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2611040001 definitions=main-2611200015
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [RFC PATCH] target/ia64: Add initial CPU state and PC accessors
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20261120024920.1064-1-joaoanandalima@gmail.com>
+Date: Fri, 20 Nov 2026 05:32:18 +0100
+Cc: qemu-devel@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0D2184E6-F4D7-4E65-AFB4-12F084251F5E@unpredictable.fr>
+References: <20261120024920.1064-1-joaoanandalima@gmail.com>
+To: dev12124 <joaoanandalima@gmail.com>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
+X-Proofpoint-GUID: Z7A0F0TibVpkGzsl7AT41WRUhCeCnkZT
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIwMDAxNyBTYWx0ZWRfX6s8vbBz/ZhGf
+ xW4RVXMqwqYWDLCc9+gVvBq8HMH19zZYR7A0+hefWXED+WzV00rBa4kCICr/7ye3dMJSBJ5yGpR
+ PSQMNjUyB1GTphoK6jRiLJKoRdAkyrw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIwMDAxNyBTYWx0ZWRfXwKuS/OjyPq1i
+ qDaR/fqqAp/Pctwpir8japJw+chFzdg7m4ibzfKS57zzIlJWzhSnuTPVr9dzBG3V7hjRGonBVQj
+ QbR0t79JAvq69KMvB0rcFBl0L1wfs4GcOh7LLv2tTSSoq8GHgZLhJk+DhRXqDM85udBVN7+zXUE
+ vpG9TobeoD8PnsJckFF+JNooPxanAoY2w1/d2jVDhBckMkv+cADRdnnPalwLMGupdPzdPcxvCvN
+ U3Orc8Y/oVonk1su1zB2jChw3UR8rAoYvdG0zy+XsdgT2S6i+RwVUMdwxu7UQth+/iLOv40Va68
+ NophiQ5ao9RJ/sZQ8+NcK64yS3A07HYaQTHfli54BCDvlr0ao8rESUX64FRyvk=
+X-Proofpoint-ORIG-GUID: Z7A0F0TibVpkGzsl7AT41WRUhCeCnkZT
+X-Authority-Info-Out: v=2.4 cv=LpUHWXdc c=1 sm=1 tr=0 ts=6affcd60
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=fajnDIswKVxD1YtQT70F:22 a=MUMyTuqJ5fOr1Nv7BSmb:22
+ a=pGLkceISAAAA:8 a=tQrIMejGTM08sTklPaUA:9 a=QEXdDO2ut3YA:10
+X-JNJ: AAAAAAABYuxskdmSubPB6Tq7Rbvv8+OsjBOTGS5UeRGWAjb9hsLUyCsRk58bP1FAfHsBE8
+ BVBhijBGhyrba7Z0GO6VnINBbLzt3McU83fLwcuoOsZajfcr8BMJsvaXoK3mNInz7XFITD
+ wUwIMslzSfufzG4whdUBqRVBIO0DwpaoEmz6BjCosqiSLML0ME4kgZ0Hr/kgyAP4vUM4Oi
+ KxTxOsrbfrPx/enE/8sZZRgXIENV8Fyqf2tiC+iMbg5LdBN9o2hdBG5lfXgsVJSamWYlyD
+ 5c0F1bU15UuAmMRyetejsvEPT0qY83omNF5+sIVpl9ye8+hS+vZxDPzLtJqho5xz+4cN8Z
+ bMB/jC61wN41nukcMkw141/YOHZSduhSwuZ4MY/6qDIU22Yms+WMivI+jk1/DOXBkmEjuu
+ GCQQaxg8fZHyoHZEQYyPj4C0vHmbUKqHLBBkwCE+yo7ZaVeVYk+CMfZPtTJ7zpLaQjk1AP
+ 0Ly9uwVmkQsEV8D+S4bbtZYaVLIIXPSNxnSDYdpRORTWMOdVdNaS2fPlG5li87S7xpv6Zb
+ Gh7+nO5CYHIzYyCbZC/NenJt9kkOKl8PXo1lNX3RhaHFv8iEjnK4kRR9xXE6l53qw8fWbk
+ +k9MpVfYBAcQlXJtiN/cshNoSFgJrPynzOWKHsVXRA6CnVhP2tmes3POESM9cm8NSxEu/U
+ m7NHShgZ3z2pACBLVJduCma0QyG0c+70ounuw33ZWAOA5gTh9AGEUiN1au2R5vu9yh3h4C
+ T91yUXigIEG17CM28mfhMTKQWx/SW/od13atSOk1Fdp7MfYYYCreD00qp12hcfBaVubpZ2
+ HDX00ljdDwwGSdQzdML60pkeuhMel/RL++crotOaPblnHnCZDHMirmvDoGKb69IPoKNjxO
+ /d3xTh/GMp3lyM+KQOEDDMtzp/m1ysmg5IalatX5C96cIIKzqldgTI60381T72l5/eJ+zP
+ fYElaQ/Wdqi2mgN6bHkHBF0tu7GnMg6J9fWpMENCOIAlzHlhWjYiiVVJVDvxhqOEPIYyDg
+ 2+yQ3YlrxGq2Lqh3SNuB3xmQ/Zqwll+yWkNk6yVK3ieoLyKlVQaQ7RyfumTZHKaNMtD8zL
+ 8+K7MN2xzIvvjRwcZh9TlSnmIgCSq9NabiPtSAhVRuK6gNvKraMKppxL4OkpxFlm0fvG7H
+ YjMe1Upeakd0vTvdgl5Fu6msOCtv5thIzrp8LfgrFcsY5IfEqHRcK/CKvM0EKQH6iyDeDr
+ DX7T6jt1xaZ6JqSbXM9DCKzlUu5uykTs9nQLDXsZGfKhrNadylWehSBX5wDD8hcOblmzhV
+ G5KD/CQWUhjbhNKv1oVlpzxJjeeeTIqed9eOf8M375OrsG2vzQ0Rw8i2QHc4w8
+Received-SPF: pass client-ip=2a01:b747:3006:207::42;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,138 +102,298 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-RnJvbTogQW50b24gSm9oYW5zc29uIDxhbmpvQHJldi5uZz4KCk90aGVyd2lzZSwgdGhlIGZvbGxv
-d2luZyBwYWNrZXQKCiAgewogICAgICBMNzo2ID0gY29tYmluZShMMCwgTDIpCiAgICAgIG1lbShS
-NykgPSBMNy5uZXcKICB9CgpyZXN1bHRzIGluIG1lbShSNykgYmVpbmcgemVyby1pbml0aWFsaXpl
-ZCwgY29tcGFyZWQgdG8gTDYubmV3IHdoaWNoCndvdWxkIGNvcnJlY3RseSB3cml0ZSB0aGUgbG93
-ZXIgYnl0ZXMgb2YgdGhlIHBhaXIuCgpDb21wYXJlZCB0byBzY2FsYXIgYW5kIEhWWCAubmV3IGlu
-c3RydWN0aW9ucywgSExYIGVuY29kZXMgdGhlIHJlZ2lzdGVyCm51bWJlciByYXRoZXIgdGhhbiBh
-biBvZmZzZXQgdG8gdGhlIHByb2R1Y2luZyBpbnN0cnVjdGlvbiArIGFuIG9kZC9ldmVuCmJpdC4g
-IEluIG9yZGVyIHRvIGZpbmQgcG9zc2libGUgcHJvZHVjZXJzIHdoaWNoIHdyaXRlIHRvIHJlZ2lz
-dGVyIHBhaXJzCndpdGhvdXQgdGhlIG9kZC9ldmVuIGJpdCwgYSBJbnN0cnVjdGlvbjo6aGFzX3Bh
-aXJfZGVzdCBmaWVsZCBpcyBhZGRlZApmb3Igc2NhbGFyLCBIVlgsIGFuZCBITFggcmVnaXN0ZXJz
-LgoKTGFzdGx5LCB3ZSBtb3ZlIHRoZSBuZXctcmVnbm8gcGF0Y2hpbmcgaW4gZGVjb2RlX2ZpbGxf
-bmV3dmFsdWVfcmVnbm8oKQp0byB0aGUgbm9uLUhMWCBzY2FsYXIgcGF0aCB0byBhdm9pZCBvdmVy
-d3JpdGluZyB0aGUgY29uc3VtZXIgTDcgd2l0aCB0aGUKYmFzZSByZWdpc3RlciBMNiBvZiB0aGUg
-cHJvZHVjZXIgZGVzdGluYXRpb24gTDc6Ni4gIFRoaXMgaXMgc2FmZSBhcyB0aGUKcGF0Y2hpbmcg
-aXMgb25seSByZXF1aXJlZCBmb3IgcmVwbGFjaW5nIHRoZSBzY2FsYXIgb2Zmc2V0K29kZC9ldmVu
-CmJpdCB3aXRoIHRoZSBhY3R1YWwgcHJvZHVjZXIuCgpGaXhlczogZWY4MWQxYjA0NzMzN2U4MSAo
-InRhcmdldC9oZXhhZ29uOiBkZWNvZGUgSExYIHBhY2tldHMgYW5kIGFkZCBsb2FkIGFuZCBzdG9y
-ZSIpClNpZ25lZC1vZmYtYnk6IEFudG9uIEpvaGFuc3NvbiA8YW5qb0ByZXYubmc+ClJldmlld2Vk
-LWJ5OiBCcmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+ClJldmlld2VkLWJ5
-OiBNYXJjbyBMaWViZWwgPG1hcmNvLmxpZWJlbEBvc3MucXVhbGNvbW0uY29tPgpTaWduZWQtb2Zm
-LWJ5OiBCcmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0
-L2hleGFnb24vaW5zbi5oICAgICAgICAgICAgICAgfCAgMSArCiB0YXJnZXQvaGV4YWdvbi9kZWNv
-ZGUuYyAgICAgICAgICAgICB8IDI5ICsrKysrKysrKysrKysrKysrKystLS0tLQogdGVzdHMvdGNn
-L2hleGFnb24vaGx4X2Fzc2lnbl9jb252LmMgfCAzNSArKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKwogdGFyZ2V0L2hleGFnb24vZ2VuX3RyYW5zX2Z1bmNzLnB5ICAgfCAgNSArKysrKwogdGFy
-Z2V0L2hleGFnb24vaGV4X2NvbW1vbi5weSAgICAgICAgfCAgMiArKwogNSBmaWxlcyBjaGFuZ2Vk
-LCA2NiBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9o
-ZXhhZ29uL2luc24uaCBiL3RhcmdldC9oZXhhZ29uL2luc24uaAppbmRleCAwZGQzNmQyOTMxZC4u
-MzdhMzExMTM3NDMgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2luc24uaAorKysgYi90YXJn
-ZXQvaGV4YWdvbi9pbnNuLmgKQEAgLTQyLDYgKzQyLDcgQEAgc3RydWN0IEluc3RydWN0aW9uIHsK
-ICAgICBpbnQzMl90IG5ld19yZWFkX2lkeDsKICAgICBpbnQzMl90IGRlc3RfaWR4OwogICAgIGJv
-b2wgaGFzX3ByZWRfZGVzdDsKKyAgICBib29sIGhhc19wYWlyX2Rlc3Q7CiAKICAgICBib29sIHBh
-cnQxOyAgICAgICAgICAgICAgLyoKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICogY21w
-LWp1bXBzIGFyZSBzcGxpdCBpbnRvIHR3byBpbnNucy4KZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhh
-Z29uL2RlY29kZS5jIGIvdGFyZ2V0L2hleGFnb24vZGVjb2RlLmMKaW5kZXggZDQ4NjMwZGE4N2Qu
-LjA4ZmE5YWVlMmE1IDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9kZWNvZGUuYworKysgYi90
-YXJnZXQvaGV4YWdvbi9kZWNvZGUuYwpAQCAtMTEwLDkgKzExMCwyNSBAQCBzdGF0aWMgaW50IGhs
-eF9maW5kX25ld192YWx1ZV9wcm9kdWNlcihQYWNrZXQgKnBhY2tldCwgaW50IGNvbnN1bWVyLAog
-ewogICAgIGZvciAoaW50IGkgPSAwOyBpIDwgcGFja2V0LT5udW1faW5zbnM7IGkrKykgewogICAg
-ICAgICBJbnNuICppbnNuID0gJnBhY2tldC0+aW5zbltpXTsKKyAgICAgICAgdWludDhfdCByZWdu
-bzsKIAotICAgICAgICBpZiAoaSAhPSBjb25zdW1lciAmJiBHRVRfQVRUUklCKGluc24tPm9wY29k
-ZSwgQV9ITFgpICYmCi0gICAgICAgICAgICBpbnNuLT5kZXN0X2lkeCAhPSAtMSAmJiBpbnNuLT5y
-ZWdub1tpbnNuLT5kZXN0X2lkeF0gPT0gbHJlZykgeworICAgICAgICAvKgorICAgICAgICAgKiBT
-a2lwIG91cnNlbHZlcywgaW5zdHJ1Y3Rpb25zIHdpdGhvdXQgcmV0dXJuIHZhbHVlcywgYW5kCisg
-ICAgICAgICAqIGFueSBub24tSExYIGluc3RydWN0aW9ucy4KKyAgICAgICAgICovCisgICAgICAg
-IGlmIChpID09IGNvbnN1bWVyIHx8ICFHRVRfQVRUUklCKGluc24tPm9wY29kZSwgQV9ITFgpIHx8
-CisgICAgICAgICAgICBpbnNuLT5kZXN0X2lkeCA9PSAtMSkgeworICAgICAgICAgICAgY29udGlu
-dWU7CisgICAgICAgIH0KKworICAgICAgICByZWdubyA9IGluc24tPnJlZ25vW2luc24tPmRlc3Rf
-aWR4XTsKKworICAgICAgICAvKgorICAgICAgICAgKiBDb21wYXJlIGFnYWluc3QgdGhlIGJhc2Ug
-cmVnaXN0ZXIgbnVtYmVyLCBhbmQgYWdhaW5zdCB0aGUgdG9wCisgICAgICAgICAqIHJlZ2lzdGVy
-IGZvciBpbnN0cnVjdGlvbnMgcmV0dXJuaW5nIHBhaXJzLgorICAgICAgICAgKi8KKyAgICAgICAg
-aWYgKHJlZ25vID09IGxyZWcgfHwKKyAgICAgICAgICAgIChpbnNuLT5oYXNfcGFpcl9kZXN0ICYm
-IHJlZ25vICsgMSA9PSBscmVnKSkgewogICAgICAgICAgICAgcmV0dXJuIGk7CiAgICAgICAgIH0K
-ICAgICB9CkBAIC0xNzIsMTIgKzE4OCwxMyBAQCBkZWNvZGVfZmlsbF9uZXd2YWx1ZV9yZWdubyhQ
-YWNrZXQgKnBhY2tldCkKICAgICAgICAgICAgICAgICBpZiAoZGVmX2lkeCA8IDAgfHwgcGFja2V0
-LT5pbnNuW2RlZl9pZHhdLmRlc3RfaWR4ID09IC0xKSB7CiAgICAgICAgICAgICAgICAgICAgIHJl
-dHVybiBmYWxzZTsKICAgICAgICAgICAgICAgICB9CisKKyAgICAgICAgICAgICAgICAvKiBOb3cg
-cGF0Y2ggdXAgdGhlIGNvbnN1bWVyIHdpdGggdGhlIHJlZ2lzdGVyIG51bWJlciAqLworICAgICAg
-ICAgICAgICAgIGRzdF9pZHggPSBwYWNrZXQtPmluc25bZGVmX2lkeF0uZGVzdF9pZHg7CisgICAg
-ICAgICAgICAgICAgcGFja2V0LT5pbnNuW2ldLnJlZ25vW3VzZV9yZWdpZHhdID0KKyAgICAgICAg
-ICAgICAgICAgICAgcGFja2V0LT5pbnNuW2RlZl9pZHhdLnJlZ25vW2RzdF9pZHhdOwogICAgICAg
-ICAgICAgfQogCi0gICAgICAgICAgICAvKiBOb3cgcGF0Y2ggdXAgdGhlIGNvbnN1bWVyIHdpdGgg
-dGhlIHJlZ2lzdGVyIG51bWJlciAqLwotICAgICAgICAgICAgZHN0X2lkeCA9IHBhY2tldC0+aW5z
-bltkZWZfaWR4XS5kZXN0X2lkeDsKLSAgICAgICAgICAgIHBhY2tldC0+aW5zbltpXS5yZWdub1t1
-c2VfcmVnaWR4XSA9Ci0gICAgICAgICAgICAgICAgcGFja2V0LT5pbnNuW2RlZl9pZHhdLnJlZ25v
-W2RzdF9pZHhdOwogICAgICAgICAgICAgLyoKICAgICAgICAgICAgICAqIFdlIG5lZWQgdG8gcmVt
-ZW1iZXIgd2hvIHByb2R1Y2VzIHRoaXMgdmFsdWUgdG8gbGF0ZXIKICAgICAgICAgICAgICAqIGNo
-ZWNrIGlmIGl0IHdhcyBkeW5hbWljYWxseSBjYW5jZWxsZWQKZGlmZiAtLWdpdCBhL3Rlc3RzL3Rj
-Zy9oZXhhZ29uL2hseF9hc3NpZ25fY29udi5jIGIvdGVzdHMvdGNnL2hleGFnb24vaGx4X2Fzc2ln
-bl9jb252LmMKaW5kZXggODE5Mjg4MmI4ZTMuLmJjYTkwMmE2ZTUyIDEwMDY0NAotLS0gYS90ZXN0
-cy90Y2cvaGV4YWdvbi9obHhfYXNzaWduX2NvbnYuYworKysgYi90ZXN0cy90Y2cvaGV4YWdvbi9o
-bHhfYXNzaWduX2NvbnYuYwpAQCAtMTIwLDYgKzEyMCw0MCBAQCBzdGF0aWMgdm9pZCB0ZXN0X2Fz
-c2lnbl9ydyh2b2lkKQogICAgIGNoZWNrX3dwKCJMWF9hc3NpZ25fcnciLCBwd19vdXRfbG8sIHB3
-X291dF9oaSwgZXhwZWN0ZWRfdywgSExYX0hBTEZfRUxFTVMpOwogfQogCitzdGF0aWMgdm9pZCB0
-ZXN0X2NvbWJpbmVfYXNzaWduX2hpKHZvaWQpCit7CisgICAgLyoKKyAgICAgKiBUZXN0cyB0aGF0
-IGEgY29tYmluZSBvcGVyYXRpb24gYWN0cyBhcyBhIHByb2R1Y2VyIG9mIGEgLm5ldyB2YWx1ZSBm
-b3IKKyAgICAgKiB0aGUgaGlnaCB2ZWN0b3IgaW4gYSBwYWlyLgorICAgICAqLworICAgIEhMWF9W
-ZWN0b3IgbF9sbzsKKyAgICBITFhfVmVjdG9yIGxfaGk7CisKKyAgICBmaWxsX3cocHdfYV9sbywg
-cHdfYV9oaSwgVkFMX1cpOworCisgICAgbF9sbyA9IFE2X0xfdG1wX21lbV9BKHB3X2FfbG8pOwor
-ICAgIGxfaGkgPSBRNl9MX3RtcF9tZW1fQShwd19hX2hpKTsKKworICAgIGhseF9wdXRfdigwLCBs
-X2xvKTsKKyAgICBobHhfcHV0X3YoMiwgbF9oaSk7CisgICAgLyoKKyAgICAgKiB7CisgICAgICog
-ICAgIEw3OjYgPSBjb21iaW5lKEwwLCBMMikKKyAgICAgKiAgICAgbWVtKFI3KSA9IEw3Lm5ldwor
-ICAgICAqIH0KKyAgICAgKi8KKyAgICBhc20gdm9sYXRpbGUoSExYX1BUUlMgSExYX0xEMCBITFhf
-TEQyCisgICAgICAgICAgICAgICAgICIud29yZCAweGVmMjQ2MDJkXG4iCisgICAgICAgICAgICAg
-ICAgICIud29yZCAweGE0ODdjMDA3XG4iCisgICAgICAgICAgICAgICAgIDogOiBbc3RhZ2VdICJy
-IihobHhfc3RhZ2UpIDogSExYX0NMT0JCRVJTKTsKKyAgICBRNl9tZW1fS3UxNl9uZXdfQUwoYnVm
-X2EsIGhseF9nZXRfdig3KSk7CisKKyAgICBmb3IgKGludCBqID0gMDsgaiA8IEhMWF9IQUxGX0VM
-RU1TOyBqKyspIHsKKyAgICAgICAgZXhwZWN0ZWRbal0gPSBWQUxfQjsKKyAgICB9CisgICAgY2hl
-Y2tfaCgiTFhfYXNzaWduX3cgKGhpIG9ubHkpIiwgYnVmX2EsIGV4cGVjdGVkLCBITFhfSEFMRl9F
-TEVNUyk7Cit9CisKIAogc3RhdGljIHZvaWQgdGVzdF9jb21iaW5lX3codm9pZCkKIHsKQEAgLTMz
-Niw2ICszNzAsNyBAQCBpbnQgbWFpbih2b2lkKQogICAgIHRlc3RfYXNzaWduX3MoKTsKICAgICB0
-ZXN0X2Fzc2lnbl91KCk7CiAgICAgdGVzdF9hc3NpZ25fcncoKTsKKyAgICB0ZXN0X2NvbWJpbmVf
-YXNzaWduX2hpKCk7CiAKICAgICAvKiBDb21iaW5lIGFuZCBtdXggKi8KICAgICB0ZXN0X2NvbWJp
-bmVfdygpOwpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vZ2VuX3RyYW5zX2Z1bmNzLnB5IGIv
-dGFyZ2V0L2hleGFnb24vZ2VuX3RyYW5zX2Z1bmNzLnB5CmluZGV4IDkzMTI1YmRmZTQ4Li43ZTY1
-NDM4NTY1ZSAxMDA3NTUKLS0tIGEvdGFyZ2V0L2hleGFnb24vZ2VuX3RyYW5zX2Z1bmNzLnB5Cisr
-KyBiL3RhcmdldC9oZXhhZ29uL2dlbl90cmFuc19mdW5jcy5weQpAQCAtNzQsNiArNzQsNyBAQCBk
-ZWYgbWFya193aGljaF9pbW1fZXh0ZW5kZWQoZiwgdGFnKToKICMjICAgICAgICAgaW5zbi0+bmV3
-X3JlYWRfaWR4ID0gLTE7CiAjIyAgICAgICAgIGluc24tPmRlc3RfaWR4ID0gMDsKICMjICAgICAg
-ICAgaW5zbi0+aGFzX3ByZWRfZGVzdCA9IGZhbHNlOworIyMgICAgICAgICBpbnNuLT5oYXNfcGFp
-cl9kZXN0ID0gZmFsc2U7CiAjIyAgICAgICAgIHJldHVybiB0cnVlOwogIyMgICAgIH0KICMjCkBA
-IC05NCw2ICs5NSw3IEBAIGRlZiBnZW5fdHJhbnNfZnVuY3MoZik6CiAgICAgICAgIGRlc3RfaWR4
-ID0gLTEKICAgICAgICAgZGVzdF9pZHhfcmVnX2lkID0gTm9uZQogICAgICAgICBoYXNfcHJlZF9k
-ZXN0ID0gImZhbHNlIgorICAgICAgICBoYXNfcGFpcl9kZXN0ID0gImZhbHNlIgogICAgICAgICBm
-b3IgcmVnbm8sIChyZWdfdHlwZSwgcmVnX2lkLCAqXykgaW4gZW51bWVyYXRlKHJlZ3MpOgogICAg
-ICAgICAgICAgcmVnID0gaGV4X2NvbW1vbi5nZXRfcmVnaXN0ZXIodGFnLCByZWdfdHlwZSwgcmVn
-X2lkKQogICAgICAgICAgICAgZi53cml0ZShjb2RlX2ZtdChmIiIiXApAQCAtMTA4LDYgKzExMCw4
-IEBAIGRlZiBnZW5fdHJhbnNfZnVuY3MoZik6CiAgICAgICAgICAgICAgICAgICAgIGRlc3RfaWR4
-X3JlZ19pZCA9IHJlZ19pZAogICAgICAgICAgICAgaWYgcmVnX3R5cGUgPT0gIlAiIGFuZCByZWcu
-aXNfd3JpdHRlbigpIGFuZCBub3QgcmVnLmlzX3JlYWQoKToKICAgICAgICAgICAgICAgICBoYXNf
-cHJlZF9kZXN0ID0gInRydWUiCisgICAgICAgICAgICBpZiByZWcuaXNfd3JpdHRlbigpIGFuZCBy
-ZWcuaXNfcGFpcigpOgorICAgICAgICAgICAgICAgIGhhc19wYWlyX2Rlc3QgPSAidHJ1ZSIKIAog
-ICAgICAgICBpZiBsZW4oaW1tcykgIT0gMDoKICAgICAgICAgICAgIG1hcmtfd2hpY2hfaW1tX2V4
-dGVuZGVkKGYsIHRhZykKQEAgLTEzMiw2ICsxMzYsNyBAQCBkZWYgZ2VuX3RyYW5zX2Z1bmNzKGYp
-OgogICAgICAgICAgICAgaW5zbi0+bmV3X3JlYWRfaWR4ID0ge25ld19yZWFkX2lkeH07CiAgICAg
-ICAgICAgICBpbnNuLT5kZXN0X2lkeCA9IHtkZXN0X2lkeH07CiAgICAgICAgICAgICBpbnNuLT5o
-YXNfcHJlZF9kZXN0ID0ge2hhc19wcmVkX2Rlc3R9OworICAgICAgICAgICAgaW5zbi0+aGFzX3Bh
-aXJfZGVzdCA9IHtoYXNfcGFpcl9kZXN0fTsKICAgICAgICAgIiIiKSkKICAgICAgICAgZi53cml0
-ZSh0ZXh0d3JhcC5kZWRlbnQoZiIiIlwKICAgICAgICAgICAgICAgICByZXR1cm4gdHJ1ZTsKZGlm
-ZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2hleF9jb21tb24ucHkgYi90YXJnZXQvaGV4YWdvbi9o
-ZXhfY29tbW9uLnB5CmluZGV4IDI0ZGNkYjVjZTFjLi42NThjZjc0OTE3ZCAxMDA3NTUKLS0tIGEv
-dGFyZ2V0L2hleGFnb24vaGV4X2NvbW1vbi5weQorKysgYi90YXJnZXQvaGV4YWdvbi9oZXhfY29t
-bW9uLnB5CkBAIC04MTAsNiArODEwLDggQEAgZGVmIGlzX2h2eF9yZWcoc2VsZik6CiAgICAgICAg
-IHJldHVybiBUcnVlCiAgICAgZGVmIGlzX2hseF9yZWcoc2VsZik6CiAgICAgICAgIHJldHVybiBG
-YWxzZQorICAgIGRlZiBpc19wYWlyKHNlbGYpOgorICAgICAgICByZXR1cm4gbGVuKHNlbGYucmVn
-aWQpID09IDIKICAgICBkZWYgaHZ4X29mZihzZWxmKToKICAgICAgICAgcmV0dXJuIGYie3NlbGYu
-cmVnX3RjZygpfV9vZmYiCiAgICAgZGVmIGh2eF9iYXNlKHNlbGYpOgotLSAKMi4zNC4xCgo=
+
+
+> On 20. Nov 2026, at 03:49, dev12124 <joaoanandalima@gmail.com> wrote:
+>=20
+> Signed-off-by: dev12124 <joaoanandalima@gmail.com>
+
+Hi,
+
+No. This alone without a series around it doesn=E2=80=99t make a whole =
+lot of sense
+if any.
+
+For context: there=E2=80=99s AI-assisted QEMU forks with IA-64 system =
+emulation
+around, that are functional. But this patch is not that.
+
+> ---
+> target/ia64/cpu-qom.h | 43 ++++++++++++++++++++++
+> target/ia64/cpu.c     | 54 ++++++++++++++++++++++++++++
+> target/ia64/cpu.h     | 83 +++++++++++++++++++++++++++++++++++++++++++
+> 3 files changed, 180 insertions(+)
+> create mode 100644 target/ia64/cpu-qom.h
+> create mode 100644 target/ia64/cpu.c
+> create mode 100644 target/ia64/cpu.h
+>=20
+> diff --git a/target/ia64/cpu-qom.h b/target/ia64/cpu-qom.h
+> new file mode 100644
+> index 0000000000..4ed395df81
+> --- /dev/null
+> +++ b/target/ia64/cpu-qom.h
+> @@ -0,0 +1,43 @@
+> +/* SPDX-License-Identifier: MIT */
+> +
+> +/*
+> +   * QEMU Project for Intel Itanium (IA-64) emulation by 'Software =
+Developer'.
+
+This looks like output from a machine learning model.
+
+Did you happen to review the QEMU LLM patches policy? Both the current =
+one and what=E2=80=99s
+on the list?
+
+> +   *
+> +   * Copyright (c) 2026-2028 Jo=C3=A3o (@dev12124 GitHub, @dev =
+GitLab).
+> +   *
+> +   * This file is the CPU Header sign QEMU Models.
+> +   * Author: Jo=C3=A3o Guilherme da Silva Freitas Lima =
+<joaoanandalima@gmail.com>.
+> +   *
+> +   * WARNINGS:
+
+Which LLM harness did you (most likely) use?
+> +   *
+> +   * Permission is hereby granted, free of charge, to any person =
+obtaining a copy
+> +   * of this software and associated documentation files (the =
+"Software"), to deal
+> +   * in the Software without restriction, including without =
+limitation the rights
+> +   * to use, copy, modify, merge, publish, distribute, sublicense, =
+and/or sell
+> +   * copies of the Software, and to permit persons to whom the =
+Software is
+> +   * furnished to do so, subject to the following conditions:
+> +   *
+> +   * The above copyright notice and this permission notice shall be =
+included in
+> +   * all copies or substantial portions of the Software.
+> +   *=20
+> +   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, =
+EXPRESS OR
+> +   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF =
+MERCHANTABILITY,
+> +   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO =
+EVENT SHALL
+> +   * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, =
+DAMAGES OR OTHER
+> +   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, =
+ARISING FROM,
+> +   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER =
+DEALINGS IN
+> +   * THE SOFTWARE.
+> +   */
+> +
+> +#ifndef __CPu_CLASS_HID
+> +#define __CPu_CLASS_HID
+> +
+> +#include "hw/core/cpu.h"
+> +
+> +struct IA64CPUClass {
+> +    CPUClass parent_class;
+> +    DeviceRealize parent_realize;=20
+> +    ResettablePhases parent_phases;
+> +} __attribute__((aligned(64))); /* Optimization in first local */
+> +
+> +#endif
+> \ No newline at end of file
+> diff --git a/target/ia64/cpu.c b/target/ia64/cpu.c
+> new file mode 100644
+> index 0000000000..731fd6b8bc
+> --- /dev/null
+> +++ b/target/ia64/cpu.c
+> @@ -0,0 +1,54 @@
+> +/* SPDX-License-Identifier: MIT */
+> +
+> +/*
+> +   * QEMU Project for Intel Itanium (IA-64) emulation by 'Software =
+Developer'.
+> +   *
+> +   * Copyright (c) 2026-2028 Jo=C3=A3o (@dev12124 GitHub, @dev =
+GitLab).
+> +   *
+> +   * This file is Implementation CPU Emulated of IA64 Arch.
+> +   * Author: Jo=C3=A3o Guilherme da Silva Freitas Lima =
+<joaoanandalima@gmail.com>.
+> +   *
+> +   * WARNINGS:
+> +   *
+> +   * Permission is hereby granted, free of charge, to any person =
+obtaining a copy
+> +   * of this software and associated documentation files (the =
+"Software"), to deal
+> +   * in the Software without restriction, including without =
+limitation the rights
+> +   * to use, copy, modify, merge, publish, distribute, sublicense, =
+and/or sell
+> +   * copies of the Software, and to permit persons to whom the =
+Software is
+> +   * furnished to do so, subject to the following conditions:
+> +   *
+> +   * The above copyright notice and this permission notice shall be =
+included in
+> +   * all copies or substantial portions of the Software.
+> +   *=20
+> +   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, =
+EXPRESS OR
+> +   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF =
+MERCHANTABILITY,
+> +   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO =
+EVENT SHALL
+> +   * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, =
+DAMAGES OR OTHER
+> +   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, =
+ARISING FROM,
+> +   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER =
+DEALINGS IN
+> +   * THE SOFTWARE.
+> +   */
+> +
+> +#include "qemu/osdep.h"=20
+> +#include "cpu-qom.h" /* target/ia64/ */
+> +#include "cpu.h" /* target/ia64/ */
+> +
+> +static void ia64_set_pc(CPUState *cs, vaddr value)
+> +{
+> +    if(unlikely(!cs)) /* Pure Optimizatiom */
+> +        return;
+> +
+> +    CPUIA64State *env =3D cpu_env(cs); /* Extract */
+> +    env->ip =3D env->ip | value & ~0xFULL;
+> +    env->slot =3D value & 0x3;
+> +}
+> +
+> +static vaddr ia64_get_pc(CPUState *cs)
+> +{
+> +    if(unlikely(!cs))
+> +        return 0;
+> +
+> +    CPUIA64State *env =3D cpu_env(cs);
+> +    vaddr result =3D env->ip | (env->slot & 0x3);
+> +    return result;
+> +}
+> \ No newline at end of file
+> diff --git a/target/ia64/cpu.h b/target/ia64/cpu.h
+> new file mode 100644
+> index 0000000000..f83f508c43
+> --- /dev/null
+> +++ b/target/ia64/cpu.h
+> @@ -0,0 +1,83 @@
+> +/* SPDX-License-Identifier: MIT */
+> +
+> +/*
+> +   * QEMU Project for Intel Itanium (IA-64) emulation by 'Software =
+Developer'.
+> +   *
+> +   * Copyright (c) 2026-2028 Jo=C3=A3o (@dev12124 GitHub, @dev =
+GitLab).
+> +   *
+> +   * This file is the CPU Header sign QEMU Models.
+> +   * Author: Jo=C3=A3o Guilherme da Silva Freitas Lima =
+<joaoanandalima@gmail.com>.
+> +   *
+> +   * WARNINGS:
+> +   *
+> +   * Permission is hereby granted, free of charge, to any person =
+obtaining a copy
+> +   * of this software and associated documentation files (the =
+"Software"), to deal
+> +   * in the Software without restriction, including without =
+limitation the rights
+> +   * to use, copy, modify, merge, publish, distribute, sublicense, =
+and/or sell
+> +   * copies of the Software, and to permit persons to whom the =
+Software is
+> +   * furnished to do so, subject to the following conditions:
+> +   *
+> +   * The above copyright notice and this permission notice shall be =
+included in
+> +   * all copies or substantial portions of the Software.
+> +   *=20
+> +   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, =
+EXPRESS OR
+> +   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF =
+MERCHANTABILITY,
+> +   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO =
+EVENT SHALL
+> +   * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, =
+DAMAGES OR OTHER
+> +   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, =
+ARISING FROM,
+> +   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER =
+DEALINGS IN
+> +   * THE SOFTWARE.
+> +   */
+> +
+> +#ifndef __CPU_HEADER_MODEL__
+> +#define __CPU_HEADER_MODEL__
+> +
+> +#include "cpu-qom.h"
+> +#include "exec/cpu-defs.h"
+> +
+> +#ifndef unlikely
+> +#define unlikely(x) __builtin_expect(!!(x), 0)
+> +#endif
+> +
+> +typedef struct CPUArchState {
+> +      uint64_t gr[128];
+> +
+> +      uint64_t nat_lo;
+> +      uint64_t nat_hi;
+> +
+> +      uint64_t pr;
+> +
+> +      uint64_t br[8];
+> +
+> +      uint64_t ar[128];
+> +
+> +      uint64_t cr[128];
+> +
+> +      uint64_t ip;
+> +      uint64_t slot;
+> +
+> +      uint64_t cfm;
+> +
+> +      uint64_t psr;
+> +} __attribute__((aligned(64))) CPUIA64State; /* Aligned in a Cache =
+Line (I love optimization) */
+> +
+> +struct ArchCPU {
+> +    CPUState parent_obj;
+> +    CPUIA64State env;
+> +} __attribute__((aligned(64)));
+> +
+> +#define TYPE_IA64_CPU "ia64-cpu"
+> +OBJECT_DECLARE_CPU_TYPE(IA64CPU, IA64CPUClass, IA64_CPU)
+> +
+> +static inline void cpu_get_tb_cpu_state(CPUIA64State *env, vaddr *pc,
+> +                                 uint64_t *cs_base, uint32_t *flags)
+> +{
+> +    =
+if(unlikely(!env)||unlikely(!pc)||unlikely(!cs_base)||unlikely(!flags))
+> +        return;
+> +
+> +    *pc =3D env->ip | (env->slot & 0x3);
+> +    *cs_base =3D 0;
+> +    *flags =3D 0;
+> +}
+> +
+> +#endif
+> \ No newline at end of file
+> --=20
+> 2.55.0.windows.3
+>=20
+>=20
+
 
