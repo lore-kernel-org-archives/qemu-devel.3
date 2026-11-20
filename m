@@ -1,109 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7BE606A325
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 14:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AF3606A32A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 14:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wryk32Y7
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=NtXDLK5P
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUPJb-00019K-Uy; Fri, 20 Nov 2026 09:10:11 -0500
+	id 1xUPNR-0001wr-Np; Fri, 20 Nov 2026 09:14:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
- id 1xUPJa-00017Q-46
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 09:10:10 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nagendranjairam52@gmail.com>)
- id 1xUPJY-0005kB-9F
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 09:10:09 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-8b4c685c751so8015877b3.1
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 06:10:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795183802; cv=none;
- d=google.com; s=arc-20260327;
- b=DUrnzgkA0Ivpq76EuQGh1WkNenHQZ6TTFXYSPQxA3IgOK1icjJob4jIcEsMyYr8e9J
- eUfmXERHJ1vZkTP23BrqSZoJc3hObFkhx00VD9RohHuSJoYWHA1UVyOkm3CImqHzbDDM
- c+xnKzLGER0EhIYeDQW00S4pgw18xtaFU1V08l3eukJSU7RYXZo85UMopLY4YvxCJOni
- bRIpK9g9pRdiIzADYUtjNHBg6FkhI/+4DSxNgG1qkMOPpkiuoKze4WDschMfMOwuNWev
- QPCT7AjLK4QdiUsO4VFZUDMrhNJ5L0T/a4K+zgJe/0zYDEmeFPVSpjIJ8IObXd6C82JV
- AxUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=NtaC4AhW6V+TUn1gZCenl5DHOvKgLNePuYYS6n0OqOI=;
- fh=BFZVXpvKVoryMlUfQ3ow+2rZBOG9jqoHPooclLpjyj4=;
- b=E6M8yB8NcBjiVng9/5O2dqprBGspEja+aQoT4PXEloNDsO9layfSqvbttBrcjAlb0e
- Ugch2oeIfhDJfiNTo7VtDjyz63ft0b3EtCFxQQOdAgcG/MGBX4lXOHp9oCwJQ0nN4agK
- S/i4Zh3SWCuefDHjMGG+EL25/+L5SUj3IIjsQw8p5sD3/tcuD2/s3P5XxxxOfUvRYqiG
- tLQIxfF/u7lZA8rNQMX13P8ezeABunXf9dptgmy6QQEYAcQi6wjv0Tuu6uC7d3ASzGmQ
- VqOcsWOwN7Bl5C42iPBFu/MvkJpOUqmLsaZjkijikGFhu0pHmNmaQcOWXLMqB8lYTdFJ
- qhQA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795183802; x=1795788602; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=NtaC4AhW6V+TUn1gZCenl5DHOvKgLNePuYYS6n0OqOI=;
- b=Wryk32Y7hai8iqNGcRzWRDR6UHM8BRnQwP9HCRVc+C7GePibhSejhnNwNQkSp2k+9w
- 85jpGUJSvcBbgf+XVuQVcc9bPUVQa9Fdh5EdSBiKXPqQLJ/kgzralNGqRS2kG+PnzAsN
- is33C0hp/CCQ+kbTSDvBnfnCbrYhI33xagUiZEL7DjbnPFZlhGotcfeZb8SXNISv+tjW
- iU6MlHOIRsIJzxdLIDGhETKddP7w0+X0e+QBSAWrZWYR0MB2UL/j/Q1EtqDxrCFurbpL
- 8QhfyUVIy/JCZeJPfYxaT8t0IxqR0ypzlatXDaaBCOtbTQ2FDqUOfYcqH6b/R6QM4CCS
- Oikw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795183802; x=1795788602;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=NtaC4AhW6V+TUn1gZCenl5DHOvKgLNePuYYS6n0OqOI=;
- b=WxbsmUcJ80Sq3sNtYBhZQfEHdI7OUkDy12kI3LqkcefTF46GdLYCBRhuOiLxwD3hSs
- BU/TNjOAP/FRnI7OY0JMxvpaWeB5uHm/6G5ggP23Iefx92ekRO4sKI7SyP9P8ifWP8dS
- 9H0yR4NGi6kA2A/s1YrMVjF3x8ZHrDTVe1DPgQR1YCBEsuWQ1GBqd+pi12UZSjrjRPZG
- 1x9INtMizDNzNVwukX4Kgm2jo4Z1z35fQdBvopFkSz3cPJpPbo+308ZKENJ7OwkYV9+E
- QJ2OfItaqB+q0OvC2W1cyWha0JmNAJCxpfYUo9jbq6lbP7LxeFEcE14VPZVmpSX0GHXe
- czRA==
-X-Gm-Message-State: APuU4Z87iTIR0KUM/F66CjxDbtzVujc1wzeOhaBmqtGq0CQ6v8FT8a4h
- Fu3+gwHY2w055MgP9fz76fFNv5YU70MRGl9uitzkwxxcw4MQyR5TApiKWJLrCh4d9x8cKYpZNBT
- rBBDKjMStDesC9g2BkIL0kJ6OVwl81Cw=
-X-Gm-Gg: AZFdTZc/pnPDurU9OrvwsL17bBMuxSEk1ti8GzvHW8YQUPvb0Baw1yZLo528iE067kU
- kvV6SrfVbYCx3xGccDoEcChMxGK56Ps7MaruAMExlPdsaRF4S7OJVNlxvZweKPOIQ6XFr1otPCG
- gVdqGmKbNtKnga9WKZwuB34VAtPn8/xDRl0kEfCh/VrnM0HlS7OeuQOUAu+pJD3RZ7Q7GbQu6I1
- 62hpQNLCXtwu+TZFt/kg8qwUunKKGMbaAQjZvLNSAxyfMVJRqBGyfxj0t2KtSTZjwuJF3dyrVUR
- STv9J13Wf9MYvt3ju9d8ILzaTov3Rsxniin05sR5LhvuVGeiZoJYJZmzNKTDQiWswIXTnWyBb0Y
- r8TJHlmV+QoCSsyYqIpFme2IUmSsYpsppgbC1VXgetrH80HeDcO4=
-X-Received: by 2002:a05:690c:799:b0:8b4:cbe3:278 with SMTP id
- 00721157ae682-8b520434a9amr12275987b3.22.1795183801654; Fri, 20 Nov 2026
- 06:10:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xUPNP-0001wG-5u; Fri, 20 Nov 2026 09:14:07 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1xUPNM-00015h-LG; Fri, 20 Nov 2026 09:14:06 -0500
+Received: from example.com (unknown [167.220.208.76])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 06F5F20B7166;
+ Fri, 20 Nov 2026 06:13:56 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 06F5F20B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795184040;
+ bh=79dthtpfs5AW3i9gHD5s59W4rTW4Y+syAm2p7hWih20=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=NtXDLK5PzE4UwMSzDL/GVhIMPFiFS7Rgannbuc0WNtq+9LCTYjaildY+VCGxOJWrd
+ 0SPy+b9YXe1Eezn7f5RSorOg389wTVb5Dl4RdmRYsdc7Xf9JGmTDHFYDqmvnD3Qu5S
+ OnSb1p1LLmpk3vQkNkkcFRg1nmFgzDE0Qay1pX1M=
+Date: Fri, 20 Nov 2026 15:13:56 +0100
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Aastha Rawat <aastharawat@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 10/14] target/arm: extract MMIO emulation logic for
+ HVF & WHPX
+Message-ID: <awBVpDKOg8wO6vbh@example.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-10-aefe5e76a0e3@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261112184949.1042-1-nagendranjairam52@gmail.com>
- <87ik1r673b.fsf@draig.linaro.org>
-In-Reply-To: <87ik1r673b.fsf@draig.linaro.org>
-From: Nagendran Jairam <nagendranjairam52@gmail.com>
-Date: Fri, 20 Nov 2026 19:39:50 +0530
-X-Gm-Features: AclHuK-mtUrgMlOYLlDao8UQIhictB90aDrO5Zv0HzpuDNLARDzfxg-lwSfMU_w
-Message-ID: <CAEAkEp7jbv=uZS61Yd6V-zfNr6cp-MjgHBStC08ft3qROfE2bA@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/core/loader.c: Add Extended Tektronix HEX file
- support
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, philmd@linaro.org, 
- daan.j.demeyer@gmail.com, peter.maydell@linaro.org, 
- Alistair <alistair@alistair23.me>
-Content-Type: multipart/alternative; boundary="000000000000cde1f70660b5cc4c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=nagendranjairam52@gmail.com; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-10-aefe5e76a0e3@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,114 +73,395 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000cde1f70660b5cc4c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Oct 01, 2026 at 10:52:55AM +0000, Aastha Rawat wrote:
+> - Move common MMIO emulation code from HVF and WHPX backend to
+>   arm_emulate_mmio() in helper.c.
+> - Update HVF and WHPX to use the new helper and shared types.
+> 
 
-On Fri, Nov 20, 2026, 17:35 Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote=
-:
+Generally, this is a patch with some potential for undesired fallout
+and we need testing on the consolidated platforms (WHPX and HVF)
+and/or close scrutiny from the maintainers. Maybe we can send this
+one as an individual patch?
 
-> Nagendran K <nagendranjairam52@gmail.com> writes:
->
-> > Add support for loading Extended Tektronix HEX files through the
-> > generic loader.
-> >
-> > The loader parses Extended Tektronix records, validates their
-> > checksums, and loads the data at the addresses specified in the file.
-> >
-> > This allows Extended Tektronix files to be loaded directly without
-> > manual conversion to another supported format.
-> >
-> > Tested by loading an Extended Tektronix file containing a simple UART
-> > application on the RealView EB machine. The application executed
-> > successfully and produced the expected UART output.
-> >
-> > Signed-off-by: Nagendran K <nagendranjairam52@gmail.com>
->
-> Ok before you send another version you should consider:
->
->   - split whitespace and comment updates into their own patches
->   - include a test case for the loader to show its use
->   - verify the whole series applies and builds cleanly on upstream's
-> master branch
->
-> And the cover letter for the series should also include what changes
-> you've made between each iteration. You can also include a summary of
-> updates under the --- in the commit messages.
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
+> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> ---
+>  target/arm/helper.c        | 62 ++++++++++++++++++++++++++++++++++++++++++++++
+>  target/arm/helper.h        | 16 ++++++++++++
+>  target/arm/hvf/hvf.c       | 57 +++++++++++++++++++-----------------------
+>  target/arm/syndrome.h      | 47 +++++++++++++++++++++++++++++++++++
+>  target/arm/whpx/whpx-all.c | 45 ++++++++++++++-------------------
+>  5 files changed, 169 insertions(+), 58 deletions(-)
+> 
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index ff0b766b73d..5b14f0bff72 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -34,6 +34,8 @@
+>  #endif
+>  #include "cpregs.h"
+>  #include "target/arm/gtimer.h"
+> +#include "target/arm/helper.h"
 
-   Ok sure, but where do I upload cover letter and testcase means the
-baremetal build through which I tested or just overall summary of how did I
-test?
-     Nagendran
+This will introduce a dependency on TCG, which might be undesirable:
 
->
+target/arm/helper.h -> exec->helper-gen.h.inc -> tcg/tcg.h
 
---000000000000cde1f70660b5cc4c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> +#include "target/arm/syndrome.h"
+>  #include "qemu/plugin.h"
+>  
+>  static void switch_mode(CPUARMState *env, int mode);
+> @@ -9455,6 +9457,66 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
+>      take_aarch32_exception(env, new_mode, mask, offset, addr);
+>  }
+>  
+> +/*
+> + * Emulate a data abort syndrome for MMIO/guest memory access
+> + */
+> +int arm_emulate_mmio(CPUState *cpu, EsrEl2 syndrome, uint64_t gpa,
+> +                     const struct arm_emul_ops *ops)
+> +{
+> +    int ret;
+> +    IssDataAbort iss = { 0 };
+> +    iss.raw = syndrome.iss;
+> +
+> +    if (!(syndrome.ec == data_abort_lower || syndrome.ec == data_abort)) {
+> +        error_report("Unknown exception class 0x%x", syndrome.ec);
+> +        return -1;
+> +    }
+> +
+> +    if (!iss.isv) {
+> +        error_report("Cannot emulate MMIO. ISS not valid.");
+> +        return -1;
+> +    }
+> +
+> +    AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Nov 20, 2026, 17:35 Alex=
- Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@lina=
-ro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Nagendran K &=
-lt;<a href=3D"mailto:nagendranjairam52@gmail.com" target=3D"_blank" rel=3D"=
-noreferrer">nagendranjairam52@gmail.com</a>&gt; writes:<br>
-<br>
-&gt; Add support for loading Extended Tektronix HEX files through the<br>
-&gt; generic loader.<br>
-&gt;<br>
-&gt; The loader parses Extended Tektronix records, validates their<br>
-&gt; checksums, and loads the data at the addresses specified in the file.<=
-br>
-&gt;<br>
-&gt; This allows Extended Tektronix files to be loaded directly without<br>
-&gt; manual conversion to another supported format.<br>
-&gt;<br>
-&gt; Tested by loading an Extended Tektronix file containing a simple UART<=
-br>
-&gt; application on the RealView EB machine. The application executed<br>
-&gt; successfully and produced the expected UART output.<br>
-&gt;<br>
-&gt; Signed-off-by: Nagendran K &lt;<a href=3D"mailto:nagendranjairam52@gma=
-il.com" target=3D"_blank" rel=3D"noreferrer">nagendranjairam52@gmail.com</a=
->&gt;<br>
-<br>
-Ok before you send another version you should consider:<br>
-<br>
-=C2=A0 - split whitespace and comment updates into their own patches<br>
-=C2=A0 - include a test case for the loader to show its use<br>
-=C2=A0 - verify the whole series applies and builds cleanly on upstream&#39=
-;s master branch<br>
-<br>
-And the cover letter for the series should also include what changes<br>
-you&#39;ve made between each iteration. You can also include a summary of<b=
-r>
-updates under the --- in the commit messages.<br>
-<br>
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br></blockquote></div></div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">=C2=A0 =C2=A0Ok sure, but where do I uploa=
-d cover letter and testcase means the baremetal build through which I teste=
-d or just overall summary of how did I test?</div><div dir=3D"auto">=C2=A0 =
-=C2=A0 =C2=A0Nagendran=C2=A0</div><div dir=3D"auto"><div class=3D"gmail_quo=
-te gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin=
-:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-</blockquote></div></div></div>
+in this patch we have a lot of variable declerations outside of blocks/
+fn top.
 
---000000000000cde1f70660b5cc4c--
+> +    uint64_t len = 1ULL << iss.sas;
+> +    bool sign_extend = iss.sse;
+> +    uint64_t reg_index = iss.srt;
+> +
+> +    if (iss.wnr) {
+> +        uint8_t data[8];
+> +        uint64_t val = reg_index < 31 ? ops->get_reg(cpu, reg_index) : 0ULL;
+> +        val = cpu_to_le64(val);
+> +        memcpy(data, &val, sizeof(val));
+> +        ret = address_space_write(as, gpa, MEMTXATTRS_UNSPECIFIED, data, len);
+> +        if (ret != MEMTX_OK) {
+> +            error_report("Failed to write guest memory");
+> +            return -1;
+> +        }
+> +    } else {
+> +        uint8_t data[8] = { 0 };
+> +        ret = address_space_read(as, gpa, MEMTXATTRS_UNSPECIFIED, data, len);
+> +        if (ret != MEMTX_OK) {
+> +            error_report("Failed to read guest memory");
+> +            return -1;
+> +        }
+> +        uint64_t val;
+> +        memcpy(&val, data, sizeof(val));
+> +        val = le64_to_cpu(val);
+> +        if (sign_extend) {
+> +            uint64_t shift = 64 - (len * 8);
+> +            val = (((int64_t)val << shift) >> shift);
+> +        }
+> +        if (!iss.sf) {
+> +            val &= 0xffffffff;
+> +        }
+> +        if (reg_index < 31) {
+> +            ops->set_reg(cpu, reg_index, val);
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  static int aarch64_regnum(CPUARMState *env, int aarch32_reg)
+>  {
+>      /*
+> diff --git a/target/arm/helper.h b/target/arm/helper.h
+> index b1c26c180ea..503404112d4 100644
+> --- a/target/arm/helper.h
+> +++ b/target/arm/helper.h
+> @@ -3,8 +3,24 @@
+>  #ifndef HELPER__H
+>  #define HELPER__H
+>  
+> +#include <stdint.h>
+> +#include <stdbool.h>
+>  #include "exec/helper-proto-common.h"
+>  #include "exec/helper-gen-common.h"
+> +#include "target/arm/syndrome.h"
+> +
+> +/*
+> + * Callback ops for per-register access during MMIO emulation.
+> + * Each hypervisor backend provides its own implementation to avoid
+> + * syncing the full CPU state for a single-register MMIO access.
+> + */
+> +struct arm_emul_ops {
+> +    uint64_t (*get_reg)(CPUState *cpu, int reg);
+> +    void (*set_reg)(CPUState *cpu, int reg, uint64_t val);
+> +};
+> +
+> +int arm_emulate_mmio(CPUState *cpu, EsrEl2 syndrome, uint64_t gpa,
+> +                     const struct arm_emul_ops *ops);
+>  
+>  #define HELPER_H "tcg/helper-defs.h"
+>  #include "exec/helper-proto.h.inc"
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index b00a7e1a845..99a66a68812 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -13,6 +13,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qemu/log.h"
+>  
+> +#include "syndrome.h"
+>  #include "system/runstate.h"
+>  #include "system/hvf.h"
+>  #include "system/hvf_int.h"
+> @@ -37,6 +38,7 @@
+>  #include "target/arm/multiprocessing.h"
+>  #include "target/arm/gtimer.h"
+>  #include "target/arm/trace.h"
+> +#include "target/arm/helper.h"
+>  #include "trace.h"
+>  #include "migration/vmstate.h"
+>  
+> @@ -2338,12 +2340,15 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>  {
+>      CPUARMState *env = cpu_env(cpu);
+>      ARMCPU *arm_cpu = env_archcpu(env);
+> -    uint64_t syndrome = excp->syndrome;
+> -    uint32_t ec = syn_get_ec(syndrome);
+> +    uint64_t syndrome;
+> +    uint32_t ec;
+>      bool advance_pc = false;
+>      hv_return_t r;
+>      int ret = 0;
+>  
+> +    syndrome = excp->syndrome;
+> +    ec = syn_get_ec(syndrome);
+> +
+>      switch (ec) {
+>      case EC_SOFTWARESTEP: {
+>          ret = EXCP_DEBUG;
+> @@ -2389,29 +2394,22 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>          break;
+>      }
+>      case EC_DATAABORT: {
+> -        bool isv = FIELD_EX32(syndrome, DABORT_ISS, ISV);
+> -        bool iswrite = FIELD_EX32(syndrome, DABORT_ISS, WNR);
+> -        bool s1ptw = FIELD_EX32(syndrome, DABORT_ISS, S1PTW);
+> -        bool sse = FIELD_EX32(syndrome, DABORT_ISS, SSE);
+> -        uint32_t sas = FIELD_EX32(syndrome, DABORT_ISS, SAS);
+> -        uint32_t len = 1 << sas;
+> -        uint32_t srt = FIELD_EX32(syndrome, DABORT_ISS, SRT);
+> -        uint32_t cm = FIELD_EX32(syndrome, DABORT_ISS, CM);
+> -        uint64_t val = 0;
+> +        EsrEl2 esr_el2 = { .raw = syndrome };
+> +        IssDataAbort iss = { .raw = esr_el2.iss };
+>          uint64_t ipa = excp->physical_address;
+>          AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
+>  
+> -        trace_hvf_data_abort(excp->virtual_address, ipa, isv,
+> -                             iswrite, s1ptw, len, srt);
+> +        trace_hvf_data_abort(excp->virtual_address, ipa, iss.isv,
+> +                             iss.wnr, iss.s1ptw, 1ULL << iss.sas, iss.srt);
+>  
+> -        if (cm) {
+> +        if (iss.cm) {
+>              /* We don't cache MMIO regions */
+>              advance_pc = true;
+>              break;
+>          }
+>  
+>          /* Handle dirty page logging for ram. */
+> -        if (iswrite) {
+> +        if (iss.wnr) {
+>              hwaddr xlat;
+>              MemoryRegion *mr = address_space_translate(as, ipa, &xlat,
+>                                                         NULL, true,
+> @@ -2438,28 +2436,25 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>           * TODO: If s1ptw, this is an error in the guest os page tables.
+>           * Inject the exception into the guest.
+>           */
+> -        assert(!s1ptw);
+> -
+> -        /*
+> -         * TODO: ISV will be 0 for SIMD or SVE accesses.
+> -         * Inject the exception into the guest.
+> -         */
+> -        assert(isv);
+> +        assert(!iss.s1ptw);
+>  
+>          /*
+>           * Emulate MMIO.
+>           * TODO: Inject faults for errors.
+>           */
+> -        if (iswrite) {
+> -            val = hvf_get_reg(cpu, srt);
+> -            address_space_write(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
+> -        } else {
+> -            address_space_read(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
+> -            if (sse) {
+> -                val = sextract64(val, 0, len * 8);
+> -            }
+> -            hvf_set_reg(cpu, srt, val);
+> +
+> +        static const struct arm_emul_ops hvf_arm_emul_ops = {
+> +            .get_reg = hvf_get_reg,
+> +            .set_reg = hvf_set_reg,
+> +        };
+> +
+> +        ret = arm_emulate_mmio(cpu, esr_el2, ipa, &hvf_arm_emul_ops);
+> +        if (ret < 0) {
+> +            error_report("Failed to emulate MMIO, syndrome=0x%llx, gpa=0x%llx",
+> +                         esr_el2.raw, ipa);
+> +            return -1;
+
+I think this introduces a subtle behaviour change for HVF. we return -1
+here, and do not advance the PC. I think MMIO emulation can fail e.g.
+for probes (non x86 UEFI we see this with TPM afair).
+
+>          }
+> +
+>          advance_pc = true;
+>          break;
+>      }
+> diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+> index 2a6fa903f27..8b4cc7f7b21 100644
+> --- a/target/arm/syndrome.h
+> +++ b/target/arm/syndrome.h
+> @@ -106,6 +106,53 @@ typedef enum {
+>      GCS_IT_GCSPOPX = 9,
+>  } GCSInstructionType;
+>  
+> +typedef union {
+> +    uint64_t raw;
+> +    struct {
+> +        uint32_t iss:25;
+> +        uint32_t il:1;
+> +        uint32_t ec:6;
+> +        uint32_t iss2:5;
+> +        uint32_t _rsvd:27;
+> +    } QEMU_PACKED;
+> +} EsrEl2;
+> +
+> +typedef union {
+> +    uint32_t raw;
+> +    struct {
+> +        uint32_t dfsc:6;
+> +        uint32_t wnr:1;
+> +        uint32_t s1ptw:1;
+> +        uint32_t cm:1;
+> +        uint32_t ea:1;
+> +        uint32_t fnv:1;
+> +        uint32_t set:2;
+> +        uint32_t vncr:1;
+> +        uint32_t ar:1;
+> +        uint32_t sf:1;
+> +        uint32_t srt:5;
+> +        uint32_t sse:1;
+> +        uint32_t sas:2;
+> +        uint32_t isv:1;
+> +        uint32_t _unused:7;
+> +    } QEMU_PACKED;
+> +} IssDataAbort;
+> +
+> +typedef enum {
+> +    data_abort_lower = 36,
+> +    data_abort = 37,
+> +} ExceptionClass;
+> +
+> +#define ARM_EL_EC_LENGTH 6
+> +#define ARM_EL_EC_SHIFT 26
+> +#define ARM_EL_IL_SHIFT 25
+> +#define ARM_EL_ISV_SHIFT 24
+> +#define ARM_EL_IL (1 << ARM_EL_IL_SHIFT)
+> +#define ARM_EL_ISV (1 << ARM_EL_ISV_SHIFT)
+> +
+> +/* In the Data Abort syndrome */
+> +#define ARM_EL_VNCR (1 << 13)
+> +
+>  static inline uint32_t syn_get_ec(uint32_t syn)
+>  {
+>      return FIELD_EX32(syn, SYNDROME, EC);
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index 46f0b9524e0..93d89f79ffe 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -28,6 +28,8 @@
+>  
+>  #include "syndrome.h"
+>  #include "target/arm/cpregs.h"
+> +#include "target/arm/helper.h"
+> +#include "target/arm/syndrome.h"
+>  #include "internals.h"
+>  
+>  #include "system/whpx-internal.h"
+> @@ -352,34 +354,23 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
+>  
+>  static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+>  {
+> -    uint64_t syndrome = ctx->Syndrome;
+> -
+> -    bool isv = FIELD_EX32(syndrome, DABORT_ISS, ISV);
+> -    bool iswrite = FIELD_EX32(syndrome, DABORT_ISS, WNR);
+> -    bool sse = FIELD_EX32(syndrome, DABORT_ISS, SSE);
+> -    uint32_t sas = FIELD_EX32(syndrome, DABORT_ISS, SAS);
+> -    uint32_t len = 1 << sas;
+> -    uint32_t srt = FIELD_EX32(syndrome, DABORT_ISS, SRT);
+> -    uint32_t cm = FIELD_EX32(syndrome, DABORT_ISS, CM);
+> -    uint64_t val = 0;
+> -
+> -    assert(syn_get_ec(syndrome) == EC_DATAABORT);
+> +    int ret = 0;
+> +    EsrEl2 esr = { .raw = ctx->Syndrome };
+> +    uint32_t cm = (esr.iss >> 8) & 0x1;
+> +
+> +    assert(syn_get_ec(esr.raw) == EC_DATAABORT);
+>      assert(!cm);
+> -    assert(isv);
+> -
+> -    if (iswrite) {
+> -        val = whpx_get_gp_reg(cpu, srt);
+> -        address_space_write(&address_space_memory,
+> -                            ctx->Gpa,
+> -                            MEMTXATTRS_UNSPECIFIED, &val, len);
+> -    } else {
+> -        address_space_read(&address_space_memory,
+> -                           ctx->Gpa,
+> -                           MEMTXATTRS_UNSPECIFIED, &val, len);
+> -        if (sse) {
+> -            val = sextract64(val, 0, len * 8);
+> -        }
+> -        whpx_set_gp_reg(cpu, srt, val);
+> +
+> +    static const struct arm_emul_ops whpx_arm_emul_ops = {
+> +        .get_reg = whpx_get_gp_reg,
+> +        .set_reg = whpx_set_gp_reg,
+> +    };
+> +
+> +    ret = arm_emulate_mmio(cpu, esr, ctx->Gpa, &whpx_arm_emul_ops);
+> +    if (ret < 0) {
+> +        error_report("WHPX: Failed to handle MMIO, syndrome=0x%llx, gpa=0x%llx",
+> +                     esr.raw, ctx->Gpa);
+> +        return -1;
+>      }
+>  
+>      return 0;
+> 
+> -- 
+> 2.45.4
 
