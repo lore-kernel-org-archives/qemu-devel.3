@@ -1,94 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59623606A6DD
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 19:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49249606A6CA
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 19:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EAJt1ys2
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FqIo04Lk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUUTA-0001lf-V2; Fri, 20 Nov 2026 14:40:24 -0500
+	id 1xUUWk-0003Ee-3j; Fri, 20 Nov 2026 14:44:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUUT9-0001j8-Gq
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:40:23 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1xUUWh-0003EF-0V
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:44:03 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUUT7-0001br-ON
- for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:40:23 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-cd61cef87f1so711935a12.0
- for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 11:40:21 -0800 (PST)
+ id 1xUUWf-00059E-Dd
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 14:44:02 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-8b271e573adso637992b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Nov 2026 11:44:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795203620; x=1795808420; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795203839; x=1795808639; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=43AJsRYeQzJj0XCASFj/qvKHJk5o7oxzyS5SO1D/nuc=;
- b=EAJt1ys2ysSSACH8ICOP744DMzZ3i8tK/EB+lvMTL5Ed6oCOpX8olXSokLAOXlhg1U
- 41Wp01pN5/1CzNXjyq9DTdiKNemcLWKhulhibE/Q6oyViHG+YM0YF8G6zJkEAxXQhIs9
- 7nvfGVl1RK4XBph6VMYcrwW+4tTPL11dpD+ApnPZApQGbN05klNqA7RPbz3lwtOBCKXO
- CZYO+yeDIEh68eohLKMjdB5i5I8BEBom+OkDt4QPWHB7bHnd1ngBKDfk5HeDulbgBiPI
- nzv2LASL0Shu2+tTsMrdp6BLjoG0y2JmW8ISzYvCWp9H1b+dfHfdWM5nTbiiANwM1Wa1
- H3OA==
+ bh=cHfpN5umEE+vuB+XeslktVacwlkPQ6rgxMeWggcMjgE=;
+ b=FqIo04LkFf+DeJwZtqhqotTXqVYes8nSF6MaF7dsp/7ddf+3wy263sGdC8D8AgAO81
+ T67zd4Gw5FfgFqgDLrUXKNUUdF1feZTI2jEWswaUbF2K3/w+Sc/naCOhQGURWsymBvuP
+ ExfBdjYxAgbrbDLgNTj6wKLojYHhj6SE3kCEm/sUx2plQwFhjOYCmGhPKS80+DYPyrQZ
+ TpFfWEg4DWEerxQ5xX/SFiopV+z0wEjF/DomGxQX4TDfDd7aL9PsL/jYPZMpfsxsXOX6
+ Mhy98BC+Kf0+JqdyUkn+47mJFs0PC/yNOa2R3GUQ3FjIQrHvw4D666O2+BIQCz9PdWp4
+ +nEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795203620; x=1795808420;
+ d=1e100.net; s=20260707; t=1795203839; x=1795808639;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=43AJsRYeQzJj0XCASFj/qvKHJk5o7oxzyS5SO1D/nuc=;
- b=GloYIqs0A+5iMG9WXl1XgLdZ2GK2+ZxgcFTAK/MKAe822/RRb3C8yecAV9ZuR2GjLQ
- k3Nn1ATtpc8W80rrrzCpMvCVWuUP7mDTVoSAtAaak8aixkGkTRuPXGFJWGKH4WLcb0WZ
- mpqa2c9uO9MqLtVdMRzWEuNQnjmDGLKCzD19863LElu4HhhdyHJHqLmOoG3kYmofAIss
- 5WPZClunBrrJqJf60u3it7HMKmzLS9Rontn0u/VAUBwMALfBsNjcNthH6EaQ8kAYTP+a
- YKsqmqLO/mqdYpJ1x1m/YsKVi9TiPoR7Kv0/bqrBpCZSANZXjX9y1LdTAFrs/2K4JFYQ
- R5qQ==
+ bh=cHfpN5umEE+vuB+XeslktVacwlkPQ6rgxMeWggcMjgE=;
+ b=HSkjBDzci2ErWk+S/MzSiV9oayYnzX432M2xRd5nPVf1aW6ebBY+A8DGhhuxFcBpkj
+ PqW5AYuAenMAxTtUuOo7Swp9psCfIcPlrzlAYIXr4o4rBIY6+HKd/0Fd9//EzxtHzh6z
+ 0raFLrIV8Y9FnNzCEeuTBE14mJUPcFO3T/L1tJx+oIY7kGTTrT5ju7CUidErGdoAwfVl
+ kB/fWH7QOJIrRgBodht72QvsnBwMxs3uGfci+wWaj3S0dLAqwxuMnIM3k4qoNBrAQFR5
+ g3uXWXGKs5UpjnUYvchUuANfyJogPFbckW12lYIt/gVQdzrBAn96TZpbVcM7v+G2fAaJ
+ hk7g==
 X-Forwarded-Encrypted: i=1;
- AL+hErHDIkzcVb+bjmUjxYf95+OIsporfGNYSmaOVQMdBCNJHCaxjlewSlku0QYXSeNcDunchmtsoCZNm3e1@nongnu.org
-X-Gm-Message-State: APuU4Z/mlOEC5LYC66DfWI5IsAwQN4CwROX/V4cMlOAb45S3499FCMzQ
- 9acTLlVKMOaYd+5N46h6nV8sFI5hBrquN1H7STN/+2gS3m0exIEpLBqhuhfm0R7Sm3o=
-X-Gm-Gg: AZFdTZf6m8AcsO2ZhZO8OhSQZkABh4sazNl7Y6Xv8b5Xf+mqIDBc+11ntvy0YjYT3Y7
- FsnrycXMXgVFdv0REzUkEB5vl5dD+9oIQA7eEw5ZXoAu2W8ZPpmaOFKyUPdxcIEOKcMsZUbZvHU
- u+mkZk8E9A7CW920hYv6FzO9vgiBSipjE1ottnQf8mVkanqCND+Xf0MJ4D1dAqfS1sz9fcta1CU
- eccIWnZAOOHsixqJpU2u30J6i+o0HXNiTJQHD7wR3M3N3xxJmNyF66zkkKnJnTIiSyWNd90rYGB
- fPvTApe9xciB6RxumUDmTI0xDRO2qXnAANbIAmqUXqmGbX6SXQEqRFEpXcY7meqGMIwIGYn9Zx2
- dapsMlqst4R2I9Yu/DwEtHu1J2ppCcuNztMBFzr838hnlM+sWoFnvYeJ9AGD5c0/dwfZVqMoeFN
- bmTybM3NasItlsDRrVsXgDA5l7SgpF7DuTHyK8UVL9nIg5FcmqwZlZsioD/SRQhnlxJdkyXpkKC
- UcWoFZhU7dvW9kVj19Cus88I6VANzPSxQZzmEBl+dJgtWIKU05ZZcc+HTDl6iJBvndWsA7HilEn
- KhjfHlZT//XSWd/RQUokINyKeECvgyO18F6icAcc+R/v0WHcnhbUfx8achLi87oszDstMps=
-X-Received: by 2002:a17:90b:2585:b0:3ac:a11a:7c7f with SMTP id
- 98e67ed59e1d1-3b41c9cd182mr3638997a91.23.1795203620185; 
- Fri, 20 Nov 2026 11:40:20 -0800 (PST)
+ AL+hErFG01sGGVdql4r3smot/eqVM972IljX5KB/JPsVr/0NA6QZRSJzOg+q+pZAUD1+DJ+DYqwhRd8dcQ6e@nongnu.org
+X-Gm-Message-State: APuU4Z+Lul8fw5OS6zhI/BgyMEn4zezDdQkKBsPrplhBSw70xuRHSKDl
+ 4pddb9eu2ndaa+b38+W+HieFMeMdmTLyFbwyBn9TcPKnmPKm20yCiaPiiaBFXurqrys=
+X-Gm-Gg: AZFdTZfGx45yE5Ghozw1WbSBlTyhEYcZ7z/OFahH4CZxjhnpjlP9jlQT+iA2JcBG5XM
+ 2zl6GKK+4ELnNRq0kPB5yGRQnbkZjWbqt67m2nakxyQKY4+WymVsdFrxOMZR/UIHV/dlR029Ejo
+ 5qmqgVRQCMdMX+ZeyvvQHRNZyAt9t6TSnxgPH7wXPe6ICZCGJWazcftkHxTOtJwy4TLSixa8bSg
+ V03XcV7ye+/nl2YAnNpin+MrTNO3qvFvO+TLax7PqRdFiQkoP7sb4jfzTYvGdaT1t2oJ3vwRYn9
+ nM+SAIaw+nED33jTxt5+6mVJAmy18hmaODvACvR7uMQSR+t8iPfp8XNJ6gvy+UmdbEufEmlMrpS
+ divgn3uKi3tZ8UuDWjdbnkBIXPdxmROJF6Q4opcxkgfHOrAijrhyCV4KvgnE3rfpWig2Vf0BKtf
+ UQpqyObVcP0sLfnxeU8syRWVgnqPkVdLEGaCNrwBym2PuAdVDgN/3PyaracYFJWWJvyomwqfkA1
+ O+y2RBhm0XbVg+GXtZvcQqx2EAJwOfR8MnT2n0p6JHbopDKfdHOmnn8pbWdIlyIInSugPDjHN5H
+ X1juJhrlIScWblSjiL/uUOPcvXl4xzgrApoc9FOUQeNIGhLyHIETBP6iXhqh4XrgIIiUOGX8bSc
+ ZSMrKJf3Dsz3I+gCs
+X-Received: by 2002:a05:6a00:368e:b0:89f:db69:1adc with SMTP id
+ d2e1a72fcca58-8c87b8da5b2mr4049321b3a.11.1795203839453; 
+ Fri, 20 Nov 2026 11:43:59 -0800 (PST)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b405d11753sm8582106a91.5.2026.11.20.11.40.19
+ d2e1a72fcca58-8c873c1cfa0sm1902763b3a.48.2026.11.20.11.43.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Nov 2026 11:40:19 -0800 (PST)
-Message-ID: <3d9b1b6c-4edc-4b21-9708-aa656ca75935@linaro.org>
-Date: Fri, 20 Nov 2026 11:40:18 -0800
+ Fri, 20 Nov 2026 11:43:59 -0800 (PST)
+Message-ID: <e744fb55-5161-4168-9a0f-f49df2c177a7@linaro.org>
+Date: Fri, 20 Nov 2026 11:43:57 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] target/arm: Kick other vCPUs on SEV under TCG
- round-robin
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Ashish Anand
- <ashish.a6@samsung.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20261119225514.4080-1-philmd@oss.qualcomm.com>
- <20261119225514.4080-5-philmd@oss.qualcomm.com>
+Subject: Re: [PULL 0/4] Hp715 fixes patches
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: Keith Monahan <keith@techtravels.org>, Helge Deller <deller@gmx.de>
+References: <20261119224744.31309-1-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261119225514.4080-5-philmd@oss.qualcomm.com>
+In-Reply-To: <20261119224744.31309-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,29 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/19/26 14:55, Philippe Mathieu-Daudé wrote:
-> In round-robin (single-thread) TCG, all vCPUs share one
-> host thread, so qemu_cpu_is_self() is true for every vCPU.
+On 11/19/26 14:47, Helge Deller wrote:
+> From: Helge Deller<deller@gmx.de>
 > 
-> The SEV helper used it to skip the kick of the issuing vCPU,
-> and so skipped it for every other vCPU too: a vCPU sleeping
-> in WFE is only woken when the RR kick timer fires.
+> The following changes since commit 45b7c3e45e2b778e560a0734daa6aa0059bc0edc:
 > 
-> Compare against the issuing vCPU instead.
+>    Merge tag 'pull-ppc-for-11.2-rc2-20261119' ofhttps://gitlab.com/harshpb/qemu into staging (2026-11-19 09:17:10 -0800)
 > 
-> Fixes: d238858bff60 ("target/arm: Implement WFE, SEV and SEVONPEND")
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
->   target/arm/tcg/op_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> are available in the Git repository at:
+> 
+>    https://github.com/hdeller/qemu-hppa.git tags/hp715-fixes-pull-request
+> 
+> for you to fetch changes up to 42497091287f8ddbcb7537a8d1f28073430062d0:
+> 
+>    hw/hppa: preload a BTLB entry for the soft power button page (2026-11-19 22:58:20 +0100)
+> 
+> ----------------------------------------------------------------
+> HPPA 715 core fixes for v11.2
+> 
+> Four patches from Keith for the 715 machine which fix interrupt issues, and
+> netbsd boot issues due to a badly mapped power button. For the latter a
+> previous commit from me needs to be reverted.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Applied, thanks.
 
 r~
 
