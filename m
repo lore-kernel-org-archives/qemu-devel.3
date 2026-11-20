@@ -1,67 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D6060A2606
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF6B606A32C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 16:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Btfmtyct
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=Xzj2qvw5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xURRE-0005CR-0V; Fri, 20 Nov 2026 11:26:12 -0500
+	id 1xURR8-0005B7-Ed; Fri, 20 Nov 2026 11:26:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xURR9-0005BX-NO; Fri, 20 Nov 2026 11:26:08 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xURR5-0001MV-V7; Fri, 20 Nov 2026 11:26:07 -0500
-Received: from example.com (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id D3E9A20B716B;
- Fri, 20 Nov 2026 08:25:55 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D3E9A20B716B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795191959;
- bh=10aP81BLI+DtakKFv8JFwm+/+Xq6Q7OLUXnjthRVg4o=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=BtfmtyctNge+LWbOcNIYmo9w9b1C78kq2qYocrGTl3NlxOH7AE+4eurKTV+X3lNbr
- Nt4nHS+WSwagJLEKqcqYRIJHiHYpw0LcyX1XVr+hCyBmCOlLagOPfSK/q0w8WHQoct
- syhvp4HhnVrlDcxbNhMeFIGiDAtgX7jedM6hkXBE=
-Date: Fri, 20 Nov 2026 17:25:55 +0100
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xURQz-0005Ag-MW
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:25:58 -0500
+Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xURQx-0001Lz-F4
+ for qemu-devel@nongnu.org; Fri, 20 Nov 2026 11:25:57 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FZLL3wCtV8A8AhJfWcIAsFkl9/BhlO15dHfvNI/Jxxea8bpzH/23SibKSN8suag4Zy5plQ/YtexHrV9AZMfIfQjl3gmQpTgoeX5jCg2ASBmK1EPpKROmGbT/RZTiryqRoqHJX4HwVgfYaTkxSp8/6/TNKHkdlntYBnKFPoYhvWYCbvz2ZCfse5KEzX8909wkKd7XIkkt1Aztp154BdtZ8D0lqFeQqyHnj6EPRy31Aav+4mR752m81tS/MIqAU9eGWoUDaOG8+C6l9HKao/Skh72qCxrvswPBXFP7a/1+N87Y401X34Nz4+AgiSl0XYe7zjJsZ1CHUtm2ozpxt4M1+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=r+KXDVCU+K9+AYipgJglzCyrXAw6cV27FXhza79ysxU=;
+ b=bpZodgLDDERYJP8CP2yblALCAjNiGDFND8xXz2xeMegvo0zLCeNr2V9qGsZftL5qPKyn8GA0vNpv2pGNF9X6Y4HlP+x3hZorWj0riUQ4Oa17ykNMNPY65C9PkpWp8xKTGkbxIw71BKituqBBQvuh5fXdy9YY/+1QMOo4utRgB3b4zVlghzNE/abJhmBOkv9EL+fXbxr8MuhaOHskKz+OoWZ7XqcGK+hSoh3+J4DuzrKoPwv3Oilb+CvizQblQtzpLOdAKK6b3VBnOmL832l0IZB4Fi/bhc3iZLIMxNGi/aKtgFVIfOKnxN6ymTaw6c9uyCYoiVyOhJUdftZ1UYiWwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r+KXDVCU+K9+AYipgJglzCyrXAw6cV27FXhza79ysxU=;
+ b=Xzj2qvw5SO31XPad/a6aNdEImuoXpJQrLSBdoGvZVDwInMtPJrwNyOMxNjpZYCxiZfyvLyzSue0FiMLCgPeW5N/o7Ue2HfFA6rWvaVe4CRk/J1/VBhgr7hFHtPxAz5CrD8cU2o2zE4jYj19sNj8xwiFLJS33fDcfJGOs8NRuOGFYw/bJJjziXH5EgQY5lq0DYPpVw849K50wNYsua6bBvftV2mac4acwxwOOxDFiXlRpxIccf1yaVLZOrl0zzIsFxKfCjS6C+W1kdwDTDsezMOz/KsEtWmgBBKWvE1SbwNX/7xhXuKDIhzIOP4Zo+aO1ZMt4JV2uQm2WMPn4zMPGdw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AS8PR08MB8350.eurprd08.prod.outlook.com (2603:10a6:20b:56c::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Fri, 20 Nov
+ 2026 16:25:49 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%5]) with mapi id 15.21.0639.010; Fri, 20 Nov 2026
+ 16:25:49 +0000
+Message-ID: <6202967f-8bbb-45eb-9e97-b296f772d1a1@virtuozzo.com>
+Date: Fri, 20 Nov 2026 17:25:47 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/10] system: add a watchdog for the Big QEMU Lock
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 13/14] hw/intc,target/arm/mshv: add MSHV vGICv3
- implementation
-Message-ID: <awB0k/A4En4wsz5H@example.com>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-13-aefe5e76a0e3@linux.microsoft.com>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260915203455.580999-1-den@openvz.org>
+ <awBz2AP3W6-XNQ9U@redhat.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <awBz2AP3W6-XNQ9U@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI1PR0902CA0053.eurprd09.prod.outlook.com
+ (2603:10a6:802:1::42) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-13-aefe5e76a0e3@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS8PR08MB8350:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0bc514a4-0bcb-4990-5443-08df4722f006
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|10070799003|23010399003|376014|366016|18002099003|6133799003|22082099003|261009223027099003|56012099006|261021121427099003|4143699003|261102124527099003|261102123227099003|261022113327099003|261021135927099003|261022075727099003|261022105027099003|261026140227099003|261026121527099003|261028144727099003|5023799004|10067099003;
+X-Microsoft-Antispam-Message-Info: 7veIG4KMAmtpQnpi/yl3qNhsLL6S2I5iRmnyk3m4WhoIjP4CtNzw8Ymo0Irp8p79n6GZWoTf5P9vq06QGhLcsUvdsca/MJVj3zhgnwZD9AdlZzKQ1qcm/oqSK91gJ2ZrPHCl8jUfkbvqVkt3tyN7a9z2BYAIMnbV9pgVM+Ys8e6sfDhP60dnL0spfcjwUVxKSmN4I5eJ/FCuifBV36jARV/1tdJ6BcDWpc3eTbQp/lYDMWmohrAErR4KXA/aUegWc1+lDWgq9MpjvrNnzaJY2z3pDnH6TD4qtQjzRX9clldrUE4MmWzkiFyRrbbcL5W7JTc51TQFyL6VMUKZ+hJ4IO/H3IykQZVu9E6sauKXDr3MA3bLmx3mZQSNKCazL9YDDTdN+E5NKt/M1DkW7FU4olI/WjPeVgkemvfqaec2MPNe+JdHmU7ktAPQopKfr0vpWHD22+7taQu0qPkBcMdkSvLQqhko3jzUMnwi7geeZyqBwR1rl74jTvmV4HemrtlR/r7pFxkA98e9wgaFwqwhV5V2a/MKNfw4An8a0zsIsM72rYVZaixuJ3CsEUckLgYfR30TecrI6D+a6we7lcB2ktF4zP2IU5gn1I9OOd+p0IsWqHiF5Ln6LBhG4pCMzKLzjHSfuCuT4MK9ykrsk2W8/2Sd1uNPzTnA3LUpf9mv4nA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(10070799003)(23010399003)(376014)(366016)(18002099003)(6133799003)(22082099003)(261009223027099003)(56012099006)(261021121427099003)(4143699003)(261102124527099003)(261102123227099003)(261022113327099003)(261021135927099003)(261022075727099003)(261022105027099003)(261026140227099003)(261026121527099003)(261028144727099003)(5023799004)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ajJxZnVFSWlBSEExOTd1VUxFUUZEWUxWOW5DckdTT25ZRHZxenM4eE1mZUNT?=
+ =?utf-8?B?RnU2alJJV2xFMkhndDRCTkl6bzZUQ1VRakNycVpXZ3FrN2YxclVWZm1xTC9m?=
+ =?utf-8?B?U3dlS1dNY3hBZHlpMFdOMHpIQ2wxaXg4bjN4c1JCSmlYak1BL2VaRWVWUmNV?=
+ =?utf-8?B?clptVXBJa2xCNzMxMjFqSnRqa3ZiYzZkUnVmeHdTUGoyK1NJZG1UMWNVTDU0?=
+ =?utf-8?B?cnlHdFEzTnVTM0dQdU5XOFhrbFQ0TUl0RzEyZit6OHFndys4SUl6b0ZaR2ph?=
+ =?utf-8?B?RkRkS3JjSWp2dDEyTUxQNWIyTTJjeFAwVVlUc1NQWVlkZHA2clA3N3hWbTRB?=
+ =?utf-8?B?dEg4VU1mSzE1enU4cDNtZ2dna2ozdFZSdXR1WkIzZjlVcXdiNlg1ZnFFc0Zp?=
+ =?utf-8?B?ZEFTekxnd2JVZEV6Q05YK3orbWRnTmhuQjVHU0xNWkFid2tRSGJMRlQ0eDQr?=
+ =?utf-8?B?OVpwL0FyRW1IS01lbHNNMTgvNVMvNTZtMER6Tjg1R2pzOXhPUVdabndqekFw?=
+ =?utf-8?B?bmZ4dFN3d1JQVjVaSEpDVE1teFRJYzJrRzRxTnZuYnN5c0U4d0EzVkpoalU4?=
+ =?utf-8?B?LzV1R2ZlWnV1M0dKRUVVYTB5UU5ta3cyZGk1Tkp5dTQ0anhQY2phWmRyMG82?=
+ =?utf-8?B?ZzhSQUNxKytLRkNYdXhSRmdXYWIrLzRjM21QMUhGcWQ4bDhHZmp0bnVUME1D?=
+ =?utf-8?B?R2RqUUVuSnpOd0N4VWpaOXhrVVVLaVRZRWtlL25ETnR4RE8wanJHcmo5TDBw?=
+ =?utf-8?B?SjJuc040ZWdKNmVxN29xUEZ4OWhMQXB0aFVleWdPcDV0bGhSZ1J4bnRsOFRT?=
+ =?utf-8?B?SnI3OTRuQi9LdHR3dC9hdUF4K0NFeUM4QVRGSUhUZUkzWnFKOStFSU9wNDlQ?=
+ =?utf-8?B?MFNCbnBxTTZIbkRtQmtwMENObExNbDNucVdjSnVTeUlQbXBCOWk2ZHpneWsw?=
+ =?utf-8?B?bXFyei9kQTJ5NjBOc2xSVm0xOTljbmNMb0NvZVN0ZUJLNnJ4THg5WFRQKzJI?=
+ =?utf-8?B?MjNKTUlXWVgyMHZlVkhBR3ZOdXJpK09oc3VpbEtxcWpJOHZpRmh1VzNZQ0Q0?=
+ =?utf-8?B?MW5wU0NVNEI0eFNNcDl2bmV2NWwzRWpzME9jeEJPWHY5aUpoczd6blArVE90?=
+ =?utf-8?B?WUVNaExBK3NzNzB5bjZCa3JCcnArbkp2b1BQSW5PUm8yQnU3cUZoSHE0d0Y4?=
+ =?utf-8?B?b0NHQlU5WUdiaHUxaGY5VnFiazFQa093VWM1ZWRIdnFBbmFwdkMwU2t3bTNE?=
+ =?utf-8?B?dHl5cHZuY3d5M0tkTDQ0UXE0WDh4NmxVNnpUZjlBOXRaZHZnSExhK1Q2aU9R?=
+ =?utf-8?B?dlRFcXB4Znh4N25IbTRXMWxTQ1JMMk41RmJaTk5HSHhQOS9PMWNBUGw1UzJ0?=
+ =?utf-8?B?Ungzb0NWampmck5GenZVNm5rblVWdXVEYm9PeFlhNFBiNDZPN1dQSncvRHZI?=
+ =?utf-8?B?OGlpajN4MXhXVy9UTGIwNG1ncFJ6czh5SjFCZ1NxVkJsdXBuUDl5K3NEZmZq?=
+ =?utf-8?B?YU1mYXhvSGliUHNOYXROUThqUS9zRlhVMks3c1RSV0VGeFBBNi9XeFhtbEI5?=
+ =?utf-8?B?VWNuUlNZbnpidGZVYWJmbXAzenRmbFROTlZhd0NhOU8rUVJoSmtmVkZDRFhx?=
+ =?utf-8?B?ckp2dUJkUmxBd3RWNWhSRmhZcEttTERIZWlJelBFZGtZVytJYmNFaWZtYnd4?=
+ =?utf-8?B?N3VhNGF5dEZQNWNTbDBUdHFzSHNpTDA0amJZVkdUSWZzdm5qckI3NTFWNkFv?=
+ =?utf-8?B?eDY3aVEyM012NXV4TTEzYmpOTEYvY3hTTnorbnFMUW1tWGRwUmhwbDhTdk5D?=
+ =?utf-8?B?Z05UNHNZU1ZPVnhFcTVQS2E5MGNyMzdSWlFKcWxCcjVOcS9SY0FOb2JoR01Z?=
+ =?utf-8?B?N3NGTUthV3pCS1g1dnp5OURGbzVseEV0Q0wxNitOckJEaXdTcU05K2lIME5L?=
+ =?utf-8?B?TXg1WUhsZEtFS2p4dm16SFkxK3BkdzM3RDhmTEhzYTZ2YWJQRE1kRm5Sd2Ey?=
+ =?utf-8?B?dDZMMjYyaDRpZzdmbGwvMUJ5TE1zTEtnR3Q3VlZRZDZaY1Exc0JlbkN3OE1t?=
+ =?utf-8?B?NUEwa0ZsNEtnS0V1S0xMa1lZdWluM0o2RkJiTHNQQzZIRXh3RHdXVE9zQVhZ?=
+ =?utf-8?B?K2ZXL2ZORWo4RmNOOWRTZ1huQmNUT21oZDY1Z09kLzVqQXJiT1AxRExmVThH?=
+ =?utf-8?B?WmVCUDZ3MW5TQkM5eXJGSmpjQ1pOWTcwQUp1NVVmVXM0N0VaMDNtTUJiYkFp?=
+ =?utf-8?B?c1FSMUc3TjFzdzFyRjJMV2gyeFRNL1BYaW52R1BXNDZFUUYxeXZMM2ZBOFhl?=
+ =?utf-8?B?WFgxOTU3UU5zS1pFQTZTb3VMVGFPQkVJS3NLRVkxZHNDUURiTG1YbTU5akR4?=
+ =?utf-8?Q?g5es/AaUBNHZk6P3e/pSIBBG4APVS4c9C+irm8u82b5Os?=
+X-MS-Exchange-AntiSpam-MessageData-1: gP2PGj1lk2z4Bg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bc514a4-0bcb-4990-5443-08df4722f006
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 16:25:49.2016 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UITN8uQcQkjM9tunwg5YTpK/x9cTC72fwEp7h1YWrP6B9+CIqx/syOVGFR29TUtwTDweXiKrniRlst/tnXmWjQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB8350
+Received-SPF: pass client-ip=2a01:111:f403:c200::5;
+ envelope-from=den@virtuozzo.com;
+ helo=DUZPR83CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,472 +151,103 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 01, 2026 at 10:52:58AM +0000, Aastha Rawat wrote:
-> From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
-> 
-> Add in-kernel GICv3 support for the MSHV accelerator, following the
-> same approach as the KVM and WHPX vGIC backends. The implementation
-> handles IRQ injection via the HVCALL_ASSERT_VIRTUAL_INTERRUPT hypercall.
-> 
-> Introduce mshv_arch_pre_init_vm(), an arch-specific hook called after
-> VM creation but before VM initialization, used on arm64 to configure
-> GIC partition properties (GICD base, ITS translater base, timer and PMU
-> PPI numbers). The x86 side provides a no-op stub.
-> 
-> Update the virt machine to treat MSHV like WHPX for GIC version
-> selection (GICv3 only) and MSI controller finalization (no ITS support).
-> 
-> Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-> ---
->  accel/mshv/mshv-all.c              |   5 +
->  hw/arm/virt.c                      |   8 +-
->  hw/intc/arm_gicv3_common.c         |   3 +
->  hw/intc/arm_gicv3_mshv.c           | 181 +++++++++++++++++++++++++++++++++++++
->  hw/intc/meson.build                |   2 +
->  include/hw/hyperv/hvgdk_mini.h     |   2 +
->  include/hw/hyperv/hvhdk_mini.h     |   6 ++
->  include/hw/intc/arm_gicv3_common.h |   1 +
->  include/system/mshv_int.h          |   1 +
->  target/arm/mshv/mshv-all.c         |  61 +++++++++++++
->  target/i386/mshv/mshv-all.c        |   5 +
->  11 files changed, 273 insertions(+), 2 deletions(-)
-> 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index 9603f0360e1..e1264952873 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -279,6 +279,11 @@ static int create_vm(int mshv_fd, int *vm_fd)
->          return -1;
->      }
->  
-> +    ret = mshv_arch_pre_init_vm(*vm_fd);
-> +    if (ret < 0) {
-> +        return -1;
-> +    }
-> +
->      ret = initialize_vm(*vm_fd);
->      if (ret < 0) {
->          return -1;
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index ee03a85f482..67a1f19190b 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -2706,7 +2706,7 @@ static void finalize_gic_version(VirtMachineState *vms)
->          /* KVM w/o kernel irqchip can only deal with GICv2 */
->          gics_supported |= VIRT_GIC_VERSION_2_MASK;
->          accel_name = "KVM with kernel-irqchip=off";
-> -    } else if (whpx_enabled()) {
-> +    } else if (whpx_enabled() || mshv_enabled()) {
->          gics_supported |= VIRT_GIC_VERSION_3_MASK;
->      } else if (hvf_enabled()) {
->          if (!hvf_irqchip_in_kernel()) {
-> @@ -2760,7 +2760,7 @@ static void finalize_msi_controller(VirtMachineState *vms)
->      if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
->          if (vms->gic_version == VIRT_GIC_VERSION_2) {
->              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-> -        } else if (whpx_enabled()) {
-> +        } else if (whpx_enabled() || mshv_enabled()) {
->              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
->          }  else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
->              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-> @@ -2790,6 +2790,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
->              error_report("ITS not supported on WHPX.");
->              exit(1);
->          }
-> +        if (mshv_enabled()) {
-> +            error_report("ITS not supported on MSHV.");
-> +            exit(1);
-> +        }
->          if (hvf_enabled() && hvf_irqchip_in_kernel()) {
->              error_report("ITS not supported on HVF when using the hardware vGIC.");
->              exit(1);
-> diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-> index f7ba74e6d52..fb34b6a942d 100644
-> --- a/hw/intc/arm_gicv3_common.c
-> +++ b/hw/intc/arm_gicv3_common.c
-> @@ -34,6 +34,7 @@
->  #include "system/kvm.h"
->  #include "system/whpx.h"
->  #include "system/hvf.h"
-> +#include "system/mshv.h"
->  
->  
->  static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
-> @@ -662,6 +663,8 @@ const char *gicv3_class_name(void)
->          return TYPE_WHPX_GICV3;
->      } else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
->          return TYPE_HVF_GICV3;
-> +    } else if (mshv_enabled()) {
-> +        return TYPE_MSHV_GICV3;
->      } else {
->          if (kvm_enabled()) {
->              error_report("Userspace GICv3 is not supported with KVM");
-> diff --git a/hw/intc/arm_gicv3_mshv.c b/hw/intc/arm_gicv3_mshv.c
-> new file mode 100644
-> index 00000000000..a87819a5ba3
-> --- /dev/null
-> +++ b/hw/intc/arm_gicv3_mshv.c
-
-this is a new file that we should add to MAINTAINERS
-
-> @@ -0,0 +1,181 @@
-> +/*
-> + * ARM Generic Interrupt Controller using MSHV in-kernel support
-> + *
-> + * Copyright Microsoft, Corp. 2026
-> + * Based on vGICv3 KVM code by Pavel Fedin
-> + *
-> + * Authors:
-> + *      Aastha Rawat <aastharawat@microsoft.com>
-> + *      Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/error-report.h"
-> +#include "hw/intc/arm_gicv3_common.h"
-> +#include "migration/blocker.h"
-> +#include "target/arm/cpregs.h"
-> +#include "hw/hyperv/hvgdk_mini.h"
-> +#include "system/mshv.h"
-> +#include "system/mshv_int.h"
-> +
-> +struct MSHVARMGICv3Class {
-> +    ARMGICv3CommonClass parent_class;
-> +    DeviceRealize parent_realize;
-> +    ResettablePhases parent_phases;
-> +};
-> +
-> +OBJECT_DECLARE_TYPE(GICv3State, MSHVARMGICv3Class, MSHV_GICV3)
-> +
-> +static void mshv_gicv3_get(GICv3State *s)
-> +{
-> +}
-> +
-> +static void mshv_gicv3_put(GICv3State *s)
-> +{
-> +}
-> +
-> +static void mshv_gicv3_reset_hold(Object *obj, ResetType type)
-> +{
-> +    GICv3State *s = ARM_GICV3_COMMON(obj);
-> +    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
-> +
-> +    if (mgc->parent_phases.hold) {
-> +        mgc->parent_phases.hold(obj, type);
-> +    }
-> +
-> +    mshv_gicv3_put(s);
-> +}
-> +
-> +static void mshv_gicv3_set_irq(void *opaque, int irq, int level)
-> +{
-> +    int ret;
-> +    GICv3State *s = (GICv3State *)opaque;
-> +    int vm_fd = mshv_state->vm;
-> +    struct hv_input_assert_virtual_interrupt arg = {0};
-> +    struct mshv_root_hvcall args = {0};
-> +    union hv_interrupt_control control = {
-> +        .interrupt_type = HV_ARM64_INTERRUPT_TYPE_FIXED,
-> +        .rsvd1 = 0,
-> +        .asserted = level,
-> +        .rsvd2 = 0
-> +    };
-> +
-> +    if (irq >= s->num_irq) {
-
-I think we also need to consider the SGI + PPI range here:
-
-if (irq >= s->num_irq - GIC_INTERNAL)
-
-> +        return;
-> +    }
-> +
-> +    arg.control = control;
-> +    arg.vector = GIC_INTERNAL + irq;
-> +
-> +    args.code   = HVCALL_ASSERT_VIRTUAL_INTERRUPT;
-> +    args.in_sz  = sizeof(arg);
-> +    args.in_ptr = (uint64_t)&arg;
-> +
-> +    ret = mshv_hvcall(vm_fd, &args);
-> +    if (ret < 0) {
-> +        error_report("Failed to set GICv3 IRQ %d to level %d", irq, level);
-> +    }
-> +}
-> +
-> +static void mshv_gicv3_realize(DeviceState *dev, Error **errp)
-> +{
-> +    ERRP_GUARD();
-> +    GICv3State *s = MSHV_GICV3(dev);
-> +    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
-> +    int i, ret;
-> +
-> +    mgc->parent_realize(dev, errp);
-> +    if (*errp) {
-> +        return;
-> +    }
-> +
-> +    if (s->revision != 3) {
-> +        error_setg(errp, "unsupported GIC revision %d for platform GIC",
-> +                   s->revision);
-> +        return;
-> +    }
-> +
-> +    if (s->security_extn) {
-> +        error_setg(errp, "the platform vGICv3 does not implement the "
-> +                   "security extensions");
-> +        return;
-> +    }
-> +
-> +    if (s->nmi_support) {
-> +        error_setg(errp, "NMI is not supported with the platform GIC");
-> +        return;
-> +    }
-> +
-> +    if (s->nb_redist_regions > 1) {
-> +        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
-> +                   "supported by MSHV");
-> +        error_append_hint(errp, "A maximum of %d VCPUs can be used",
-> +                          s->redist_region_count[0]);
-> +        return;
-> +    }
-> +
-> +    gicv3_init_irqs_and_mmio(s, mshv_gicv3_set_irq, NULL);
-> +
-> +    for (i = 0; i < s->num_cpu; i++) {
-> +        CPUState *cpu_state = qemu_get_cpu(i);
-> +
-> +        hv_register_assoc gicr_base = {
-> +            .name = HV_ARM64_REGISTER_GICR_BASE_GPA,
-> +            .value = {
-> +                .reg64 = 0x080A0000 + (GICV3_REDIST_SIZE * i)
-> +            }
-> +        };
-> +
-> +        ret = mshv_set_generic_regs(cpu_state, &gicr_base, 1);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to set GICR base for CPU %d", i);
-> +            return;
-> +        }
-> +    }
-> +
-> +    if (s->maint_irq) {
-> +        error_setg(errp,
-> +               "Nested virtualisation not currently supported by MSHV");
-> +        return;
-> +    }
-> +
-> +    error_setg(&s->migration_blocker,
-> +        "Live migration disabled because GIC state save/restore not supported on MSHV");
-> +    if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
-> +        error_report_err(*errp);
-
-err_report_err() will consume/free errp. AFAIU the call site owns the
-error, and we can just return here. otherwise we will probably have a
-double free of the error somewhere up in the callchain.
-
-> +    }
-> +}
-> +
-> +static void mshv_gicv3_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
-> +    MSHVARMGICv3Class *mgc = MSHV_GICV3_CLASS(klass);
-> +
-> +    agcc->pre_save = mshv_gicv3_get;
-> +    agcc->post_load = mshv_gicv3_put;
-> +
-> +    device_class_set_parent_realize(dc, mshv_gicv3_realize,
-> +                                    &mgc->parent_realize);
-> +    resettable_class_set_parent_phases(rc, NULL, mshv_gicv3_reset_hold, NULL,
-> +                                       &mgc->parent_phases);
-> +}
-> +
-> +static const TypeInfo mshv_arm_gicv3_info = {
-> +    .name = TYPE_MSHV_GICV3,
-> +    .parent = TYPE_ARM_GICV3_COMMON,
-> +    .instance_size = sizeof(GICv3State),
-> +    .class_init = mshv_gicv3_class_init,
-> +    .class_size = sizeof(MSHVARMGICv3Class),
-> +};
-> +
-> +static void mshv_gicv3_register_types(void)
-> +{
-> +    type_register_static(&mshv_arm_gicv3_info);
-> +}
-> +
-> +type_init(mshv_gicv3_register_types)
-> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-> index 0620b0792a1..e0047ab1c0f 100644
-> --- a/hw/intc/meson.build
-> +++ b/hw/intc/meson.build
-> @@ -49,6 +49,8 @@ specific_ss.add(when: ['CONFIG_WHPX', 'CONFIG_ARM_GICV3'], if_true: files('arm_g
->  specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
->  stub_ss.add(files('arm_gicv3_hvf_stub.c'))
->  specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
-> +specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
-> +specific_ss.add(when: ['CONFIG_MSHV', 'TARGET_AARCH64'], if_true: files('arm_gicv3_mshv.c'))
-
-Do we need 'CONFIG_ARM_GIC' here (like KVM)?
-
->  arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
->  specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
->  specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
-> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> index d81c9816e7f..2b4b1406ab0 100644
-> --- a/include/hw/hyperv/hvgdk_mini.h
-> +++ b/include/hw/hyperv/hvgdk_mini.h
-> @@ -85,6 +85,8 @@ typedef enum hv_register_name {
->      HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
->      HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
->  
-> +    HV_ARM64_REGISTER_GICR_BASE_GPA       = 0x00063000,
-> +
->  #elif defined(__x86_64__)
->      /* X64 User-Mode Registers */
->      HV_X64_REGISTER_RAX     = 0x00020000,
-> diff --git a/include/hw/hyperv/hvhdk_mini.h b/include/hw/hyperv/hvhdk_mini.h
-> index 9c2f3cf5aee..4d78fa06777 100644
-> --- a/include/hw/hyperv/hvhdk_mini.h
-> +++ b/include/hw/hyperv/hvhdk_mini.h
-> @@ -62,6 +62,12 @@ enum hv_partition_property_code {
->      HV_PARTITION_PROPERTY_ISOLATION_POLICY                       = 0x00050014,
->      HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION               = 0x00050017,
->      HV_PARTITION_PROPERTY_SEV_VMGEXIT_OFFLOADS                   = 0x00050022,
-> +    HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS                      = 0x00050028,
-> +    HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS           = 0x00050029,
-> +    HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS                    = 0x0005002A,
-> +    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV   = 0x0005002B,
-> +    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTP   = 0x0005002C,
-> +    HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT = 0x0005002D,
->  
->      /* Compatibility properties */
->      HV_PARTITION_PROPERTY_PROCESSOR_VENDOR              = 0x00060000,
-> diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-> index 03ab3e8f2ff..2ed456e654a 100644
-> --- a/include/hw/intc/arm_gicv3_common.h
-> +++ b/include/hw/intc/arm_gicv3_common.h
-> @@ -316,6 +316,7 @@ DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
->  /* Types for GICv3 kernel-irqchip */
->  #define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
->  #define TYPE_HVF_GICV3 "hvf-arm-gicv3"
-> +#define TYPE_MSHV_GICV3 "mshv-arm-gicv3"
->  
->  struct ARMGICv3CommonClass {
->      /*< private >*/
-> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> index 31d2f4381c7..2dcfd11d8df 100644
-> --- a/include/system/mshv_int.h
-> +++ b/include/system/mshv_int.h
-> @@ -107,6 +107,7 @@ void mshv_arch_amend_proc_features(
->  void mshv_arch_disable_partition_proc_features(
->       union hv_partition_processor_features *disabled_features);
->  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
-> +int mshv_arch_pre_init_vm(int vm_fd);
->  int mshv_arch_post_init_vm(int vm_fd);
->  void mshv_setup_hvcall_args(AccelCPUState *state);
->  int mshv_arch_migration_init(MshvState *s);
-> diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> index 786d815312b..8fa497c9a89 100644
-> --- a/target/arm/mshv/mshv-all.c
-> +++ b/target/arm/mshv/mshv-all.c
-> @@ -288,6 +288,67 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
->      state->hvcall_args = (MshvHvCallArgs){0};
->  }
->  
-> +static int set_partition_prop(int vm_fd, uint32_t prop_code,
-> +                                uint64_t prop_value)
-> +{
-> +    int ret;
-> +    struct hv_input_set_partition_property in = {0};
-> +    in.property_code = prop_code;
-> +    in.property_value = prop_value;
-> +
-> +    struct mshv_root_hvcall args = {0};
-> +    args.code = HVCALL_SET_PARTITION_PROPERTY;
-> +    args.in_sz = sizeof(in);
-> +    args.in_ptr = (uint64_t)&in;
-> +
-> +    ret = mshv_hvcall(vm_fd, &args);
-> +    if (ret < 0) {
-> +        error_report("Failed to set partition property code %u", prop_code);
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int mshv_arch_pre_init_vm(int vm_fd)
-> +{
-> +    int ret;
-> +    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
-> +
-> +    ret = set_partition_prop(vm_fd,
-> +                            HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS,
-> +                            vms->memmap[VIRT_GIC_DIST].base);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    ret = set_partition_prop(vm_fd,
-> +                        HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS,
-> +                        vms->memmap[VIRT_GIC_ITS].base);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    ret = set_partition_prop(vm_fd,
-> +                        HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS,
-> +                        0);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    ret = set_partition_prop(vm_fd,
-> +                        HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV,
-> +                        ARCH_TIMER_VIRT_IRQ);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    ret = set_partition_prop(vm_fd,
-> +                        HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT,
-> +                        VIRTUAL_PMU_IRQ);
-> +
-> +    return ret;
-> +}
->  
->  static uint32_t mshv_arm_get_ipa_bit_size(int mshv_fd)
->  {
-> diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
-> index 968fe2a4494..85dbacf98ff 100644
-> --- a/target/i386/mshv/mshv-all.c
-> +++ b/target/i386/mshv/mshv-all.c
-> @@ -39,6 +39,11 @@ int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
->      return 0;
->  }
->  
-> +int mshv_arch_pre_init_vm(int vm_fd)
-> +{
-> +    return 0;
-> +}
-> +
->  /*
->   * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
->   * fault to the guest if it tries to access it. It is possible to override
-> 
-> -- 
-> 2.45.4
+On 11/20/26 17:22, Daniel P. Berrangé wrote:
+> On Tue, Sep 15, 2026 at 10:34:44PM +0200, Denis V. Lunev wrote:
+>> A vCPU thread reacquires the BQL on every exit that needs userspace. A
+>> holder that keeps it for tens of seconds stops every vCPU, the guest
+>> reports a soft lockup or panics, and qemu itself records nothing. The
+>> guest log is the only evidence, and it cannot say whether the hypervisor
+>> held the lock or the guest wedged on its own.
+>>
+>> This series adds a BQL watchdog. A sampler thread watches a sequence
+>> counter that bql_update_status() advances on every acquire and release.
+>> One odd value across the whole window means one owner held the lock for
+>> the whole window. On expiry the watchdog names the holder and prints the
+>> state of every other thread:
+>>
+>>   qemu-system-x86_64: 2026-09-15T15:53:57Z BQL held for more than 100 ms by thread 168146
+>>     168146  qemu-system-x86  S
+>>         pc 0x785a4dbcb884 liburing.so.2+0x2884
+>>         wchan io_cqring_wait
+>>     168147  call_rcu         S
+>>         pc 0x785a4d534acb syscall+0x1b
+>>         wchan futex_do_wait
+>>     168148  IO mon_iothread  S
+>>         pc 0x785a4d4ac802 libc.so.6+0xac802
+>>         wchan poll_schedule_timeout.constprop.0
+>>
+>> With CAP_SYS_ADMIN the wchan line becomes the kernel stack. The pc line
+>> comes from signalling each thread and reading the program counter out of
+>> its signal frame, which is what tells a thread spinning in userspace
+>> from one asleep in a syscall.
+>>
+>> The watchdog is off by default and stays quiet under a debugger. Two
+>> machine properties drive it: bql-watchdog-ms sets the deadline, on the
+>> command line or over qom-set at any time, and bql-watchdog-abort turns
+>> the report into a core dump for hosts where the answer is worth more
+>> than the guest.
+>>
+>> Patches 1 to 6 are the pieces: a fix for bql_locked across the timed
+>> condvar wait, a debugger check, the per-thread state reader and its
+>> kernel stack and program counter extensions, and the signal reserved for
+>> the latter. Patches 7 to 9 are the watchdog itself. Patch 10 is a
+>> functional test that holds the BQL through an HMP qemu-io write to a
+>> null-co node with a latency longer than the deadline.
+>>
+>> The program counter lives at a host specific offset in the signal frame,
+>> so patch 6 reads it through a host/include header. The Linux headers for
+>> aarch64, ppc64, riscv64, s390x and loongarch64 repeat what linux-user's
+>> host-signal.h already knows about those frames, but only the x86_64 one
+>> has been compiled here, and the Windows half of patch 1 has not been
+>> compiled either.
+>>
+>> Cc: Paolo Bonzini <pbonzini@redhat.com>
+>> Cc: Richard Henderson <richard.henderson@linaro.org>
+>> Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> Cc: Zhao Liu <zhao1.liu@intel.com>
+>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>
+>> Denis V. Lunev (10):
+>>   util/qemu-thread: track bql_locked across the timed condvar wait
+>>   oslib: add qemu_debugger_attached()
+>>   oslib: add qemu_thread_states()
+>>   oslib: report kernel stacks in qemu_thread_states()
+>>   util/qemu-thread: reserve a signal for thread introspection
+>>   oslib: report each thread's program counter
+>>   system/cpus: report a BQL held past a deadline
+>>   system/cpus: hold off the BQL watchdog under a debugger
+>>   system/cpus: add bql-watchdog-abort
+>>   tests/functional: cover the BQL watchdog
+>>
+>>  host/include/aarch64/host/signal-pc.h         |  20 ++
+>>  host/include/generic/host/signal-pc.h         |  11 +
+>>  host/include/loongarch64/host/signal-pc.h     |  20 ++
+>>  host/include/ppc64/host/signal-pc.h           |  22 ++
+>>  host/include/riscv64/host/signal-pc.h         |  20 ++
+>>  host/include/s390x/host/signal-pc.h           |  20 ++
+>>  host/include/x86_64/host/signal-pc.h          |  20 ++
+>>  hw/core/machine.c                             |  44 +++
+>>  include/qemu/osdep.h                          |  29 ++
+>>  include/system/cpus.h                         |   8 +
+>>  meson.build                                   |   2 +
+>>  qemu-options.hx                               |  11 +
+>>  system/cpus.c                                 | 143 ++++++++
+>>  tests/functional/generic/meson.build          |   1 +
+>>  tests/functional/generic/test_bql_watchdog.py |  60 ++++
+>>  util/oslib-posix.c                            | 316 ++++++++++++++++++
+> As a general point that doesn't fit any single patch, IMHO
+> it is undesirable to be putting all this logic into the
+> oslib-posix.c file.
+>
+> It likely justifies being put into a standalone file eg a
+> new 'debug.c'
+Good point. Thanks
 
