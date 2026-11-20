@@ -1,67 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AF3606A32A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 14:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3BA606A330
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Nov 2026 14:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=NtXDLK5P
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Z1nRtpMF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUPNR-0001wr-Np; Fri, 20 Nov 2026 09:14:09 -0500
+	id 1xUPYZ-0003sY-Cu; Fri, 20 Nov 2026 09:25:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xUPNP-0001wG-5u; Fri, 20 Nov 2026 09:14:07 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xUPNM-00015h-LG; Fri, 20 Nov 2026 09:14:06 -0500
-Received: from example.com (unknown [167.220.208.76])
- by linux.microsoft.com (Postfix) with ESMTPSA id 06F5F20B7166;
- Fri, 20 Nov 2026 06:13:56 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 06F5F20B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795184040;
- bh=79dthtpfs5AW3i9gHD5s59W4rTW4Y+syAm2p7hWih20=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=NtXDLK5PzE4UwMSzDL/GVhIMPFiFS7Rgannbuc0WNtq+9LCTYjaildY+VCGxOJWrd
- 0SPy+b9YXe1Eezn7f5RSorOg389wTVb5Dl4RdmRYsdc7Xf9JGmTDHFYDqmvnD3Qu5S
- OnSb1p1LLmpk3vQkNkkcFRg1nmFgzDE0Qay1pX1M=
-Date: Fri, 20 Nov 2026 15:13:56 +0100
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 10/14] target/arm: extract MMIO emulation logic for
- HVF & WHPX
-Message-ID: <awBVpDKOg8wO6vbh@example.com>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-10-aefe5e76a0e3@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1xUPYX-0003rP-7u; Fri, 20 Nov 2026 09:25:37 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1xUPYV-0002Ma-Hl; Fri, 20 Nov 2026 09:25:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1795184736; x=1826720736;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=EefFb8ASchTKj58/+zHayDxohZkIqeeZhPY3tyC3SDU=;
+ b=Z1nRtpMFdL8+w9Vc/m55f0X6uLX/k/eXDDgv5E1XW2vguzkMyQFu2nW6
+ bHpgsNJx7mBOX4a/BTV/eGcR9CL2flv7W4Tsak4tpZZkTefz1Moh7WhyQ
+ zsPVZLIvOPnwPs/kA/l1SVjcTHf9x+kIT4ek+hY0aFH4ffFxx8p1yt0O2
+ ZJAdnJAjumByEil+vyZTuMSHqXI+acxwAD2RBDKreF3hLg2xRBnK0Dr0d
+ fBuAtTuU4AcMofKKRer7IHnvbHtV+RmfadEJLuzHA1/Ydnu0BMebMd+65
+ hqjufW4Ac2/hQvPIwPxRMaXex8YVi6OIa+Kp3WCvpwKWji/fvh3Y+F605 g==;
+X-CSE-ConnectionGUID: 3d4qAjPiRcuf6qZ6p1hipA==
+X-CSE-MsgGUID: xUIij+MzQOejV8jSHgQdWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11972"; a="4094895"
+X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; 
+   d="scan'208";a="4094895"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Nov 2026 06:25:27 -0800
+X-CSE-ConnectionGUID: DY2aMGnqSVeo0zKywDJLQQ==
+X-CSE-MsgGUID: boomZ4/wRUerTg/HtsyCjg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,223,1787036400"; d="scan'208";a="10720407"
+Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.112.226.173])
+ by orviesa002.jf.intel.com with ESMTP; 20 Nov 2026 06:25:25 -0800
+Date: Fri, 20 Nov 2026 22:25:23 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH for-12.0 5/6] rust: Replace vmstate_validate with post_load
+Message-ID: <awBYUwFhba1AYpZb@intel.com>
+References: <20261120124923.1656220-1-peterx@redhat.com>
+ <20261120124923.1656220-6-peterx@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-10-aefe5e76a0e3@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20261120124923.1656220-6-peterx@redhat.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,395 +80,85 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 01, 2026 at 10:52:55AM +0000, Aastha Rawat wrote:
-> - Move common MMIO emulation code from HVF and WHPX backend to
->   arm_emulate_mmio() in helper.c.
-> - Update HVF and WHPX to use the new helper and shared types.
+Hi Peter,
+
+On Fri, Nov 20, 2026 at 07:49:22AM -0500, Peter Xu wrote:
+> Date: Fri, 20 Nov 2026 07:49:22 -0500
+> From: Peter Xu <peterx@redhat.com>
+> Subject: [PATCH for-12.0 5/6] rust: Replace vmstate_validate with post_load
+> X-Mailer: git-send-email 2.56.0
 > 
+> We dropped all of that in C, drop that in Rust too.
 
-Generally, this is a patch with some potential for undesired fallout
-and we need testing on the consolidated platforms (WHPX and HVF)
-and/or close scrutiny from the maintainers. Maybe we can send this
-one as an individual patch?
+but rust is using the different way to address this case :)
 
-> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> ---
->  target/arm/helper.c        | 62 ++++++++++++++++++++++++++++++++++++++++++++++
->  target/arm/helper.h        | 16 ++++++++++++
->  target/arm/hvf/hvf.c       | 57 +++++++++++++++++++-----------------------
->  target/arm/syndrome.h      | 47 +++++++++++++++++++++++++++++++++++
->  target/arm/whpx/whpx-all.c | 45 ++++++++++++++-------------------
->  5 files changed, 169 insertions(+), 58 deletions(-)
+> The goal is to remove
+> the VMSTATE_VALIDATE() together with VMS_MUST_EXIST.
 > 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index ff0b766b73d..5b14f0bff72 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -34,6 +34,8 @@
->  #endif
->  #include "cpregs.h"
->  #include "target/arm/gtimer.h"
-> +#include "target/arm/helper.h"
+> Use post_load instead for the check.
 
-This will introduce a dependency on TCG, which might be undesirable:
+...
 
-target/arm/helper.h -> exec->helper-gen.h.inc -> tcg/tcg.h
+>  // HPETRegistersMigration is generated by ToMigrationState macro.
+>  impl_vmstate_struct!(
+>      HPETRegistersMigration,
+> @@ -1109,7 +1111,6 @@ fn restore_migrated_state(
+>          .fields(vmstate_fields! {
+>              vmstate_of!(HPETState, regs),
+>              vmstate_of!(HPETState, num_timers_save),
+> -            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
+>              vmstate_of!(HPETState, timers[0 .. num_timers_save], HPETState::validate_num_timers).with_version_id(0),
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Before this patch, the test method didn't work since vmstate_validate!
+has already done the check. But, IIUC, when vmstate_validate! goes away,
+this test seems necessary for rust side since it can help avoid overflow
+caused by num_timers_save (maybe it can be greater than HPET_MAX_TIMERS?
+before the commit 7be175e65f07).
 
-> +#include "target/arm/syndrome.h"
->  #include "qemu/plugin.h"
->  
->  static void switch_mode(CPUARMState *env, int mode);
-> @@ -9455,6 +9457,66 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
->      take_aarch32_exception(env, new_mode, mask, offset, addr);
->  }
->  
-> +/*
-> + * Emulate a data abort syndrome for MMIO/guest memory access
-> + */
-> +int arm_emulate_mmio(CPUState *cpu, EsrEl2 syndrome, uint64_t gpa,
-> +                     const struct arm_emul_ops *ops)
-> +{
-> +    int ret;
-> +    IssDataAbort iss = { 0 };
-> +    iss.raw = syndrome.iss;
-> +
-> +    if (!(syndrome.ec == data_abort_lower || syndrome.ec == data_abort)) {
-> +        error_report("Unknown exception class 0x%x", syndrome.ec);
-> +        return -1;
-> +    }
-> +
-> +    if (!iss.isv) {
-> +        error_report("Cannot emulate MMIO. ISS not valid.");
-> +        return -1;
-> +    }
-> +
-> +    AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
+>          })
 
-in this patch we have a lot of variable declerations outside of blocks/
-fn top.
+So LGTM for the change in rust hpet,
 
-> +    uint64_t len = 1ULL << iss.sas;
-> +    bool sign_extend = iss.sse;
-> +    uint64_t reg_index = iss.srt;
-> +
-> +    if (iss.wnr) {
-> +        uint8_t data[8];
-> +        uint64_t val = reg_index < 31 ? ops->get_reg(cpu, reg_index) : 0ULL;
-> +        val = cpu_to_le64(val);
-> +        memcpy(data, &val, sizeof(val));
-> +        ret = address_space_write(as, gpa, MEMTXATTRS_UNSPECIFIED, data, len);
-> +        if (ret != MEMTX_OK) {
-> +            error_report("Failed to write guest memory");
-> +            return -1;
-> +        }
-> +    } else {
-> +        uint8_t data[8] = { 0 };
-> +        ret = address_space_read(as, gpa, MEMTXATTRS_UNSPECIFIED, data, len);
-> +        if (ret != MEMTX_OK) {
-> +            error_report("Failed to read guest memory");
-> +            return -1;
-> +        }
-> +        uint64_t val;
-> +        memcpy(&val, data, sizeof(val));
-> +        val = le64_to_cpu(val);
-> +        if (sign_extend) {
-> +            uint64_t shift = 64 - (len * 8);
-> +            val = (((int64_t)val << shift) >> shift);
-> +        }
-> +        if (!iss.sf) {
-> +            val &= 0xffffffff;
-> +        }
-> +        if (reg_index < 31) {
-> +            ops->set_reg(cpu, reg_index, val);
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->  static int aarch64_regnum(CPUARMState *env, int aarch32_reg)
->  {
->      /*
-> diff --git a/target/arm/helper.h b/target/arm/helper.h
-> index b1c26c180ea..503404112d4 100644
-> --- a/target/arm/helper.h
-> +++ b/target/arm/helper.h
-> @@ -3,8 +3,24 @@
->  #ifndef HELPER__H
->  #define HELPER__H
->  
-> +#include <stdint.h>
-> +#include <stdbool.h>
->  #include "exec/helper-proto-common.h"
->  #include "exec/helper-gen-common.h"
-> +#include "target/arm/syndrome.h"
-> +
-> +/*
-> + * Callback ops for per-register access during MMIO emulation.
-> + * Each hypervisor backend provides its own implementation to avoid
-> + * syncing the full CPU state for a single-register MMIO access.
-> + */
-> +struct arm_emul_ops {
-> +    uint64_t (*get_reg)(CPUState *cpu, int reg);
-> +    void (*set_reg)(CPUState *cpu, int reg, uint64_t val);
-> +};
-> +
-> +int arm_emulate_mmio(CPUState *cpu, EsrEl2 syndrome, uint64_t gpa,
-> +                     const struct arm_emul_ops *ops);
->  
->  #define HELPER_H "tcg/helper-defs.h"
->  #include "exec/helper-proto.h.inc"
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index b00a7e1a845..99a66a68812 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -13,6 +13,7 @@
->  #include "qemu/error-report.h"
->  #include "qemu/log.h"
->  
-> +#include "syndrome.h"
->  #include "system/runstate.h"
->  #include "system/hvf.h"
->  #include "system/hvf_int.h"
-> @@ -37,6 +38,7 @@
->  #include "target/arm/multiprocessing.h"
->  #include "target/arm/gtimer.h"
->  #include "target/arm/trace.h"
-> +#include "target/arm/helper.h"
->  #include "trace.h"
->  #include "migration/vmstate.h"
->  
-> @@ -2338,12 +2340,15 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
->  {
->      CPUARMState *env = cpu_env(cpu);
->      ARMCPU *arm_cpu = env_archcpu(env);
-> -    uint64_t syndrome = excp->syndrome;
-> -    uint32_t ec = syn_get_ec(syndrome);
-> +    uint64_t syndrome;
-> +    uint32_t ec;
->      bool advance_pc = false;
->      hv_return_t r;
->      int ret = 0;
->  
-> +    syndrome = excp->syndrome;
-> +    ec = syn_get_ec(syndrome);
-> +
->      switch (ec) {
->      case EC_SOFTWARESTEP: {
->          ret = EXCP_DEBUG;
-> @@ -2389,29 +2394,22 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
->          break;
->      }
->      case EC_DATAABORT: {
-> -        bool isv = FIELD_EX32(syndrome, DABORT_ISS, ISV);
-> -        bool iswrite = FIELD_EX32(syndrome, DABORT_ISS, WNR);
-> -        bool s1ptw = FIELD_EX32(syndrome, DABORT_ISS, S1PTW);
-> -        bool sse = FIELD_EX32(syndrome, DABORT_ISS, SSE);
-> -        uint32_t sas = FIELD_EX32(syndrome, DABORT_ISS, SAS);
-> -        uint32_t len = 1 << sas;
-> -        uint32_t srt = FIELD_EX32(syndrome, DABORT_ISS, SRT);
-> -        uint32_t cm = FIELD_EX32(syndrome, DABORT_ISS, CM);
-> -        uint64_t val = 0;
-> +        EsrEl2 esr_el2 = { .raw = syndrome };
-> +        IssDataAbort iss = { .raw = esr_el2.iss };
->          uint64_t ipa = excp->physical_address;
->          AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
->  
-> -        trace_hvf_data_abort(excp->virtual_address, ipa, isv,
-> -                             iswrite, s1ptw, len, srt);
-> +        trace_hvf_data_abort(excp->virtual_address, ipa, iss.isv,
-> +                             iss.wnr, iss.s1ptw, 1ULL << iss.sas, iss.srt);
->  
-> -        if (cm) {
-> +        if (iss.cm) {
->              /* We don't cache MMIO regions */
->              advance_pc = true;
->              break;
->          }
->  
->          /* Handle dirty page logging for ram. */
-> -        if (iswrite) {
-> +        if (iss.wnr) {
->              hwaddr xlat;
->              MemoryRegion *mr = address_space_translate(as, ipa, &xlat,
->                                                         NULL, true,
-> @@ -2438,28 +2436,25 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
->           * TODO: If s1ptw, this is an error in the guest os page tables.
->           * Inject the exception into the guest.
->           */
-> -        assert(!s1ptw);
-> -
-> -        /*
-> -         * TODO: ISV will be 0 for SIMD or SVE accesses.
-> -         * Inject the exception into the guest.
-> -         */
-> -        assert(isv);
-> +        assert(!iss.s1ptw);
->  
->          /*
->           * Emulate MMIO.
->           * TODO: Inject faults for errors.
->           */
-> -        if (iswrite) {
-> -            val = hvf_get_reg(cpu, srt);
-> -            address_space_write(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
-> -        } else {
-> -            address_space_read(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
-> -            if (sse) {
-> -                val = sextract64(val, 0, len * 8);
-> -            }
-> -            hvf_set_reg(cpu, srt, val);
-> +
-> +        static const struct arm_emul_ops hvf_arm_emul_ops = {
-> +            .get_reg = hvf_get_reg,
-> +            .set_reg = hvf_set_reg,
-> +        };
-> +
-> +        ret = arm_emulate_mmio(cpu, esr_el2, ipa, &hvf_arm_emul_ops);
-> +        if (ret < 0) {
-> +            error_report("Failed to emulate MMIO, syndrome=0x%llx, gpa=0x%llx",
-> +                         esr_el2.raw, ipa);
-> +            return -1;
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-I think this introduces a subtle behaviour change for HVF. we return -1
-here, and do not advance the PC. I think MMIO emulation can fail e.g.
-for probes (non x86 UEFI we see this with TPM afair).
 
->          }
-> +
->          advance_pc = true;
->          break;
->      }
-> diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-> index 2a6fa903f27..8b4cc7f7b21 100644
-> --- a/target/arm/syndrome.h
-> +++ b/target/arm/syndrome.h
-> @@ -106,6 +106,53 @@ typedef enum {
->      GCS_IT_GCSPOPX = 9,
->  } GCSInstructionType;
->  
-> +typedef union {
-> +    uint64_t raw;
-> +    struct {
-> +        uint32_t iss:25;
-> +        uint32_t il:1;
-> +        uint32_t ec:6;
-> +        uint32_t iss2:5;
-> +        uint32_t _rsvd:27;
-> +    } QEMU_PACKED;
-> +} EsrEl2;
-> +
-> +typedef union {
-> +    uint32_t raw;
-> +    struct {
-> +        uint32_t dfsc:6;
-> +        uint32_t wnr:1;
-> +        uint32_t s1ptw:1;
-> +        uint32_t cm:1;
-> +        uint32_t ea:1;
-> +        uint32_t fnv:1;
-> +        uint32_t set:2;
-> +        uint32_t vncr:1;
-> +        uint32_t ar:1;
-> +        uint32_t sf:1;
-> +        uint32_t srt:5;
-> +        uint32_t sse:1;
-> +        uint32_t sas:2;
-> +        uint32_t isv:1;
-> +        uint32_t _unused:7;
-> +    } QEMU_PACKED;
-> +} IssDataAbort;
-> +
-> +typedef enum {
-> +    data_abort_lower = 36,
-> +    data_abort = 37,
-> +} ExceptionClass;
-> +
-> +#define ARM_EL_EC_LENGTH 6
-> +#define ARM_EL_EC_SHIFT 26
-> +#define ARM_EL_IL_SHIFT 25
-> +#define ARM_EL_ISV_SHIFT 24
-> +#define ARM_EL_IL (1 << ARM_EL_IL_SHIFT)
-> +#define ARM_EL_ISV (1 << ARM_EL_ISV_SHIFT)
-> +
-> +/* In the Data Abort syndrome */
-> +#define ARM_EL_VNCR (1 << 13)
-> +
->  static inline uint32_t syn_get_ec(uint32_t syn)
->  {
->      return FIELD_EX32(syn, SYNDROME, EC);
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 46f0b9524e0..93d89f79ffe 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -28,6 +28,8 @@
->  
->  #include "syndrome.h"
->  #include "target/arm/cpregs.h"
-> +#include "target/arm/helper.h"
-> +#include "target/arm/syndrome.h"
->  #include "internals.h"
->  
->  #include "system/whpx-internal.h"
-> @@ -352,34 +354,23 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
->  
->  static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
->  {
-> -    uint64_t syndrome = ctx->Syndrome;
-> -
-> -    bool isv = FIELD_EX32(syndrome, DABORT_ISS, ISV);
-> -    bool iswrite = FIELD_EX32(syndrome, DABORT_ISS, WNR);
-> -    bool sse = FIELD_EX32(syndrome, DABORT_ISS, SSE);
-> -    uint32_t sas = FIELD_EX32(syndrome, DABORT_ISS, SAS);
-> -    uint32_t len = 1 << sas;
-> -    uint32_t srt = FIELD_EX32(syndrome, DABORT_ISS, SRT);
-> -    uint32_t cm = FIELD_EX32(syndrome, DABORT_ISS, CM);
-> -    uint64_t val = 0;
-> -
-> -    assert(syn_get_ec(syndrome) == EC_DATAABORT);
-> +    int ret = 0;
-> +    EsrEl2 esr = { .raw = ctx->Syndrome };
-> +    uint32_t cm = (esr.iss >> 8) & 0x1;
-> +
-> +    assert(syn_get_ec(esr.raw) == EC_DATAABORT);
->      assert(!cm);
-> -    assert(isv);
-> -
-> -    if (iswrite) {
-> -        val = whpx_get_gp_reg(cpu, srt);
-> -        address_space_write(&address_space_memory,
-> -                            ctx->Gpa,
-> -                            MEMTXATTRS_UNSPECIFIED, &val, len);
-> -    } else {
-> -        address_space_read(&address_space_memory,
-> -                           ctx->Gpa,
-> -                           MEMTXATTRS_UNSPECIFIED, &val, len);
-> -        if (sse) {
-> -            val = sextract64(val, 0, len * 8);
-> -        }
-> -        whpx_set_gp_reg(cpu, srt, val);
-> +
-> +    static const struct arm_emul_ops whpx_arm_emul_ops = {
-> +        .get_reg = whpx_get_gp_reg,
-> +        .set_reg = whpx_set_gp_reg,
-> +    };
-> +
-> +    ret = arm_emulate_mmio(cpu, esr, ctx->Gpa, &whpx_arm_emul_ops);
-> +    if (ret < 0) {
-> +        error_report("WHPX: Failed to handle MMIO, syndrome=0x%llx, gpa=0x%llx",
-> +                     esr.raw, ctx->Gpa);
-> +        return -1;
->      }
->  
->      return 0;
-> 
-> -- 
-> 2.45.4
+And I find C side (in patch 3) handles this differently via using the local
+"num_timers".
+
+In this case, I think we still have the option to keep the logic
+consistent between C and Rust :). We can add VMSTATE_STRUCT_VARRAY_TEST
+for C side:
+
+#define VMSTATE_STRUCT_VARRAY_TEST(_field, _state, _field_num, _test,\
+                                   _version, _vmsd, _type) {\
+    .name         = (stringify(_field)),\
+    .num_indirect = vmstate_field_offset(_state, _field_num),\
+    .version_id   = (_version),\
+    .field_exists = (_test),\
+    .vmsd         = &(_vmsd),\
+    .size         = sizeof(_type),\
+    .flags        = VMS_STRUCT | VMS_VARRAY,\
+    .offset       = vmstate_offset_varray(_state, _field, _type),\
+}
+
+and make C hpet use this:
+
+        VMSTATE_STRUCT_VARRAY_TEST(timer, HPETState, num_timers_save,
+                                   hpet_validate_num_timers, 0,
+                                   vmstate_hpet_timer, HPETTimer),
+
+Alternatively, we can also have Rust use num_timers (as u8) for timers
+array VMState, but this will bring back the conversion issue between u8
+and usize, which is the commit b3bf86b8936d & 6e85cfe44c0e want to fix...
+
+Thanks,
+Zhao
+
 
