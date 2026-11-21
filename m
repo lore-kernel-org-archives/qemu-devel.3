@@ -1,94 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E92C606A33B
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Nov 2026 16:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A164606A320
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Nov 2026 18:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ccpr5KCt
+	dkim=pass (2048-bit key, unprotected) header.d=amutable-com.20260707.gappssmtp.com header.i=@amutable-com.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=N4q8NttM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUoND-0007nO-Vk; Sat, 21 Nov 2026 11:55:36 -0500
+	id 1xUq3k-0002aU-Ir; Sat, 21 Nov 2026 13:43:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUoNB-0007lI-AE
- for qemu-devel@nongnu.org; Sat, 21 Nov 2026 11:55:34 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <alex@amutable.com>) id 1xUq3I-0002Yw-7D
+ for qemu-devel@nongnu.org; Sat, 21 Nov 2026 13:43:09 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xUoN9-0000oB-I8
- for qemu-devel@nongnu.org; Sat, 21 Nov 2026 11:55:33 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2f06ff94acfso1505165ad.0
- for <qemu-devel@nongnu.org>; Sat, 21 Nov 2026 08:55:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex@amutable.com>) id 1xUq3G-0004YM-A3
+ for qemu-devel@nongnu.org; Sat, 21 Nov 2026 13:43:07 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-48e09aa5264so1054309f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 21 Nov 2026 10:43:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795280130; x=1795884930; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Bagqczuuyp3Qr32vQtJyRb5XD5AdRgE7p82m+nSsMgA=;
- b=ccpr5KCtSvyK8G6Ss75nCCLemycs2rfyCjWxwwXcEAJwazakQTCGcYlae2nmqxtih7
- 96aI5571HOcufnThRG1MNjIymcjkCVCdiVSylW70JicizM2Y9LP6IcRsHN2DWtDy08pF
- bve2RbzuB+y3Y56ovFBTaiNw7SJveAuWciDRbCKJIKfHDjqwg2SHJTQuSdxtbXu5jhNe
- JQMkNVwIK6snqQu5QJydrnn2RwivDe7w1K+bedHxRo0I+1IjpWtZDw8hmud4RIYKefAN
- 0XkDGNhvGS/csSrFb3j/V1yhYMDA/49bf4xYgU5HMJglGH/VrQUr2PNPe9fiNBRiVeJd
- Gxvw==
+ d=amutable-com.20260707.gappssmtp.com; s=20260707; t=1795286584; x=1795891384;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=OPtNs4xMnm2ZdPak90Lg/QccmJA2D8okQG2oRAxtZmQ=;
+ b=N4q8NttMXz0cAY4S2PyZkyHymptlZDjrcJC/4ZONoN0TidBN945VsWhObWA8/vozYX
+ XtsRnTdN9h6tUvp8LvpjK0IAYP2OKP2wtyrRM4sSz8rhF/+o7x7wHTTT28gi7u2w6nBj
+ 43zo3ik6Ze2ArmafidqR0yDyS27SgdpWpsL0T37mVtnhZatDRTdkSTH0KgsawuFApJlW
+ a86b2I4po5H1LsYhmlQOXGvsy1y4n41Ee71/AtL20XXhSKUtl5u+T5kNSJZf89fWBrhj
+ AbHPWYk3aHotNT2WcxFJX7LdE+QRGz6ovK+Yy7AHlGscKuaL5sC1BF05/vfAbdTETo0L
+ dGNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795280130; x=1795884930;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Bagqczuuyp3Qr32vQtJyRb5XD5AdRgE7p82m+nSsMgA=;
- b=IfpNlGNW+T61fxfUuzC0+OnMQM+jZPbcIemm0g57qH2Aqr1j6qU1HBXABVO9XRJ0SK
- nVNuHqXpgJboMf+eQbMtvdt0lRRVMcfYQN60Lvs0M/h1EyG9iTkSrHuv4zF9/hgWsbRG
- Afla0e//ySQIeaCJCGr7glJ8rlbtX9ou1SHChr7TVWSGamLgqkwL2YTq18zgqpmffxmx
- LGECTOAjw9vItYU70BDHEJmzp1s1iyOvjfgPxp8qqfzxtaLfZ84zP4qLlTa0TDoNCU7g
- sC52z1aa3goQHLOorYohfRL4jptajEZun8uwUZmNzO0anMoQ9Cry6EtOeXTqTyPyjbFX
- +hIA==
-X-Gm-Message-State: APuU4Z+NYy7sa3M325b/+KpqlIXRERPqu2s0+i7UCm4eVapBXVo9A7Di
- OUTsDwZMhTY5Jj4x5pXy4kKF/B0QQFkVC2DC1MS88ZpqHSwrh8ziM1p1mXjMBTqEhTzyMa8TAGY
- nUYGo
-X-Gm-Gg: AZFdTZe7GHiLmvLF6fKMFrU+Okwia9S+PJvhSQofjIoMkrpHFRP3MtYua9Aof3pHk7k
- Jruj/X3db85Vf79OSdzPgRDsR6HiS9+DwCThWXnxMFqBdsF25llDC399Vhou9N1RbJTT6tVKeeu
- Ny53LJg42dSAGldX/tXL0Lo5bOmfCbm6S6bWNXR01hmePpQx7qlURDOSKg8LCRNcR63P0/B0vmH
- eNbL1uYaMPzZkxT2UOeW6ujmUOr65RK4zp2N2uU/wcahgIvAKedEUqq4H//jnSGXSTGEUeXmrtC
- gQJraE8CD0uHjXd/49PkzALFOXvb06Gin1ZW22pG5vWiIRDUpAJ5uhwjJDfloLf9vKE8t7z2thr
- RehO6K3YlPA/AstULxFrup5lC2B2GTMQqRTZ3TCdArzv64Dj8n6+btbdyKJymZz/v0Xn7d/YqKL
- x1RQ4C4I2b5MRheuzrDo223R8zS2DMLnCQ+nFqsezEQymdgW4gJ22p3KrHQgbLaG8XYgu7gSxhd
- 8wkVbeJB5XrrNemaly8gfnUB+HZuGVYxpUaNjl9so1EJBGC/g6xV3uZo643+8mW8/n/7GESaQKf
- jyVbUn2rceoSUIqGLcGrOODLrs/2kf9sFj6svRT3XFJi0oSITLXfYDLXfiJYXmoA3qSVXvc=
-X-Received: by 2002:a17:903:26c8:b0:2df:b250:ad9a with SMTP id
- d9443c01a7336-2f03f1722c4mr59385255ad.48.1795280129425; 
- Sat, 21 Nov 2026 08:55:29 -0800 (PST)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ d=1e100.net; s=20260707; t=1795286584; x=1795891384;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=OPtNs4xMnm2ZdPak90Lg/QccmJA2D8okQG2oRAxtZmQ=;
+ b=FSMXYgJQmG2eDcYQ9Nb4nnbiCyGxBmX3fpCD+lMGfOfoeAawt3MX9cF3t4AMvdiMlh
+ +zhD7BedlXgHjvSFXAOBgKAmRz3FWp4kl8ZgMP30alNQ8IcCN87d4d/S6s38vVEaI1x5
+ 2mbkWrOGrL3g90OWq1/m8yt/z2y/UQJrmhPxGeSxIJg2nPiX/dE0ltu1qPDCHVENYLrt
+ GsrnQrEfWtunDFinNMEQMIDOY371kl94Rwzb2s2tTiV8PhsekCnysl8PSflDmZEULf0U
+ hN0/0gFQSXxlB3oG8zPsGVD4dE/SoewwigLG6lr4EUtEnQlWkukSiRXyNwCxs8v6gXps
+ 1qVA==
+X-Gm-Message-State: APuU4Z+xNr1KBXJgKIsEBjdS67P5cKaUTh+jfFVIl0G+5DLuKNwueIOf
+ PmcUUeVHc0MyBzOqpgaPwFUlY7L3/GvQP5Uxhwx+362VzcnOWYfZy1gX7aQcGA8qUYbxHxhp1bS
+ eNWUKPX3z
+X-Gm-Gg: AZFdTZeiF7SfXhGwlDoKgUhFViZzLXlsP3dxJ61SYk5wMlj4SOkcQVjJ+ABFyrxArtH
+ dzZ3eaD9DTp/dWzk1ro1pEEGvcZG3KS61RKnrzoADO2BRIujLa/4RZIGTA/kaf0iJuXlA4cpZEo
+ DGrtL/ICoF3H7/w98Ljm/J8yOmi6+b11t1sjAYxigT/hDPe98Xrjgp+q7popY7I0KbeiTxX3qCu
+ Dz8eylfqexHp+TVzulcq4FjwGPpnF00GTxPWy9uoWK/s9iVxEEOt6YU777rPJFw+8NXboUDiEtx
+ CavlcRbR3oedqP/1y7sRhjS1K8R1xdKZb053incUQwrFvalDOG4Mx0CLy8y1nlUCU8a46GRMK0x
+ HgTPHrB3vlncEiAnE3cItSufL5FEZV5nSsvB7N862IdM+QGN9BTXFTpUu5uN7V0QIdxt3bR+ryO
+ BplC6fDo3j3+eVevdgOAkco6iuddSeCrcASI5eq+UNdlvqxY7Mgn4zpFDkh25Bl9hyk0orPDXQe
+ ff/c5y8h8D3lvQ/3cl8+bVPV/2PlL4WIr3FNKYfNXbGKrU23ljuH20ItmGfCS+rVg/NMB7H6jU5
+ o/Q9CMiLfRpmxtXwd2inbcwTVy5L37f2aqEL/hUnWy45M9rbECqNJ/0b0p6nfeYF967Sa70WRT8
+ RvSFa6g21/iQY6qhC
+X-Received: by 2002:a05:6000:26ca:b0:48d:f14a:9188 with SMTP id
+ ffacd0b85a97d-4abb0f3c225mr13547600f8f.17.1795286583464; 
+ Sat, 21 Nov 2026 10:43:03 -0800 (PST)
+Received: from alex-t14g7.lan
+ (p200300cf572c2800e6fa15a778fe8e37.dip0.t-ipconnect.de.
+ [2003:cf:572c:2800:e6fa:15a7:78fe:8e37])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2f03ee84294sm28015785ad.9.2026.11.21.08.55.27
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Nov 2026 08:55:28 -0800 (PST)
-Message-ID: <b8601f47-cc5d-44bc-9455-28b994787985@linaro.org>
-Date: Sat, 21 Nov 2026 08:55:25 -0800
+ ffacd0b85a97d-4ab6b110d56sm12370285f8f.40.2026.11.21.10.43.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 21 Nov 2026 10:43:03 -0800 (PST)
+From: Alexander Mikhalitsyn <alex@amutable.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Klaus Jensen <its@irrelevant.dk>,
+ Peter Xu <peterx@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ Alexander Mikhalitsyn <alex@amutable.com>
+Subject: [PATCH] tests/functional/x86_64: fix race in NVMe live migration test
+Date: Sat, 21 Nov 2026 19:43:01 +0100
+Message-ID: <20261121184301.21112-1-alex@amutable.com>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] tcg patch queue 20261120
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20261120225138.7198-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261120225138.7198-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex@amutable.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,33 +103,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/20/26 14:51, Richard Henderson wrote:
-> The following changes since commit 08c9bbb825148dec9669f5184ecf18823bb6d631:
-> 
->    Update version for v11.2.0-rc1 release (2026-11-18 12:57:24 -0800)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20261120
-> 
-> for you to fetch changes up to 3b89d474910fe8a8e70d83639f5bd26de37ccb77:
-> 
->    docs/tcg-ops: Rename cpu_env to tcg_env (2026-11-19 11:56:49 -0800)
-> 
-> ----------------------------------------------------------------
-> docs/tcg-ops: Rename cpu_env to tcg_env
-> accel/tcg: Fix jump cache flush after large page flush
-> host/include/loongarch64: Fix build with 128-bit LL/SC enabled
+This test uses /tmp to hold test_nvme_mig_workload.pid file, which
+is a PID of a "workload" process (producing heavy read I/O).
 
-Applied, thanks.
+Earlier I did a mistake and forgot to mount /tmp as tmpfs, instead
+/tmp was using the same storage as root-filesystem (which lives on
+NVMe device).
 
-r~
+The problem here is that for this device we use "snapshot=on" mode,
+so after live migration all data that was written on the underlying
+disk is lost. It is not critical for the test itself (because it's
+read-only test by design), but very critical for the test logic
+that uses /tmp to find out the PID of the workload process to kill it
+after live migration. Absence of this file causes test to fail
+spontaneously.
+
+Link: https://lore.kernel.org/all/20260921190345.1709227-1-alex.bennee@linaro.org/
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Alexander Mikhalitsyn <alex@amutable.com>
+---
+ tests/functional/x86_64/test_nvme_migration.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
+index 890f0aab6d..a8fb5f9e81 100755
+--- a/tests/functional/x86_64/test_nvme_migration.py
++++ b/tests/functional/x86_64/test_nvme_migration.py
+@@ -94,6 +94,8 @@ def launch_source_vm(self, vm):
+                                           prompt, vm=vm)
+         exec_command_and_wait_for_pattern(self, 'mount -t sysfs sysfs /sys',
+                                           prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'mount -t tmpfs tmpfs /tmp',
++                                          prompt, vm=vm)
+ 
+         # Run workload before migration to check if it continues
+         # to run properly after migration.
+-- 
+2.47.3
+
 
