@@ -1,64 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F947606A32A
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 14:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429E0606A320
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 16:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=deller@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=rwui/gl5
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=deller@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=b6epee7I
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xV8tV-0007yr-Hb; Sun, 22 Nov 2026 09:50:17 -0500
+	id 1xVA5x-0007Hy-QI; Sun, 22 Nov 2026 11:07:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xV8tP-0007xP-Bb
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 09:50:11 -0500
-Received: from mout.gmx.net ([212.227.15.19])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xVA5u-0007Hi-SM
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 11:07:11 -0500
+Received: from mout.gmx.net ([212.227.15.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xV8tN-0001V7-9B
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 09:50:10 -0500
-DKIM2-Signature: i=1; m=1; t=1795359003; mf=PGRlbGxlckBnbXguZGU+;
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xVA5r-0002Eb-8b
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 11:07:10 -0500
+DKIM2-Signature: i=1; m=1; t=1795363625; mf=PGRlbGxlckBnbXguZGU+;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=; d=gmx.de;
- s=s31663417:rsa-sha256:XOiB0lWBrbn7D9q9ZCy4Ymas20xd
- sXyPTSN5JsfvsxbzzjXTtJlw72t8v0kvwAUDn3Dcx9LqEHz6x7BNdDM0WeVyHJ0yH6DfpwXeK+3
- VWNIe87FRBoN0pV5IFyUWtlhTa6KLWYEO0LQrdSaMZCwRj0P5eKw2Cn2AE+wHy++ovPHrL1IGnJ
- 4NpKNqvqGhsM4dh+6c91lOpu7j70epiQVVq5Oulsl3AS//SUxyLglWZx2fkZx786E735NyZQJ7A
- 6rOpC6Z3k+gqamjT+QfhCJ0D/g6UBxINV/OQaDlMI3svl1zjYIdV26u7bbkgex8PnImelnw5SGF
- /tMj06KJGuft8Q==;
-Message-Instance: m=1; h=sha256: 1Bi05ZaG4h9krp/fj3GWyUJ+WUoypBm8+dd4pP4XLpw=:
- 0hHyEle4zg1cf9EyuTeu5Aor8qyWcOPE8/R4UidRX30=, sha512:
- aKpUxkDRaHWnJilrWUlTUgcPvxllMABD9jOEhW0XYdWwld2pFcKpdvFrP75n5y7CgNbIMppKpv4k0ATlwnrMnw==:
- qXc2V1NxV2mpL8OiNx1/5BpW0jErDFUMy7iOQrVOS3GKYV3pZjrfAWTVleXhaaHZ3MvrFBYhxXkr6KW+5/J3Ig==;
+ s=s31663417:rsa-sha256:p2Z61IIZmuHh/lo+PAwrHjZLu/Bl
+ IrJXQVeilefCB7aZA7NNWq9hRGMm8dzKqfUlLqvr2rFB3gZfih4Uh45vKkeaJlCdH5UyM9NjOMZ
+ 2ulixURQtbDmMD043KawaBRmjWHck0BhUoYD4cKbbEbN4gjwVTDDhHg8HpritxCOFvH8hGvr5Ve
+ 1zHXKSXvk78CWp0OwXXxTLCOnXbNAfE9gUFo51unLExIrC8rcNb/0yKgIZFLURUtJTCTjtZVJo8
+ 4cV9P7PP213gMZskXHJFpRPmNOHW7Gwic0/dpxEWtQrZpcY9hY7WQrHRI2fHpjTExOBfIPjh/CG
+ jUzTJNxpn4U6hA==;
+Message-Instance: m=1; h=sha256: kx82iLA4m7X/jTGEE0iJSPz2xgbDZVDB2yKOzb3zJTg=:
+ GRY3g+rSmjtwIshvXvFG6RATsRZBzV7gD79/JJAvD3g=, sha512:
+ GzLZYvbMVWspml/7FbWMkUgoZ9p3cwdhtkAD1mwxB19b4GG00iRl+NDFSwQ6KysQ0eGGkHUzZsjfXxsCTuG8rg==:
+ fqgMDKDEfyKuuI7TbOcttuafgV9KUdzS68Y45Nd4lczkwizeBINoB9kmeBJpIwkgR7BDmn/XgQTym68kC8RA+g==;
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1795359000; x=1795963800; i=deller@gmx.de;
- bh=hXO3pVL1k16qJm7TE1eavO8YGH3UTGtPJUSYgsz36Jk=;
+ s=s31663417; t=1795363621; x=1795968421; i=deller@gmx.de;
+ bh=2YmlMG0+NPRPmhXjniG9ecB8WmWMA3BNzV1gmMtwZOg=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=rwui/gl5pHT39fPWYYHqZDc3VxstMRnwdmw1IMQ9i1C43WFNmzFsINImLz5kzpft
- a1x+84LxMnSEntiQwb4xwFtmpFLPNHhEBOs2idCAHcLCehvp1eCrWjf99TqLU36it
- O6Y28FjGm9PhDUAu87k5UfN7uqQCKuJClzQlCLl4mTt7Xj37fGg9gRO4I6SkdHC1G
- GrM7Gbhb4D6rQmugbdWjZ77K+j0G/WsAH22ljTFOrTPM8dF9i97r10EgOH8aH280R
- DtJFXWExKR+CuY1KCPPnPhTlcnY1JE5AZGq4dCAG4lXfTU2ynioPnae2YIMiB++Ec
- GYdrAojNc3irUUuwLQ==
+ b=b6epee7Ijp1/aqwloZ1XW5wNncEvRuoEy6JBEuJpfpH3IvjbThFcdX90n3xByTmh
+ 1LdvXZqQj59ec6NuBnmP4K+4/0GUYUoGWWfqx4ivyh95IgStYKLsbtSHRTJ7dc6Bo
+ jQyp8EcEGCnoBTIPtd29KhREeop++sWZLOGYVjZKY2QCuWQN6phvKNx0kHYGGkrPA
+ WmnaH5E4SsT7RsCuxbxeIYcC9Vg5XBd7GI3zP5Gg61YAWh92q+uJB6RYO0Z8pWuzH
+ 7y9lYdewzsNxNuHv/kb4cIPoK+zNqHkzzzXDFAwA6uBOiFK9ln6LO0f5NXj5jqze3
+ B+IIv5ukWLHkmt8ilw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3siA-1yUyoy11rE-017W5q; Sun, 22
- Nov 2026 15:50:00 +0100
-Message-ID: <2810afa2-4f26-49d9-ba01-a85398b84839@gmx.de>
-Date: Sun, 22 Nov 2026 15:49:58 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUGe1-1xupqJ3uZX-00Z0FB; Sun, 22
+ Nov 2026 17:07:01 +0100
+Message-ID: <9ed93ce9-7443-4f3d-a977-fdcbcb5e97cc@gmx.de>
+Date: Sun, 22 Nov 2026 17:06:56 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1] linux-user: do not emulate PI futexes given
- endianness mismatch
-To: =?UTF-8?Q?Barnab=C3=A1s_P=C5=91cze?= <pobrn@protonmail.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20261119191247.391446-1-pobrn@protonmail.com>
+Subject: Re: [PATCH] linux-user: honor dirfd for synthetic proc opens
+To: Artemii Mashanov <ralerrdirsardx@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20261025131700.34930-1-ralerrdirsardx@gmail.com>
+ <20261025152314.49954-1-ralerrdirsardx@gmail.com>
+ <CAGHp__YOsuwOR+2NdwPmV2qp5az96EbsmhiFgjQmVMvC4DT+LA@mail.gmail.com>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -104,128 +105,129 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20261119191247.391446-1-pobrn@protonmail.com>
+In-Reply-To: <CAGHp__YOsuwOR+2NdwPmV2qp5az96EbsmhiFgjQmVMvC4DT+LA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:AbFXnXmgC21rRNrX/7UV95sA1Vo5oNmijTvVyjOVnzOae2UkK4f
- Oui883o5KL6Pi3WXHIvxBMgHdl9/S/nbdeNKCCIDf2EzuaRE7j8F+VzamBy21jYwvP+pHTg
- PyrlprCvAlZvAuuiy5WSO6IY6m6YWFFGAzZb5XNQHr/zo5nWLENZ9uifNKmktOEN//i73Us
- tCSOIIIYStWGejYbNlAyw==
-UI-OutboundReport: notjunk:1;M01:P0:GUFkudff6Ec=;UV97se25jOjpnd8bIcUkaIuy4XH
- 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
- lx/xxpM2dw==
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:EmTSzAXwlE/N1FmSuKULutxlTX0L3tRZNImwRnHOm5kLKCAVJb1
+ cEIWjgykLKfHgMdiEKp3jcIEavV8E/NsARFqwYoxJY1Yr9kXD4JT7qhIwX2SI3EtdBgLsfs
+ Hzx7hWEYpRHPKNr5tsZYMIF1auYBggiaMb9IjgJ3jxEMAGpi6NrML9+Hv96rQ1n6wos9q/7
+ MwjQVU0zm/QvNEOemx1mA==
+UI-OutboundReport: notjunk:1;M01:P0:QFKiKIRU2+Q=;lNys8WRhSOWpsEO2n4zoVFaSd9A
+ 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
+Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -246,41 +248,679 @@ X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/19/26 20:12, Barnab=C3=A1s P=C5=91cze wrote:
-> For PI futexes, the futex word is expected to contain the thread id in n=
-ative
-> byte order. And failing to emulate that leads to issues as e.g. glibc do=
-es
-> not expect `ESRCH` to be returned from a `FUTEX_LOCK_PI` operation.
+On 11/17/26 09:31, Artemii Mashanov wrote:
+> Hi,
 >=20
-> If the mutex is set to be "robust", then this is detected as unrecoverab=
-le
-> failure and glibc aborts (since a robust mutex should've been unlocked b=
-y
-> the kernel when the owner dies):
+> Ping on this patch. Could someone please take a look when time permits?
 >=20
->    Fatal glibc error: pthread_mutex_lock.c:450 (__pthread_mutex_lock_ful=
-l): assertion failed: e !=3D ESRCH || !robust
->    qemu: uncaught target signal 6 (Aborted) - core dumped
->    Aborted (core dumped)
->=20
-> Since `FUTEX_LOCK_PI{,2}` cannot be easily emulated when the host and ta=
-rget
-> endianness differs, do not handle them, and return `ENOSYS`. This allows
-> e.g. glibc to detect that they do not work and handle things accordingly=
-.
->=20
-> Link: https://gitlab.com/qemu-project/qemu/-/work_items/4911
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Barnab=C3=A1s P=C5=91cze <pobrn@protonmail.com>
-> ---
->   linux-user/syscall.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de> # on big-endian hppa guest
+> Please let me know if any changes or additional testing are needed.
 
-I've applied this patch to the linux-user-next git tree.
+I've queued this patch up for qemu v12.0.
+
+Overall I'm not happy how we handle the relative paths when running
+outside of a chroot. I think this something we should take a closer
+look during the next release cycle.
 
 Thanks!
-Helge
+Helge=20
+> Thanks,
+> Artemii
+>=20
+> =D0=B2=D1=81, 25 =D0=BE=D0=BA=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 18:23, =
+Artemii Mashanov <ralerrdirsardx@gmail.com>:
+>>
+>> Opening "<pid>/cmdline" relative to a directory descriptor for /proc
+>> can return QEMU's command line instead of the guest's.
+>>
+>> Honor dirfd when selecting synthetic proc contents and add regression
+>> coverage for openat and openat2.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4458
+>> Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+>> ---
+>>   linux-user/syscall.c                     | 321 +++++++++++++++++-----=
+-
+>>   tests/tcg/multiarch/linux/proc-openat.c  |  94 +++++++
+>>   tests/tcg/multiarch/linux/proc-openat2.c |  83 ++++++
+>>   tests/tcg/multiarch/meson.build          |   2 +
+>>   4 files changed, 418 insertions(+), 82 deletions(-)
+>>   create mode 100644 tests/tcg/multiarch/linux/proc-openat.c
+>>   create mode 100644 tests/tcg/multiarch/linux/proc-openat2.c
+>>
+>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+>> index 0380691a8b..0583e7e19d 100644
+>> --- a/linux-user/syscall.c
+>> +++ b/linux-user/syscall.c
+>> @@ -8839,12 +8839,132 @@ static int open_net_route(CPUArchState *cpu_en=
+v, int fd)
+>>   }
+>>   #endif
+>>
+>> -static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
+>> -                              const char *fname, int flags, mode_t mod=
+e,
+>> -                              int openat2_resolve, bool safe)
+>> +static char *proc_entry_path(int dirfd, const char *name)
+>> +{
+>> +    g_autofree char *base =3D NULL;
+>> +    g_autofree char *absolute =3D NULL;
+>> +    g_autofree char *parent =3D NULL;
+>> +    g_autofree char *resolved =3D NULL;
+>> +    g_autofree char *entry =3D NULL;
+>> +    char fd_path[64];
+>> +
+>> +    if (!name[0]) {
+>> +        snprintf(fd_path, sizeof(fd_path), "/proc/self/fd/%d", dirfd);
+>> +        return g_file_read_link(fd_path, NULL);
+>> +    }
+>> +    if (name[0] =3D=3D '/') {
+>> +        absolute =3D g_strdup(name);
+>> +    } else {
+>> +        if (dirfd =3D=3D AT_FDCWD) {
+>> +            base =3D getcwd(NULL, 0);
+>> +        } else {
+>> +            snprintf(fd_path, sizeof(fd_path), "/proc/self/fd/%d", dir=
+fd);
+>> +            base =3D g_file_read_link(fd_path, NULL);
+>> +        }
+>> +        if (!base) {
+>> +            return NULL;
+>> +        }
+>> +        absolute =3D g_build_filename(base, name, NULL);
+>> +    }
+>> +    parent =3D g_path_get_dirname(absolute);
+>> +    resolved =3D realpath(parent, NULL);
+>> +    if (!resolved) {
+>> +        return NULL;
+>> +    }
+>> +    entry =3D g_path_get_basename(absolute);
+>> +    return g_build_filename(resolved, entry, NULL);
+>> +}
+>> +
+>> +static int fake_open_contents(CPUArchState *cpu_env,
+>> +                              int (*fill)(CPUArchState *, int),
+>> +                              int status_flags, bool safe)
+>> +{
+>> +    g_autofree char *filename =3D NULL;
+>> +    const char *tmpdir =3D g_get_tmp_dir();
+>> +    const char *reader_path;
+>> +    char fd_path[64];
+>> +    bool named =3D status_flags & O_NOFOLLOW;
+>> +    int fd, reader =3D -1, result =3D -1, saved_errno;
+>> +
+>> +retry:
+>> +    if (named) {
+>> +        g_free(filename);
+>> +        filename =3D g_build_filename(tmpdir, "qemu-open.XXXXXX", NULL=
+);
+>> +        fd =3D g_mkstemp_full(filename, O_RDWR | O_CLOEXEC, 0600);
+>> +        if (fd < 0 && strcmp(tmpdir, P_tmpdir) &&
+>> +            errno !=3D EMFILE && errno !=3D ENFILE &&
+>> +            errno !=3D ENOMEM && errno !=3D EINTR) {
+>> +            tmpdir =3D P_tmpdir;
+>> +            goto retry;
+>> +        }
+>> +    } else {
+>> +        fd =3D memfd_create("qemu-open", MFD_CLOEXEC);
+>> +    }
+>> +    if (fd < 0) {
+>> +        if (!named && (errno =3D=3D ENOSYS || errno =3D=3D EPERM)) {
+>> +            named =3D true;
+>> +            goto retry;
+>> +        }
+>> +        return -1;
+>> +    }
+>> +    if (fill(cpu_env, fd)) {
+>> +        goto out;
+>> +    }
+>> +    if (named) {
+>> +        int closed =3D close(fd);
+>> +
+>> +        fd =3D -1;
+>> +        if (closed < 0) {
+>> +            goto out;
+>> +        }
+>> +        reader_path =3D filename;
+>> +    } else {
+>> +        snprintf(fd_path, sizeof(fd_path), "/proc/self/fd/%d", fd);
+>> +        reader_path =3D fd_path;
+>> +    }
+>> +    reader =3D safe ? safe_openat(AT_FDCWD, reader_path, status_flags,=
+ 0) :
+>> +                    openat(AT_FDCWD, reader_path, status_flags, 0);
+>> +    if (reader < 0) {
+>> +        if (!named && errno =3D=3D EMFILE) {
+>> +            close(fd);
+>> +            named =3D true;
+>> +            goto retry;
+>> +        }
+>> +        goto out;
+>> +    }
+>> +    result =3D named ? reader : dup3(reader, fd, status_flags & O_CLOE=
+XEC);
+>> +    if (result >=3D 0) {
+>> +        if (named) {
+>> +            reader =3D -1;
+>> +        } else {
+>> +            fd =3D -1;
+>> +        }
+>> +    }
+>> +out:
+>> +    saved_errno =3D errno;
+>> +    if (reader >=3D 0) {
+>> +        close(reader);
+>> +    }
+>> +    if (fd >=3D 0) {
+>> +        close(fd);
+>> +    }
+>> +    if (named) {
+>> +        unlink(filename);
+>> +    }
+>> +    errno =3D saved_errno;
+>> +    return result;
+>> +}
+>> +
+>> +static int maybe_do_fake_open(CPUArchState *cpu_env, int opened_fd, in=
+t dirfd,
+>> +                              const char *fname,
+>> +                              const struct open_how_ver0 *how,
+>> +                              bool safe)
+>>   {
+>>       g_autofree char *proc_name =3D NULL;
+>> +    char fd_path[64];
+>>       const char *pathname;
+>> +    int flags =3D how->flags;
+>> +    int original_errno =3D errno;
+>>       struct fake_open {
+>>           const char *filename;
+>>           int (*fill)(CPUArchState *cpu_env, int fd);
+>> @@ -8869,26 +8989,70 @@ static int maybe_do_fake_open(CPUArchState *cpu=
+_env, int dirfd,
+>>           { NULL, NULL, NULL }
+>>       };
+>>
+>> -    /* if this is a file from /proc/ filesystem, expand full name */
+>> -    proc_name =3D realpath(fname, NULL);
+>> -    if (proc_name && strncmp(proc_name, "/proc/", 6) =3D=3D 0) {
+>> -        pathname =3D proc_name;
+>> -    } else {
+>> -        pathname =3D fname;
+>> +    if (opened_fd >=3D 0 &&
+>> +        ((flags & (O_PATH | O_NOFOLLOW)) =3D=3D (O_PATH | O_NOFOLLOW))=
+) {
+>> +        return opened_fd;
+>> +    }
+>> +    if (opened_fd < 0 && original_errno !=3D ENOENT) {
+>> +        return opened_fd;
+>>       }
+>>
+>> -    if (is_proc_myself(pathname, "exe")) {
+>> -        /* Honor openat2 resolve flags */
+>> -        if ((openat2_resolve & RESOLVE_NO_MAGICLINKS) ||
+>> -            (openat2_resolve & RESOLVE_NO_SYMLINKS)) {
+>> -            errno =3D ELOOP;
+>> -            return -1;
+>> +    if (opened_fd >=3D 0 && !(flags & O_NOFOLLOW) &&
+>> +        !(how->resolve & (RESOLVE_IN_ROOT | RESOLVE_BENEATH |
+>> +                           RESOLVE_NO_SYMLINKS | RESOLVE_NO_MAGICLINKS=
+))) {
+>> +        struct stat opened, executable;
+>> +
+>> +        if (fstat(opened_fd, &opened) =3D=3D 0 &&
+>> +            stat("/proc/self/exe", &executable) =3D=3D 0 &&
+>> +            opened.st_dev =3D=3D executable.st_dev &&
+>> +            opened.st_ino =3D=3D executable.st_ino) {
+>> +            g_autofree char *entry =3D proc_entry_path(dirfd, fname);
+>> +
+>> +            if (entry && is_proc_myself(entry, "exe")) {
+>> +                close(opened_fd);
+>> +                if (how->resolve) {
+>> +                    return safe_openat2(AT_FDCWD, real_exec_path,
+>> +                                        how, sizeof(*how));
+>> +                }
+>> +                return safe ? safe_openat(AT_FDCWD, real_exec_path,
+>> +                                          flags, how->mode) :
+>> +                       openat(AT_FDCWD, real_exec_path, flags, how->mo=
+de);
+>> +            }
+>>           }
+>> -        if (safe) {
+>> -            return safe_openat(dirfd, real_exec_path, flags, mode);
+>> -        } else {
+>> -            return openat(dirfd, real_exec_path, flags, mode);
+>> +    }
+>> +
+>> +    if (opened_fd < 0) {
+>> +        g_autofree char *parent =3D g_path_get_dirname(fname);
+>> +        g_autofree char *entry =3D g_path_get_basename(fname);
+>> +        g_autofree char *directory =3D NULL;
+>> +        struct open_how_ver0 parent_how =3D {
+>> +            .flags =3D O_PATH | O_DIRECTORY | O_CLOEXEC,
+>> +            .resolve =3D how->resolve,
+>> +        };
+>> +        int fd;
+>> +
+>> +        fd =3D how->resolve ?
+>> +             safe_openat2(dirfd, parent, &parent_how, sizeof(parent_ho=
+w)) :
+>> +             safe ? safe_openat(dirfd, parent, parent_how.flags, 0) :
+>> +                    openat(dirfd, parent, parent_how.flags, 0);
+>> +        if (fd >=3D 0) {
+>> +            snprintf(fd_path, sizeof(fd_path), "/proc/self/fd/%d", fd)=
+;
+>> +            directory =3D g_file_read_link(fd_path, NULL);
+>> +            close(fd);
+>> +            if (directory) {
+>> +                proc_name =3D g_build_filename(directory, entry, NULL)=
+;
+>> +            }
+>>           }
+>> +    } else {
+>> +        snprintf(fd_path, sizeof(fd_path), "/proc/self/fd/%d", opened_=
+fd);
+>> +        proc_name =3D g_file_read_link(fd_path, NULL);
+>> +    }
+>> +    pathname =3D proc_name;
+>> +
+>> +    if ((opened_fd >=3D 0 && (flags & O_PATH)) ||
+>> +        !pathname || strncmp(pathname, "/proc/", 6)) {
+>> +        errno =3D original_errno;
+>> +        return opened_fd;
+>>       }
+>>
+>>       for (fake_open =3D fakes; fake_open->filename; fake_open++) {
+>> @@ -8898,60 +9062,52 @@ static int maybe_do_fake_open(CPUArchState *cpu=
+_env, int dirfd,
+>>       }
+>>
+>>       if (fake_open->filename) {
+>> -        const char *tmpdir;
+>> -        char filename[PATH_MAX];
+>> -        int fd, r;
+>> -
+>> -        fd =3D memfd_create("qemu-open", 0);
+>> -        if (fd < 0) {
+>> -            if (errno !=3D ENOSYS) {
+>> -                return fd;
+>> -            }
+>> -            /* create temporary file to map stat to */
+>> -            tmpdir =3D getenv("TMPDIR");
+>> -            if (!tmpdir)
+>> -                tmpdir =3D "/tmp";
+>> -            snprintf(filename, sizeof(filename), "%s/qemu-open.XXXXXX"=
+, tmpdir);
+>> -            fd =3D mkstemp(filename);
+>> -            if (fd < 0) {
+>> -                return fd;
+>> -            }
+>> -            unlink(filename);
+>> -        }
+>> -
+>> -        if ((r =3D fake_open->fill(cpu_env, fd))) {
+>> -            int e =3D errno;
+>> -            close(fd);
+>> -            errno =3D e;
+>> -            return r;
+>> +        int saved_errno, status_flags;
+>> +
+>> +        status_flags =3D flags & ~(O_CREAT | O_EXCL | O_TRUNC);
+>> +        if (opened_fd >=3D 0) {
+>> +            status_flags =3D fcntl(opened_fd, F_GETFL);
+>> +            saved_errno =3D errno;
+>> +            close(opened_fd);
+>> +            if (status_flags < 0) {
+>> +                errno =3D saved_errno;
+>> +                return -1;
+>> +            }
+>> +        } else if (flags & O_DIRECTORY) {
+>> +            errno =3D ENOTDIR;
+>> +            return -1;
+>> +        } else if ((flags & (O_CREAT | O_EXCL)) =3D=3D (O_CREAT | O_EX=
+CL)) {
+>> +            errno =3D EEXIST;
+>> +            return -1;
+>>           }
+>> -        lseek(fd, 0, SEEK_SET);
+>>
+>> -        return fd;
+>> +        status_flags |=3D flags & O_CLOEXEC;
+>> +        return fake_open_contents(cpu_env, fake_open->fill, status_fla=
+gs, safe);
+>>       }
+>>
+>> -    return -2;
+>> +    errno =3D original_errno;
+>> +    return opened_fd;
+>>   }
+>>
+>>   int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *pat=
+hname,
+>>                       int flags, mode_t mode, bool safe)
+>>   {
+>> -    int fd =3D maybe_do_fake_open(cpu_env, dirfd, pathname, flags, mod=
+e, 0, safe);
+>> -    if (fd > -2) {
+>> -        return fd;
+>> -    }
+>> +    struct open_how_ver0 how =3D { .flags =3D flags, .mode =3D mode };
+>> +    const char *host_name =3D path(pathname);
+>> +    int fd;
+>>
+>>       if (safe) {
+>> -        return safe_openat(dirfd, path(pathname), flags, mode);
+>> +        fd =3D safe_openat(dirfd, host_name, flags, mode);
+>>       } else {
+>> -        return openat(dirfd, path(pathname), flags, mode);
+>> +        fd =3D openat(dirfd, host_name, flags, mode);
+>>       }
+>> +    return maybe_do_fake_open(cpu_env, fd, dirfd, host_name, &how,
+>> +                              safe);
+>>   }
+>>
+>> -
+>>   static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
+>> -                      abi_ptr guest_pathname, abi_ptr guest_open_how,
+>> -                      abi_ulong guest_size)
+>> +                     abi_ptr guest_pathname, abi_ptr guest_open_how,
+>> +                     abi_ulong guest_size)
+>>   {
+>>       struct open_how_ver0 how =3D {0};
+>>       char *pathname;
+>> @@ -8981,23 +9137,19 @@ static int do_openat2(CPUArchState *cpu_env, ab=
+i_long dirfd,
+>>       how.flags =3D target_to_host_bitmask(tswap64(how.flags), fcntl_fl=
+ags_tbl);
+>>       how.mode =3D tswap64(how.mode);
+>>       how.resolve =3D tswap64(how.resolve);
+>> -    int fd =3D maybe_do_fake_open(cpu_env, dirfd, pathname, how.flags,=
+ how.mode,
+>> -                                how.resolve, true);
+>> -    if (fd > -2) {
+>> -        ret =3D get_errno(fd);
+>> -    } else {
+>> -        const char *host_pathname =3D pathname;
+>> -        if (pathname[0] =3D=3D '/' &&
+>> -            !(how.resolve & (RESOLVE_IN_ROOT | RESOLVE_BENEATH))) {
+>> -            /*
+>> -             * RESOLVE_BENEATH rejects absolute paths; RESOLVE_IN_ROOT
+>> -             * resolves them relative to dirfd.
+>> -             */
+>> -            host_pathname =3D path(pathname);
+>> -        }
+>> -        ret =3D get_errno(safe_openat2(dirfd, host_pathname, &how,
+>> -                                     sizeof(struct open_how_ver0)));
+>> +    const char *host_pathname =3D pathname;
+>> +    if (pathname[0] =3D=3D '/' &&
+>> +        !(how.resolve & (RESOLVE_IN_ROOT | RESOLVE_BENEATH))) {
+>> +        /*
+>> +         * RESOLVE_BENEATH rejects absolute paths; RESOLVE_IN_ROOT
+>> +         * resolves them relative to dirfd.
+>> +         */
+>> +        host_pathname =3D path(pathname);
+>>       }
+>> +    int fd =3D safe_openat2(dirfd, host_pathname, &how,
+>> +                         sizeof(struct open_how_ver0));
+>> +    ret =3D get_errno(maybe_do_fake_open(cpu_env, fd, dirfd, host_path=
+name, &how,
+>> +                                      true));
+>>
+>>       fd_trans_unregister(ret);
+>>       unlock_user(pathname, guest_pathname, 0);
+>> @@ -9034,6 +9186,19 @@ ssize_t do_guest_readlink(const char *pathname, =
+char *buf, size_t bufsiz)
+>>       return ret;
+>>   }
+>>
+>> +static ssize_t do_guest_readlinkat(int dirfd, const char *pathname,
+>> +                                  char *buf, size_t bufsiz)
+>> +{
+>> +    const char *host_name =3D path(pathname);
+>> +    g_autofree char *entry_path =3D proc_entry_path(dirfd, host_name);
+>> +    ssize_t ret =3D readlinkat(dirfd, host_name, buf, bufsiz);
+>> +
+>> +    if (ret >=3D 0 && entry_path && is_proc_myself(entry_path, "exe"))=
+ {
+>> +        return do_guest_readlink(entry_path, buf, bufsiz);
+>> +    }
+>> +    return ret;
+>> +}
+>> +
+>>   static int do_execv(CPUArchState *cpu_env, int dirfd,
+>>                       abi_long pathname, abi_long guest_argp,
+>>                       abi_long guest_envp, int flags, bool is_execveat)
+>> @@ -11143,16 +11308,8 @@ static abi_long do_syscall1(CPUArchState *cpu_=
+env, int num, abi_long arg1,
+>>               } else if (!arg4) {
+>>                   /* Short circuit this for the magic exe check. */
+>>                   ret =3D -TARGET_EINVAL;
+>> -            } else if (is_proc_myself((const char *)p, "exe")) {
+>> -                /*
+>> -                 * Don't worry about sign mismatch as earlier mapping
+>> -                 * logic would have thrown a bad address error.
+>> -                 */
+>> -                ret =3D MIN(strlen(real_exec_path), arg4);
+>> -                /* We cannot NUL terminate the string. */
+>> -                memcpy(p2, real_exec_path, ret);
+>>               } else {
+>> -                ret =3D get_errno(readlinkat(arg1, path(p), p2, arg4))=
+;
+>> +                ret =3D get_errno(do_guest_readlinkat(arg1, p, p2, arg=
+4));
+>>               }
+>>               unlock_user(p2, arg3, ret);
+>>               unlock_user(p, arg2, 0);
+>> diff --git a/tests/tcg/multiarch/linux/proc-openat.c b/tests/tcg/multia=
+rch/linux/proc-openat.c
+>> new file mode 100644
+>> index 0000000000..4af2fde113
+>> --- /dev/null
+>> +++ b/tests/tcg/multiarch/linux/proc-openat.c
+>> @@ -0,0 +1,94 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +#define _GNU_SOURCE
+>> +#include <assert.h>
+>> +#include <errno.h>
+>> +#include <fcntl.h>
+>> +#include <stdlib.h>
+>> +#include <string.h>
+>> +#include <sys/resource.h>
+>> +#include <unistd.h>
+>> +
+>> +static char expected[16384];
+>> +static size_t expected_size;
+>> +
+>> +static void check(int dirfd, const char *name, int flags, int expected=
+_errno)
+>> +{
+>> +    char actual[sizeof(expected)];
+>> +    size_t size =3D 0;
+>> +    int fd =3D openat(dirfd, name, flags);
+>> +
+>> +    if (expected_errno) {
+>> +        assert(fd =3D=3D -1 && errno =3D=3D expected_errno);
+>> +        return;
+>> +    }
+>> +    assert(fd >=3D 0);
+>> +    assert((fcntl(fd, F_GETFD) & FD_CLOEXEC) =3D=3D
+>> +           ((flags & O_CLOEXEC) ? FD_CLOEXEC : 0));
+>> +    assert((fcntl(fd, F_GETFL) & (O_PATH | O_NOFOLLOW | O_ACCMODE)) =
+=3D=3D
+>> +           (flags & (O_PATH | O_NOFOLLOW | O_ACCMODE)));
+>> +    if (flags & O_PATH) {
+>> +        assert(read(fd, actual, 1) =3D=3D -1 && errno =3D=3D EBADF);
+>> +    } else {
+>> +        for (;;) {
+>> +            ssize_t n =3D read(fd, actual + size, sizeof(actual) - siz=
+e);
+>> +
+>> +            if (n < 0 && errno =3D=3D EINTR) {
+>> +                continue;
+>> +            }
+>> +            assert(n >=3D 0);
+>> +            if (!n) {
+>> +                break;
+>> +            }
+>> +            size +=3D n;
+>> +            assert(size < sizeof(actual));
+>> +        }
+>> +        assert(size =3D=3D expected_size && !memcmp(actual, expected, =
+size));
+>> +        assert(write(fd, "x", 1) =3D=3D -1 && errno =3D=3D EBADF);
+>> +    }
+>> +    assert(close(fd) =3D=3D 0);
+>> +}
+>> +
+>> +int main(int argc, char **argv)
+>> +{
+>> +    struct rlimit saved, limit;
+>> +    int cwd =3D open(".", O_PATH | O_DIRECTORY | O_CLOEXEC);
+>> +    int proc =3D open("/proc", O_PATH | O_DIRECTORY | O_CLOEXEC);
+>> +    int self =3D open("/proc/self", O_PATH | O_DIRECTORY | O_CLOEXEC);
+>> +    int flags =3D O_RDONLY | O_CLOEXEC;
+>> +
+>> +    assert(cwd >=3D 0 && proc >=3D 0 && self >=3D 0);
+>> +    for (int i =3D 0; i < argc; i++) {
+>> +        size_t size =3D strlen(argv[i]) + 1;
+>> +
+>> +        assert(size <=3D sizeof(expected) - expected_size);
+>> +        memcpy(expected + expected_size, argv[i], size);
+>> +        expected_size +=3D size;
+>> +    }
+>> +    check(AT_FDCWD, "/proc/self/cmdline", flags, 0);
+>> +    check(-1, "/proc/self/cmdline", flags, 0);
+>> +    check(proc, "self/cmdline", flags, 0);
+>> +    check(proc, "./self/cmdline", flags, 0);
+>> +    check(self, "cmdline", flags, 0);
+>> +    check(self, "cmdline", flags | O_NOFOLLOW, 0);
+>> +    check(self, "cmdline", O_PATH | O_CLOEXEC, 0);
+>> +    check(self, "cmdline", flags | O_DIRECTORY, ENOTDIR);
+>> +    assert(chdir("/proc") =3D=3D 0);
+>> +    check(AT_FDCWD, "self/cmdline", flags, 0);
+>> +    check(-1, "self/cmdline", flags, EBADF);
+>> +    assert(fchdir(cwd) =3D=3D 0);
+>> +    assert(close(self) =3D=3D 0);
+>> +    assert(close(proc) =3D=3D 0);
+>> +    assert(close(cwd) =3D=3D 0);
+>> +    assert(getrlimit(RLIMIT_NOFILE, &saved) =3D=3D 0);
+>> +    int next =3D open("/dev/null", O_RDONLY | O_CLOEXEC);
+>> +
+>> +    assert(next >=3D 0);
+>> +    limit =3D saved;
+>> +    limit.rlim_cur =3D next + 1;
+>> +    assert(setrlimit(RLIMIT_NOFILE, &limit) =3D=3D 0);
+>> +    assert(close(next) =3D=3D 0);
+>> +    check(AT_FDCWD, "/proc/self/cmdline", flags, 0);
+>> +    check(AT_FDCWD, "/proc/self/cmdline", flags | O_NOFOLLOW, 0);
+>> +    assert(setrlimit(RLIMIT_NOFILE, &saved) =3D=3D 0);
+>> +    return EXIT_SUCCESS;
+>> +}
+>> diff --git a/tests/tcg/multiarch/linux/proc-openat2.c b/tests/tcg/multi=
+arch/linux/proc-openat2.c
+>> new file mode 100644
+>> index 0000000000..7641bbe634
+>> --- /dev/null
+>> +++ b/tests/tcg/multiarch/linux/proc-openat2.c
+>> @@ -0,0 +1,83 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +#define _GNU_SOURCE
+>> +#include <assert.h>
+>> +#include <errno.h>
+>> +#include <fcntl.h>
+>> +#include <stdint.h>
+>> +#include <stdlib.h>
+>> +#include <sys/syscall.h>
+>> +#include <unistd.h>
+>> +
+>> +#ifdef SYS_openat2
+>> +#include <linux/openat2.h>
+>> +
+>> +static int cmdline_argc;
+>> +static char **cmdline_argv;
+>> +
+>> +static void check(int dirfd, const char *name, uint64_t flags,
+>> +                  uint64_t resolve, int expected_errno)
+>> +{
+>> +    struct open_how how =3D { .flags =3D flags, .resolve =3D resolve }=
+;
+>> +    char byte;
+>> +    int fd =3D syscall(SYS_openat2, dirfd, name, &how, sizeof(how));
+>> +
+>> +    if (expected_errno) {
+>> +        assert(fd =3D=3D -1 && errno =3D=3D expected_errno);
+>> +        return;
+>> +    }
+>> +    assert(fd >=3D 0);
+>> +    assert(fcntl(fd, F_GETFD) =3D=3D FD_CLOEXEC);
+>> +    if (flags & O_PATH) {
+>> +        assert(fcntl(fd, F_GETFL) & O_PATH);
+>> +        assert(read(fd, &byte, 1) =3D=3D -1 && errno =3D=3D EBADF);
+>> +    } else {
+>> +        for (int i =3D 0; i < cmdline_argc; i++) {
+>> +            const char *p =3D cmdline_argv[i];
+>> +
+>> +            do {
+>> +                assert(read(fd, &byte, 1) =3D=3D 1 && byte =3D=3D *p);
+>> +            } while (*p++);
+>> +        }
+>> +        assert(read(fd, &byte, 1) =3D=3D 0);
+>> +        assert(write(fd, "x", 1) =3D=3D -1 && errno =3D=3D EBADF);
+>> +    }
+>> +    assert(close(fd) =3D=3D 0);
+>> +}
+>> +#endif
+>> +
+>> +int main(int argc, char **argv)
+>> +{
+>> +#ifdef SYS_openat2
+>> +    struct open_how how =3D { .flags =3D O_RDONLY | O_CLOEXEC };
+>> +    int fd =3D syscall(SYS_openat2, AT_FDCWD, "/proc/self/cmdline",
+>> +                     &how, sizeof(how));
+>> +    int proc, self, root, flags =3D O_RDONLY | O_CLOEXEC;
+>> +
+>> +    cmdline_argc =3D argc;
+>> +    cmdline_argv =3D argv;
+>> +    if (fd < 0 && errno =3D=3D ENOSYS) {
+>> +        return EXIT_SUCCESS;
+>> +    }
+>> +    assert(fd >=3D 0 && close(fd) =3D=3D 0);
+>> +    proc =3D open("/proc", O_PATH | O_DIRECTORY | O_CLOEXEC);
+>> +    self =3D open("/proc/self", O_PATH | O_DIRECTORY | O_CLOEXEC);
+>> +    root =3D open("/", O_PATH | O_DIRECTORY | O_CLOEXEC);
+>> +    assert(proc >=3D 0 && self >=3D 0 && root >=3D 0);
+>> +    check(-1, "/proc/self/cmdline", flags, 0, 0);
+>> +    check(AT_FDCWD, "/proc/self/cmdline", flags,
+>> +          RESOLVE_NO_SYMLINKS, ELOOP);
+>> +    check(proc, "self/cmdline", flags, 0, 0);
+>> +    check(proc, "self/cmdline", flags, RESOLVE_NO_SYMLINKS, ELOOP);
+>> +    check(proc, "self/root/proc/self/cmdline", flags,
+>> +          RESOLVE_NO_MAGICLINKS, ELOOP);
+>> +    check(self, "../self/cmdline", flags, RESOLVE_BENEATH, EXDEV);
+>> +    check(self, "../self/cmdline", flags, RESOLVE_IN_ROOT, ENOENT);
+>> +    check(root, "proc/self/cmdline", flags, RESOLVE_NO_XDEV, EXDEV);
+>> +    check(proc, "self/cmdline", flags, UINT64_C(1) << 63, EINVAL);
+>> +    check(self, "cmdline", O_PATH | O_CLOEXEC, 0, 0);
+>> +    assert(close(root) =3D=3D 0);
+>> +    assert(close(self) =3D=3D 0);
+>> +    assert(close(proc) =3D=3D 0);
+>> +#endif
+>> +    return EXIT_SUCCESS;
+>> +}
+>> diff --git a/tests/tcg/multiarch/meson.build b/tests/tcg/multiarch/meso=
+n.build
+>> index e60a052700..337dda729a 100644
+>> --- a/tests/tcg/multiarch/meson.build
+>> +++ b/tests/tcg/multiarch/meson.build
+>> @@ -61,6 +61,8 @@ tests +=3D {
+>>     multiarch/'linux/linux-shmat-null.c': {},
+>>     multiarch/'linux/linux-sigrtminmax.c': {},
+>>     multiarch/'linux/linux-test.c': {},
+>> +  multiarch/'linux/proc-openat.c': {},
+>> +  multiarch/'linux/proc-openat2.c': {},
+>>     multiarch/'linux/test-vma.c': {},
+>>   }
+>>
+>> --
+>> 2.55.0
+>>
+
 
