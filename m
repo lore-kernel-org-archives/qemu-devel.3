@@ -1,90 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40C5606A320
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 07:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219FC606A332
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 09:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wXRSBKDX
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pdp1BB9v
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xV24A-000391-66; Sun, 22 Nov 2026 02:32:51 -0500
+	id 1xV3WU-0001Xd-KI; Sun, 22 Nov 2026 04:06:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itai.handler@gmail.com>)
- id 1xV23g-000369-K9
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 02:32:23 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xV3W8-0001WC-Av
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 04:05:48 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <itai.handler@gmail.com>)
- id 1xV23e-0000Vd-Sf
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 02:32:20 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4a35df85cc8so163616f8f.0
- for <qemu-devel@nongnu.org>; Sat, 21 Nov 2026 23:32:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xV3W6-0000ya-Rl
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 04:05:48 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c4d5b2db4bbso526485266b.0
+ for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 01:05:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795332737; x=1795937537; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795338345; x=1795943145; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=e64S4WnlE/+ph5XDdDBmL08MSRlgGmdTbb7tW197pZw=;
- b=wXRSBKDX2qS40Fb+9HaF8aOH/khqG+idYJn10cppAgyb/ETLtn92Kz6Wq2YWE6Ox2t
- ZRLFJZZClIGgXHcNAbYf/KKZDdwtpcNPWPHNvBPi/aaIcfJZSD6Blhu/6rcZ8HA3t5Pa
- gOu6vg3jTgocjWba43/Wz0oxSww7KglQoqD5eJk/W7dbVcBvCl+4NnKLWQ/DLKsREp+i
- tle1ZBNApEkDToXsx14DGJ9Pqqcv8GwvUUDQDR8ntRo4Q/Mh+MsutanKGNYzWTJPpoL6
- mH2g9qTHRzGQeXjbelN5qpaxDTsJCotQpgvnHK3a84R+2b50t0aKRexrcVAjUHkoyh8H
- rp0w==
+ bh=ZlG5sNKBkvXvY9Mqh0mDtE4lKYoM32I/uSr5hNM8NDQ=;
+ b=pdp1BB9vVRNXnS/XbVXOMzCjdjvJhiR7I7UBJL4rCXXbNwrxRf0DIeqFsABMb6qVOb
+ IITMOW3CyUm9QTRg/RHYnobzaJIkmOmaKwUwAWg9JiWkeJyGz0PNYzkFffn4CBorXaBR
+ 7fsQrY7M27mjywMkoF30i0eeA6qxeoM+apwSoOagBYTcg5WWXHSaTy660g1TeT22zMHo
+ yHCFak+0Or2eV2mV17yEB5YWINNaB4O3ZjC0vt0b5KXoLa9OZWvNhZQ3dCENRiLhXSjA
+ I8ipcQEobiXoQpg8Z0P3jRxKhofEBc6mUYGm560OMNELO7iNsg3BzkVks3DxStw4Xynl
+ Rw5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795332737; x=1795937537;
+ d=1e100.net; s=20260707; t=1795338345; x=1795943145;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=e64S4WnlE/+ph5XDdDBmL08MSRlgGmdTbb7tW197pZw=;
- b=bvDVNqsk6EueG8YLTz1I5wS2KITVSJY4BbyCAVHJRWCQ59zz53opA8GsN2g0O32MSN
- z7w6/1+FUNSaGDWjPzeQzXiLsj3LZRTPZ4J7crAv/OqM7FM7AmipRDZhd1htupmvClh5
- AeBuwcS+nRNYD0PCwgRnl7YupRFOX5HkUTg2RTwYgS9AIeBiywzR+d8/dXiHRsrAx/5b
- ag3Nq0YvbNvLe8mXjwDOHxKCpaU4KHx3u6n3YTmaW2y7qKJILm0ikmx1kvrYzbKNjjhK
- aKHk+voEzn3ky5Z9foQVxTP3ZL82z482tWQH+lkk1uYuSIMR+XqwRLHqiIMvAWpkLcnJ
- 208g==
-X-Forwarded-Encrypted: i=1;
- AL+hErEQGo/v8w2g8yp4/aHMqSiIgcYIEIttauUGvT+KmVZkt5I9suHbJlhqprgcbSPflA4SV4FGmMwFVojw@nongnu.org
-X-Gm-Message-State: APuU4Z8jQZoDzLOeYTHUjd8RXji0Xqy0JCY1+2JlwzPG2zVPcYwTcm/q
- 3uqKB5XPZbDYcmjjJ+kCloQ/EQg9VsyGcGeJ/JFghHwmXWB2TjCDqR1A
-X-Gm-Gg: AZFdTZfDF2ABoUHH2sDv1Htjr2063LHAw0g1/WOUi+aWa0QJq2LBC3VOZZX57M1g0Lj
- RKvqaDOTnGcnwoAOltO/7qN9kEmFCiHp+CKGllg4mLnxrNwjaXSIzO+0rEVpZKKue7fjleibo+B
- gExhD2mHsXnGgtWm0HV9B88a2CHFYzhclhhQ+0/f7Sf9WAZrInfJs3E04Ip0ucjjbA7kIDjzOxo
- c6ucfCWjKJwx/4cJmUVJzJLhttuYPhXvBCkBgMKJ1JP9CSpPxnyUOR0n6oRdJRSzCkLoG4yIBjb
- 8zQT8vt/jVKlBJeS4SSsLQFgLmsdQ7Gy8c+NUXbqWd6IBDW1vG8ROKoeic5oMpw7vI+jvjeZ/gn
- OIGZ9ryOfZnU+F2MIjL4uSBWK5lizZaLnWjUu7W0rVh73xK39dQxjUMkXBA1ff+49t9fXBaDqaE
- edKigDO1QvDWiQS33O055eBHM8qqLySBFoVoyC+fYyl41+4ZjgiXtUg3ciWVdyJo/9VCVaY9sH4
- yIsyosRkH9uGKYn8AEl8CfohM0jTfv2GoBSKTVuQKBqCNj7S7pJeDK5x+8raOXTgCtKzEABQUx1
- GoQCAOvZe8DLhiJMlBwhZdruz4HZjmAYo23ljCmYW1NhzF1qxCs=
-X-Received: by 2002:a05:600c:8284:b0:4bb:6c01:de9c with SMTP id
- 5b1f17b1804b1-4bb887f55c1mr155263005e9.2.1795332736521; 
- Sat, 21 Nov 2026 23:32:16 -0800 (PST)
-Received: from L-P-ITAIH2-L-RF.rf.local ([193.169.70.108])
+ bh=ZlG5sNKBkvXvY9Mqh0mDtE4lKYoM32I/uSr5hNM8NDQ=;
+ b=uETibEOcDiVZQY8rFxO756JpWhG4Y6gc7AeHTqOt1NsAozpa2fU8ZqPCHXKIRIyCUn
+ u9St1JM5FNYGK7mL0tsCO9XceOnWrtQBX8HT9+qWhd20tqgQEXcsBOVB18P9siiIAkyj
+ 1Kf/YJHiuEvOUvxROQ+fWL/gjo4woo9t6CHcZtt4FFfcJ5rPA6ekAIjowX5R6C0FI2hu
+ fLJ3atY4Wi9lhwv/88k2MaZC/ggUCLNSZoDqCR1jb5qNBjLClHnBWINyhdPHmyZkjVW4
+ c0XVKThGp5xqFv5jgWM0Upzu2J5R9KQXwot4cqy7g/dGwpcSkh8vvxi0bgcBaoQDHidD
+ Z+gw==
+X-Gm-Message-State: APuU4Z9iOPhU2RLlsyEjx+NzvtHFSiWOIvFn1DIt2H8k4C1RHBT9buU8
+ CGbP2lWiJlePjBpUGySaho0gygdItO+kK0tdKUDiJM6dIcCxBqHZujQ8dcy5+wBL
+X-Gm-Gg: AZFdTZf7ROsTcFIgbHK9yezFfDkulbT1Q6ri9Ajo7diLO0gfSlQVAXh8Mkgg1o4FjX+
+ N6ARoXdrvjCEVBhgWhjwJgHoRir6B2yr5VGqjkf1+xdHOAzAjm/g4B/ycmlMdKRm8/SGtrGOCWZ
+ QZzZtzsl0KOUpnHZuN8++4GoE3Erz4Rq0EbbHaOVpThQvrcsCzAa/znoi4vJMPkoRgmdZtwK1v/
+ LwYcjYdjeSmXL7BqD3zf4E7jrgxVZnz1Ca65qDF1ExktpUSjexKkTjRbxclsTXFWg7HE4/Z+d9s
+ Kmf0EKB6g6wcWhq7OHR4XAN46gAF0cZv7ow9KyOfCyrUKDuUHrEU2HqlPO38KK5A99aCGqG2jm7
+ tP5N6PlNOL4+i8A1+GFZYa1l0Toad3E99X324dGa3YiqlnZemoCbizNE+awYBCicfCo//6qwh9X
+ 4CX2vRp5juJlAQUz79xsMi+mJl1mxqfzArlNJgUgIAHtSqfsIc4enruYyD5GK8T8FLd0yV21V+C
+ Wg6YP84UJtbSY6nHJkdK5kbrkPDjXo6nCCj3IyDDxW+u4tXmAy0g12XVyKS/Ef/vD8Dli6hFOdL
+ kNd6l3KWSoetS7EbdKjudFIRNZG7srqpaFIWXX85KiFyM3JC1n+t1sZwI6EmCz0nIKtxzMFNALQ
+ I5XMbCZS4H0iTeRD/HbF9sgASFQseqepGS325XnI=
+X-Received: by 2002:a17:907:3d4e:b0:c4c:e91f:e1db with SMTP id
+ a640c23a62f3a-c51319a7850mr830662266b.25.1795338344574; 
+ Sun, 22 Nov 2026 01:05:44 -0800 (PST)
+Received: from tulp.my.domain
+ (2001-1c02-1a15-3000-2727-f7d1-9628-aa81.cable.dynamic.v6.ziggo.nl.
+ [2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb88402ce9sm188359425e9.0.2026.11.21.23.32.14
+ a640c23a62f3a-c513ad010a6sm298893666b.7.2026.11.22.01.05.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Nov 2026 23:32:15 -0800 (PST)
-From: Itai Handler <itai.handler@gmail.com>
-To: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>,
-	qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
- peter.maydell@linaro.org, francisco.iglesias@amd.com,
- edgar.iglesias@gmail.com, berrange@redhat.com, eugene@nuvacore.ai,
- takahiro.nakata.wr@renesas.com
-Subject: Re: [PATCH 00/20] hw/core: Remote Port Memory Master
-Date: Sun, 22 Nov 2026 09:31:33 +0200
-Message-Id: <20261122073133.1940537-1-itai.handler@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260915160044.345788-1-ruslichenko.r@gmail.com>
-References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
+ Sun, 22 Nov 2026 01:05:44 -0800 (PST)
+From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Roman Bogorodskiy <bogorodskiy@gmail.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH 5/5] tests/unit/test-qga: test 'guest-get-cpustats'
+Date: Sun, 22 Nov 2026 10:05:10 +0100
+Message-ID: <20261122090511.15121-6-bogorodskiy@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261122090511.15121-1-bogorodskiy@gmail.com>
+References: <20261122090511.15121-1-bogorodskiy@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=itai.handler@gmail.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +102,79 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Ruslan,
+Add a test for 'guest-get-cpustats'. As it works only
+on Linux and FreeBSD, guard the test accordingly.
 
-On 9/15/26 16:00, Ruslan Ruslichenko wrote:
+Validate that the result is not empty and all the required
+fields are present.
 
-> This patch series introduces the Remote Port (RP) subsystem, a framework designed to connect QEMU with external simulation environments (such as SystemC models or RTL simulators).
+Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+---
+ tests/unit/test-qga.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-When a guest performs a memory access larger than 8 bytes through a
-MemoryRegion whole max_access_size is greater than 8 (e.g. the Remote
-Port memory master with RP_MAX_ACCESS_SIZE=4096), QEMU aborts with:
+diff --git a/tests/unit/test-qga.c b/tests/unit/test-qga.c
+index a8ef6b0e21..530bf97fd1 100644
+--- a/tests/unit/test-qga.c
++++ b/tests/unit/test-qga.c
+@@ -1119,6 +1119,38 @@ static void test_qga_get_disks(gconstpointer fix)
+ }
+ #endif
+ 
++static void test_qga_get_cpustats(gconstpointer fix)
++{
++    const TestFixture *fixture = fix;
++    g_autoptr(QDict) ret = NULL;
++    QList *list;
++    const QListEntry *entry;
++
++    ret = qmp_fd(fixture->fd, "{'execute': 'guest-get-cpustats'}");
++    g_assert_nonnull(ret);
++    qmp_assert_no_error(ret);
++
++    list = qdict_get_qlist(ret, "return");
++    g_assert(!qlist_empty(list));
++    QLIST_FOREACH_ENTRY(list, entry) {
++        QDict *qdict;
++
++        qdict = qobject_to(QDict, entry->value);
++        g_assert(qdict);
++#if defined(CONFIG_LINUX)
++        g_assert_cmpstr(qdict_get_str(qdict, "type"), ==, "linux");
++#else
++        g_assert_cmpstr(qdict_get_str(qdict, "type"), ==, "bsd");
++        g_assert(qdict_haskey(qdict, "irq"));
++#endif
++        g_assert(qdict_haskey(qdict, "cpu"));
++        g_assert(qdict_haskey(qdict, "user"));
++        g_assert(qdict_haskey(qdict, "nice"));
++        g_assert(qdict_haskey(qdict, "system"));
++        g_assert(qdict_haskey(qdict, "idle"));
++    }
++}
++
+ int main(int argc, char **argv)
+ {
+     TestFixture fix;
+@@ -1185,6 +1217,9 @@ int main(int argc, char **argv)
+ #if defined(CONFIG_WIN32) || defined(CONFIG_LIBUDEV) || defined(CONFIG_FREEBSD)
+     g_test_add_data_func("/qga/get-disks", &fix, test_qga_get_disks);
+ #endif
++#if defined(CONFIG_LINUX) || defined(CONFIG_FREEBSD)
++    g_test_add_data_func("/qga/get-cpustats", &fix, test_qga_get_cpustats);
++#endif
+ 
+     ret = g_test_run();
+ 
+-- 
+2.56.0
 
-  ERROR:.../include/qemu/bswap.h:487:ldn_he_p: code should not be reached
-
-The root cause is in flatview_write_continue_step() and
-flatview_read_continue_step() in system/physmem.c. These functions call
-memory_access_size() to determine the access size, which returns
-pow2floot(1) - for l=4096 this returns 4096.  They then call
-ldn_he_p(buf, *l) / stn_he_p(buf, *l, val) with that size.
-
-However, ldb_he_p() and stn_he_p() (defined via DO_STN_LDN_P(he) in
-include/qemu/bswap.h) only handle sizes 1, 2, 4 and 9.  Any other size
-hits g_assert_not_reached() and aborts.
-
-The normal dispatch path (memory_region_dispatch_read/write) does not
-hit this because it uses size_memop(op) which is always a power of 2
-(1, 2, 4, or 8).  But flatview_write_continue_step() and
-flatview_read_continue_step() call ldn_he_p()/stn_he_p() directly,
-bypassing the dispatch path.
-
-The fix is to limit RP_MAX_ACCESS_SIZE to 8, which is the maximum size
-that ldn_he_p()/stn_he_p() can handle.  The flatview_write_continue()
-and flatview_read_continue() loops will process remaining bytes in
-subsequent 8-byte iterations.
-
-The RP_MAX_ACCESS_SIZE definition is currently duplicated in two
-patches in this series:
-  - "hw/core: Add Remote Port Memory Master object skeleton" (06/20)
-  - "hw/core: Imoplement Remote Port Memory Master bus transactions" (11/20)
-
-I also recommend to move this duplicate definition into a common header.
-
-Itai
 
