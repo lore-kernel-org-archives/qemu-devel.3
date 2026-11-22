@@ -1,111 +1,119 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A07606A681
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Nov 2026 21:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE67606A320
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 02:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ifeYVkzh
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JYzBKvEJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xUsgw-0004Mh-F5; Sat, 21 Nov 2026 16:32:14 -0500
+	id 1xUxAw-0008Hg-2s; Sat, 21 Nov 2026 21:19:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xUsgu-0004MC-RG
- for qemu-devel@nongnu.org; Sat, 21 Nov 2026 16:32:12 -0500
-Received: from mail-qv1-xf41.google.com ([2607:f8b0:4864:20::f41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xUsgs-0003KI-Sb
- for qemu-devel@nongnu.org; Sat, 21 Nov 2026 16:32:12 -0500
-Received: by mail-qv1-xf41.google.com with SMTP id
- 6a1803df08f44-92106d5371dso25359286d6.1
- for <qemu-devel@nongnu.org>; Sat, 21 Nov 2026 13:32:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795296729; cv=none;
- d=google.com; s=arc-20260327;
- b=hj6dN0OTvE+QgLBIF+19ZYdMAr4ssrkBmLeF4nApMrHNV+5MGjNNvDDLZyE17tWonR
- YN0LuB4L/IA4VI1QuB0eRb2FI+IQ+aH+bn7D7OFT2Qw/Ql6VAsPatscdMEYjS96ZGmFp
- +7VyEwzGbG7CetkghfU4LrsWKN7GjH1P08bpY5qXRWYBUxNrHB20MjyAQRVZ2eSaOJAc
- B8lFZgfijZ0HtBBQxpFUR1PJWxdCJsIVranaAJM7zdEthZ+HrH2SrxEuof5FAcZ2sIdC
- ez/ZfH2GdButyJgBWj0G3OxiOvrh8HvlafeGlT1h46aYPdMCXXqBwgqqgzNoKORamlio
- CcpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=iwEREc2iV/sJ/aK1NASNvmtJjk9qKty843oHVWMgqI8=;
- fh=03AmPWFaHef3r0pr6lywoT+NsG/gfH+n4yTbB9xciVM=;
- b=qdCKeh4Ab0e5RuQRXAhGRdX647VUFgMp7vWUVdz0wbkWnDQ2TNUloHXMe3NaQ+pkk7
- 7eXmPyIZKdO+jwXmACH3n7uTQ7OXq50sLNF0szyIwqVW+ep7tXqBNKa61Yd1Y1hZl6X9
- jJsvZHga1O1s7UPNqv3EjfQlGrwVjk5YeA7/zqGTrI5XnUH3jEkr8+mC6h1gmHlcPjSm
- CjzhkNSW+bxjk5gTOP5DHJM147Renod0nlV9kxJoWMIz7+6eivaDrmFDzkBw2bJObAYg
- t6oa/+9DZF2SFPORSNEYx3VWAU2AovJDNXgyd9CR5ZFY1pcgsAN+KfDtFwL8NMj4EeAc
- PG/w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795296729; x=1795901529; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=iwEREc2iV/sJ/aK1NASNvmtJjk9qKty843oHVWMgqI8=;
- b=ifeYVkzhHcxsx0fzS3unB2MV0nIxQTaN7y5z7XIhv5H+J3WPHLPp7PBDuhsqhm3vPT
- cXfIHeh0t38dimG368ZcjLXLN7C9k/N8vakNME/OCIijxzo1sBWEJ7xgJ9XuJiNsSKHO
- p/z9KP8Vh3Nb3XdrXdA9QWr1OwOLsMNiQHQNHlAgOjgB7wHL3mHudHb5zZFK/PGu+w8n
- kojKB2rlInfr/XCovyreJ4HifUI/cDq7kbsJQq7pYjANOIB1e1c0gtu7GrUTVeDaF6Lf
- I3JuO+RcnqCTTsu+CiuMJ+d9Ls7uiVD+dhJl0esWc8eHd5VE6O4dtqrp7I7weRy0Yw+C
- 0xDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795296729; x=1795901529;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=iwEREc2iV/sJ/aK1NASNvmtJjk9qKty843oHVWMgqI8=;
- b=0OEM4MWqxlcQpPv42sBzgiS3XJOL18hZ66m8tesfnemviSh9bwv+iD5tthMVdCCiQl
- ON58WEk4IIIp/v5cZEWSiHCE92DVmwrwO5YFfJ8pJQo+MpR4oMM5bUpYAzowsTIupAVS
- GLuAGR+0lSSGQIouIPCo4M2lGSKe/6Es/1+YxjYbWg3/K8rK4HlZyVEAlCab1eIdTJ8D
- 9Y8tlNrs8oLsnFYaREKFa9pUJewKuxs5eIhkh+WlJPzUTo7HHcEjUQOV6UozRQsuFYKI
- BJY+4JQKK25QkCMGlPyyvnmnUIOA0Qn2qDi+SZEOwBFok/Y/GIUHApVanL8jwSWxxRDi
- Mtkg==
-X-Gm-Message-State: APuU4Z8Z/A6m0Xqv6T9/L9d/vVJQq46jgj8qEhw+gpZDd1eifT2fQcqS
- DreUJzZR2UlEYXe5Z//qTLG5BMQgqOUtuKgk+Xu1hgOJ9DHq3BQev3zo0momj49lMm33iesd+wo
- D6JFPW0dXmKy/3S/NJ8tklPUWgFO1wPY=
-X-Gm-Gg: AZFdTZf7hECNMEOpv4geNFbVwU15JcfAce5hBZhq4Ji0vDx1rqCVN5FkbtOKRe/nl2c
- H1SEXXVRLeTo5Md6OmGNExm8ak77oe3tlfwiI1AWCPZWRE6Uo4oPIX+YRokzMh+s7821KhGXayJ
- 7H6bSzn4hEMITYNBO33tA9dYz2rYn5MGjsTH3dG7WghC9yo6iz/TN2DoJuxKRmGXpOSqncuEY+a
- oDSQ7Qsv5SFPm0aZ8TnRcHDTX7SGLkH6C8FdDSTdh+9Z9b6peizFM7EiSK7a/bVI/0ensmWsmRT
- /n8GMVep0ge9VrXz381I5+lxXx53BomAKA/TYGWZrQxQaxkNFtnBsDHHwy5GEhD9zLxXV5rT+Rz
- FV3tBrYh/Xd66549lJv5E7xTGkJydKfhBIzxbiBSNw5ykTlqGtND8X3d/WcXT3FT4DvocUQjAKO
- O3cVsh9lJb7661/g==
-X-Received: by 2002:ad4:41c9:0:b0:921:3439:58d4 with SMTP id
- 6a1803df08f44-921343963ebmr94162156d6.36.1795296729369; Sat, 21 Nov 2026
- 13:32:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
+ id 1xUxAv-0008HT-9D; Sat, 21 Nov 2026 21:19:29 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <asahu1x@linux.ibm.com>)
+ id 1xUxAt-0006lq-G0; Sat, 21 Nov 2026 21:19:29 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AM0ZAiN2073048; Sun, 22 Nov 2026 02:19:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=R8xjdX
+ 6VEdwa84Uv1+fusQUpdfbe9bdJZcLvS0Cddes=; b=JYzBKvEJzT1PL5jvL5SyIh
+ pvWEHXtrSzop9kbyy1Wike6k5AGfvqvTHdYjXvte0zgPrJUT5XVjby8iI2mR2Hvq
+ i+EpgwoL4kVCBip/WLOoMgSFx3n0ePkPgqFpEVdl6bqo4QU8vI6pNze7TP6Yn8wI
+ RxAdrTKHlXQgXbSIIIZ5FKuVPkqBekyjFlRnixEG/wppY8s+2x4z+xVBDxmjvlBV
+ E4lVccndloYHM2bMK07MYajeeEeP38EBW8b8hrPqH1qh0BX2Km7ULuEcuYeEYMLB
+ Ks4ZE3X8m8VsjyHMD2kY8XirFlF1j6TqrNJw5ts1BjiZb62dL7QzBeGw+6znNRRA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34p44aar-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Sun, 22 Nov 2026 02:19:22 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AM0JHHU2538680; Sun, 22 Nov 2026 02:19:21 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j34n4vq5m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 22 Nov 2026 02:19:21 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AM2JKTC28902112
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 22 Nov 2026 02:19:21 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E2D8C58056;
+ Sun, 22 Nov 2026 02:19:20 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DF8BC58052;
+ Sun, 22 Nov 2026 02:19:14 +0000 (GMT)
+Received: from [9.124.222.212] (unknown [9.124.222.212])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sun, 22 Nov 2026 02:19:14 +0000 (GMT)
+Message-ID: <497b4b73-07b8-4c53-af59-e62a3043ec8e@linux.ibm.com>
+Date: Sun, 22 Nov 2026 07:49:12 +0530
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261120104431.733136-1-mdspan.github@gmail.com>
- <20261120104431.733136-4-mdspan.github@gmail.com>
- <e4159fa3-e122-43f7-8ce3-e108ce8dcbf9@linaro.org>
-In-Reply-To: <e4159fa3-e122-43f7-8ce3-e108ce8dcbf9@linaro.org>
-From: mdspan <mdspan.github@gmail.com>
-Date: Sat, 21 Nov 2026 15:31:58 -0600
-X-Gm-Features: Aa3M54oLtzvYmYd5HUhkfSGKjxrPUUySM9tE2GeXOuqZgTPOf0zkfaTEYnUxS4M
-Message-ID: <CALU8FV_p8we36GXdsMB5QR3LO2VfKwiTZ68gAKb37Q5UrXK+Rg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] target/i386: use separate MMU indexes for
- instruction fetch
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f41;
- envelope-from=mdspan.github@gmail.com; helo=mail-qv1-xf41.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] tests/functional/ppc64: Fixes and improvements for
+ hypervisor tests
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, peterx@redhat.com,
+ farosas@suse.de, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, harshpb@linux.ibm.com, rathc@linux.ibm.com,
+ anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com,
+ gautam@linux.ibm.com, thuth@redhat.com, amachhiw@linux.ibm.com
+References: <20261120095854.35941-7-asahu1x@linux.ibm.com>
+ <87y0an4he9.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Aniket Sahu <asahu1x@linux.ibm.com>
+In-Reply-To: <87y0an4he9.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIyMDAwOCBTYWx0ZWRfX4nBWtYGJWQrQ
+ EOqz6cCvNJ5a7WWYnmrgJDCscTbAncKSiqbyDfx7dlL/AsGW15BoAZLQhHv4Vo70l4egdHZKUhM
+ ycLVjhpHSF1+uS9Vk4yJwpZJl+gaTMI=
+X-Proofpoint-GUID: ABsw6JyM3UEY_uMT3FZrhWjwtd9JEUjA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIyMDAwOCBTYWx0ZWRfXwmoI+NQwlbzy
+ eGoLHrqn3xNXNydZJimV5mmD5yfhb/RCr0g04uzSVTsZwf+5e9NtCOj5JjheqM01AZ9sJMdUw4L
+ H/CvraiqLimlz+PdlAKZuIjNBU7dexTubhMD1xOxBE+O1o5W4TM65rBPxQ6B8696rkJx1Z1HL7a
+ wL9UbYmNKpdiRzYL45VeXh7Uuo7wgKXWR3bhxqwp7WgYdlP0t+FmXGqlHiWhI+03iFGmL/xTPnY
+ lHySEaEdSsT6BQgqgOe8A+FbKuKmoLEolw8b/AV8+Ki07hfSIXd0rH773M+PZVXRAsDsJHHCSCV
+ R/Pz95dg1jgr7tCQYSJIB+zbfmGsXNzdXs1WKzgpWhqS6t7czxrd0VoKR8N+6qRnfxSMA1Mhati
+ NA66n0CWoAgKzpdRwmVOV8wwcPwK/lkTYPpx4oay9zySKNKfe1MURIocM1eUE5kTeaFP1J+ZTI8
+ Ydwxbm6jJXVsaT2dtfQ==
+X-Proofpoint-ORIG-GUID: XhqTM13zeuzvaH6WdgUoXPAyagly4TN_
+X-Authority-Analysis: v=2.4 cv=QabzLcbv c=1 sm=1 tr=0 ts=6b02512b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=QsAAtPqVoXNInit7G4EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-21_06,2026-11-19_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1011 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611220008
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=asahu1x@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,113 +125,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Yes, that seems like a more logical approach. I'll do that in v3.
-Masking only changes 64-bit linear addresses, so I plan to add masked
-forms of the three 64-bit data indexes (KSMAP64, KNOSMAP64, USER64).
-While LAM is enabled, x86_mmu_index_pl() and x86_mmu_index_kernel_pl()
-would return them, and the walk would mask only for those indexes.
-x86_cpu_mmu_index() would return the normal index when ifetch is true,
-so the fetch indexes from v2 go away.
 
-One question before I write it. With this, the data mmu_idx depends on
-CR3.LAM_U48/LAM_U57 and CR4.LAM_SUP, and translate.c captures it in
-dc->mem_index. So the LAM state has to be part of the TB flags. I'd add
-an hflags bit, set when any of those three bits is set, and update it
-in cpu_x86_update_cr3() and cpu_x86_update_cr4(). Is an hflags bit
-acceptable for this, or would you rather it be handled another way?
+On 20/11/26 9:36 PM, Alex Bennée wrote:
+> Aniket Sahu <asahu1x@linux.ibm.com> writes:
+>
+>> This series fixes several issues in the PPC64 hypervisor functional tests
+>> and improves their robustness and reliability.
+> Just a quick note to say the power hardware we have from OSUL doesn't
+> expose a hypervisor so we can't currently run these tests in the
+> upstream CI. Do you know of any way we could get such hardware added to
+> the CI?
+Hypervisor tests are part of the thorough test run (mentioned as hv in 
+the meson.build file), and if I remember correctly, only quick tests are 
+run as part of the CI on gitlab. While the changes I have made would 
+benefit everyone who wants to run hypervisor tests or the thorough test 
+cycle on their machine for ppc64 systems, this mainly helps us target 
+clean CI runs on our internal CI systems. Regarding hardware 
+availability in OSUL, this is something we need to look at and plan for. 
+Will talk with my team about this!
+>
+> Also I should note it would be nice to get:
+>
+>    https://gitlab.com/qemu-project/qemu/-/work_items/3207
+>
+> addressed. Let me know if you need access to the system.
+Noted, taking a loot at the issue, will correspond via the work item 
+comments if I need a machine.
+>
+>> Changes in this series:
+>> -----------------------
+>>
+>> 1. Replace deprecated datetime.utcnow() with datetime.now(timezone.utc)
+>>     to avoid deprecation warnings in Python 3.12+.
+>>
+>> 2. Pin machine types to avoid CPU compatibility issues between the L0
+>>     QEMU (which now defaults to power11) and the L1 Alpine guest's
+>>     packaged QEMU (which doesn't recognize power11). This fixes
+>>     "Register sync failed" errors in L2.
+>>
+>> 3. Add kernel command line parameters (console=hvc0 usbcore.nousb) and
+>>     early panic detection to fail fast when L2 encounters issues, plus
+>>     retry logic for apk update to handle transient network failures.
+>>
+>> 4. Dynamically resolve the NVMe device path in L1 instead of hardcoding
+>>     it, as the device name varies by machine type (nvme0n1 vs nvme1n1).
+>>     Also adds comprehensive debug logging throughout the test flow and
+>>     writes the L2 launch command to a script to avoid terminal line-wrap
+>>     issues.
+>>
+>> 5. Increase the test timeout from 1000 to 6000 seconds to accommodate
+>>     the longer runtime due to apk update retries and additional testing.
+>>
+>> Testing:
+>> --------
+>> All tests pass on our PPC64 test machines running Ubuntu 26.04 in an
+>> LPAR.
+>>
+>> Aniket Sahu (3):
+>>    tests/functional/ppc64: replace deprecated datetime.utcnow()
+>>    tests/functional/ppc64: add kernel params and early panic detection
+>>    tests/functional/ppc64: dynamically resolve NVMe device path
+>>
+>> Misbah Anjum N (2):
+>>    tests/functional/ppc64: pin machine types for hypervisor tests
+>>    tests/functional/ppc64: increase timeout for hypervisor tests
+>>
+>>   tests/functional/ppc64/meson.build |   2 +-
+>>   tests/functional/ppc64/test_hv.py  | 140 +++++++++++++++++++++++++----
+>>   2 files changed, 117 insertions(+), 25 deletions(-)
 
-Thanks,
-Tim
+Regards,
+Aniket.
 
-On Fri, Nov 20, 2026 at 12:31=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/20/26 02:44, Tim wrote:
-> > x86_cpu_mmu_index() ignores ifetch, so instruction fetches and data
-> > accesses at the same privilege level share a TLB.  Add user and
-> > supervisor fetch indexes, each in 64-bit and 32-bit forms, and return
-> > them for fetches.  Supervisor fetches need no SMAP variant, since SMAP
-> > does not apply to instruction fetches.
-> >
-> > This lets the fetch and data translations of a linear address differ,
-> > which LAM needs.
-> >
-> > Signed-off-by: Tim <mdspan.github@gmail.com>
-> > ---
-> > v2: new patch, as suggested in review of v1.
-> >
-> >   target/i386/cpu.h         | 11 ++++++++---
-> >   target/i386/tcg/tcg-cpu.c |  9 ++++++++-
-> >   2 files changed, 16 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > index 3945e903..5bc19d5e 100644
-> > --- a/target/i386/cpu.h
-> > +++ b/target/i386/cpu.h
-> > @@ -2838,8 +2838,12 @@ uint64_t cpu_get_tsc(CPUX86State *env);
-> >   #define MMU_USER32_IDX     3
-> >   #define MMU_KNOSMAP64_IDX  4
-> >   #define MMU_KNOSMAP32_IDX  5
-> > -#define MMU_PHYS_IDX       6
-> > -#define MMU_NESTED_IDX     7
-> > +#define MMU_KFETCH64_IDX   6
-> > +#define MMU_KFETCH32_IDX   7
-> > +#define MMU_UFETCH64_IDX   8
-> > +#define MMU_UFETCH32_IDX   9
-> > +#define MMU_PHYS_IDX       10
-> > +#define MMU_NESTED_IDX     11
-> >
-> >   #ifdef CONFIG_USER_ONLY
-> >   #ifdef TARGET_X86_64
-> > @@ -2856,7 +2860,8 @@ static inline bool is_mmu_index_smap(int mmu_inde=
-x)
-> >
-> >   static inline bool is_mmu_index_user(int mmu_index)
-> >   {
-> > -    return (mmu_index & ~1) =3D=3D MMU_USER64_IDX;
-> > +    return (mmu_index & ~1) =3D=3D MMU_USER64_IDX ||
-> > +           (mmu_index & ~1) =3D=3D MMU_UFETCH64_IDX;
-> >   }
-> >
-> >   static inline bool is_mmu_index_32(int mmu_index)
-> > diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-> > index 167ff769..b8f20f20 100644
-> > --- a/target/i386/tcg/tcg-cpu.c
-> > +++ b/target/i386/tcg/tcg-cpu.c
-> > @@ -130,7 +130,14 @@ int x86_mmu_index_pl(CPUX86State *env, unsigned pl=
-)
-> >   static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
-> >   {
-> >       CPUX86State *env =3D cpu_env(cs);
-> > -    return x86_mmu_index_pl(env, env->hflags & HF_CPL_MASK);
-> > +    unsigned pl =3D env->hflags & HF_CPL_MASK;
-> > +
-> > +    if (ifetch) {
-> > +        int mmu_index_32 =3D (env->hflags & HF_CS64_MASK) ? 0 : 1;
-> > +
-> > +        return (pl =3D=3D 3 ? MMU_UFETCH64_IDX : MMU_KFETCH64_IDX) + m=
-mu_index_32;
-> > +    }
-> > +    return x86_mmu_index_pl(env, pl);
-> >   }
-> Instead of "normal" vs "fetch", I suggest "normal" vs "masked".
->
-> This way, if no mask is enabled, only one mmu_idx is used and fewer page
-> table walks are required.
->
-> Thus ifetch would always be "normal".
->
->
-> r~
->
->
-> r~
 
