@@ -1,89 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19995606A33C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 16:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06F5606A320
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 16:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wCn/hNAl
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HH6u5w+6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVAl8-0001n0-Ek; Sun, 22 Nov 2026 11:49:47 -0500
+	id 1xVAld-00020L-5O; Sun, 22 Nov 2026 11:50:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xVAl3-0001mI-EL
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 11:49:41 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1xVAlH-0001ot-Iz
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 11:49:56 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xVAl1-0001Vf-6g
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 11:49:40 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c4cac7a7d3cso353113066b.3
- for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 08:49:38 -0800 (PST)
+ id 1xVAl5-0001X0-3K
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 11:49:44 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6a642495d81so3997154a12.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 08:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795366178; x=1795970978; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795366181; x=1795970981; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ILpF0sTy0cu/V1CAQBURyqxfUnvV1l87JurI6ftYrGo=;
- b=wCn/hNAlkIEsXa6rcKhwIMtwmYb5C9+BmbCYuLc7do4EfmzKactEOACLsnFwS00hSj
- T2AZkxjybeenRUrqUEr8OXZl9B+zwiE/2ic+YUJVXJDHE8sTpxlh1yAHw2zfwkOOU1cn
- 0OLE3EI9VWF96cGbW3/ML2+vaeS4pSSLLG5MYyWOIRUEp0SKTxIQJLEaX1mmY4c7qa/Z
- 2P7cNM85h4mequXzluXuQC8wcs+RSbfdD4NfAFlGwY785YV/3SKP16H9FHNh+qaVzRDH
- 0BPKHXxWxqL2E+N0oZ7udHPcQTS84twnhH3VppK2ysBg9hG01ux9ItYk0J7iDl8l3PZO
- h3tg==
+ bh=58lcozQBlvFlvhWZsGJ8kScJExcsgoaAtpw1STdA0TE=;
+ b=HH6u5w+6zSWmcjJ7oT/F2i7e0kPqONaz+8apvioRStr8d7EWa6g1RkjOi6bODszhjW
+ O7byGtoGeQJVlh2itxIyjbGDTTt4bkzjTn8z2H3pT7jEMQW1sYO66B6e8E3ZOeGwPsEX
+ cOUcnPPqyrNB9hUXe6KCwwk6eEEIJnhzjgoH0tMf2sDhvpJb/g3Uj0pr2cfxzcvZCGNE
+ jKKscV4Z/1/QDGSpxzwaKuJb/bu7XUQpe79pjCrAUIpQyjr5Il+Y+u6F+sAHJczqUE5Q
+ B3ar3TSSHaC9e7itwFCE/p7RMBeXvYD3xDteNwsIYHGIxuNUV6FlVYjjHELv0I4+LKi2
+ 7jMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795366178; x=1795970978;
+ d=1e100.net; s=20260707; t=1795366181; x=1795970981;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ILpF0sTy0cu/V1CAQBURyqxfUnvV1l87JurI6ftYrGo=;
- b=tBxdv6oLbSCysAHIyQzYpnbMXg4Y3P+f1jmFBXcQ1Y/UWvPaFgDCQwjmjOc2SIGT8o
- bD6bDeAYnkyj2louw2FIbqD2NVMBfFFngocDiljn56M5I1DacUr8o+yZxoo9DC0G4UBj
- kHzy9GpaCRMEtbL1ZFjBLakOxmrwFFxyLhpAaj8+FqamJIPP7RgkGoK3TZ6oILCXwjhH
- TjIyxAga6Jsat8w1UMeXN8WV+RXdt8mnYWTeIMRtcIxZ/jrTvkcXVzZtc+OeZYbyIFTv
- YfipWeisYbziQoxze7Pkr4DFB8RS7S02rPSue03nTvnzsr4Eetz6JuPdcMUchFCLRdij
- YFEw==
-X-Gm-Message-State: APuU4Z/mQrZ88MtXiF9ZlGt5EnHNdEcjlptYhPuqzYNK3f/GZuTH2WE6
- 1rM6s+SJaS+31nPL8Jh0wXDqcplM5j7sOp/Hq1R9AJQgTUbCvmpjtmLshcoNjiyuv64=
-X-Gm-Gg: AZFdTZeg0rtiWdVgyvjRpFxjrRiucx/ZfPosOUvLddn1lehNqvbGUGbxhalSvRfmZO8
- V1cnfyCQ4RtEJxHQhMD7ltYSBjLGYokLwrrm3Wp6GdY63aPwl20SRulIQzqGxK8tfUEqviMEI+b
- teDZ+aGhYIoeYqAPK5JA4zpPU5qb5dbJ8AO9ncGO9JWva+OQdwptxtn08Wx0pnIT+EN0L6oepuF
- l3oo0d+dmSl1u/nHB4/HErIvKw2SPvpf1//U73HTAXNOMjT2fq8ukiSCalHMF8xP/ZHCPpjgALS
- U3HccIecfEYTMgrE1c4FofZtkaSd5WqxzHtPbGpAom8//WEW+xLLAT+kbue8bZjo0HTA1cNkmJv
- KiroVqnLNmO3O69wbdblWEIt7/jr+dgNrNHv0OzIyjtiYBTYW3c+54+BkegIVPTHuNyqyj4YbBa
- HmMrTaPAqQrQmDsHC+TSBIEXbgZP1K/X5lUfBw15I6N4EfUyg7AuvxhX1E/GJ3v2oWhaJYOJRZF
- JpojbB7eDcmCMqxYQ+fejPGCqFc/8Jb14shxsjZADg6NHRmUWcFKf+Wj8gR/j36ysAx5Fg3tJ9g
- BN1tJi3ZZY0h8QB+4wnvZwOt6XJcWfjd9FYFhfajocGp+VyNwjdxVCqLbzNEfr4Qg6x5sezD/gV
- sVwT4BiXd7GHI4gt2xvmH8QjQpm8CtIvRhvofLPU=
-X-Received: by 2002:a17:906:3e1a:b0:c41:285a:46a9 with SMTP id
- a640c23a62f3a-c513ac9c0cemr594172566b.46.1795366177360; 
- Sun, 22 Nov 2026 08:49:37 -0800 (PST)
+ bh=58lcozQBlvFlvhWZsGJ8kScJExcsgoaAtpw1STdA0TE=;
+ b=DfLeYrufWq++uWmsnPIeOcFVk5G6kSa+ZSfNOw5Ed6MyOQJ6uBSgf/6RB4BmxiQYpr
+ xgnSAufF8Zv72zY5VeSAxR/nYuMpmXBKMK1ZWZNILvy0re5Lv+zl7jUzJV3mQmyXeBhe
+ 4TNbapR+zbaG7l1PAsbpHTgjO/rmpTx60ctk1Lc7P9e1XeSBaOajwhvLYep7bQ1D8CID
+ Co6krfr8pmC0rQUsxq0oz/lZw+QdO/683CdkIpaXDKPG8G6wRt8mpVkijYuVsMLAtfv9
+ ZQ52uuUhdsate0K79JidfGyD1SUwnmcbW2ip6paKms1eULFyeTM0r4UGrY1Rr19iOOke
+ dkXg==
+X-Gm-Message-State: APuU4Z/k+2FnCAYOwjqCgHDze+Tuz4mrGordtM7IgY8pmVnOBRf7sUef
+ lJioAZBvQzvwPrgB0qpWbAkWAKt7Ek9bEvHytD8m4MNs7amzGv+qUxzoEd87aw1yth0=
+X-Gm-Gg: AZFdTZcC7x49qTALmsfgEq6bIDRfFzHLe9OwASPh4hsPg3uV2UDsKV6zLZicIzSE4gG
+ yL2o7ll6k2HWH4jUJyxgrDEPsimyWnD+BW+8+vQXkux+xHxGbRiRGK8HBw+1yGPNKWNrod1M8+r
+ 40XkiWHgB8lWWXWXvuQ8gbHDUI7gxladnwjZQIIEK5uz/WTfr0gS7y1AUUKmp+wEBkj4nZrz9wv
+ VhmE8bkoOh6qgrzZfDIcDKGPWp1SjkzqHY+8Bx5BZ7gzDDUDnecXFo6gWWQtw5HhwHXj3ChCA9I
+ YIQguQY/HASc4SUEANwI60kmJVxZ0BqGw9ZVP3N+elv8a/ak7a5sV3TH3vfXFPNICs67RF+ggci
+ 7yUMNlvG6APwDoblxBHzoGPPEVCJq583sfd+QAKNfWIgOSeOOV2eUyodJb6s5rK/W/0WyyD9vbX
+ i1uZ47Py1S5paTGKyBBtPwR9H8z/6LrTdh74/G7MfkG0WGBwQh7MLW3TlXazwbR1Gri7SG4vc+k
+ bmtbz0TdPTxjL1yOu78uKhlN4ggLkU0kgb+88rRHIH2x3WwWRSDggztlmP0xqENrZp85lpG8qjk
+ /uUjAbei3Zbu2S+fOb0wnKVVfVEKiOqZCwbNX9iS5KE7jlwOk3v4P9RIJiBtq3iQdzi4jJDy25Z
+ PYOvHudmyuO1YYBPj+1TZ+1+L/x6LNHy6svVDWtjYAlUvYGBVwb5fnmQWPtbW
+X-Received: by 2002:a17:907:3e88:b0:c26:1648:a06b with SMTP id
+ a640c23a62f3a-c513aae0416mr795379266b.38.1795366181377; 
+ Sun, 22 Nov 2026 08:49:41 -0800 (PST)
 Received: from tulp.my.domain
  (2001-1c02-1a15-3000-2727-f7d1-9628-aa81.cable.dynamic.v6.ziggo.nl.
  [2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c513afc2455sm325303166b.57.2026.11.22.08.49.36
+ a640c23a62f3a-c513afc2455sm325303166b.57.2026.11.22.08.49.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Nov 2026 08:49:37 -0800 (PST)
+ Sun, 22 Nov 2026 08:49:41 -0800 (PST)
 From: Roman Bogorodskiy <bogorodskiy@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Roman Bogorodskiy <bogorodskiy@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH 01/10] iotests: use gsed instead of sed
-Date: Sun, 22 Nov 2026 17:48:56 +0100
-Message-ID: <20261122164905.59680-2-bogorodskiy@gmail.com>
+Subject: [PATCH 07/10] iotests: fix test 162
+Date: Sun, 22 Nov 2026 17:49:02 +0100
+Message-ID: <20261122164905.59680-8-bogorodskiy@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261122164905.59680-1-bogorodskiy@gmail.com>
 References: <20261122164905.59680-1-bogorodskiy@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,140 +110,57 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Some iotests fail on FreeBSD because the tests call sed
-directly, and BSD sed is not always compatible with GNU sed.
-As common.rc already provides the gsed() wrapper, use it
-instead.
+Test 162 expects Linux error messages. These messages could
+be different on other OSes, on FreeBSD for example.
+Add a _normalize_errors() helper to normalize these
+error messages.
 
 Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
 ---
- tests/qemu-iotests/115           |  2 +-
- tests/qemu-iotests/common.filter | 26 +++++++++++++-------------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ tests/qemu-iotests/162 | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qemu-iotests/115 b/tests/qemu-iotests/115
-index 5c8a12f85a..e3ff91de7a 100755
---- a/tests/qemu-iotests/115
-+++ b/tests/qemu-iotests/115
-@@ -78,7 +78,7 @@ _make_test_img -o "refcount_bits=64,cluster_size=512,preallocation=metadata" 256
- # qemu-img check for that purpose, too.
- 
- $QEMU_IMG check "$TEST_IMG" | \
--    sed -e 's/^.* = \([0-9]\+\.[0-9]\+% allocated\).*\(clusters\)$/\1 \2/' \
-+    gsed -e 's/^.* = \([0-9]\+\.[0-9]\+% allocated\).*\(clusters\)$/\1 \2/' \
-         -e '/^Image end offset/d'
- 
- # (Note that we cannot use _check_test_img because that function filters out the
-diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
-index ce4213cb97..ed31249515 100644
---- a/tests/qemu-iotests/common.filter
-+++ b/tests/qemu-iotests/common.filter
-@@ -21,18 +21,18 @@
- 
- _filter_date()
- {
--    sed -Ee 's/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/yyyy-mm-dd hh:mm:ss/'
-+    gsed -Ee 's/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/yyyy-mm-dd hh:mm:ss/'
+diff --git a/tests/qemu-iotests/162 b/tests/qemu-iotests/162
+index 4f01611886..73a0c43e2c 100755
+--- a/tests/qemu-iotests/162
++++ b/tests/qemu-iotests/162
+@@ -33,6 +33,12 @@ _cleanup()
  }
+ trap "_cleanup; exit \$status" 0 1 2 3 15
  
- _filter_vmstate_size()
- {
--    sed -E -e 's/[0-9. ]{5} [KMGT]iB/     SIZE/' \
-+    gsed -E -e 's/[0-9. ]{5} [KMGT]iB/     SIZE/' \
-            -e 's/[0-9. ]{5} B/   SIZE/'
- }
++_normalize_errors()
++{
++    sed -e "s/Name does not resolve/Name or service not known/" \
++        -e "s/Can't assign requested address/Connection refused/"
++}
++
+ # get standard environment, filters and checks
+ . ./common.rc
+ . ./common.filter
+@@ -45,7 +51,7 @@ echo '=== NBD ==='
+ # NBD expects all of its arguments to be strings
  
- _filter_generated_node_ids()
- {
--    sed -Ee 's/\#block[0-9]{3,}/NODE_NAME/'
-+    gsed -Ee 's/\#block[0-9]{3,}/NODE_NAME/'
- }
+ # So this should not crash
+-$QEMU_IMG info 'json:{"driver": "nbd", "host": -1}'
++$QEMU_IMG info 'json:{"driver": "nbd", "host": -1}' 2>&1 | _normalize_errors
  
- _filter_qom_path()
-@@ -43,7 +43,7 @@ _filter_qom_path()
- # replace occurrences of the actual TEST_DIR value with TEST_DIR
- _filter_testdir()
- {
--    sed -e "s#$TEST_DIR/#TEST_DIR/#g" \
-+    gsed -e "s#$TEST_DIR/#TEST_DIR/#g" \
-         -e "s#$SOCK_DIR/#SOCK_DIR/#g" \
-         -e "s#SOCK_DIR/fuse-#TEST_DIR/#g"
- }
-@@ -51,7 +51,7 @@ _filter_testdir()
- # replace occurrences of the actual IMGFMT value with IMGFMT
- _filter_imgfmt()
- {
--    sed -e "s#$IMGFMT#IMGFMT#g"
-+    gsed -e "s#$IMGFMT#IMGFMT#g"
- }
+ # And this should not treat @port as if it had not been specified
+ # (We need to set up a server here, because the error message for "Connection
+@@ -78,10 +84,12 @@ echo '=== SSH ==='
+ # expected to be an integer
  
- # Replace error message when the format is not supported and delete
-@@ -89,7 +89,7 @@ _filter_qemu()
- # replace occurrences of QEMU_IMG_PROG with "qemu-img"
- _filter_qemu_img()
- {
--    sed -e "s#$QEMU_IMG_PROG#qemu-img#g"
-+    gsed -e "s#$QEMU_IMG_PROG#qemu-img#g"
- }
+ # So "0" should be converted to an integer here (instead of crashing)
+-$QEMU_IMG info 'json:{"driver": "ssh", "host": "localhost", "port": "0", "path": "/foo"}'
++$QEMU_IMG info \
++    'json:{"driver": "ssh", "host": "localhost", "port": "0", "path": "/foo"}' 2>&1 | \
++        _normalize_errors
+ # The same, basically (all values for --image-opts are seen as strings in qemu)
+ $QEMU_IMG info --image-opts \
+-    driver=ssh,host=localhost,port=0,path=/foo
++    driver=ssh,host=localhost,port=0,path=/foo 2>&1 | _normalize_errors
  
- # replace problematic QMP output like timestamps
-@@ -130,7 +130,7 @@ _filter_actual_image_size()
- # Filename filters for qemu-img create
- _filter_img_create_filenames()
- {
--    sed \
-+    gsed \
-         -e "s#$REMOTE_TEST_DIR#TEST_DIR#g" \
-         -e "s#$IMGPROTO:$TEST_DIR#TEST_DIR#g" \
-         -e "s#$TEST_DIR#TEST_DIR#g" \
-@@ -178,7 +178,7 @@ _do_filter_img_create()
-         | grep -a -e '^fmt' -e '^size' -e '^backing' -e '^preallocation' \
-                   -e '^encryption' "${grep_data_file[@]}" \
-         | _filter_img_create_filenames \
--        | sed \
-+        | gsed \
-             -e 's/^\(fmt\)/0-\1/' \
-             -e 's/^\(size\)/1-\1/' \
-             -e 's/^\(backing\)/2-\1/' \
-@@ -186,9 +186,9 @@ _do_filter_img_create()
-             -e 's/^\(encryption\)/4-\1/' \
-             -e 's/^\(preallocation\)/8-\1/' \
-         | LC_ALL=C sort \
--        | sed -e 's/^[0-9]-//' \
-+        | gsed -e 's/^[0-9]-//' \
-         | tr '\n\0' ' \n' \
--        | sed -e 's/^ *$//' -e 's/ *$//'
-+        | gsed -e 's/^ *$//' -e 's/ *$//'
-     )
- 
-     if [ -n "$options" ]; then
-@@ -296,7 +296,7 @@ _filter_qemu_img_map()
-         data_file_filter=(-e "s#$data_file_pattern#\\1#")
-     fi
- 
--    sed -e 's/\([0-9a-fx]* *[0-9a-fx]* *\)[0-9a-fx]* */\1/g' \
-+    gsed -e 's/\([0-9a-fx]* *[0-9a-fx]* *\)[0-9a-fx]* */\1/g' \
-         -e 's/"offset": [0-9]\+/"offset": OFFSET/g' \
-         -e 's/Mapped to *//' \
-         "${data_file_filter[@]}" \
-@@ -310,7 +310,7 @@ _filter_nbd()
-     # receive callbacks sometimes, making them unreliable.
-     #
-     # Filter out the TCP port number since this changes between runs.
--    sed -e '/nbd\/.*\.c:/d' \
-+    gsed -e '/nbd\/.*\.c:/d' \
-         -e 's#127\.0\.0\.1:[0-9]*#127.0.0.1:PORT#g' \
-         -e 's#localhost:[0-9]*#localhost:PORT#g' \
-         -e 's#host=127\.0\.0\.1,port=[0-9]*#host=127.0.0.1,port=PORT#g' \
-@@ -356,7 +356,7 @@ sys.stdout.write(result)'
- 
- _filter_authz_check_tls()
- {
--    sed -e 's/TLS x509 authz check for .* is denied/TLS x509 authz check for DISTINGUISHED-NAME is denied/'
-+    gsed -e 's/TLS x509 authz check for .* is denied/TLS x509 authz check for DISTINGUISHED-NAME is denied/'
- }
- 
- _filter_qcow2_compression_type_bit()
+ # This, however, should fail because of the wrong type
+ $QEMU_IMG info 'json:{"driver": "ssh", "host": "localhost", "port": 0.42, "path": "/foo"}'
 -- 
 2.56.0
 
