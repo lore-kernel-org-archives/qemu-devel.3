@@ -1,100 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B825E606A320
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 09:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F5A606A320
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Nov 2026 09:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=RDsp0IP1
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=fCjptVRn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xV3nY-0005F2-W6; Sun, 22 Nov 2026 04:23:49 -0500
+	id 1xV3pa-00060s-0O; Sun, 22 Nov 2026 04:25:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xV3nU-0005EM-KC
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 04:23:45 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1xV3pW-00060g-QM
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 04:25:51 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xV3nT-0006iT-3v
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 04:23:44 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-8b4e2fcc300so19134157b3.2
- for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 01:23:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795339421; cv=none;
+ id 1xV3pV-0006xJ-08
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 04:25:50 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-67dae7d3f7dso2828926d50.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 01:25:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795339547; cv=none;
  d=google.com; s=arc-20260327;
- b=OTtWj/P3GOz8Bt+VpZTX7i0TrJOF64kI44OHDNPx6TTlsze9FPO9niSblD1U12hgDF
- e4usDGh63XgNIGQ8AjMlPeQ/IqoLms6ifuVLXThHBUwuXyq/iIU2iyLXjGoElnnScajE
- FsSPwlQ5LESZIzqkUHiViZ+DuUY3V/qSb+qISnWXr3ry+b7XXUVDnKbkjtj+MEfmEdrr
- D/4IyNNUb03qONf6/W+2/Zt+GF/wLn/EC+2CH+rriY17uB9+M3opb8Dag4Ryapo2Zb+o
- iB7f0idLg7AQIliKNPVh09epSu7HkFoKIvZFvi4jWfKcuqGFoc0WOIh73G/FKUr8NQYG
- BlYQ==
+ b=sJgfq7Lt9ICLfcjYVuIHnrbBzKPKcugJuuk5lJuJy+nbN6qWs6/xt00wTcDlcOgsKB
+ V/aSQ2dYceiTWP80AbCTl7kXqOqIxQAqvVcalQ0ay7dmqsECwAXxJ2Gpxd8TvzM/BmOn
+ ugYfWshWgVkrMEsDwCWcmr73gwcZhOSgxs4MVw7aUDmdhPm7sSlXymeDFLtVB+mwtbc/
+ ijyjeQGtbjFeDMPVJV04XjFkNNY5qwrQPsJWmt0/t+Put10tD2MsuXphdM1JeyLIRUVT
+ 3kv+W25Oia72EXOOMCKKt93iPfrwdtjEWnbc9reIdqijBPPqesln8VZc0NZQWV5iRVmC
+ rCmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=5gnnsNywiSofMO7wLuiIvFpv5OuikOC1DdEsDbrD8PM=;
- fh=FEnsPW1+Jeui4H3TY0+cybeCikFuKHWTt4JZ8F3LATM=;
- b=ar79htEl2s2eutbMbRcK+2BoliHqzaFhPC/YJ9g3PAnYLFtX3gCXclcBNPzyeXjiDv
- b7GzZ1qCLOSKyaSZISoOjYvDv2tWLhzU82DN7Dx96VwmMlE5mtCv5Vt9dHVFD4f3DlY8
- FzzZ9ndX06FiG5uWWenjsK0Kc0EtE1eKgRiUHwgZVKv65rExFkggL9IWlOY0ZhvK72vI
- JdGu8A9wMlvasEverO53hIrz0nfsCvT5y5M/px6RT2R5jCjtpQ/y4kx/GTPi1fq+dIKe
- JRMY5IogWvCrDj5oQqoZ58RA+VQH4gFp1SPeue3cZ4ljQ3d058ranTDGibtjFa8804GD
- WvCA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ps869aHsO96rvkQt2O2vx6xO+s30w8hXFUCM6/Ckzas=;
+ fh=Qph2jk63x1lfk6l1bsZP8aNHVrvi2CZcm30+sz1vSNY=;
+ b=buoyyMjufqc/V8kOscLDg4lZSWphLCU77gDj9lelCM+ki57dFTYHQ12/2ZykJC/RIt
+ 4A6c58W3FVUR3UxbFVij+FpA22OgaTarRO39tqXGFsdanli2CQ++qhKWCAlgIQLQID98
+ OwmIrjDqzEHIiaA95fhIS8HV0O8rCASoerAutok2yaeLe3WdgNixtoAipXEn6UFNvNFc
+ cafiMBt1PPZf4l85D/j8i+q4KwfOwJFCMhPxIrcYZ9lln+oEs2s4EdQuQgFuFf5/wwS2
+ EF93wsl2kt14qdSJFQpWBOR5oD1buKuTEjEOVxO0Vt4IyuAMLGerGq2kfWOQB37MFQZp
+ sSJA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795339421; x=1795944221; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=5gnnsNywiSofMO7wLuiIvFpv5OuikOC1DdEsDbrD8PM=;
- b=RDsp0IP1DPUZHAYaaOuRur9AAbM9U48f1XaafQFmmRbY8k4L6oUC9VNh7gOR5tNoLH
- mHRL7UlA8QlqN4YaFuXwIMzn5dRcx5UPzQUI7/RXSpCFb521EvSBpXO8CPE6WAP/yH+o
- xqQGFEy/DaGrfsG/udOPf3TiM2UjsuqmKBS5iDRrukoSQu2bGFK9aa+WtjMVVo2ylhoy
- 9g7kJtaW/6uMKoGigj4YdwrUfhyRma1uyVT0qP8JRj86ZjVGsiMz2Q6gsCPz3dk9bGzd
- 3M9eIEOyChaRzr/Y0JVgO8pXPfqfMu3aJnwJbudElp0f9EBhHf1z+UqpO38bjT+x9Hqy
- OLzw==
+ d=linaro.org; s=google; t=1795339547; x=1795944347; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ps869aHsO96rvkQt2O2vx6xO+s30w8hXFUCM6/Ckzas=;
+ b=fCjptVRn9h/D/pyxkua7FOsyFu4hpd+SurXvOnrpAN5uyNUroDD3n+AmeVUdwRqnfQ
+ GTET/D7wWKQDefsQJP2ug//g2D9LLoujxRFpiIKnnvZSH9H9ONOi2yakdJ06YeJj6fFj
+ eAP8aJLVg2Kt6ogf9KF+BBR2NrICHphOMZ5siU+AdO7gkG0WTI8TtMXtSw0gUHd4Q1mt
+ maXy0rDdSAHTsePBA0QrPPbUlLVVB1HdeqP0htkmCZeUshrrfZIbOXJYx7yFmJFAfXXE
+ pJTM/D73sT/6zrodP/0dkNm12gdZybRDlTXOsDfYDOtBdFQDct9vQXtTNuCKhRsbr83w
+ 3Bhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795339421; x=1795944221;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=5gnnsNywiSofMO7wLuiIvFpv5OuikOC1DdEsDbrD8PM=;
- b=Z5RC5dZzrfZ4fD8Qk5dJlwSiHkmR2SWF32TUU9Z8ScWTxYFvzN3lHmfBtxswWKC4E3
- K5oUqNdsy6NZWwPdxVKnT3MyzEhU+uO1MFUIPdm/AEZGTVnvJYkubqsYa2V32OQRLySB
- H49bTbRK7SUzpSGbGS44w9p2692qWRq8dSI1uu9j1Rb0ld2G7K5U8PAF7dOIqYr80ym0
- w1g/byfuRSKSx68WwG8A285mZjzHB76AKHy8BdCUBovT8BtMu8KnyWyJw+UVggXZrEr9
- TlQyLJlOQ2Myou/qBSInbGlniSq6gJWLn9KgPeuFS1iQihqz+MogPlwE1kzCjcWV8xsG
- lC5w==
-X-Gm-Message-State: APuU4Z+OUFqL0YUJy49/2OhibmJQWqWdwLRGWX9//ZdRG8KELuvBoWsK
- aHIGnV/TERTCrgX/47eAhWIa1QWf+hIISMWe6mVYQZBrQdXujVFsrtJMbBWF0t7Kd3uUBf0xHLr
- 5jMHmnR3OfnjaHZ1wmEzJ1YNvYZGGPYiGJPnXeNbADA==
-X-Gm-Gg: AZFdTZfUrm6u7k5qfIpxukytRlTKfsOFeZwXB73tHh0rjAzg6ZRXpNJHeSN9ySUsHzs
- T/UBEG2BK+M3ChTBvDEVU/PyhgIV7VkbUzr367/E/inRlrxYwohZh+ZaVP268G8dVGxyTl6HLPe
- XZPx0iNMpdSQTQxyarv33+XwxwCALJjskL9rFlbyP+9W9yp0G7NQk1b1A3lpeTjtquQyJfkQfmD
- GSf+PlvhK3rXW1mZAgTumbv3ny2XFIaKCOGDqGcGyatiCs/hz8GsRef2bcDo6QNliyFE7PDGBLa
- IobV9vZZLzzzlxyLS+K6OAdckeCOqAshZHEkHKv8uvtc0z7WPxVqM75Whqf5Op8ih3sEg93Kyb7
- Rzd72Do6bUNfb2i8EaCLL7zDm2OuUGEDRbe79UCnHHU1NfjUBN1XMB1U6KwRfXCCaLaYAM3Bod6
- E4g+NOZpPIqzNPN5evl99X
-X-Received: by 2002:a05:690c:6b0b:b0:8b4:c35e:5fe3 with SMTP id
- 00721157ae682-8b520498199mr31107577b3.46.1795339420820; Sun, 22 Nov 2026
- 01:23:40 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795339547; x=1795944347;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ps869aHsO96rvkQt2O2vx6xO+s30w8hXFUCM6/Ckzas=;
+ b=GUR6TljN1/tNBWj1MQAYPJo+xaCJ0QWrJu2bVxSqoWeOKvLfQPn69kX83t6/JaAULp
+ ED2s30YPbNzxETurYh8tEBuj5RIPp+K7y9cHgJFNn8plHT9xPVHMj122+gCvqKhKHE/0
+ cGyLgpjPIf/kl/2ZA2X+9E5jbvCPiwRKW/P6wCA41paxKpsqPXUos+XPXbLP/3aU7ldu
+ DZmVv6KVU/ujbZEsWLn4heiih1DLET93Srt08+vw76/aYYML0GjpKkyGL2DaZlB+bKSk
+ y09pLNnQOMloRVzHMNHV11UQisRmHwqZNHsrt6IoD8ZpXz1hbE6x7kIUOlayeU58yUbO
+ NQ+A==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEkm2ySLbQHWBrtMih674QqpBsqHfPQzVtZUs6nlySOtqqxtPgtFceP1OTRaKFG6mSMZl9lKDOcq4gu@nongnu.org
+X-Gm-Message-State: APuU4Z9Dk/jR7DyKP7SGKo1FzaZtg3A86a8GsEIJ0tOWmCAglqb/HcPc
+ zQPbTSYuym1TEmFim2RXZVgjtxsGI2LZNJvuNv5eN9UVkqoNL/GESgtSwn9wWkzlsxpXuBxP6Gq
+ FrV8GEUGfckLvvseQ9UHPeuzYTMMjLkju8QEr0kC9UA==
+X-Gm-Gg: AZFdTZdeOefCBCwfpUC03bS9sbxucrqXAUMByDeIqOR2cdy/23J7XAjIyut1ViohoqP
+ AMfjIKdW9PtySrTHpf8xR06q43VDqOONGP02S3qggEGCfzdcj9+G3nHITpMcbgzFP8s5S4Jq9Lm
+ 0qk0U6zxNcOO0RX42RSmFlq2Io0hIwrzTxHKBn1OghGYwZIdVmnrKio5SJJMhD0KiEF12qyffTv
+ HI3P7zY/gDFftDKE3uPEgAkcX4ToSneYqjANX3murs3arMcL0JaT55Bd/xIUtM7PTx15X91Ttqv
+ 6QnceXCRVIRPWee68ru+B5ARSK+S5SISFSB6zJ+RgQ6V1HJs7B6bVJwHrle6NzgpFIDBYmjbrBV
+ KD7S3J6bmgr9JjmIVJFGwtTEB8bF/0AZaj6LSvekLb6mtGHqNB4rlMKyOsqMz5rYsb/3yJvfWMM
+ z3v4aQ7nLHl60Q2LBTKcFd
+X-Received: by 2002:a05:690e:1697:b0:67d:a31c:4f8 with SMTP id
+ 956f58d0204a3-67df44162dcmr2491355d50.58.1795339547500; Sun, 22 Nov 2026
+ 01:25:47 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261120143453.1998949-1-farosas@suse.de>
-In-Reply-To: <20261120143453.1998949-1-farosas@suse.de>
+References: <20260915203455.580999-1-den@openvz.org>
+ <20260915203455.580999-3-den@openvz.org>
+ <CAFEAcA-Bc_Lev19s7=UjokZKjxTgDkZRYO-hbPMexj9BXqs2xQ@mail.gmail.com>
+ <awBzF9i3fo1KRGMk@redhat.com>
+In-Reply-To: <awBzF9i3fo1KRGMk@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 22 Nov 2026 09:23:29 +0000
-X-Gm-Features: Aa3M54qtNzi7GKIQJRWRCw3H0QmK4IwG1yrgvvJUSn9JcoQVODtLGjXj1Qmnozc
-Message-ID: <CAFEAcA_KuTApe-Rozy4KhCdeTiw=EYazc_7UOqHrSwYWU1oTQw@mail.gmail.com>
-Subject: Re: [PATCH] docs: migration: Clarify the security posture
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Date: Sun, 22 Nov 2026 09:25:35 +0000
+X-Gm-Features: Aa3M54rUjOchfJHFz5-MeRcPEMdKaKfjY7Zr1GNi2hI4SnEs4aJf3vAGF41TVOU
+Message-ID: <CAFEAcA-WddxT4s+aAuyuz7SzgQeMT2zEPeix2x_7RCMByEWY9A@mail.gmail.com>
+Subject: Re: [PATCH 02/10] oslib: add qemu_debugger_attached()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Stefan Weil <sw@weilnetz.de>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,68 +123,47 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 20 Nov 2026 at 14:35, Fabiano Rosas <farosas@suse.de> wrote:
+On Fri, 20 Nov 2026 at 16:19, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> We have documented[0] the scenarios in which a migration bug is
-> considered for a security vulnerability but some ambiguity still
-> remains, mostly because of the mention of live migration in the
-> untrusted entities list. Remove that mention and expand the "Security
-> boundary scope" and "Sensitive configurations" sections with migration
-> content.
+> On Tue, Nov 17, 2026 at 02:38:44PM +0000, Peter Maydell wrote:
+> > On Tue, 15 Sept 2026 at 21:36, Denis V. Lunev <den@openvz.org> wrote:
+> > >
+> > > From: Denis V. Lunev <den@openvz.org>
+> > >
+> > > Code that watches for a hang has to tell a hang apart from a debugger
+> > > stop, because under a debugger every thread stops and whatever livene=
+ss
+> > > signal the watcher samples stops changing with them.
+> > >
+> > > Linux reports the tracer in /proc/self/status and Windows has
+> > > IsDebuggerPresent(). Answer false elsewhere, which leaves the caller
+> > > behaving as it did before the check.
+> > >
+> > > Match the Linux field at the start of a line. The Name: line holds
+> > > fifteen characters of comm, enough to spell the field name and appear
+> > > ahead of the real one.
+> >
+> > Should we have a mechanism for the user to force this to
+> > claim "no debugger present" ? You might want to debug the
+> > watchdog mechanism itself, for instance, or maybe you're
+> > running QEMU under something that looks like a debugger or
+> > process tracer but which isn't going to do user-controlled
+> > "stop for arbitrary time" (e.g. does the record-and-replay
+> > tool "rr" appear as a tracer for these purposes?)
 >
-> 0 - commit 8b6405a493a ("docs: Add security considerations for migration")
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  docs/system/security.rst | 39 ++++++++++++++++++++++++++++++++-------
->  1 file changed, 32 insertions(+), 7 deletions(-)
->
-> diff --git a/docs/system/security.rst b/docs/system/security.rst
-> index c0254fef113..a41b84ea70d 100644
-> --- a/docs/system/security.rst
-> +++ b/docs/system/security.rst
-> @@ -28,7 +28,7 @@ malicious:
->
->  - Guest
->  - User-facing interfaces (e.g. VNC, SPICE, WebSocket)
-> -- Network protocols (e.g. NBD, live migration)
-> +- Network protocols (e.g. NBD)
->  - User-supplied files (e.g. disk images, kernels, device trees)
->  - Passthrough devices (e.g. PCI, USB)
->
-> @@ -136,12 +136,17 @@ an issue as a normal bug.
->  * **migration/snapshots**. Migration failures and snapshot load
->    failures are considered part of normal operation as long as the
->    source virtual machine and savevm file, respectively, are still
-> -  functional. Aborting the QEMU process at the migration/snapshot
-> -  destination is similarly not considered a security issue. The
-> -  migration stream is assumed to be secure as long as the design
-> -  principles described in the Architecture section are held, in
-> -  which case plain manipulation of the stream is not considered as
-> -  an attack vector.
-> +  functional.
-> +  Aborts, crashes or misbehaviour of the destination QEMU due to an
-> +  externally manipulated migration stream are bugs, but not security
-> +  issues. The user must deploy QEMU following the design principles
-> +  described in the Architecture section to ensure that the migration
-> +  stream is not compromised. Manipulation of a plain-text stream is
-> +  not considered to be an attack vector.
-> +  A crash of the destination QEMU that can be triggered by a guest
-> +  manipulating a device on the source QEMU before or during a
-> +  migration may be a security issue, if it meets the other documented
-> +  criteria for security issues.
+> "strace" is going to be detected as a debugger this way, but it does
+> not  halt execution of the program, merely slow it down a bit.
 
-Personally I thought that making this three sub bullet points
-(splitting "normal" from "bug" from "maybe security issue")
-was clearer than having it be a single paragraph of text.
+Right, so it would be nice to be able to strace the watchdog.
+At the moment with this patch that wouldn't be possible.
 
-thanks
 -- PMM
 
