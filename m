@@ -1,124 +1,142 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D1F606A31F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 16:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843E3606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 16:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=IyAfYOGu
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gbGflroP;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=L7QJVGRN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVWgc-0000sx-Vy; Mon, 23 Nov 2026 11:14:35 -0500
+	id 1xVWjv-0001p6-18; Mon, 23 Nov 2026 11:17:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xVWgb-0000sk-Ry; Mon, 23 Nov 2026 11:14:33 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xVWjt-0001ox-Cl
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 11:17:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xVWgY-0002Wl-AG; Mon, 23 Nov 2026 11:14:33 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANDYtR63696211; Mon, 23 Nov 2026 16:14:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dKyHgf
- VJHW7yLyNk4NL2ZNMTtWBp98FvYtQbdhfGW2A=; b=IyAfYOGuyGnQHO2UxbbSPE
- k8ANxpfz0Fld2a6UHBQZZewzWyVzH/ukjijylePsPzXJjiyC1RQoiH64SEQ+IDB3
- YHKDsYy8LYYuKLGeGkmiCuzaNpeqODobpgulqevcPMACDkcG+aeOyAx9IRl3hU3L
- soWyw4AquWbBJX5BYv3SzVOwxtXx7wQHbn0FhrKCkhJEspgQngYp20MHw7Z/6WDN
- T/RfQdVXnqPyiDPYuYdc2aI+U7CNrQbh0sW5Gn69x2b73+8lqnd6lclIac9Bphv+
- KOzxNqSb+jqOZyo22jidGTiNPFFsBn3eUK4Hjvg8h5bknIZgC7iv5UVASITo3e1g
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34gv3q8g-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 23 Nov 2026 16:14:27 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANDJVLV1882033; Mon, 23 Nov 2026 16:14:26 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j3nmqfm1v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Nov 2026 16:14:26 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6ANGEP9F26739216
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Nov 2026 16:14:25 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 721EB5805B;
- Mon, 23 Nov 2026 16:14:25 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6306458058;
- Mon, 23 Nov 2026 16:14:21 +0000 (GMT)
-Received: from [9.123.12.1] (unknown [9.123.12.1])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 23 Nov 2026 16:14:21 +0000 (GMT)
-Message-ID: <fd569ae2-b44e-4d30-a0e1-4523f0caec8e@linux.ibm.com>
-Date: Mon, 23 Nov 2026 21:44:19 +0530
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xVWjr-0002vl-Ki
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 11:17:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795450672;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2ATf/w9JAXaQjsy8vfed4omLl10VItLMiiZ/bmoXwK0=;
+ b=gbGflroP6VNY+6H64c4p02FBN7ylzPpAmXyaaXnFcuinVZvIn1QgvFfzKaF5ydG4EFm9I6
+ GaZ9da5f1kSLR9YF3t4x7bqkVzzOcf9F8RqzHpKRBq88Mes/6LB5QPMjqsrZJv93DgxLeS
+ mNsqbkEe/YhCLuNZcZDidLLElzqqX/0=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-311-DGg1swtRMb-aRdCP7FnR2Q-1; Mon, 23 Nov 2026 16:17:49 +0000
+X-MC-Unique: DGg1swtRMb-aRdCP7FnR2Q-1
+X-Mimecast-MFC-AGG-ID: DGg1swtRMb-aRdCP7FnR2Q_1795450668
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3aed37745bcso3624139a91.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 08:17:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795450667; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TNGar4QAoWS3zW6Yy15NFO6lmynAsgHWyLVvxZqkL4uUx1NoiTyli56T5Q0sX74+Av
+ o4ORJ4HAR4E94tSkzgo+DOSyLapLfUibUEQrke3zzHBKnAoD+CJug7e2wzWHZyB8eT/m
+ y9wZzB0jing3qxSw+PlmUcNBfsuS7P6qou+9z40QV92uEp8OfsBlSc2O3oJVkPup3CU7
+ NdLA55S5IymeRMg2x8RIPyn1LpdQxH82nLS8Ul1sTeaSjPS8uZntZ+ArGWL7ckU50MJg
+ koPCmKhv9oA9erq6oLASfsjBlIhgdRGzPo7kUZSGO//cmhnTCtHagbT7HLjrtY9jrWBw
+ CATg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2ATf/w9JAXaQjsy8vfed4omLl10VItLMiiZ/bmoXwK0=;
+ fh=WYdm4gs/Ax4+GRbGMViCVZJauWbTAy2YVE0gMOcD+bc=;
+ b=ACsPFJ3ck642b4Y1yVC8TTUJ1zQW1Yj2BrZdth3qnH839iQsjfL3ZbuF+mAYn/jpcy
+ t33/ByxHUYCKTWwNk4YgWoxUjc9oE8ztP9rAUbezIUoekpubsR1e1nwvzLoJCjjXQtPD
+ YU3eaCpOJZaquR/lgsSEdA0vv6MnklAI0Hp6zOSYSaYQ+IT9u87pdb0VHojUn6KCJPk4
+ +V98pYiRaLAL4a9WPRhEd6CThOvEL8WARG00vv7SWerxNTXGYYqtm4SwKRtTKSuffkVb
+ Bq57X/BomGU/r26Pg3rMdKCZekc7tpHv3ashD8AbWCB6cKwl7ayFg4u5iMtanA8Qk0bM
+ lPFg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1795450667; x=1796055467; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=2ATf/w9JAXaQjsy8vfed4omLl10VItLMiiZ/bmoXwK0=;
+ b=L7QJVGRNcxVAjBBlr5rp8QeL4FOGO5d/8NuY6iW76L3yrToCgi9r9ftjbWwskwrJxr
+ HubY6nhZV8mMqQZQtPKl/otZ0znV55TDd4k+cQJQOHyKCCoEzH1WWZkaBRbSCCI0m6na
+ xXj3GidhqLGGbiqWgMUkofRxJ/EJHD83mFD1FqFDzjgAsH3HD4PNns+NwBJkX1m04nc8
+ uwGraMe4Rg2tWwh0a7EFgMRTPhvjLJbTX6vtLxYDcDImoomoQZlvIBEX96RxzjCN9Q5y
+ f7I3ztNNiedAlppVabneRgFz6oEU/bt9N+cx4/J6L4LuEwAaUd6WKKWWnku8lcJoADIA
+ wbZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795450667; x=1796055467;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=2ATf/w9JAXaQjsy8vfed4omLl10VItLMiiZ/bmoXwK0=;
+ b=QgG7EKSMUuttXMY/DG56Ih9nWDDtheTMD9X/NMyGxWU4ufQMwENCPMiq9/svOLUwpP
+ FKVFIk2W9DO2AzzQLlvLXKejY1BKOpMZqpmLf9s1c3Ji06v1MkPg5iqakzXmmAFTA0yo
+ K0gqckMm2M3bBakD183K4j8y8xL/NNTACYZpy1CJ4Yeza6osS1G9IsCUDWCVMDRpgUPF
+ qtfP0gGG4uYbl3atyKYa94x7GMDAzjP9bmLVxqK5KvEpZS6Ub3DxJASMlHj6cU7ZdGDF
+ 8aL05VBKYtLvWRRx/4VSp3kCKQBD1hOyHXijUovywkZ7VJOfpBI7rrkSurRMgjzJUX/x
+ o5gQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEwFQtClIkJDiFh5IqcdmmgPoR+JTbBEuhD26ICWYU37wCenR5NSpzDBfPAl+R/buTkWt/xLJi+2Ct8@nongnu.org
+X-Gm-Message-State: APuU4Z9ObXVMpIAzCiCIWvTB4yRzPcGDyBVAQIhGLvqk9RDKoyIdWweT
+ Iblm6tEMZXgKfL8i3TxN0AnhRYbF2iYwj1thAQVHhypGy5081dALyoZL7yroJyWcnbCR59wMfd0
+ wOnHm/IhcCkFKdLydnUKKzCRvUrraUm1vYsrf8/WmMGHf0D9iPk9HVCE8udzKblT2o4fGYiK8Bs
+ stmsDPIZ2CmUtFoVk29n1z5QSRnH04KDA=
+X-Gm-Gg: AZFdTZfsY++Q2zWo7ST9rvQOTcNiDQbOOK/89kGDCiZpylY6r1mOuy1mgS1VHpAT7DE
+ hVkQ/dU4YJL36mQA383FCLjSaaa3ugi5a5/R80mltXLN7uASaPHkKmlgXygeHb61XALgMmC2Ft5
+ e/z8Rv772sjq8+xad46G2SPlI31RTT8Rpz7Lw+pEMq/Dt8T7C6XKiRL2ZNEKa27iQq27wQv5sQq
+ J/1mvDdgxNNrXh0GmWYBqnAw+b/tOQ79QQsS28lDAJz4eRNRxwdEpY95q1rEtEdR7hy6rfTirYS
+ AOkWdVNRi25fsANbBNKq
+X-Received: by 2002:a17:90a:e710:b0:39e:6c68:fd91 with SMTP id
+ 98e67ed59e1d1-3b41c96151cmr7663943a91.38.1795450667400; 
+ Mon, 23 Nov 2026 08:17:47 -0800 (PST)
+X-Received: by 2002:a17:90a:e710:b0:39e:6c68:fd91 with SMTP id
+ 98e67ed59e1d1-3b41c96151cmr7663914a91.38.1795450666951; Mon, 23 Nov 2026
+ 08:17:46 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] tests/functional/ppc64: add pseries virtio-blk
- hotplug test
-To: Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Amit Machhiwal <amachhiw@linux.ibm.com>,
- Miles Glenn <milesg@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>, misanjum@linux.ibm.com,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20261030131025.32219-1-anushree.mathur@linux.ibm.com>
- <20261119062951.83498-1-anushree.mathur@linux.ibm.com>
- <20261119062951.83498-4-anushree.mathur@linux.ibm.com>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <20261119062951.83498-4-anushree.mathur@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=CYCdd7rl c=1 sm=1 tr=0 ts=6b046663 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=NEAV23lmAAAA:8
- a=VnNF1IyMAAAA:8 a=HJRHp4nUziAppNLKrx8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA2NCBTYWx0ZWRfX7OuHppO3nS1r
- f78AZBwgkZueA/P0unX+ccJX4mk+2HtTdWckyK61kzoTrx9YePiDSFi4tPDqpwbAd0H525PlH3c
- it6Ia7ZIGHDuqXlRIJZ4CABWDZkkpPM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA2NCBTYWx0ZWRfXygl4v0X1yF29
- 1tAA2jwpkZnv9v4zwUWG3BGJ66Ryzrh6p3PclwqcSETYmlcXGinCzoNiw9U/3Z6LJGoUtTVTHFZ
- SWiQTVxV0Luvjifdw7/m4K1QDy8OWRaszxjx6cYlfL2dq3hpv0e/tsiv3vU4ZlW4Sj2DjkWNBJo
- 3qGCqHE07oe+LtPzaaT0Tx7lXn0Tg/x82oNWZTGYZPSvF98prhbeomqIpXHu32rusbKZNX5f7FA
- kXBvp1NlS7wg9dHMsUV8VYkUZOq7Juk3xquROPQ+oXqDbL5CKbnHjn3mBS30Ta8ojeRFEw+0xZK
- t15TZ+hs5BiICkIgMNSqIixUVVBrjeEHYSBBTsQ9UXhsP+fPujnsf1kFT+rfUcFm7HzgEEKPjjJ
- 4k4OMPIU5AjzZg6eeebxiMV/nrn3cfZvaZjEXelMd3vnZszYQE18GAiCkppH9O9nMPqnQIqeyK/
- 7kj9KdUtscVovci7Asg==
-X-Proofpoint-ORIG-GUID: qbWGBXbl7ODGPjdJRhf90anq_xrXWDVI
-X-Proofpoint-GUID: EYUCRyEyz4E2mEcGkovStPRFg8LukMDv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-23_03,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 spamscore=0 bulkscore=0 impostorscore=0 adultscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611230064
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+ <ar_FXE5rzVqKcTc4@redhat.com> <87ik21vy11.fsf@pond.sub.org>
+ <CABgObfagz=EvmYtNFBo2xyDdXNkFPK8k0-YGDs7aVS6xRKEJTw@mail.gmail.com>
+ <awQisiKRYpQSTmVy@redhat.com> <87a4mzwuqp.fsf@pond.sub.org>
+In-Reply-To: <87a4mzwuqp.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 23 Nov 2026 17:17:35 +0100
+X-Gm-Features: Aa3M54qYJ8rD5APliQNu91x3-Rf5TxwAd5j5S0VZ7IsjDdCG2KNFOiIsCiswtf8
+Message-ID: <CABgObfaELn80BU_b9CjaTqiHx_tCj+8hSh+59FpUk33+osBvDQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,290 +148,80 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/19/26 11:59 AM, Anushree Mathur wrote:
-> Add a functional test that hot-plugs and hot-unplugs a virtio-blk-pci
-> disk on the pseries machine.  It runs with TCG, and also with KVM if
-> KVM is enabled.
-> 
-> On pseries a PCI device added through QMP is only enumerated by the
-> guest once rtas_errd (ppc64-diag) handles the RTAS hotplug event and
-> runs drmgr (powerpc-utils).  Neither is in the buildroot image used by
-> the other pseries tests, so the test uses rootfs-hotplug.ext2: the same
-> image with those two tools added.
-> 
-> The test boots with a second PHB (phb1) present so that the guest
-> registers its slots, adds a null-co backend, hot-plugs virtio-blk-pci
-> into phb1.0 and waits for /dev/vda, then unplugs it and waits for both
-> the QMP DEVICE_DELETED event and /dev/vda to go away.  The root drive is
-> used with snapshot=on so the cached asset is not modified by the guest.
-> 
-> Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-> ---
-> v2: no longer RFC.  I raised the patch adding rootfs-hotplug.ext2 to
-> qemu-ppc-boot (https://github.com/raphael502/qemu-ppc-boot/pull/1) and
-> it has been merged, so the asset URLs now point to that repository
-> (sha256 unchanged).  The vmlinux asset also points to qemu-ppc-boot, and
-> the test file is now executable like the other functional tests.
-> 
->   tests/functional/ppc64/meson.build         |   2 +
->   tests/functional/ppc64/test_hotplug_blk.py | 188 +++++++++++++++++++++
->   2 files changed, 190 insertions(+)
->   create mode 100755 tests/functional/ppc64/test_hotplug_blk.py
-> 
-> diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
-> index d91209f041..f483ce4d76 100644
-> --- a/tests/functional/ppc64/meson.build
-> +++ b/tests/functional/ppc64/meson.build
-> @@ -2,6 +2,7 @@
->   
->   test_ppc64_timeouts = {
->     'fadump' : 480,
-> +  'hotplug_blk' : 600,
->     'hotplug_cpu' : 480,
->     'hv' : 1000,
->     'mac99' : 120,
-> @@ -21,6 +22,7 @@ tests_ppc64_system_quick = [
->   tests_ppc64_system_thorough = [
->     'e500',
->     'fadump',
-> +  'hotplug_blk',
->     'hotplug_cpu',
->     'hv',
->     'mac99',
-> diff --git a/tests/functional/ppc64/test_hotplug_blk.py b/tests/functional/ppc64/test_hotplug_blk.py
-> new file mode 100755
-> index 0000000000..5740922977
-> --- /dev/null
-> +++ b/tests/functional/ppc64/test_hotplug_blk.py
-> @@ -0,0 +1,188 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that hot-plugs and hot-unplugs a virtio-blk-pci disk
-> +# on the pseries machine type.
-> +#
-> +# Copyright (c) 2025 IBM Corporation
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import platform
-> +
-> +from qemu_test import LinuxKernelTest, Asset
-> +from qemu_test import exec_command_and_wait_for_pattern
-> +
-> +
-> +class PseriesHotplugBlk(LinuxKernelTest):
-> +    """
-> +    Test virtio-blk-pci hotplug/unplug on the pseries machine type.
-> +
-> +    A pre-built rootfs image (based on the buildroot image used by
-> +    test_hotplug_cpu.py) is used as the guest OS.  The image includes
-> +    rtas_errd from ppc64-diag, which is required on pseries to call the
-> +    ibm,configure-connector RTAS function that makes a QMP-hotplugged
-> +    PCI device visible to the kernel.
-> +
-> +    ppc64-diag is not packaged in Alpine Linux, so the Alpine+apk
-> +    approach used by test_hv.py cannot be used here.  Instead a
-> +    self-contained rootfs with rtas_errd and drmgr (from powerpc-utils)
-> +    already installed is referenced as an Asset, following the same
-> +    pattern as test_hotplug_cpu.py.
-> +
-> +    The test is run with both TCG and KVM; the KVM variant needs a
-> +    ppc64 host with kvm-hv loaded and is skipped automatically otherwise.
-> +
-> +    A second spapr-pci-host-bridge (phb1, index=1) is present at VM
-> +    launch so the guest kernel registers its PCI slots with rpaphp
-> +    during boot-time PCI probe.  Runtime DLPAR hotplug of
-> +    virtio-blk-pci into phb1.0 then works via the rtas_errd path.
-> +    """
-> +
-> +    timeout = 600
-> +
-> +    ASSET_KERNEL = Asset(
-> +        ('https://github.com/raphael502/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
-> +         'vmlinux'),
-> +        'fc20d5820ad83ed514ac5f88af7e2692d47ab7f36dab290cdb137d05b98502f5')
-> +
-> +    # Pre-built rootfs based on the buildroot pseries image above, with
-> +    # rtas_errd (from ppc64-diag) and drmgr (from powerpc-utils) added.
-> +    # rtas_errd is required to process RTAS hotplug events on pseries and
-> +    # it execs drmgr to configure the device; without them rpaphp
-> +    # registers the slots but the device is never enumerated by the kernel.
-> +    ASSET_ROOTFS = Asset(
-> +        ('https://github.com/raphael502/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc64le_pseries-2023.11-8-gdcd9f0f6eb-20240104/'
-> +         'rootfs-hotplug.ext2'),
-> +        '01ab3421d313e7765176eb27193fdb5837281dc3c8484eed140de8a3e65908eb')
-> +
-> +    def _boot_pseries(self, accel):
-> +        """Boot pseries with phb1 present and rtas_errd running.
-> +
-> +        accel must be 'tcg' or 'kvm'.
-> +        """
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        rootfs_path = self.ASSET_ROOTFS.fetch()
-> +
-> +        self.set_machine('pseries')
-> +        if accel == 'tcg':
-> +            self.vm.add_args('-accel', 'tcg,thread=multi')
-> +        else:
-> +            self.vm.add_args('-accel', 'kvm')
-> +        self.vm.add_args('-smp', '2', '-m', '512M')
-> +        # Second PHB present at boot so the guest kernel registers its
-> +        # slots with rpaphp.  Required for runtime DLPAR hotplug of
-> +        # virtio-blk-pci into phb1.0.
-> +        self.vm.add_args('-device', 'spapr-pci-host-bridge,id=phb1,index=1')
-> +        # snapshot=on keeps the cached rootfs asset unmodified
-> +        self.vm.add_args(
-> +            '-drive',
-> +            f'file={rootfs_path},if=scsi,index=0,format=raw,snapshot=on')
-> +        self.vm.add_args(
-> +            '-kernel', kernel_path,
-> +            '-append', 'root=/dev/sda console=hvc0 rootwait printk.time=0',
-> +        )
-> +        self.vm.set_console()
-> +        self.vm.launch()
-> +
-> +        self.wait_for_console_pattern('buildroot login:')
-> +        exec_command_and_wait_for_pattern(self, 'root', '#')
-> +
-> +        # Start rtas_errd so that RTAS hotplug events are processed.
-> +        # rtas_errd daemonizes by default (no -d flag).  Run mkdir and
-> +        # rtas_errd unconditionally then echo a sentinel so the pattern
-> +        # match never depends on their exit codes.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'touch /var/log/platform; mkdir -p /var/log/dump;'
-> +            ' /usr/sbin/rtas_errd;'
-> +            ' echo rtas_errd_started',
-> +            'rtas_errd_started',
-> +        )
+On Mon, Nov 23, 2026 at 2:19=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+> >> Even larger QMP interfaces may fall under bullet #3 - parts of large
+> >> code changes - but you definitely get a vote if there are substantial
+> >> changes to code you maintain. No doubt about that! This is just normal
+> >> interaction between maintainers; I think we do well in that respect
+> >> and I see no reason for LLMs to change that.
+> >
+> > This is a new situation with LLMs though, and it ties back to the
+> > SFC's (IMHO impossible) guidance that is included in this patch:
+> >
+> >   "the project seeks to both support those contributors who outright re=
+ject
+> >    generative AI systems, and to not shun those who choose to use them;=
+"
+> >
+> > If the contributor wants to use LLM, and some but not all maintainers
+> > do not, then we've got an impossible situation where someone is going
+> > to come away quite unhappy.
+> >
+> > I don't think the proposal to allow pre-arrangement between contributor
+> > and /a/ maintainer is workable, unless we accept that manitainers of
+> > common code are just going to have to accept the result.
 
-The "rtas_errd_started" is a substring of the typed command, so the 
-console output already contains the pattern which it is trying to match, 
-so it always evaluates to true.
-It can be fixed using the shell variable sentinel (similar to how it is 
-done at other places) for example:
-S=started; echo rtas_errd_$S
+I see your point better now. IMO it's up to the maintainer who
+initially agreed to review the patch to understand the issues that
+arise. The maintainer can do an initial pre-review of the code, can
+take on himself part of the yak shaving, can figure out a way to
+reduce the scope back to something manageable, or can just say sorry.
 
-Starting the daemon unconditionally and not checking it may be
-deliberate. However, a better fix would be to verify that the daemon is
-actually running, for example with pidof, and then only evaluate to true 
-and proceed further.
+> > There are plenty of examples of series which start off self-contained,
+> > but grow into changes in common library code maintained by other
+> > people. Often the maintainer of the common code won't get looped in
+> > until v5 or v10 posting of a series.
+>
+> Matches my experience. Such growth is commonly due to
+> reviewers demanding improvements.  The reviewers are
+> commonly right.
 
-> +
-> +    def _do_blk_hotplug(self):
-> +
-> +        # Confirm /dev/vda does not exist before hotplug.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'test -b /dev/vda && echo present || echo absent',
-> +            'absent',
-> +        )
-> +
+I agree, it cannot be fully anticipated. However, in many other cases,
+the changes are there from the beginning, thought to be "small", and
+the second maintainer is only looped in late because of that. This is
+already an antipattern, and one that (like most bad things) LLMs risk
+exacerbating. The maintainer who is first approached can ask to see a
+diffstat, loop in other people, etc. both without and with LLMs. And
+in many (more?) cases the changes can be expected to stay
+self-contained. The series I posted at
+https://lore.kernel.org/qemu-devel/20261118122357.659634-1-pbonzini@redhat.=
+com/T/
+is an example of something that is *really* large but can reasonably
+be expected to stay within the scope of a single subsystem. Perhaps
+there could be interactions with "make check-python" but those are
+very limited.
 
-Same issue here as well, the "absent" is a substring of the typed 
-command, so it always evaluates to true regardless of the real state of 
-/dev/vda.
-It can be fixed with the same shell variable sentinel trick.
-> +        # Add a null-co block backend (no image file needed).
-> +        self.vm.cmd(
-> +            'blockdev-add',
-> +            **{
-> +                'driver': 'null-co',
-> +                'size': 1073741824,
-> +                'node-name': 'testdisk',
-> +            },
-> +        )
-> +
-> +        # Hotplug virtio-blk-pci into phb1.0.  The RTAS hotplug event
-> +        # (type 229) is delivered to the guest; rtas_errd calls
-> +        # ibm,configure-connector, the kernel enumerates the device and
-> +        # udev creates /dev/vda.
-> +        self.vm.cmd(
-> +            'device_add',
-> +            driver='virtio-blk-pci',
-> +            drive='testdisk',
-> +            id='hotblk0',
-> +            bus='phb1.0',
-> +            addr='0x0',
-> +        )
-> +
-> +        # Poll until /dev/vda appears.  Use a shell variable sentinel so
-> +        # the string 'vda_present' never appears in the typed command,
-> +        # avoiding a false match on the echoed command text.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'until test -b /dev/vda; do sleep 0.2; done'
-> +            '; R=present; echo vda_$R',
-> +            'vda_present',
-> +        )
+> > By that point the LLM usage will be present throughout the
+> > patch series.  There will be way too much pressure to accept
+> > the LLM usage in the common code, for the other maintainers
+> > to be able to say no.
 
-It would be better to have a timeout of 1 minute or so in this loop, 
-because currently incase of error the loop runs until the 600 seconds 
-test timeout. Something like
-for i in $(seq 1 60); do ... sleep 1; done
-will give a faster failure and it can also print a failure log incase of 
-timeout.
+On the other hand: people are already reviewing *clearly* LLM-produced
+patch series (example
+https://lore.kernel.org/qemu-devel/CABgObfbKKSoO1NsyygXUT4O1b+aPZ0SRNUGU55p=
+cQphR5s81aQ@mail.gmail.com/T/).
+Doesn't that produce the same kind of peer pressure on core
+maintainers, in fact even more so because they are not warned in
+advance?
 
-> +
-> +        # Unplug the device and wait for the QMP deletion event.
-> +        self.vm.cmd('device_del', id='hotblk0')
-> +        self.vm.event_wait(
-> +            'DEVICE_DELETED',
-> +            match={'data': {'device': 'hotblk0'}},
-> +        )
-> +
-> +        # Poll until /dev/vda disappears.
-> +        exec_command_and_wait_for_pattern(
-> +            self,
-> +            'while test -b /dev/vda; do sleep 0.2; done'
-> +            '; R=absent; echo vda_$R',
-> +            'vda_absent',
-> +        )
-
-Here also it would be better to have a timeout in the loop to report the 
-failures quickly.
-
-> +
-> +    def test_pseries_hotplug_blk_tcg(self):
-> +        """Hotplug then unplug a virtio-blk-pci device on pseries (TCG)."""
-> +        self.require_accelerator('tcg')
-> +        self._boot_pseries('tcg')
-> +        self._do_blk_hotplug()
-> +
-> +    def test_pseries_hotplug_blk_kvm(self):
-> +        """Hotplug then unplug a virtio-blk-pci device on pseries (KVM).
-> +
-> +        Requires a ppc64 host with kvm-hv loaded; skipped automatically
-> +        on other hosts.
-> +        """
-> +        self.require_accelerator('kvm')
-> +        # On ppc64 the base kvm module can be loaded (and /dev/kvm created)
-> +        # without kvm-hv, so checking /dev/kvm alone is not sufficient.
-> +        if platform.machine() in ('ppc64le', 'ppc64'):
-> +            try:
-> +                with open('/proc/modules', encoding='utf-8') as f:
-> +                    if not any(line.split()[0] == 'kvm_hv' for line in f):
-> +                        self.skipTest('kvm-hv module is not loaded')
-> +            except OSError:
-> +                pass
-> +        self._boot_pseries('kvm')
-> +        self._do_blk_hotplug()
-> +
-> +
-> +if __name__ == '__main__':
-> +    PseriesHotplugBlk.main()
-
-Regards,
-Utkarsh
+Paolo
 
 
