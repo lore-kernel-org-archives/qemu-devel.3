@@ -1,52 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A39606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A23606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key, unprotected) header.d=crudebyte.com header.i=@crudebyte.com header.a=rsa-sha256 header.s=kylie header.b=Mypr7WM/
+	dkim=pass (4096-bit key) header.d=crudebyte.com header.i=@crudebyte.com header.a=rsa-sha256 header.s=kylie header.b=ckVy+qUQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVWGS-0000WR-JB; Mon, 23 Nov 2026 10:47:32 -0500
+	id 1xVWGV-0000Wy-DC; Mon, 23 Nov 2026 10:47:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <98d19860ac1d82610490d46382299d58d8d8a784@kylie.crudebyte.com>)
- id 1xVWGP-0000W6-Bz
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:47:29 -0500
+ (envelope-from <8af000b5aee54ed5672f151f7080810b7b40f59b@kylie.crudebyte.com>)
+ id 1xVWGT-0000Wj-Lc
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:47:33 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <98d19860ac1d82610490d46382299d58d8d8a784@kylie.crudebyte.com>)
- id 1xVWGN-0003Nc-1h
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:47:28 -0500
+ (envelope-from <8af000b5aee54ed5672f151f7080810b7b40f59b@kylie.crudebyte.com>)
+ id 1xVWGR-0004Bh-JS
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:47:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=CMfIFY91NxTE8Mxf0+xpvu0MzSeqS8KrFI5n24wdUpw=; b=Mypr7
- WM/xz0iCjeYTa6Ln/ZVW9BoOv5HXwk0odkGsme/MzsIT4+uMjJ4GUljBua82P7zTQJy2wV257B0OJ
- iZqWtIZhtHlea8GH+EaZorDo6ORr4xQHlXLln5vZzaGLykU/+v3O75h9mYSUtX9z7yO0MPwWxT9JK
- Pqjygd7lxkRnrzJDRzZerkDuO6AFBubOHvk232ZhaxaKCF7SW2NaVJGM8x4/7sNlhSmvm1Xj2y3ZB
- 2WGPDGpQfo/TBQIa47DH4dQ4wbquVIKSRqQVDSQaT4T/QQljQiBSLsqCU9Vcn4OGPRL2munGfLt1q
- n2YpdYnk4+Q+qvW1I6RZ9oWRh2QMh507OVJhG+e1XcwTZE43on0m1dMTwyvx07mm6rTK5sByQFgAf
- 7L0LPj8eSq8Z8Zt5AkCsneziQtls2pou+8lB17jUVGxpyZXs6Q+C5RHzSf73jevktoZkE9koKn8UI
- eBtoDNUeYyw6qkC0FHlPixrMz3mdUYxbh+sXF/J1Vvtn6cuJnTnmlmO6N4/G/yg6cTF/Xrgwdt5CV
- V+9h6J2l7mBV3uf6OBJj2ixeiXx2Lbyfa17sUZqUKAt6kC4a+LW8etFgMUWncbp1PCO8sIS9uKftj
- CvbhhttgNcVvmfvHXMA70tqtTTkfe3hTzlaF9/tj6+0g7AF4+FgomXgrX/xBK4=;
-Message-ID: <cover.1795447869.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=u7A1h4Lm5G03bZw4ERu1x8Pa8jZcUX6HpIBGEVrkZOA=; b=ckVy+
+ qUQN0DH56VYDYypJh8eCYmndFi/FWHQWxyFbml9pozCZ+enbXBKvPmzNQQOzMdmtQrhBwDVYceQzY
+ GxuZ6LgLBTgRGfW2GxWRS2EwvZfyGlbbVWpOYhC12KQUzcJryTxIe+zksxNgX+bqj3XT0O/BwWrMe
+ 72AMKTtKW3mitYHjePEPLXuniBGzxBRBuZqWiKDevJEcOPnyYgCfI8Z6THCQ8kdsO/NGq/xDMd9mb
+ gPAiV94fK/KkrojLc/3QJZfT2Kl8SpALz1IbLTAQwNWttkg32KC0EgPJJSDNKTWUQVEh7zn0CNHC2
+ w31IbOoAH4T1Y+RmQdNd3QKgNFiJMCvxxkvvqXHIdiTyTAKZMUdnO2rM98oxJran19bcWe3bcILya
+ UCkB36y4AReYfp+BcMGxi5Du4vF8b4yaZnsLiNVjOqrZY3KHfzQQHBLyrc6LdxOUpFrxFJn9vaYRq
+ DyOIGlYtdxWiMAIxweQy09l2b5WcOGl/BySSBS/vl1AtG1OImZCNTXs6JMkTvpq1nCSYpZgfSvyGy
+ K9gE9WbPaRAiAvLeZGuxtAsVTvduk4xH872TgyR16jcKbgNt4cx3i+rohTRtADGTtwuDlXPtQaPT+
+ gaCRhGq0mK9IARbOhMleV7GpeVzMGr3DtAUmZwujHgWREn+zvfF+Co2uYGpl6U=;
+Message-ID: <8af000b5aee54ed5672f151f7080810b7b40f59b.1795447869.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1795447869.git.qemu_oss@crudebyte.com>
+References: <cover.1795447869.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 23 Nov 2026 16:31:09 +0100
-Subject: [PATCH 0/7] 9pfs: hardening against export root escape
- (CVE-2026-93834)
+Date: Mon, 23 Nov 2026 16:24:51 +0100
+Subject: [PATCH 1/7] hw/9pfs: local_open_nofollow(): abort on illegal FID path
+ components
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Paolo Bonzini <pbonzini@redhat.com>,
-    "Marc-André Lureau" <marcandre.lureau@redhat.com>,
-    "Daniel P. Berrangé" <berrange@redhat.com>,
-    Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Greg Kurz <groug@kaod.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=98d19860ac1d82610490d46382299d58d8d8a784@kylie.crudebyte.com;
+ envelope-from=8af000b5aee54ed5672f151f7080810b7b40f59b@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -65,58 +63,173 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 X-Archived-By: <archiver.kernel.org>
+
+Harden local_open_nofollow() against potentially corrupted,
+malicious paths.
 
 CVE-2026-93834 (fixed by fe9e30899ff) allowed guests to escape from
 9p server's export root. Due to that severe impact, it is therefore
 worth hardening the 9p server at relevant, affected code locations.
 
-Core patches of this series are the following 2 patches:
+The target victim of that CVE was local_open_nofollow(), which is
+9p server's central place for opening files and directories. This
+function opens the passed FID path by walking and opening one path
+element at a time, starting from the 9p export root directory. And
+the key mechanism exploited by the CVE was to smuggle ".." elements
+into the path, which eventually caused local_open_nofollow() to
+open files outside of the allowed 9p exported root directory.
 
- - Patch 1 hardens local_open_nofollow(), the most vulnerable place in 9p
-   server for this, as this function does the actual element-wise path walk
-   and openat() calls. Key change of this patch is to longer trust the passed
-   path. The path is instead copied right at the beginning of the function to
-   retain an immutable string so that nobody could pull the rug under our feet
-   while we are then validating the path string upon that immutable path
-   string, and the function would now abort QEMU process on any illegal path,
-   not expected at this point, as it means server state is already corrupted.
+That could be exploited by the CVE this way, because so far
+local_open_nofollow() relied on local_name_to_path() having
+translated a client-side path into a safe host-side path
+representation (which especially includes having stripped all ".."
+path elements already), before that path was ever passed to
+local_open_nofollow().
 
- - Patch 6 adds a sanity check exactly at those locations in the 9p local
-   backend, where a manipulated path would manifest into real filesystem
-   action. This new sanity check verifies the V9fsPath object, and again aborts
-   the QEMU process loudly in this case, for the same reason described above.
-   
-Furthermore this series adds a new 9p test suite tests/unit/test-9p-internals.c,
-which checks expected behaviour of specific 9p server internal functions.
+And that assumption of local_open_nofollow() was actually valid,
+because the code structure guaranteed that local_name_to_path()
+was always called before the (translated / defused) path would
+eventually reach local_open_nofollow().
 
-Christian Schoenebeck (7):
-  hw/9pfs: local_open_nofollow(): abort on illegal FID path components
-  hw/9pfs: move struct LocalData into 9p-local.h
-  meson: move 9pfs-util selection to toplevel meson file
-  tests/unit: add forktest.h, a forked-child run-and-verify helper
-  tests/unit: add test-9p-internals.c
-  hw/9pfs: local: abort on corrupt V9fsPath objects
-  tests/9p-internals: test 9p's local_path_sanity_check() function
+However the CVE used a side effect, by exploiting a concurrency
+issue, which allowed it to mutate the path after the path has
+already been translated by local_name_to_path(), eventually
+causing local_open_nofollow() to blindly follow a crafted,
+malicious path.
 
- MAINTAINERS                    |   2 +
- hw/9pfs/9p-local.c             | 117 +++++++++++++-
- hw/9pfs/9p-local.h             |   5 +
- hw/9pfs/meson.build            |   8 +-
- meson.build                    |  10 ++
- tests/unit/forktest.h          | 132 ++++++++++++++++
- tests/unit/meson.build         |  22 +++
- tests/unit/test-9p-internals.c | 270 +++++++++++++++++++++++++++++++++
- 8 files changed, 554 insertions(+), 12 deletions(-)
- create mode 100644 tests/unit/forktest.h
- create mode 100644 tests/unit/test-9p-internals.c
+Since local_open_nofollow() is such a fragile place, and since
+concurrency issues can be complex for being completely ruled out
+(especially with C), we no longer blindly rely on a path that
+has been passed to local_open_nofollow() to be always sane, so:
 
+ - Copy the passed path as very first action, so nobody else
+   could mutate it while we are checking and processing it.
+
+Then from there, by using the path copy only:
+
+ - Check the path for any ".." element.
+
+ - Check the path for not being an absolute path.
+
+ - Check the path to not contain any empty path element.
+
+If the path fails any of these checks, abort the QEMU process
+deliberately loudly instead of trying to return a regular error
+to client. Because if we detected a bad path at this point of
+the code, it means somebody already managed to corrupt the overall
+server state. So better to die immediately and loudly with a clear
+admin message, than giving an attacker the chance to make the
+situation even worse.
+
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/9p-local.c | 71 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 68 insertions(+), 3 deletions(-)
+
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index ee592b62f8..710652dbca 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -58,24 +58,89 @@ typedef struct {
+     int mountfd;
+ } LocalData;
+ 
+-int local_open_nofollow(FsContext *fs_ctx, const char *path, int flags,
++int local_open_nofollow(FsContext *fs_ctx, const char *_path, int flags,
+                         mode_t mode)
+ {
+     LocalData *data = fs_ctx->private;
+     int fd = data->mountfd;
+ 
++    /*
++     * Hardening: snapshot the FID path to prevent any mutations (by
++     * another thread) during the checks and individual directory
++     * walks below (i.e. preventing TOCTOU issues). This is usually
++     * not expected to happen, as we are holding a read lock on the
++     * path, but the impact of CVE-2026-93834 deserves more robust
++     * handling.
++     */
++    g_autofree char *snap = g_strdup(_path);
++    const char *path = snap;
++
++    if (!*path) {
++        /*
++         * Hardening: check for empty string.
++         *
++         * An empty string means the FID path is corrupted (the
++         * export's root FID path is a single "."), so stop with a
++         * loud failure instead of serving a corrupted state.
++         */
++        error_report("9pfs: FATAL: corrupted state detected: empty FID "
++                     "path");
++        abort();
++    }
++
+     while (*path && fd != -1) {
+         const char *c;
+         int next_fd;
+         char *head;
+ 
+-        /* Only relative paths without consecutive slashes */
+-        assert(*path != '/');
++        /*
++         * Hardening: check for leading slash.
++         *
++         * An absolute path or an empty path element at this point
++         * means the path is corrupted (the client supplied path was
++         * already translated by local_name_to_path() to a safe host
++         * path before).
++         */
++        if (*path == '/') {
++            /* Do not print this path: it is corrupted. */
++            error_report("9pfs: FATAL: corrupted state detected: FID "
++                         "path contains a leading or empty path "
++                         "component");
++            abort();
++        }
+ 
+         head = g_strdup(path);
+         c = qemu_strchrnul(path, '/');
++        /*
++         * Hardening: check for "..".
++         *
++         * Relative ".." path elements were already translated by
++         * local_name_to_path() before, so a ".." element at this
++         * point means a corrupted path.
++         */
++        if (c - path == 2 && head[0] == '.' && head[1] == '.') {
++            /* Do not print this path: it is corrupted. */
++            error_report("9pfs: FATAL: corrupted state detected: FID "
++                         "path contains a '..' component");
++            abort();
++        }
+         if (*c) {
+             /* Intermediate path element */
++
++            /*
++             * Hardening: check for trailing slash.
++             *
++             * Prevents calling openat() with an empty string (""). It
++             * would not actually be fatal, but this can only happen
++             * with a corrupted path. So abort, just to be sure.
++             */
++            if (c[1] == '\0') {
++                /* Do not print this path: it is corrupted. */
++                error_report("9pfs: FATAL: corrupted state detected: "
++                             "FID path ends with a '/' (empty final "
++                             "component)");
++                abort();
++            }
+             head[c - path] = 0;
+             path = c + 1;
+             next_fd = openat_dir(fd, head);
 -- 
 2.47.3
 
