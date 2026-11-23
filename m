@@ -1,67 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC72606A327
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 08:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0508D606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=I6TK5/+R
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PbRPBH7n
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVPcb-0005mk-F1; Mon, 23 Nov 2026 03:41:57 -0500
+	id 1xVQ7V-0000s2-G3; Mon, 23 Nov 2026 04:13:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVPcY-0005mO-QD; Mon, 23 Nov 2026 03:41:54 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVPcW-000125-Sn; Mon, 23 Nov 2026 03:41:54 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id D35C720B7167; Mon, 23 Nov 2026 00:41:47 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D35C720B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795423307;
- bh=vAL3j1cSBPE2sXMB/xBCPGOdiyzO1BDzHwWSyd5zTzs=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=I6TK5/+RB4uZNaG1ahbGi9yRK4WGYD7ygiL1QR6U/OfO5l7tLp51QUXay+k5cU4Hu
- S4Qv59QOXoPGisRSZlUqS3eS/7YG4kFOxIbjxny7Ug7bPV7JggNBB6zpl201Nq4K9O
- KNthURfREGCY91IorqSHSQOehgplS/zFMTftF8z8=
-Date: Mon, 23 Nov 2026 00:41:47 -0800
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
- arch-specific
-Message-ID: <awP8SyP6QyrM+DUK@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
- <av8UE3dpLrEY6uD9@example.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xVQ7Q-0000rP-EN
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:13:48 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xVQ7O-0003C9-S6
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:13:48 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4a210470b49so28451565e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 01:13:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795425225; x=1796030025; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=uTTE+l6YI9JuWAqmG1kclELSlKlQuPwIA0YAkWZ+Izs=;
+ b=PbRPBH7nLYyocAAuOZ6jKPLuCqYB+1DFfGf1E1yaOhh2JNr456uYcYYGm5RDhzod6F
+ WvvTRNNZ6xO6ClVA8r4YQ75zMAIQdVLFz7PWrsOkt6TntT4t+wsWDz9+BcEj8OfR4iGj
+ 1xeBBD8gZDrOMZ0wtK8UztVWt1sdgp5E6vTeCTqTINo7J8noRg38y/qJaSn9l4AK3NwL
+ SITtCUH81ODJStZTLmp3V7bG/MkqUpmr8RDV2Lipw7kvTQ37JKUnN7i/g+bCGYGUooIn
+ LVjA3MibaroZhcj5/2o8ULNKF2zHiwxgNxMG2OPjMwOxqRBfLPghfEU4/wJs9NsyaJRT
+ 0fXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795425225; x=1796030025;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uTTE+l6YI9JuWAqmG1kclELSlKlQuPwIA0YAkWZ+Izs=;
+ b=VnVgPuTG3FOoK3o3ChdEGa/Gc1KdVH2DbXHPSJFgQElVbAw+tRbIHDEXsm93HZWpzy
+ eK/K/OLKPSJu20/AWwkdbHDLT/+Xch3bWIYQppytLTiy2XftDKqD5piTVMOqQ1joFGKI
+ yMAoxlgoh1Qk3/xSrHKxSnPhgxGZnkW8GtEFL1dPJfJLnyOZo8NQtxpxmYpilpmRikf4
+ +GnTrbUr4dGXPvYsmmIFraKwhf77KQ4KgmYv76IYQgzt677BjuhCqRs5N1NLDmmFW3Lt
+ PIg7xTgQiWGYJ9GNAAVHZEfU0wTqxAasg9cD+H83Kb1n3P+TSU/JPNu3IZcjAFggwxWO
+ +c7Q==
+X-Gm-Message-State: APuU4Z+/BL0ToSv/INV5T6GAf6U4oG8AIcCR1k0PvebebTJPv+jVB6/w
+ QHWmkpLDLXYhkVx0scuh0ynmH839ZJTsYw42rr/VKWBPu0GWvv/VWtIMBIs/5BX2G+I=
+X-Gm-Gg: AZFdTZdSKdHlGocSoeRooiqXhw8woDgh8HntlggpT6QVm7Q23OChxp6Up4JaRk5CoXU
+ u9TmLbt1ahTLHcdGPiiEW2Ehdbf8FmF4C4N8NitpGFRBM7cWImy9J0fGiquXqnGz4z8Klx/gOJ6
+ VsfUb7LCfQgIFsM1IDWlEZGo17rQ61uFjQDBOIvUzt/gfAu6PJNK7P9osrmKtVQHZ3RifKJrxcf
+ zE+/132HHk//MwpvKnfeX0UyJ59hz/L0bjTqbV0YC/jsVa3/kHViC7tkCeVTVzH8ZM6FUPFUQKP
+ 7nONJ/Vx8tsxbpbzr25H1lRoWaEcxnhCRIKL48NIDlCKKtQ+u2xQWxeZvrzFKX2Aal7bKWuiY3M
+ qzCe08Ea8KQQL2vfmmfaXCJ0Ul+h3p/kocU0kKE6A30P1ACriumWRuPp7OzRGa/GOLe+FBV0tv3
+ Pw/nqZmL5lZ9v5pL2I7zH/44UVoKT/XBA2Io3hLBf+Uz7j5lAwebumpiSyoGDVp03H+w794zl5C
+ Kz8G0Xhrj3wh17O/Z7Dw70X6As4+PP9XOZ/FvPaK5SfrWGKmnecspOOdeMgltQKYKtgTfppXN0z
+ 5H5fO3pU9M5d+oW6gKPM3yWDLOXb
+X-Received: by 2002:a05:600c:5249:b0:4bb:665c:a078 with SMTP id
+ 5b1f17b1804b1-4bb8893a89bmr218098255e9.28.1795425224856; 
+ Mon, 23 Nov 2026 01:13:44 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb884ab091sm480682815e9.11.2026.11.23.01.13.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Nov 2026 01:13:44 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 171975F914;
+ Mon, 23 Nov 2026 09:13:43 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Kuan-Wei Chiu
+ <visitorckw@gmail.com>,  Palmer Dabbelt <palmer@dabbelt.com>,  Alistair
+ Francis <alistair.francis@wdc.com>,  Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
+ Joel Stanley <joel@jms.id.au>,  Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,  Michael Ellerman
+ <mpe@kernel.org>,  Portia Stephens <portias@oss.tenstorrent.com>,  Halil
+ Pasic <pasic@linux.ibm.com>,  Christian Borntraeger
+ <borntraeger@linux.ibm.com>,  Eric Farman <farman@linux.ibm.com>,  Matthew
+ Rosato <mjrosato@linux.ibm.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,
+ qemu-arm@nongnu.org,  qemu-riscv@nongnu.org,  qemu-s390x@nongnu.org
+Subject: Re: [PATCH v2] tests/functional: use immutable tuxboot kernel URLs
+In-Reply-To: <20261112133320.418012-2-marcandre.lureau@redhat.com> (marcandre
+ lureau's message of "Thu, 12 Nov 2026 17:33:20 +0400")
+References: <20261112133320.418012-2-marcandre.lureau@redhat.com>
+User-Agent: mu4e 1.14.5-pre2; emacs 30.1
+Date: Mon, 23 Nov 2026 09:13:43 +0000
+Message-ID: <87fqwrx648.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <av8UE3dpLrEY6uD9@example.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,148 +115,36 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 19, 2026 at 04:21:55PM +0100, Magnus Kulke wrote:
-> On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
-> > x86 specific migration handlers currently live in common MSHV code. Move
-> > these handlers into x86 backend and add a generic architecture migration
-> > initialization hook. ARM MSHV live migration support is not added yet,
-> > this will allow ARM to add an empty initialization hook.
-> > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> > ---
-> >  accel/mshv/mshv-all.c       | 35 ++++-------------------------------
-> >  include/system/mshv_int.h   |  1 +
-> >  target/i386/mshv/mshv-all.c | 34 ++++++++++++++++++++++++++++++++++
-> >  3 files changed, 39 insertions(+), 31 deletions(-)
-> > 
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index 860f511fcba..efe19a39140 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -60,30 +60,6 @@ static int init_mshv(int *mshv_fd)
-> >      return 0;
-> >  }
-> >  
-> > -static int mshv_load_cleanup(void *opaque)
-> > -{
-> > -    CPUState *cpu;
-> > -    int ret;
-> > -
-> > -    ret = mshv_arch_set_partition_msrs(first_cpu);
-> > -    if (ret < 0) {
-> > -        error_report("Failed to set partition MSRs: %s", strerror(-ret));
-> > -        return -1;
-> > -    }
-> > -
-> > -    CPU_FOREACH(cpu) {
-> > -        ret = mshv_arch_set_mp_state(cpu);
-> > -        if (ret < 0) {
-> > -            error_report("Failed to set mp state for vCPU %d: %s",
-> > -                         cpu->cpu_index, strerror(-ret));
-> > -            return -1;
-> > -        }
-> > -    }
-> > -
-> > -    return 0;
-> > -}
-> > -
-> > -
-> >  static int get_host_partition_property(int mshv_fd, uint32_t property_code,
-> >                                         uint64_t *value)
-> >  {
-> > @@ -519,10 +495,6 @@ static int mshv_init_vcpu(CPUState *cpu)
-> >      return 0;
-> >  }
-> >  
-> > -static SaveVMHandlers savevm_mshv = {
-> > -    .load_cleanup = mshv_load_cleanup,
-> > -};
-> > -
-> >  static int mshv_init(AccelState *as, MachineState *ms)
-> >  {
-> >      MshvState *s;
-> > @@ -574,9 +546,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
-> >                                    0, "mshv-memory");
-> >      memory_listener_register(&mshv_io_listener, &address_space_io);
-> >  
-> > -    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
-> > -
-> > -    mshv_clock_init();
-> > +    ret = mshv_arch_migration_init(s);
-> > +    if (ret < 0) {
-> > +        return ret;
-> > +    }
-> >  
-> >      return 0;
-> >  }
-> > diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> > index 0e68365c63f..31d2f4381c7 100644
-> > --- a/include/system/mshv_int.h
-> > +++ b/include/system/mshv_int.h
-> > @@ -109,6 +109,7 @@ void mshv_arch_disable_partition_proc_features(
-> >  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
-> >  int mshv_arch_post_init_vm(int vm_fd);
-> >  void mshv_setup_hvcall_args(AccelCPUState *state);
-> > +int mshv_arch_migration_init(MshvState *s);
-> >  int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
-> >  int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
-> >  typedef struct mshv_root_hvcall mshv_root_hvcall;
-> > diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
-> > index f0b43aa86f1..968fe2a4494 100644
-> > --- a/target/i386/mshv/mshv-all.c
-> > +++ b/target/i386/mshv/mshv-all.c
-> > @@ -78,3 +78,37 @@ int mshv_arch_post_init_vm(int vm_fd)
-> >  
-> >      return ret;
-> >  }
-> > +
-> > +static int mshv_load_cleanup(void *opaque)
-> > +{
-> > +    CPUState *cpu;
-> > +    int ret;
-> > +
-> > +    ret = mshv_arch_set_partition_msrs(first_cpu);
-> > +    if (ret < 0) {
-> > +        error_report("Failed to set partition MSRs: %s", strerror(-ret));
-> > +        return -1;
-> > +    }
-> > +
-> > +    CPU_FOREACH(cpu) {
-> > +        ret = mshv_arch_set_mp_state(cpu);
-> > +        if (ret < 0) {
-> > +            error_report("Failed to set mp state for vCPU %d: %s",
-> > +                         cpu->cpu_index, strerror(-ret));
-> > +            return -1;
-> > +        }
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +static SaveVMHandlers savevm_mshv = {
-> > +    .load_cleanup = mshv_load_cleanup,
-> > +};
-> > +
-> > +int mshv_arch_migration_init(MshvState *s)
-> 
-> mshv_clock_init() is also relevant for pause/resume handling, so maybe
-> "mshv_arch_vm_state_init()"?
+marcandre.lureau@redhat.com writes:
 
-Sure, that makes sense.
- 
-> > +{
-> > +    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
-> > +    mshv_clock_init();
-> > +    return 0;
-> > +}
-> > 
-> > -- 
-> > 2.45.4
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> tuxboot rebuilds the 6.18.54 kernel images in place, so the URLs
+> without a datestamp now serve content that does not match the recorded
+> hashes and the tuxrun tests fail to fetch their assets. Point the
+> x86_64, arm64 and s390 tests at the immutable 20260930 snapshots and
+> keep the hashes that were recorded against them, instead of implicitly
+> switching to the rebuilt images.
+>
+> Do the same for the riscv64 6.11.9 kernel assets, which still used
+> non-datestamped URLs; their recorded hashes already match the 20241122
+> snapshot.
+>
+> Fixes: 8ac1aab21fca ("tests/functional: update arm64 tuxrun images")
+> Fixes: 09961fafc5a0 ("tests/functional: update s390x tuxrun images")
+> Fixes: 467c9eb7dd31 ("tests/functional: update x86_64 tuxrun images")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+Queued to testing/next, thanks.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
