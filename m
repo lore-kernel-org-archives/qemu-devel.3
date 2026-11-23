@@ -1,50 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C24606A32A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EAC606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=crudebyte.com header.i=@crudebyte.com header.a=rsa-sha256 header.s=kylie header.b=ncBfrhWf
+	dkim=pass (4096-bit key) header.d=crudebyte.com header.i=@crudebyte.com header.a=rsa-sha256 header.s=kylie header.b=fZB/ciDM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVWH0-0000xy-Tx; Mon, 23 Nov 2026 10:48:06 -0500
+	id 1xVWH9-0001KR-Pa; Mon, 23 Nov 2026 10:48:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <81ec50e2d3721f7a855f988637dfa1dc0ef3a544@kylie.crudebyte.com>)
- id 1xVWGp-0000nY-76
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:47:55 -0500
+ (envelope-from <98d19860ac1d82610490d46382299d58d8d8a784@kylie.crudebyte.com>)
+ id 1xVWH7-0001GU-2l
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:48:13 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <81ec50e2d3721f7a855f988637dfa1dc0ef3a544@kylie.crudebyte.com>)
- id 1xVWGn-0005bX-A5
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:47:54 -0500
+ (envelope-from <98d19860ac1d82610490d46382299d58d8d8a784@kylie.crudebyte.com>)
+ id 1xVWH5-0005cT-Gp
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:48:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=2eObQTVs6WyJZOi07U5Gx6HPUMg9YMYPOEz6SWEpePs=; b=ncBfr
- hWfKgBpM3xRBX1cWiOJOPxMe5bhyvwXnTAeRsrQqR+d9R5yGd0TKJEtglE9PSUmfSAPe856qfsuWV
- bmQmoSHgK3TCcUDZ8qY7KyHLW5yYwsFzd0jbiCj2mutG1PZuV5dgp1kZdvqGpaKr0eEF/xqmbpyx8
- a/yFwini8pS5QXzbELbAQVtY5J7JfuZLvzQOZ+L6oZrOYlxhW/KlYoc1aGA2COr8Bqc8B3ndefaIy
- 5V2SI6Bqz2nRyWzUgRl9ByNlyh7j2Topzmc38Jqfnh5XH/4D/Ui9ze49poLaCg1x7xtjTNdYjShMr
- ToJrgQEXGjVozg5/KiO4/iOn4U201w1ox0+9CnVXAif3MdHUC3T4ett53fPUS0OcGSLufw4eSpXk/
- +VxAGKhaBJsKJrxQL4U7bZFbdPeZXi+SBM31dklPwLdmsEfAlgDK1lPJGs3/HjIxSPt4Pb+qJTV1e
- P5zEoJMjWhJ2X8OUGCZE7e7MSHaLkgVjAKcmt2wTPQoGGgnT14wBXXiFtHkU1HTGNo1GaHhdDfKm1
- 8W26pRdQFvLEZFJTr3CK7nFZ6O6a9g/6J+c9nXN/CYfW7ZU4eEX62ZlFW7NznSPLK9bWZKeSc27fe
- 7BkhquOQmjpDZ7q09tAoDrtkg1PLIwnG2QDl8npVWNp2YlpaoCR7SPjJgI7VMc=;
-Message-ID: <81ec50e2d3721f7a855f988637dfa1dc0ef3a544.1795447869.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=hNCnHoBTyk4qCzZQXEAORbD24D2NnTcmbCQHmQ/pQyw=; b=fZB/c
+ iDMo4xLqiVMbPiX5KdnDBIUBfNQBbPq/T4L+19tX0F9CJ3xPEjy5P2lPSn5620lROtv/vY4HyNQrd
+ y8xXmYEY15OlMWi4kJjg8YhoYVckGGXlGgO3g7NnlLcSiTegck7X/h3dUDkhDgQn5W6ENBjZdRpZj
+ FjUd3JG0rFiDdV2EHy7LInq3LG44z6o8ggEdT2zXgp8LCWggiU37jGiIdt0bc9+3x2rZinWjbIghX
+ cp418saeQ0qiTT4F3GFuW4dkEI49YKIAQF2N/q5yz2A7aWAQf0LS8k2gYjkjN3jWJ6gWXXZEBKCcV
+ sQnvolkq24yU9JO6Y88owTxEeBAd1kArpq2GhUlOu7DpWjepmmB5VzpNDlFg5fEJWcp4Ycctyoj5u
+ U8zOaEcTMv1lFyXXRqsYQYGkUKF0qmW2cbDl9xGsCstOFe/cxxOpUAj+kil2JBB2sjW9S7+BaC/Av
+ X79mL0xYuAuSPkOv/mVPWf+UFguBdGBloqUdgtq/RihDbzia+nKNhcWCrzLl725P4OaBvQFS7bQBQ
+ aKIP5geHFiygVwy1mhhbqwVBTBVpBp58hUw9dyt/C8Hd3OrUJ6Fz73SVhkYctiqWN6KESDAE+gUEL
+ fv8yhjl189OgX+a7h6ReBib8baclCUEpERuR7EwtaetmCwfq/O+1aXCZZvPxIM=;
+Message-ID: <98d19860ac1d82610490d46382299d58d8d8a784.1795447869.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1795447869.git.qemu_oss@crudebyte.com>
 References: <cover.1795447869.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 23 Nov 2026 16:24:59 +0100
-Subject: [PATCH 4/7] tests/unit: add forktest.h, a forked-child run-and-verify
- helper
+Date: Mon, 23 Nov 2026 16:25:06 +0100
+Subject: [PATCH 7/7] tests/9p-internals: test 9p's local_path_sanity_check()
+ function
 To: qemu-devel@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=81ec50e2d3721f7a855f988637dfa1dc0ef3a544@kylie.crudebyte.com;
+ envelope-from=98d19860ac1d82610490d46382299d58d8d8a784@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -63,187 +63,127 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 X-Archived-By: <archiver.kernel.org>
 
-We are going to test QEMU internal functions (actual tests added
-by subsequent patch) which are expected to abort() the running
-process on certain conditions. So we are going to simulate those
-conditions, and aborting the process is hence the sane result of
-those test cases.
-
-Since aborting the process would also terminate the test and
-falsely yield a failed test result; we therefore need to fork and
-run these special tests from a separate subprocess. That way we
-can detect from the parent process whether the subprocess was
-aborted as expected, and then proclaim the test case as succeeded.
-
-This header file provides the general purpose boilerplate code to
-run this kind of forked test cases.
+Test 9p local fs backend's internal local_path_sanity_check()
+function (introduced by previous patch) for it to abort() the
+process as expected on passed, corrupted V9fsPath objects.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- MAINTAINERS           |   1 +
- tests/unit/forktest.h | 132 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 133 insertions(+)
- create mode 100644 tests/unit/forktest.h
+ tests/unit/test-9p-internals.c | 73 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 40bf63651c..0f4f1ee442 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2609,6 +2609,7 @@ X: hw/9pfs/xen-9p*
- F: fsdev/
- F: tests/qtest/virtio-9p-test.c
- F: tests/qtest/virtio-9p-race-test.c
-+F: tests/unit/forktest.h
- F: tests/qtest/libqos/virtio-9p*
- T: git https://github.com/cschoenebeck/qemu.git 9p.next
+diff --git a/tests/unit/test-9p-internals.c b/tests/unit/test-9p-internals.c
+index 61c7fc7779..30c7c58afc 100644
+--- a/tests/unit/test-9p-internals.c
++++ b/tests/unit/test-9p-internals.c
+@@ -14,6 +14,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "fsdev/file-op-9p.h"
++#include "hw/9pfs/9p.h"
+ #include "hw/9pfs/9p-local.h"
+ #include "forktest.h"
+ #include <stdlib.h>
+@@ -56,6 +57,29 @@ static const char *v9p_internals_corrupt_paths[] = {
+     "",
+ };
  
-diff --git a/tests/unit/forktest.h b/tests/unit/forktest.h
-new file mode 100644
-index 0000000000..ece5ccd835
---- /dev/null
-+++ b/tests/unit/forktest.h
-@@ -0,0 +1,132 @@
 +/*
-+ * Boilerplate code for running tests forked to a subprocess
-+ * (e.g. for testing functions to abort() the running process as expected)
-+ *
-+ * Copyright (c) 2026 Christian Schoenebeck <qemu_oss@crudebyte.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Resembles a V9fsPath - @expect_abort reflects whether that state
++ * is expected to cause an abort
 + */
-+
-+#ifndef FORKTEST_H
-+#define FORKTEST_H
-+
-+#include <signal.h>
-+#include <sys/wait.h>
-+
-+/* Test case passed without aborting, as expected. */
-+#define FORKTEST_EXIT_OK 0
-+/* Test case failed because it did not abort even though expected to abort. */
-+#define FORKTEST_EXIT_SURVIVED 124
-+/* Test case (subprocess) returned without calling expected forktest_exit(). */
-+#define FORKTEST_EXIT_MISSED 255
-+
-+/*
-+ * The only way out of a forktest child: terminates it without
-+ * running the atexit, glib or ASan teardown inherited from the
-+ * parent. @code is one of the FORKTEST_EXIT codes above.
-+ */
-+static inline void forktest_exit(int code)
-+{
-+    _exit(code);
-+}
-+
-+/* Wraps the actual test code to run, forked into a subprocess. */
 +typedef struct {
-+    /* entry point of the test case (to be executed on a subprocess) */
-+    void (*child_fn)(void *);
-+    /* user data passed to @child_fn */
-+    void *opaque;
-+    /* defines the success criteria: whether subprocess is expected to abort */
++    const char *data;
++    size_t size;
 +    bool expect_abort;
-+    /* printed as context on failure cases */
-+    const char *name;
-+} ForkTest;
++} V9pInternalsPathPair;
 +
-+static inline bool forktest_aborted(int status)
-+{
-+    return WIFSIGNALED(status) && WTERMSIG(status) == SIGABRT;
-+}
-+
-+static inline bool forktest_exited(int status, int code)
-+{
-+    return WIFEXITED(status) && WEXITSTATUS(status) == code;
-+}
-+
-+/* launch (fork and run) the passed test case in a subprocess */
-+static inline void forktest_run(ForkTest test)
-+{
-+    pid_t pid;
-+    int status = 0;
-+
-+    pid = fork();
-+    if (pid == -1) {
-+        g_error("fork failed: %s", g_strerror(errno));
-+    }
-+    if (pid == 0) {
-+        test.child_fn(test.opaque);
-+        forktest_exit(FORKTEST_EXIT_MISSED);
-+    }
-+    if (waitpid(pid, &status, 0) != pid) {
-+        g_error("waitpid failed: %s", g_strerror(errno));
-+    }
-+    if (forktest_aborted(status)) {
-+        if (!test.expect_abort) {
-+            g_error("child on %s aborted unexpectedly",
-+                    test.name);
-+        }
-+    } else if (test.expect_abort &&
-+               forktest_exited(status, FORKTEST_EXIT_SURVIVED)) {
-+        g_error("child on %s survived; the case was expected to "
-+                "abort", test.name);
-+    } else if (!test.expect_abort &&
-+               forktest_exited(status, FORKTEST_EXIT_OK)) {
-+        /* passed cleanly */
-+    } else {
-+        g_error("child on %s died unexpectedly (status 0x%x)",
-+                test.name, status);
-+    }
-+}
-+
-+/*
-+ * Setup and teardown tasks to be executed before and after a test case
-+ * respectively, sharable between several test cases.
-+ */
-+typedef struct {
-+    void *(*setup_fn)(void);
-+    void (*teardown_fn)(void *data);
-+} ForkTestEnv;
-+
-+/* internal: g_test data of the trampoline below */
-+struct ForkTestRun {
-+    const ForkTestEnv *env;
-+    void (*test_fn)(void *data);
++static const V9pInternalsPathPair v9p_internals_path_pairs[] = {
++    { NULL, 0, true },
++    { NULL, 4, true },
++    /* short size: a copy would not be NUL-terminated */
++    { "abc", 2, true },
++    /* long size: captured copy would exceed the string */
++    { "abc", 99, true },
++    /* implausible size: larger than our hard-coded 4 MiB limit */
++    { "abc", 5 * 1024 * 1024, true },
++    /* valid size: this should not abort */
++    { "abc", 4, false },
 +};
 +
-+/* internal trampoline function */
-+static inline void forktest_case_run(const void *opaque)
+ /* shared test-suite state */
+ typedef struct {
+     LocalData localdata;
+@@ -183,6 +207,53 @@ static void v9p_internals_local_open_nofollow_corrupt_paths(void *data)
+     }
+ }
+ 
++/*
++ * Called from within a child process, because the tested
++ * local_path_sanity_check() function aborts if it detected a
++ * corrupted V9fsPath. So we test whether the child process was
++ * aborted as expected (for corrupted paths).
++ */
++static void v9p_internals_check_v9fspath(void *opaque)
 +{
-+    const struct ForkTestRun *tc = opaque;
-+    void *state = NULL;
++    const V9pInternalsPathPair *p = opaque;
++    V9fsPath pair;
++    V9fsPath dst;
 +
-+    if (tc->env) {
-+        state = tc->env->setup_fn();
++    pair = (V9fsPath) { .data = (char *)p->data, .size = p->size };
++
++    local_path_sanity_check(&pair);
++    if (p->expect_abort) {
++        forktest_exit(FORKTEST_EXIT_SURVIVED);
 +    }
-+    tc->test_fn(state);
-+    if (tc->env) {
-+        tc->env->teardown_fn(state);
++
++    v9fs_path_init(&dst);
++    v9fs_path_copy(&dst, &pair);
++    g_assert_cmpuint(dst.size, ==, p->size);
++    g_assert_nonnull(dst.data);
++    g_assert_cmpint(dst.data[p->size - 1], ==, '\0');
++    v9fs_path_free(&dst);
++    forktest_exit(FORKTEST_EXIT_OK);
++}
++
++static void v9p_internals_local_path_sanity_check(void *data)
++{
++    size_t i;
++
++    for (i = 0; i < ARRAY_SIZE(v9p_internals_path_pairs); i++) {
++        const V9pInternalsPathPair *pair = &v9p_internals_path_pairs[i];
++        g_autofree char *name =
++            g_strdup_printf("path pair (data %s, size %zu)", pair->data,
++                            pair->size);
++
++        forktest_run((ForkTest) {
++            .child_fn = v9p_internals_check_v9fspath,
++            .opaque = (void *)pair,
++            .expect_abort = pair->expect_abort,
++            .name = name,
++        });
 +    }
 +}
 +
-+/* register a test case; @env may be NULL */
-+static inline void forktest_add(const char *path,
-+                                void (*test_fn)(void *data),
-+                                const ForkTestEnv *env)
-+{
-+    struct ForkTestRun *tc = g_new(struct ForkTestRun, 1);
-+
-+    tc->test_fn = test_fn;
-+    tc->env = env;
-+    g_test_add_data_func_full(path, tc, forktest_case_run, g_free);
-+}
-+
-+#endif
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -193,5 +264,7 @@ int main(int argc, char **argv)
+     forktest_add("/9p-internals/local_open_nofollow/corrupt-paths",
+                  v9p_internals_local_open_nofollow_corrupt_paths,
+                  &v9p_internals_env);
++    forktest_add("/9p-internals/local_path_sanity_check",
++                 v9p_internals_local_path_sanity_check, NULL);
+     return g_test_run();
+ }
 -- 
 2.47.3
 
