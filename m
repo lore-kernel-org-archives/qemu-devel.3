@@ -1,103 +1,103 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42ADF606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1409C606A322
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PTODh3Si;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hoOdD/io
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=J7tGpGiI;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=i5oaDJeV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVcwI-0002Ps-5d; Mon, 23 Nov 2026 17:55:10 -0500
+	id 1xVcwA-0001xQ-JT; Mon, 23 Nov 2026 17:55:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVcwE-0002FY-M4
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:55:07 -0500
+ id 1xVcw7-0001rL-Nl
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:59 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVcwC-0005eY-6i
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:55:06 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xVcw5-00057g-8E
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:59 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANJuQkR3255327
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:55:03 GMT
+ 6ANJuYlW1579761
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0FZlg61rj4t/q48PT/Pf/xZZdnByOmwaoaTpd4wxur8=; b=PTODh3Sipjf/Fws5
- bTiqEu6CPXtT5StqqBw4yeY7xDpWTGOjLedsfEBAZy62urz8H916Yph0FjH8FHFc
- U5fiY06/dqTN4+kL4kWrEXddFdOb73izEXSInrGvxRh61bSNxficUaYzD5xqZW4b
- dydLGLM7Elx96rSpXJgfxbN0FrID71/TJMHnjJNwEwhtZY9Tq+tY+KQLC8jZ8rFr
- 6IeclLQJFySKFZLM8cY4QYBFM+g8vCO+LyJDG9zf1o5+EgVAwLkbqyRyFgWL/NKu
- co9OO+Wg0qPw56qG7JzYOlEgn53GFXu8XhH1UFaV1PvPEhFV4SBsehEvWs9uVGfJ
- 91TtsA==
+ GStmKwoXoWRWEfw9QEx8NmYd2FOC4cfpzvtlSc0HZVM=; b=J7tGpGiIH8Dvpbnt
+ Y1/KMAECr/0txfcCAAC5gDHtxEv6c01sdmOmYGGzeabN1lkvMAyvbtHVvHIsAYJj
+ hLGnomslBbvesczmIqvbxgyrYk1o2wReBa3/tkltv9mgFrsr+k+dv4gx/qj1LAsU
+ WTRvS7LW/60lfbGXYzT7nkhwX00FAeIPvw4Ld1vhMmCah4oN/ReuFAkR42SwQTvM
+ wpPVDJi/6FmgBAZ7CHemxF9FWTil6T/XL1R6G/4tXNwvIvGnGr8flHmEQdf/gm6f
+ tpjcUIwbkVIWDrnhiJGCaqpckoibQwSzRxSnFsP+NlV75bFXFJCerZOzZ3yCTzeW
+ T41zeQ==
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g1pbrx2-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4ma0tqxt-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:55:02 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:55 +0000 (GMT)
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-94970ad532bso98979685a.0
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 14:55:02 -0800 (PST)
+ af79cd13be357-9495c71055bso742310185a.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 14:54:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795474502; x=1796079302; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795474495; x=1796079295; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=0FZlg61rj4t/q48PT/Pf/xZZdnByOmwaoaTpd4wxur8=;
- b=hoOdD/ioOp6zykMtDcIlHttjeXZZPZJD1bKDGc4dpPpWwv2TKoALutdMwc00g+73l+
- HM+oZjgbddcfcnbT79lPkeW1nBCeg0MjNW6A35E6Ul2yfIyOzYjUgqyT7y5tg2UvII8o
- 7KRxOy4Y5XOnyLEv4ASwc0Y1et8MZlGP+k4OIcaGySXMgGkM277e79NJ/go5fsmVHDj0
- bVol9Gcih3Kux9InlIhE+VPHB/kR6k0uMnCsdSxqoplmfIjlehfkt6YMCEJNCSLl+LW9
- NdVrf1EO27eeG10EkxUucTW4w25Stl+8ONP3uyARsL7HOMz5fCJ7VI9ps7a5l2t3oazh
- uIyw==
+ bh=GStmKwoXoWRWEfw9QEx8NmYd2FOC4cfpzvtlSc0HZVM=;
+ b=i5oaDJeVQ32tANn8x4s5yaH/Nhkf2GIoU0LrnxFtoy2TW3M0kbKG8yAwWdjlH1V9fJ
+ I6+xo5o/jPeJRcL2oXduFfuMMKZF5Dr7ncaPsk4IZJjRAGm3i8uwM6rCcLU7TYdo4wr9
+ aOB/z8Mbcsjlef6CG0GPj0zzw/np81YLnJqEWspbpAwtvcURbVgKHz7HNKnIAjOTBi2I
+ /nRqKv/2hISq6smUbMtPoUXQ/ORnUIL/Zc/p66LirF82H2pDAYqSyTPl1FX+Q0AmnEnP
+ PchllFXhHRBfLTajgUyMHx1GI7FrE00fQjEyOnaDIIMfu+Zctm7BnwiGAHSaPC1oG7G5
+ +Adg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795474502; x=1796079302;
+ d=1e100.net; s=20260707; t=1795474495; x=1796079295;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=0FZlg61rj4t/q48PT/Pf/xZZdnByOmwaoaTpd4wxur8=;
- b=uOjYCDR3SRKOxb4LVMfcRZBgxN78YjFH1b5XfnA/EjLDQ88gJTMOtksx1ROTfEwnoE
- 5WrOfFeiJeTEKA6ihPva6rQmP11K+1rJLE6XLM/Ijr7bQ4H8Ua6uRf4kdZGWdqNPKURh
- dZ4k5s2dJD8bHlz1ZkHYZvvanSAVi8rtr6sIKIIGeQLBa3a727JjlYdeb5hGBrYDRg2t
- fu7p8mkkMWTAanbz0t6MCJmSsqZIUB6nQZI339Gu8pCYa92PN8eLWYCK8aDfwhYekwVW
- DyK2ZNy0e0k8y9nP+Xh+eWYslGSPyTHz58/FF6TjRBeI9DNoAgjAaAB6BZFAcotlrw0C
- HVNw==
-X-Gm-Message-State: APuU4Z/b/Myn0YvbdVVEVd1YLimvIXqciNk9vk9U4sIGLCxuQZO38h8v
- NgFwFJfNsx3ipk1z/drOHIZmsr+8pDxIAkXo1HHcU2LWOA9iF4gycAeJ1GSD/fJmLuGA8XsKihk
- I6BnMVKHYZfY9Bw9EG42Yl1S9Xf1aXd6nRUWmxD9Nz136QROSG1OJbO+w7T/UXyS2lSjY
-X-Gm-Gg: AZFdTZc6k2AxPrqxk/5L6urNN3/PSQqy+36/PkylD5wfkHKMmGovUoV7Az4Bxvft4Fn
- bFB/p3/GeL21iCBNCFcKaNzDiq6C4Dtp0ArtdcBJNdjl6kC6C+FLIqF4EeoQej92ByitrerjO6e
- yBkGMe0I1HRp6M94oOq3wdRE/w3Jrn7HOxVsHQKjU2KP87Qm9B/eId1Y9+9G4jlXWqUIcwLgAHC
- L++UXdNB4MDroYZBqEi/+GyqVSRtZj93OHVg3e42EpG56XStqnFny7KV1nRLkMHeVlO3+FJvBZy
- so4RqM44RLMAZewPJTM9jv9+Tj5qnwgBinkTdYxRzcoeIVe/x2ODQTDZdLJNN62oxcw8iVAs+v+
- IoZhVdDPmjbq9lX6opHMVlMAU7zR1Q6Jlp07tAsPrk5ysMNToGhfwmq1VCGsZi0pUWdKJICEBnf
- sj4CCM8RFQu2MnZg==
-X-Received: by 2002:a05:620a:480e:b0:949:7502:6a5 with SMTP id
- af79cd13be357-949bab2275emr2336817685a.57.1795474501622; 
- Mon, 23 Nov 2026 14:55:01 -0800 (PST)
-X-Received: by 2002:a05:620a:480e:b0:949:7502:6a5 with SMTP id
- af79cd13be357-949bab2275emr2336815385a.57.1795474501212; 
- Mon, 23 Nov 2026 14:55:01 -0800 (PST)
+ bh=GStmKwoXoWRWEfw9QEx8NmYd2FOC4cfpzvtlSc0HZVM=;
+ b=N+CY3S7thteQ7MV+09OQtp7ndcH1Q+I0u6ngrOclN3fxm3utdkeY47a8mo2Y0N4Sdj
+ 9+1kjOl1obSNShb2RJXwlYtFegFp/LvnmSSPMlSDZ17QDZgjSCTn2ojcvtXgUQ6f5n9V
+ Kb+dILyi+8iJOzCt+oo0LxjgETUjgmqclL4dVfPPXdv+zJ/PahUxQFlD3LQ0xSHTM2PE
+ VrbqMxg/PYACJR3VlcPoRxQmGA/q7lXqaCwgJaguORY1nKz+fthgjGs/oJ2geivUsYf4
+ v8AarTzoZNLVZg8JD9SSnFXRkqiCKIcVWLLx7SfGYcG0vJr+uOMymAEhAPJ4zLEoGN0j
+ FAuw==
+X-Gm-Message-State: APuU4Z+CIwiP4le44SKlXqDKRLCSKj7Z87RA5xszYeGfggX3A1PdFIdy
+ Y8aXTdJuUUBbeLgLQ1NlNxhmtokQFMSSfkcYRVu5fEkUe2a8rivN/1gsJiIGMMKOFoyHDStUQsZ
+ lx68IHYmvgejLOq1zFpByz1HxvnsxzjowgQ2P3/GtCSc6P+nrclqjXXA3DRF1AeXw0P7c
+X-Gm-Gg: AZFdTZcVCdgsBkl6op5sS6FtHZX0xIZmJ8p8YWiNE5JkEOafquC91MSBZ5b1nGqrWnC
+ NWjky9sLHaDS+2KptsQHDQuESdjaV1LfWJI8wPn0TEwufcoYaPq+7YrATLqU0yr/XUZUixXOEFc
+ fGQQPMBbCQeOa1YHsLdKKQKlS1ZtuHFqxAgonBEGNssl8aFLHX4862cK5iZ7tuLXdXSxfDAeV6o
+ 0uWeyB8icvSYVZLr09m04hr5wsKihooRcxDvo2UXD5KBRP3AaDkikA9rdQjKQm9jiL4WPDeeoRe
+ z9J+pfALPdOvjx7Jn1FGVlpwl7Zp4lGODepMrdOivQK3fIlaWP+K9Ga3STsi3APQDQwnKWP3+mf
+ Jhm6kbBAbJ/XUDhTJkosMI6pJwLxjAiQfwqIBvQlWo4NdvVnb65Acp+zD/JumQcE9A/m2/52Cgo
+ PJaX68LQ4mziqg5w==
+X-Received: by 2002:a05:620a:130a:b0:93f:2f48:c9e5 with SMTP id
+ af79cd13be357-949ba9f9712mr2308734585a.34.1795474494695; 
+ Mon, 23 Nov 2026 14:54:54 -0800 (PST)
+X-Received: by 2002:a05:620a:130a:b0:93f:2f48:c9e5 with SMTP id
+ af79cd13be357-949ba9f9712mr2308732385a.34.1795474494223; 
+ Mon, 23 Nov 2026 14:54:54 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884a3a3dsm369109495e9.10.2026.11.23.14.55.00
+ ffacd0b85a97d-4ab6a680355sm21157100f8f.27.2026.11.23.14.54.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Nov 2026 14:55:00 -0800 (PST)
+ Mon, 23 Nov 2026 14:54:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-stable@nongnu.org
-Subject: [PATCH-for-11.2 9/9] hw/sd/sdhci: Report Auto CMD12 response timeout
- in error status
-Date: Mon, 23 Nov 2026 23:53:49 +0100
-Message-ID: <20261123225349.54981-10-philmd@oss.qualcomm.com>
+Subject: [PATCH-for-11.2 8/9] hw/sd/sdcard: Fill SPI R1 response for rejected
+ commands
+Date: Mon, 23 Nov 2026 23:53:48 +0100
+Message-ID: <20261123225349.54981-9-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261123225349.54981-1-philmd@oss.qualcomm.com>
 References: <20261123225349.54981-1-philmd@oss.qualcomm.com>
@@ -105,34 +105,33 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX/VQB0ktToe0H
- jZcGJSM9fsXa8/EFhKS6FfocuWaL0lu9ng97TuVwoKwUBwJ1Chi5vSTJr9o5Xwdq6Xe/bxMEo6L
- tXCqsQk6pkiUB7XqW+GCUn0CaZzUj+Ndekq46ZBPuFZ8P8pBrRQidfTao9/Y8FTIigp56fYHEcw
- oi/zoApUEWc/e91piENphyDleSkK8y2k8sxrzwx5IUfZKW8MKPbkYR2p2tZy6QDiUNUx7SO06/X
- H0XWz2v6s9e4YyFSXvufijlF0t38HE7s44AcImX+qAfcHOThXmFBagI1ZWYxIJW1nT0ufez9j9m
- /9D/UWu+3hy56d5XPi3V3SswHdfAPsG574DnaZAAyfhUAjUzsVPCt493cDPGuybhWI071+XYgPb
- +UowNacoygzK62EhTfSXF/2WMPvEEsJjo3y+D/5LRq3gqigD6brNejbvFLnMLsc8tZwbT4HYHKV
- tyRZnrLXRhC3P46Hr9w==
-X-Authority-Analysis: v=2.4 cv=AeIkjHXG c=1 sm=1 tr=0 ts=6b04c446 cx=c_pps
+X-Proofpoint-GUID: g_Jyv4i8eOZVbIdYEaELb-JaFSwgxTTf
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX6rfN4Avtt9Gu
+ /SZTcSZCL9jnTgWTLdrN0VWg5vNMYtLPVAGd2RFna7oWzYTTGLIoiIUxN24PgoHVIguOVaIuKa4
+ /zgbktQ9tA+tHDoVM2o54dFi39WIxa4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX5qLI8E6bQ8PC
+ s899w1J5XigP1mJjFkGF364inLzHNiiOZDWyAiB2SOt0oMsaM/YyidqtSQhmId99zaB0zk+pYmQ
+ IX3LH6AG0OGz3MmKCROnLYyRqxYUPwGKyYYHgb2Dv6FxDSwvg8RjZr3Tk7/OAvWqCzK8S84A4A6
+ eGLEvGi32Zdx/5RD2SINcO4AP+DlQLmhHXadxjsXSfX/+St9wluddbEu6GK4aQo41lFQZ1O5M8B
+ fg+qmPvubKPdrRzz/ZcptGf6YzaZaqXOcsO8lBRWQlWJkh5uePMyvmEVXdA+NiEstYcrP6x5XgG
+ YDRNWotbFhfHqCS3xxzzkKy2yvhHgC0Vc3ycuEx07CQG9v3+cTdGk+E+90vvSLtM59W3IQwUSih
+ G+sBQUuUvoai/smW8PUYL2zivZ5+LxJcQttj5DbzqIx/ybVy43FGAsfdPDegVTJEyJDONllG3ZX
+ bZ20Pjh02ZD5lf+cd/Q==
+X-Authority-Analysis: v=2.4 cv=Yr+a1IYX c=1 sm=1 tr=0 ts=6b04c43f cx=c_pps
  a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=AtiBkSoUvsowU9FJreAA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=jg0HPy1x56av6D61QKAA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: wedZ-lD_M8Un8WjvrN8cp0RsJ3_g178w
-X-Proofpoint-ORIG-GUID: wedZ-lD_M8Un8WjvrN8cp0RsJ3_g178w
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX7v5bYwT3MxuW
- UMC0KAw04NAAE5uBe5irltAq3LrJkn2BlbRReerq3AwJ1NskEb3s7lk3D4oLhiRqO3iJG1T0lyE
- IXuMIzeUjhdDsT8ypAAj8kgWMNPDT6c=
+X-Proofpoint-ORIG-GUID: g_Jyv4i8eOZVbIdYEaELb-JaFSwgxTTf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-23_05,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1015
- suspectscore=0 phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611230091
+ bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 phishscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611230091
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -141,7 +140,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,65 +159,38 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Auto CMD12 copied an uninitialised stack buffer into the upper
-Response register when the card did not respond.
+In SPI mode the card always responds (Physical Layer spec v1.10,
+7.2.8 "Error Conditions"), so sd_response_size() returns 1 for sd_r0
+and sd_illegal. However sd_do_command() does not fill the response
+buffer for these response types, so the ssi-sd bridge returns
+uninitialized bytes instead of an R1 with the "illegal command" bit
+set. Before commit 1585ab9f1baf, ssi-sd itself replied 0x04 (illegal
+command) in this case.
 
-Zero the buffer. On timeout, set the Auto CMD12 Timeout Error status
-bit and, if enabled, the Auto CMD12 Error interrupt.
+Build the R1 response with the "illegal command" bit set.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d7dfca0807a0 ("hw/sdhci: introduce standard SD host controller")
+Fixes: 1585ab9f1baf ("hw/sd/sdcard: Fill SPI response bits in card code")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sd/sdhci-internal.h |  1 +
- hw/sd/sdhci.c          | 18 ++++++++++++++----
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ hw/sd/sd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 2116995dccaf..9bc6f302b62e 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -174,6 +174,7 @@ FIELD(SDHC_TIMEOUTCON, COUNTER,        0, 4);
- #define SDHC_EISEN_CMDTIMEOUT          0x0001
- #define SDHC_EISEN_BLKGAP              0x0004
- #define SDHC_EISEN_CMDIDX              0x0008
-+#define SDHC_EISEN_CMD12ERR            0x0100
- #define SDHC_EISEN_ADMAERR             0x0200
- 
- /* R/W Normal Interrupt Signal Enable Register 0x0 */
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index bd74c60f7287..8c81b90f1a73 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -414,14 +414,24 @@ static void sdhci_end_transfer(SDHCIState *s)
-     /* Automatically send CMD12 to stop transfer if AutoCMD12 enabled */
-     if ((s->trnmod & SDHC_TRNS_ACMD12) != 0) {
-         SDRequest request;
--        uint8_t response[16];
-+        uint8_t response[16] = { };
-+        size_t rlen;
- 
-         request.cmd = 0x0C;
-         request.arg = 0;
-         trace_sdhci_end_transfer(request.cmd, request.arg);
--        sdbus_do_command(&s->sdbus, &request, response, sizeof(response));
--        /* Auto CMD12 response goes to the upper Response register */
--        s->rspreg[3] = ldl_be_p(response);
-+        rlen = sdbus_do_command(&s->sdbus, &request, response,
-+                                sizeof(response));
-+        if (rlen == 4) {
-+            s->rspreg[3] = ldl_be_p(response);
-+        } else {
-+            trace_sdhci_error("timeout waiting for Auto CMD12 response");
-+            s->acmd12errsts |= R_SDHC_ACMD12ERRSTS_TIMEOUT_ERR_MASK;
-+            if (s->errintstsen & SDHC_EISEN_CMD12ERR) {
-+                s->errintsts |= SDHC_EIS_CMD12ERR;
-+                s->norintsts |= SDHC_NIS_ERR;
-+            }
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 862622e217b4..a3a4947e5645 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2693,6 +2693,10 @@ send_response:
+         sd->data_offset = 0;
+         /* fall-through */
+     case sd_illegal:
++        if (sd_is_spi(sd)) {
++            sd_response_r1_make(sd, response);
++            response[0] |= 1 << 2; /* ILLEGAL_COMMAND */
 +        }
-     }
- 
-     s->prnsts &= ~(SDHC_DOING_READ | SDHC_DOING_WRITE |
+         break;
+     default:
+         g_assert_not_reached();
 -- 
 2.55.0
 
