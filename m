@@ -1,37 +1,38 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E065606A32C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 08:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC72606A327
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 08:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=BuQWX6Y+
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=I6TK5/+R
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVPJ9-0001aU-LT; Mon, 23 Nov 2026 03:21:51 -0500
+	id 1xVPcb-0005mk-F1; Mon, 23 Nov 2026 03:41:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVPIq-0001VW-96; Mon, 23 Nov 2026 03:21:35 -0500
+ id 1xVPcY-0005mO-QD; Mon, 23 Nov 2026 03:41:54 -0500
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVPIl-0005u6-1p; Mon, 23 Nov 2026 03:21:29 -0500
+ id 1xVPcW-000125-Sn; Mon, 23 Nov 2026 03:41:54 -0500
 Received: by linux.microsoft.com (Postfix, from userid 1236)
- id 4665C20B7167; Mon, 23 Nov 2026 00:21:21 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4665C20B7167
+ id D35C720B7167; Mon, 23 Nov 2026 00:41:47 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D35C720B7167
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795422081;
- bh=nBmnvFF+F7EHn8sy6qkmIKfVhH1jBUyrUMdBHQkcP1k=;
+ s=default; t=1795423307;
+ bh=vAL3j1cSBPE2sXMB/xBCPGOdiyzO1BDzHwWSyd5zTzs=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=BuQWX6Y+U5Redrwm5Cbd/BvnN9qvmmf2SBhlO2eP38B3yzRVB4XAy7I8c/TprdA/D
- fk+9zW/q5Nnne6ve3SFdnypV2mpJb86sJqy3sN8n6t30dTqP+Zxsxgc7pP8Us7gSxo
- WmZkfdjXwyCveEVYeycCjqi1iRohk3VXG3VgwSRQ=
-Date: Mon, 23 Nov 2026 00:21:21 -0800
+ b=I6TK5/+RB4uZNaG1ahbGi9yRK4WGYD7ygiL1QR6U/OfO5l7tLp51QUXay+k5cU4Hu
+ S4Qv59QOXoPGisRSZlUqS3eS/7YG4kFOxIbjxny7Ug7bPV7JggNBB6zpl201Nq4K9O
+ KNthURfREGCY91IorqSHSQOehgplS/zFMTftF8z8=
+Date: Mon, 23 Nov 2026 00:41:47 -0800
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -44,16 +45,15 @@ Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
 Subject: Re: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
  arch-specific
-Message-ID: <awP3gdFCCTBdkE+8@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+Message-ID: <awP8SyP6QyrM+DUK@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
  <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
- <avb2etJ16sVs3QIk@linux.microsoft.com>
+ <av8UE3dpLrEY6uD9@example.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <avb2etJ16sVs3QIk@linux.microsoft.com>
+In-Reply-To: <av8UE3dpLrEY6uD9@example.com>
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -26
@@ -80,7 +80,7 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 13, 2026 at 01:37:30PM +0200, Doru Blânzeanu wrote:
+On Thu, Nov 19, 2026 at 04:21:55PM +0100, Magnus Kulke wrote:
 > On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
 > > x86 specific migration handlers currently live in common MSHV code. Move
 > > these handlers into x86 backend and add a generic architecture migration
@@ -198,26 +198,18 @@ On Fri, Nov 13, 2026 at 01:37:30PM +0200, Doru Blânzeanu wrote:
 > > +    return 0;
 > > +}
 > > +
-> 
-> For me, on x86 this does not build. The SaveVMHandlers type is unknown.
-
-It's defined by the migration include which is missing. I'll add that
-and going forward I'll test patches for x86 as well.
- 
 > > +static SaveVMHandlers savevm_mshv = {
 > > +    .load_cleanup = mshv_load_cleanup,
 > > +};
 > > +
 > > +int mshv_arch_migration_init(MshvState *s)
-> > +{
 > 
-> Also, this function here is seen as implicit declaration.
-> I think there's a missing include in this file.
+> mshv_clock_init() is also relevant for pause/resume handling, so maybe
+> "mshv_arch_vm_state_init()"?
 
-That's probably because of the mshv_clock_init() called inside this
-function. Fixing the naming mismatch will fix this too. Along with the
-migration include, it should build successfully.
-
+Sure, that makes sense.
+ 
+> > +{
 > > +    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
 > > +    mshv_clock_init();
 > > +    return 0;
