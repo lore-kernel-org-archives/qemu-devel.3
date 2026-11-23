@@ -1,91 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CC5606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5AC606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=On6xizxO
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wqB4JB6h
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVWJi-0003aR-AI; Mon, 23 Nov 2026 10:50:54 -0500
+	id 1xVWOH-00051g-98; Mon, 23 Nov 2026 10:55:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xVWJg-0003aJ-4s
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:50:52 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1xVWO9-000519-Cg
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:55:29 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xVWJe-00052b-E3
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:50:51 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2f0458cc9easo25534135ad.3
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 07:50:46 -0800 (PST)
+ id 1xVWO6-0004zj-9U
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:55:27 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3b49a6e8212so595841a91.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 07:55:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795449045; x=1796053845; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795449325; x=1796054125; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zXAYZLWdMIZ8zZBlWmkItUiOvGLsDZDuabUtUp0Hn/I=;
- b=On6xizxOPux9CTnwj5kv8W5cQHDqd/9pDT0STJkcNjaY/t3pzhpvbt61r1h74++HRD
- LeUaII6YMTuCNII/GuOOjwMrIgUzCP2MZWCjvj4Bd7RCMPEpnFbjZ1j4ol9yXMowqRO2
- mX0Lxzjd4lIWTzf8rwQLFfmOmvyQfPP7wWRhdVTpeMVuPjAFTHWqBf5jRfShEsRBvQKJ
- 1fK5sIMAL3C47hy9H8N9yCvSO3hIZprKh63TUKF8DdnHjWVbvJIkPXzx/1N8tja/M22Y
- PxieAg7pHIwMCj2phuzfEUzfCUZX/JAhRUZ0AYyhLdvEYvpJZ2VzfeKpNoic757aEYku
- FTfg==
+ bh=+BxwWhDaELWUH0+LYGqLWY38OKZfleshvKR2YXCe81M=;
+ b=wqB4JB6hX6kyH75UOz+b8Q4ulzGAgBsUQnMi+KXgQ7GaGmaZO4d+ro1P1frM6eX0uN
+ vpuO3KMX/T0+7XE8rJegFJDTGKU1uVlf0iDOt7pMc8cDunh55PeOGp0H36Bog2SMLTZ9
+ 70/GIB0RdVSjSKNkUBK1XMHt+hxghtU3OoG4nANNHjtcK1O3q85l32qxgnBNOC+1w5QX
+ OPE1jueM/nf1Ft2dkESA3wW8RH+/Mo/5XfmDDQP+Bs2G9oak3O816eS0SxRH0djFPJ3S
+ bHU6i7Vl/GSGVyDCGm0KyxiZEizQzcTS2AP5i8AO0Ij7zV0TctlbR7UCXi5qEbncWdW2
+ kEtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795449045; x=1796053845;
+ d=1e100.net; s=20260707; t=1795449325; x=1796054125;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zXAYZLWdMIZ8zZBlWmkItUiOvGLsDZDuabUtUp0Hn/I=;
- b=qeWsLRIJ4QCzfTnVQu4/MOg4gGvkzZ8HJunD06gMp+OTCGO7Rz6eGSkXVh1c+f465G
- lqo9XDzfFe7bN2s94GgpuUrTc3qOKTpQPXmjka2fKAljA6RtT2bh+/9q1eFIu32Sw5cY
- 9CAzUEaH0h3fm8XuYDhfAolHR74WPhkKHDLCl5KOJ/KvdmvwZmaOZhpY5wapRFeMGt4/
- re4ANqsL+y8zDE4lSaEvdIS+GjDNJWsSpg+dKXp5osKaUq1eIJuH6Sc5d+nxqa7EHjdk
- 11UVWl+GSeKRzFD+N5IY7NVRDyTSbhC2WQSYMYI5WsOwTVgAY3fiefaADKdgkyGYamfE
- 4JMw==
-X-Gm-Message-State: APuU4Z9fD2FWsS0ABRFMCAPmKxfK04sRn8Qn53VMmLyf/anpuGpC955W
- m2B7GtHA+GtE+7c9Uc78Cwv+Z9aOjhhJH+jyxrAiIc4/ZZPkodhRgJiLV6BC4HDtaA8=
-X-Gm-Gg: AZFdTZeA2ifO1p+wpvz52krIzIsCq/aVIItx+XlFiNwM6XYNK0NZDwhTrMHTHMsiEZx
- qYklhp4SAgI/EuSxRWsBHXVMuh8G6T0padbWP0A/MVBTgvh9LnQp0tj46STwH74QddmG5CsqU2S
- T9JVG6fIjM+6MhoK8AV2nKXvDJa+arem+4LQVMhrMAjb1JkJDrNYqt/+AaJfRkzscAkJ5wQ8X2p
- wTCSsAsucyQgIKsCNnmYB7+Qo4eF6eVqpxutauRkmGlKUQ90IA0iJ3l8WUCxnzAsMnVOjol4XIe
- N8VnA/e4l9IS4Qa1y7LcTkd7EAuGvSEV4jAQxOtomNjy4CgQ0rMYVt+yHzc+mdlO9UePLwusTjN
- GckMo60tEmkSNt1c1+xn0UFCg2yzsInoOg/eT1i6kDzjjOlAz6RTqMBmLyQa/iXB9GXl/TiuYIR
- zuwvZD20IWqQY3tKat+E41kCVE7QZ8UcGDRgZ/zAPYNKlkDKmhGGZptGPOfSFl6jk6zcnErgov4
- jSk3yKTB95NsQ+SfIqZvpH64kSbrw/8gnGyHt31m5NVNTMqGGJzIi5LmloNHEfkXQTEYMX/PEh8
- REc8bscOPXqR8d2/NUp/ErDIO8eOdfjxPXZXzZtfa7Q=
-X-Received: by 2002:a17:903:2805:b0:2e5:54b9:6b5c with SMTP id
- d9443c01a7336-2f03f17d1f3mr77667795ad.20.1795449042994; 
- Mon, 23 Nov 2026 07:50:42 -0800 (PST)
+ bh=+BxwWhDaELWUH0+LYGqLWY38OKZfleshvKR2YXCe81M=;
+ b=oCfqkv1bP7bRH5uaqfSnY+4xsLvy42Ng/XhPxQaF+uIaNVWA7IE2YFih/RXvHYi9FI
+ 3YZi7cOSxzXJ7G0N009QmHChfNYjhaz9KgEV1dCxHlJ+WMvHT4oiRTpcrIca2dK/4kth
+ B5FY1ZJ1FmAh7p9enZ5X532gfMCGuuUL310sX2+xE2YMBhfKpCPHwt0CD6ci6EACPDQM
+ Tr6toO98GKmRsGFa+Dq9YxBJmyqA8uEeeXsJUX8JqCx0+5EqXydQVBDIbJudzVpBVLuN
+ TtyoHaZogRSqjQxYMaalXCpKz17BfBNApXp9F9q5eiYThk/DpjNluefQ8EY69NYT4KjT
+ Y17g==
+X-Forwarded-Encrypted: i=1;
+ AL+hErF0pFLVEeBYtaURnsd58Dpm23L48lr1aieaU9CtSvKB043NKhw3nc/5ALQQYvXPTDyWPSzj/tJVyKif@nongnu.org
+X-Gm-Message-State: APuU4Z+TGbXNVQ8+/2i2lOstVr2kP4jEtdwpbNR+5F1qoiUFqSkdJAMU
+ a645sQp1KYnvo6ARiVCGoOxFWHqIz92Lnsr704oyar2ow84MEnZTQAprXbpP5FwaMFM=
+X-Gm-Gg: AZFdTZeWB4WGESpjoPDjecMOpFQ3Vbw9PooRnFh2BklGzWqQ9shzJaID7SuDjvm/5EG
+ cWIu1qXyVk5/6Usim+D8zu25wed4siLNh9gAnu4DOMKDKpXbWqzN1IjTyUlf81Mg2isr/8Kl9Qn
+ Wh2zSRta8E7xVjnGiMv+Gb+EI5EaQXCM2auOh1SqXTUlcEXbL+IQWzoXtx21uixv8+pcSi8guCR
+ wg0jo3Jo1vRp1NITYHZd2KsVp6jCcPLV5md9TlnHIiaFOfL+L5vYnVXhcGMqt7hC6X/vFEadIMm
+ bfz5M3Co3HoGQYxIlE5+ICSinMTmWqqwBpSngfIt82fmr0Z26yL8Y6rIM5hmU76zYblM/ON/cP/
+ Z4dS4yXOG03EapgpCP3yshdDDInz9zFshTkw2n6TZcG1EyOTIyDZihIH+PCXLmPpPDDYRG4oe34
+ BNLcEoGKW0dbUzy2NMK7Gyzh7iE84wbGV6/OfiYsQEi5o9ZX2D/GsvIVeENffdFTPYVXnuhzhzI
+ rS1PofqYE17L38yaUt94Zz7pJn0elUVfhnj755/Adh+nUHQhmn4BEZJhKjpNSnZIfhxzx7ndPX9
+ d2t/fWgpBAuPyou0T/naGOSp81RhM8y01gHm8p4qogJTSe5u3mi2x0EhdpJi4gCh
+X-Received: by 2002:a17:90b:3d8d:b0:3b3:b704:118c with SMTP id
+ 98e67ed59e1d1-3b41cb4f321mr10697699a91.65.1795449324577; 
+ Mon, 23 Nov 2026 07:55:24 -0800 (PST)
 Received: from [172.20.3.121] ([156.19.246.27])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2f03f1276c5sm59403665ad.67.2026.11.23.07.50.41
+ d9443c01a7336-2f03ee84425sm57292245ad.6.2026.11.23.07.55.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Nov 2026 07:50:42 -0800 (PST)
-Message-ID: <b27ae4a0-d9b4-43c9-8f84-0135a2b1b2a5@linaro.org>
-Date: Mon, 23 Nov 2026 07:50:40 -0800
+ Mon, 23 Nov 2026 07:55:24 -0800 (PST)
+Message-ID: <067f8bd5-249b-4d20-8b27-f77594efdb4e@linaro.org>
+Date: Mon, 23 Nov 2026 07:55:20 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] target/i386: use separate MMU indexes for
- instruction fetch
-To: mdspan <mdspan.github@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com
-References: <20261120104431.733136-1-mdspan.github@gmail.com>
- <20261120104431.733136-4-mdspan.github@gmail.com>
- <e4159fa3-e122-43f7-8ce3-e108ce8dcbf9@linaro.org>
- <CALU8FV_p8we36GXdsMB5QR3LO2VfKwiTZ68gAKb37Q5UrXK+Rg@mail.gmail.com>
+Subject: Re: [PATCH] accel/tcg: Skip clean MMU modes when resetting TLB dirty
+ flags
+To: Murat Seker <muratseker@meta.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
+References: <20261102022732.2418106-1-muratseker@meta.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CALU8FV_p8we36GXdsMB5QR3LO2VfKwiTZ68gAKb37Q5UrXK+Rg@mail.gmail.com>
+In-Reply-To: <20261102022732.2418106-1-muratseker@meta.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,35 +103,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/21/26 13:31, mdspan wrote:
-> Yes, that seems like a more logical approach. I'll do that in v3.
-> Masking only changes 64-bit linear addresses, so I plan to add masked
-> forms of the three 64-bit data indexes (KSMAP64, KNOSMAP64, USER64).
-> While LAM is enabled, x86_mmu_index_pl() and x86_mmu_index_kernel_pl()
-> would return them, and the walk would mask only for those indexes.
-> x86_cpu_mmu_index() would return the normal index when ifetch is true,
-> so the fetch indexes from v2 go away.
+On 11/1/26 18:27, Murat Seker wrote:
+> tlb_reset_dirty() scans every MMU mode, including modes whose TLBs
+> contain no entries. These scans waste work while holding the TLB lock.
 > 
-> One question before I write it. With this, the data mmu_idx depends on
-> CR3.LAM_U48/LAM_U57 and CR4.LAM_SUP, and translate.c captures it in
-> dc->mem_index. So the LAM state has to be part of the TB flags. I'd add
-> an hflags bit, set when any of those three bits is set, and update it
-> in cpu_x86_update_cr3() and cpu_x86_update_cr4(). Is an hflags bit
-> acceptable for this, or would you rather it be handled another way?
-Yes, adding a single "LAM enabled" bit is acceptable, and seems to be 
-the easiest way in the short term.
+> Use the dirty MMU bitmap to scan only modes that may contain entries.
+> A clear bit indicates an empty TLB, so skipping those modes preserves
+> the dirty flag reset behavior and reduces time spent under the lock.
 
-You could also store the complete mmu_idx in 4 bits, but I think you'd 
-only do that if you could eliminate some of the other bits currently 
-stored in hflags that would be redundant with the complete mmu_idx.
+How much time?
+
+For hosts with out ctz, like riscv without Zbb, does it slow things 
+down?  Is a simple
+
+     if (dirty & (1 << mmu_idx))
+
+test just as good?
 
 
 r~
+
+> 
+> Signed-off-by: Murat Seker <muratseker@meta.com>
+> ---
+>   accel/tcg/cputlb.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index dc83f3bad8..386f1beb5f 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -918,10 +918,15 @@ static inline void copy_tlb_helper_locked(CPUTLBEntry *d, const CPUTLBEntry *s)
+>    */
+>   void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
+>   {
+> -    int mmu_idx;
+> +    MMUIdxMap work;
+>   
+>       qemu_spin_lock(&cpu->neg.tlb.c.lock);
+> -    for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
+> +    /*
+> +     * An mmu_idx that is clean in c.dirty has been flushed and holds no
+> +     * entries, so only the dirty ones need scanning.
+> +     */
+> +    for (work = cpu->neg.tlb.c.dirty; work != 0; work &= work - 1) {
+> +        int mmu_idx = ctz32(work);
+>           CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
+>           CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
+>           unsigned int n = tlb_n_entries(fast);
+
 
