@@ -1,101 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD60606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2930606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=ZfVAW/Xa;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Nt0DQv1C
+	dkim=pass (2048-bit key, unprotected) header.d=defmacro.it header.i=@defmacro.it header.a=rsa-sha256 header.s=fm3 header.b=ayIFWg8W;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Rw+EI6Av
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVVc4-0001fD-CF; Mon, 23 Nov 2026 10:05:52 -0500
+	id 1xVVcH-0001sT-JO; Mon, 23 Nov 2026 10:06:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xVVbN-0001Mn-UJ
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xVVbM-0001M6-0Z
  for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:05:06 -0500
 Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xVVbL-0003is-Ov
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:05:05 -0500
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>) id 1xVVbK-0003hf-Al
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:05:03 -0500
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id 44B1CEC0BCA
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:05:03 -0500 (EST)
+ by mailfout.phl.internal (Postfix) with ESMTP id 2F07BEC0BA1
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:05:00 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Mon, 23 Nov 2026 10:05:03 -0500
+ by phl-compute-02.internal (MEProxy); Mon, 23 Nov 2026 10:05:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1795446303;
- x=1795532703; bh=22PASwItlfVZYvyVbpvPcRn6Vjqt+NQKu1LmvzL0Aqk=; b=
- ZfVAW/Xa/NKQFWOybV1Hna0FplQXHncTyaFpuwNsE/WVIn3Kee93PwzAtsPuSA5y
- bWylZConGUQSku7W4Ec4ORBmgL+DqCOjTDl0dOV6o57vBVnxZwFo9BJ+nfTYkgwe
- Sy0I4wh4U8Iz9ugUV85bNKFyWkxQB2xRpereBH22K+JRsMONuJGWpqT9pAr4AXMN
- qxJyyUuxYZtTRFXaQSKsYE6aNYlTEkYF8UAjsNj4IijAIM15qDhR2k5uuORb6B4r
- qEypUc+1tZruEL6aESt8ogvOpAsdB4vSES/lH2GawbwNRzVCdelygSWol6CbkZJK
- SaI4+N4n0aMaCRtMcj+OBA==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1795446299;
+ x=1795532699; bh=A9q2SC81qbfg1j120eXPaQtkG8p0iseFyCNltrrxaIE=; b=
+ ayIFWg8Wnd4QivR77CD3Pm7IfmH8VeGiDiMl2ltM1dMXjMz8A4N3OM9MpxeH08OZ
+ T/AvANTdwbkB7ukw4XvpIrVsc+asqj00W2NAmM1zVpAm0Z/iCT0a9L3Fg32srEgn
+ nZDgih5KcVC2lBFKJej7OHsi+l15loVKycsW5gMkIqZZY56ffCy3zFhIebuGNLXN
+ DJFxTXhwJByW01DgjxW91mw/tND9wCH4m9XVujpU8xamR4TjGyoYmI0BencI3qqj
+ TQ81y3n1IG9c/gu5zkTjlk5XbVxAJz1LKJMX9XZyU/57bZmZF3OZVr3vqYixBYww
+ dd0Fv+0rpiVIFqEAZlC9IQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795446303; x=
- 1795532703; bh=22PASwItlfVZYvyVbpvPcRn6Vjqt+NQKu1LmvzL0Aqk=; b=N
- t0DQv1Cb1w6dT5TCMafXRd5KYxA4SZpdD/4mU1NfWeNCeOttelYD6rcTRbEGfYvv
- 7ytcRtKFPPoMrP07QvndFfMtC5rQxqmqslkDD9tBBl8K44NqAFkQHnwYEtaBvDRT
- 9nI8OOZdP0XGxJBsrLsaCZ/2N1ElXCmKBHKkK1BaXP8KhfZ85Hfz5uTv7FWM3szM
- P6PhDmZ0RwSMsM8xFNHjIhtNlzhP676SaPRaa5JNZIzNJyy/oNRLTofUl2qyCEkX
- l4JbvK6JI41tTVeT1qJvKF+bdA18C1/D8XN0q1o1GPTWNH7EN+xRT2+kjrRTUbap
- nQNb2USQeZ5Yh9pQiVCyA==
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795446299; x=
+ 1795532699; bh=A9q2SC81qbfg1j120eXPaQtkG8p0iseFyCNltrrxaIE=; b=R
+ w+EI6Av+QZpyejobEOq9m6CYr6PIC/16GsgZrP/vIXExUhwBKlFRfvtP3Tvg8GuT
+ q9hR8i/arS17WcevGaBFu6e61tLpx7pvzPVDyTkAS8yqwFo7yCf4cCx709VRrYLT
+ ydEm7FfDrUt3mwMIG5lWtN39cGXNfGYkVFdYQVyZd67rCyMI/phlaQNoUw6cf1/L
+ +vNsO9kw5CS254r7UlXC5EZfG8g7sCyOmtcEAq0pOUhDjb3DuVQ01UwOQ3puF1Gr
+ mDGxb5SqWl4Y3758lF8R5IM/SrXEJcdFxuT0rHOAberlsV4PcmXbq19PeHz+hKg2
+ 9eWk4EsMeG+gtknK+PL3Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=sign d=defmacro.it a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795446303; d=defmacro.it;
+DKIM2-Signature: i=1; m=1; t=1795446299; d=defmacro.it;
  mf=PGZvc3NAZGVmbWFjcm8uaXQ+;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:CP06njnulHAUNLh8GDQ+MbE38gbrTJYVC1E29KJc8bToUjd
- uNJD60zNWP7AffI4T1Xs7xwhqJsPxirjYrrR9zBCHoD/bhdEsYKzn72FD/GxPy33
- DbhoXRsamrJMwNuTQz8a9atkoBdMIKO+MnrRgPAjUZSOqqhJkLjUGEw5Gky9A/5b
- cyJXbyBlXahbhELyzWHOBR1zMKVC58zN47Ng2TzwevyZ+Q0JTjt20x1vXtOGAyZj
- ib+M/u8Vioo0YDsYKJVinqU18dBJHVVNWLiCX3l62jhPIrF2XQi53S0Tm3KRooo0
- P3X/I6WDPR6WeQZ0FVwal7sxLIh1KDxOs36Gz7Q==;
+ s=fm3:rsa-sha256:nFeMDMszrKI2WUihyTTwWL2Aw42k8vZiWYA2IwQ+EWtfF9r
+ Yo13ucoStWeRV30MutnCamtCP5HYeIu0Kh8Mu0Eu6HVEEOms08pTgintKICSiOWz
+ R+56sgJfFoFbUxWdpaDqwO7qQnKa7mXI9Ar4DK9rE8R0s9Fu2ydBpffLnHpovfYo
+ J3Bn1s7xFmyhG0nFrJwAUpnQlAl4o820nwBFg8ud37UgZZ0VX04hWfYABfHgB/7z
+ wDrF8B0fyBsMG51YLHAvS+bPenBQB92Rx4u+loKwGDCYWdp2P7wvBJb4ligOsLY1
+ 1xXHOsloGJQpTBwaZO1lQVgYgzZT40iQC39Xq2Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=mi-m=1; hc=12;
  hn=cc,content-transfer-encoding,content-type,date,feedback-id,
  from,in-reply-to,message-id,mime-version,references,subject,to;
 Message-Instance: m=1;
- h=sha256:FbaW0hmvNgrIsX6Uu3Z9Gn8vwgW42eKT6ErLf/v7fsY=:o/VK/uEwjwQh1cgNCp5CG/C6WyI61fIsI3iSX3byDXY=;
-X-ME-Sender: <xms:H1YEa_egAgnkXUe8X1goJXmceVXbwvEzMbXIbFjeKfOx7cS3IAZ0sQ>
- <xme:H1YEa1opEtrb11shdgcmypwebC2UrYCpj13ukPmF8yOJXfEr4si0YbmBJLPub9IlW
- xKRahcGMc9SmWjXDWZq8gxTsACG9OPscHSzE5mHXAd_psFUK_YxHPrt>
-X-ME-Received: <xmr:H1YEa5Nz4R5dctztn5dar3LwMFLBBnl2bN2EODXMKEPmmeIE3faNQH_gl1GPcYspLZzxBmY2iDM7fvSG8Nb8nLZdOS9BrL3WEIbT>
-X-ME-Proxy-Cause: dmFkZTGB7n4iRbxkL5EKH5afsxNBGu5hKNBCu9NYeUwp8wHZTplRTS+HvL6v9Haw8wpEg8
- Zq2Qfrm6LlhHCfbTptsRIeUivsTnI7nIruVPWBJoI3pNIb8lBjYAnOrcKiv8u5fg0AODOW
- NH2AwKH1rEuKfFW/YIGG6WQn/KuGY//3Mkn+Oaw4soUPNDzzL/vBUWpJgwkDxpX5QCQk3i
- wGedWCQmOy/5wXfLQqwmF+d5VfOpIT/MIHWFIC9iR9FkbsufRA0wZL3ADXfJJgxtK91v4z
- edysda/X136m8zypSyqrCdxBUsCK/niHrGPZ+BrKOfTvrtczXoZRqTAMdSzA99Al4RSqCu
- wYWOuwc8UYfeDPbD1oSekw2BDhH0mWvheG2ugumDUJuDxCWsXNZEXfSwXi9bFW1Ivkrc1z
- lHXpFYAbualOwlh7CkfYO8nppkWJKmMsYlJ55XnGDwtJPGQ6ASbrvdXLZYHf4JSvbB/y7f
- KO1OSkK/PvhrqwQUT5cqxiKdguTJx6FR/I23G9Jm+/PkZGMWF/9AiaAXL3+FHwg7g6vduO
- tPedkF4QKC5P9Hdiqi8PXqRgeEsFVCd43IxIME73uSIVOu9AiXQTUNO0s1rHUEgiaRZPKZ
- aBWO6fBNlgccbwOanCcs3w7oP9Or5Eod6XlerdN3I3C45IzqFxyadU9VNe2w
-X-ME-Proxy: <xmx:H1YEa4guJDGYPMqmH0Mq-kYIXGLrLVWjM3ZQMI4AXmM3TgPzHQ7Tlg>
- <xmx:H1YEa8s4PLcPhtfByLlLjyuPGwZHOZrsGJPMRYnNhMkri9vtwsfJ1w>
- <xmx:H1YEa8iRQ7Xaf34JkhdcoycXlTgCZb8pWp_SjewRVZSCerxsRxB-nA>
- <xmx:H1YEayaaPBO8mVc_fJkQQhouRU14CtAgl0_3-hN7Ssj5ZQL8USqIbg>
- <xmx:H1YEa1kKT2o_cR5beX8qMS44CjO0JkRFdWmUP_DigG5NjvUhnfeOZGU7>
+ h=sha256:YR3IYcjgoeE3kXYQBP18tEomKZmU9VaXCTBSElDN60E=:4nyWdp4G21MIx2iDnZLkd4om62RtzW5WGwGT3bz+Zzk=;
+X-ME-Sender: <xms:G1YEa6bZz6TNUiz4LfeRH5gMnMrBvv8D6LGN8SrHJP9-0Sy3t5s_OQ>
+ <xme:G1YEa92FtJSc-H9RYlgHgQw35-_lh9SQ6koqyhgsiDY3BvuFlIaLJU5oetQ_wr2pu
+ g4eQGT39DLEGZwZwW1qIRVB6TSZ4uYCJVOP7ViN4vTPFzFFmFNhc-6->
+X-ME-Received: <xmr:G1YEa1qJ5FcMHAxPiDOyU9iHSqpxMKsYX2JeoQnL5NUdbE5Qd7JasvcmNHOPyG3uQiDGlueCNPfqnIh2xM3snfLw8LGGaoqKXiTT>
+X-ME-Proxy-Cause: dmFkZTE+oIySUTencSDrezjdlYlA3KRh/B+gt/B7pvsu4MYYZUmi9LXvi9Ffrqz4t56wFH
+ eDEN1nNdacz5DD1luGTgKjOqmCi06+6FPKXqnvYVkitPCyyh5BZizsVnUsjbYqWs7QIb+m
+ KHSxtZhJEfsjm2cF5L++Mi7A+djysq2nH/FN84chbpJMoWKoEui2Lm3b3ikSnZ5VKaUqbI
+ nwmFM4Ie4ZaT4pNhF1HIQWpJZ9q9IkC/OfP7nGHsmxwKnRtVil+fcHNEgWhQG+7qx11qUr
+ 3uSsMPiQDMStnjDIePLvIjHwJ8aCzUSJ50KHyZNdCVN5tVRmohrAi9u15+uOtwQMfFJ0oU
+ HX8ZfuSFe10AWCkLKs17zIanvn7TTlZRTp96ngmuv1MAVt+AJuTi8KPqAVZuCz5M/VCCv8
+ CbdFFR5yqgiTfkVivALckjvWkDdF+AcAbpzGnepBiqdM37nlDhIUHcVmdecfQNfLfa0lA6
+ 95pBUSL05dF8CUddmzHXSBgHCahe+fNmcchcJaOd8ELji0adrNlTHUoXMTXL5Axe5VsP1+
+ W0Hxv7y4kja5tPNFfGOcSdyO4iytdYGqJ0+44uKNqHOJBqhwziFnGX5h8TGKKLoR6EfyPj
+ lrgjrmD4zcElCYk6aWNen15t1/iUlZ25jkd44u+1g8u05W1sdNXK/ufEZn7g
+X-ME-Proxy: <xmx:G1YEa0M-eeJKuHX5x-33fjlxAR2bP0HdhbX0i1pMuZ2DKLmONAWLGA>
+ <xmx:G1YEa2rt-U7Ef3NkFhs04E-XCAnK3yL21-Z6qHpHTfMHbefooaXk2w>
+ <xmx:G1YEa3tT5CW_ftZDkWMpuLpEPI2E4SLG8o1rUwau_zvNq-adiZAgRg>
+ <xmx:G1YEa13luUBBdmmwfzXMoxKnbNufmDU_a5vqU9IvkkV_WYGn9Il2Og>
+ <xmx:G1YEa5hIaUBjpkWxfCCVp_2xFovl7b8G7wh4dY3akEwO0gEVRPNJgeOz>
 Feedback-ID: ic0014905:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Nov 2026 10:05:00 -0500 (EST)
+ 23 Nov 2026 10:04:58 -0500 (EST)
 From: Jesper Devantier <foss@defmacro.it>
-Date: Mon, 23 Nov 2026 16:04:52 +0100
-Subject: [PATCH v2 05/12] hw/nvme: get feature FDP (1Dh) fixes
+Date: Mon, 23 Nov 2026 16:04:51 +0100
+Subject: [PATCH v2 04/12] hw/nvme: get fdp events, use helper
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261123-jwd-181126-fdp-fixes-v2-5-4c9893537cd1@samsung.com>
+Message-Id: <20261123-jwd-181126-fdp-fixes-v2-4-4c9893537cd1@samsung.com>
 References: <20261123-jwd-181126-fdp-fixes-v2-0-4c9893537cd1@samsung.com>
 In-Reply-To: <20261123-jwd-181126-fdp-fixes-v2-0-4c9893537cd1@samsung.com>
 To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
@@ -134,80 +134,24 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Jesper Wendel Devantier <j.devantier@samsung.com>
 
-- endurance group is 16 bits, mask appropriately
-- support reporting current/default values correctly
-- use fdp enabled helper
-
 Signed-off-by: Jesper Wendel Devantier <j.devantier@samsung.com>
 ---
- hw/nvme/ctrl.c | 27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 8fc0884fcda..7c7b31b46bf 100644
+index 5d4122309ea..8fc0884fcda 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -6342,16 +6342,17 @@ static uint16_t nvme_get_feature_timestamp(NvmeCtrl *n, NvmeRequest *req)
-     return nvme_c2h(n, (uint8_t *)&timestamp, sizeof(timestamp), req);
- }
- 
--static int nvme_get_feature_fdp(NvmeCtrl *n, uint32_t endgrpid,
--                                uint32_t *result)
-+static uint16_t nvme_get_feature_fdp(NvmeCtrl *n, uint16_t endgrpid,
-+                                     bool current,
-+                                     uint32_t *result)
- {
-     *result = 0;
+@@ -6372,7 +6372,7 @@ static uint16_t nvme_get_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+     NvmeRuHandle *ruh;
+     NvmeFdpEventDescr *s_event;
  
 -    if (!n->subsys || !n->subsys->endgrp.fdp.enabled) {
-+    if (!nvme_fdp_enabled(n) || endgrpid != 0x1) {
-         return NVME_INVALID_FIELD | NVME_DNR;
++    if (!nvme_fdp_enabled(n)) {
+         return NVME_FDP_DISABLED | NVME_DNR;
      }
  
--    *result = FIELD_DP16(0, FEAT_FDP, FDPE, 1);
-+    *result = FIELD_DP16(0, FEAT_FDP, FDPE, current ? 1 : 0);
-     *result = FIELD_DP16(*result, FEAT_FDP, CONF_NDX, 0);
- 
-     return NVME_SUCCESS;
-@@ -6428,7 +6429,7 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
-     uint16_t iv;
-     NvmeNamespace *ns;
-     int i;
--    uint16_t endgrpid = 0, ret = NVME_SUCCESS;
-+    uint16_t ret = NVME_SUCCESS;
- 
-     static const uint32_t nvme_feature_default[NVME_FID_MAX] = {
-         [NVME_ARBITRATION] = NVME_ARB_AB_NOLIMIT,
-@@ -6528,13 +6529,7 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_c2h(n, (uint8_t *)&n->features.hbs,
-                         sizeof(n->features.hbs), req);
-     case NVME_FDP_MODE:
--        endgrpid = dw11 & 0xff;
--
--        if (endgrpid != 0x1) {
--            return NVME_INVALID_FIELD | NVME_DNR;
--        }
--
--        ret = nvme_get_feature_fdp(n, endgrpid, &result);
-+        ret = nvme_get_feature_fdp(n, dw11 & 0xffff, true, &result);
-         if (ret) {
-             return ret;
-         }
-@@ -6579,13 +6574,7 @@ defaults:
-         }
-         break;
-     case NVME_FDP_MODE:
--        endgrpid = dw11 & 0xff;
--
--        if (endgrpid != 0x1) {
--            return NVME_INVALID_FIELD | NVME_DNR;
--        }
--
--        ret = nvme_get_feature_fdp(n, endgrpid, &result);
-+        ret = nvme_get_feature_fdp(n, dw11 & 0xffff, false, &result);
-         if (ret) {
-             return ret;
-         }
 
 -- 
 2.51.2
