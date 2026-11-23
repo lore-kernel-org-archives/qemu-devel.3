@@ -1,50 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD8B606A33B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5180606A335
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:46:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=qOum5Ggp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVQag-00075x-18; Mon, 23 Nov 2026 04:44:02 -0500
+	id 1xVQcu-0007tx-8f; Mon, 23 Nov 2026 04:46:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1xVQae-00075k-P4; Mon, 23 Nov 2026 04:44:00 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1xVQad-0005Sf-8C; Mon, 23 Nov 2026 04:44:00 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 5799E42DBD;
- Mon, 23 Nov 2026 10:43:57 +0100 (CET)
-Message-ID: <d7c9928d-224e-44ee-85fd-a4cbb498d728@proxmox.com>
-Date: Mon, 23 Nov 2026 10:43:51 +0100
+ (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1xVQcp-0007rc-1f; Mon, 23 Nov 2026 04:46:16 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1xVQcm-0008AG-Bl; Mon, 23 Nov 2026 04:46:13 -0500
+Received: by linux.microsoft.com (Postfix, from userid 1236)
+ id A864F20B7169; Mon, 23 Nov 2026 01:46:06 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A864F20B7169
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795427166;
+ bh=L0yzYuiLm3MzmX18B1X6RcdzbUJqDs+zRSufm5MWryg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=qOum5GgpAvh1KeSLOxuWTuzN8f1uri6BRU+EEto7dd2U9ib8Qp9iuGHtPDj3/HtGa
+ GxoGayQfyLSgsRUG7vyO+a4we8vrlj2KjzJI7wB2QP/SnNVz7757SnEBhCRwyca3xS
+ qn///UUFdBqi7HJ+Crx4qzOyNKvSQP6IuH0nQLWE=
+Date: Mon, 23 Nov 2026 01:46:06 -0800
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
+ arch-specific
+Message-ID: <awQLXiXpv3jsD6s7@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
+ <av8UyInK9UM/M3wV@example.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] block/mirror: fix assertion failure upon duplicate
- complete for job using 'replaces'
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com
-References: <20260325111140.347421-1-f.ebner@proxmox.com>
- <1edb7531-1294-486c-bbd4-bea0f74e08ae@proxmox.com>
- <awC8Z36NE0t7ZUwY@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <awC8Z36NE0t7ZUwY@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1795427036472
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <av8UyInK9UM/M3wV@example.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,27 +73,155 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Eric,
-
-Am 20.11.26 um 10:33 PM schrieb Eric Blake:
-> On Wed, Jun 10, 2026 at 12:35:02PM +0200, Fiona Ebner wrote:
->> Ping
+On Thu, Nov 19, 2026 at 04:24:56PM +0100, Magnus Kulke wrote:
+> On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
+> > x86 specific migration handlers currently live in common MSHV code. Move
+> > these handlers into x86 backend and add a generic architecture migration
+> > initialization hook. ARM MSHV live migration support is not added yet,
+> > this will allow ARM to add an empty initialization hook.
+> > 
+> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> > ---
+> >  accel/mshv/mshv-all.c       | 35 ++++-------------------------------
+> >  include/system/mshv_int.h   |  1 +
+> >  target/i386/mshv/mshv-all.c | 34 ++++++++++++++++++++++++++++++++++
+> >  3 files changed, 39 insertions(+), 31 deletions(-)
+> > 
+> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> > index 860f511fcba..efe19a39140 100644
+> > --- a/accel/mshv/mshv-all.c
+> > +++ b/accel/mshv/mshv-all.c
+> > @@ -60,30 +60,6 @@ static int init_mshv(int *mshv_fd)
+> >      return 0;
+> >  }
+> >  
+> > -static int mshv_load_cleanup(void *opaque)
+> > -{
+> > -    CPUState *cpu;
+> > -    int ret;
+> > -
+> > -    ret = mshv_arch_set_partition_msrs(first_cpu);
+> > -    if (ret < 0) {
+> > -        error_report("Failed to set partition MSRs: %s", strerror(-ret));
+> > -        return -1;
+> > -    }
+> > -
+> > -    CPU_FOREACH(cpu) {
+> > -        ret = mshv_arch_set_mp_state(cpu);
+> > -        if (ret < 0) {
+> > -            error_report("Failed to set mp state for vCPU %d: %s",
+> > -                         cpu->cpu_index, strerror(-ret));
+> > -            return -1;
+> > -        }
+> > -    }
+> > -
+> > -    return 0;
+> > -}
+> > -
+> > -
+> >  static int get_host_partition_property(int mshv_fd, uint32_t property_code,
+> >                                         uint64_t *value)
+> >  {
+> > @@ -519,10 +495,6 @@ static int mshv_init_vcpu(CPUState *cpu)
+> >      return 0;
+> >  }
+> >  
+> > -static SaveVMHandlers savevm_mshv = {
+> > -    .load_cleanup = mshv_load_cleanup,
+> > -};
+> > -
+> >  static int mshv_init(AccelState *as, MachineState *ms)
+> >  {
+> >      MshvState *s;
+> > @@ -574,9 +546,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
+> >                                    0, "mshv-memory");
+> >      memory_listener_register(&mshv_io_listener, &address_space_io);
+> >  
+> > -    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
+> > -
+> > -    mshv_clock_init();
+> > +    ret = mshv_arch_migration_init(s);
+> > +    if (ret < 0) {
 > 
-> Crawling through older mails in my inbox. I don't think this series
-> was applied at the time; is is still worth having? If so, I'll add it
-> to my NBD queue for 12.0.
-it tests two more scenarios that were not covered before, so I do think
-it's worth adding. I sent a rebased version with some slight improvements:
-https://lore.kernel.org/qemu-devel/20261123093808.185781-1-f.ebner@proxmox.com/
+> if this is fallible now, do we need to unwind the previous steps?
 
-Best Regards,
-Fiona
+The existing initialization was infallible and ARM does nothing yet
+(currently a no-op). I will keep this hook returning `void`. If it
+becomes fallible later, then we will add a proper cleanup.
+ 
+> > +        return ret;
+> > +    }
+> >  
+> >      return 0;
+> >  }
+> > diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> > index 0e68365c63f..31d2f4381c7 100644
+> > --- a/include/system/mshv_int.h
+> > +++ b/include/system/mshv_int.h
+> > @@ -109,6 +109,7 @@ void mshv_arch_disable_partition_proc_features(
+> >  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
+> >  int mshv_arch_post_init_vm(int vm_fd);
+> >  void mshv_setup_hvcall_args(AccelCPUState *state);
+> > +int mshv_arch_migration_init(MshvState *s);
+> >  int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
+> >  int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
+> >  typedef struct mshv_root_hvcall mshv_root_hvcall;
+> > diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+> > index f0b43aa86f1..968fe2a4494 100644
+> > --- a/target/i386/mshv/mshv-all.c
+> > +++ b/target/i386/mshv/mshv-all.c
+> > @@ -78,3 +78,37 @@ int mshv_arch_post_init_vm(int vm_fd)
+> >  
+> >      return ret;
+> >  }
+> > +
+> > +static int mshv_load_cleanup(void *opaque)
+> > +{
+> > +    CPUState *cpu;
+> > +    int ret;
+> > +
+> > +    ret = mshv_arch_set_partition_msrs(first_cpu);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to set partition MSRs: %s", strerror(-ret));
+> > +        return -1;
+> > +    }
+> > +
+> > +    CPU_FOREACH(cpu) {
+> > +        ret = mshv_arch_set_mp_state(cpu);
+> > +        if (ret < 0) {
+> > +            error_report("Failed to set mp state for vCPU %d: %s",
+> > +                         cpu->cpu_index, strerror(-ret));
+> > +            return -1;
+> > +        }
+> > +    }
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +static SaveVMHandlers savevm_mshv = {
+> > +    .load_cleanup = mshv_load_cleanup,
+> > +};
+> > +
+> > +int mshv_arch_migration_init(MshvState *s)
+> 
+> mshv_clock_init() also covers pause/resume, so maybe
+> "mshv_arch_vm_state_init()" would be a better name?
 
+Definitely.
+
+> > +{
+> > +    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
+> > +    mshv_clock_init();
+> > +    return 0;
+> > +}
+> > 
+> > -- 
+> > 2.45.4
 
