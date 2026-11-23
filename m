@@ -1,147 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFFA606A680
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 13:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83148606A339
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 13:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UN5o7e2C;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=j0CeBxAR
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gWHJFI2b
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVUEJ-0001of-IT; Mon, 23 Nov 2026 08:37:11 -0500
+	id 1xVUEn-0002D7-VJ; Mon, 23 Nov 2026 08:37:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xVUED-0001kc-Hu
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:37:06 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xVUEB-0001KX-M8
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:37:05 -0500
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANDKwBG2442739
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 13:37:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6AoQpW+ymI45nH3l0UGKC6lF6pJ+YGQ/TXcjiLHKz3Y=; b=UN5o7e2CdfObcLaX
- JHqyhDorXY9TR69JGvgfIM1y2r9DMfR4cEbhu5GSXVS8t7VdVXVtX4FPCCdBkTlA
- bWFUf4Sfye6m3bBy3Zgx4s96o/a12cFmWPN70YhOoAPtgOG+Wi2vDGJjguL7l8Uy
- u51eAQGgdfthv1idnRWi3RKzCF0fOMAhN3KSFN5/BxF9ouFOZjTqOgS0IC0HMG5U
- Qk3U/OMa9tUjO4w/HMVdfG/HUVImt6hc6q1pP0Cf2FDq8HtI9c1JD6a/rHv3XP+f
- Bffya2ghN6iC3BkvfRWWfUOQOkc1yqKt6F+332N2SJS4dShyKAFQT4z05f9We/I0
- wje+Ag==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g1k1kjq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 13:37:02 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-921273a6cacso49858906d6.0
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 05:37:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVUEl-0002AC-SM
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:37:39 -0500
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVUEj-0001Lo-Uh
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:37:39 -0500
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-67921b515a7so3370363d50.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 05:37:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795441056; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Uu83m7zlJm9U46Npwt6cklDEzY7tk5KgWIvhFDWGziTnyDxic5lVWD9t+OrnglWEot
+ sEDRZ+4Js/LqBBvvW4h7n74TfFQ05uU3GCZa4AEsmRGl4mkt/xUmxoALCJLKM3KVeB2z
+ GhDWpYeeC0DEMKvSK6CIqiHi3zW0rmCSCAmz2ZBd1eJ0rH/oX04kbNy4iBP18VK+ePg+
+ VPYTOKnjcBVKVSNdJPmZpg8ejytBE6ryV0zpGwLPC0Z6ImokrV44eIyjDwYyrxF/6mxu
+ TRHxtgW+oO73o7GwDveXWATeSrPKffJ2zzg2M5+p80lPOrXfkhP95pvYQ3LMsaMmBuaZ
+ I/Nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=4KR7T+DaZA9hkDETt2lUk/f5nZKGhFOgN8UqDfQ1AZI=;
+ fh=B1nVdZnJxaMTMpK80f+XKedIUSFHs8aQPN0adri8zVk=;
+ b=qOa+73nabFEgVtcAaxtP8XoIgBRwa/fFRj5O2RNCP5xnI7NpmDbO9nj3utXmNIX4zM
+ hbnhGtbIc+/vCB4PHX2AwRrFe2iktFQl4QTc+mwtDVcLBpCxrOpFX5Mjz0XolbVC2EZK
+ rNdm6fmEjY3qXbAlpJy0XIPNFa/KV/ekaQ9JKJBH5bX1VyH0liQ52S+K1Uhh/X31l5kD
+ ar22GCr7UfXrw5zkwFQ9StHhxKMF6X6iE1SrrCy1a3w/5k3SmPfoXtYxpjPCCK61MYob
+ 6dsDRd9oOgshY/jwlA96AbaMcQIHBM4OZfYc0YkXLhFkiTUe0foTlEIvzFcifeyPP8nI
+ tqMg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795441022; x=1796045822; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6AoQpW+ymI45nH3l0UGKC6lF6pJ+YGQ/TXcjiLHKz3Y=;
- b=j0CeBxARFJk/SrvybH8NeQ2rOVJ7F9lAXK+I4wxTg01jZ+LvAjblKormux78F2Od+N
- UVYDz8qhbrQgnlYLZandIAGWYtCtuM2uDDthoHfD6tzqcObR/rVLNluIUHTGse/Tn0N3
- hsF/ks+koTHY7IRPj5oHSoTvaoUll1WPkJD2SCrUpPT8v+0f6H4OHxCIJxOQCT0hbrTY
- dxp2TKay5RFH8dG7BEmJr1c5KqXfVQEHj4r6AdpkyYJ3qrFIvbvYqOsC08lSEvQmzvYn
- 0kUBdF27uDwGZRsvNkI76g9jDDhOE948YUsg9++A+QEESBYWz12Z3kUK6tu8BEzIzGQO
- BsEA==
+ d=linaro.org; s=google; t=1795441056; x=1796045856; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=4KR7T+DaZA9hkDETt2lUk/f5nZKGhFOgN8UqDfQ1AZI=;
+ b=gWHJFI2bVYmavAjfIuJWHCveez+7DTSWARUr7JnL7o1vivjsBBZbeuq6vhoyDKEhx2
+ 5HnSVwxaVbo3Mw0teVU+saJPJprLk8/Nf971F+EDYsN6TVn0p1c6Bx0G+QH4KkO2oE8G
+ bBLQeutlSs0kQ1rTcP191gHvMtBODxreo2xWy3eGRHNsTCHVgCWviyI6QT06dGWarjTs
+ 6nSvHbIMegHyQD4o/NZoTuOjgFybMJEOthyP+V8wvUzdUgPd9WteX/fsP51ApRJ7cbfu
+ fQxyyMHpdMNxBXfwkWFFEpRPtXBebUyeou4/lrs6ESeBVbqo8AVit1rV4+l+yI0qQyrG
+ jIdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795441022; x=1796045822;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6AoQpW+ymI45nH3l0UGKC6lF6pJ+YGQ/TXcjiLHKz3Y=;
- b=Wi3IVwpYzKZFMNTcASzgJ4SPWYTQJuWpo2IKTtKHhDGLmfi+sc52+Dtj37xutrfwXD
- Guxhrhu9ss8D2+Md56KGKxaXUbehjHwCBH+KNLV8kwnZxN2ErNRpjgjqrg6Ck6K9BEFI
- Gwgco3j5NtAzZyzs0vJzZzccxRWzQ2fEP8ks/0VQ9JkuUMYoiQwOS4vAl9jyTAoH4zq8
- 3HWf+VcR3QV63iIR7X/KNpiYx9g8JGO0c9/i8fxBCsydkx7Kyiy2nYh/113FnkpOtsAk
- v2MSy4Umj3CW6S7pCEVusCrw7+x5ZbBGm5qcsZceDohxUgt0HabAmFX5+PnIszaEbDBH
- YwzA==
+ d=1e100.net; s=20260707; t=1795441056; x=1796045856;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=4KR7T+DaZA9hkDETt2lUk/f5nZKGhFOgN8UqDfQ1AZI=;
+ b=DjNee4ETUqBGn6NIfzW9uNbTmc6Jc+6GJDdGdP5EWiPY/BXNopL9aoZiu561WjmlAB
+ AwWxxaBL2qR5C+LNVLNghP5veKXEx2/4wlMTZmHatBSLr8dOeqnbf++FjOy0hsNzPL2k
+ eVlmUn8osJbUVR8Ry0tYaMwuwbgDK+o9GWCrvw0Tj3KAcrp/5XeBLC+eOAVVigGhOim5
+ WtfCyoUuK0v93DeE38yMyLLTuu9F+u19uhb6DcMIS0KzuMGXYXx2EatzuHznZq9e/ttW
+ eN5FVlyjD1N3USDu3xFsyDm0kgN3yBpm3wQqphX2M2N/Xj2beO+7+jmbI1r8Ro+5wGiE
+ 51Sw==
 X-Forwarded-Encrypted: i=1;
- AL+hErEFzQ7p0n+YhxOcPFwpeahujGYpkfh4+C1ktvUq8YyLbfMncvvpn7XMjnjJ0GT0mS+jOWZjUv74brGN@nongnu.org
-X-Gm-Message-State: APuU4Z/xMh6AGDH4GShUL1yTsJi7rcI8c1qGXQrUjURl9z7+iyrCLfK7
- hEuIbQ+cUdMyLEclP7cuMOLJsrAs7EvASWzmV6Hp4v39ybKE8ROYqmJR577DvgUbEWP7w0jPWUF
- prciRX1MwxGVWkOyPZT6CCoWnQj9Nf164GuRjLnHaU6s+OiaDDcfpeo9uDw==
-X-Gm-Gg: AZFdTZeViBvRNAY7HnaWsl7h3mOR7mEP+YSnHxtHmp33C2w1I12PiA5oAAsu66q6psB
- MfaQc1I5Lgqm1j9vqpqddYVRoCoibEK/9IALskp89WJUbwubREzD+875NSCggkQ/UzBKrVezKdM
- Ao3032HlO38+SHfWZDpebFVFaSGevecrqo1XHouAUaXUwZe1ilXEM8gI2q2YGOeoxM0zHFMsRDq
- RHh7xXBABCJC7cvdSXiCXzj0uXfwfLicxbMbEtXzK3JBxKMmlrJENyz619wPY6MPwTBDE4NBknO
- SF45Z8QFigrRbsn7gZ0VYZkOLVcHkf2OiIGYmJyu+h4ovcKMUGasC/U78O4CpSrftKXFuS8t54q
- t2j4U/7CQ4pLhXFljg5e4C2CLIuVKCBcuct5NeqS+CULpaAExJZovKHM3fEjD1V+Lelekj2L281
- d+IHyp32WI
-X-Received: by 2002:a05:620a:2610:b0:947:920d:3408 with SMTP id
- af79cd13be357-949bab188famr2031572985a.46.1795441021559; 
- Mon, 23 Nov 2026 05:37:01 -0800 (PST)
-X-Received: by 2002:a05:620a:2610:b0:947:920d:3408 with SMTP id
- af79cd13be357-949bab188famr2031566385a.46.1795441020994; 
- Mon, 23 Nov 2026 05:37:00 -0800 (PST)
-Received: from [192.168.68.101] ([189.110.107.17])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949ca846322sm615464785a.34.2026.11.23.05.36.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Nov 2026 05:37:00 -0800 (PST)
-Message-ID: <f2ff2235-807e-4292-a559-1f892c810805@oss.qualcomm.com>
-Date: Mon, 23 Nov 2026 10:36:57 -0300
+ AL+hErF4wMYGvL6ceC3FYVxrRTP+aJLpPlOmEdBzLsLActJEB2IMNRr0DOitoNgou134kKiukTfRXqAFHF5k@nongnu.org
+X-Gm-Message-State: APuU4Z82yA80cDoJxR6snUub54WphBvGN+bonPMnAFbzTbm3bL0Vn+6D
+ 2VWH2Ayvaiwhj6dbTDqJNEslmi3ExuxJ8oaZF+2LGR4woKeS8cZZvt5wCtk2IvAd4q+7xDFwM+G
+ r1bAN2jjhRdW5b3lWiIXfUQdLW+VS7Ic6z089yLP03Q==
+X-Gm-Gg: AZFdTZc1bB3VLhwRIaIQhru3HUBFRb8xQXUBTcFq0JJZUdjiwPvAlwNs6QvrJrXwr97
+ v1fdatRmiyuHeFgYnKzVBvCe19q1ZCmuP40xD7Yd6oGavw9OUSt4e+t1V4XKOBavwJFCCJzVuII
+ rNnJJ9wF1v9M2/pGzYp7vMllCVzjq6g8QdvsC0Nee92TLKtTiXJugMCCrwEfAZ+s7xluDPiX66z
+ YWOhhW8SG+liKpzdYomn5/54sIID2KATxYTHB0gwBUt528feHLoaTwAhDqVLbQzjtDlDSAUz6TS
+ VWGs5p0/ZvbJpUmokdNLZMLOyOj48t0Z3HO5yuB8nyXKcGUoBItVX73gNq+xAWSo5X0uXgg3G+9
+ F9O/jE8RjCeWq8KlVdkJar3xUdWYdnQ4thCwbtlrn4aWWySgSRjZk82epYZaHV/UfsTIeE1PE6X
+ sK03AzfGSVFvzQUPIoypzj
+X-Received: by 2002:a05:690e:1c1a:b0:67d:bc6d:a4f0 with SMTP id
+ 956f58d0204a3-67df43cf2a4mr4898537d50.23.1795441056388; Mon, 23 Nov 2026
+ 05:37:36 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: fix WPRI handling in mhpmevent CSRs
-To: Dmitry Kokorev <domestos48@mail.ru>, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, chao.liu@processmission.com, liwei1518@gmail.com,
- palmer@dabbelt.com, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
-References: <20261111200924.49157-1-domestos48@mail.ru>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261111200924.49157-1-domestos48@mail.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA1NCBTYWx0ZWRfXzNrs+u9UWy/P
- FGExK18lGx3aHpza1NMLChML2HGvEQiwAYJTZJwjQ4nsD+sakQsu+Xx8mnY4uIZNTfU6bM7OKe7
- oxBzdi6VCDBTu36QmoZ4T+DG96ubm/s=
-X-Proofpoint-GUID: m4eetfrtPtw-2--yBDp6P-utsqx7_-KN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA1NCBTYWx0ZWRfXy8lOpCAfV+pA
- 7nBs9fDceVNhsmqPk7Y1jLlkciZEW40DKDj3AHs+eRuHWv4WhjXfq+xC8T8Ql6JB9egdgGHMiQh
- OCbWzva2c80gIm2LojVYR50O2tShsCmRamxp48xEGJVYn15JRRaGaUAVzdz7A9lAPqUeDOm2Gwg
- bBzAccYiXFsghuYUBcX4pbS0QgnkQpuELsGCsadRdpxQ1dCKkO8ZJL7RXNZsC+OloMR3PO3F0nj
- T1jDWZOF1tBzwtx4UrJqD7pKXBEYLKoLw5FnM1hZsnDLbgWl1lOsLqkUZMDpe/sGrUyMuUTje5B
- l2mbSiM3buMcCTc/r0W3l2YEaImhpNOG0M/yKMwYBF1DsmRrYHpmerqY9y6C3uIXGbLKFM5zOLu
- kfqMgIyqv+Vp9NRRFqrnNhhZ0NM9aYRMNCrcf7C63gfm93e0OJ3V+Soh/DxlWGMNvvSuQmoWqBW
- 77s8Qdn7UeDBeqnVU/Q==
-X-Proofpoint-ORIG-GUID: m4eetfrtPtw-2--yBDp6P-utsqx7_-KN
-X-Authority-Analysis: v=2.4 cv=cpIOAF4i c=1 sm=1 tr=0 ts=6b04417e cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=p0WdMEafAAAA:8 a=JF9118EUAAAA:8 a=RgBw9RmQAAAA:8 a=EUspDBNiAAAA:8
- a=LDk848BDNixZ8QLvqFcA:9 a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
- a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-23_03,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611230054
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261119165546.3050013-1-peter.maydell@linaro.org>
+ <awQ-vnYjY8BEAdFi@linaro.org>
+In-Reply-To: <awQ-vnYjY8BEAdFi@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Nov 2026 13:37:24 +0000
+X-Gm-Features: Aa3M54ozPfJrsImcufVrU5GEVI-9eKkCGo-EwixlTJzMf1AzRtj23n8cjYPXAFQ
+Message-ID: <CAFEAcA-j1tady8pueaLqrWEj5La74qsaU6hmGoergbxM1cfq2g@mail.gmail.com>
+Subject: Re: [PATCH for-11.2] target/arm: Handle "PMU disabled" in migration
+ validate functions
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,96 +115,102 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Mon, 23 Nov 2026 at 13:25, Jim MacArthur <jim.macarthur@linaro.org> wrote:
+>
+> On Thu, Nov 19, 2026 at 04:55:46PM +0000, Peter Maydell wrote:
+> > In various test functions for VMSTATE_VALIDATE() fields, we check
+> > whether the migrated region number register is within bounds (i.e.
+> > less than the total number of configured regions).  These tests fail
+> > spuriously if there are zero configured regions, because then "x <
+> > cpu->pmsav7_dregion" is always false.
+> >
+> > When we allowed v6M CPUs to have PMSAv7 in commit 157f6c69edd06, this
+> > exposed a bug, because we now have a CPU which has PMSAv7 according
+> > to the pmsav7_needed() function but which is configured with 0 PMSA
+> > regions: the Cortex-M0.
+> >
+> > We could fix this by having pmsav7_needed() return false if there
+> > are 0 regions; however, the cpu/m-security vmstate struct does
+> > migration of the secure equivalents of these fields, and we also do
+> > a VMSTATE_VALIDATE that checks against the number of MPU regions
+> > there. Making those fields be migrated only if there is more than
+> > one region would be awkward (we'd need to pull them out into their
+> > own vmstate struct), and it's unnecessary -- migrating something
+> > that's all zeroes and not used isn't a problem.
+> >
+> > So instead we relax the checks to handle the "no configured regions"
+> > case, insisting then that the rnr field in the CPU state (which
+> > should never be used) is zero.
+> >
+> > Similarly, we adjust the check in sau_rnr_vmstate_validate against
+> > sau_sregion; this one is currently theoretical as all our CPUs which
+> > implement the Security Extension have at least one SAU region, but
+> > architecturally it is permitted to implemnt no SAU regions.
+> >
+> > Fixes: 157f6c69edd06 ("target/arm: extend PMSAv7 support to v6-M CPUs")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >  target/arm/machine.c | 9 ++++++---
+> >  1 file changed, 6 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/target/arm/machine.c b/target/arm/machine.c
+> > index c3aef3f3301..d624425c0dd 100644
+> > --- a/target/arm/machine.c
+> > +++ b/target/arm/machine.c
+> > @@ -593,7 +593,8 @@ static bool pmsav7_rgnr_vmstate_validate(void *opaque, int version_id)
+> >  {
+> >      ARMCPU *cpu = opaque;
+> >
+> > -    return cpu->env.pmsav7.rnr[M_REG_NS] < cpu->pmsav7_dregion;
+> > +    return cpu->env.pmsav7.rnr[M_REG_NS] < cpu->pmsav7_dregion ||
+> > +        (cpu->pmsav7_dregion == 0 && cpu->env.pmsav7.rnr[M_REG_NS] == 0);
+> >  }
+> >
+> >  static const VMStateDescription vmstate_pmsav7 = {
+> > @@ -693,14 +694,16 @@ static bool s_rnr_vmstate_validate(void *opaque, int version_id)
+> >  {
+> >      ARMCPU *cpu = opaque;
+> >
+> > -    return cpu->env.pmsav7.rnr[M_REG_S] < cpu->pmsav7_dregion;
+> > +    return cpu->env.pmsav7.rnr[M_REG_S] < cpu->pmsav7_dregion ||
+> > +        (cpu->pmsav7_dregion == 0 && cpu->env.pmsav7.rnr[M_REG_NS] == 0);
+> >  }
+> >
+> >  static bool sau_rnr_vmstate_validate(void *opaque, int version_id)
+> >  {
+> >      ARMCPU *cpu = opaque;
+> >
+> > -    return cpu->env.sau.rnr < cpu->sau_sregion;
+> > +    return cpu->env.sau.rnr < cpu->sau_sregion ||
+> > +        (cpu->sau_sregion == 0 && cpu->env.sau.rnr == 0);
+> >  }
+> >
+> >  static bool m_security_needed(void *opaque)
+> > --
+> > 2.43.0
+> >
+> >
+>
+> The logic makes sense; it would be nice to have a comment in there explaining
+> that RNR==0 indicates an unused value rather than a genuine region numbered
+> 0, but I'm OK with this being applied as is.
 
+Yeah, that's reasonable. Something like:
 
-On 11/11/2026 5:09 PM, Dmitry Kokorev wrote:
-> Writes to the mhpmevent CSRs can currently modify the
-> reserved WPRI bits 57:56. Fix this by ignoring writes to
-> these bits when writing to the mhpmevent CSRs through both
-> direct and indirect CSR access paths.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4722
-> Suggested-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Dmitry Kokorev <domestos48@mail.ru>
-> 
-> ---
+/*
+ * field is migrated even when MPU not present: in that case number
+ * of regions is 0 and the field is RAZ/WI and also 0
+ */
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+?
 
-> v2:
-> - Drop explicit preservation of mhpmevent WPRI bits.
-> 
->   target/riscv/cpu_bits.h | 2 ++
->   target/riscv/tcg/csr.c  | 9 ++++++---
->   2 files changed, 8 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 3579789a1f..3df9ea4ec3 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -1161,6 +1161,8 @@ typedef enum CTRType {
->   #define MHPMEVENTH_BIT_VSINH               BIT(27)
->   #define MHPMEVENT_BIT_VUINH                BIT_ULL(58)
->   #define MHPMEVENTH_BIT_VUINH               BIT(26)
-> +#define MHPMEVENT_WPRI                     (BIT_ULL(57) | BIT_ULL(56))
-> +#define MHPMEVENTH_WPRI                    (BIT(25) | BIT(24))
->   
->   #define MHPMEVENT_FILTER_MASK              (MHPMEVENT_BIT_MINH  | \
->                                               MHPMEVENT_BIT_SINH  | \
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index af444e3e6f..94a57a4553 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -1230,13 +1230,15 @@ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
->       if (riscv_cpu_mxl(env) == MXL_RV32) {
->           mhpmevt_val = deposit64(env->mhpmevent_val[evt_index], 0, 32, val);
->       } else {
-> -        inh_avail_mask = ~MHPMEVENT_FILTER_MASK | MHPMEVENT_BIT_MINH;
-> +        inh_avail_mask = (~MHPMEVENT_FILTER_MASK | MHPMEVENT_BIT_MINH) &
-> +                         ~MHPMEVENT_WPRI;
->           inh_avail_mask |= riscv_has_ext(env, RVU) ? MHPMEVENT_BIT_UINH : 0;
->           inh_avail_mask |= riscv_has_ext(env, RVS) ? MHPMEVENT_BIT_SINH : 0;
->           inh_avail_mask |= (riscv_has_ext(env, RVH) &&
->                              riscv_has_ext(env, RVU)) ? MHPMEVENT_BIT_VUINH : 0;
->           inh_avail_mask |= (riscv_has_ext(env, RVH) &&
->                              riscv_has_ext(env, RVS)) ? MHPMEVENT_BIT_VSINH : 0;
-> +
->           mhpmevt_val = val & inh_avail_mask;
->       }
->   
-> @@ -1263,6 +1265,7 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
->       target_ulong inh_avail_mask = (target_ulong)(~MHPMEVENTH_FILTER_MASK |
->                                                     MHPMEVENTH_BIT_MINH);
->   
-> +    inh_avail_mask &= ~MHPMEVENTH_WPRI;
->       inh_avail_mask |= riscv_has_ext(env, RVU) ? MHPMEVENTH_BIT_UINH : 0;
->       inh_avail_mask |= riscv_has_ext(env, RVS) ? MHPMEVENTH_BIT_SINH : 0;
->       inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-> @@ -1531,7 +1534,7 @@ static int rmw_cd_mhpmevent(CPURISCVState *env, int evt_index,
->               *val &= ~MHPMEVENT_BIT_MINH;
->           }
->       } else if (wr_mask) {
-> -        wr_mask &= ~MHPMEVENT_BIT_MINH;
-> +        wr_mask &= ~(MHPMEVENT_BIT_MINH | MHPMEVENT_WPRI);
->           /* wr_mask is 64-bit so upper 32 bits of mhpmevt_val are retained */
->           mhpmevt_val = (new_val & wr_mask) | (mhpmevt_val & ~wr_mask);
->           env->mhpmevent_val[evt_index] = mhpmevt_val;
-> @@ -1560,7 +1563,7 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, int evt_index,
->               *val &= ~MHPMEVENTH_BIT_MINH;
->           }
->       } else if (wr_mask) {
-> -        wr_mask &= ~MHPMEVENTH_BIT_MINH;
-> +        wr_mask &= ~(MHPMEVENTH_BIT_MINH | MHPMEVENTH_WPRI);
->           mhpmevth_val = (new_val & wr_mask) | (mhpmevth_val & ~wr_mask);
->           mhpmevt_val = deposit64(mhpmevt_val, 32, 32, mhpmevth_val);
->           env->mhpmevent_val[evt_index] = mhpmevt_val;
-
+thanks
+-- PMM
 
