@@ -1,107 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0508D606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E67606A681
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PbRPBH7n
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=O7AwYxdM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVQ7V-0000s2-G3; Mon, 23 Nov 2026 04:13:53 -0500
+	id 1xVQH5-00029r-Cq; Mon, 23 Nov 2026 04:23:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xVQ7Q-0000rP-EN
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:13:48 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
+ id 1xVQH3-00028Q-AA
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:23:45 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xVQ7O-0003C9-S6
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:13:48 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a210470b49so28451565e9.2
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 01:13:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
+ id 1xVQH1-0004Oz-PA
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:23:45 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c4d21051042so494445966b.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 01:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795425225; x=1796030025; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ d=gmail.com; s=20260707; t=1795425821; x=1796030621; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=uTTE+l6YI9JuWAqmG1kclELSlKlQuPwIA0YAkWZ+Izs=;
- b=PbRPBH7nLYyocAAuOZ6jKPLuCqYB+1DFfGf1E1yaOhh2JNr456uYcYYGm5RDhzod6F
- WvvTRNNZ6xO6ClVA8r4YQ75zMAIQdVLFz7PWrsOkt6TntT4t+wsWDz9+BcEj8OfR4iGj
- 1xeBBD8gZDrOMZ0wtK8UztVWt1sdgp5E6vTeCTqTINo7J8noRg38y/qJaSn9l4AK3NwL
- SITtCUH81ODJStZTLmp3V7bG/MkqUpmr8RDV2Lipw7kvTQ37JKUnN7i/g+bCGYGUooIn
- LVjA3MibaroZhcj5/2o8ULNKF2zHiwxgNxMG2OPjMwOxqRBfLPghfEU4/wJs9NsyaJRT
- 0fXw==
+ bh=U3h3aB3iPc4yOQ9kzDgmCyHPvpi9IbLxvcB+SYUpspI=;
+ b=O7AwYxdM/7lpKeU8IlwSop41fEiLOy7xKEW+vQLnj/xLNmAxJb5NBGvcVduZ82TH6C
+ uRjboiAYnoHb4IYzP6BKOmeLmhPZZ1R8Oa1ojl1OkdWM8N5z1Pjw2Rw8ZpCPlLUDdqdg
+ eyiymycBwDsYNGggsxqPQZZaMzU5EtcJpdH5MAjwHHM3nOFPJJnjya4All5UF2vcnV6X
+ yhz2dpLI/aO74nR2xwp314OR4FMPf65UMwSYUiA0y0KEpv+olqSbkmpZS2nFaEXjpiq8
+ PUCTuOVP1g3fWieiHtz/S6YN0+dG83udidMSeLB5PcpKIStcQsqxwlwCgNiGMWvKhC8a
+ grmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795425225; x=1796030025;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1795425821; x=1796030621;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=uTTE+l6YI9JuWAqmG1kclELSlKlQuPwIA0YAkWZ+Izs=;
- b=VnVgPuTG3FOoK3o3ChdEGa/Gc1KdVH2DbXHPSJFgQElVbAw+tRbIHDEXsm93HZWpzy
- eK/K/OLKPSJu20/AWwkdbHDLT/+Xch3bWIYQppytLTiy2XftDKqD5piTVMOqQ1joFGKI
- yMAoxlgoh1Qk3/xSrHKxSnPhgxGZnkW8GtEFL1dPJfJLnyOZo8NQtxpxmYpilpmRikf4
- +GnTrbUr4dGXPvYsmmIFraKwhf77KQ4KgmYv76IYQgzt677BjuhCqRs5N1NLDmmFW3Lt
- PIg7xTgQiWGYJ9GNAAVHZEfU0wTqxAasg9cD+H83Kb1n3P+TSU/JPNu3IZcjAFggwxWO
- +c7Q==
-X-Gm-Message-State: APuU4Z+/BL0ToSv/INV5T6GAf6U4oG8AIcCR1k0PvebebTJPv+jVB6/w
- QHWmkpLDLXYhkVx0scuh0ynmH839ZJTsYw42rr/VKWBPu0GWvv/VWtIMBIs/5BX2G+I=
-X-Gm-Gg: AZFdTZdSKdHlGocSoeRooiqXhw8woDgh8HntlggpT6QVm7Q23OChxp6Up4JaRk5CoXU
- u9TmLbt1ahTLHcdGPiiEW2Ehdbf8FmF4C4N8NitpGFRBM7cWImy9J0fGiquXqnGz4z8Klx/gOJ6
- VsfUb7LCfQgIFsM1IDWlEZGo17rQ61uFjQDBOIvUzt/gfAu6PJNK7P9osrmKtVQHZ3RifKJrxcf
- zE+/132HHk//MwpvKnfeX0UyJ59hz/L0bjTqbV0YC/jsVa3/kHViC7tkCeVTVzH8ZM6FUPFUQKP
- 7nONJ/Vx8tsxbpbzr25H1lRoWaEcxnhCRIKL48NIDlCKKtQ+u2xQWxeZvrzFKX2Aal7bKWuiY3M
- qzCe08Ea8KQQL2vfmmfaXCJ0Ul+h3p/kocU0kKE6A30P1ACriumWRuPp7OzRGa/GOLe+FBV0tv3
- Pw/nqZmL5lZ9v5pL2I7zH/44UVoKT/XBA2Io3hLBf+Uz7j5lAwebumpiSyoGDVp03H+w794zl5C
- Kz8G0Xhrj3wh17O/Z7Dw70X6As4+PP9XOZ/FvPaK5SfrWGKmnecspOOdeMgltQKYKtgTfppXN0z
- 5H5fO3pU9M5d+oW6gKPM3yWDLOXb
-X-Received: by 2002:a05:600c:5249:b0:4bb:665c:a078 with SMTP id
- 5b1f17b1804b1-4bb8893a89bmr218098255e9.28.1795425224856; 
- Mon, 23 Nov 2026 01:13:44 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884ab091sm480682815e9.11.2026.11.23.01.13.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Nov 2026 01:13:44 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 171975F914;
- Mon, 23 Nov 2026 09:13:43 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Kuan-Wei Chiu
- <visitorckw@gmail.com>,  Palmer Dabbelt <palmer@dabbelt.com>,  Alistair
- Francis <alistair.francis@wdc.com>,  Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
- Joel Stanley <joel@jms.id.au>,  Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,  Michael Ellerman
- <mpe@kernel.org>,  Portia Stephens <portias@oss.tenstorrent.com>,  Halil
- Pasic <pasic@linux.ibm.com>,  Christian Borntraeger
- <borntraeger@linux.ibm.com>,  Eric Farman <farman@linux.ibm.com>,  Matthew
- Rosato <mjrosato@linux.ibm.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,
- qemu-arm@nongnu.org,  qemu-riscv@nongnu.org,  qemu-s390x@nongnu.org
-Subject: Re: [PATCH v2] tests/functional: use immutable tuxboot kernel URLs
-In-Reply-To: <20261112133320.418012-2-marcandre.lureau@redhat.com> (marcandre
- lureau's message of "Thu, 12 Nov 2026 17:33:20 +0400")
-References: <20261112133320.418012-2-marcandre.lureau@redhat.com>
-User-Agent: mu4e 1.14.5-pre2; emacs 30.1
-Date: Mon, 23 Nov 2026 09:13:43 +0000
-Message-ID: <87fqwrx648.fsf@draig.linaro.org>
+ bh=U3h3aB3iPc4yOQ9kzDgmCyHPvpi9IbLxvcB+SYUpspI=;
+ b=zaB07oGrFsE2ZA3Wundh/henr6ejZjP8raYPrmpRbo/tgvW9LByMkgVYd7PwuQHD0T
+ RciOBJZR+71EkFdZQcnESFOVVwiUDylOSAixIiua9PhUHMrHF3amB+llJz5uW4U3Lg+n
+ bO4lxYEJZzIqq5rMTzqSvy73kXte4eKEgEJFcZvo2vFrA9Lb6oya8ykGsEzPm7ja4oLR
+ NaDtVY0Ej9K3Y/eIyrCo+roxnGLFHAiF44EdoM7h6X+RIMwD/0pU4LLbCiMBTzYqETwz
+ 5hTthI8EWGtWC1gL42FC+3KJPDzKr0jfSqaCT4IE4baxtvI2ZgylMqInJv5Tkv5NWxvv
+ BQPw==
+X-Gm-Message-State: APuU4Z+gThrJslk7OA8ugGG91pdCzm1Rbwxegt1wE/jJIMUZohlF06Ld
+ JcIasB68Zm7AMzsm/+b0vKURH3l2SSokt3aS+2u820fydf6IaHE9eLHm
+X-Gm-Gg: AZFdTZc2GCuZdMf+C686sCVClfKHooDg6f1bxTNHUG4p8G40kg3ro03eS1SImCpvpVY
+ ZKbYVGfeOZYOMQw7xHCPufbLL9d6qDDIdR4OdoEptwuvrdYueXZBMB2SyMrNhhgtcNN+qjAz7hf
+ ceEmNwSZ1Bnr7m8GfeO0JkAZIP+g/MA+tGyN5kOJUrSLWlAaf1zltVIj5iFhRF5/ZuSoFKHTX4f
+ VuNaC7DyEruEiirXzACkTyTMBD1ln4l+IarAw+8X+thuzFlzRgBNG8XP3O0d42gQb0nncJBETZQ
+ veFhxZGEvPb1KHySRoi1Td9Y9oXjt60wIsOwOXgtacdXReEN6igmv4fIejFuBPspxKy7BlIR06M
+ ll7A/tN+Ly5O/tDQ7R3H+401opbAdmR6Q0csgr0b6CH7vHg5D6U++Wgj734JzodWPxCORYcYbYw
+ CWWga76er3TmTU8JMUgBirCultPcr4lwXKkdz8AevBoUIvj0gvpR60SuxHH90GChTyXYB/YTEXo
+ YQBLRjk/8x40onosMuNM9clEL5b4VsaQvfbtHnsshL465hglVCrTYw+ggx9pc7GrSzygPtYEViE
+ mj8NvltMcRzsnruJSUWZxhS87dmaJQMC0e8pcgadNdU7jit3JAHpZJu1s0huw7Ig/OV+vBHfcTw
+ VlbuVr/pF1vPvjMGjQyBzdVTCuDHljYLKmcGb+I3Ijs07IQxuNjcfnxzXw52IHTQ=
+X-Received: by 2002:a17:906:b34a:b0:c50:f08a:eed5 with SMTP id
+ a640c23a62f3a-c513a9aa13cmr681932766b.34.1795425821132; 
+ Mon, 23 Nov 2026 01:23:41 -0800 (PST)
+Received: from smtpclient.apple (088156177242.warszawa.vectranet.pl.
+ [88.156.177.242]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c513afc5396sm377539266b.58.2026.11.23.01.23.40
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 23 Nov 2026 01:23:40 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH] docs/system/target-sparc64: mention sun4v-qemu-kit
+From: Dmitry Pimenov <sun4qemu@gmail.com>
+In-Reply-To: <CAAM0arP89Yr1fU5r5KPxLqAGnUt6QAy3uta7Ztoj_jm5CBZaPg@mail.gmail.com>
+Date: Mon, 23 Nov 2026 10:23:29 +0100
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@oss.qualcomm.com,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Message-Id: <B2788CCD-4F6C-4D7D-867D-02E654E0DB15@gmail.com>
+References: <20261114162002.1995864-3-sun4qemu@gmail.com>
+ <CAAM0arP89Yr1fU5r5KPxLqAGnUt6QAy3uta7Ztoj_jm5CBZaPg@mail.gmail.com>
+To: Artyom Tarasenko <atar4qemu@gmail.com>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=sun4qemu@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,36 +103,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-marcandre.lureau@redhat.com writes:
+Pierrick, Mark, a gentle ping,
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> tuxboot rebuilds the 6.18.54 kernel images in place, so the URLs
-> without a datestamp now serve content that does not match the recorded
-> hashes and the tuxrun tests fail to fetch their assets. Point the
-> x86_64, arm64 and s390 tests at the immutable 20260930 snapshots and
-> keep the hashes that were recorded against them, instead of implicitly
-> switching to the rebuilt images.
->
-> Do the same for the riscv64 6.11.9 kernel assets, which still used
-> non-datestamped URLs; their recorded hashes already match the 20241122
-> snapshot.
->
-> Fixes: 8ac1aab21fca ("tests/functional: update arm64 tuxrun images")
-> Fixes: 09961fafc5a0 ("tests/functional: update s390x tuxrun images")
-> Fixes: 467c9eb7dd31 ("tests/functional: update x86_64 tuxrun images")
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Artyom: thx for your support, I hope the project will be useful for the =
+QEMU community.
 
-Queued to testing/next, thanks.
+Regards,
+Dmitry
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> On 14 Nov 2026, at 17:31, Artyom Tarasenko <atar4qemu@gmail.com> =
+wrote:
+>=20
+>=20
+>=20
+> =D1=81=D0=B1, 14 =D0=BD=D0=BE=D1=8F=D0=B1. 2026 =D0=B3., 17:21 Dmitry =
+Pimenov <sun4qemu@gmail.com>:
+> This patch adds the reference to sun4v-qemu-kit; it builds the set
+> of firmware (hypervisor, OpenBoot and binary set of machine =
+descriptions)
+> for the Niagara machine based on the OpenSPARC source code archive
+> with some changes and build tests. The kit can be used instead of
+> S10image/ firmware.
+>=20
+> Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
+>=20
+> Great work, Dmitry! This is really important step towards making =
+OpenBoot really open.
+>=20
+> Acked-by: Artyom Tarasenko <atar4qemu@gmail.com>
+>=20
+> ---
+>=20
+> Artyom, Mark, please look at this project.
+>=20
+>  docs/system/target-sparc64.rst | 4 ++++
+>  1 file changed, 4 insertions(+)
+>=20
+> diff --git a/docs/system/target-sparc64.rst =
+b/docs/system/target-sparc64.rst
+> index 97e334b930..24d5883cf5 100644
+> --- a/docs/system/target-sparc64.rst
+> +++ b/docs/system/target-sparc64.rst
+> @@ -20,6 +20,10 @@ and is able to boot the disk.s10hw2 Solaris image.
+>                         -nographic -m 256 \
+>                         -drive =
+if=3Dpflash,readonly=3Don,file=3D/S10image/disk.s10hw2
+>=20
+> +Alternatively, sun4v-qemu-kit =
+https://github.com/unix0cc/sun4v-qemu-kit contains
+> +a set of components (hypervisor, OpenBoot and machine descriptions) =
+for building
+> +the Niagara firmware based on the OpenSPARC code.
+> +
+>  QEMU emulates the following peripherals:
+>=20
+>  -  UltraSparc IIi APB PCI Bridge
+> --=20
+> 2.43.0
+>=20
+
 
