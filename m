@@ -1,137 +1,138 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD72606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 18:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5717E606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 18:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fQ8oAzR6;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=FYURh710
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=bVvcMkIf;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=C21FaS3l
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVYMY-0003dv-13; Mon, 23 Nov 2026 13:01:58 -0500
+	id 1xVYNn-0004Cy-7N; Mon, 23 Nov 2026 13:03:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xVYMV-0003dN-GT
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:01:55 -0500
+ id 1xVYNX-00046u-5T
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:03:01 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xVYMS-0005ME-VZ
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:01:55 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xVYNV-0005Rl-Aj
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:02:58 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANGGmxa1861196
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 18:01:50 GMT
+ 6ANGGmX33025324
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 18:02:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CcmJO7pH1pFuFNxsk/FLjEAuy78lnNQBGuxMjAFJHqU=; b=fQ8oAzR61aYmQsb+
- UQV5fb+S5yarWa8kPSvh1ciwxYKd1C3ZZGsb3MRBKEaaX06X0zsCyHn+P+8Ed3hR
- Lbxmge8RiC85szDE44TahsNR8QX5lRU6d1OvketjGt/P4R5PsoDT6UkiIpnJ9xwb
- dJDcKBmMOcs5nwQ5kmZ7ZmQ6/OEkUdtLuaIjfhY5M1jJzk1Pp3cf9j2sqykG7WnY
- /M/Pm6fpXVmapNN4sgHbCutMhpsu89bUAHgh+4gW3oUe6M5cqa3bxZxg0SmThXLH
- k70mLulPhxNRGDtC25cMMPzIYOcS6z+pRkWxPF7eqw3dVa1uhjQcp6hz9/gMi1R3
- wFbHOw==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g9a2pe9-1
+ yKmUh9ami92KU4Yt9k1JSDAQL60SxtrLBxqgR9BvSZ0=; b=bVvcMkIf0GM70XUF
+ MXe8kHZUjaZg194v9tjuUUTL4DjLRsrZ4wLcwsBXOkWD1+K2LtTm70aND+jzBBIl
+ wxf34OXouXdThFhMUmQA9uhlvIhExnhvRgK8HNT9gfj2jRAD7tmfmaWvV+s3+tCc
+ 73QNU7Bm3kqf2E4zEpky6uuFBG99/efMwuZ4/h4HXMpEA/uvxfxupmC//QwLg1bR
+ iQzWJTLN7vs/2IaGJY+LART1nBY2yzZitCNZ1FHTFRWh3oVtmmdcYuyGjvtwvx/I
+ AlxOlwi79De1T8fVZ76u+NtT0M/JUG0Dt9uGNUhtnJvq82mqsFgJ/dLo1NDPD1vi
+ JxEX7w==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g1par6q-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 18:01:49 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-1b3b5b49cabso3231880c88.0
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:01:49 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 18:02:54 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-33713e5e6daso6496346eec.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:02:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795456909; x=1796061709; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795456974; x=1796061774; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CcmJO7pH1pFuFNxsk/FLjEAuy78lnNQBGuxMjAFJHqU=;
- b=FYURh710eH3VKn58rwak1iVXYtzoWC9vUPnR90azxOqs6G4HKIdH52OYxbR3qNbLb5
- X94QH6htM5aqUgllweorgs2s2opXD1Ej2fbd34E0J9sOpaSGlONDaQgT9ee2pbTnuDh8
- yG3k84m6TusHoFR719gE9uhvDbrHV7qMVvnQuZ2CWpIwnaTkWhFevifAYukwd3RRlc2f
- 7wzsGxpwhfmZCuFg/oR0M0sGalTy9caCtSFiwvL7LjvCiVNNjJe0fbo/fOTZBi75Hh0e
- gHsXHAGdqCFAnyRg/LO7+f0YogCqF0WTbIZYy41yYOi2U+xFUJj+qcwuVNkVGYYW36RR
- PVwQ==
+ bh=yKmUh9ami92KU4Yt9k1JSDAQL60SxtrLBxqgR9BvSZ0=;
+ b=C21FaS3lBZYPYMiWAMpl49TBnPwIuzo1Ur6XGmCuRzxb6Kc231gxFBaJIiupuEbrym
+ 283WT68EwfAyOuLOuvFhHh3WFZXaidZUP0TZPjVHia5Wsqst13Qv7h9mH04T4yslAfuY
+ W0d2CYCAPnUvV7m3sDXbTQNdaRCTtZg1JiypZpHvkibH2uwQ+M0GCFKpY6fFUlFd4b4N
+ w9loLLb2YuLB8D50t87JAvi/bMspxn7fhoKMbEp5jP3FvIFVU09VzqDSCoaRKoDlBMQp
+ OtsLPs3yOy6ZauHwIPwiHOOy4JZX3nPBfvsZQGJSDDkthyeqbxdP5uvytUUuVONun13m
+ dS1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795456909; x=1796061709;
+ d=1e100.net; s=20260707; t=1795456974; x=1796061774;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CcmJO7pH1pFuFNxsk/FLjEAuy78lnNQBGuxMjAFJHqU=;
- b=zVhZ5zvSgsqubv/81lXbgVQ1r8nqQtY7PeyEg4lMGEASRg1aRh9SHLAVxyu7XftjHA
- 6/wQrHaHeTpB2CUzrlr5t/wHVzsbm+PC2+oeZfbKrN4G7acwl98YPYGReFQZeqU9jCWj
- 6xF1gcyqnPi3kMa+9p2/vQZG07McbOgO24yNf+aGmN7/rhDTHQ/JaTV+pMlWaGFVbaH7
- +Ac6TOwxWMikl9CE6hZ/C/oOoFIDqX5ujfa8soKFsc06VIosnmByYIUDjqwyHeUN82f+
- jlhgE/NZRi3aj0efSRkDHqWOlW+yfpsAZ2X/kKQvrSnP7e8oFljFOsjQBcHTnLh/y7XI
- CIoA==
+ bh=yKmUh9ami92KU4Yt9k1JSDAQL60SxtrLBxqgR9BvSZ0=;
+ b=R0qpHgWGpciCUG8CZkvsOTw3sx+tMXHAM9e/9T+pgWfcTRAVa2vtnDTe7YMKYOmNY7
+ X16/hEmntX2HCguM0ZDIdTJKvjnrld51bouqJ/DicjhYmRL7puz96s/A7qaolLwy9Yb3
+ tcDd/EZlc0ru1twb3ohpaIsWFhN5j2UBaqqN09/WBr4DQkpTuW/iZ1pHAsXueWv1iWs6
+ TpUX4tYWAXRnm/pQJayocKAqAfIpN39tma9ls4Zre2Hi+q1zabpaiP95ui2yVOOvTTc3
+ fH6x8nGJ81qiD5XeFbx9vosMYiAqO94yqfpvz/LS+6PQMctGp3UvlazPN4ejEvqUyhav
+ ZVKQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErFIj4YxUbXlD3lPksvb9NypYXteyksijFwm0vH//yRccrENgh4H4+ITfrUKcpDcSywemvQdxja5+/Hj@nongnu.org
-X-Gm-Message-State: APuU4Z+9ygo8jH/i86QVgPN7iiw4dCES5Ry0sGz55+1Ns8s1Ve2Pkxc7
- 5Cro4huqKNmeE97frm5983/8P443ZeIGPLjrzqmwUEwx94lrXmrRHYDfXiV3KWkhTBMzSWM2bOQ
- p3N8ujk0BFrmQWK20P4cqKM0vTk5SZZrw1jemkQCGV+kvnecQZ+7U9nX9YQ==
-X-Gm-Gg: AZFdTZc7dIgl8K73Yh574iGk8FubCxN0ygWRcB6Hy7btI3clwK5GVdibHAM3O8AssfS
- FvPMsIHAxy59q26VbEwf4zIvb2AITKPaS5E4rbBcPVFC0bNFrD92n2lR+dFSjs8IFCIdtBRFO92
- zh00QJ8UixC0gtnH4BdzejDJUt4DBGrIigNbwNDat2NiHx9KahNrJnccHR2naEAVLSaloQ9L8oG
- 9RdKQ6M7UCZXU6yFfapIuV/ld3as8GxZ3/oVCYX0JcJ5SGSQXCinAH5MdFvYAiDMAkuTZYblCk/
- dBXkkOdy8gEem9gWg2zxwIE+Wv8wCKl1bMwqba23y84MZwKBCpgiaETfvSRo2zIKAym48VIL2QC
- rX/S7+ULYBuTRCcnUEksK4wtLgAUao6nDx0btcvfbs9KThdPZfizXBEPD4rWsbBNAbc/gg6MJgc
- 66b2/hwCCsrikPZOBIxQlb3l5CKzBVMueNvPKXFK/mRXk=
-X-Received: by 2002:a05:701b:291b:b0:1b5:3878:a9d2 with SMTP id
- a92af1059eb24-1b5568e950amr10402520c88.20.1795456908976; 
- Mon, 23 Nov 2026 10:01:48 -0800 (PST)
-X-Received: by 2002:a05:701b:291b:b0:1b5:3878:a9d2 with SMTP id
- a92af1059eb24-1b5568e950amr10402508c88.20.1795456908501; 
- Mon, 23 Nov 2026 10:01:48 -0800 (PST)
+ AL+hErE+SBptfg1mjIL+/OI9vyVYbK0OMi1v+mwInFyBWCCS8glNuwLRF6xpqm7XxL7xgZgeCTixQ58Qkzg1@nongnu.org
+X-Gm-Message-State: APuU4Z9reg+iiisocREm5r/cTruFkqOHf0A27jDzxykuo34ahQ5VLrNT
+ 5l9XvoCIpudKYx73obNXVo0l72R/dPMsoc5qqmEJIm+BUVLngYlewyyE9on6F1MjZ6C6QwOiiHZ
+ sXVG5PCe1gW617sdmQLs+dbHs2FtS8iyFK6st0ygtIigdyuA0fDYDs0HdEg==
+X-Gm-Gg: AZFdTZejXZXqEH+BuvaT/DJh4qLXRkflfUtlSFmi7oQxHKazLGI3Cqd657Lm9RyFlAr
+ gUTgCtWh47A8HmqxuRTIP+QUo93RoZn9FhTkY6PiYcZDQq221k34cW/H6NUtummgMmDDVIjiH/+
+ eYas7k+2wKs3bkV9elhguPhtZySjq5GMHSxKH4772G1V5XeYDYUN2aWVwpDORf4mJobhw9kyW33
+ 4PIhXvr7ujVOzeFe8ipLMVVHwmJMyQWBO4tCOdb3F3l/UwZUz3DdMybL7YgbSWx+L2V4bBcPMlc
+ UKC7khLwtvw8u+hjCT7tGCs78oknxQpLd+NKHRuXaidhoeYZpoE6//L06eJQcoPrxeFKk/AVv/Q
+ dTp3VLmevFV6KgRZfjuQK7gFjPH/j7mSMpu4WIwSJ/8UBedRirp7KMO3e7ZMGV4VfV7Fg+DT45p
+ yWHU9O2TAd/+hLB0XRCbRwC7zm1oZ99XKVIcho1HbJGI8=
+X-Received: by 2002:a05:693c:8390:10b0:36e:d060:8bad with SMTP id
+ 5a478bee46e88-3856c6b3245mr14441423eec.5.1795456973891; 
+ Mon, 23 Nov 2026 10:02:53 -0800 (PST)
+X-Received: by 2002:a05:693c:8390:10b0:36e:d060:8bad with SMTP id
+ 5a478bee46e88-3856c6b3245mr14441389eec.5.1795456973249; 
+ Mon, 23 Nov 2026 10:02:53 -0800 (PST)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1b556840494sm30389961c88.12.2026.11.23.10.01.47
+ 5a478bee46e88-38567daaf70sm39516469eec.28.2026.11.23.10.02.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Nov 2026 10:01:48 -0800 (PST)
-Message-ID: <23dcbd96-6492-4226-921c-62f39066074a@oss.qualcomm.com>
-Date: Mon, 23 Nov 2026 10:01:46 -0800
+ Mon, 23 Nov 2026 10:02:52 -0800 (PST)
+Message-ID: <e2002096-3dcd-48e6-9b3e-4fba96222894@oss.qualcomm.com>
+Date: Mon, 23 Nov 2026 10:02:51 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.2 v2 05/12] target/hexagon: report the faulting
- packet for stack limit exceptions
+Subject: Re: [PATCH-for-11.2 v2 06/12] target/hexagon: take exceptions for
+ cache operations
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20261120182031.560481-1-brian.cain@oss.qualcomm.com>
- <20261120182031.560481-6-brian.cain@oss.qualcomm.com>
+ <20261120182031.560481-7-brian.cain@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261120182031.560481-6-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261120182031.560481-7-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA3MSBTYWx0ZWRfX2jFXyMY+3aEp
- 0013t6zhNOx90sYBoIv0Ugk7g4gDk3wRA67dNWA7H7cmdL05IxZOoO4L48ae20xFnr1HixD4P2y
- w2CvaAQPC7EP+d5XkVWkN4YuVdEk3Ac=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA3MSBTYWx0ZWRfX2Qxujkvoyc3S
- t4Fs4SQWO5Epv+cQKezusa3U2BprstmdAX+IqlucDGGgvudXSZ+LzcQphfmg1aWsS3/uuHlYPLJ
- FdqABNwu6A7e2hKStN2ioiXR5ucJsl1JpC0Cxox0Ms2vavYsEypDbHnP9jABQr66RF+N0ny8VPq
- Gv0zj8PoBQDiK5XXdNn7uEC87TxP/jxG3/jY4stpQCjb3GwqBfW81MBXqyxMEGnoZ21Tsfz3FrI
- QSYVrro1XZqRQVlwr9kLCdrHAcphDvBnLkgXcFqhNsRlgtPnfURvkyYAPRcD3mkZUdNlpRb1yFY
- lOBXWc9z24hF77p1tPeKgq12BXOgqI6e3/b1nVGdZvj/HGjMfsH4GADsq3pqGlpk9T6ag2EsKwG
- TlLeQE3jhIvcXTMsqhTaESxh6uKeXs9nyCfGZ7dhFqRRQ03V1DwT390a0M/ObOXW7wySnh95DJE
- Qp23EJi/Qa6LpciyD6A==
-X-Proofpoint-ORIG-GUID: MLvtLJXJpdiD4VEekXFiKDfI2ZlCYTSo
-X-Authority-Analysis: v=2.4 cv=cYJHPXDM c=1 sm=1 tr=0 ts=6b047f8d cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-GUID: 36f4uVDOvnkZlC3XaGR1QrXLf7VtdCwM
+X-Authority-Analysis: v=2.4 cv=K+O3jCWI c=1 sm=1 tr=0 ts=6b047fce cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=mcuABler3LHUAgRv5qgA:9 a=QEXdDO2ut3YA:10
- a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-GUID: MLvtLJXJpdiD4VEekXFiKDfI2ZlCYTSo
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=0VtwvS1-_wHwKdXkx1IA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA3MSBTYWx0ZWRfX2Kp2cLXxYatC
+ p4c3vTL2LOx6l1SMAHv9HEkO/2K88+hLVf/axBcRMmi6q1ZI3i7Fz6+z/ngrmgptpUZrwAPgied
+ U9FKS6z+4ba1gNpPLzT8vQEKmp9rVrc=
+X-Proofpoint-ORIG-GUID: 36f4uVDOvnkZlC3XaGR1QrXLf7VtdCwM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA3MSBTYWx0ZWRfX8jEzeH2kR2G9
+ RHUAgseFQ1nhgnzwkeckarJHOWrPc0tapOKDHabRagqj1SSqZOSW1KtSsOIyBIbg44wMWwWatlH
+ wyiuaz9BuafpmJBcskxdzC6RNdxhu0yceoLPqzC3F0Vssbaufp1yFai4sXRGojyERL7qRxzARVi
+ LkqGCmwmj1TULh3pplBN5Z1FzNBoL6lhthtU45EEZEO+1DrDeruO3bA30oRZart499Yxwk8ntks
+ beJX1vTRYe3lneWSq8GITWhdMtOAuVLyXkdMFHDMJe5hcn15Q0XirrDPhCdpO1DLMj/mVDUX5zq
+ XeTUuP3V3cav1KXxC/f6SI+sr7DGg6V6JPko7dbKk9MjPA5T8Apql+SiDmuKVMLiCPOWk9BSyCb
+ TiVevoj/QYhYUQuvIZiL77cR4+gk0BMW4kgqiuHR5vI817iVLCXq89dGVitf1wM6+4Y0rca7VXg
+ ju/3/+jWOkGh/NEGyVA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-23_04,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ phishscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
  definitions=main-2611230071
 Received-SPF: pass client-ip=205.220.168.131;
@@ -164,22 +165,29 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 11/20/2026 10:20 AM, Brian Cain wrote:
-> The stack limit check raised the exception from a helper without
-> updating the PC register, which is not kept current while a packet runs.
-> The exception's ELR was whatever PC was last written, so a handler that
-> skipped the faulting allocframe resumed at an earlier packet and took
-> the same exception forever.  Pass the packet's PC to the helper.
+> The dcinva, dccleaninva, dccleana and icinva instructions did nothing
+> in system mode, but the hardware translates their address.  A data cache
+> operation takes a TLB miss exception if the address is unmapped, and a
+> privilege exception if the mapping can be neither read nor written.  An
+> instruction cache operation only takes the TLB miss exception.
 > 
-> This enables the framelimit systest.
+> Probe the address through the normal TLB fill path, which also reports
+> the packet that faulted.
 > 
+> This enables the mmu_cacheops systest.
+> 
+> Link: https://lore.kernel.org/qemu-devel/20261117183629.2002840-7-marco.liebel@oss.qualcomm.com/
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/helper.h                   | 2 +-
->  target/hexagon/genptr.c                   | 3 ++-
->  target/hexagon/op_helper.c                | 4 +++-
->  tests/functional/hexagon/test_systests.py | 5 +++++
->  4 files changed, 11 insertions(+), 3 deletions(-)
+>  target/hexagon/gen_tcg.h                  | 18 +++++++---
+>  target/hexagon/helper.h                   |  2 ++
+>  target/hexagon/op_helper.c                | 42 +++++++++++++++++++++++
+>  tests/functional/hexagon/test_systests.py |  4 +++
+>  4 files changed, 62 insertions(+), 4 deletions(-)
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+This looks like new feature more than a bug fix.
+
+Regards,
+Pierrick
 
