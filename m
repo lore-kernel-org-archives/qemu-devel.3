@@ -1,106 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953E3606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 11:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18734606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 11:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=t2Gwq6oE
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nKnI+eQA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVSIx-000524-Qe; Mon, 23 Nov 2026 06:33:52 -0500
+	id 1xVSKW-0005kL-In; Mon, 23 Nov 2026 06:35:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVSIq-0004yb-Hb
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:33:47 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1xVSJx-0005Za-LP
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:35:05 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVSIn-0007vl-PP
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:33:44 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-8b4d07494b0so41758867b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 03:33:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795433620; cv=none;
+ id 1xVSJw-0001aD-0k
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:34:53 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-67583c777abso3084481d50.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 03:34:51 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795433690; cv=none;
  d=google.com; s=arc-20260327;
- b=a9d2Mn77lPKachKRwVgraf7yk0PmjFyYR2c1e+3itdlupP9dSzz208D5jN/ifREe3T
- 70K6yqRlHB3eWIlZQTIKvUYz0WjUHiDb3o2T3mhP9TbaWdifV7aXZrf97ErnWuwcmDYo
- nPzeXxQHxRSimrqYPOjk80Fh3wOx02TlpTXNCTO3gFtv1AipugOYmUWBIBpOnnIvQBpk
- ytjj6vsaVzPgq8vaXEUvf9QB5tOBBBDChdPps4+Tz/v/4BXfedgCKPsU0RaZYnRxd9PM
- chvWd8c66iHPN9H1gafvqRTIylRj7BkdRM6kbavR7l/KiceRrMxZg72Pkaf79u7V9g88
- uc/A==
+ b=JzRVu64DgaPW4vq1ZoYIudW8WfB+5EyYJwg4De+8vXsT9CNPAFImTFQJmIucr5soFK
+ KF4ULznPMp+dprhzwult3nwwAaNrHcBU3umHoNnf9glBC2tCqzPjUW60wrkWCM1zp+Tb
+ 57muNNrLerXQ39p5nfJF0w217Nvz59AWRCkdIPxUfSyqPbnUH9WC0I7OnRnyjt1P/+38
+ Td7CdpjhFABfDCbxwm0nPkZ9vIY/fH17u09sjyrPXIbcOAc60PCzBoinCPVKx01tLxmU
+ jKDNiTTg45a5OazBnSiumNSGQ0us6Vavu2oNxNsMFPbltgT4o8mEjvI5Dg+GU4133Fnd
+ 4Q+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=EKkmkSylR03Y9B23WtbRqfh0zauSJ8Gp8q0rHWrMgss=;
- fh=ZbLVWfwPzSmwQQJY3iAUgT8xZLFlnNQOT1qozk/C1Ms=;
- b=jpuGF7WXNHbnIiJGlO9i8uDkbFfbtuI38mpGAee2deuJ3gEASImkRtkjVM7+av4j0z
- Xg3mF+OQre4ftJ38i9PQHXdhtkTVqSsDSuiXKnmR0Zc+YGULCjGbdy7Jun9j7zrJ5S7q
- j5bjUE3A4q39Zf36A2Mmc8Tm+bDJDXubEyg7SJhmUvP+D9KNjqojJmVDsDkRi4922BjD
- KDaqJRSNn71nEscrgUN+kKWriKkI14qn6dHBrnP3tg1gCMZSOWMIsWvVBhAuwS58QNm0
- B+dg3K4e/vYP83A8YmEqI2m+GDfPMLu+svXWNE2vtHTeuCOyZfpDtxTrOkTw3l/iKGVP
- Stng==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7r3aoO4bhWZhB1GeACZdgFlYoDBFvSGPgfe8yoob/ps=;
+ fh=IfVNTi1A3NbvhnLPwhk/3mZfH63i7FsTWIp8ALqEEp8=;
+ b=C0iIhUcRAVscF5HJzYo6+kSHYM6QeX76O34mfF+0b2U3ca+cvGAWB9Ztxv0J+NVhXm
+ M2+gEj7zYmq42zF7ZcwRqX64pYmfkmmXGcW0YnQXHR5u0ByUJd8nTung0nE3L6+syUkp
+ IKXZV7Y3uOdRk3wpnY2VYu2E8Ib2CxJQxa8SaLiTbEmexVxY9N6DcGpZ8xKyhQVOWbCf
+ OvFzqwUdtVwS9XBUqIBx0vy4h5ReOVFDvr6M6vPEHZ1lQsd1aRM7m4/hYbNhxC5OQzRY
+ 0Swa8RZp6T/9JU8irsJb6QBmzD8FLe4r8ZcVqhNOOZNgorYu7UoWDJ2rqvjw6VBSSJ66
+ lktQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795433620; x=1796038420; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=EKkmkSylR03Y9B23WtbRqfh0zauSJ8Gp8q0rHWrMgss=;
- b=t2Gwq6oE9TT75BVFcmzzja1E3/0TMuOurMQZNY1Y/dB7sb6CW5PxI5ffcec6l2bpwW
- 5rgdBhpmhWIkoxDETL704UZFXmUC1mmUgPueXs+wSOZ8DxmwWqB0HUrdNhvH2OdseXQs
- aXIONGIx0QBE2ojLK1zi+E6X+HOtaKjNIZfkYsKww4e8QXwr79zJm21M6hFhTXCagnef
- 4zVAXC7IEXiSdwiJUA27UNAT94LA5vmLezNkI4g0IoVE7CA19C0bpKBbuQ71WCfIPw1n
- 8zKpxunEz2iRMHm3EWks1O+JZ2fhieWwmC52T2dI7db5gc+3OiFKkKXkU1Qcu+1qGG/6
- q8mA==
+ d=linaro.org; s=google; t=1795433690; x=1796038490; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7r3aoO4bhWZhB1GeACZdgFlYoDBFvSGPgfe8yoob/ps=;
+ b=nKnI+eQA8eSF8vn1vPdafG/6rHH7oLkFkWoGLiUzRr0/ys5lh0YjwGZOCEUeNd/M7j
+ NMzYwS+FRzqB4ebJszB/Vd11T1TX1+81+ElRrH7wrxHAmmS9LSiUmykjrhmPTXbLv5za
+ hIhTmhET4FhwiOeHm/J45B7o7Nmich8k8VCg3/gRaj0PHOz6KCnO/Rc9yXM914JEuUgX
+ nlpVGcphDbiI1Yvx5yctU22iLCVgG052tpCKJvevyNTLppDoMG6hVtSbSs8A79gHridX
+ lxLEUJqW6C+fQtKS2CroAB9i8K9KBVkGc6EZhSck1BhSIGIt2B5zDtn4ITsyRh8tmvzE
+ OqZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795433620; x=1796038420;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EKkmkSylR03Y9B23WtbRqfh0zauSJ8Gp8q0rHWrMgss=;
- b=FzNoE4OSBGSpVrDo10c/mCwpOMp67pC6SeHJcgFW9GiAU2o6NUhvUtW/YyPfu0d/ps
- qMhvlvS4JijtQQtUkeTsm9+CiajwxvpbBn5ShuKfwsT4R9QqBLXThZOKh8MXbu6h9H6h
- k1r4AdyhXtSvQ0d4iUC7BYZU0f3+NDcYs8cGbXvZq5rlpuZpBbr7NHzFA6NOt7rCzPLs
- 0HU3zdE1/uBh7WRjP0lwKseiv7n8BurtQ0Sxplms0XjNx/XWryB7tY0t6H3PV74uJSca
- b6eR6qFpsSGNVV/8C3fNSOR3NMtpd075LjAiGVJw0RRvvUcVqdUUQWsFzkSPiTX1gD+p
- UJJA==
-X-Forwarded-Encrypted: i=1;
- AL+hErGXiE7U5mPDxmbaEciqJTzNhz5yz+Q49/1/Lc7ticFP/W9o73yLoys22WsFc1Bi7jcu+yLV+ioPlkHf@nongnu.org
-X-Gm-Message-State: APuU4Z/xy+szwz8phdn57QewFgxbOMHmPQrkhp4CP7Dz0q8NFydS1k8t
- noWApdJqe1luYPhggzmvDk74DWYmkd/xi290mr0wFWHXQ801vZXk+nnRfVHmfGv4j3poxhrknlg
- ziKCMRDgppCMJgILT4cHYf/2SkSI6Mtm/b23mhXIJ4g==
-X-Gm-Gg: AZFdTZcKepbMamMB+FL7ResPL/Na0yHj5Hg2+L5RVTT979vHrS/xCa+ezsz4rOVo32D
- 4hoBNwl12fx4zheLzJxLojQk676dbIICnZQZcpNWyPLShzXXvITHfzuT4N6tV+8sXXVjWdi6PPW
- H/yCSFColkYH2YBscF6Fo6GdmiyWXdjcvIPoFx9WUujq/LD4QIMJ+CtoqCW2YtcN3CMwni86Atu
- IApCN01lt1cNVZPFp9VUNdRM+0WdUq6yiAkl5SRbJzNETjE/AkTCK3UdzyLOFxCQ+QoKMXKzvxB
- MNnl0fYsFgXPvJ8xwPOlN9BauTg4woRhtNVkSJGFMebiaoO56/Xu6BUogvIW41pF0fJ9s8i30fk
- D2jVBqVo9WRH4avhdlw7yF4TOGGjjbD1UQdAp/pgrg/eWhnYY1w1QWTYZImgfe4NpJqMgkrPoVN
- 0T4jtUGYX36rqw52lAO1bN
-X-Received: by 2002:a05:690e:e87:b0:677:c90f:46bf with SMTP id
- 956f58d0204a3-67dec4202b0mr4628300d50.17.1795433620401; Mon, 23 Nov 2026
- 03:33:40 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795433690; x=1796038490;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7r3aoO4bhWZhB1GeACZdgFlYoDBFvSGPgfe8yoob/ps=;
+ b=YL1wAVcYYMwXMkXhGoQGD3pkmn4AFGtyBqzRjTIjTySXw2+E/Sfp35kLvNClfpliSy
+ f3o+5Fm85YPVHJmBe/K9H/PXZEEUlVzqxwBlL9Q7sW2l8YaaOUvvKRvYjwFTTbYvB03C
+ 7ZM9t6Pv+XkDjuCCckLH8LqvbJCpKhxeBiliUT2Q63x8dsoUr8c3JjQLzmnKLYKu5f3g
+ DrZzNPLUv4h2GtYxLseb1sepam932WqEzlwzd3lbms3NFwU0i8i7UOUNXKOcNxl6iWMU
+ PAnWjUxIGvuMFbRivKPCR9tXHTPYGWg+9091imTK9Ojs2oHegPtunthHA9vJATndGfIn
+ 3Tfw==
+X-Gm-Message-State: APuU4Z/7MntnL2QjJj7X63vdY7p6xzLDoJC1ytPQfD7conJMArvJXxec
+ CzIronlcMxyCui3zXLGGF3eIxUlZHCdI7cDJUCsQlmhvPYG148D+ODVhYmP5lYezvgq4gfae41E
+ gWKJJiloth0YEgjJ3viBzoz39rpgF+5j/ZrU27Dsi0w==
+X-Gm-Gg: AZFdTZei17Z0xv2HBbPcqKydPH1xT4z6pxv+V1pljoQVc7j0OGDMjFK809AnNEN58op
+ f1v/JYouOcz5n8MiiQQ7WDob0KpEztESAuNhqXQ8uOzziGUAcCkkvckZJcqvRut1ZUusNVIe7TZ
+ 3hBuZa2VB0PWZuy8ykvu8OBLmBH6P9+OV1ZgKXZ6JXXryu0jpvhOsDuVXukl5ul+rbrC01/kP/C
+ eHjed3bKlPgrzSHZjVX8l07zojGb9aYksdvkc8rhxAaWfEtS1gBqOUyVQ5gwc0AK+DHr/r5jPl4
+ J8knM89MOTXNqEHquK0hiiAjU5gnyZtmOzBAhEi1wfSL/nAFYCxNnv+Gn6i+nB+4drAhTkh/2Bm
+ xDsiOj8LCEMy0Jnfs0FjzW18sB+x2OIlK5VAFxwxc1ePNQq4JbCQo6+VGepbqvPHpo7gnuK6HTG
+ X65gVujnUXgQnbUzXWG4NU
+X-Received: by 2002:a05:690e:419a:b0:67b:e7b9:7a58 with SMTP id
+ 956f58d0204a3-67df44dee3fmr3450977d50.44.1795433690421; Mon, 23 Nov 2026
+ 03:34:50 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261119171425.3186790-1-peter.maydell@linaro.org>
- <00f62c2a-f094-4922-92c9-2d3c26a012d4@kaod.org>
-In-Reply-To: <00f62c2a-f094-4922-92c9-2d3c26a012d4@kaod.org>
+References: <20261113165015.1150646-1-peter.maydell@linaro.org>
+ <CAFEAcA--1GLGf=7tmkzQZ=QRPApLTdsdFskgbSibYPDF0o626w@mail.gmail.com>
+ <41dc8ba1-839c-4c56-b7d3-876a72fde6fd@redhat.com>
+In-Reply-To: <41dc8ba1-839c-4c56-b7d3-876a72fde6fd@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Nov 2026 11:33:29 +0000
-X-Gm-Features: Aa3M54oDzgtNUMLgOZ7sO0mQ_a5gKfBubKT8eGfW0-_wnlfq_yBZ22Zyx0o-Zzs
-Message-ID: <CAFEAcA_mntTSsiZZRH1vOd9g4W2D=2AaNEEXvoucVDyf3ur1SA@mail.gmail.com>
-Subject: Re: [PATCH for-11.2] hw/ssi/aspeed_smc: Correct minimum_version_id in
- vmstate
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+Date: Mon, 23 Nov 2026 11:34:37 +0000
+X-Gm-Features: Aa3M54rrwRNlHdlL-7STh4xrKua48cMir2tSLo5d03SlCG-1VSu9-43qLAV6G_o
+Message-ID: <CAFEAcA-krvOZrOTwXBdPWOjocXuuM4jTwaTf-NCB1ofju071Sw@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/rtl8139: Limit DMA transfers to plain memory
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,77 +114,22 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 20 Nov 2026 at 07:08, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+On Mon, 23 Nov 2026 at 11:32, Thomas Huth <thuth@redhat.com> wrote:
 >
-> On 11/19/26 18:14, Peter Maydell wrote:
-> > In commit 29139270d8ad70f2 we made an incompatible change to the
-> > migration state for the aspeed_smc device, and bumped the version_id
-> > and minimum_version_id: this is because we increased ASPEED_SMC_R_MAX
-> > and so the regs array is bigger.
-> >
-> > However, the old vmstate was handling migration from a range of
-> > vmstate versions, with version_id =3D 3 and minimum_version_id =3D 1.
-> > The change to ASPEED_SMC_R_MAX is (intentionally) not compatible with
-> > any of those older versions, and so it should have moved
-> > minimum_version_id up to 4 (matching the new version_id), not merely
-> > increment it.
-> >
-> > The effect of this is that trying a migration save on v11.1.3 and
-> > then a load on the current head of git fails in a confusing way
-> > ("Missing section footer for aspeed.smc") rather than clearly ("error
-> > while loading state for instance 0x0 of device 'aspeed.smc':
-> > aspeed.smc: incoming version_id 3 is too old for local minimum
-> > version_id 5").
-> >
-> > Since we now don't need to try to handle migration from versions 2
-> > and 3 at all, we can drop the complications in the vmstate struct (an
-> > unused field, and field only present in version 3 and up). Clean
-> > these up and set the version_id and minimum_version_id to 5
-> > accordingly.
-> >
-> > Fixes: 29139270d8ad70f2 ("hw/ssi/aspeed_smc: Add Data FIFO-based flash =
-access support for AST2700")
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4880
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   hw/ssi/aspeed_smc.c | 7 +++----
-> >   1 file changed, 3 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-> > index ec9ad0f747e..f82947e752e 100644
-> > --- a/hw/ssi/aspeed_smc.c
-> > +++ b/hw/ssi/aspeed_smc.c
-> > @@ -1218,12 +1218,11 @@ static void aspeed_smc_realize(DeviceState *dev=
-, Error **errp)
-> >
-> >   static const VMStateDescription vmstate_aspeed_smc =3D {
-> >       .name =3D "aspeed.smc",
-> > -    .version_id =3D 4,
-> > -    .minimum_version_id =3D 2,
-> > +    .version_id =3D 5,
-> > +    .minimum_version_id =3D 5,
-> >       .fields =3D (const VMStateField[]) {
-> >           VMSTATE_UINT32_ARRAY(regs, AspeedSMCState, ASPEED_SMC_R_MAX),
-> > -        VMSTATE_UNUSED_V(2, 2), /* was snoop_index/snoop_dummies */
-> > -        VMSTATE_BOOL_V(unselect, AspeedSMCState, 3),
-> > +        VMSTATE_BOOL(unselect, AspeedSMCState),
-> >           VMSTATE_END_OF_LIST()
-> >       }
-> >   };
+> Am 23.11.26 um 12:28 schrieb Peter Maydell:
+> > Ping -- could I get a reviewed-by for this CVE fix, please?
+> > I can fix up the unnecessary "inline" keyword.
 >
->
-> Reviewed-by: C=C3=A9dric Le Goater <clg@kaod.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Thanks. I've applied this to target-arm.next as I plan to send
-a pullreq before the next rc.
+Thanks; I've queued it to target-arm.next.
 
 -- PMM
 
