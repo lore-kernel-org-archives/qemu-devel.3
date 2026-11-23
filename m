@@ -1,127 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23333606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC35E606A322
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=NxRQOwoc
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jHWVASjb;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CFhOv7Dk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVcdi-0004og-NK; Mon, 23 Nov 2026 17:35:58 -0500
+	id 1xVcvd-0001FW-EQ; Mon, 23 Nov 2026 17:54:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1xVcdZ-0004nI-20; Mon, 23 Nov 2026 17:35:49 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVcvb-0001EK-IM
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:27 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1xVcdX-0004BV-0G; Mon, 23 Nov 2026 17:35:48 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Aq/9Gq5W300WDFXuU4k6JiZhbfaVynPanHfTYKSado5lWaJtCuUQV5eFo5ItLiCxdP0sAnuUasL3iCMJY3MaghDLjfPAfgIEBIk3lAMAalOilUnKsIG0G7TNZlHzfKPo9InKwYcDLTJeMxSCvLjuN6r7rM/0HZjzki5jcwBIyf8S1JVAdMkD8qB4/o+3PQF7Jp+d3XIcd8/wUagFs5X6vOMe3LXrnVdgSewFWwqq3LTqzMUDEPL7SPPhKPlV/noOIoKqTYgL3x9sxahDWkiUQHAveZ0YAuaeLxJv2yQdB9z9tx3nD+EKg2kfML6nYHUOfQ6F2oYXVxeJSNWIBLck2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DGnByXuOEIp58duUE8fnlTjfo3iGNV37CAfUhf8t4jM=;
- b=XLSYJ+jKuZBBVdnZCUAr9Tjv4eEj984EWeBj6ssXBwzUfu/VdFl6c1CjTvssKB5QnQVUmq5OhMh9eda6okVqDC0eIrQhgPB+oAiacMfWRRoMLlm651D2i7WkyA70bdtvztiUXMbEbrwx4onFEVWDPwtiGH/xl4Z1Q1SIPjYmGgX2sOBocmg4S2cEgSVX/oSydHtgyhvvJGeMSicLf8ALvStoy3TRqAr170Nyx0PuaHz9TM6u9SGCNF/ERWtd2tCm2gT+mCU35c7R2Mw+dsf4Ut3+hl2SJ4KUulLW/8Qy3plbl4n5rr1S+83+u6gwwPciV0Y2u1en5Qz//sUwtCK7Ug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DGnByXuOEIp58duUE8fnlTjfo3iGNV37CAfUhf8t4jM=;
- b=NxRQOwocPCQoGXTQxq8I1odnSPnyF7i6VICNEYakr8sx8Yv6NTuqswaB09NTLwkMrZPuNFQdintXHgHUfnU606eD0rydZoabrrhpYAOQ7fTuJDcs013Oes9D9k8IEVIZq2XdT30AUmDhbj4ZL8jpiztulmyrajQUarEkfRu3frSQ26h2gN3zYdbImELvqmI7Xfx0X/IxyDiiBTKtM2OL+v6sLBs1GT2q9nVaJgKoeXh0+ePa/wIO/ShyTApQt5jTpyYk7Bay8uSL81o4dIAu0Jve2QP0KZsKMPGDgRAjJW2i99J3FYpFM9t18Z/pdJ0mItNgnTRwTIksWfsin/5MNQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17) by CY8PR12MB7562.namprd12.prod.outlook.com
- (2603:10b6:930:95::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Mon, 23 Nov
- 2026 22:35:34 +0000
-Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
- ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0639.012; Mon, 23 Nov 2026
- 22:35:34 +0000
-From: Tushar Dave <tdave@nvidia.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVcvZ-0004xm-Q5
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:27 -0500
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ANLCPEr189072
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ aX4Zd/r+HKRKyjNsted6QI0xTC8rYEmdwtxMfPoLcKg=; b=jHWVASjb+tnp9ieB
+ fAHhHbv2XWJccKtyxEPyeiRO9Sz4M12M6rscAhYe38MWTKNYbn4bKwXSVAWtY8mm
+ e6BmoMQW6ZWjMWqbisRjhnqflEzdSqltREAHao1v4SqhtmJ/95Au9qEizd8/kAmJ
+ +TqUE5EnOv4segddJdorKWUx3a6uaapQ2QfM1mdPTtUaAOlYcQXZd6aaPqRghl31
+ u+t4wpGtRLLUK0S8Nib/BfXcbd6Vyc3rKk8NBy4VofhtJVWNqpE8TJPHlzbIytPh
+ m4SnVmqI+yYonQeEty43irR5u0vCK91hv8hNHoGIpMDlwPTTvI9slXeh6YySpcEE
+ NgkYYg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4w6sradj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:23 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-94960bd17b5so641118685a.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 14:54:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1795474462; x=1796079262; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=aX4Zd/r+HKRKyjNsted6QI0xTC8rYEmdwtxMfPoLcKg=;
+ b=CFhOv7Dk478Lq5oR78h+iAI3gaDLfsUBlyuAwZPBlaTlBGXePE1tW7zXTckjbQpFGz
+ qNW5rQrOFgabZL6Py6fzqLvrFYSQ1Bx1RFYqQpzR54F/vfKeOomaP+kpOERTq/feDgm0
+ 5X9Qyl4+q+tfX2NK8hGZPNMhCVspyv0VVA4NSQBgSLtgA7KG2Zr7I896OkHytATFSZHc
+ ofkoNqY0Flp72CAFD3tmcvG/6d3qqNiAzuszXWeGOc5FZ9Z0OuE7athUsWpBfPmEoiHI
+ 6bx2AroibQOM5gRxBeOl0gR2gDaNq2oH3AWrVlKCSz+jqLNsgvEVcEuglucJbYmXCKlW
+ luGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795474462; x=1796079262;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=aX4Zd/r+HKRKyjNsted6QI0xTC8rYEmdwtxMfPoLcKg=;
+ b=al7Nk7m2/7/zECmW/JXyinxlPTZEpZYR/fsPFlHh2H9bVop8Qmka3XBjHTsPDTacgr
+ 0VPO9uIvcy1Uo0OQdmM8ugd484cimGtWjvue/BqqLqzirBWZ4gcHc+ja5MmTc2q8Snxd
+ 1wUpcEZBNUMGOES6+Hoco7KfSLmIk6t1umpAPOyKL0WTtwLW4i4gX/kIxWH+6lcirFUw
+ vXgohiJGzCqTJdaVZXM+GfZuKQ0jv/GyOLaAvkpClAvdV+SuppvJyDxsKR7h1rsItswi
+ IeBJsGKltDvmwlL7y/O1euPDJnutIanIJxgE7DZ6AkSwxVVoA/+yaLwIUffop1BWErQa
+ h/4g==
+X-Gm-Message-State: APuU4Z+wGb48gBiguaFPTx7+WNOr7RmXO/qgeqBY3//ckYRKlSEIpXUs
+ 4RMSbriGl+roCh3WJPlmBDPjlKg3ZK4NOFcISaujXJGDaTdA7sup1Knei4HMq5QRNXWxBHfqL2k
+ 02mCL7mGuoIgw/23P3w1b4YL7Ew3GpEG3LrsVWLjsJs4/xCW6FbLLt+PbGHhtNyIhBwJk
+X-Gm-Gg: AZFdTZeb10YP3TRZvZCUZeO6gFXGXSrm82IMr6InUdiFew8ReK/ElPmKEXpckrZjL8b
+ rmDggGsbLngF4IFOq/yN0LZbuNSLBWlDTMt/G/MLatdUYvLJGpXrz02+Le0eQopY1rcDhaG7X4q
+ PQKoAYAa56DC9rXr+hR3BciZR+oVNgohjp9LPp6nipjOvzZ0bvyOYMHoaEuD4a2508W+4LzEXF5
+ tAPDKEt7pd2ufg4ZIfaSZFEOTVFgebC2NI1hhtvEcuwiE0sUjselF3ii+JynzxcoxiLTc4TQpjj
+ UVVK57+alc/RK6UE+F3FIlD59f/alKCTWVzp3A243+sj9fhXRaolnbxcCAcvAnmlIbstnkoqy9l
+ sMUPHDmNclKgmtg55nkK4EcWZdpov0VuRjgqwzh53iUGbSYxD/QoPsGsobX2/6N14bf7SheWzmK
+ VaA+hhcVJxnh7jrQ==
+X-Received: by 2002:a05:620a:1727:b0:93c:a191:88fe with SMTP id
+ af79cd13be357-949ba80f88bmr2236830985a.8.1795474462547; 
+ Mon, 23 Nov 2026 14:54:22 -0800 (PST)
+X-Received: by 2002:a05:620a:1727:b0:93c:a191:88fe with SMTP id
+ af79cd13be357-949ba80f88bmr2236828285a.8.1795474462087; 
+ Mon, 23 Nov 2026 14:54:22 -0800 (PST)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb85399d52sm374758205e9.6.2026.11.23.14.54.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 23 Nov 2026 14:54:21 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
- marcel@redhat.com, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, tdave@nvidia.com
-Subject: [PATCH] hw/pci: Add acs-ctrl property for root and downstream ports
-Date: Mon, 23 Nov 2026 16:35:23 -0600
-Message-Id: <20261123223523.47719-1-tdave@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BY1P220CA0042.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:59e::17) To IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17)
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH-for-11.2 4/9] hw/sd/sdcard: Fix incoming migration of SPI mode
+ cards
+Date: Mon, 23 Nov 2026 23:53:44 +0100
+Message-ID: <20261123225349.54981-5-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261123225349.54981-1-philmd@oss.qualcomm.com>
+References: <20261123225349.54981-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|CY8PR12MB7562:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c842b1b-9a93-4351-94ad-08df49b216ec
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|18002099003|56012099006|261021123027099003|11063799006|261102123227099003|261021121427099003|261026121527099003|261009223027099003|261009221227099003|10067099003;
-X-Microsoft-Antispam-Message-Info: NT+fKXzpCkTiMm+BfOr7RDYFNiJmxR4VdWlEeDFNJOiwJA9szkU2Ieri3obmSidSwcr0EtG1q6Ds0LT7C6m1+WHkiGNDfT1tXHyFzoGP5OR1lcKDA8jmgOAcBQy3ixcQEx+RpwhT9F2KAC4B1Ai/tvcYfvVio7RCXj2iOklZWOiP7YR08agCW4GjJq3vTqhBUHDRGv+GLXgWgJMA3IfAPqLy/d6qUH3H3OmbHB18QgxTkFbfbtVGT1iHnlw5CXlt4raH9brc5og2YC9ZtDBgEjvfC5vxM3h5nEqxK9f4marhWoI6udbuH+KGw9M6mEoIHj0O/19TM5thNpCfxce0+cpBtEh7xz3MQjXcKyEuI4XysH0mwJ7HD7jCG3/msnhk5ehaAiUKreJxwozn+ejO39ga2qAF/R/jVgUf8jM1iq9Fr2fYuAUpUJrRbHoQtBEIyRYAAdV9RsSFSIZ93fBuDykQcLQ2WAWyoeuKJFk62KlJ264WfcJmlESjkLilEaXgQq8b+wZbwy0mtvbUrtYKJcuGR4LkPpPJp+knTwVm8nr7n6Ipg6j6ncdluf1ovo7dWquNQnreba5fWwHkCjeCC0XkjxhE8n3KU62gnj3pWl4XNYxEHnkFs0rbnM4BHw27
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(56012099006)(261021123027099003)(11063799006)(261102123227099003)(261021121427099003)(261026121527099003)(261009223027099003)(261009221227099003)(10067099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6nCgiSYPHWPOvCAkUOSeWZo8zxfy35cVvds4nVWIazrE2+hEJliWeE9fYYv/?=
- =?us-ascii?Q?Bx2SKxT9qh5qMjVdbUQIQzBnXy1w5M4noDRUJkquOzQ49oeypqmcPaN0HJDe?=
- =?us-ascii?Q?rP+VfDcMuf44NRojzfMAEpuyKaKv+ZGSYpeSygGR+WVaQinA4vzdY0jV2LRT?=
- =?us-ascii?Q?e4aotX0i7GsAbnRnPAfib/uHeqZ2OEvzUdZ6EEaa8mtD6XM/LkHLffgTjIwM?=
- =?us-ascii?Q?W6P8APPGld8PtWg/VL933DvubiJhZi1AlcnQqN7mX5JCnB2wd23H0Vre/uzt?=
- =?us-ascii?Q?rO2p8Y+mugHrOs1aZHcLmSJNNGCZH6YnWnX7zmPoGcXMg0mszjvkvkfhytLO?=
- =?us-ascii?Q?HLlHFTUlu9C6LfEhp0Erqz6h6CAAGYsLz04slwWphMBSlrwzGQiO2odP4j6X?=
- =?us-ascii?Q?lIzXky1JHE3obHoN3uDHnb9wROGz4ZskBaRvYaOgCpn2mzIsoHb3t+MtRNbW?=
- =?us-ascii?Q?cZK0uQP56xkMmPwLxU9FWzRB5UjHj3ApaEnjl9EO65TZxMkmWFMjBwsuDjmk?=
- =?us-ascii?Q?0Xr9MOBUiPK/tcMiN3Qpf9XkJUO9b13mdbql4XL+02C2aUx3rrrdOrzd8YUk?=
- =?us-ascii?Q?MNFJkDfZWHy5ruoqFdrSw2VJ2pBykVi0D4kzl19TiInpMVooUo0c1rW3ojdp?=
- =?us-ascii?Q?4QyiliNanWmcvKHgwTNAVwWSXJdcVp4JjHB9cD5NMTdzeNIO9mQTnkYmx/Pg?=
- =?us-ascii?Q?nncg5WTL+I48Y0o6DuwPQLP7yYYD5gKAXUX4OB6NCH3Z3WgE2YiDdwD9WJsL?=
- =?us-ascii?Q?D10KbH3BW46QwKr4VpC5Pju2+LSY8ngjYitB2c7ltqBAhUBWneE4mjWljv+8?=
- =?us-ascii?Q?PY/CWJ4S2bQuisNolqBuymKkmpY5ImBa5Gyh86vQ3357XgGxffjRf4miLe1P?=
- =?us-ascii?Q?vt33qwq+Kjc6Bw3387hy9UT+8TaefyImAzG85EZl1Bz0p0icItu/x/c0PTgW?=
- =?us-ascii?Q?EszdBPm9FkyTXdBPeGrT9mIW+4IyxSxTkd6YSL6RAk6wsI7jVhYqBNoZut7p?=
- =?us-ascii?Q?iECBuKuo2vjvBnZJeJyMgdqCUHr6JDTRqFi4UyE7s+S8Yx0OxEuSxNSKnvJL?=
- =?us-ascii?Q?dMeMVDoRutn27O0pMHh6bP2bfz1cwkx4lxK1z1/GYFeRQc+vAILUeGOE5erg?=
- =?us-ascii?Q?CFdO2MiDXSHFyKDUui0NAvUwSPQEW4eXOGjCRMohYruFZfOM61a9nGlWNkXh?=
- =?us-ascii?Q?2CxLXw2h+hb9ZOSnb+U64+oRNOxjHvwDu0oOLs5Z60/gnjcjFqY1dguRMA/l?=
- =?us-ascii?Q?XiBfZORSe3iNlLyxovTDgbfrSjNeRtix0b5MJs1hDRKOt1aO8/M3ngWEf5mt?=
- =?us-ascii?Q?rmyAHsIIC+yXYVdamqj0k119F9VEimmqgKsME1K2qZBsIZiW3o2Sypa9QIaX?=
- =?us-ascii?Q?QSz3HubRgc7tKPHtEAcxhvsDsvTBogDzmuoP+Gy528QWbVHq2Y0ST55GVnzJ?=
- =?us-ascii?Q?mUFDP7lpmsWpu/1wX/93IkR45yRK7zwSlnSzovbTjQcc8njlgaWsEOrHpgQA?=
- =?us-ascii?Q?mAG6UtUE/mlsSWWArMNDE7ozubGSqhIIcquRBCeS+F6uD8Lt4I/ua799M2bN?=
- =?us-ascii?Q?QyIjLei2Ij2jNa5HKauJNbjxCKYwigNoVvrw3QyjywS9qRjujJn6zJM0mQpV?=
- =?us-ascii?Q?tm1ps+2j3iQsav/BrlOzucek6H/vFrN/2ri4LnBGdsTjyJegGb8C8ZS1mBqy?=
- =?us-ascii?Q?R3ud++cZHnu0S9bCbSr1B8s9qbPK7M55e4qOvNDL3uZh0cEU?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c842b1b-9a93-4351-94ad-08df49b216ec
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 22:35:34.8229 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4dedoduQXt3enPzzdjLtRZknsVGu2Ely5ThOufaBdCYs5j5vOv+oVUTY3ZGDgIEYrLHebgN2mauwYWgHDS9DiQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7562
-Received-SPF: pass client-ip=2a01:111:f403:c110::1;
- envelope-from=tdave@nvidia.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: lmyr2y9V4vxscJobAZ3Bd1sFVjZ8nKHC
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX9NprLg4kVTRF
+ 6Ds7Lt9UAdfR+03nuYUS0J9Hiu6bD0BCQTnYs0GEf+iEu3lYTT5hXwYoNnRIn1nLynMlzGqhCTA
+ X6UQ8wCdiyshHEFxnrN9H1j2/WzI2d4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX39wK/+aak8Q6
+ eNOF3JbSl1cRyELzgqFQzRPulEJic29TxevxIHhWlj4vf5VL4WitZpiCwVh61GKhfBdRhB5vGcz
+ DD2B5MSD/D0VRKbjCAVwu9Na20/Ixq2zZbR97qosEznJuFR87yMx2u37zD54qMRwlszqJXLHWvR
+ Ac/ZbCUA/I0IsGvAVCPqKMjBru4Q+hORXFt6H9KaTdHeFOy+MJbdxB9yzHtqEgPdj/Efpronmy7
+ 7N6fswcboCJToHGmSciek+Bk2ENANRSUWWKAlDBl2TnwxMzXROQOzKCGMUJCiW5vqfm4AENfh6y
+ 8tG4aQBTKCAe1GUb0DvoIkMDpSqLFZyk7lcqRGSAv+QKIk0pX9zv0zXwdQJwHw7K/w/X7P+bKSz
+ 0a1CwaeIr1YeDmQ7lIYDsJM6LuPUGC9zdM6wylz6ou2Kv0in+1TfaWZYJ6icXLzLF9DbbNTTDoQ
+ stKpek2QyBM1HmnQP5Q==
+X-Proofpoint-ORIG-GUID: lmyr2y9V4vxscJobAZ3Bd1sFVjZ8nKHC
+X-Authority-Analysis: v=2.4 cv=V8DoQuni c=1 sm=1 tr=0 ts=6b04c41f cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=OJEd5HcXf_zait6-lbMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-23_05,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611230091
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,205 +153,48 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-For P2P to work between devices assigned to a guest, the ACS Control
-register that the guest sees must match the ACS routing that the host
-administrator configured. A mismatch can prevent P2P between the
-devices from working as expected.
+sd_vmstate_pre_load() powers up the card when the OCR state is not
+part of the migration stream. Since commit b66f73a0cb31, SPI mode
+cards are already powered up at reset, so the incoming migration
+of a machine with an SPI mode card aborts in sd_ocr_powerup():
 
-Add an acs-ctrl property to the generic PCIe root port and the generic
-PCIe downstream port, so that the administrator can configure the ACS
-Control register.
+  Assertion failed: (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)),
+  function sd_ocr_powerup, file sd.c, line 409.
 
-Signed-off-by: Tushar Dave <tdave@nvidia.com>
+Only power up the card if it is not already powered up.
+
+Cc: qemu-stable@nongnu.org
+Fixes: b66f73a0cb31 ("hw/sd: Add SDHC support for SD card SPI-mode")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
-This replaces my earlier ACS series:
-https://lore.kernel.org/qemu-devel/20261006013133.3457555-1-tdave@nvidia.com/
+ hw/sd/sd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-The patch that made ACS Control read-only for the guest is dropped,
-along with the patch that adds acs-ctrl for x3130/xio3130. Instead,
-acs-ctrl is added for the generic root port and the generic downstream
-port.
-
-
- hw/pci-bridge/gen_pcie_downstream_port.c | 11 ++++++++++-
- hw/pci-bridge/pcie_root_port.c           | 13 +++++++++++--
- hw/pci/pcie.c                            | 17 ++++++++++++++---
- include/hw/pci/pcie.h                    |  5 +++--
- include/hw/pci/pcie_port.h               |  1 +
- 5 files changed, 39 insertions(+), 8 deletions(-)
-
-diff --git a/hw/pci-bridge/gen_pcie_downstream_port.c b/hw/pci-bridge/gen_pcie_downstream_port.c
-index 3084a208a8..e5d1f642ba 100644
---- a/hw/pci-bridge/gen_pcie_downstream_port.c
-+++ b/hw/pci-bridge/gen_pcie_downstream_port.c
-@@ -72,10 +72,12 @@ static void gen_downstream_write_config(PCIDevice *d, uint32_t address,
- static void gen_downstream_reset(DeviceState *qdev)
- {
-     PCIDevice *d = PCI_DEVICE(qdev);
-+    PCIEPort *p = PCIE_PORT(d);
- 
-     pcie_cap_deverr_reset(d);
-     pcie_cap_slot_reset(d);
-     pcie_cap_arifwd_reset(d);
-+    pcie_acs_reset(d, p->acs_ctrl);
-     pci_bridge_reset(qdev);
- }
- 
-@@ -115,10 +117,16 @@ static void gen_downstream_realize(PCIDevice *d, Error **errp)
-         goto err_chassis;
-     }
- 
--    pcie_acs_init(d, GEN_PCIE_DOWNSTREAM_PORT_ACS_OFFSET);
-+    rc = pcie_acs_init(d, GEN_PCIE_DOWNSTREAM_PORT_ACS_OFFSET, p->acs_ctrl,
-+                       errp);
-+    if (rc < 0) {
-+        goto err_aer;
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index d82aa35f6f87..d922e813c102 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1067,8 +1067,11 @@ static int sd_vmstate_pre_load(void *opaque)
+     /* If the OCR state is not included (prior versions, or not
+      * needed), then the OCR must be set as powered up. If the OCR state
+      * is included, this will be replaced by the state restore.
++     * In SPI mode the card is already powered up after reset.
+      */
+-    sd_ocr_powerup(sd);
++    if (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)) {
++        sd_ocr_powerup(sd);
 +    }
  
-     return;
- 
-+err_aer:
-+    pcie_aer_exit(d);
- err_chassis:
-     pcie_chassis_del_slot(s);
- err_cap:
-@@ -163,6 +171,7 @@ static const Property gen_pcie_downstream_port_props[] = {
-                                 speed, PCIE_LINK_SPEED_64),
-     DEFINE_PROP_PCIE_LINK_WIDTH("width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_32),
-+    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
- };
- 
- static void gen_pcie_downstream_port_class_init(ObjectClass *klass,
-diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-index 7c3e78010b..e7cce8c0ee 100644
---- a/hw/pci-bridge/pcie_root_port.c
-+++ b/hw/pci-bridge/pcie_root_port.c
-@@ -46,6 +46,7 @@ static void rp_write_config(PCIDevice *d, uint32_t address,
- static void rp_reset_hold(Object *obj, ResetType type)
- {
-     PCIDevice *d = PCI_DEVICE(obj);
-+    PCIEPort *p = PCIE_PORT(d);
-     DeviceState *qdev = DEVICE(obj);
- 
-     rp_aer_vector_update(d);
-@@ -53,7 +54,7 @@ static void rp_reset_hold(Object *obj, ResetType type)
-     pcie_cap_deverr_reset(d);
-     pcie_cap_slot_reset(d);
-     pcie_cap_arifwd_reset(d);
--    pcie_acs_reset(d);
-+    pcie_acs_reset(d, p->acs_ctrl);
-     pcie_aer_root_reset(d);
-     pci_bridge_reset(qdev);
-     pci_bridge_disable_base_limit(d);
-@@ -118,11 +119,18 @@ static void rp_realize(PCIDevice *d, Error **errp)
-     rp_aer_vector_update(d);
- 
-     if (rpc->acs_offset) {
--        pcie_acs_init(d, rpc->acs_offset);
-+        rc = pcie_acs_init(d, rpc->acs_offset, p->acs_ctrl, errp);
-+        if (rc < 0) {
-+            goto err;
-+        }
-+    } else if (p->acs_ctrl) {
-+        error_setg(errp, "acs-ctrl is not supported by this root port");
-+        goto err;
-     }
-     return;
- 
- err:
-+    pcie_aer_exit(d);
-     pcie_chassis_del_slot(s);
- err_pcie_cap:
-     pcie_cap_exit(d);
-@@ -151,6 +159,7 @@ static void rp_exit(PCIDevice *d)
- static const Property rp_props[] = {
-     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-+    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
- };
- 
- static void rp_instance_post_init(Object *obj)
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index bd00305ecc..57dd873eb9 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -1278,7 +1278,8 @@ void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned)
+     return 0;
  }
- 
- /* ACS (Access Control Services) */
--void pcie_acs_init(PCIDevice *dev, uint16_t offset)
-+int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
-+                  Error **errp)
- {
-     bool is_downstream = pci_is_express_downstream_port(dev);
-     uint16_t cap_bits = 0;
-@@ -1302,16 +1303,26 @@ void pcie_acs_init(PCIDevice *dev, uint16_t offset)
-          */
-         cap_bits = PCI_ACS_SV | PCI_ACS_TB | PCI_ACS_RR |
-             PCI_ACS_CR | PCI_ACS_UF | PCI_ACS_DT;
-+
-+        if (ctrl_bits & ~cap_bits) {
-+            error_setg(errp,
-+                       "acs-ctrl 0x%hx has bits not supported by this port "
-+                       "(supported: 0x%hx)", ctrl_bits, cap_bits);
-+            return -EINVAL;
-+        }
-     }
- 
-     pci_set_word(dev->config + offset + PCI_ACS_CAP, cap_bits);
-     pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
-+    pci_set_word(dev->config + offset + PCI_ACS_CTRL, ctrl_bits);
-+
-+    return 0;
- }
- 
--void pcie_acs_reset(PCIDevice *dev)
-+void pcie_acs_reset(PCIDevice *dev, uint16_t val)
- {
-     if (dev->exp.acs_cap) {
--        pci_set_word(dev->config + dev->exp.acs_cap + PCI_ACS_CTRL, 0);
-+        pci_set_word(dev->config + dev->exp.acs_cap + PCI_ACS_CTRL, val);
-     }
- }
- 
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index ec25e7a7de..678ad73f7f 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -137,8 +137,9 @@ bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
-                             uint16_t offset, uint16_t size);
- void pcie_sync_bridge_lnk(PCIDevice *dev);
- 
--void pcie_acs_init(PCIDevice *dev, uint16_t offset);
--void pcie_acs_reset(PCIDevice *dev);
-+int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
-+                  Error **errp);
-+void pcie_acs_reset(PCIDevice *dev, uint16_t val);
- 
- void pcie_ari_init(PCIDevice *dev, uint16_t offset);
- void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index b28af067a6..2ad9a563d9 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -36,6 +36,7 @@ struct PCIEPort {
- 
-     /* pci express switch port */
-     uint8_t     port;
-+    uint16_t    acs_ctrl;
- };
- 
- void pcie_port_init_reg(PCIDevice *d);
 -- 
-2.34.1
+2.55.0
 
 
