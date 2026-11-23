@@ -1,66 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9918606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFD5606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=ATGrYWS3
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JJfK1MeL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVQjz-0002d8-G6; Mon, 23 Nov 2026 04:53:39 -0500
+	id 1xVQkK-0003BL-NH; Mon, 23 Nov 2026 04:54:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVQju-0002b0-Bc; Mon, 23 Nov 2026 04:53:35 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVQjs-0001kW-H4; Mon, 23 Nov 2026 04:53:34 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id A4A0920B7167; Mon, 23 Nov 2026 01:53:27 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A4A0920B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795427607;
- bh=ejqw3eGoIb6VMc/GsDUyybUlzLaAFkWtkyC69ARBT3g=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=ATGrYWS3nOc54WNVMkwAij1lV1YHWH/wjpAwlaaKkb75d8LE3IthpP8C9aHILv/QE
- En88SXt+WvnD1uMREDLUfruvPJW+/Y2iYpUolOiXoROntSaJ8T2PvtCOR3a1fULoWq
- WxkEnwudF+mLrfu2+EGrqAtIVb3S7yzxrOvsq9+Y=
-Date: Mon, 23 Nov 2026 01:53:27 -0800
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 04/14] meson, target/arm/mshv: Enable arm64 build &
- add initial MSHV support
-Message-ID: <awQNF24R6hMFT8Of@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
- <avcBKaigaegTPyBV@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xVQkI-0003Ai-RK
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:53:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xVQkG-0001ko-Vs
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:53:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795427636;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=DmnuBIezuccBlqTQttINaahRu7v//69rhyKmFE/Nf8Q=;
+ b=JJfK1MeLh6lb7XQqODlVgFONMinMLh/QplwnZCqAKGwgIF2+H09JeFsFbY/PFnPhmaQUhj
+ xCgSApm2SZNGWBG89P9BGwJ926RM9h3o4F6OV731twBrJ344QshW4mQqX+85mR6OCrv6HS
+ G3IPV1OmdPAbDXScUaVQDyJCZ8okqds=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-X8MfjyPuPAOYj7eGiF6MGg-1; Mon,
+ 23 Nov 2026 09:53:53 +0000
+X-MC-Unique: X8MfjyPuPAOYj7eGiF6MGg-1
+X-Mimecast-MFC-AGG-ID: X8MfjyPuPAOYj7eGiF6MGg_1795427632
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74743180055C; Mon, 23 Nov 2026 09:53:52 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79479180054C; Mon, 23 Nov 2026 09:53:51 +0000 (UTC)
+Date: Mon, 23 Nov 2026 09:53:48 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH] git: Fix broken relative symlinks for Claude and Gemini
+ skills
+Message-ID: <awQNLBquRToihQJV@redhat.com>
+References: <20261123092817.1237214-1-zhenzhong.duan@intel.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <avcBKaigaegTPyBV@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20261123092817.1237214-1-zhenzhong.duan@intel.com>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,248 +80,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 13, 2026 at 02:23:05PM +0200, Doru Blânzeanu wrote:
-> On Thu, Oct 01, 2026 at 10:52:49AM +0000, Aastha Rawat wrote:
-> > Enable the build of the MSHV accelerator for arm64 in the Meson build
-> > system. Introduce initial files and stub implementations to support MSHV
-> > for the ARM target.
-> > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> > ---
-> >  accel/mshv/mshv-all.c       | 10 ++++--
-> >  hw/i386/mshv/clock.c        |  2 +-
-> >  include/system/mshv.h       |  2 +-
-> >  meson.build                 |  8 ++---
-> >  target/arm/meson.build      |  1 +
-> >  target/arm/mshv/meson.build |  7 ++++
-> >  target/arm/mshv/mshv-all.c  | 81 +++++++++++++++++++++++++++++++++++++++++++++
-> >  7 files changed, 103 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index efe19a3914..f3f1825b0b 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -142,8 +142,10 @@ static int create_partition(int mshv_fd, int *vm_fd)
-> >  {
-> >      int ret;
-> >      uint64_t pt_flags, host_proc_features;
-> > -    union hv_partition_processor_xsave_features disabled_xsave_features;
-> >      union hv_partition_processor_features disabled_partition_features = {0};
+On Mon, Nov 23, 2026 at 05:28:17PM +0800, Zhenzhong Duan wrote:
+> Update the relative symlink targets for both ".claude/skills" and
+> ".gemini/skills" from ".agents/skills/" to "../.agents/skills".
 > 
-> I think this should reside in an arch specific variant of `create_partition`.
+> Fixes: 3e9fe057ae0b ("agents: Add a skill for finding your way around QEMU")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  .claude/skills | 2 +-
+>  .gemini/skills | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-Agreed, I'll introduce it in the next revision and move arm specific
-bits there. As discussed, it will also help us get rid of the
-checkpatch.pl warnings.
- 
-> > +#if defined(__x86_64__)
-> > +    union hv_partition_processor_xsave_features disabled_xsave_features;
-> > +#endif
-> >  
-> >      struct mshv_create_partition_v2 args = {0};
-> >  
-> > @@ -155,7 +157,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
-> >                 (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
-> >                 (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
-> >  
-> > -    /* enable all */
-> > +#if defined(__x86_64__)
-> > +    /* enable all xsave features (0 = enabled) */
-> >      disabled_xsave_features.as_uint64 = 0;
-> >      /*
-> >       * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
-> > @@ -165,6 +168,7 @@ static int create_partition(int mshv_fd, int *vm_fd)
-> >      disabled_xsave_features.amx_bf16_support = 1;
-> >      disabled_xsave_features.amx_int8_support = 1;
-> >      disabled_xsave_features.amx_fp16_support = 1;
-> > +#endif
-> >  
-> >      /*
-> >       * query host for supported processor features and disable unsupported
-> > @@ -196,7 +200,9 @@ static int create_partition(int mshv_fd, int *vm_fd)
-> >      /* populate args structure */
-> >      args.pt_flags = pt_flags;
-> >      args.pt_isolation = MSHV_PT_ISOLATION_NONE;
-> > +#if defined(__x86_64__)
-> >      args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
-> > +#endif
-> >      args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
-> >  
-> >      ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
-> > diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
-> > index 02c586503a..b7db382752 100644
-> > --- a/hw/i386/mshv/clock.c
-> > +++ b/hw/i386/mshv/clock.c
-> > @@ -182,7 +182,7 @@ static const VMStateDescription vmstate_mshv_clock = {
-> >      },
-> >  };
-> >  
-> > -void mshv_clock_init(void)
-> > +void mshv_arch_clock_init(void)
-> >  {
-> >      vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
-> >      qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
-> > diff --git a/include/system/mshv.h b/include/system/mshv.h
-> > index f98ddff9b5..114f065db5 100644
-> > --- a/include/system/mshv.h
-> > +++ b/include/system/mshv.h
-> > @@ -58,7 +58,7 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
-> >  extern MshvState *mshv_state;
-> >  
-> >  /* clock (partition reference time) */
-> > -void mshv_clock_init(void);
-> > +void mshv_arch_clock_init(void);
-> >  
-> >  /* interrupt */
-> >  int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-> > diff --git a/meson.build b/meson.build
-> > index cae1591cd2..6a90a394a2 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -304,7 +304,8 @@ if cpu == 'aarch64'
-> >    accelerator_targets += {
-> >      'CONFIG_HVF': ['aarch64-softmmu'],
-> >      'CONFIG_NITRO': ['aarch64-softmmu'],
-> > -    'CONFIG_WHPX': ['aarch64-softmmu']
-> > +    'CONFIG_WHPX': ['aarch64-softmmu'],
-> > +    'CONFIG_MSHV': ['aarch64-softmmu'],
-> >    }
-> >  elif cpu == 'x86_64'
-> >    accelerator_targets += {
-> > @@ -884,10 +885,9 @@ if get_option('kvm').allowed() and host_os == 'linux'
-> >  endif
-> >  
-> >  if get_option('mshv').allowed() and host_os == 'linux'
-> > -  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
-> > -    error('mshv accelerator requires x64_64 host')
-> > +  if host_machine.cpu() in [ 'x86_64', 'aarch64' ]
-> > +    accelerators += 'CONFIG_MSHV'
-> >    endif
-> > -  accelerators += 'CONFIG_MSHV'
-> >  endif
-> >  
-> >  if get_option('whpx').allowed() and host_os == 'windows'
-> > diff --git a/target/arm/meson.build b/target/arm/meson.build
-> > index 0369f96b4c..1ac2cef26b 100644
-> > --- a/target/arm/meson.build
-> > +++ b/target/arm/meson.build
-> > @@ -63,6 +63,7 @@ arm_common_system_ss.add(files(
-> >  
-> >  subdir('hvf')
-> >  subdir('whpx')
-> > +subdir('mshv')
-> >  
-> >  if 'CONFIG_TCG' in config_all_accel
-> >     subdir('tcg')
-> > diff --git a/target/arm/mshv/meson.build b/target/arm/mshv/meson.build
-> > new file mode 100644
-> > index 0000000000..169643691e
-> > --- /dev/null
-> > +++ b/target/arm/mshv/meson.build
-> > @@ -0,0 +1,7 @@
-> > +arm_mshv_ss = ss.source_set()
-> > +
-> > +arm_mshv_ss.add(files(
-> > +  'mshv-all.c',
-> > +))
-> > +
-> > +arm_system_ss.add_all(when: 'CONFIG_MSHV', if_true: arm_mshv_ss)
-> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> > new file mode 100644
-> > index 0000000000..00c54f5d66
-> > --- /dev/null
-> > +++ b/target/arm/mshv/mshv-all.c
-> > @@ -0,0 +1,81 @@
-> > +/*
-> > + * QEMU MSHV support
-> > + *
-> > + * Copyright Microsoft, Corp. 2026
-> > + *
-> > + * Authors: Aastha Rawat          <aastharawat@linux.microsoft.com>
-> > + *          Anirudh Rayabharam    <anirudh@anirudhrb.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "hw/arm/virt.h"
-> > +#include "system/mshv.h"
-> > +#include "system/mshv_int.h"
-> > +
-> > +static int load_regs(CPUState *cpu)
-> > +{
-> > +    return 0;
-> > +}
-> > +
-> > +static int store_regs(const CPUState *cpu)
-> > +{
-> > +    return 0;
-> > +}
-> > +
-> > +int mshv_arch_load_vcpu_state(CPUState *cpu)
-> > +{
-> > +    return load_regs(cpu);
-> > +}
-> > +
-> > +int mshv_arch_store_vcpu_state(const CPUState *cpu)
-> > +{
-> > +    return store_regs(cpu);
-> > +}
-> > +
-> > +int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-> > +{
-> > +    return 0;
-> > +}
-> > +
-> > +void mshv_arch_init_vcpu(CPUState *cpu)
-> > +{
-> > +
-> > +}
-> > +
-> > +void mshv_arch_destroy_vcpu(CPUState *cpu)
-> > +{
-> > +
-> > +}
-> > +
-> > +int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
-> > +{
-> > +    return 0;
-> > +}
-> > +
-> > +void mshv_arch_amend_proc_features(
-> > +    union hv_partition_synthetic_processor_features *features)
-> > +{
-> > +    /*
-> > +     * TLB-flush hypercalls are an x86 enlightenment. ARM guests use
-> > +     * broadcast TLBI instructions instead.
-> > +     */
-> > +    features->tb_flush_hypercalls = 0;
-> > +}
-> > +
-> > +void mshv_arch_disable_partition_proc_features(
-> > +    union hv_partition_processor_features *disabled_features)
-> > +{
-> > +    /* No processor features to disable on ARM */
-> > +}
-> > +
-> > +int mshv_arch_post_init_vm(int vm_fd)
-> > +{
-> > +    return 0;
-> > +}
-> > +
-> > +int mshv_arch_migration_init(MshvState *s)
-> > +{
-> > +    return 0;
-> > +}
-> > 
-> > -- 
-> > 2.45.4
+FYI, I've also sent the same fix several weeks ago
+
+https://lists.gnu.org/archive/html/qemu-devel/2026-11/msg02802.html
+
+> 
+> diff --git a/.claude/skills b/.claude/skills
+> index a7540c2442..2b7a412b8f 120000
+> --- a/.claude/skills
+> +++ b/.claude/skills
+> @@ -1 +1 @@
+> -.agents/skills/
+> \ No newline at end of file
+> +../.agents/skills
+> \ No newline at end of file
+> diff --git a/.gemini/skills b/.gemini/skills
+> index a7540c2442..2b7a412b8f 120000
+> --- a/.gemini/skills
+> +++ b/.gemini/skills
+> @@ -1 +1 @@
+> -.agents/skills/
+> \ No newline at end of file
+> +../.agents/skills
+> \ No newline at end of file
+> -- 
+> 2.52.0
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
