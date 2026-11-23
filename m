@@ -1,70 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8648A606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 07:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC96607150E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 08:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=comstyle.com header.i=@comstyle.com header.a=rsa-sha256 header.s=default header.b=GpqE+/y6
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=jgbtdDdR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVOvn-0005XO-PI; Mon, 23 Nov 2026 02:57:43 -0500
+	id 1xVP41-0006a7-8q; Mon, 23 Nov 2026 03:06:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>)
- id 1xVOvm-0005X5-CY; Mon, 23 Nov 2026 02:57:42 -0500
-Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
- helo=mail.comstyle.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>)
- id 1xVOvk-0001qB-Ji; Mon, 23 Nov 2026 02:57:42 -0500
-Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4jXywM4f1zz8PbY;
- Mon, 23 Nov 2026 02:57:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
- content-type:message-id:date:mime-version:subject:to:cc
- :references:from:in-reply-to; s=default; bh=HCP+17hH+lfLwHRc7q/H
- gk0FpM0MbasuMsfUV9C0yd8=; b=GpqE+/y6iEJmpK1uS5hvYz8R+C81H8Q5t1zo
- HU+m01ryy/9wOi1i+nmBj1cjqy/F+GCC/lIqT51hTE3FuaArTd9JMm3UA835guZ6
- pCPiqGFvQLZZCHdkTXQzHwoDbxZ9XZPzJun807Et75fac7F/CD/2xYlhScV+ayZE
- IcWARH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=content-type
- :message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to; q=dns; s=default; b=KGtFbV5LTJ9V7OFBmCKYvihMNLVdhv
- VsqaRummTpmFRxga23oKP938LtmVd4Zxo8bWUPAWdNTSpDrBiVYShti03SRFtRwS
- dgBlmiKPQWWjJdQ+dMdLJwJEuraUmfHSiFW8yDtwCON4f+tEIdAs4K/eHTd1aZ2A
- D8p/B0H2Ze9yo=
-Received: from [IPV6:2001:470:b050:6:9651:79e5:aca2:6069] (unknown
- [IPv6:2001:470:b050:6:9651:79e5:aca2:6069])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4jXywM3zFQz8PbW;
- Mon, 23 Nov 2026 02:57:39 -0500 (EST)
-Content-Type: multipart/alternative;
- boundary="------------kxQNEJmGrnhJI3oPf28ezp0T"
-Message-ID: <6e03ffd6-6b13-4a40-8ff7-d1d310619f8b@comstyle.com>
-Date: Mon, 23 Nov 2026 02:57:39 -0500
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xVP3y-0006Zi-2E; Mon, 23 Nov 2026 03:06:10 -0500
+Received: from canpmsgout06.his.huawei.com ([113.46.200.221])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xVP3t-0004F3-RI; Mon, 23 Nov 2026 03:06:09 -0500
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=c01I33I+83vMc753z973gwZ1aF8sMhxFCCFQwV1PCmw=;
+ b=jgbtdDdRGZR41Yim0FJYS/4BiK5SskAceHe7MLkIgw18WHjGgH01fIiYuaJJ0XsxejL/8+J9L
+ UcvTFRfoH3X5s3bign1OFq/8T0A03Vy8ksIC2cRt6Y1/ynJa2w8M2F7oaWmZ0FNgmpswLSWPkPl
+ dSEB5fFP0nXbkymWaNbHnmU=
+Received: from mail.maildlp.com (unknown [172.19.162.223])
+ by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4jXz5J2tntzRhRC;
+ Mon, 23 Nov 2026 16:05:24 +0800 (CST)
+Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
+ by mail.maildlp.com (Postfix) with ESMTPS id D39CD40575;
+ Mon, 23 Nov 2026 16:05:41 +0800 (CST)
+Received: from [10.67.110.68] (10.67.110.68) by kwepemk200008.china.huawei.com
+ (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 23 Nov
+ 2026 16:05:41 +0800
+Message-ID: <ce20db62-82ea-45bd-b758-94c9e9a35c8c@huawei.com>
+Date: Mon, 23 Nov 2026 16:05:40 +0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] iotests: fix the dd() wrapper
-To: Roman Bogorodskiy <bogorodskiy@gmail.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-References: <20261122164905.59680-1-bogorodskiy@gmail.com>
- <20261122164905.59680-4-bogorodskiy@gmail.com>
-Content-Language: en-US
-From: Brad Smith <brad@comstyle.com>
-In-Reply-To: <20261122164905.59680-4-bogorodskiy@gmail.com>
-Received-SPF: pass client-ip=2607:f938:3000:8::2;
- envelope-from=brad@comstyle.com; helo=mail.comstyle.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [PATCH 05/37] hw/arm/mpam: Add MPAM MSC register map
+To: Jonathan Cameron <jic23@kernel.org>, Jinjie Ruan <2118537295@qq.com>
+CC: <anisinha@redhat.com>, <armbru@redhat.com>, <eblake@redhat.com>,
+ <imammedo@redhat.com>, <michael.roth@amd.com>, <mst@redhat.com>,
+ <pbonzini@redhat.com>, <peter.maydell@linaro.org>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>
+References: <20261016094733.1898485-1-2118537295@qq.com>
+ <tencent_25A9B619D0E3909582B4CF096744805B6107@qq.com>
+ <20261103003352.42e05890@jic23-hlaptop>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <20261103003352.42e05890@jic23-hlaptop>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
+ kwepemk200008.china.huawei.com (7.202.194.74)
+Received-SPF: pass client-ip=113.46.200.221;
+ envelope-from=ruanjinjie@huawei.com; helo=canpmsgout06.his.huawei.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,187 +73,227 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is a multi-part message in MIME format.
---------------kxQNEJmGrnhJI3oPf28ezp0T
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 2026-11-22 11:48 a.m., Roman Bogorodskiy wrote:
-> The dd() wrapper already uses status=noxfer on Linux. Use the same
-> for FreeBSD to fix its consumers.
->
-> Add a separate "elif" block rather than extending the already existing
-> Linux block as dd on FreeBSD does not support --help.
-> The "status=noxfer" is supported since FreeBSD 9.3 and 10.1, so it's
-> been long enough to use it without a check.
->
-> Signed-off-by: Roman Bogorodskiy<bogorodskiy@gmail.com>
-> ---
->   tests/qemu-iotests/common.rc | 3 +++
->   1 file changed, 3 insertions(+)
->
-> diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-> index 262fe63da8..82a6b1b5c4 100644
-> --- a/tests/qemu-iotests/common.rc
-> +++ b/tests/qemu-iotests/common.rc
-> @@ -64,6 +64,9 @@ dd()
->               else
->                   command dd $@
->               fi
-> +   elif [ "$HOSTOS" == "FreeBSD" ]
-> +   then
-> +        command dd status=noxfer $@
->      else
->           command dd $@
->      fi
-
-|Instead of adding another $HOSTOS check, I think it would be better to 
-check if dd supports status=noxfer, and not rely on --help either. That 
-way it works on any OS that supports it, without OS-specific checks. |
-
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 262fe63da820..c18ff7d72039 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -28,6 +28,13 @@ arch=$(uname -m)
-  # make sure we have a standard umask
-  umask 022
-  
-+if command dd if=/dev/null of=/dev/null status=noxfer >/dev/null 2>&1
-+then
-+    DD_NOXFER="status=noxfer"
-+else
-+    DD_NOXFER=""
-+fi
-+
-  # bail out, setting up .notrun file
-  _notrun()
-  {
-@@ -54,19 +61,7 @@ fi
-  
-  dd()
-  {
--   if [ "$HOSTOS" == "Linux" ]
--   then
--        command dd --help | grep noxfer > /dev/null 2>&1
--
--        if [ "$?" -eq 0 ]
--            then
--                command dd status=noxfer $@
--            else
--                command dd $@
--            fi
--   else
--        command dd $@
--   fi
-+    command dd $DD_NOXFER "$@"
-  }
-  
-  # poke_file 'test.img' 512 '\xff\xfe'
 
 
---------------kxQNEJmGrnhJI3oPf28ezp0T
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+在 2026/11/3 8:33, Jonathan Cameron 写道:
+> On Fri, 16 Oct 2026 17:46:59 +0800
+> Jinjie Ruan <2118537295@qq.com> wrote:
+> 
+>> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>>
+>> Add the MMIO register map of an MPAM 1.1 Memory System Component
+>> (IHI 0099 sections 4-6) as registerfields definitions:
+>> - The feature IDRs (MPAMF_IDR, IIDR/AIDR, CPOR/CCAP/MBW/PRI/PARTID_NRW,
+>>   MSMON family)
+>> - The error registers (ERR_MSI block, ECR, ESR)
+>> - The configuration registers (PART_SEL, CMAX/CMIN/CASSOC,
+>>   MBW_MIN/MAX/PBM/PROP, PRI, INTPARTID, CPBM/MBW_PBM arrays) and their
+>>   write masks
+>> - The portion-width constants of this model.
+>>
+>> Based on an RFC series by Jonathan Cameron.
+> 
+> Maybe a link tag to that old piece of garbage - might be more useful
+> than referring to it like this.
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <div class="moz-cite-prefix">On 2026-11-22 11:48 a.m., Roman
-      Bogorodskiy wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:20261122164905.59680-4-bogorodskiy@gmail.com">
-      <pre wrap="" class="moz-quote-pre">The dd() wrapper already uses status=noxfer on Linux. Use the same
-for FreeBSD to fix its consumers.
+Yes, you are right! A link will be more clear.
 
-Add a separate "elif" block rather than extending the already existing
-Linux block as dd on FreeBSD does not support --help.
-The "status=noxfer" is supported since FreeBSD 9.3 and 10.1, so it's
-been long enough to use it without a check.
+> 
+> A few typos in here that should be tidied up. I clearly
+> didn't check this closely enough at the time. Nothing major
+> but need tidying up.
+> 
+> Also, an LLM pointed out that some of the write masks are more
+> complex that this implies as depend on other register values.
+> Maybe add comments where that is true as enforcement will be
+> needed in the writing code - what we have here just acts as
+> some sort of worst case masking.  I guess you could define
+> some macros to create the masks here.
+> 
+> Thanks,
+> 
+> Jonathan
+> 
+>>
+>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> 
+>> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+>> index bcc068d..42ca75b 100644
+>> --- a/hw/arm/meson.build
+>> +++ b/hw/arm/meson.build
+>> @@ -106,6 +106,7 @@ arm_common_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
+>>  arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
+>>  arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
+>>  arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
+>> +arm_common_ss.add(when: 'CONFIG_MPAM', if_true: files('mpam.c'))
+>>  arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+>>  arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+>>  arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+>> diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
+>> new file mode 100644
+>> index 0000000..772a120
+>> --- /dev/null
+>> +++ b/hw/arm/mpam.c
+>> @@ -0,0 +1,223 @@
+>> +/*
+>> + * ARM MPAM emulation
+>> + *
+>> + * Copyright (c) 2023 Huawei
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +#include "qemu/osdep.h"
+>> +#include "qapi/error.h"
+>> +#include "qemu/log.h"
+>> +#include "hw/core/irq.h"
+>> +#include "hw/core/qdev-properties.h"
+>> +#include "hw/core/registerfields.h"
+>> +#include "hw/core/sysbus.h"
+>> +#include "qom/object.h"
+>> +#include "hw/arm/mpam.h"
+>> +
+>> +REG64(MPAMF_IDR, 0)
+>> +    FIELD(MPAMF_IDR, PART_ID_MAX, 0, 16)
+> 
+> Maybe call it PARTID_MAX given spec naming.
 
-Signed-off-by: Roman Bogorodskiy <a class="moz-txt-link-rfc2396E" href="mailto:bogorodskiy@gmail.com">&lt;bogorodskiy@gmail.com&gt;</a>
----
- tests/qemu-iotests/common.rc | 3 +++
- 1 file changed, 3 insertions(+)
+Yes, the spec naming is PARTID_MAX.
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 262fe63da8..82a6b1b5c4 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -64,6 +64,9 @@ dd()
-             else
-                 command dd $@
-             fi
-+   elif [ "$HOSTOS" == "FreeBSD" ]
-+   then
-+        command dd status=noxfer $@
-    else
-         command dd $@
-    fi</pre>
-    </blockquote>
-    <pre
-style="color: rgb(255, 255, 255); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; overflow-wrap: break-word; white-space: pre-wrap;">
-<code>Instead of adding another $HOSTOS check, I think it would be better
-to check if dd supports status=noxfer, and not rely on --help either.
-That way it works on any OS that supports it, without OS-specific
-checks.
-</code>
+> 
+>> +    FIELD(MPAMF_IDR, PMG_MAX, 16, 8)
+>> +    FIELD(MPAMF_IDR, HAS_CCAP_PART, 24, 1)
+>> +    FIELD(MPAMF_IDR, HAS_CPOR_PART, 25, 1)
+>> +    FIELD(MPAMF_IDR, HAS_MBW_PART, 26, 1)
+>> +    FIELD(MPAMF_IDR, HAS_PRI_PART, 27, 1)
+>> +    FIELD(MPAMF_IDR, EXT, 28, 1)
+>> +    FIELD(MPAMF_IDR, HAS_IMPL_IDR, 29, 1)
+>> +    FIELD(MPAMF_IDR, HAS_MSMON, 30, 1)
+>> +    FIELD(MPAMF_IDR, HAS_PARTID_NRW, 31, 1)
+>> +    FIELD(MPAMF_IDR, HAS_RIS, 32, 1)
+>> +    FIELD(MPAMF_IDR, NO_IMPL_PART, 36, 1)
+>> +    FIELD(MPAMF_IDR, NO_IMPL_MSMON, 37, 1)
+>> +    FIELD(MPAMF_IDR, HAS_EXTD_ESR, 38, 1)
+>> +    FIELD(MPAMF_IDR, HAS_ESR, 39, 1)
+>> +    FIELD(MPAMF_IDR, HAS_ERR_MS, 40, 1)
+>> +    FIELD(MPAMF_IDR, SP4, 41, 1)
+>> +    FIELD(MPAMF_IDR, HAS_ENDIS, 42, 1)
+>> +    FIELD(MPAMF_IDR, HAS_NFU, 43, 1)
+>> +    FIELD(MPAMF_IDR, RIS_MAX, 56, 4)
+> 
+> 
+> 
+>> +
+>> +REG32(MPAMF_MSMON_IDR, 0x080)
+> 
+> An LLM pointed out I was really inconsistent in numbers of
+> digits.  0x0080
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 262fe63da820..c18ff7d72039 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -28,6 +28,13 @@ arch=$(uname -m)
- # make sure we have a standard umask
- umask 022
- 
-+if command dd if=/dev/null of=/dev/null status=noxfer &gt;/dev/null 2&gt;&amp;1
-+then
-+    DD_NOXFER="status=noxfer"
-+else
-+    DD_NOXFER=""
-+fi
-+
- # bail out, setting up .notrun file
- _notrun()
- {
-@@ -54,19 +61,7 @@ fi
- 
- dd()
- {
--   if [ "$HOSTOS" == "Linux" ]
--   then
--        command dd --help | grep noxfer &gt; /dev/null 2&gt;&amp;1
--
--        if [ "$?" -eq 0 ]
--            then
--                command dd status=noxfer $@
--            else
--                command dd $@
--            fi
--   else
--        command dd $@
--   fi
-+    command dd $DD_NOXFER "$@"
- }
- 
- # poke_file 'test.img' 512 '\xff\xfe'</pre>
-    <p><br>
-    </p>
-  </body>
-</html>
+Yes, it is 0x0080 in the spec.
 
---------------kxQNEJmGrnhJI3oPf28ezp0T--
+> Ah the heady days of copying typing specs.
+> 
+>> +    FIELD(MPAMF_MSMON_IDR, MSMON_CSU, 16, 1)
+>> +    FIELD(MPAMF_MSMON_IDR, MSMON_MBWU, 17, 1)
+>> +    FIELD(MPAMF_MSMON_IDR, HAS_OFLOW_SR, 28, 1)
+>> +    FIELD(MPAMF_MSMON_IDR, HAS_OFLW_MS, 29, 1)
+> _MSI
+
+Right, will fix them.
+
+> 
+>> +    FIELD(MPAMF_MSMON_IDR, NO_OFLW_INTR, 30, 1)
+>> +    FIELD(MPAMF_MSMON_IDR, HAS_LOCAL_CAPT_EVNT, 31, 1)
+> ...
+> 
+>> +REG32(MPAMF_MPAMCFG_WINWD, 0x0220)
+>> +    FIELD(MPAMF_MPAMCFG_WINWD, US_FRAC, 0, 8)
+>> +    FIELD(MPAMF_MPAMCFG_WINWD, US_INT, 8, 16)
+>> +#define MPAMF_MPAMCFG_WINWD_WRITE_MASK ( \
+>> +    R_MPAMF_MPAMCFG_WINWD_US_FRAC | \
+>> +    R_MPAMF_MPAMCFG_WINWD_US_INT)
+> 
+> Those need _MASK suffix.
+> 
+>> +
+>> +REG32(MPAMF_MPAMCFG_EN, 0x0300)
+>> +    FIELD(MPAMF_MPAMCFG_EN, PARTID, 0, 16)
+>> +#define MPAMF_MPAMCFG_EN_WRITE_MASK ( \
+>> +    R_MPAMF_MPAMCFG_EN_PARTID_MASK)
+>> +
+>> +REG32(MPAMF_MPAMCFG_DIS, 0x0310) /* WHat is this for? */
+>> +    FIELD(MPAMF_MPAMCFG_DIS, PARTID, 0, 16)
+>> +    FIELD(MPAMF_MPAMCFG_DIS, NFU, 31, 1)
+>> +#define MPAMF_MPAMCFG_DIS_WRITE_MASK ( \
+>> +    R_MPAMF_MPAMCFG_DIS_PARTID_MASK | \
+>> +    R_MPAMF_MPAMCFG_DIS_NFU)
+> 
+> Needs a _MASK suffic.
+
+OK
+
+> 
+>> +
+>> +REG32(MPAMF_MPAMCFG_EN_FLAGS, 0x320)
+> 
+> Lots of 3 digit addresses scattered through here that
+> should all be 4 digits.
+
+Will fix them all.
+
+> 
+>> +
+>> +#define TYPE_MPAM_MSC "mpam-msc"
+>> +/*
+>> + * Max number of portions this model exposes for the cache-portion (CPOR)
+>> + * bitmap and the memory-bandwidth-portion (MBW_PBM) bitmap.  IHI 0099
+>> + * dimensions CPBM_WD/BWPBM_WD by these widths (see MPAMF_CPOR/MBW_IDR).
+>> + */
+>> +#define MPAM_MBW_PART 4
+>> +#define MPAM_CACHE_PART 32
+>> +/* MPAMF_IIDR.IMPLEMENTER: ARM JEP106 code for Huawei (0x736). */
+>> +#define MPAM_IIDR_IMPLEMENTER 0x736
+>> diff --git a/include/hw/arm/mpam.h b/include/hw/arm/mpam.h
+>> new file mode 100644
+>> index 0000000..e7557a9
+>> --- /dev/null
+>> +++ b/include/hw/arm/mpam.h
+>> @@ -0,0 +1,20 @@
+>> +/*
+>> + * QEMU MPAM emulation
+> Come to think of it, why have QEMU in a QEMU header.
+> 
+> MPAM emulation.
+
+OK.
+
+> 
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +#ifndef _MPAM_H_
+>> +#define _MPAM_H_
+>> +
+>> +#include "qom/object.h"
+>> +
+>> +#define TYPE_MPAM_MSC_MEM "mpam-msc-mem"
+>> +#define TYPE_MPAM_MSC_CACHE "mpam-msc-cache"
+>> +
+>> +/*
+>> + * MMIO window of one MSC: IHI 0099 places the register block in a 16 KiB
+>> + * region (0x4000).  The virt board reserves a 1 MiB slot for up to 256 MSCs.
+>> + */
+>> +#define MPAM_SIZE 0x4000
+>> +
+>> +#endif /* _MPAM_H_ */
+> 
+
 
