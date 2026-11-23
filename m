@@ -1,109 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CB1606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 12:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JdS14I6x
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F8D606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 12:20:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVStf-0002g9-73; Mon, 23 Nov 2026 07:11:47 -0500
+	id 1xVT1s-0004h9-Pi; Mon, 23 Nov 2026 07:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVStd-0002as-0H
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:11:45 -0500
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVStb-0004D6-9A
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:11:44 -0500
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-67c0bd676eeso2049133d50.3
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 04:11:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795435902; cv=none;
- d=google.com; s=arc-20260327;
- b=emyfhTlSAg3F5ngg4Li4/elKRKQ9qJrl6w9/FXtimbg7wOZmMYtlEbxLeZNotbViTA
- 7H51qKlSbcQKNwt9Wjxt8/1mRQk+fL4cTKTNLBJafzgCG3SwJU73kHLCcxaovMGLgRw+
- ckG0sf7Oupl0ia7KhmOTB8B/OEbAUuYM5jlGN8JxTT2PxCrIEFGbC6ooq7n2qwKm2qPQ
- Z9vYBm5aaG00ENzGWKs8yeE5I6RSzBnn6GJWKH+Z6eDfnk4Ozut2D/rl01jDpfSgYXfh
- eDKwi1f0LrmQ1PVoIMD58kJ6oThJkcpuZxkNGefYIDCBXBJjm9vijqTCm9RLcEkP71tj
- rqpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=7bsd6MScyb/Cw9bSouzvpkrUzEybksY5A3VWBFLKcos=;
- fh=2ALTUQ4fM6Vbf5rhGVBfpTVykrqnFQBD6OcN7/kmt8g=;
- b=sh4/Zn9GZmddtCphZvlq0s85Tm2CKVoPreGV+3aIlFuEO7dwidbcwRd5Ew1yjAETTS
- 7njlPU+8jfGW4ONE57vfviq4G5IrgiTt4TpZaFojH8qQqJ+hXw1InDtk9r6H4BOLzMw+
- uVbpzrlHm4ZmbOMm0n2YyL7mBnz3xFPQ7H1iTuj2qJduUrv986ugOlHqRtnqvq+kMYy6
- gyZButiqdk7yJUrndTQNmw5T5nEHE0gQPLjlKXpRyELLqBxqIVFlGo/OpYsGakTVTbNT
- MLuMnCHZ7YzgAlz/mx73pLuMBOOQyI26vklATZA5jEpJLQbYoLECEGCWdb8WWGtEu6aD
- P+dg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795435902; x=1796040702; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=7bsd6MScyb/Cw9bSouzvpkrUzEybksY5A3VWBFLKcos=;
- b=JdS14I6xMJB7zxtdhvjNFpQ91fpjba3mSA9Jha8GZqLpOeifjht85Y+wKKKrz3xChG
- 66OyuoRvC4YC4lLdY06jcO1MDlPG9Yqv985h/KpGEkAT0EUEzTDFIyvBd8Cjv2ezURNQ
- 4WMRpMRVDj9OIAXVFQN5v4OXiOlh+BorfHAKp3bKW7caa0T2CoHqp4L8NrT4vAI0Y1cj
- 5LDbe+uSvNdbEVsCSmYH7vuE1PeFolS3UaMyo9by0sFPeB7CuNOQkJWbVJoiRHtsorU+
- +a37+G7X5SmmdsPK6z+KbMPEcIVzQaUkem5MdSAxxPlI4+aQ/zPBb2HBXKWNF5hWcrUN
- J9og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795435902; x=1796040702;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=7bsd6MScyb/Cw9bSouzvpkrUzEybksY5A3VWBFLKcos=;
- b=ENTv/X+/yh6HvfWVmvVkSvk5kD8c4DnhDa8eSpVciy0hnPyPhuvwQVNRfog6rmV8Hm
- WsStMu9Qk7g0RTtk3qT2r0xDy/GeorUaaTO+PgxP+nzMoFMNOzph2byz03zLhMftksXx
- DNzgMv42//HulqHPrYUD372WJh4sT8fSUuj7HvmaGLisEHGkonuJ1TvxCOz0ADnB0AUw
- sec5/9p/IvXLgwrAnn6DFvJbjsUz/+tA0eTS/IZrZCT5O1yAAugKYciz32e1IvNsz60S
- mHeYFbIjP+FZhHsUzIKJDINR7LOpGLcGAt9iq2/mcn0mxLeEKpzRLn0eVx+65g8lM5C+
- vPeQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErH0/1qig2GSYHRCMxGaahl1Vx+fsdFFNLyLFoo0aHFC7JE2jEWU3Js66hiTSU9kkF2KpeBCiQbQRwZl@nongnu.org
-X-Gm-Message-State: APuU4Z9SFkaL/B5sgzNxF4Squuv/w9tdLo9Qi2Lrm7sfrBT6Gk3fsrlA
- pGzCXWOxPpW4MupNUNs337c+VemmfTAGHH5CR4t0mXxG+s8wCNJyWUQsFXM+E/jCkUkaadZPhOb
- DfCIaa+H3L/1siyIZG3yxGlwVwEBUOW058Ygsl6VYBg==
-X-Gm-Gg: AZFdTZcBjQdl9ab9E5GkSkKpMoFgOvTKai2h0XD+G3U0F8tqRqK57mSA6gNUbxWIZ+x
- OU4+nM0Eg0GmSrTqHMiNQvhcmW83Snm85DhmG97H3rcAdsaCHHbK50I3+P3m1dgJ3ch0wJwal4h
- tHQ20iheb003fmmRsjW58zlJFju6ndxtXm/3RjlsPX4yxjo4EyBCGuX31NNy6tx7tftsme+HHnl
- MEc3FlHUtrbdgZHTCdjR8rhbzUZ9zUhoT07p8HpHrdd9QBeHc46kfiJa2kTThTDjPNKQvXbaqz+
- iz/iJc8QFgKMIcjZ5dj/7qWsn16lQA61QAnVRnvZgVnnOFSrDy+RSai+hwHd8QlPFrL3LRt+r/B
- p5QFacASwwQfN+jD3DRJ3QjN6WdwiJfsnvfKDEqcYLwkmL9YA/UL/ZbTMW85MaqLfR6gS3vUzGt
- M9hQJFrJ0V2M4SEr8NzRkU
-X-Received: by 2002:a05:690e:13cb:b0:66f:c1be:a64f with SMTP id
- 956f58d0204a3-67df4444c30mr5051365d50.65.1795435901705; Mon, 23 Nov 2026
- 04:11:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1xVT1o-0004gX-C8; Mon, 23 Nov 2026 07:20:12 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1xVT1m-0007lU-05; Mon, 23 Nov 2026 07:20:12 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 1475C42E24;
+ Mon, 23 Nov 2026 13:20:06 +0100 (CET)
+Message-ID: <b9538c3e-6d50-42cb-b2e9-770cdb9768fc@proxmox.com>
+Date: Mon, 23 Nov 2026 13:20:04 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261119091922.1380805-1-fuad.tabba@linux.dev>
-In-Reply-To: <20261119091922.1380805-1-fuad.tabba@linux.dev>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Nov 2026 12:11:29 +0000
-X-Gm-Features: Aa3M54rpluT39izReyFJiIZcPDUpABTDZz_S3j63cL7aubt1aEvxAtxAxp_Umg8
-Message-ID: <CAFEAcA9mkWC5re8NfCPQzgB5de+0DYC5TbQV9TXweEtMKzdi7Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3_cpuif: Don't count a virtual EOI in
- EOImode 1
-To: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fdmon-io_uring: avoid idle event loop being accounted as
+ IO wait
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, fam@euphon.net,
+ jmaguire2013@gmail.com, axboe@kernel.dk, kwolf@redhat.com,
+ hreitz@redhat.com, t.lamprecht@proxmox.com, qemu-stable@nongnu.org,
+ casasfernando@outlook.com, ncopa@alpinelinux.org
+References: <20261119150839.439544-1-f.ebner@proxmox.com>
+ <20261120163624.GC780462@shajnocz.csb>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20261120163624.GC780462@shajnocz.csb>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1795436405157
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,44 +57,129 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 19 Nov 2026 at 09:19, Fuad Tabba <fuad.tabba@linux.dev> wrote:
->
-> icv_eoir_write() increments ICH_HCR_EL2.EOIcount for a virtual EOI with
-> no matching list register, in either EOImode. The VirtualWriteEOIR0()
-> and VirtualWriteEOIR1() pseudocode in the GICv3 architecture
-> specification only does so in EOImode 0 (ICH_VMCR_EL2.VEOIM clear),
-> since in EOImode 1 the DIR write increments EOIcount instead.
->
-> In EOImode 1 an interrupt with no list register is therefore counted
-> twice, and KVM running under TCG deactivates an interrupt that its guest
-> has yet to deactivate.
->
-> Increment EOIcount on EOIR only when EOImode is 0.
->
-> Fixes: b3b48f529fe8 ("hw/intc/arm_gicv3: Implement ICV_ registers EOIR and IAR")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-> ---
->
-> Notes:
->     Tested with a local reproducer that runs a KVM guest in EOImode 1
->     under TCG, with more interrupts pending than list registers. Without
->     this patch the guest sees an interrupt deactivated before its DIR,
->     and with it the reproducer passes.
->
->  hw/intc/arm_gicv3_cpuif.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+Hi Stefan,
 
+Am 20.11.26 um 5:36 PM schrieb Stefan Hajnoczi:
+> On Thu, Nov 19, 2026 at 04:08:08PM +0100, Fiona Ebner wrote:
+>> diff --git a/include/qemu/aio.h b/include/qemu/aio.h
+>> index e65e90093a..17bc145eb6 100644
+>> --- a/include/qemu/aio.h
+>> +++ b/include/qemu/aio.h
+>> @@ -55,6 +55,12 @@ struct CqeHandler {
+>>  
+>>      /* This field is filled in before ->cb() is called */
+>>      struct io_uring_cqe cqe;
+>> +
+>> +    /*
+>> +     * Whether the in-flight request should count towards IO wait.
+>> +     * Set by the fdmon layer; callers must not touch it.
+> 
+> "callers must not touch it"
+> 
+> This is a struct field and there are no callers since it's not a
+> function. Is the intent that this field is private to the fdmon
+> implementation and nothing outside should access this field?
 
+Yes, that is the intent. Should I change it to
+"Private to the fdmon layer; must not be touched outside of it."
+or do you prefer something else?
 
-Applied to target-arm.next, thanks.
+>> @@ -422,9 +440,25 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
+>>       * 1. If no SQEs were submitted, then -EINTR is returned.
+>>       * 2. If SQEs were submitted then the number of SQEs submitted is returned
+>>       *    rather than -EINTR.
+>> +     *
+>> +     * Submit and wait are split into separate calls so we can pass
+>> +     * IORING_ENTER_NO_IOWAIT when no request that should count against IO
+>> +     * wait is in flight.
+>>       */
+>>      do {
+>> -        ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+>> +        ret = io_uring_submit(&ctx->fdmon_io_uring);
+>> +
+>> +        if (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)) {
+>> +            unsigned flags = IORING_ENTER_GETEVENTS;
+>> +
+>> +            if ((ctx->fdmon_io_uring.features & IORING_FEAT_NO_IOWAIT) &&
+>> +                qatomic_read(&ctx->iowait_accounting_reqs) == 0) {
+>> +                flags |= IORING_ENTER_NO_IOWAIT;
+>> +            }
+>> +
+>> +            ret = io_uring_enter(ctx->fdmon_io_uring.ring_fd, 0, wait_nr,
+>> +                                 flags, NULL);
+>> +        }
+> 
+> Can you use io_uring_set_iowait() instead of splitting
+> io_uring_submit_and_wait() so that all liburing APIs automatically
+> set/clear the flag when calling io_uring_enter(2)?
+> 
+> Perhaps that will also reduce the remaining iowait that you observed
+> because there are other (indirect) io_uring_enter(2) calls in
+> fdmon-io_uring.c aside from.
 
--- PMM
+The io_uring_set_iowait() function is available since liburing 2.10, but
+Debian 13, which our management layer is based on, only has liburing
+2.9. I tried it with a self-compiled liburing 2.10, to see if the other
+callers are the reason for the remaining IO PSI, but it does not seem to
+be the case, see below. Should I still go for the approach with
+io_uring_set_iowait()?
+
+I added:
+
+io_uring_set_iowait(&ctx->fdmon_io_uring,
+                    qatomic_read(&ctx->iowait_accounting_reqs) != 0);
+CALL()
+io_uring_set_iowait(&ctx->fdmon_io_uring, false);
+
+to the four relevant calls:
+
+1. io_uring_submit() in get_sqe()
+2. io_uring_get_events() in process_cq_ring()
+3. io_uring_submit() in fdmon_io_uring_gsource_prepare()
+   This one I split into a do {} while loop to be able to surround the
+   single call.
+4. io_uring_submit_and_wait() in fdmon_io_uring_wait()
+
+Also also tried it when only surrounding the io_uring_submit_and_wait()
+call.
+
+In the guest I ran
+
+fio --name=make-mirror-work --size=4096k --direct=1 --rw=randwrite \
+--bs=4k --ioengine=psync --numjobs=4 --runtime=60 --time_based
+
+and then checked the total of the 'some' metric of the IO PSI after it
+finished:
+
+this patch:
+
+total=5472173
+total=6375811
+total=6361853
+
+set_iowait for submit_and_wait only:
+
+total=6103261
+total=6156911
+total=6806779
+
+set_iowait for all four calls:
+
+total=7284803
+total=6896655
+total=6489701
+
+So, at least with this pattern, it's not a huge difference between the
+different approaches.
+
+Best Regards,
+Fiona
+
 
