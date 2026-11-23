@@ -1,124 +1,120 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5193A606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23333606A31E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=sF4GN0Hw
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=NxRQOwoc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVcGM-0005Y8-2Y; Mon, 23 Nov 2026 17:11:51 -0500
+	id 1xVcdi-0004og-NK; Mon, 23 Nov 2026 17:35:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1xVcGC-0005W3-JN; Mon, 23 Nov 2026 17:11:41 -0500
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ id 1xVcdZ-0004nI-20; Mon, 23 Nov 2026 17:35:49 -0500
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1xVcGB-0007DL-3i; Mon, 23 Nov 2026 17:11:40 -0500
+ id 1xVcdX-0004BV-0G; Mon, 23 Nov 2026 17:35:48 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Cy/JhkeZGUEDQtB02f7hm/oqPsSc4/EuC32vQA5Y1Dtw8bIMJJPChz8jsChIyfeTg9j1WEsa4VhFVGOtQqlD/om8Ue8qnihl0ygWh579DhMdjj3Sahn7uTd/oe8PGeVDFDtgZ2Iw9QtiJSOuKj06l5xC1Ilif6ewKfLWfpCRGdm6m91j+WzGPc9H4nb+LAp8aphu6iGBp0BCyi1mvOOFlyAjTiGpKfy0KuUW/dgMWJTDd0rqO4xkKbQ86lCxggqgVkglCjTNeBSyfeu3ImaBnCBwLhuwQnUuTpQcY8oFsnkh4GulbJFNwu3mWExwwrk6EI8nNOJlghBEbVirQD20BQ==
+ b=Aq/9Gq5W300WDFXuU4k6JiZhbfaVynPanHfTYKSado5lWaJtCuUQV5eFo5ItLiCxdP0sAnuUasL3iCMJY3MaghDLjfPAfgIEBIk3lAMAalOilUnKsIG0G7TNZlHzfKPo9InKwYcDLTJeMxSCvLjuN6r7rM/0HZjzki5jcwBIyf8S1JVAdMkD8qB4/o+3PQF7Jp+d3XIcd8/wUagFs5X6vOMe3LXrnVdgSewFWwqq3LTqzMUDEPL7SPPhKPlV/noOIoKqTYgL3x9sxahDWkiUQHAveZ0YAuaeLxJv2yQdB9z9tx3nD+EKg2kfML6nYHUOfQ6F2oYXVxeJSNWIBLck2A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sSgvQ2w07wxzQrLlImdhnd6dLimUHhsuxkZmF2ru1CU=;
- b=cBFTQFUTg4a6z44Ksk38WIPA5KCR052H9tzj1UWoMsUmK9fCC7fC0lAHkT4DSkIPP/cO9tAo2n6NsHNfp/lyjM8h1e8nVIj5KsV0Bug3RLFS6ZItxjPTFjswmWGrVSMRmaddHljE3cIRIc6fIQOCbcXOs4HDQNsi31O4wpyGk57GkxGeUMR84trUsMzoo92KyoYtEmtnwSHJ9yGyXDn1QKRSokAswdmJfTayjk6/H6sykZOVN23hYT8EkOzbCsFVotZx4W3aKU74GWGbOBdz5XV6pI3UNE9rte+VspXS0rMsz31yzjwp9Hnl7EXdRFHAI/eQj1U6ppM2CrD95XRJdg==
+ bh=DGnByXuOEIp58duUE8fnlTjfo3iGNV37CAfUhf8t4jM=;
+ b=XLSYJ+jKuZBBVdnZCUAr9Tjv4eEj984EWeBj6ssXBwzUfu/VdFl6c1CjTvssKB5QnQVUmq5OhMh9eda6okVqDC0eIrQhgPB+oAiacMfWRRoMLlm651D2i7WkyA70bdtvztiUXMbEbrwx4onFEVWDPwtiGH/xl4Z1Q1SIPjYmGgX2sOBocmg4S2cEgSVX/oSydHtgyhvvJGeMSicLf8ALvStoy3TRqAr170Nyx0PuaHz9TM6u9SGCNF/ERWtd2tCm2gT+mCU35c7R2Mw+dsf4Ut3+hl2SJ4KUulLW/8Qy3plbl4n5rr1S+83+u6gwwPciV0Y2u1en5Qz//sUwtCK7Ug==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sSgvQ2w07wxzQrLlImdhnd6dLimUHhsuxkZmF2ru1CU=;
- b=sF4GN0HwMPWkGrS8gF8IKrPrtyytikM4s+0DvdUfPXcvKIhaafqppMMP6YX/u9RYKe6OlE81f1VhcIi0V4FujbCQ9jXjgPKZUHd7iLLzPx6yiHgvX10TUXfIm5NHIloQEpbnqWW0E7y4HdTbbKtZu0ZWW7bIkyY/H73kVw1uI6QaBisHjPdN6SQzPOTRXbmd9XEPWhQYY5WGNedUdDn/uWykFkFaKnKUojVTpCPRs3LqyJOQbBoKWVFfBgW7fsYd5hkpYaH74L/nNPLQkVEMqynAxnkb7S/XlzAitfH6CrvE69sUsNN4gnkwk5VBf+Xx8nKHYwGDcdtRuJriQoPJ2w==
+ bh=DGnByXuOEIp58duUE8fnlTjfo3iGNV37CAfUhf8t4jM=;
+ b=NxRQOwocPCQoGXTQxq8I1odnSPnyF7i6VICNEYakr8sx8Yv6NTuqswaB09NTLwkMrZPuNFQdintXHgHUfnU606eD0rydZoabrrhpYAOQ7fTuJDcs013Oes9D9k8IEVIZq2XdT30AUmDhbj4ZL8jpiztulmyrajQUarEkfRu3frSQ26h2gN3zYdbImELvqmI7Xfx0X/IxyDiiBTKtM2OL+v6sLBs1GT2q9nVaJgKoeXh0+ePa/wIO/ShyTApQt5jTpyYk7Bay8uSL81o4dIAu0Jve2QP0KZsKMPGDgRAjJW2i99J3FYpFM9t18Z/pdJ0mItNgnTRwTIksWfsin/5MNQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17) by PH7PR12MB6979.namprd12.prod.outlook.com
- (2603:10b6:510:1b9::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Mon, 23 Nov
- 2026 22:11:26 +0000
+ (2603:10b6:208:627::17) by CY8PR12MB7562.namprd12.prod.outlook.com
+ (2603:10b6:930:95::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Mon, 23 Nov
+ 2026 22:35:34 +0000
 Received: from IA3PR12MB923065.namprd12.prod.outlook.com
  ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
  ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0639.012; Mon, 23 Nov 2026
- 22:11:26 +0000
+ 22:35:34 +0000
 From: Tushar Dave <tdave@nvidia.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
- marcel@redhat.com, devel@edk2.groups.io, alwilliamson@nvidia.com,
- jgg@nvidia.com, skolothumtho@nvidia.com, ardb@kernel.org,
- kraxel@redhat.com, clg@redhat.com, tdave@nvidia.com
-Subject: [PATCH v3 4/5] hw/arm/virt: validate fixed BARs and preserve the PCI
- configuration
-Date: Mon, 23 Nov 2026 16:11:04 -0600
-Message-Id: <20261123221105.37029-5-tdave@nvidia.com>
+ marcel@redhat.com, alwilliamson@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com, tdave@nvidia.com
+Subject: [PATCH] hw/pci: Add acs-ctrl property for root and downstream ports
+Date: Mon, 23 Nov 2026 16:35:23 -0600
+Message-Id: <20261123223523.47719-1-tdave@nvidia.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261123221105.37029-1-tdave@nvidia.com>
-References: <20261123221105.37029-1-tdave@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SN7PR04CA0169.namprd04.prod.outlook.com
- (2603:10b6:806:125::24) To IA3PR12MB923065.namprd12.prod.outlook.com
+X-ClientProxiedBy: BY1P220CA0042.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:59e::17) To IA3PR12MB923065.namprd12.prod.outlook.com
  (2603:10b6:208:627::17)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|PH7PR12MB6979:EE_
-X-MS-Office365-Filtering-Correlation-Id: 04368468-78c4-4acf-e086-08df49aeb7bd
+X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|CY8PR12MB7562:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2c842b1b-9a93-4351-94ad-08df49b216ec
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|1800799024|366016|261022075727099003|11063799006|56012099006|261021121427099003|261102123227099003|10067099003|261009223027099003|261026121527099003|18002099003|6133799003|22082099003;
-X-Microsoft-Antispam-Message-Info: lGr5TIhxDmg4nN8orJdc8hm2NZGjocForFNDxKiuTFp+koDTxOUnr9Kr8zrVGBqzXVrmRv2tcqkQBF3QoOJl5ECeAy0guH4XRrAauhdySzx0mXLaWr7/CpITLTXq1HBs/tLvXh9TpFIG4zOkzaA5Gj/B+T5OC1WfrsAWJt5DDkAP2XpNEx60nqYr5wOqouqU/9lJSzxc7qebPw1kC/aPumV9EaaFilde6ghbH1S5QOo1rjsPEboTRQCkdxxjDV5i1cb+kV9JsjpmTAUe/Qa8mYxc63xPAI3WJ0TlVdTP3RllOFEtOPX6UiiK9CYa+DOa5Ni8fh05M8HlPwpUqx1OfNB1k+cCEiyaAk3aiHCJHlwhZmN4ZW/a5432MN6X2LkvxLVEb/TbFeoKHKqBzPDZEfddHfKKDR242VmIBvI45INS2uWCMA1998H7mcZyGNUjd3kRJd7F37woq1m/eMlhLot9aeypp76BI2a3NS50YrQga7EW0767SMCedCQf3r1LuQgwrFCRGxLHTmhRXoQMc2s7ICXrmOhs+KKdvp8vbqTgj1WtkR/9bhOVxHuGXL8ZhTmShTVHQJilFRSOKMIa+ysBYSnvf0+MhXtq16B5P9dAxsmCzGgIHuwFQCrm6ylnp4Nwu/5kZW19zReW4pB9nGUGpmWIke5w1/MI88j85Uo=
+ ARA:13230040|23010399003|1800799024|366016|376014|18002099003|56012099006|261021123027099003|11063799006|261102123227099003|261021121427099003|261026121527099003|261009223027099003|261009221227099003|10067099003;
+X-Microsoft-Antispam-Message-Info: NT+fKXzpCkTiMm+BfOr7RDYFNiJmxR4VdWlEeDFNJOiwJA9szkU2Ieri3obmSidSwcr0EtG1q6Ds0LT7C6m1+WHkiGNDfT1tXHyFzoGP5OR1lcKDA8jmgOAcBQy3ixcQEx+RpwhT9F2KAC4B1Ai/tvcYfvVio7RCXj2iOklZWOiP7YR08agCW4GjJq3vTqhBUHDRGv+GLXgWgJMA3IfAPqLy/d6qUH3H3OmbHB18QgxTkFbfbtVGT1iHnlw5CXlt4raH9brc5og2YC9ZtDBgEjvfC5vxM3h5nEqxK9f4marhWoI6udbuH+KGw9M6mEoIHj0O/19TM5thNpCfxce0+cpBtEh7xz3MQjXcKyEuI4XysH0mwJ7HD7jCG3/msnhk5ehaAiUKreJxwozn+ejO39ga2qAF/R/jVgUf8jM1iq9Fr2fYuAUpUJrRbHoQtBEIyRYAAdV9RsSFSIZ93fBuDykQcLQ2WAWyoeuKJFk62KlJ264WfcJmlESjkLilEaXgQq8b+wZbwy0mtvbUrtYKJcuGR4LkPpPJp+knTwVm8nr7n6Ipg6j6ncdluf1ovo7dWquNQnreba5fWwHkCjeCC0XkjxhE8n3KU62gnj3pWl4XNYxEHnkFs0rbnM4BHw27
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(261022075727099003)(11063799006)(56012099006)(261021121427099003)(261102123227099003)(10067099003)(261009223027099003)(261026121527099003)(18002099003)(6133799003)(22082099003);
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(56012099006)(261021123027099003)(11063799006)(261102123227099003)(261021121427099003)(261026121527099003)(261009223027099003)(261009221227099003)(10067099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?lyPVsH+vPsUb4JqOmuSO772AJWOQX5vAJ5GQyq2H8MNlXUEELo0nzCz5gCkX?=
- =?us-ascii?Q?rcTAYqp3s4FKGtyg4ZiW5uNvV3zr64Ai1H56+PkbvMwwAbBv/xw3FOCHdm2m?=
- =?us-ascii?Q?gdIT+Jl3trFo37ieMRey4pw0Zdo9HpuFBND+KDGfRhV0BsOXaUHD0LytpOv/?=
- =?us-ascii?Q?yzAMEeWq6zsv1Wj/sL/DvV8aBBG3CTgxf3/b/vSmA4G8/IiGqd36rkIb36vy?=
- =?us-ascii?Q?+AZCbj1ZNtLBlMvpC0gDb0u/8lmifypMYW6xxOo25YzOYVD1s5sH6s2r1WIU?=
- =?us-ascii?Q?+xiJvS+OYV9iEvyLutWonhif0ji2BqCKwPjmbDEc5g6yCFQjdbkqeKpNH49Q?=
- =?us-ascii?Q?UH+8L6j7BvPsBu86v3bf4hp3CEAAliXsxSeQCN2/IA1D+KQMJJS/FucdX9Yf?=
- =?us-ascii?Q?8pBnKyY5GMrToRYnZthlowx4drgV9FcKfR75IL0WvyOo3R0ULUkKwZTlEyPb?=
- =?us-ascii?Q?49AeMnuGsU6gjhezm9daONY07uOEzSzbUj2bN8lEkzYBlUrqn+EtjwJptabc?=
- =?us-ascii?Q?JhWbfJLgwj4mbUUdD44T4wvv6J35/5K4fwXMpTzqXs4aFpm1S/00s4+v10P2?=
- =?us-ascii?Q?04BpO/xKt0Fmqe5fMXEKAiNZI+JLTTt+GFzhaMy/V/g103McDDut5cHFELAO?=
- =?us-ascii?Q?HyfNyz8eEpM7E/AH/hlmm4/WvqNIXVU4RboChxNooOzxaAXG8ZJiDgQIprji?=
- =?us-ascii?Q?vCu1wIXQWi+CLHEzelfBKOEZz6b4jk577+mWW5onczOuASal3apkLY81fQa7?=
- =?us-ascii?Q?rvGuMMxlurX4bJBZD1TDCjjWUHwRij7ftAUoOX6R4WWyCRySF4jkdK1+z0e4?=
- =?us-ascii?Q?d7JYGnxs5vcRo839Vi5lUymC9xTVZEO8gTLjZyr1qX2PZvtDKBNh13wx5LNx?=
- =?us-ascii?Q?sfXlGsdZZV+506qVTyEKZ5GLKnGg8UyDLA7XefJUWbrtZZ7ovds+TjBpOncu?=
- =?us-ascii?Q?jpyzs0hIC/9nlyiQehURJ94KsG0stgzjUSuEOeD3HBUoLvGfEqyaRQfB218Z?=
- =?us-ascii?Q?ID9OG80WKEeY22yWlSROD8/jvHgY7y+SIxCywPMOq1ZnSJ5j+K7waj7S87ee?=
- =?us-ascii?Q?IFr7pqcaHI/KpEzhvnFpT3P67cC5rO6kaAnCSjPGPLxmGNwjIfMpDvVGMrdJ?=
- =?us-ascii?Q?Bb2/XCg9gaSjsna7rgfL/1cOcRr/nKD9rJrO5dmF0rRoeurZeJwGyr/V9knt?=
- =?us-ascii?Q?3nkIWjXzNrNttYnajlK+OuhAveoA99HWA9IGkLGW5eWvrym+QI0qe7oBKnf2?=
- =?us-ascii?Q?OBMXeGyOTYwsh4S+gNULa3mf/eslpQ91kHqUP0U+kTXFRE1ik04z3Y2H2KfG?=
- =?us-ascii?Q?heqOjlTJTeuLqpif71hOG55m0Mya5vlqJ2Hcr1MKE3IqMZ5ML1WnMyILATAm?=
- =?us-ascii?Q?Lr8yWRcbZfH10XW1CqdH7QpGWGy120SC3JItrdqFg5uhfGx5PDZpuCReCjb7?=
- =?us-ascii?Q?yj1PBWQbktg1RmYfHoM7iR4DMnnlu8UlJBcIw7jbWrbxCRwdLOi8kQBZPSpD?=
- =?us-ascii?Q?+gMIWEmQ+g0WxcCfHDRNN7VxBJBvcGYaFcCCxfTofITxDp0h1hbqOBjyeLQv?=
- =?us-ascii?Q?bZhqAhBBjuII6uK1ZqGvpGOdiL34jOgn607/xSSRj2udKvCWTSVH+RaB00aG?=
- =?us-ascii?Q?mC42fDPFHJLGuqrBJP/8wAafn1W27r8+vUNHOGZ9NIzyCwDS1W0eOVnut9sO?=
- =?us-ascii?Q?u85mI3GOaBZhUShQKdSg3zxiXn3JaY8rbjI+3qLIjZhncL0Q?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6nCgiSYPHWPOvCAkUOSeWZo8zxfy35cVvds4nVWIazrE2+hEJliWeE9fYYv/?=
+ =?us-ascii?Q?Bx2SKxT9qh5qMjVdbUQIQzBnXy1w5M4noDRUJkquOzQ49oeypqmcPaN0HJDe?=
+ =?us-ascii?Q?rP+VfDcMuf44NRojzfMAEpuyKaKv+ZGSYpeSygGR+WVaQinA4vzdY0jV2LRT?=
+ =?us-ascii?Q?e4aotX0i7GsAbnRnPAfib/uHeqZ2OEvzUdZ6EEaa8mtD6XM/LkHLffgTjIwM?=
+ =?us-ascii?Q?W6P8APPGld8PtWg/VL933DvubiJhZi1AlcnQqN7mX5JCnB2wd23H0Vre/uzt?=
+ =?us-ascii?Q?rO2p8Y+mugHrOs1aZHcLmSJNNGCZH6YnWnX7zmPoGcXMg0mszjvkvkfhytLO?=
+ =?us-ascii?Q?HLlHFTUlu9C6LfEhp0Erqz6h6CAAGYsLz04slwWphMBSlrwzGQiO2odP4j6X?=
+ =?us-ascii?Q?lIzXky1JHE3obHoN3uDHnb9wROGz4ZskBaRvYaOgCpn2mzIsoHb3t+MtRNbW?=
+ =?us-ascii?Q?cZK0uQP56xkMmPwLxU9FWzRB5UjHj3ApaEnjl9EO65TZxMkmWFMjBwsuDjmk?=
+ =?us-ascii?Q?0Xr9MOBUiPK/tcMiN3Qpf9XkJUO9b13mdbql4XL+02C2aUx3rrrdOrzd8YUk?=
+ =?us-ascii?Q?MNFJkDfZWHy5ruoqFdrSw2VJ2pBykVi0D4kzl19TiInpMVooUo0c1rW3ojdp?=
+ =?us-ascii?Q?4QyiliNanWmcvKHgwTNAVwWSXJdcVp4JjHB9cD5NMTdzeNIO9mQTnkYmx/Pg?=
+ =?us-ascii?Q?nncg5WTL+I48Y0o6DuwPQLP7yYYD5gKAXUX4OB6NCH3Z3WgE2YiDdwD9WJsL?=
+ =?us-ascii?Q?D10KbH3BW46QwKr4VpC5Pju2+LSY8ngjYitB2c7ltqBAhUBWneE4mjWljv+8?=
+ =?us-ascii?Q?PY/CWJ4S2bQuisNolqBuymKkmpY5ImBa5Gyh86vQ3357XgGxffjRf4miLe1P?=
+ =?us-ascii?Q?vt33qwq+Kjc6Bw3387hy9UT+8TaefyImAzG85EZl1Bz0p0icItu/x/c0PTgW?=
+ =?us-ascii?Q?EszdBPm9FkyTXdBPeGrT9mIW+4IyxSxTkd6YSL6RAk6wsI7jVhYqBNoZut7p?=
+ =?us-ascii?Q?iECBuKuo2vjvBnZJeJyMgdqCUHr6JDTRqFi4UyE7s+S8Yx0OxEuSxNSKnvJL?=
+ =?us-ascii?Q?dMeMVDoRutn27O0pMHh6bP2bfz1cwkx4lxK1z1/GYFeRQc+vAILUeGOE5erg?=
+ =?us-ascii?Q?CFdO2MiDXSHFyKDUui0NAvUwSPQEW4eXOGjCRMohYruFZfOM61a9nGlWNkXh?=
+ =?us-ascii?Q?2CxLXw2h+hb9ZOSnb+U64+oRNOxjHvwDu0oOLs5Z60/gnjcjFqY1dguRMA/l?=
+ =?us-ascii?Q?XiBfZORSe3iNlLyxovTDgbfrSjNeRtix0b5MJs1hDRKOt1aO8/M3ngWEf5mt?=
+ =?us-ascii?Q?rmyAHsIIC+yXYVdamqj0k119F9VEimmqgKsME1K2qZBsIZiW3o2Sypa9QIaX?=
+ =?us-ascii?Q?QSz3HubRgc7tKPHtEAcxhvsDsvTBogDzmuoP+Gy528QWbVHq2Y0ST55GVnzJ?=
+ =?us-ascii?Q?mUFDP7lpmsWpu/1wX/93IkR45yRK7zwSlnSzovbTjQcc8njlgaWsEOrHpgQA?=
+ =?us-ascii?Q?mAG6UtUE/mlsSWWArMNDE7ozubGSqhIIcquRBCeS+F6uD8Lt4I/ua799M2bN?=
+ =?us-ascii?Q?QyIjLei2Ij2jNa5HKauJNbjxCKYwigNoVvrw3QyjywS9qRjujJn6zJM0mQpV?=
+ =?us-ascii?Q?tm1ps+2j3iQsav/BrlOzucek6H/vFrN/2ri4LnBGdsTjyJegGb8C8ZS1mBqy?=
+ =?us-ascii?Q?R3ud++cZHnu0S9bCbSr1B8s9qbPK7M55e4qOvNDL3uZh0cEU?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04368468-78c4-4acf-e086-08df49aeb7bd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2c842b1b-9a93-4351-94ad-08df49b216ec
 X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 22:11:26.6439 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 22:35:34.8229 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /qCptQOR5zIniKwuTBIXzZCzkwfmTXaYe4kiFtE2YjHEzAb9PDEu+ZtYWPp4DYhXk0xu8inYl0EfW9irD1J1tg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6979
-Received-SPF: pass client-ip=2a01:111:f403:c001::2;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4dedoduQXt3enPzzdjLtRZknsVGu2Ely5ThOufaBdCYs5j5vOv+oVUTY3ZGDgIEYrLHebgN2mauwYWgHDS9DiQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7562
+Received-SPF: pass client-ip=2a01:111:f403:c110::1;
  envelope-from=tdave@nvidia.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
+ helo=BN1PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -145,68 +141,196 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Validate the fixed BAR configuration with fixed_bars_check() and set
-pci_fixed_bar_supported to allow the fixed-bar-N properties on the virt
-machine.
+For P2P to work between devices assigned to a guest, the ACS Control
+register that the guest sees must match the ACS routing that the host
+administrator configured. A mismatch can prevent P2P between the
+devices from working as expected.
 
-Fixed BAR placement requires the guest to preserve the PCI resource
-configuration established by firmware, preventing the fixed BAR
-addresses from being reassigned during guest boot. ACPI provides
-this through the PCI boot configuration preservation mechanism
-(_DSM function 5).
-
-Reject fixed BAR configuration if firmware is not loaded or ACPI
-is disabled, since PCI boot configuration preservation cannot
-otherwise be guaranteed.
+Add an acs-ctrl property to the generic PCIe root port and the generic
+PCIe downstream port, so that the administrator can configure the ACS
+Control register.
 
 Signed-off-by: Tushar Dave <tdave@nvidia.com>
 ---
- hw/arm/virt.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+This replaces my earlier ACS series:
+https://lore.kernel.org/qemu-devel/20261006013133.3457555-1-tdave@nvidia.com/
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0b11f7e328..dc487f9ea0 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -94,6 +94,7 @@
- #include "hw/cxl/cxl_host.h"
- #include "qemu/guest-random.h"
- #include "hw/watchdog/sbsa_gwdt.h"
-+#include "hw/pci/pci-fixed-bar.h"
+The patch that made ACS Control read-only for the guest is dropped,
+along with the patch that adds acs-ctrl for x3130/xio3130. Instead,
+acs-ctrl is added for the generic root port and the generic downstream
+port.
+
+
+ hw/pci-bridge/gen_pcie_downstream_port.c | 11 ++++++++++-
+ hw/pci-bridge/pcie_root_port.c           | 13 +++++++++++--
+ hw/pci/pcie.c                            | 17 ++++++++++++++---
+ include/hw/pci/pcie.h                    |  5 +++--
+ include/hw/pci/pcie_port.h               |  1 +
+ 5 files changed, 39 insertions(+), 8 deletions(-)
+
+diff --git a/hw/pci-bridge/gen_pcie_downstream_port.c b/hw/pci-bridge/gen_pcie_downstream_port.c
+index 3084a208a8..e5d1f642ba 100644
+--- a/hw/pci-bridge/gen_pcie_downstream_port.c
++++ b/hw/pci-bridge/gen_pcie_downstream_port.c
+@@ -72,10 +72,12 @@ static void gen_downstream_write_config(PCIDevice *d, uint32_t address,
+ static void gen_downstream_reset(DeviceState *qdev)
+ {
+     PCIDevice *d = PCI_DEVICE(qdev);
++    PCIEPort *p = PCIE_PORT(d);
  
- static GlobalProperty arm_virt_compat_defaults[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-@@ -2451,6 +2452,22 @@ void virt_machine_done(Notifier *notifier, void *data)
-                                        vms->memmap[VIRT_PLATFORM_BUS].size,
-                                        vms->irqmap[VIRT_PLATFORM_BUS]);
+     pcie_cap_deverr_reset(d);
+     pcie_cap_slot_reset(d);
+     pcie_cap_arifwd_reset(d);
++    pcie_acs_reset(d, p->acs_ctrl);
+     pci_bridge_reset(qdev);
+ }
+ 
+@@ -115,10 +117,16 @@ static void gen_downstream_realize(PCIDevice *d, Error **errp)
+         goto err_chassis;
      }
-+    if (fixed_bars_check(vms->memmap[VIRT_PCIE_MMIO].base,
-+                         vms->memmap[VIRT_PCIE_MMIO].size,
-+                         vms->memmap[VIRT_HIGH_PCIE_MMIO].base,
-+                         vms->highmem_mmio ?
-+                         vms->memmap[VIRT_HIGH_PCIE_MMIO].size : 0,
-+                         &error_fatal)) {
-+        if (!(vms->bootinfo.firmware_loaded && virt_is_acpi_enabled(vms))) {
-+            error_report("fixed-bar: fixed BAR placement requires firmware "
-+                         "and ACPI to preserve the PCI boot configuration, "
-+                         "otherwise these BAR assignments could be "
-+                         "reassigned later with no protection");
-+            exit(1);
-+        }
-+        vms->pci_preserve_config = true;
+ 
+-    pcie_acs_init(d, GEN_PCIE_DOWNSTREAM_PORT_ACS_OFFSET);
++    rc = pcie_acs_init(d, GEN_PCIE_DOWNSTREAM_PORT_ACS_OFFSET, p->acs_ctrl,
++                       errp);
++    if (rc < 0) {
++        goto err_aer;
 +    }
-+
-     if (arm_load_dtb(info->dtb_start, info, info->dtb_limit, as, ms, cpu) < 0) {
-         exit(1);
-     }
-@@ -4203,6 +4220,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     hc->unplug_request = virt_machine_device_unplug_request_cb;
-     hc->unplug = virt_machine_device_unplug_cb;
-     mc->nvdimm_supported = true;
-+    mc->pci_fixed_bar_supported = true;
-     mc->smp_props.clusters_supported = true;
  
-     /* Supported caches */
+     return;
+ 
++err_aer:
++    pcie_aer_exit(d);
+ err_chassis:
+     pcie_chassis_del_slot(s);
+ err_cap:
+@@ -163,6 +171,7 @@ static const Property gen_pcie_downstream_port_props[] = {
+                                 speed, PCIE_LINK_SPEED_64),
+     DEFINE_PROP_PCIE_LINK_WIDTH("width", PCIESlot,
+                                 width, PCIE_LINK_WIDTH_32),
++    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
+ };
+ 
+ static void gen_pcie_downstream_port_class_init(ObjectClass *klass,
+diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+index 7c3e78010b..e7cce8c0ee 100644
+--- a/hw/pci-bridge/pcie_root_port.c
++++ b/hw/pci-bridge/pcie_root_port.c
+@@ -46,6 +46,7 @@ static void rp_write_config(PCIDevice *d, uint32_t address,
+ static void rp_reset_hold(Object *obj, ResetType type)
+ {
+     PCIDevice *d = PCI_DEVICE(obj);
++    PCIEPort *p = PCIE_PORT(d);
+     DeviceState *qdev = DEVICE(obj);
+ 
+     rp_aer_vector_update(d);
+@@ -53,7 +54,7 @@ static void rp_reset_hold(Object *obj, ResetType type)
+     pcie_cap_deverr_reset(d);
+     pcie_cap_slot_reset(d);
+     pcie_cap_arifwd_reset(d);
+-    pcie_acs_reset(d);
++    pcie_acs_reset(d, p->acs_ctrl);
+     pcie_aer_root_reset(d);
+     pci_bridge_reset(qdev);
+     pci_bridge_disable_base_limit(d);
+@@ -118,11 +119,18 @@ static void rp_realize(PCIDevice *d, Error **errp)
+     rp_aer_vector_update(d);
+ 
+     if (rpc->acs_offset) {
+-        pcie_acs_init(d, rpc->acs_offset);
++        rc = pcie_acs_init(d, rpc->acs_offset, p->acs_ctrl, errp);
++        if (rc < 0) {
++            goto err;
++        }
++    } else if (p->acs_ctrl) {
++        error_setg(errp, "acs-ctrl is not supported by this root port");
++        goto err;
+     }
+     return;
+ 
+ err:
++    pcie_aer_exit(d);
+     pcie_chassis_del_slot(s);
+ err_pcie_cap:
+     pcie_cap_exit(d);
+@@ -151,6 +159,7 @@ static void rp_exit(PCIDevice *d)
+ static const Property rp_props[] = {
+     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
+                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
++    DEFINE_PROP_UINT16("acs-ctrl", PCIEPort, acs_ctrl, 0),
+ };
+ 
+ static void rp_instance_post_init(Object *obj)
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index bd00305ecc..57dd873eb9 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1278,7 +1278,8 @@ void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned)
+ }
+ 
+ /* ACS (Access Control Services) */
+-void pcie_acs_init(PCIDevice *dev, uint16_t offset)
++int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
++                  Error **errp)
+ {
+     bool is_downstream = pci_is_express_downstream_port(dev);
+     uint16_t cap_bits = 0;
+@@ -1302,16 +1303,26 @@ void pcie_acs_init(PCIDevice *dev, uint16_t offset)
+          */
+         cap_bits = PCI_ACS_SV | PCI_ACS_TB | PCI_ACS_RR |
+             PCI_ACS_CR | PCI_ACS_UF | PCI_ACS_DT;
++
++        if (ctrl_bits & ~cap_bits) {
++            error_setg(errp,
++                       "acs-ctrl 0x%hx has bits not supported by this port "
++                       "(supported: 0x%hx)", ctrl_bits, cap_bits);
++            return -EINVAL;
++        }
+     }
+ 
+     pci_set_word(dev->config + offset + PCI_ACS_CAP, cap_bits);
+     pci_set_word(dev->wmask + offset + PCI_ACS_CTRL, cap_bits);
++    pci_set_word(dev->config + offset + PCI_ACS_CTRL, ctrl_bits);
++
++    return 0;
+ }
+ 
+-void pcie_acs_reset(PCIDevice *dev)
++void pcie_acs_reset(PCIDevice *dev, uint16_t val)
+ {
+     if (dev->exp.acs_cap) {
+-        pci_set_word(dev->config + dev->exp.acs_cap + PCI_ACS_CTRL, 0);
++        pci_set_word(dev->config + dev->exp.acs_cap + PCI_ACS_CTRL, val);
+     }
+ }
+ 
+diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+index ec25e7a7de..678ad73f7f 100644
+--- a/include/hw/pci/pcie.h
++++ b/include/hw/pci/pcie.h
+@@ -137,8 +137,9 @@ bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
+                             uint16_t offset, uint16_t size);
+ void pcie_sync_bridge_lnk(PCIDevice *dev);
+ 
+-void pcie_acs_init(PCIDevice *dev, uint16_t offset);
+-void pcie_acs_reset(PCIDevice *dev);
++int pcie_acs_init(PCIDevice *dev, uint16_t offset, uint16_t ctrl_bits,
++                  Error **errp);
++void pcie_acs_reset(PCIDevice *dev, uint16_t val);
+ 
+ void pcie_ari_init(PCIDevice *dev, uint16_t offset);
+ void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
+diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
+index b28af067a6..2ad9a563d9 100644
+--- a/include/hw/pci/pcie_port.h
++++ b/include/hw/pci/pcie_port.h
+@@ -36,6 +36,7 @@ struct PCIEPort {
+ 
+     /* pci express switch port */
+     uint8_t     port;
++    uint16_t    acs_ctrl;
+ };
+ 
+ void pcie_port_init_reg(PCIDevice *d);
 -- 
 2.34.1
 
