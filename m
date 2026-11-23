@@ -1,37 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC56606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DBC606A31F
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 17:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RjkjOyDl
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ltIB2IKv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVXk7-00067W-Fx; Mon, 23 Nov 2026 12:22:15 -0500
+	id 1xVXkT-0006bM-Ka; Mon, 23 Nov 2026 12:22:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXk5-00066m-7N
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:13 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXkN-0006UF-CA
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:34 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXk3-0002m8-Ok
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:12 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXkL-0003Pe-NK
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:31 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 1002C623A8;
- Mon, 23 Nov 2026 17:22:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785EE1F000D8;
- Mon, 23 Nov 2026 17:22:08 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 21BFC62397;
+ Mon, 23 Nov 2026 17:22:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53E21F000E1;
+ Mon, 23 Nov 2026 17:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795454530;
- bh=JHR4k4W41LfOazmxhXxQKde1p++XwOQnB+oq1SROjsU=;
+ s=k20260515; t=1795454548;
+ bh=+oNDc3o3gz1XiDr3S9zFT2krXIhkc8komSvWhPXf97s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RjkjOyDlrfyokWcv0bMsmFkfGY8Lo1dlvml9RSzfDqYilPY8j9ys+/tPPH0JoYcsf
- I36zojsZS81yY2UfROtXEfkb++iU0P7cDZ+MaIv7VCcV6StBjAkkUNpo1HmhSvVAhZ
- hdD2P94EJ0b8HCtfddfXFq1lwdVVKRz/SvJdeCOz/JhWjZl78HzUtNzyUvawn4nraW
- rn3LhwPXGlGaCxPP9s+zVKgjhhEEvbWFQA/Scyb0sKZ1saHt9HIXUF9mUanPXl6JuT
- bUS6kfUEUGdX8DhiddVOsB5l+p9EssU1MuV4sVeiDz2vSilkB9NRuOGRyEIWUQp8/c
- 16jaoUPtDf2fw==
+ b=ltIB2IKvDlslTPxViA0HbV/7nzkK73GN91SuYkehHht7YD4BzVl/neqYCZrWVVojE
+ YpMqRMbtcu87LGqyDUi41PAYCdp8dGgOMvEPyVjXcPccLPnCn6lNDXlLBtfd58RxG2
+ UhZMkNT1cAdrIH7Z3yiVx8wopNe+VV8sh8BOMiRxHiXMZSjVkYG+hqe2cfoh3ngYDs
+ 4iaK6rLYq3nPBMlcd4AAqyLDL/6is5fm3GiSUf1TIBaecP0OBBqrwS0hklZQjxJ/El
+ lIyyiZ8dg4t2v7O7ysarWppOMwEnr5o+9W+/88S9RA43lEQCSHffmo4PBOCp8IrxhU
+ 3mfhnQAFI8HjA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -40,10 +40,10 @@ Cc: Keith Monahan <keith@techtravels.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH 05/14] hw/scsi/ncr53c710: Keep DCNTL.EA and DMODE.FC1 across
- an ISTAT.RST reset
-Date: Mon, 23 Nov 2026 18:21:42 +0100
-Message-ID: <20261123172151.7605-6-deller@kernel.org>
+Subject: [PATCH 11/14] hw/scsi/ncr53c710: Guard SCRIPTS reentrancy and cancel
+ requests on soft reset
+Date: Mon, 23 Nov 2026 18:21:48 +0100
+Message-ID: <20261123172151.7605-12-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261123172151.7605-1-deller@kernel.org>
 References: <20261123172151.7605-1-deller@kernel.org>
@@ -51,8 +51,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -78,96 +78,130 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Keith Monahan <keith@techtravels.org>
 
-The NCR 53C710 data manual, ISTAT bit 6 (RST) description, says the
-software reset clears all registers except that "This reset will not
-clear the Enable Acknowledge (EA) or Function Control One (FC1) bits".
-EA is DCNTL bit 5 and FC1 is DMODE bit 4.  ncr710_soft_reset() cleared
-both registers entirely.
+The SCRIPTS interpreter guards against CVE-2023-0330. When a command finishes
+while the interpreter is running, the interpreter moves on to the next
+instruction without restarting itself. If a script keeps triggering itself, the
+interpreter stops it after 8 nested restarts.
 
-Add named defines for the two bits and preserve them in the soft reset.
-ncr710_soft_reset() is also used for device reset and realize, which
-must still clear both bits, so those callers (the LASI reset and
-realize handlers and the sysbus reset handler) now zero DCNTL and
-DMODE after calling it.
+A guest ISTAT.RST soft reset cancels the connected and any queued
+tagged requests, so a stale s->current cannot dangle into the next
+command and queued requests are not leaked, mirroring the SCNTL1.RST
+bus reset teardown.
 
-The effect on real guest drivers has not been tested.
-
+Signed-off-by: Keith Monahan <keith@techtravels.org>
 AI-used-for: Patch series decomposition (commit splitting and ordering)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/lasi_ncr710.c | 6 ++++++
- hw/scsi/ncr53c710.c   | 7 +++++--
- hw/scsi/ncr53c710.h   | 5 +++++
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ hw/scsi/ncr53c710.c | 41 +++++++++++++++++++++++++++++++++++++++--
+ hw/scsi/ncr53c710.h |  5 +++++
+ 2 files changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/hw/scsi/lasi_ncr710.c b/hw/scsi/lasi_ncr710.c
-index 27234aadd3..27d8b5c749 100644
---- a/hw/scsi/lasi_ncr710.c
-+++ b/hw/scsi/lasi_ncr710.c
-@@ -186,6 +186,9 @@ static void lasi_ncr710_realize(DeviceState *dev, Error **errp)
-                      &s->ncr710);
- 
-     ncr710_soft_reset(&s->ncr710);
-+    /* A device reset clears EA and FC1; only ISTAT.RST keeps them. */
-+    s->ncr710.dcntl = 0;
-+    s->ncr710.dmode = 0;
- 
-     trace_lasi_ncr710_timers_initialized(
-         (uint64_t)s->ncr710.reselection_retry_timer);
-@@ -246,6 +249,9 @@ static void lasi_ncr710_reset(DeviceState *dev)
-     LasiNCR710State *s = LASI_NCR710(dev);
-     trace_lasi_ncr710_device_reset();
-     ncr710_soft_reset(&s->ncr710);
-+    /* A device reset clears EA and FC1; only ISTAT.RST keeps them. */
-+    s->ncr710.dcntl = 0;
-+    s->ncr710.dmode = 0;
- }
- 
- static void lasi_ncr710_instance_init(Object *obj)
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 9ea2c47744..55153418e4 100644
+index d6bd1c95fc..b7fc97b93b 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -349,8 +349,8 @@ void ncr710_soft_reset(NCR710State *s)
-     s->ctest5 = 0;
-     s->dsp = 0;
-     s->dsps = 0;
--    s->dmode = 0;
--    s->dcntl = 0;
-+    s->dmode &= NCR710_DMODE_FC1;
-+    s->dcntl &= NCR710_DCNTL_EA;
-     s->scntl0 = 0xc0;
-     s->scntl1 = 0;
-     s->sstat0 = 0;
-@@ -2266,6 +2266,9 @@ static void ncr710_device_reset(DeviceState *dev)
-     NCR710State *s = &sysbus_dev->ncr710;
+@@ -104,8 +104,23 @@ static int lsi_id_from_bits(unsigned bits)
  
-     ncr710_soft_reset(s);
-+    /* A device reset clears EA and FC1; only ISTAT.RST keeps them. */
-+    s->dcntl = 0;
-+    s->dmode = 0;
+ void ncr710_soft_reset(NCR710State *s)
+ {
++    lsi_request *p, *p_next;
++
+     trace_ncr710_reset();
+ 
++    /*
++     * A guest ISTAT.RST soft reset can land with commands still in flight.
++     * Cancel them so no stale pointer survives the reset.
++     */
++    if (s->current && s->current->req) {
++        scsi_req_cancel(s->current->req);
++    }
++    QTAILQ_FOREACH_SAFE(p, &s->queue, next, p_next) {
++        if (p->req) {
++            scsi_req_cancel(p->req);
++        }
++    }
++
+     s->carry = 0;
+     s->msg_action = LSI_MSG_ACTION_COMMAND;
+     s->msg_len = 0;
+@@ -115,6 +130,11 @@ void ncr710_soft_reset(NCR710State *s)
+     s->command_complete = 0;
+     s->script_running = false;
+     s->sigp_pending_resume = false;
++    /*
++     * Do not reset reentrancy_level here.  A SCRIPTS driven soft reset can run
++     * while lsi_execute_script frames are still on the stack; those frames
++     * decrement the counter as they unwind.
++     */
+ 
+     s->scntl0 = 0xc0;       /* full arbitration */
+     s->scntl1 = 0;
+@@ -258,6 +278,16 @@ static int lsi_bad_phase(NCR710State *s, int new_phase)
+ static void lsi_resume_script(NCR710State *s)
+ {
+     trace_ncr710_resume_script(s->waiting);
++    if (s->reentrancy_level > 0) {
++        /*
++         * A completion fired synchronously while the SCRIPTS interpreter is
++         * already on the stack.  Do not recurse: release the wait so the outer
++         * loop continues to the next instruction, which the completion has
++         * already armed.
++         */
++        s->waiting = LSI_NOWAIT;
++        return;
++    }
+     if (s->waiting != LSI_DMA_SCRIPTS) {
+         s->waiting = LSI_NOWAIT;
+         lsi_execute_script(s);
+@@ -858,13 +888,18 @@ static void lsi_execute_script(NCR710State *s)
+         s->waiting = LSI_NOWAIT;
+     }
+ 
++    s->reentrancy_level++;
+     s->script_running = true;
+ again:
+-    /* Yield to the CPU after LSI_MAX_INSN instructions. */
+-    if (++insn_processed > LSI_MAX_INSN) {
++    /*
++     * Yield to the CPU after LSI_MAX_INSN instructions, and guard against a
++     * script that retriggers itself (CVE-2023-0330).
++     */
++    if (++insn_processed > LSI_MAX_INSN || s->reentrancy_level > 8) {
+         trace_ncr710_script_yield(insn_processed);
+         s->waiting = LSI_WAIT_SCRIPTS;
+         lsi_scripts_timer_start(s);
++        s->reentrancy_level--;
+         return;
+     }
+ 
+@@ -1210,6 +1245,8 @@ again:
+             goto again;
+         }
+     }
++
++    s->reentrancy_level--;
  }
  
- static const struct SCSIBusInfo ncr710_scsi_info = {
+ static uint8_t lsi_reg_readb(NCR710State *s, int offset)
 diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
-index 00b6a01577..7dd0fe5f75 100644
+index 8b5cbfc135..9a4816794e 100644
 --- a/hw/scsi/ncr53c710.h
 +++ b/hw/scsi/ncr53c710.h
-@@ -85,6 +85,11 @@
- #define NCR710_DCNTL_REG        0x3B    /* DMA Control */
- #define NCR710_ADDER_REG        0x3C    /* Adder Sum Output (32-bit, LE) */
- 
-+/* DMODE bit 4: Function Code 1 (FC1), kept by an ISTAT.RST soft reset. */
-+#define NCR710_DMODE_FC1  0x10
-+/* DCNTL bit 5: Enable Acknowledge (EA), kept by an ISTAT.RST soft reset. */
-+#define NCR710_DCNTL_EA   0x20
-+
- #define NCR710_REG_SIZE         0x100
- 
- #define NCR710_BUF_SIZE         4096
+@@ -101,6 +101,11 @@ typedef struct NCR710State {
+     bool sigp_pending_resume;
+     /* A SCSI continue was deferred to lsi_issue_bh. */
+     bool issue_pending;
++    /*
++     * SCRIPTS interpreter recursion depth; always 0 outside
++     * lsi_execute_script, so it is not migrated.
++     */
++    int reentrancy_level;
+     lsi_request *current;
+     /* Disconnected tagged commands awaiting reselection. */
+     QTAILQ_HEAD(, lsi_request) queue;
 -- 
 2.54.0
 
