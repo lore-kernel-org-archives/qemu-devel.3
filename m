@@ -1,159 +1,125 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACC5606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 07:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73106606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 07:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=g7OTB/Qu;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=riNqn6mI
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=jT+4lQ5W
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVO3a-0002E8-HD; Mon, 23 Nov 2026 02:01:42 -0500
+	id 1xVOFN-0004KY-Q6; Mon, 23 Nov 2026 02:13:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xVO3Y-0002DG-Il
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 02:01:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1xVOFI-0004IA-7b; Mon, 23 Nov 2026 02:13:48 -0500
+Received: from smtpout5.mo537.mail-out.ovh.net ([51.210.91.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xVO3W-0000oZ-Ip
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 02:01:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795417296;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sdqrTFCVis/ozIAGVPOqqXg8WrMVgYTPHKd4qNq3f+k=;
- b=g7OTB/QuM7Wd9qh3KiGi2MmkbycDjylfg+PIUHd4TfIKzlxOP/lIDADNM7PXA4ZjnsWS/j
- ZX0h7IOl7ZQmZ4mfw10AoDePG4jITlwY10a5w0STtLLflZqaXhXq85495vT3lZ2Wq2l/Nr
- jqgjxB94E2qd1DltdPWxYci9OhnZL5A=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-k55K-qFJPviLmBNgPWG3sg-1; Mon, 23 Nov 2026 07:01:34 +0000
-X-MC-Unique: k55K-qFJPviLmBNgPWG3sg-1
-X-Mimecast-MFC-AGG-ID: k55K-qFJPviLmBNgPWG3sg_1795417293
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-6b57668479aso3332791a12.0
- for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 23:01:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795417293; x=1796022093; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=sdqrTFCVis/ozIAGVPOqqXg8WrMVgYTPHKd4qNq3f+k=;
- b=riNqn6mIxtM2vPvDVUssEK+fGTvp/6Hj/YHjF9zab4csOWM5WwyYTxGmxjlnRhxQ2F
- DSZsMKlZcAwiatjKhaGwbcokAomY8wXs/ZWkBWHmBAhEluSxe+z9DlDNc6otz7Ylvoqw
- cYqI3eS99aziFQl4peD6m7VL87oHKE8f3VwpV1LBQhJl5xjFPBCj3HWCgLxwzq/73mHQ
- p6Dc0TTyYHL8fg2+DujJyLRPfm4N0ohI5boIEUl/ZCbqw7eX+TfsV8mcdIiH9JOzdURN
- Ki2zGM2HoEHAriUdcimNg2iA/h7S4LaDQQyWCQeEHmm5ChybpCWD+kIlZkADBTYPcgLG
- aLlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795417293; x=1796022093;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sdqrTFCVis/ozIAGVPOqqXg8WrMVgYTPHKd4qNq3f+k=;
- b=eX7bT/QJnzBU3C/YHa4QXUZLkgXpXnWna9W+7J2Oo91EOT2Q2ta2CbYlDVAEWQXDgs
- rT4fROoSJkiyadpmusYgf0UvmrEe9/EGjVkwTHAX2yjEvgBqL6UbVgpE/z18z9dUrh9p
- rROXBK6TGiXTtyYOLQ/ZVW2E/CxwvAnUwF1jh2ad4SJOJn7NJv9/+O+5fKz1yROVfUCH
- k2R4HKcmGoMNvECKNgYCkag7/qLw3JAxSpMNuXI1xpDoqKnreoAsJUq7oSx4/RHxytsg
- HSlwsDhxvndzdJw4c6OX3pY6UL2vQhKkxFyfDGSDjky9oCBDWoumDRsSI+Q93sdLOaw+
- 31+g==
-X-Gm-Message-State: APuU4Z+H3RpH592PcOkgjgZMcsy2Ni3o6r+CFM4XwUHiVV04imUaD0jd
- QJ/ZVDPgj5DJX1AE22+k2nh3paQ5BwPH3tKXVa8piawDSSiynbqmjRucwYSIpDunFIE039vCbjN
- zNJtP7p8GI9EfdnOaAJ42OmhhPKeBVqTAS94wJ7riMQnhs1pZiIv3VXQu
-X-Gm-Gg: AZFdTZeLBxoDNIHp0W1IlFN91uDSBzImOpxb3cnHmH6f3v7td6AuE61dwA42TpralB/
- 5N/pRs7guykcJclDCZ4LM6UuSWQMopG8aphWAJjBxvT62WuhxISuq1g/eSXpwGTLwzJ0YiTChdO
- O90q1XKCqk5Dnoy1LLHnLiXbLhWc1LYOILwVdNC6c/HPqzmv/iYm1LoNCCThKUOmBtqOh0UiKS4
- worlcP9PVwDb7i/+8+jQlf1qbCjA8KHy4aCmjxnzVcFaHKWIT4tx9OqOGzNprBBwPZvUN9gpMPa
- 9eOrVC2FZE9d7pzy96YTU0eYYkPbFp5ciOYXK/N+cp1fX8zEUJy8yN3wWqbELi6zOa3cu2JhjUX
- 6tpcSb/oUIJEXDSS7d2gDM5x2l7144AMlaXmBRaC3McRR
-X-Received: by 2002:a05:6402:270c:b0:6b6:f3ca:94c9 with SMTP id
- 4fb4d7f45d1cf-6ba37d6434amr7262827a12.26.1795417292255; 
- Sun, 22 Nov 2026 23:01:32 -0800 (PST)
-X-Received: by 2002:a05:6402:270c:b0:6b6:f3ca:94c9 with SMTP id
- 4fb4d7f45d1cf-6ba37d6434amr7262693a12.26.1795417290351; 
- Sun, 22 Nov 2026 23:01:30 -0800 (PST)
-Received: from [192.168.0.9] ([47.65.243.90]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6a67fe48sm18609537f8f.23.2026.11.22.23.01.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 22 Nov 2026 23:01:29 -0800 (PST)
-Message-ID: <05860cf1-ba01-428e-b891-e8d0f4ca2cd8@redhat.com>
-Date: Mon, 23 Nov 2026 08:01:27 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1xVOFC-000838-G6; Mon, 23 Nov 2026 02:13:44 -0500
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4jXxxQ24ktz403q;
+ Mon, 23 Nov 2026 07:13:30 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Mon, 23 Nov 2026 07:13:30 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.147])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jXxxQ0y15z1xnp; Mon, 23 Nov 2026 07:13:30 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id E3C731B44372;
+ Mon, 23 Nov 2026 07:13:27 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G004c2ce8ae8-b942-47be-93f6-3c06bc4a629b,
+ B6C8A908DA241A829C2EE32824EAF31EC75DFE0A) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 159.26.105.2
+Message-ID: <39176a72-7756-477a-842b-e277ec07d321@kaod.org>
+Date: Mon, 23 Nov 2026 08:13:27 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] tests/functional/ppc64: Fixes and improvements for
- hypervisor tests
-To: Aniket Sahu <asahu1x@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, peterx@redhat.com,
- farosas@suse.de, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, harshpb@linux.ibm.com, rathc@linux.ibm.com,
- anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com, gautam@linux.ibm.com,
- amachhiw@linux.ibm.com
-References: <20261120095854.35941-7-asahu1x@linux.ibm.com>
- <87y0an4he9.fsf@draig.linaro.org>
- <497b4b73-07b8-4c53-af59-e62a3043ec8e@linux.ibm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <497b4b73-07b8-4c53-af59-e62a3043ec8e@linux.ibm.com>
+Subject: Re: [PATCH 2/2] m25p80: Clear write_enable after page program and
+ flash erase operation
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+References: <20261110-m25p80_write_enable_fix-v1-0-3a2abc0072b0@oss.tenstorrent.com>
+ <20261110-m25p80_write_enable_fix-v1-2-3a2abc0072b0@oss.tenstorrent.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20261110-m25p80_write_enable_fix-v1-2-3a2abc0072b0@oss.tenstorrent.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 16688651370230230061
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFL1YKstmikY/X0MbgcgAFyYbipXDYws8jjC7gM5NrccUKXT4PzO09mVxwTSlDmo0Ms+mfViiLde4Pjhu3EyiIbIyL+QPGsCjW5Pmu1eS0Ua36GioMShMQLi2whT8d+vj4hJTZY9Hnuw3qdKJ5WwLr/e1svXEIPCHtqQCiaiNRtlYwz45NvCkICzW/cSZUP+6WE0/iwKsTVNsSCa+29bnD68I7aE5j5gUIfizJ0ZBUkmsLa3NS5JxUc6IWBJe0Op9bJ0qYz+KBcB0eLBo1CQuFIjV547H4DCCWoc9LB65C0whWme7PF3lvbFRJr4JXuQKs2D8WPpT+/FadidY1HSK5QWPfPO1F3JIpJyK5cqhG6bvsLGcwVJtF3wqDahcysTBDZ68154Sx9iPknbd0ZslJdAiVJ+llKDi+fWfqAx679AJuvIGO0rg7o/JE75qSPZnG+T3Ap3MBzgvsI1aYUj7cBFG4ucNwk0ltaL3RIsHMAUbruWvvOZXhyBWMhnTuwH2q+fhV8GKL6hRZuVX4gdYahtQmdsxE+9tPDhT2YzRkCPxK+4dxm9tCdYP6I+UVb+dCshdQebVNG8XKeSa8l6D575wJ6o4IHPZidryLHYrLvQ3BoOJqgGjIzD3EGLObeq7uSMe80ZOCOT9IUNiXpSu+pm1GMsx/cJshoaz7r0rmGcw
+DKIM-Signature: a=rsa-sha256; bh=XLipqwcUZygTRa9Tf1DQDiVbFLYGHS/bUTy2BF7+SX0=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1795418010; v=1;
+ b=jT+4lQ5WaZA6fXwI6/3EeZG8YjnDRLxGYv3kxwq9me0531kg8y1IkvqkMEQjjTkwJZiUgDxm
+ lqAik3liqZW1pQkZECxVlgmZyp1Zk4a21iawjCuopKWOH1kt4fZew0WT/o4YZljRaoCLt482A+N
+ YwFz3WpjA2e7y3/OgcRKXSa34WRuVFQWTrtMAT0Snb2d7SQ1E+FujjUMFSgJzni9JjKYUY056JY
+ dc2nIbOVbkwDmLUX7NpKiTKJFibhqDhroG7t9c7XmL8YX8Lr9Ak63WwZWUB9SVI1vSE5J55FTjl
+ bqOFuegIwvKzxNDO0FWQJ908i2phaC6KfTtrmQrLOOe6w==
+Received-SPF: pass client-ip=51.210.91.24; envelope-from=clg@kaod.org;
+ helo=smtpout5.mo537.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,32 +131,67 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Am 22.11.26 um 03:19 schrieb Aniket Sahu:
+On 11/10/26 19:11, Anirudh Srinivasan wrote:
+> NOR flash drivers in EDK2[1] and its forks[2] poll for write enable
+> (WEL) to be deasserted at the end of a SPI operation to indicate that
+> the operation has been completed. The m25p80 spec[3] indicates that real
+> hardware would desassert WEL at the end of page program and erase
+> operations.
 > 
-> On 20/11/26 9:36 PM, Alex Bennée wrote:
->> Aniket Sahu <asahu1x@linux.ibm.com> writes:
->>
->>> This series fixes several issues in the PPC64 hypervisor functional tests
->>> and improves their robustness and reliability.
->> Just a quick note to say the power hardware we have from OSUL doesn't
->> expose a hypervisor so we can't currently run these tests in the
->> upstream CI. Do you know of any way we could get such hardware added to
->> the CI?
-> Hypervisor tests are part of the thorough test run (mentioned as hv in the 
-> meson.build file), and if I remember correctly, only quick tests are run as 
-> part of the CI on gitlab.
-Just a FYI, only the quick functional tests are run when you do a "make 
-check". But the whole functional test suite (i.e. the thorough tests) are 
-run when you do a "make check-functional". And that's what we're doing in 
-the various functional-system-* jobs in the CI, see .gitlab-ci.d/buildtest.yml.
+> The m25p80 model does not deassert WEL at the end of these operations.
+> Update the model to do so to match hardware behaviour.
+> 
+> [1] https://github.com/tianocore/edk2/blob/3c890c11dfdb5908dcbc84f977dddc6c6d43789f/MdeModulePkg/Bus/Spi/SpiNorFlashJedecSfdp/SpiNorFlash.c#L987
+> [2] https://github.com/spacemit-com/edk2-platforms/blob/0b8b7182d8a20a771b97a487d0e6f4ab89fb3492/Silicon/Spacemit/Drivers/Spi/SpiNorFlashDxe/SpiNorFlashDxe.c#L532
+> [3] https://www.alldatasheet.com/datasheet-pdf/download/22807/STMICROELECTRONICS/M25P80.html
+> 
+> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
-  Thomas
+
+If this change is to be merged in QEMU 11.2, could you please provide
+a Fixes: tag ?
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/block/m25p80.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> index 545e0b5728..cedfec67a2 100644
+> --- a/hw/block/m25p80.c
+> +++ b/hw/block/m25p80.c
+> @@ -650,6 +650,8 @@ static void flash_erase(Flash *s, int offset, FlashCMD cmd)
+>       }
+>       memset(s->storage + offset, 0xff, len);
+>       flash_sync_area(s, offset, len);
+> +
+> +    s->write_enable = false;
+>   }
+>   
+>   static inline void flash_sync_dirty(Flash *s, int64_t newpage)
+> @@ -1599,6 +1601,10 @@ static int m25p80_cs(SSIPeripheral *ss, bool select)
+>           if (s->state == STATE_COLLECTING_VAR_LEN_DATA) {
+>               complete_collecting_data(s);
+>           }
+> +        /* Deassert WEL at the end of a non-AAI page program */
+> +        if (s->state == STATE_PAGE_PROGRAM && !s->aai_enable) {
+> +            s->write_enable = false;
+> +        }
+>           s->len = 0;
+>           s->pos = 0;
+>           s->state = STATE_IDLE;
+> 
 
 
