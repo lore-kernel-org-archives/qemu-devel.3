@@ -1,114 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7154A606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FEB606A31E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=ATNtDYL8
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=A0KFR5Cn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVVkA-0007Cw-Mq; Mon, 23 Nov 2026 10:14:18 -0500
+	id 1xVVsW-0001sp-2Q; Mon, 23 Nov 2026 10:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xVVin-0006YS-2i
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:12:50 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1xVVrQ-0001Te-35
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:21:45 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xVVik-0006Om-9N
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:12:44 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-67db23d8892so3590241d50.2
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 07:12:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795446761; cv=none;
- d=google.com; s=arc-20260327;
- b=Y8+bAsjIwZvee9SDLQXe5ABT7XlI7iw/O5DIp5GqgX9s9GrIsQUy+me+4qqVuD5OgY
- bvIcE+QWSJg10c7MJBznCgeardaRWk7+r4EaAtJufusrukPuMQQ2pjizln+UvDo0/deJ
- cM2dq/UMYTchJxHbShwfemTuRADF4FeH+15+gB+vHYBRK2pRbjAzSOYn59C7fHBAasyP
- kdxb5rNkerdRTH5KQp8ypCZ2wEhkp7brxIvrXaTx8iEXMtBoNXMzNFKs7h3qfpCm+NIe
- 17ZCoTBZ3WmGb1id09sqs/L/6kLEDeQqdLpkOBcH1nAfXwoQ8zw9NrXK6zaBTyQXIqdo
- tYzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=CtGjttGjiRbvno6EBHpB5Jtwc+KOTQQoZUgh/y0R2D0=;
- fh=NLQEsyaHAaR/r1ZilKlHNSug1PhaFkpfWGnPfhqws+A=;
- b=Q1jMZFsVIryyKOkq8bw6OWG81VbvYqgtkCEeiJDt2HrCPIBDgGoMAhgYxvsyft0Sdy
- ElB88i1kHsDMYpW3ymHUnpqEEDEd2gwpZjmAQ2eEZi8JSuAV6bHKqVhmSbsDm0Ms18BS
- /0p2eZYoR+Rsj4CoIAHT7yAma8GU1LPAc4hIGn05ULbaogyx4EsXCZyeLVg6ZQFVbDNn
- F/oqvX6bNW++q9ZfQLUF+FW29hXyqeUBJ5/hMUYGo8yx9lYldYUD4K/uLrZEolG7ctnk
- 98W9oKPYU5KNd9MnWa50YoaWeQ+TCKUlgqus0jK6qkYdWmq1TLIWTbgmTZtnyJOZ+Qp/
- 44/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1xVVrM-0003dW-OT
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:21:39 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-67da69e7c31so3442043d50.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 07:21:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1795446761; x=1796051561; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CtGjttGjiRbvno6EBHpB5Jtwc+KOTQQoZUgh/y0R2D0=;
- b=ATNtDYL8GS9NENENeEBsz69ALVU6K/wBdL2EGcp6rw9KfFP2IWunD83UE7+Gw7tQQl
- iIdO4G4upedcSmphGZkgXk25VRJOH8w8HfWL+PkoLIYn3LDQKgKlR01PLO8LWM4Jcw9M
- 7aAhC//0IRleoJVJvHGryOdXsDxOyFluyFLbCkwKirJ8S2QVHyRHewx/N94co6hrVk8X
- WWyIW0hItDBFNBPuBZ+txjJ/2k/G61qwUovNMpwdk681p0pAajvCONHgVSBK7wZXNzVD
- VkzCOMiX9iBDs90WbSSTDReGtFMsuj0Pl0qsZyclA3+X8tfildcgaJRjY13g6JadHCyg
- bkaA==
+ d=tenstorrent.com; s=google; t=1795447295; x=1796052095; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/vs4sFdfKdIOq/B7UfEgjO9NdPjzDJFAw1/gWQ7A7dI=;
+ b=A0KFR5CnxsRfvYS018rM6zpXlG6PrIpC5y6Kvph5jblKfYWzCJ40HqrULXfKM11E4w
+ KrTns8MWyruG6BF2IoercidzUIHbn9i6/nQnwhtxmLE09wU8fxl/Skt0RAnzb2besc3z
+ cXUQiseO/jOXrtoGzBHFqVV7WwzCF06/PXDaDpF5JvH3VSw9YPuN3yu263XVuvW0V6EY
+ godQSB8FLlHxG44nzkst6tinwQ5EcXjy/GE/Ti8aCS8djxW+gEwZ/LEcOuwZTt6cWNsJ
+ LqL+xb/SnBG1Jf5Q9sBE7WiLP6DxGwscMaWn9AknyvmcaMOk76IaNF6Ln/0sptDPcmF4
+ osog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795446761; x=1796051561;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20260707; t=1795447295; x=1796052095;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=CtGjttGjiRbvno6EBHpB5Jtwc+KOTQQoZUgh/y0R2D0=;
- b=nCvD2A/T4AMKopd5z+JqFu1SDhHq4OON4TlkOCuK21mb5dhThypsYjn2LkWC26tArr
- mdupzF83uySqKhvGIhyz3GCSf4mvjV5l09iO4GSHFzyYxbwUGtzUo3YsIjsgwd2MKYeR
- y9miNUi8bToBMx+Jq2Fs2fR39/VV75qz+oM2zfsY/Qqc3YOZpallm9M//erEYYhJTQrr
- 6ElNXX+83u1y0cQ1fz5I+kJjeShWK1/o0edIZ93Rz1vFLiJGfkAyvulrS9jrmM36vYiY
- j2AetOCGFpA1O0kSd2wyUi6TedmfScpwVrQbcyEaqK5gLt8OyQbBROsCvw/hAQkmNAhy
- YFsA==
-X-Forwarded-Encrypted: i=1;
- AL+hErG1QrXir414KA1ZruEDabaa2/BoeGvN11Zhedoah0Ug9/DR4qtbnuB38eCjzUbxw81ymWN/FFJb9pO+@nongnu.org
-X-Gm-Message-State: APuU4Z+SM/4jl7ik4ObbWjWpZ0Ok4PljFLCVAW824JrwvkWhLDGdVi4g
- sqC3iuvli2UxDtgIIohH62ZTDvon2StBbIJyU8GW7M0MzC2Qrz5PFNxxycl1c3alXhJ36Sxqzt1
- NNjc706Tu+iQaAB149KXG8ei3qLZsx3xE9t0ISVmQ3A==
-X-Gm-Gg: AZFdTZdNfVTfLBh3qIvU9QIbsVUiAQF5HowM8UAAQsLChV16EPTo/v8QHs5crnRk8ml
- BRpO8mctF7wcdv5zj3VM1k/dwkIGt7kMnIYmc/mElzRSEwB0VGp63Du9O2DhcxnUZyjNiDEsiPR
- ntHEbr0fHEg93vfsEibuAZ4iOjr0DL70813iupqGdaHv7wD5EqzGIEtjdzJeYNXOU8ZuDmN7bwp
- 8HzJ+IFElAT+SFogSbH944nN9kyOkHV7/1Or69q6IgLZnBqejtDFgaS5zWe0ITJlPirZWxrx4mX
- XYt6a2026zdgLTX2LAeZz6MafiKisKC8A5J7TSfasVP3A9qqBJZya02pcUxE3L7XrQ33e7V5Wf6
- mxdrArneRurTCijPufJI3JrKxDuqAb0ttvYICNj8KC7VMnGD52Z2dGT+ZYdicu2twrnhNZiA6c2
- fxGR/832SRJl2r6deNlxZ9m/w51w==
-X-Received: by 2002:a05:690e:810:20b0:67d:b995:a5b9 with SMTP id
- 956f58d0204a3-67df442229cmr3055985d50.49.1795446760721; Mon, 23 Nov 2026
- 07:12:40 -0800 (PST)
+ bh=/vs4sFdfKdIOq/B7UfEgjO9NdPjzDJFAw1/gWQ7A7dI=;
+ b=WjnBaF5aKcVRYpbX7gvJZp51yucuYzlZLQwUspON1QuV6kXVmPC1y9L5bAOgFPx1m9
+ oCoyGbsf949CtMh6lNr6Jon+k3PLSTS+FUDgA/VM8mmwGL5eaNgsJ2fQmT66gnj60nzu
+ DhnrWDc+aQVRBFVHH5bYW7So2y+bYcpWlzG3WYbsd+yvvVlHmD7Cc02jnVQcULffg/8y
+ BQMFU7ZcuhkK0CUE8jJEN99UNjHgyVhKyMO0TsWgMsw2/LoKDPB+WjR1M9gTyoGCfyl0
+ xVPHKSNmq5/hgBl/4uHjmVeeQrXBtvii70TKZIXwRLyhXpvCmdnu8+VJMdbWAJEilOP/
+ SoxQ==
+X-Gm-Message-State: APuU4Z8BUsyCxuKHlvB3tAmEQ0fNuUz/vT4/PO/dD01CV+jNc5jd2LKA
+ pDVtjVvb6Lxc+DP4mCjxIqOZi2i4eH+XJhxg9K2wSjq4P861m9Zu3BBg9sukgFqT1+o=
+X-Gm-Gg: AZFdTZecngoLPwqddKo3LQvIkHezIQ1msDs4jFpZ/Zr0zsfy5LgsmCplC9HjP7mHR0K
+ /Ays3DwCLv9ov9/t7QjVtfa+0ywWVZlH5s92uSNaoMcl/L4ZgPTaM/2TcFFAhMDG86ikcBx/7JZ
+ 6rN+rjyuW/+4euziQIxxuFNPdzRbygI8VQktVdPv6iVP+SILGdbjnldlV3SbmvB4Icms3EMx4M7
+ ceTaApXePSUbmWK2NrSPQ4xd3y/fkGHmUQHhw0pXniZlrNO64yoSoY1m9fdus7b5HtQJ5dtwehm
+ euOEOYQHxFWmJoJvj7r82e2i1RibXiWPzUzrWtdeCcsVV7qrws0XQ2a7JmrDgndR+uTuojqYUa9
+ WXTsfDz5g1wfqwJhzvUM5GU0GW3WZ+MxQjMpzKCp1u7yvpCZKFVBMoz2zVqlDrNIppfLOP7Tjry
+ /LL/9f5/b2y7rf51cmJCUOj7Uy2H4/ki2Nly0kYtT8NXm1HO5B//Ms2qAuwTU1a0QC+KwW2mQ8b
+ VRSJwlEaj0tTJf9DeeYCrgRvgfHoo4HxranW81fXoG+dsuDh4HsHJjSbyI89PH9AOu82wGXWhWD
+ XeJM82RjKi4CrGHHYZM46bt55G0DsVF3hQ2pI9HHr5L3OKJiwCYQGwyC5cPpzazZmZSpPE09Dtq
+ 4mgTDdEEU
+X-Received: by 2002:a05:690e:43d4:b0:67d:a47a:599d with SMTP id
+ 956f58d0204a3-67df44101d7mr2902524d50.27.1795447295218; 
+ Mon, 23 Nov 2026 07:21:35 -0800 (PST)
+Received: from [192.168.2.129] ([2600:1700:220:59e0:f880:d5ac:69f1:fb89])
+ by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-67df3353258sm5747939d50.9.2026.11.23.07.21.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Nov 2026 07:21:34 -0800 (PST)
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Mon, 23 Nov 2026 09:21:16 -0600
+Subject: [PATCH v2 1/2] test/qtest/aspeed_smc-test: Send write enable
+ before each page program command
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261110-m25p80_write_enable_fix-v1-0-3a2abc0072b0@oss.tenstorrent.com>
- <20261110-m25p80_write_enable_fix-v1-2-3a2abc0072b0@oss.tenstorrent.com>
- <39176a72-7756-477a-842b-e277ec07d321@kaod.org>
- <CAEev2e_SbbLENO3YhkJPtBXyd2JKZktmnxzD6UbbDyfyih6C2Q@mail.gmail.com>
- <c6bdf631-52f8-49db-b2a2-c028671a2753@kaod.org>
-In-Reply-To: <c6bdf631-52f8-49db-b2a2-c028671a2753@kaod.org>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Mon, 23 Nov 2026 09:12:29 -0600
-X-Gm-Features: Aa3M54o7RLBv5QJqjt0z2LroN4QAg3PNi3q5ZFH9xHZROZCqmdwgWQCJwhE7yfs
-Message-ID: <CAEev2e8+9G_fEbGb4pxc22G-fHF6ebLOhBPJdDP47Y976pML8Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] m25p80: Clear write_enable after page program and
- flash erase operation
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Alistair Francis <alistair@alistair23.me>, qemu-devel@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb136.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261123-m25p80_write_enable_fix-v2-1-0ac94f99e91f@oss.tenstorrent.com>
+References: <20261123-m25p80_write_enable_fix-v2-0-0ac94f99e91f@oss.tenstorrent.com>
+In-Reply-To: <20261123-m25p80_write_enable_fix-v2-0-0ac94f99e91f@oss.tenstorrent.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -126,94 +108,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi C=C3=A9dric,
+The M25P80 specification [1] dictates that a write enable (WREN) must
+be sent before a page program (PP), and that the write enable latch
+(WEL) is reset at some point before the PP command has finished.
 
-On Mon, Nov 23, 2026 at 9:10=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod.org=
-> wrote:
->
-> On 11/23/26 16:01, Anirudh Srinivasan wrote:
-> > Hello C=C3=A9dric, Alistair,
-> >
-> > On Mon, Nov 23, 2026 at 1:13=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod=
-.org> wrote:
-> >>
-> >> On 11/10/26 19:11, Anirudh Srinivasan wrote:
-> >>> NOR flash drivers in EDK2[1] and its forks[2] poll for write enable
-> >>> (WEL) to be deasserted at the end of a SPI operation to indicate that
-> >>> the operation has been completed. The m25p80 spec[3] indicates that r=
-eal
-> >>> hardware would desassert WEL at the end of page program and erase
-> >>> operations.
-> >>>
-> >>> The m25p80 model does not deassert WEL at the end of these operations=
-.
-> >>> Update the model to do so to match hardware behaviour.
-> >>>
-> >>> [1] https://github.com/tianocore/edk2/blob/3c890c11dfdb5908dcbc84f977=
-dddc6c6d43789f/MdeModulePkg/Bus/Spi/SpiNorFlashJedecSfdp/SpiNorFlash.c#L987
-> >>> [2] https://github.com/spacemit-com/edk2-platforms/blob/0b8b7182d8a20=
-a771b97a487d0e6f4ab89fb3492/Silicon/Spacemit/Drivers/Spi/SpiNorFlashDxe/Spi=
-NorFlashDxe.c#L532
-> >>> [3] https://www.alldatasheet.com/datasheet-pdf/download/22807/STMICRO=
-ELECTRONICS/M25P80.html
-> >>>
-> >>> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> >>
-> >>
-> >> If this change is to be merged in QEMU 11.2, could you please provide
-> >> a Fixes: tag ?
-> >
-> > Looks like Alistair has picked up these to his branch already.
->
-> b4 handles trailers updates nicely.
->
-> > These would be the fixes tags. Not sure if i should send another
-> > version or if Alistair could apply these tags.
-> >
-> > Patch 1/2 (aspeed smc test)
-> > Fixes: 3e62a32ddb ("test/qtest: Introduce a new aspeed-smc-utils.c to
-> > place common testcases")
->
-> hmmm, this is for patch 1 and you have just replied to patch 2.
->
-> > This bug was introduced in 7a2334f720 ("tests: add a m25p80 test")
-> > back in 2016. The commit in the previous line refactored these tests,
-> > so I think the fixes tag should mention that one.
-> >
-> > Patch 2/2 (m25p80)
-> > Fixes: m25p80 ("Initial implementation of SPI flash device")
->
-> This is not a git commit it.
->
-> I think you should send a v2, the tools are now quite confused :
->
-> $ b4 am 20261110-m25p80_write_enable_fix-v1-0-3a2abc0072b0@oss.tenstorren=
-t.com
-> Analyzing 7 messages in the thread
-> Looking for additional code-review trailers on lore.kernel.org
-> Analyzing 0 code-review messages
-> Checking attestation on all messages, may take a moment...
-> ---
->    =E2=9C=97 [PATCH 1/2] test/qtest/aspeed_smc-test: Send write enable be=
-fore each page program command
->    =E2=9C=97 [PATCH 2/2] m25p80: Clear write_enable after page program an=
-d flash erase operation
->      + Fixes: 3e62a32ddb ("test/qtest: Introduce a new aspeed-smc-utils.c=
- to place common testcases") (=E2=9C=93 DKIM/tenstorrent.com)
->      + Fixes: m25p80 ("Initial implementation of SPI flash device") (=E2=
-=9C=93 DKIM/tenstorrent.com)
->    ---
->    =E2=9C=97 BADSIG: DKIM/tenstorrent.com
+The current tests that make use of page program send WREN only once at
+the beginning, before issuing multiple PP commands. The m25p80
+implementation in QEMU doesn't deassert WEL at the end of each PP
+operation (so this isn't an issue currently), but real hardware would
+unset WEL at the end of the first PP command the second PP command would
+fail. Update the tests to send WREN before each PP command.
 
-Uhh, sorry about that. I'll send a v2.
+The current m25p80 model does not reset the WEL at the end of each PP
+command. This is a bug, and a subsequent commit will fix this.
 
-Regards
-Anirudh Srinivasan
+[1] https://www.alldatasheet.com/datasheet-pdf/download/22807/STMICROELECTRONICS/M25P80.html
+
+Fixes: 3e62a32ddb89 ("test/qtest: Introduce a new aspeed-smc-utils.c to place common testcases")
+Cc: qemu-stable@nongnu.org
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+---
+ tests/qtest/aspeed-smc-utils.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
+
+diff --git a/tests/qtest/aspeed-smc-utils.c b/tests/qtest/aspeed-smc-utils.c
+index 146332240d..85e883d0b8 100644
+--- a/tests/qtest/aspeed-smc-utils.c
++++ b/tests/qtest/aspeed-smc-utils.c
+@@ -218,12 +218,23 @@ static void read_page_mem(const AspeedSMCTestData *data, uint32_t addr,
+ typedef void (*read_page_mem_fn)(const AspeedSMCTestData *data,
+                                  uint32_t addr, uint32_t *page);
+ 
++static void flash_write_enable(const AspeedSMCTestData *data)
++{
++    spi_ctrl_start_user(data);
++    flash_writeb(data, 0, WREN);
++    spi_ctrl_stop_user(data);
++}
++
+ static void write_page_mem(const AspeedSMCTestData *data, uint32_t addr,
+                            uint32_t write_value)
+ {
+-    spi_ctrl_setmode(data, CTRL_WRITEMODE, PP);
+-
+     for (int i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
++        /* Send write enable before each Page Program */
++        flash_write_enable(data);
++
++        /* move out USER mode to use direct writes to the AHB bus */
++        spi_ctrl_setmode(data, CTRL_WRITEMODE, PP);
++
+         flash_writel(data, addr + i * 4, write_value);
+     }
+ }
+@@ -468,10 +479,13 @@ void aspeed_smc_test_write_page_mem(const void *data)
+     flash_writeb(test_data, 0, WREN);
+     spi_ctrl_stop_user(test_data);
+ 
+-    /* move out USER mode to use direct writes to the AHB bus */
+-    spi_ctrl_setmode(test_data, CTRL_WRITEMODE, PP);
+-
+     for (i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
++        /* Send write enable before each Page Program */
++        flash_write_enable(test_data);
++
++        /* move out USER mode to use direct writes to the AHB bus */
++        spi_ctrl_setmode(test_data, CTRL_WRITEMODE, PP);
++
+         flash_writel(test_data, my_page_addr + i * 4,
+                make_be32(my_page_addr + i * 4));
+     }
+
+-- 
+2.43.0
+
 
