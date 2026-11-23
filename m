@@ -1,113 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B646E606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 12:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CB1606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 12:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=U6mp63M5;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Ww1K9ApE
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JdS14I6x
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVSlY-0001Wk-M6; Mon, 23 Nov 2026 07:03:25 -0500
+	id 1xVStf-0002g9-73; Mon, 23 Nov 2026 07:11:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVSlU-0001Vh-Ud
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:03:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVSlR-0001Aq-NW
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:03:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795435394;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1onM7vQOH4ybeT1o/duq27rl7jDAlFyfvuCyzAHhmu4=;
- b=U6mp63M5SshH1iD1j0+upRFuc3LXQpvnR02eHzmjcAdSx/Tf7/KybxAx9bPD/TDYQbLr9t
- 0OcNUumspb4EjgKSt0XFRC8GuWZMNYCQE18//MGU4/oPIQulF76vRPzBMjT4cGR9etjscM
- CDRYOB+DxxuiwR005Uh8MepYyZUrwLk=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-BicIy_IrMWKznazUCTWoIA-1; Mon, 23 Nov 2026 12:03:12 +0000
-X-MC-Unique: BicIy_IrMWKznazUCTWoIA-1
-X-Mimecast-MFC-AGG-ID: BicIy_IrMWKznazUCTWoIA_1795435391
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-8b4e8af48c8so42803627b3.1
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 04:03:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVStd-0002as-0H
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:11:45 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVStb-0004D6-9A
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:11:44 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-67c0bd676eeso2049133d50.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 04:11:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795435902; cv=none;
+ d=google.com; s=arc-20260327;
+ b=emyfhTlSAg3F5ngg4Li4/elKRKQ9qJrl6w9/FXtimbg7wOZmMYtlEbxLeZNotbViTA
+ 7H51qKlSbcQKNwt9Wjxt8/1mRQk+fL4cTKTNLBJafzgCG3SwJU73kHLCcxaovMGLgRw+
+ ckG0sf7Oupl0ia7KhmOTB8B/OEbAUuYM5jlGN8JxTT2PxCrIEFGbC6ooq7n2qwKm2qPQ
+ Z9vYBm5aaG00ENzGWKs8yeE5I6RSzBnn6GJWKH+Z6eDfnk4Ozut2D/rl01jDpfSgYXfh
+ eDKwi1f0LrmQ1PVoIMD58kJ6oThJkcpuZxkNGefYIDCBXBJjm9vijqTCm9RLcEkP71tj
+ rqpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7bsd6MScyb/Cw9bSouzvpkrUzEybksY5A3VWBFLKcos=;
+ fh=2ALTUQ4fM6Vbf5rhGVBfpTVykrqnFQBD6OcN7/kmt8g=;
+ b=sh4/Zn9GZmddtCphZvlq0s85Tm2CKVoPreGV+3aIlFuEO7dwidbcwRd5Ew1yjAETTS
+ 7njlPU+8jfGW4ONE57vfviq4G5IrgiTt4TpZaFojH8qQqJ+hXw1InDtk9r6H4BOLzMw+
+ uVbpzrlHm4ZmbOMm0n2YyL7mBnz3xFPQ7H1iTuj2qJduUrv986ugOlHqRtnqvq+kMYy6
+ gyZButiqdk7yJUrndTQNmw5T5nEHE0gQPLjlKXpRyELLqBxqIVFlGo/OpYsGakTVTbNT
+ MLuMnCHZ7YzgAlz/mx73pLuMBOOQyI26vklATZA5jEpJLQbYoLECEGCWdb8WWGtEu6aD
+ P+dg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795435391; x=1796040191; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=1onM7vQOH4ybeT1o/duq27rl7jDAlFyfvuCyzAHhmu4=;
- b=Ww1K9ApESDEVYyGxg2UoLS9PtiC8D5WNREBGCJKLIYfXFcQDyRaPNxP2H5y63mh1cu
- Se0C+ZIP7cZxvfbL53+bsEflr8Kg4vrjTYTAxhCcHXFR50wEcpmGkMoBYD1rlytj5A12
- B6U38DrE+6HviVXUZxSk01LQt1YDtKbx3H5yufD7AZnmvUpXeZYJBJyiPAORYMRZ0oYC
- q8lMDXiPkxfyD06QHYV/j7uNAJ2uyhsk6TTZtR52PhKcWLnv4EYYqcGPWL4Vq3jQpn9H
- 7m9G6xw+GJ0ZFp2xUAcKEOJsWegfg4RxqQK460/uCi7U5/TsfujliR1YgsaQYENtAgMt
- UqKw==
+ d=linaro.org; s=google; t=1795435902; x=1796040702; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7bsd6MScyb/Cw9bSouzvpkrUzEybksY5A3VWBFLKcos=;
+ b=JdS14I6xMJB7zxtdhvjNFpQ91fpjba3mSA9Jha8GZqLpOeifjht85Y+wKKKrz3xChG
+ 66OyuoRvC4YC4lLdY06jcO1MDlPG9Yqv985h/KpGEkAT0EUEzTDFIyvBd8Cjv2ezURNQ
+ 4WMRpMRVDj9OIAXVFQN5v4OXiOlh+BorfHAKp3bKW7caa0T2CoHqp4L8NrT4vAI0Y1cj
+ 5LDbe+uSvNdbEVsCSmYH7vuE1PeFolS3UaMyo9by0sFPeB7CuNOQkJWbVJoiRHtsorU+
+ +a37+G7X5SmmdsPK6z+KbMPEcIVzQaUkem5MdSAxxPlI4+aQ/zPBb2HBXKWNF5hWcrUN
+ J9og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795435391; x=1796040191;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=1onM7vQOH4ybeT1o/duq27rl7jDAlFyfvuCyzAHhmu4=;
- b=W6mIJy3w6qUhVHYKQIGt2O9qag70JaUors1t50NQ/Wst2/DGU4PNtJjvuI33vJp42M
- TOsnWC9qqkTG0W52yKUsunMZun5NlYnTwepw7FgSqR+kcX1Ad7hQPUNlqxBl8OC5CyIJ
- pFpBxDXbLnOmK6TjmmNNvXP/upj16C+quJ9l2Q6r/ryAkyengWuHT4i9C6qDeUbeu6Eo
- j2fSbAFAWlESLhDfL/S9pG/KBx1yquoyWbp2MDD8aBSPQX+wsnR07Pqb/0RmamkiETuZ
- pcgj5XeohSUyOj0TffIxX0pKja2KjceFlRxMtKe3w1EpiITGwRnvgHoM6/kOJcFntJYX
- Ohfg==
-X-Gm-Message-State: APuU4Z+jwtfjeZAG9rdZN55mljV7STQJ5I5XBqaUjG8DSqNCd5dV0ZEj
- xE74zYh0JgULvi33chOWfu4YS/dQcCX7yGu4e/0dYHBAr5Zun/NmaxC40qQI7aZjWj32OzVEsbL
- 4Kw2gysxh2qob6rZ6vfPn0D4mUKDqKtwMNNRG8EdGxBQVGf7digY0Df6Y
-X-Gm-Gg: AZFdTZcYYxdb3stOdL540oj1xcGFVuISCW61U7gTQF5jsUY+A56bqa3z+SF2n5UxmKg
- f0f468z6Fw+0XPWYrkVfnS4frUfUwVwcqHMRAverTptT6gcWVLiaF8KU8YaDUP7HDYi3Sas2v89
- lz8l8d3Qgg+SCnlmG92YYki35nx8xFyGmFrMYruk2UgAyWMX/3RRhL/HajRvbsfKvr5sDl27vBY
- grWO/c9mrvD9tqTtKynUpDoPZcBHd2lXJKbK/tUEfgNMU2hrjnO/0mVPWvghk56/n/Y15gIk+y4
- 1CgvpXWLmknshOTMlwmCyxYO8N5oZGJQ2XqpQPTPvYWbCildAywW5RmSDO2m2HKqSMe2IZRzyB0
- 1401u1iKB5YYW0y7i3s85N0mld/EdFWi2szij5oGwNlBx
-X-Received: by 2002:a05:690c:c04:b0:8b4:c8c5:6b11 with SMTP id
- 00721157ae682-8b5204f087fmr54864727b3.36.1795435391260; 
- Mon, 23 Nov 2026 04:03:11 -0800 (PST)
-X-Received: by 2002:a05:690c:c04:b0:8b4:c8c5:6b11 with SMTP id
- 00721157ae682-8b5204f087fmr54864177b3.36.1795435390614; 
- Mon, 23 Nov 2026 04:03:10 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949bb34a38bsm778661685a.13.2026.11.23.04.03.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Nov 2026 04:03:09 -0800 (PST)
-Date: Mon, 23 Nov 2026 07:03:08 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org
-Subject: Re: [PATCH for-12.0 5/6] rust: Replace vmstate_validate with post_load
-Message-ID: <awQrfKAyGDxxI3Gl@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261120124923.1656220-1-peterx@redhat.com>
- <20261120124923.1656220-6-peterx@redhat.com>
- <awBYUwFhba1AYpZb@intel.com>
- <awBqoiy3zjHiXXEG@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <awO3EjQI/8QJsyZ9@intel.com>
+ d=1e100.net; s=20260707; t=1795435902; x=1796040702;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7bsd6MScyb/Cw9bSouzvpkrUzEybksY5A3VWBFLKcos=;
+ b=ENTv/X+/yh6HvfWVmvVkSvk5kD8c4DnhDa8eSpVciy0hnPyPhuvwQVNRfog6rmV8Hm
+ WsStMu9Qk7g0RTtk3qT2r0xDy/GeorUaaTO+PgxP+nzMoFMNOzph2byz03zLhMftksXx
+ DNzgMv42//HulqHPrYUD372WJh4sT8fSUuj7HvmaGLisEHGkonuJ1TvxCOz0ADnB0AUw
+ sec5/9p/IvXLgwrAnn6DFvJbjsUz/+tA0eTS/IZrZCT5O1yAAugKYciz32e1IvNsz60S
+ mHeYFbIjP+FZhHsUzIKJDINR7LOpGLcGAt9iq2/mcn0mxLeEKpzRLn0eVx+65g8lM5C+
+ vPeQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErH0/1qig2GSYHRCMxGaahl1Vx+fsdFFNLyLFoo0aHFC7JE2jEWU3Js66hiTSU9kkF2KpeBCiQbQRwZl@nongnu.org
+X-Gm-Message-State: APuU4Z9SFkaL/B5sgzNxF4Squuv/w9tdLo9Qi2Lrm7sfrBT6Gk3fsrlA
+ pGzCXWOxPpW4MupNUNs337c+VemmfTAGHH5CR4t0mXxG+s8wCNJyWUQsFXM+E/jCkUkaadZPhOb
+ DfCIaa+H3L/1siyIZG3yxGlwVwEBUOW058Ygsl6VYBg==
+X-Gm-Gg: AZFdTZcBjQdl9ab9E5GkSkKpMoFgOvTKai2h0XD+G3U0F8tqRqK57mSA6gNUbxWIZ+x
+ OU4+nM0Eg0GmSrTqHMiNQvhcmW83Snm85DhmG97H3rcAdsaCHHbK50I3+P3m1dgJ3ch0wJwal4h
+ tHQ20iheb003fmmRsjW58zlJFju6ndxtXm/3RjlsPX4yxjo4EyBCGuX31NNy6tx7tftsme+HHnl
+ MEc3FlHUtrbdgZHTCdjR8rhbzUZ9zUhoT07p8HpHrdd9QBeHc46kfiJa2kTThTDjPNKQvXbaqz+
+ iz/iJc8QFgKMIcjZ5dj/7qWsn16lQA61QAnVRnvZgVnnOFSrDy+RSai+hwHd8QlPFrL3LRt+r/B
+ p5QFacASwwQfN+jD3DRJ3QjN6WdwiJfsnvfKDEqcYLwkmL9YA/UL/ZbTMW85MaqLfR6gS3vUzGt
+ M9hQJFrJ0V2M4SEr8NzRkU
+X-Received: by 2002:a05:690e:13cb:b0:66f:c1be:a64f with SMTP id
+ 956f58d0204a3-67df4444c30mr5051365d50.65.1795435901705; Mon, 23 Nov 2026
+ 04:11:41 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <awO3EjQI/8QJsyZ9@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261119091922.1380805-1-fuad.tabba@linux.dev>
+In-Reply-To: <20261119091922.1380805-1-fuad.tabba@linux.dev>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Nov 2026 12:11:29 +0000
+X-Gm-Features: Aa3M54rpluT39izReyFJiIZcPDUpABTDZz_S3j63cL7aubt1aEvxAtxAxp_Umg8
+Message-ID: <CAFEAcA9mkWC5re8NfCPQzgB5de+0DYC5TbQV9TXweEtMKzdi7Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/arm_gicv3_cpuif: Don't count a virtual EOI in
+ EOImode 1
+To: Fuad Tabba <fuad.tabba@linux.dev>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,87 +115,44 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Nov 23, 2026 at 11:46:26AM +0800, Zhao Liu wrote:
-> > > And I find C side (in patch 3) handles this differently via using the local
-> > > "num_timers".
-> > > 
-> > > In this case, I think we still have the option to keep the logic
-> > > consistent between C and Rust :). We can add VMSTATE_STRUCT_VARRAY_TEST
-> > > for C side:
-> > > 
-> > > #define VMSTATE_STRUCT_VARRAY_TEST(_field, _state, _field_num, _test,\
-> > >                                    _version, _vmsd, _type) {\
-> > >     .name         = (stringify(_field)),\
-> > >     .num_indirect = vmstate_field_offset(_state, _field_num),\
-> > >     .version_id   = (_version),\
-> > >     .field_exists = (_test),\
-> > >     .vmsd         = &(_vmsd),\
-> > >     .size         = sizeof(_type),\
-> > >     .flags        = VMS_STRUCT | VMS_VARRAY,\
-> > >     .offset       = vmstate_offset_varray(_state, _field, _type),\
-> > > }
-> > > 
-> > > and make C hpet use this:
-> > > 
-> > >         VMSTATE_STRUCT_VARRAY_TEST(timer, HPETState, num_timers_save,
-> > >                                    hpet_validate_num_timers, 0,
-> > >                                    vmstate_hpet_timer, HPETTimer),
-> > 
-> > One thing to mention is, here the test() function is not for validation,
-> > but for checking if the field exists.
-> > 
-> > It means, assuming dest QEMU has num_timers=8, source QEMU has
-> > num_timers=4, when migration happens with your VARRAY_TEST(), it won't
-> > sanity check it, but since it saw 4!=8 it will assume the whole VARRAY
-> > doesn't exist.
-> > 
-> > That's one reason why I want to get rid of VALIDATE(), because it's abusing
-> > field_exist() IMO, and we don't necessarily need such abuse when we have
-> > post_load.
-> 
-> I see, this makes sense.
-> 
-> > > 
-> > > Alternatively, we can also have Rust use num_timers (as u8) for timers
-> > > array VMState, but this will bring back the conversion issue between u8
-> > > and usize, which is the commit b3bf86b8936d & 6e85cfe44c0e want to fix...
-> > 
-> > Ohhh, I decided to not dig into this part. May I make a request instead? :)
-> 
-> Happy to help :-)
-> 
-> > Could you help me to come up with a Rust patch that does what's needed for
-> > this series to drop VALIDATE and VMS_MUST_EXIST and replace this one (drop
-> > my Author), meanwhile matches the best you'd like to?  It'll be much easier
-> > to me then because my Rust is rust (this is not strict; it never shined),
-> > so I can just pick it up when repost.
-> 
-> I find it's possible to use num_timers directly without going back to
-> u8 type. Since the commit 1f0b40dccfe5 ("migration: Remove redundant
-> flags"), C side has already dropped VMS_VARRAY_UINT8/16/32, so Rust
-> side can use usize as the array length type (without migrating it), like:
-> 
-> unsafe impl VMState for usize {
->     const BASE: VMStateField = {
->     	panic!("usize cannot be migrated, use a fixed-size integer type");
->     };
->     const VARRAY_FLAG: VMStateFlags = VMStateFlags::VMS_VARRAY;
-> }
-> 
-> I'll think more/cook a patch based on this approach.
+On Thu, 19 Nov 2026 at 09:19, Fuad Tabba <fuad.tabba@linux.dev> wrote:
+>
+> icv_eoir_write() increments ICH_HCR_EL2.EOIcount for a virtual EOI with
+> no matching list register, in either EOImode. The VirtualWriteEOIR0()
+> and VirtualWriteEOIR1() pseudocode in the GICv3 architecture
+> specification only does so in EOImode 0 (ICH_VMCR_EL2.VEOIM clear),
+> since in EOImode 1 the DIR write increments EOIcount instead.
+>
+> In EOImode 1 an interrupt with no list register is therefore counted
+> twice, and KVM running under TCG deactivates an interrupt that its guest
+> has yet to deactivate.
+>
+> Increment EOIcount on EOIR only when EOImode is 0.
+>
+> Fixes: b3b48f529fe8 ("hw/intc/arm_gicv3: Implement ICV_ registers EOIR and IAR")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+> ---
+>
+> Notes:
+>     Tested with a local reproducer that runs a KVM guest in EOImode 1
+>     under TCG, with more interrupts pending than list registers. Without
+>     this patch the guest sees an interrupt deactivated before its DIR,
+>     and with it the reproducer passes.
+>
+>  hw/intc/arm_gicv3_cpuif.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
-Thank you!  For me I don't need everything, a minimum patch to make the
-next patch pass would work.  But anyway I'll wait for that.  If your series
-will be separate and stand on its own, I'll just rebase to it.
 
--- 
-Peter Xu
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
