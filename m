@@ -1,70 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58FB606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 14:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF019606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 14:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=nsSlQ003
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GTs7RO/8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVVJW-0004R4-ED; Mon, 23 Nov 2026 09:46:39 -0500
+	id 1xVVN2-0005Bq-R4; Mon, 23 Nov 2026 09:50:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xVVJQ-0004Ql-Hf
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 09:46:33 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xVVJM-0008Pa-Vk
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 09:46:32 -0500
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6ANEkCpg025174
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 23 Nov 2026 23:46:12 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=MSrNJmGoAGEJnmU5IruyfJMXH3sNlckxjpdkx+WjQLs=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1795445172; v=1;
- b=nsSlQ003GrEywlaApxmc3efNJUU3a+ZWC0A1cM5FOPjF4tb+s+URFe+lCliRrd0D
- bI19BjIJNtfrlpKm2jO9Fr2zSNigIX2IpVy2UROO5WNKmHGScT/fZdXYrF9TmzMV
- 07Kmza9vitk927ZUeJWKCCJP+9+aGuZeliaAMm/5MctNk2+e1f/D9/VZ0pSTxyoe
- 9swidf5nUwd6RspOKBukOkD2HDvPTgqno8AYlS+Ty+RmTBzH+QUUoI78JHAS1QIb
- mFqYwS2o2anaH19BRni17+p4Jek1M7x1CJ7Hz6GexgTDZuIZGwNxjvRsFiBfnxXV
- 3dz9Ld6my1ruZ/ozedbRyw==
-Message-ID: <60c1db4c-8245-46a9-9dc3-4cebba3f9d4a@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 23 Nov 2026 23:46:11 +0900
+ (Exim 4.90_1) (envelope-from <agarwaljayesh03@gmail.com>)
+ id 1xVVMj-00051q-Od
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 09:49:58 -0500
+Received: from mail-dl1-x122a.google.com ([2607:f8b0:4864:20::122a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <agarwaljayesh03@gmail.com>)
+ id 1xVVMi-0004lm-4h
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 09:49:57 -0500
+Received: by mail-dl1-x122a.google.com with SMTP id
+ a92af1059eb24-15ea896ddc8so5657792c88.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 06:49:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795445392; x=1796050192; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=O5+8/AixUPXQ4kSG2aFXHVaf5Ok62tVtQCfdSL/IMr0=;
+ b=GTs7RO/8Dst61I0mq/gGkalW9itxAqWXakG3bojfaC6iPgX2hcOTNT2aN8Z1BB2zH0
+ 5SkMggBB57r/6jOrz3iGU53lcp4RZYvCpu1EnGuhGKtAl/aNl/YtLgHQKqLUnylu1Fw6
+ PBQWb7cuX1w8LPXAc64P795hEduwwZBS1a3/GRO6ad2rlyptxl9u3JPvFg8JdajAnaga
+ +Oea+mAL+EqbsSCqlIwpYD4S/vhKpkkkp9bGtMilmbCGF+yA2ry+6Eyt54+zdzG5pTP6
+ doOL4vPT0nFp9pDxn3j1WlF1nmmjQiiV49MIx7TL7B9C0/yu3+Xj+EsKPpffeajluy0z
+ Z69Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795445392; x=1796050192;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=O5+8/AixUPXQ4kSG2aFXHVaf5Ok62tVtQCfdSL/IMr0=;
+ b=U7P9t00np5lJNpC+pvQLflLT9ToTOtsQQMzfW5a2GaCnZ7fnDdNVtliDjW5irylvuu
+ q321DHppFLsjNVUzyeyf93HIau2Y3g0j0Z7Ae45PIBkR6wBl1IdJVVsjt55eIO/IKfMI
+ q1o9JDPv6vmE+/vL/1+93qE1a1s+WMEieYecKIOmZ4hffR8pw5Omi6do2KQdOS3gxvyt
+ xVuskClKYlCSQTYeER1aey+SoyeprBJ7QOk6sEonMYHHp0Qjq9zZxiHVfx7oGI1HnzlZ
+ SpSC1HAc7q6+cm4cZLg1oBtFDxOVEmrwr6PCGDclUbBc4W0HN9GOTNt33MNC0M4Alh1a
+ mEjQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErG/lQbMUnwIMzZAC/hk+Va/8VQ/qWfKvTb8a05k6PGgamaUJRliIvCutdevD2deU6Hy2F3nZG+fxVPX@nongnu.org
+X-Gm-Message-State: APuU4Z92uB0AyC9dP2diJf7UZrgN+3e/qbfVMCxyVaa0ddzVWK/9emr5
+ 6OZkpcozGf0H6jXAQiPbug6arKF2Xr1NGO17w/edWTpd6BL2ZLrr5N2G
+X-Gm-Gg: AZFdTZdBuV3TttzceP8crSo+r95OHz8+h4Dr9gIQH4LBNQosuHcAhuU+NgM7NpcRYx6
+ 1gQBeRudLc9HUZXXR1Df0+Sd+eSblFfbCfFFAyipfCx9hSGm18FD5CqnBIIN5H2CHX/O/vMsQFQ
+ 1+RdWoMuQh0mhTgHBFMeDqnDz7yLLe4XzxjX6tbwJEcqT4WV+GxOOAg1RICxgWY8kJvA2Fng6DO
+ yiqesY3H+dEpdH9T0fI1zGi92kROpWNXbetDhWlSPhtKUv4bgFyFMqJ7guvnDNggaJ0Pf1EJ8N8
+ 2i+xR2HoX4fqxf7prjhscImI126tM1i2y1L1tU4/s44CzJVCvjxXBqtOoFUIw7h6AdsG94vYVOF
+ 2lVhiigXLmykBcI4xVs2rF6xwNjWXZbIphggyhoK8iWhI1/qPhfYwCDPlJabBlVEIaRLev4Yk1K
+ cmiDBhUvRMoTvzp7aWzhoFOB1I/3X8gfDyBT/jSTzQBpmKOD3zssNRnj9MsD6S/TXWQCAizqois
+ usJJetpkjIIOXRXvgKab3aEi/93QJHPGPx6aTiZ4e4SoOUOacInrFRLY4r3IJxFr66FDVIlTJtW
+ wQNeJ6GuTL+mpIzKDqsDk4NqxthLWLS7SrlDUS3KatK6o4rewzlRiMiw9eGw39oDnBSLEdxOhDv
+ 64EalCyHc
+X-Received: by 2002:a05:701a:c96a:b0:14a:8cff:fbb8 with SMTP id
+ a92af1059eb24-1b5568c8dffmr9916578c88.28.1795445392336; 
+ Mon, 23 Nov 2026 06:49:52 -0800 (PST)
+Received: from LinuxMachine.bits-hyderabad.ac.in ([182.75.45.16])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1b55ff0e4e6sm21657646c88.11.2026.11.23.06.49.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Nov 2026 06:49:51 -0800 (PST)
+From: Jayesh Agarwal <agarwaljayesh03@gmail.com>
+To: peter.maydell@linaro.org
+Cc: philmd@oss.qualcomm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ s23adhik@csclub.uwaterloo.ca
+Subject: Re: [PATCH] hw/arm/bcm2838: Route system timer interrupts to GIC
+Date: Mon, 23 Nov 2026 20:19:43 +0530
+Message-ID: <20261123144943.9630-1-agarwaljayesh03@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAFEAcA_4+PcP8f2DF+mtjkO5iO6eU6C6R6hjfBN7dg0o_TGPiw@mail.gmail.com>
+References: <CAFEAcA_4+PcP8f2DF+mtjkO5iO6eU6C6R6hjfBN7dg0o_TGPiw@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/8] hw/display/vhost-user-gpu: reset scanouts on the
- main loop
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Dmitry R <rdmitry@taktcycles.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20261113-issue-4848-v3-0-98e4fa3e77eb@redhat.com>
- <20261113-issue-4848-v3-4-98e4fa3e77eb@redhat.com>
- <23ed503d-01ed-4ef4-96d2-e31ca00d4bd9@rsg.ci.i.u-tokyo.ac.jp>
- <CAMxuvaxDU0K_w5kQfm6UnGskM=zs=ie_uUYbVWVhwMko=ypVTg@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAMxuvaxDU0K_w5kQfm6UnGskM=zs=ie_uUYbVWVhwMko=ypVTg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122a;
+ envelope-from=agarwaljayesh03@gmail.com; helo=mail-dl1-x122a.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,161 +101,29 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026/11/15 16:58, Marc-André Lureau wrote:
-> Hi Akihiko
-> 
-> On Sat, Nov 14, 2026 at 3:54 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/11/13 9:29, Marc-André Lureau wrote:
->>> vhost_user_gpu_reset() runs on the vCPU thread when the guest writes the
->>> device status. Installing the placeholder surface there calls the
->>> display listener without the EGL context being current, so the D-Bus
->>> listener receives a surface without a texture and aborts on the tex_id
->>> assertion.
->>>
->>> Defer the display cleanup to a bottom half, as virtio_gpu_reset() does,
->>> and wait for it when reset is triggered from a vCPU thread.
->>
->> This suffers from the same issue the following patch series addresses:
->> https://lore.kernel.org/qemu-devel/20260908-gpu-v3-0-25332a85f909@rsg.ci.i.u-tokyo.ac.jp/
->> ("[PATCH v3 0/9] virtio-gpu: Do not wait for the main thread during reset")
-> 
-> Could you fix vhost-user-gpu in the same series?
+On Mon, 23 Nov 2026 at 11:55, Peter Maydell <peter.maydell@linaro.org> wrote:
+> Thanks; applied to target-arm.next.
 
-Yes, though it may take a while since it's quite complicated and I've 
-been busy lately.
+Thank you. The problem that you raised in the 2025 thread on Sourojeet's
+patch also affects the following devices:
+uart0, aux, mbox, sdhost, mphi, dwc2, rng200, the eMMC OR gate, DMA 
+channels 0-6 and the two DMA OR gates.
 
-> 
-> Should we review & merge your series before this one?
+bcm_soc_peripherals_common_realize() and bcm2838_peripherals_realize(), 
+for the Pi4 only peripherals, wire these devices to the legacy 
+controller, and later in bcm2838_realize(), the GIC wiring overwrites 
+that.
 
-I don't think your series needs to wait for mine. I suggest dropping
-patch 3 and 4 for now.
+Should I fix them the same way, one patch per device? I will send them
+in December.
 
-Regards,
-Akihiko Odaki
-
-> 
-> 
->>
->> Regards,
->> Akihiko Odaki
->>
->>>
->>> Reported-by: Dmitry R <rdmitry@taktcycles.com>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>    hw/display/vhost-user-gpu.c    | 39 +++++++++++++++++++++++++++++++++++++--
->>>    include/hw/virtio/virtio-gpu.h |  4 ++++
->>>    2 files changed, 41 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
->>> index d3b720d08a73..46e7fc136583 100644
->>> --- a/hw/display/vhost-user-gpu.c
->>> +++ b/hw/display/vhost-user-gpu.c
->>> @@ -18,6 +18,7 @@
->>>    #include "chardev/char-fe.h"
->>>    #include "qapi/error.h"
->>>    #include "migration/blocker.h"
->>> +#include "system/cpus.h"
->>>    #include "standard-headers/drm/drm_fourcc.h"
->>>
->>>    typedef enum VhostUserGpuRequest {
->>> @@ -635,9 +636,9 @@ vhost_user_gpu_instance_finalize(Object *obj)
->>>    }
->>>
->>>    static void
->>> -vhost_user_gpu_reset(VirtIODevice *vdev)
->>> +vhost_user_gpu_reset_bh(void *opaque)
->>>    {
->>> -    VhostUserGPU *g = VHOST_USER_GPU(vdev);
->>> +    VhostUserGPU *g = VHOST_USER_GPU(opaque);
->>>        int i;
->>>
->>>        /* release the scanouts before virtio_gpu_base_reset() drops ds */
->>> @@ -653,6 +654,25 @@ vhost_user_gpu_reset(VirtIODevice *vdev)
->>>            qemu_console_set_surface(scanout->con, NULL);
->>>        }
->>>
->>> +    g->reset_finished = true;
->>> +    qemu_cond_signal(&g->reset_cond);
->>> +}
->>> +
->>> +static void
->>> +vhost_user_gpu_reset(VirtIODevice *vdev)
->>> +{
->>> +    VhostUserGPU *g = VHOST_USER_GPU(vdev);
->>> +
->>> +    if (qemu_in_vcpu_thread()) {
->>> +        g->reset_finished = false;
->>> +        qemu_bh_schedule(g->reset_bh);
->>> +        while (!g->reset_finished) {
->>> +            qemu_cond_wait_bql(&g->reset_cond);
->>> +        }
->>> +    } else {
->>> +        aio_bh_call(g->reset_bh);
->>> +    }
->>> +
->>>        virtio_gpu_base_reset(VIRTIO_GPU_BASE(vdev));
->>>
->>>        vhost_user_backend_stop(g->vhost);
->>> @@ -699,9 +719,23 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
->>>            return;
->>>        }
->>>
->>> +    g->reset_bh = virtio_bh_io_new_guarded(qdev, vhost_user_gpu_reset_bh, g);
->>> +    qemu_cond_init(&g->reset_cond);
->>> +
->>>        g->vhost_gpu_fd = -1;
->>>    }
->>>
->>> +static void
->>> +vhost_user_gpu_device_unrealize(DeviceState *qdev)
->>> +{
->>> +    VhostUserGPU *g = VHOST_USER_GPU(qdev);
->>> +
->>> +    g_clear_pointer(&g->reset_bh, qemu_bh_delete);
->>> +    qemu_cond_destroy(&g->reset_cond);
->>> +
->>> +    virtio_gpu_base_device_unrealize(qdev);
->>> +}
->>> +
->>>    static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
->>>    {
->>>        VhostUserGPU *g = VHOST_USER_GPU(vdev);
->>> @@ -722,6 +756,7 @@ vhost_user_gpu_class_init(ObjectClass *klass, const void *data)
->>>        vgc->gl_flushed = vhost_user_gpu_gl_flushed;
->>>
->>>        vdc->realize = vhost_user_gpu_device_realize;
->>> +    vdc->unrealize = vhost_user_gpu_device_unrealize;
->>>        vdc->reset = vhost_user_gpu_reset;
->>>        vdc->set_status   = vhost_user_gpu_set_status;
->>>        vdc->guest_notifier_mask = vhost_user_gpu_guest_notifier_mask;
->>> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
->>> index 631dfc63a4d4..c8cb91032968 100644
->>> --- a/include/hw/virtio/virtio-gpu.h
->>> +++ b/include/hw/virtio/virtio-gpu.h
->>> @@ -276,6 +276,10 @@ struct VhostUserGPU {
->>>        CharFrontend vhost_chr;
->>>        QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
->>>        bool backend_blocked;
->>> +
->>> +    QEMUBH *reset_bh;
->>> +    QemuCond reset_cond;
->>> +    bool reset_finished;
->>>    };
->>>
->>>    #define MAX_SLOTS 4096
->>>
->>
-> 
-
+Thanks
+Jayesh Agarwal
 
