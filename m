@@ -1,37 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B585606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 17:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7975C606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 17:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Q985vBW4
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tz5GG9iR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVXju-00060j-HK; Mon, 23 Nov 2026 12:22:02 -0500
+	id 1xVXkJ-0006IN-Nj; Mon, 23 Nov 2026 12:22:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXjt-00060H-M5
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:01 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXkH-0006EA-JX
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:25 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXjr-0002jz-UJ
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:01 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVXkG-0002xX-0w
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 12:22:25 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id E164D44E20;
- Mon, 23 Nov 2026 17:21:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCAC1F000D3;
- Mon, 23 Nov 2026 17:21:53 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6727D6238D;
+ Mon, 23 Nov 2026 17:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088081F000C0;
+ Mon, 23 Nov 2026 17:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795454515;
- bh=ZmOpM2IQ4kmZseG/LBs8EIhar4S3b8RO7X1iUrM69NM=;
- h=From:To:Cc:Subject:Date;
- b=Q985vBW4kYEYHKLhen42VWaw0OqAVLuD3KTyryFYaltKRMjXm1npxmeTgcjAoqYT/
- rkydjcEk3WwL9hs0aDndgDlp1lJObFZ1uJz0H2JuOtQYLzFPj1wQoKvb7TfNBipV8W
- pzd7h4JdDlZFndUyd35huVZkJbsizvyFe0+Cv3xFMXA/6zeuzVvQgo0BecQ250R34K
- GIo/A5puE/ywqtOA3hWVxhhjadth7yy6dHG5t6LMvzaFOCeD9eTqqX4QXiDL1O771V
- tINf5i5Plk9SzgD3MM01hRP5jgpziByS297wleHBP9U0WxB+ISAPm0vpx+ISuUd7D2
- C05aOZqbhE82Q==
+ s=k20260515; t=1795454543;
+ bh=VGBVfMxDCicHLKWal5RFeUy7+lYxfrUcbpJpWQGcpm8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=Tz5GG9iRwpwiozWhGjZx8EEcCfAIygyicwpyL/tfAhnpkK+lYhKtW7Lqp7jYrj39h
+ 3mXxpKBbVeDgzFVbpCobEe1GadOjeyOg7sdk/aZTvRPDU4dpYNwAp58tT7m4cyitYJ
+ 8Jt6chX7sH0ZJf3UTYAjJ45XlkRwSYBr4atxYSXq7taZyCHb4lo8J61NefiQiLLkn0
+ QFzyO3cV0i0DEoMFc/DbJP/1I8ev0kOhcjgnMI8ZZw8QaeQourCee28zFfclo5ccPL
+ dhi2YHgxorGlqHOkcAP7NuEUENrABNCe5NQrIUbNLNyDFgDI5qPIZ/ziamujYdUn7y
+ pHOCXiA9WvkDg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -40,16 +40,19 @@ Cc: Keith Monahan <keith@techtravels.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH 00/14] nc53c710 rewrite
-Date: Mon, 23 Nov 2026 18:21:37 +0100
-Message-ID: <20261123172151.7605-1-deller@kernel.org>
+Subject: [PATCH 09/14] hw/scsi/ncr53c710: Drain asynchronous transfers in the
+ register write
+Date: Mon, 23 Nov 2026 18:21:46 +0100
+Message-ID: <20261123172151.7605-10-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261123172151.7605-1-deller@kernel.org>
+References: <20261123172151.7605-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -68,89 +71,91 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Helge Deller <deller@gmx.de>
+From: Keith Monahan <keith@techtravels.org>
 
-Fifth attempt to replace the existing 53c710 driver by
-a new driver based on the code of the lsi53c895a.c 🙂
+The c720 driver of HP-UX 10.20 needs the completion interrupt ordering
+hardware provides, starting a command with interrupts masked and then
+spinning.  So after a register write starts an asynchronous transfer
+the model drives it to completion before returning to the guest (a
+bounded synchronous drain under the BQL, as IDE and MegaSAS do, falling
+back to asynchronous completion if it cannot advance).
 
-Since v5:
-Incorporated feedback from BALATON Zoltan <balaton@eik.bme.hu>,
-specifically:
-- added his r-b tag
-- use dma_addr_t in lsi_do_dma() as in lsi53c895a driver
-- rephrased commit message in patch 11, text from Keith Monahan
-- stick to version 2 in vmstate struct
+Signed-off-by: Keith Monahan <keith@techtravels.org>
+AI-used-for: Patch series decomposition (commit splitting and ordering)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ hw/scsi/ncr53c710.c  | 29 +++++++++++++++++++++++++++++
+ hw/scsi/trace-events |  1 +
+ 2 files changed, 30 insertions(+)
 
-Since v4:
-Used LLM to decompose v3 as logical / atomic changes when
-possible (didn't work well with the rewrite patch).
-
-Fixes extracted first so could be merged for v11.2 (patches
-1 to 5). The rest is the rewrite, so up to the maintainers
-(Helge, Mark) and is probably OK as hobbyist-only code.
-
-Since v3:
-- header split, Suggested-by tag (Zoltan)
-- I couldn't figure the "hw/misc/lasi.c" change so dropped
-  the comment about it.
-- Dropped "move to COMMAND on CLEAR ACK after MESSAGE REJECT"
-- Split rewrite patch as separated commits:
-   - base engine
-   - asynchronous completions
-   - synchronous drain
-   - HP-UX MESSAGE REJECT quirk
-   - reentrancy guard and reset-time request cancel
-
-hw/scsi/ncr53c710.c is derived from hw/scsi/lsi53c895a.c which
-is LGPL, the rewrite is now declared GPL-2.0-or-later.
-hw/scsi/lsi_scsi.h, which is moved verbatim from lsi53c895a.c,
-keeps the original terms: its header says "This code is licensed
-under the LGPL." with SPDX-License-Identifier: LGPL-2.1-or-later.
-
-Keith Monahan (9):
-  hw/scsi/scsi-disk: Add quirk_mode_page_no_flexible_disk, use it on the
-    715
-  hw/scsi: Move shared LSI/NCR definitions to lsi_scsi.h
-  hw/scsi/ncr53c710: Rewrite the 53C710 SCRIPTS engine
-  hw/scsi/ncr53c710: Deliver completions from bottom halves
-  hw/scsi/ncr53c710: Drain asynchronous transfers in the register write
-  hw/scsi/ncr53c710: Append SAVE DATA POINTERS after MESSAGE REJECT for
-    HP-UX
-  hw/scsi/ncr53c710: Guard SCRIPTS reentrancy and cancel requests on
-    soft reset
-  hw/scsi/lasi_ncr710: Map the full LASI SCSI module page
-  hw/scsi/ncr53c710: Bump the migration version
-
-Philippe Mathieu-Daudé (5):
-  hw/scsi/ncr53c710: Cancel the in-flight request on soft reset
-  hw/scsi/ncr53c710: Do not load SBCL from DBC after a SCRIPTS phase
-    move
-  hw/scsi/lasi_ncr710: Limit max_target and max_lun to 7
-  hw/scsi/ncr53c710: Keep DCNTL.EA and DMODE.FC1 across an ISTAT.RST
-    reset
-  hw/scsi/ncr53c710: Document the SIGP latch deviation
-
- MAINTAINERS            |    1 +
- hw/hppa/machine.c      |   10 +
- hw/scsi/lasi_ncr710.c  |  135 +-
- hw/scsi/lasi_ncr710.h  |   28 +-
- hw/scsi/lsi53c895a.c   |   79 +-
- hw/scsi/lsi_scsi.h     |  104 ++
- hw/scsi/ncr53c710.c    | 2957 +++++++++++++++-------------------------
- hw/scsi/ncr53c710.h    |  287 ++--
- hw/scsi/scsi-disk.c    |   13 +
- hw/scsi/trace-events   |   43 +-
- include/hw/scsi/scsi.h |    1 +
- 11 files changed, 1441 insertions(+), 2217 deletions(-)
- create mode 100644 hw/scsi/lsi_scsi.h
-
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index 5522dedee8..7558d5b4b0 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -54,6 +54,12 @@
+ 
+ #define LSI_BUF_SIZE     4096
+ 
++/*
++ * Safety bound on the synchronous completion drain loop in ncr710_reg_write();
++ * it then falls back to asynchronous completion.
++ */
++#define LSI_DRAIN_MAX_ITERS  100000
++
+ static const char *const lsi_reg_names[64] = {
+     "SCNTL0", "SCNTL1", "SDID", "SIEN", "SCID", "SXFER", "SODL", "SOCL",
+     "SFBR", "SIDL", "SBDL", "SBCL", "DSTAT", "SSTAT0", "SSTAT1", "SSTAT2",
+@@ -1553,7 +1559,30 @@ uint64_t ncr710_reg_read(NCR710State *s, hwaddr addr, unsigned size)
+ 
+ void ncr710_reg_write(NCR710State *s, hwaddr addr, uint64_t val, unsigned size)
+ {
++    unsigned drained = 0;
++
+     lsi_reg_writeb(s, addr & 0xff, val & 0xff);
++
++    /*
++     * Drive any asynchronous SCSI transfer the register write kicked off to
++     * completion before returning to the guest, so its completion interrupt is
++     * raised first.  A deferred continue (lsi_issue_bh) has not issued its
++     * backing I/O yet, so pump it inline; otherwise blk_drain the backend.
++     */
++    while (s->waiting == LSI_DMA_IN_PROGRESS && s->current != NULL &&
++           s->current->req != NULL) {
++        if (drained++ >= LSI_DRAIN_MAX_ITERS) {
++            trace_ncr710_drain_exhausted(drained);
++            break;
++        }
++        if (s->issue_pending) {
++            lsi_issue_bh(s);
++        } else if (s->current->req->dev->conf.blk != NULL) {
++            blk_drain(s->current->req->dev->conf.blk);
++        } else {
++            break;      /* nothing deferred and no backend to drain */
++        }
++    }
+ }
+ 
+ static int lsi_pre_save(void *opaque)
+diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
+index f0eb145702..843d8f1a1e 100644
+--- a/hw/scsi/trace-events
++++ b/hw/scsi/trace-events
+@@ -340,6 +340,7 @@ ncr710_memmove(uint32_t dest, uint32_t src, int count) "MOVE MEMORY dest=0x%08x
+ ncr710_do_dma_unavailable(void) "DMA: data not yet available"
+ ncr710_wait_disconnect(void) "Wait Disconnect"
+ ncr710_illegal_insn(uint32_t insn) "ILLEGAL instruction 0x%08x"
++ncr710_drain_exhausted(unsigned iters) "synchronous completion drain gave up after %u iters"
+ 
+ # lasi_ncr710.c
+ lasi_ncr710_device_realize(void) "Device realized"
 -- 
 2.54.0
 
