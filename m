@@ -1,149 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B40606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 19:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D826D606A333
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 19:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=nRV25Hqn;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=cVFZV+8E
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PSCf1u4R
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVZRX-0007tH-ET; Mon, 23 Nov 2026 14:11:11 -0500
+	id 1xVZZr-0000mY-Uu; Mon, 23 Nov 2026 14:19:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xVZRV-0007ss-Hw
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 14:11:09 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xVZZk-0000lS-Ur; Mon, 23 Nov 2026 14:19:41 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xVZRT-0000iT-PG
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 14:11:09 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANGGnlC1861249
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 19:11:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iJq3OB5B3ew6+MB9F2MgMAj3j3brynZUXmpO8WZqmCQ=; b=nRV25HqnWvS6d4sO
- HBoL85IR1+XAYdL7DlrL4TsWJNxGMmJyFmPis4R5ZmYZFn0u6rFxqZfrFrHCWY2v
- aLjEjUhh3UTOUpd8wx6vLZzfsrPhauyRPmqvg9yLkamN6MFHUt2k72GnLK0Hh5Ql
- b5AlTNZnZvDXHJgrwehH003A2uwgbKt0ZUdDl1ECXNaO2kc9wF62Au754J0vjknQ
- FJrQAhzEoqFg5t2tH5FrBcULJrum5RL3GfxQ2zgiPH1Y5xTScDY94UJM16yJQCXg
- XOXatgx8G7GSZaUAfRpLujFwQVKrjT2Ny897cNsQRzEtO47cf1WYEZ3hGEa641IZ
- hmBApA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g9a30h4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 19:11:06 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-921052e3e92so71950226d6.1
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 11:11:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795461065; x=1796065865; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=iJq3OB5B3ew6+MB9F2MgMAj3j3brynZUXmpO8WZqmCQ=;
- b=cVFZV+8Eg5s39gKeyMJ3QgKWOl8NwwSD66LSRVsEhng/oJr2sUQ6EILog/4el7YN5T
- C4KUg7XAs1gXXbJXMAL50hrhYR4A9uo0p66PMsGMoG7dqs1VoZAggbsQLbXk0SVBBgax
- SCMw/lPEX50fYxuTpYTRfiQjqpEcM+8Zl9kgukAwLAiMJxB2pI9Cr2oY3DIuBfLfa5vk
- moZy5j5Mmt/L30lVEANQ5PzTre4uIrjZLTId43JfEx8AHSHx6KQuPYZjwlQneAWF6C6F
- XrhHzN5N+CsBnFVQB7kSdfJtV5RCnfgHCcpFPdXQmICSXKhZdgPUeojdQji47JjDgC0v
- rgYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795461065; x=1796065865;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iJq3OB5B3ew6+MB9F2MgMAj3j3brynZUXmpO8WZqmCQ=;
- b=mmysPGBl5w/Nu8n3RtY8zfNIRvlRKBUvxFafjG49O3j0sK7SA+pXqKKLjWoJt9za/7
- oNeX9wXgAnqAIkbmvn+UrsVD2y45l80WS1nNQGT96IPDv8Vf01qAp5Uam3NeMzJsyRqF
- A1oyOVTZxRYXH97BgIL0EyVmsf9j33HAVEP8TrwgzbakMw9d3X/p4U9Cd2QqX4kDv3Tu
- R707DEGlVtiuFira5Bi6UhGo85F+DJgg18I8EjgwbU3hogt3DTbXHW6YWa/TSN8Zyfm5
- HuWtP2TeZS0zIUW5Es/ecslcMmdkFvQO3hMroqLGPJsy+5uM1uuMUxpVyG3YreRyYsxo
- gCyA==
-X-Forwarded-Encrypted: i=1;
- AL+hErG9EnAyzWsAagUYacIrADceSU7jl682A/mWvnOEvW7w1OUcWclgaU64364ntLwYaqL3ad84a3B8aG88@nongnu.org
-X-Gm-Message-State: APuU4Z9pV1zzE5aay+8bKAo5gf7xDFX663fTYfn4R9L+9jvk53O8IKOt
- sHS3Qt2vNvbumU7zy5YkT3FMjadddDQtQLDu3OoHNOLH8ju6XlGj3v6V0oWinLAACkpn0gsqMfw
- qrt+WwveVjQHozkfQ/LOImNzZ11BjDEA96oXGHCtkm1Y1HwcwKWGwpcI9rQ==
-X-Gm-Gg: AZFdTZfZLD+81WJSL4RXofXPxTdF0iq2Y/R3AShvXca2kaxJwkg5hYIOC+KrtsurBwm
- YmI9CNvX3KyR+jErilFbmtZoUVbyKnYI1UB4UL4FDeU8E0B5rGZMWDQk5ifYhIhx4RSvrADXchw
- JcCVqV3aq2yEMgOQuusVihi1aekzyDUqolrMmAHeqAI51v327pGeWuKgymH1lmUCIndrr1Juk8K
- D9QFivu6wpFjYebyDrlWRAWO8MA9T97+4U1T1MHUeLl6LeoKG66TUWvNkHxYMMZZ2QHRdQ5JKjX
- w5LGpNZBLhs7ChrJY0KynXYFRU80ZoT61JOnjm4FSA1ndD75FO3/Ag9WLLuRb7Me6vPiJUgvR85
- CrjZpH7tl1tf9kezIjGiKUnviaIZsQR85RWzh8xBEHtVSLP3yFOT3aOBbbnHiqlId/5NvWK1RFK
- WCyT0FvU9Nex/osHqLe2C0w3mnYloMuuVxbF36gA==
-X-Received: by 2002:a05:6214:3a84:b0:921:3171:b604 with SMTP id
- 6a1803df08f44-92134b48c88mr209363686d6.54.1795461064954; 
- Mon, 23 Nov 2026 11:11:04 -0800 (PST)
-X-Received: by 2002:a05:6214:3a84:b0:921:3171:b604 with SMTP id
- 6a1803df08f44-92134b48c88mr209362696d6.54.1795461064264; 
- Mon, 23 Nov 2026 11:11:04 -0800 (PST)
-Received: from [10.222.168.147] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-921349d0e35sm112643736d6.20.2026.11.23.11.11.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Nov 2026 11:11:03 -0800 (PST)
-Message-ID: <b8e121de-e8b8-423b-9956-a2a603661a5e@oss.qualcomm.com>
-Date: Mon, 23 Nov 2026 13:11:02 -0600
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xVZZi-0006Oy-Q8; Mon, 23 Nov 2026 14:19:40 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 9A6CB41398;
+ Mon, 23 Nov 2026 19:19:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A1E1F000EB;
+ Mon, 23 Nov 2026 19:19:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1795461576;
+ bh=CGC7yVQLVDvNpMPVZ/Uo1pixnvVv0k954KwZmg9TrVg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=PSCf1u4RQo66p4AxW2s9rKw3UIiOojrW919uIBhnXqfrEauQq5IkB5N2bvCBpacGF
+ FiK8D/C5CQZ3hG4G8lj6fq7KVW2ub1e8iW9LQQ7QAdd20b0UGfdaOa+tucKXbHlf+U
+ Q9SFJ8Jvz+k1kkUcLFdQsU7lEOII00JVqelMvkD+YAZVjBBhxGwTj2VG9ZXvv4MPIL
+ Okq7E4UEyJkw/m1ADQFNGZH0QWNIbUFj79spPMsa7mNjLcsI0WCLWi5Pp5ZDaA3J+j
+ ZkpFQacRDdSCcnhvrsJu8++SqUBdeo4/TF3Ot8Hz39Yj8kItaMyG3CK5bDoINH1p36
+ pymuZ5UphXL3w==
+Date: Mon, 23 Nov 2026 11:19:34 -0800
+From: Drew Fustini <fustini@kernel.org>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Sunil V L <sunilvl@oss.qualcomm.com>,
+ Anup Patel <anup.patel@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>,
+ Kornel =?utf-8?Q?Dul=C4=99ba?= <mindal@semihalf.com>,
+ Atish Patra <atish.patra@linux.dev>,
+ Radim =?utf-8?B?S3LEjW3DocWZ?= <radim.krcmar@oss.qualcomm.com>,
+ yunhui cui <cuiyunhui@bytedance.com>,
+ Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
+ liu.qingtao2@zte.com.cn, Jinjie Ruan <ruanjinjie@huawei.com>,
+ Jinjie Ruan <2118537295@qq.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Vasudevan Srinivasan <vasu@rivosinc.com>
+Subject: Re: [PATCH v2 1/2] hw/riscv: add cache_level and node properties to
+ CBQRI controllers
+Message-ID: <awSRxt903KEHUHYQ@thelio>
+References: <20261113-riscv-rqsc-v2-0-34d47fa4141e@kernel.org>
+ <20261113-riscv-rqsc-v2-1-34d47fa4141e@kernel.org>
+ <51e50192-328b-4780-aea1-06dbd89be222@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.2 v2 06/12] target/hexagon: take exceptions for
- cache operations
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20261120182031.560481-1-brian.cain@oss.qualcomm.com>
- <20261120182031.560481-7-brian.cain@oss.qualcomm.com>
- <e2002096-3dcd-48e6-9b3e-4fba96222894@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <e2002096-3dcd-48e6-9b3e-4fba96222894@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA3NiBTYWx0ZWRfX3vob5FEakB2h
- h8nuIPuR33ucQJJrQArgt+cZdybjHQ88axaN+XNHgHA4J5QSUwwM2G852wpMF9+8nieXc9dnYbF
- tG56sXgMENRgfaQh+9N9P5STklCDaeU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA3NiBTYWx0ZWRfX8LqDWsHS9Xqm
- E/RvwEveu3igDOt0+KjXn4u2G8YI0uD+TQW3nVEQlksULRf/+lgYPJyeN/vHEyCqeWClKlslU+G
- s0Emh1M/5PIBA85Xq6MlhqvocuT3mSGgraillgq0qf+ZmXJybmLB2mxVgaR2LfBDOy3MUVhPWVR
- ZUIDZ9u1GgqlqCwIeqxoO07vqQQePlfZu5PzQb+ZLewtVSP2J5JqwAq6+xi3vphAexjRld3cs3q
- FpB1rq0WHET0HkZWEiaKfF7xps9amcZDRBXoy9yyMzTyBTw3akvb6vB+KQZBvvFJtaDTvVgJYM3
- Jsu+k3wCouhdRYC4pW0XwwCVerp/OLuYaZTwpMMAWO5kfVI8wF/5VZ6MRah7Fy6Yo0e/6pwQkBB
- P7rJtEBkIRJkQ4oV39Vak9TDfTgMQJ3y5RJOkaKbhInrzDe4ERDFp2oLMS5dZJx04lCb1F5JluN
- FwEJFGi1ndm3aWdnasA==
-X-Proofpoint-ORIG-GUID: ncJ8OHUuK3I_h8JKeG5RUoz5BxiZC2cF
-X-Authority-Analysis: v=2.4 cv=cYJHPXDM c=1 sm=1 tr=0 ts=6b048fca cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=SJ7SESo309w2I3wKx_sA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: ncJ8OHUuK3I_h8JKeG5RUoz5BxiZC2cF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-23_04,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611230076
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51e50192-328b-4780-aea1-06dbd89be222@oss.qualcomm.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,44 +83,141 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On Mon, Nov 23, 2026 at 11:03:15AM -0300, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 11/13/2026 8:12 PM, Drew Fustini wrote:
+> > The ACPI RQSC table specifies which cache a capacity controller backs
+> > and which proximity domain a bandwidth controller serves.
+> > 
+> > Add a cache_level property to the capacity controller. It accepts 2 or
+> > 3, the unified cache levels that the smp-cache option can place and the
+> > PPTT can describe, and defaults to 2. Add a node property to the
+> > bandwidth controller. It defaults to 0 and rejects a node the machine
+> > does not have.
+> > 
+> > Signed-off-by: Drew Fustini <fustini@kernel.org>
+> > ---
+> >   hw/riscv/cbqri_bandwidth.c | 13 +++++++++++++
+> >   hw/riscv/cbqri_capacity.c  |  8 ++++++++
+> >   2 files changed, 21 insertions(+)
+> > 
+> > diff --git a/hw/riscv/cbqri_bandwidth.c b/hw/riscv/cbqri_bandwidth.c
+> > index bd8cf2b50e4c..6c33d1738d27 100644
+> > --- a/hw/riscv/cbqri_bandwidth.c
+> > +++ b/hw/riscv/cbqri_bandwidth.c
+> > @@ -17,7 +17,9 @@
+> >   #include "hw/core/sysbus.h"
+> >   #include "migration/vmstate.h"
+> >   #include "target/riscv/cpu.h"
+> > +#include "hw/core/boards.h"
+> >   #include "hw/riscv/cbqri.h"
+> > +#include "system/numa.h"
+> >   /* Property defaults, shared with riscv_cbqri_bc_caps_init() */
+> >   #define BC_DEFAULT_MAX_MCIDS    256
+> > @@ -139,6 +141,7 @@ typedef struct RiscvCbqriBandwidthState {
+> >       uint16_t nbwblks;
+> >       uint16_t mrbwb;
+> > +    uint32_t node;
+> >       bool supports_at_code;
+> > @@ -542,12 +545,21 @@ static const MemoryRegionOps riscv_cbqri_bc_ops = {
+> >   static void riscv_cbqri_bc_realize(DeviceState *dev, Error **errp)
+> >   {
+> >       RiscvCbqriBandwidthState *bc = RISCV_CBQRI_BC(dev);
+> > +    MachineState *ms = MACHINE(qdev_get_machine());
+> > +    unsigned int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
+> >       if (!bc->mmio_base) {
+> >           error_setg(errp, "mmio_base property not set");
+> >           return;
+> >       }
+> > +    /* Without -numa there is a single implicit node 0. */
+> > +    if (bc->node >= MAX(nb_nodes, 1)) {
+> > +        error_setg(errp, "node %u out of range, %u NUMA node(s)",
+> > +                   bc->node, MAX(nb_nodes, 1));
+> > +        return;
+> > +    }
+> > +
+> >       if (bc->nb_rcids == 0) {
+> >           error_setg(errp, "max_rcids must be at least 1");
+> >           return;
+> > @@ -638,6 +650,7 @@ static const Property riscv_cbqri_bc_properties[] = {
+> >                          BC_DEFAULT_NBWBLKS),
+> >       DEFINE_PROP_UINT16("mrbwb", RiscvCbqriBandwidthState, mrbwb,
+> >                          BC_DEFAULT_MRBWB),
+> > +    DEFINE_PROP_UINT32("node", RiscvCbqriBandwidthState, node, 0),
+> >       DEFINE_PROP_BOOL("at_code", RiscvCbqriBandwidthState,
+> >                        supports_at_code, true),
+> > diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
+> > index 0c572aa8b02f..1585cad1d073 100644
+> > --- a/hw/riscv/cbqri_capacity.c
+> > +++ b/hw/riscv/cbqri_capacity.c
+> > @@ -127,6 +127,7 @@ typedef struct RiscvCbqriCapacityState {
+> >       uint16_t nb_rcids;
+> >       uint16_t ncblks;
+> > +    uint8_t cache_level;
+> >       bool supports_at_code;
+> > @@ -591,6 +592,11 @@ static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
+> >           return;
+> >       }
+> > +    if (cc->cache_level != 2 && cc->cache_level != 3) {
+> > +        error_setg(errp, "cache_level must be 2 or 3");
+> > +        return;
+> > +    }
+> > +
+> 
+> For this kind of property that has a very specific and restrictive value range (i.e.
+> we'll abort if we don't get what we want), I suggest not using DEFINE_PROP_UINT8()
+> to declare the prop in the array.
+> 
+> What we do in target/riscv/cpu.c in for 'num-pmp-regions':
+> 
+> 
+> static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char *name,
+>                                      void *opaque, Error **errp)
+> {
+>     RISCVCPU *cpu = RISCV_CPU(obj);
+>     uint8_t value;
+> 
+>     visit_type_uint8(v, name, &value, errp);
+> 
+>     (... a bunch of checks ....)
+> }
+> 
+> static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
+>                                      void *opaque, Error **errp)
+> {
+>     uint8_t value = RISCV_CPU(obj)->cfg.pmp_regions;
+> 
+>     visit_type_uint8(v, name, &value, errp);
+> }
+> 
+> static const PropertyInfo prop_num_pmp_regions = {
+>     .type = "uint8",
+>     .qapi_type = &uint8_type_info,
+>     .description = "num-pmp-regions",
+>     .get = prop_num_pmp_regions_get,
+>     .set = prop_num_pmp_regions_set,
+> };
+> 
+> 
+> And this is added in a property array like this:
+> 
+> {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
+> 
+> 
+> This is more verbose but it will make realize() easier since the property
+> is guaranteed to be valid. 'cache_level' seems like a good candidate for
+> this kind of pattern.
 
-On 11/23/2026 12:02 PM, Pierrick Bouvier wrote:
-> On 11/20/2026 10:20 AM, Brian Cain wrote:
->> The dcinva, dccleaninva, dccleana and icinva instructions did nothing
->> in system mode, but the hardware translates their address.  A data cache
->> operation takes a TLB miss exception if the address is unmapped, and a
->> privilege exception if the mapping can be neither read nor written.  An
->> instruction cache operation only takes the TLB miss exception.
->>
->> Probe the address through the normal TLB fill path, which also reports
->> the packet that faulted.
->>
->> This enables the mmu_cacheops systest.
->>
->> Link: https://lore.kernel.org/qemu-devel/20261117183629.2002840-7-marco.liebel@oss.qualcomm.com/
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/gen_tcg.h                  | 18 +++++++---
->>   target/hexagon/helper.h                   |  2 ++
->>   target/hexagon/op_helper.c                | 42 +++++++++++++++++++++++
->>   tests/functional/hexagon/test_systests.py |  4 +++
->>   4 files changed, 62 insertions(+), 4 deletions(-)
->>
-> This looks like new feature more than a bug fix.
+That makes sense. I'll change cache_level to a custom PropertyInfo and
+remove the check from realize.
 
-Ok - seemed like incomplete buggy behavior from sysemu but I will 
-concede that it's more new code so makes sense to re-target this for 12.0.
-
-
->
-> Regards,
-> Pierrick
+Drew
 
