@@ -1,104 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEF8606A32E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98149606A33D
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 15:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=eJHkUByp
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=CCQvdmA1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVVuz-0003eB-Cc; Mon, 23 Nov 2026 10:25:21 -0500
+	id 1xVW70-0007kQ-Ba; Mon, 23 Nov 2026 10:37:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xVVrN-0001SB-RI
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:21:38 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVW6x-0007k7-BK
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:37:43 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xVVrL-0003dI-O7
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:21:37 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-8b4cc793704so23569927b3.2
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 07:21:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVW6v-0000fF-Na
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 10:37:43 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-67da62357acso4438461d50.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 07:37:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795448260; cv=none;
+ d=google.com; s=arc-20260327;
+ b=h1IOFH44VU7c5/zFVP6L3HHevjLJZo1vIuek5Z1TCqa+U5/Cvt8QAE5c1GF/tHxN06
+ WTDoSKt5xCeWbYj1jbjKra21y5UrMDArMX1KVjW1cFG5gUUOGsGqqdqYqqaagbGW42zF
+ ECe7BxM+Yd0C9QjkIcJ9o+HKdES7g7en5bNHh/zeJO8vEcgQYN2N3oT1szMMcCSpze4h
+ XTB+4zhY+TLzqk+sD+1Z+SsHAyG6zJ7mKOwa2iREcFHNQA4iA2RtH2PnBjOIr713yKFq
+ ezZ6JXXZAQ/SdmpSQ+pM7A7oeQxzaXsUdKTlQV9Ytpx/hHlkbHVpImBfnyW3U6H4+oWg
+ j8pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=4LCaBKHWMB1T+mI4Ctek9gRui8KSkdg9JaTqoRb6N/8=;
+ fh=p/w+HpwE/NGb/2RiV20clBwRwriP+2+cZWCF1A9n8Vs=;
+ b=e7W0Ybrg667ZlDab1EsaXV2AAXoRB376Sr/42CENGUsnm1CuQ3sC5Jfze1fmCuTonj
+ Val7iYOjsAU8hr842d8QThE3YHEVVpWOi/+oXHUTwxBuDr/V/E0RxBFmAgyvjplRSqN+
+ PglfsgIqWL2Y9xXzWyLoVmCai5TmnZ8HeXjpFriY640wHs8sUpU3qcBJqqAEbA4Ac3+y
+ iG20Br15JtHx8xmU2FlUCSkmgNNKIX+PzqP3jnl0Vi8uu1DO2ZfSK63dza5imQK26Nb7
+ rD6+QFDtXcFG9Ofa0M+49MSyy2oipvgp0tNqLa5z07+ZlooZupzmyb4xw01PTK4vgldv
+ CxkA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1795447294; x=1796052094; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=YoyzAh15+NSYeyDm4eHRz3J/8trqzznIPnykW7AlBmQ=;
- b=eJHkUByp4KHGk7LyzXAAtgRxnmxWi2/Hb3CwHiIQKAyL4Sga/F6y99OVJoa71YciSx
- XYgIE6B+3EdSYpJeC4HXFKqtqNIkkVcOaQnXSNUBR4u6vLCXxKGMwEMu8Of0v8Jtew3N
- /3lT2XeCs2LHel4vvuoN1DeTb8lVqNV6GldX7QYaqyeIERcq1/Lh2ALCXEOqv5VKUA5W
- IJ9ymzKLzmLiSOEEww/F1cVZQxULvhN1uTh1OGpjunhy6gkNER7tBvLJwNFCkAURVmVP
- tA3c+u+Havm2pMusY4YKlnqsB5lDz/HFJ104fi/YMpnONMoY6ztBwhizCfEyJ+rX1zT9
- bSiw==
+ d=linaro.org; s=google; t=1795448260; x=1796053060; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=4LCaBKHWMB1T+mI4Ctek9gRui8KSkdg9JaTqoRb6N/8=;
+ b=CCQvdmA1S6wgQ/TuqPvrcRiCulqz/yKN40VA9+Rc3DaE1EDMBsQl3ZpUweociFEgyg
+ 6xO9qcQ/yICElvJ7Z8pkci/8wGqQDDqcIm5jwSZMtQH7QXDngMDc6oM4UlCpU62bK36I
+ eOV9eLb2iQqElBL14SUJVOlY3OYx0jUTyCON1GunyZYItxt50t8P8sCLAt4f2Yw1nr0t
+ Rhj4w4Sjme6jCV3n8RHyz0vD/gd5exbW01ftc+TFaYJ0ARsWAqUBl25ArbSe+Ha7Buea
+ UHDVsFddnU5JYcOO3TrRfvG3LVNvnpm6cePH6XfSR3z4ZTqv2j4aKCElXXuI65UeeBLE
+ feAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795447294; x=1796052094;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20260707; t=1795448260; x=1796053060;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=YoyzAh15+NSYeyDm4eHRz3J/8trqzznIPnykW7AlBmQ=;
- b=v6oqdDNAtmvC5xqw5shPh2t+z/x4X4jVVZRLmD9gOVPmLIZnTchSP/2QpxGkAHFlY8
- aR1z3X5/kWYhVdHbshBL/EhTEnhuubwZ1DfpZOXi+stNdDTmKINjcCH+t92hj5AqY0QP
- 9pEyRPbo6iRuZ8D1caVFPfwrBiqt1302vS8a/KEDIHlG48Sehg5cy/61E7Vnr9QGfwyu
- WXtzuyX6F2YKCqgNLNPoedJ3OdZva98UcVuJjB2zu1UakCCKocURd+KZGOGkGaeQT/0U
- q/wkongr70J3kILlprqPYA2UGkFlHA7K1cKoFigLJy+JUtG9cCBD9ghrfSS7AVRRsy4z
- rOWA==
-X-Gm-Message-State: APuU4Z8/2se4WVnM18+wPv0xuDSYioZZ6rsXu0J5Qi8t9bqScVMkPKJr
- Wwcba454BXm/M5+mQbNMpRVuYa3sXL9W9VfZEBCH4Eswm02KeIXVfs61B4HLUtOkH5g=
-X-Gm-Gg: AZFdTZcFvvNq65nw2y+mJ5mCOVDVcfKeF7Jclm32PD+lK9wkrzC4obrWLUtJiifpjlz
- is0QzFOFyhZfHEYMRzO5F9NF+HXytx30kreJYxXnClXB9h5KoIF9BVqEyrBl8ChohYolKW0EZK+
- MSUPjjBAyJ+x/39VX+9vk/HCcF6P+C9LFoQ1PiiPW7GVICnPeHpv7d2EFy3H3llo3lC4hhfeli1
- hBnrH4SApGN9XcxBz3voihprZVDtCQVLJ6oYtOe9D9uU9ATjPLNO7aBqfWKW8l/wtcuBjJJfRLi
- jsD8MUBXLt8djPEfwcFeLzqiwI2/g+tJxpxNy2O0uN+3Kl+SJCQFC+X2Kr2NHmeBY/x7UyoUng/
- H3h/D9fjGf2frAA30g5M3nBMuxvhmKij8b2DdHuYnt9tOeyimwHtzPuy/FkpPKg8bLBH+ZNt3wW
- zYvMjdQyHOqMGl0jMFUMMx7/VsJTfjjfrfuXRJ2Ts88exeGiw8eo7PdujEunuuPZ5X9iYVP8rmP
- ZrTgs5fMajGY/aY3vyW+8iN9GKN5fZyReZj3HMDxqdjVb/h6DyMJOo+9ZFaBVGcJ1RY2C+K3UNq
- RdjH1YwUXOtPeoGJ42lMwV0s0TaCc15d6ZXX1HEXx+Z0g65w6Xz/vKfGDkWcYfs/9qmTI5Vbimy
- SCvO4zDDzUx7pV3t6QTaALRoxtCTNAw==
-X-Received: by 2002:a05:690e:812:10b0:67d:ea5e:e50a with SMTP id
- 956f58d0204a3-67df442605amr2554729d50.46.1795447294253; 
- Mon, 23 Nov 2026 07:21:34 -0800 (PST)
-Received: from [192.168.2.129] ([2600:1700:220:59e0:f880:d5ac:69f1:fb89])
- by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-67df3353258sm5747939d50.9.2026.11.23.07.21.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Nov 2026 07:21:33 -0800 (PST)
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Subject: [PATCH v2 0/2] m25p80: Clear write enable latch (WEL) at the end
- of SPI operations
-Date: Mon, 23 Nov 2026 09:21:15 -0600
-Message-Id: <20261123-m25p80_write_enable_fix-v2-0-0ac94f99e91f@oss.tenstorrent.com>
+ bh=4LCaBKHWMB1T+mI4Ctek9gRui8KSkdg9JaTqoRb6N/8=;
+ b=cywZ37eq4osFccb+MhRmwhiQPqDwzdQ//JtTDl/XhTVxw4jmCPL85IE/HVx8WUTMA8
+ r5z2v9l2zSPTzyfHlBPEkQ/riy6hJBRJuAKUKsiYJamZ7AS9uehblLW9g5o2ou60MA2m
+ 36QXElqQGpwqtO/qvdoHSTA45N5g31o4hrzNuTODwjza9VI3AXTuP2yC7P3XFTI6OULu
+ NF4M0Ehjt9XDeML5oPConkmz929fKfY/PYyu3PRRF2ymVcsnBQXUMJ3PylEa1SGJRUrk
+ VAzQSVlKU7mO04WetodwiL+FzltNAkC6luAq6xfafhcLRALiB1xYLLjV4bdAeb/TgUNt
+ Cggg==
+X-Gm-Message-State: APuU4Z9Qyc9ZOFf2MnwieImMVwtMA0KOLAj5jQNQmTrx6xgIJ6yzYwCB
+ 03kdoC7qb7zCpz7Wbz7jkTG4pgzlIply46aMxjwh4mTh51SFpiEnO4LwlKU3pk5erPiqTmJIc1D
+ ocd2Uo2/uBb2gGDstt9Bw+MDL2yB7fUeNmZOfH636CQ==
+X-Gm-Gg: AZFdTZflev31xdpQW5zYWrmcDT70cIhTHRhnvv1OqcdF5WfYuW6gKaPUkuJh8DF8bBL
+ zwV2L46vo6BKEw9lgJ8gy3M7m+e4LaZd7wFpPX7wS1pw8IgasD7rsTIhw1YRuaCpIDkBfifnPR7
+ vJwN7fSNj4BBq7IcPLIjvk8FZYgsNEIY+dywR2CV6Xix4KNBWd8be/B4OeIdEvYACFJGX8RNsn4
+ G+K7xS+v0DKXNM59xwPqP81DuwGsFwt03pMxS7W1B8Y/WbxpOxDqlVN0et2mnrOSsSu4e6TKVgE
+ Y3BCvYeMR0KXnrUFQCUmZhAaMEdpnh+eUuLrEJvLuFjg2joN3kCDbJujbnpaT+TARcACp0sctOE
+ qcw6JcV6wIqBaeWLLRZfQukF6f/lTdkn9GO8NdE0D61BIFaVn+k1J54SPhWk3+hvafaa6B1QJ9x
+ XHKL8lAV8QMuXHR2X61pPt
+X-Received: by 2002:a05:690e:1512:b0:67d:c255:9bf7 with SMTP id
+ 956f58d0204a3-67df4457baamr4368160d50.50.1795448260106; Mon, 23 Nov 2026
+ 07:37:40 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAOtZBGsC/4WNQQ6CMBREr2K6tuT3E0RdeQ9DSFs+UiMtaStqC
- He3xQO4fJOZNwsL5A0Fdt4tzNNsgnE2Ae53TA/S3oibLjFDwIMQAviI1XSE9uVNpJasVA9qe/P
- mXd2fqhJEjSWxtJ48pXgzX5sfh6e6k45ZlxuDCdH5z3Y9i9z7/zILDryUKJUGqFHBxYVQRLJZ5
- cnGQruRNeu6fgHmVyK32gAAAA==
-X-Change-ID: 20261110-m25p80_write_enable_fix-d7f95301723e
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-X-Mailer: b4 0.15.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20261118104150.599535-1-pbonzini@redhat.com>
+ <20261118104150.599535-5-pbonzini@redhat.com>
+In-Reply-To: <20261118104150.599535-5-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Nov 2026 15:37:28 +0000
+X-Gm-Features: Aa3M54pqmGTTPV6mvm5lpxAfLso8vFx5A2UW1qWU1yva5BplGzcf3sEJOrhc8Zo
+Message-ID: <CAFEAcA8YKFsvKjtcPq7_gTwA=XKbeSsxmtp9nd6k-VuE6SOA4g@mail.gmail.com>
+Subject: Re: [PATCH 4/4] docs/devel: allow larger contributions with
+ pre-arrangement
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,42 +121,53 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The m25p80 model in qemu doesn't deassert the write enable latch (WEL)
-at the end page program and erase operations. This series contains a fix
-for that, to match real hardware behaviour.
+On Wed, 18 Nov 2026 at 10:42, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> The current policy does not include a path to formalize the submission
+> of a larger body of AI-assisted work.  In particular, contributors have
+> expressed the interest in using LLMs for new accelerators or for the
+> userspace side of new hypervisor features; and some past contributions
+> suspected to use AI still fall outside what the policy allows.
+>
+> From the maintainer side, the policy does not handle well the submission
+> of multiple small patches; it encourages splitting the work into small
+> pieces, which hides the design context and does not allow maintainers
+> to delegate infrastructure improvements to contributors that are willing
+> (or could be required) to do them.
+>
+> Constant streams of changes were forbidden in previous drafts, but since
+> pre-arrangement of large changes was dropped they were implicitly allowed,
+> except possibly when they end up being a code of conduct issue.  Therefore,
+> the policy as written risks being unbalanced and shifting the effort
+> from developers towards maintainers, which is the opposite of what it
+> wanted to achieve.
 
-This series also has a fix to the aspeed_smc tests. These tests exercise
-the m25p80 flash model by sending page program (PP) ops, but do not send
-write enable (WREN) before each PP op as the spec requires. The test is
-updated to do so.
+If we don't want constant streams of small changes, the fix to that
+is to say "don't do that", i.e. put some variant of this part:
 
-Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
----
-Changes in v2:
-- Add Fixes tags to both commits
-- Link to v1: https://lore.kernel.org/qemu-devel/20261110-m25p80_write_enable_fix-v1-0-3a2abc0072b0@oss.tenstorrent.com
+>  - small LLM-assisted bugfixes (as a rule of thumb, below 10 lines of code)
+> -  are allowed with disclosure.
+> +  are allowed with disclosure.  Splitting a submission in multiple parts
+> +  is **not** a valid way to bypass this rule; repeated, frequent posting
+> +  of such fixes must follow the rule for large contributions.
 
----
-Anirudh Srinivasan (2):
-      test/qtest/aspeed_smc-test: Send write enable before each page program command
-      m25p80: Clear write_enable after page program and flash erase operation
+into patch 1, e.g.
 
- hw/block/m25p80.c              |  6 ++++++
- tests/qtest/aspeed-smc-utils.c | 24 +++++++++++++++++++-----
- 2 files changed, 25 insertions(+), 5 deletions(-)
----
-base-commit: 73294d096cc591e122fde9e63db4739de6d84f2b
-change-id: 20261110-m25p80_write_enable_fix-d7f95301723e
+"Splitting a submission in multiple parts is **not** a valid way to
+bypass this rule. If you have a larger set of changes to make then
+you must do them under the rules for larger contributions."
 
-Best regards,
---  
-Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+For the rest, I'm not personally in favour (at least at this point
+in time), but I can work with it if that's where the community's
+consensus ends up landing.
 
+thanks
+-- PMM
 
