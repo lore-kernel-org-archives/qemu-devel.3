@@ -1,66 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D17606A33A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 01:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8515F606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 01:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=alistair23.me header.i=@alistair23.me header.a=rsa-sha256 header.s=fm3 header.b=ErkA/NR5;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RveuEgDn
+	dkim=pass (2048-bit key, unprotected) header.d=alistair23.me header.i=@alistair23.me header.a=rsa-sha256 header.s=fm3 header.b=Tqr3nR3a;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=p1TXd0qk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVJ6T-0000Li-CP; Sun, 22 Nov 2026 20:44:21 -0500
+	id 1xVJGN-0002Il-0U; Sun, 22 Nov 2026 20:54:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xVJ6O-0000LG-Mj
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 20:44:16 -0500
-Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
+ id 1xVJGH-0002I7-N6
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 20:54:29 -0500
+Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xVJ6L-0005UJ-FJ
- for qemu-devel@nongnu.org; Sun, 22 Nov 2026 20:44:16 -0500
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id EAD501D003BE
- for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 20:44:09 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Sun, 22 Nov 2026 20:44:10 -0500
+ id 1xVJGF-0006IK-O2
+ for qemu-devel@nongnu.org; Sun, 22 Nov 2026 20:54:29 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 6158F7A03DC
+ for <qemu-devel@nongnu.org>; Sun, 22 Nov 2026 20:54:26 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Sun, 22 Nov 2026 20:54:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1795398249; x=1795484649; bh=0N47pa0CQjHEhwV5WpubYnmKQtn8e8kZ
- 09+cOgvlCdQ=; b=ErkA/NR59rHi4N4qLMZc2XHNNk3xnfR1Ino0mUVyXvo2ota/
- 7Mq1IqJElRfjr8x8GtwJDeKnTBRb3lS6Lj8TchjOV8J22Gy+5boQMPhMcA4k8aE0
- aDTgUlYKHw4xWfmL0fY88zBUUTfEMsfZpQAxBAMbsmuNUxw9rd5nO/Ev3JjTcLHD
- IRePYuPZiS2EtdCwIpnZg6sSmU7Inapb2CbWtXzSZRShtVhga6ncNwL7fMSGwzJw
- SQNu64oSOsXfOVOdDZVjYs57hK8vkXUyU5yMqtcnG1PIT+ySxrkaM68VWles1i/a
- funpboHjwxeCduiFMuGgEvVk+sTan8Hep78kJQ==
+ t=1795398866; x=1795485266; bh=9nIBKR2E1w0/MisCOlhfnME2Gm+f+Ssf
+ 68pbQbqpYlI=; b=Tqr3nR3aS88DwAkQZo0Ttq6FnUIDUsJDNyuln29c4s16CiuM
+ psA7ei2KHqmpRaiOjFePRgm0BoXe8ARpMjTfwl9UIqvGgsEGg+U4JlhCbV8ad0Yi
+ O3/Gd685CyVFBSvW0v5SXm4FBuz3G3e8cVYjRs7uKBcrx6IhS1rzw9wZZwAUEGg9
+ 7XOoYoOXj2e+KoHEMA2dKEIJHVd9BzRKzMvNjYs52wOOwfd8gueA3GL78feGqRRk
+ ok8hW9XCdzDd8AKlMoCBNkN5n795n/zUBNY8lRx6DT/O8RhUMbS1QCdKZ5qdikZM
+ dicSbxGvES0p+PWxEHrTSFn72KbBMSozs0Mz0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795398249; x=
- 1795484649; bh=0N47pa0CQjHEhwV5WpubYnmKQtn8e8kZ09+cOgvlCdQ=; b=R
- veuEgDnBAGzFuJFb7QW0fjC9s9mprk3ui10t8DJMvIofKfFSekSDFMkzj/LXmgC4
- Cvb8N3II7vJcSyIENDZFZbt0IQlnzIANZlFuxzRUXSjwi52K68yvcT/823YClwDP
- O51Six9+U0dDZyuy+EGc9dYtCtkzMn6EU4qYZbMzvkoqmkfTXQ/JqZiDCOsmfYit
- edPxvZ5y9L3mP1ujcglDZjPJ4uHDouI5IXHFJsDHtUDfMH3VnEyYjr25bZmaYUou
- 1trn8aMq+jhuxHm73DXBxopQaVqY8RHcb53NCS99WaVrwwNb2TqDJUPfLqOS6JcI
- Z7ljWpE1BAcBpVVaQIxFQ==
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795398866; x=
+ 1795485266; bh=9nIBKR2E1w0/MisCOlhfnME2Gm+f+Ssf68pbQbqpYlI=; b=p
+ 1TXd0qkZMnilqHskaYwC1bRh03S0wV91bqKiT8N3sFKb3aWSCNw7Png5y6TXEvoy
+ 1Kf5ZVGdKeZLgRyUItseDpFZ24UNkDtdGoSg3WpcTRL40dEb/11cf9sgqJxy1BJa
+ 2tqz1WdWgyWGDugXdCw8FQcrXGT/wKNWoMFmscmX2GeClHPO6IW8djSlMuVdLs1K
+ 4tNqEu972Z4qpOoyha7Ukd9HB0/3wAi9D2P/GEC2N8QJICHyPbOPKyXn+avjIfwY
+ L7sUXXVdWwB6mp/24TEMT9GVc9SlGW3Jy84Jr8xOOy0PMHZdpNab86BlDiqoYc6F
+ suYuCOzlBChqFf7CJEKfg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795398249; d=alistair23.me;
+DKIM2-Signature: i=1; m=1; t=1795398866; d=alistair23.me;
  mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:GZNT2vFlcYrbeNSzJZOLn/YZjnPPaqn58fmSmsN5gvqV5Of
- imbdaI6FJUGu5BbMaU09qMLe8KyeIGJ/hW6dOoIATost2GCQkhAybJZIHpQzrpTh
- Sa3y6O74WmbLwv065QJfmth9wwaLyFTHFIhAwLHwzcLgssp/wQEdQptXjwq9dpQ6
- 8GTTaL+WBrpadWayl3iwpqU9F/kWCdL5zQ6X+BRao2PWOEcWMhxFlfymll3pv/Bg
- nRuwLMLUWcerm4GuVF9cXhsGYZbWB9oCnR9aQRH9QpjZePsuzrjcUI3rWyeEh7Zr
- Vr2CsWXZ5cYdH9IZmr1bvswXBpWrzUJpp2PSkeQ==;
+ s=fm3:rsa-sha256:XtthFlehVatYMTaMCVjcnaX0BlzvSJjxYt5uEtIsjSw14Eo
+ uphrvXLQslVjAgSp7qdtdnHaLUikwEjFwG50vH2FbB0eM00bqiVcrZavAGr0dG7J
+ gfG4aGqYlasvT/ujz4RwGSCYWpPDjYq0ZEbRxwBtoNnzdstg+M65z0hT7zOB9JKf
+ 9rcfXgOmawWDrxAwwPEAoSCYeHkWylp0mWAbQgoq0YhHph0tL7XuEnSZXn/54VA6
+ vcX9nGiYDSrAVMDMC41VP/ClHU5eVxLt6yZEBXRmpYIadUnFpajrDg6fc0VrbDZb
+ LWLIbkgKnJItGGmB2fKFBWtNv/GYbnACrNSRB9Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
  action=mi-m=1; hc=13;
@@ -68,30 +68,30 @@ X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
  from,in-reply-to,message-id,mime-version,references,subject,to,
  user-agent;
 Message-Instance: m=1;
- h=sha256:WmTzPmHBq/tlRwbQOy5OkF4ZWrbJOi77UkzCqYrgmYc=:0N47pa0CQjHEhwV5WpubYnmKQtn8e8kZ09+cOgvlCdQ=;
-X-ME-Sender: <xms:aJoDa0IJmluuQLKFbVLTNuKvY7EFVYn9pAiIwwVcxi6KWZ4lZFPnvw>
- <xme:aJoDa6i7KXw5zHdLdHwm3wbTKd1_bs_yGz4G_lS5Szi9trHp3TOWSaire0XlShur9
- OPHKrpH0xec99ck2qDJyGwCF5IcdVOJpFujfvMXBpvK_fRl0wu5PjxY>
-X-ME-Received: <xmr:aJoDaw_4LYjGtdwHOOwFr3N8YgeG_APYMK1u7OgupEvK4MnQUYfPFER-sZM5zWoD1W6yh8E6SoZE5wNrFCQ2C_r8Lo4>
-X-ME-Proxy-Cause: dmFkZTGLH5SQJgb9SFf8Rq/ZS0DtnyyK7iJy/Km2vXfT2HQZtpxHRrJog/06eowC7TYk5b
- 3B2XpN7ydriB4miW7P4cehpsxxbyRhB8E8WsJuzAEoA4Dx4UPUg39q8vO9h4DJhOBkZF8t
- VRbliJSP4vVH+MJCbjkqUz+TFkZYqlwj8j38OzzUTy2mw6oGhSGT7pJkaU3HCW7BqCPXld
- V/1R2qfsl5Lyfnavk6zK7n1V0JLc2aHiZ4cV673iMpVjQBO2xx+UK4zFDQD1quoS8aAWZp
- 52Q1X5v+B0PVjO+5liieLSwvYB52FUVkweQNmRDpPIo7Cg37wDTgzdUG7vo4fRKIamqDJY
- yViPNeh7CYmOS+8ciPSRj2EsbGWl6N7v9im1q5/K2xba8Ma5oAhJp11N+xnNT0M4cxHnN4
- XT4JeosKGo60mzL/C/heQA5bieOfQqT7z0xMRLKwgorhHJhEifcXZ3r2Jo2HtoC+X5JSSt
- 7DPcRt4YBJ1DDl2Ci3YqZ9cLYeh5L7LQ/YelCw83mQVMyWNA0EzzNwri93k1LSG3MHYE2Y
- 4d607tQXQCbQyKtG0TBM1jJq6xh/Ruzwd7xPxpDvyeUzLzzF8C676ynT9x+G9UHpH548ta
- 75C31JGEz4Vcx/E6qUUlo9U9HDSEI2ZzpGSEpyDbBGjaDLL+CX1Xcr9/VIVw
-X-ME-Proxy: <xmx:aJoDa_O3sV2nUlqj8M1meV-y7mrFvsejUaVxmx9YGpEhXYW6Vi5T3Q>
- <xmx:aJoDa0Cv3XYJMW9A18ot2iJeblhWzUyPEAN0CnsaYmUD38iXsUatQg>
- <xmx:aJoDazNqgeTJmQehVvIk2p2NamvZ24TQoGluyFe1ljwZF2Kir5o3kw>
- <xmx:aJoDa7fsdSto3kIEIE-IIdXX1rNFmx2a8BGqWltJ34Gz0nIPxcKY8g>
- <xmx:aZoDa4O5M0IAvhDn72rkb2EstafZs2SHyaevtd6ARqpPOrll-LGQJgQF>
+ h=sha256:3qAd2HPPzpzgxvRkRlLOa8BPb12SmDHTJZnTtJlGMlQ=:9nIBKR2E1w0/MisCOlhfnME2Gm+f+Ssf68pbQbqpYlI=;
+X-ME-Sender: <xms:0ZwDa-7vrJXR4KhWfkSNrW1Fuc4VD0gvI_ZuckKkxEEGkrXmE9TISA>
+ <xme:0ZwDa-R6BAAPuOrnrrYQDj4DJy1OjQNM-47RQ-hB1yP6qWyvQYBM73KuYLsgPvoPA
+ f72i3c008OEOFw4xrFBt6ZjfFX3Olts4A6aZPjkucNAWmiIQHgWcl_j>
+X-ME-Received: <xmr:0ZwDa5tMcYdtZVQ4uW6hvtzm-Hqdb8M6MX7Z1IOLd0rDXNg55kJbav1Rlf6eRLJtNGOZPCefuJ_0CegT2ZO7YiVv8qg>
+X-ME-Proxy-Cause: dmFkZTFH+x2kqa8O9RQWMqr9yWPrGOxvxDFnVypGOZOldKEvk57Eh6/+iz2B0GOjUuAmtL
+ UaR+N4FgzjQhOrGdKNCy+kpLkR4lhqsTQasEg0i7YzKufNJClq2KaU5qRg1j/6Ys5auwtp
+ CWwsmY1X4yIrfq88w6mxiU4zMpifXm9Byzvn7+Sk1XCXpBpqIGGCCr4R3LXeZTy+Y0H21w
+ X2TW4zQ2MGy+84dqciOi+5MiamshS/K9S6Af6nadE0CO8aA3Ae6b4m59RxY/DHIRrM5CgZ
+ TGwd3aqrZtpjEgL4+KQKPCDmeiaPulDjxCV+09t/tBmz9e4oJrNY0iHwsVFO6yejlXWxsg
+ AYAsuiUdNmCY98eErKrK2WvDvizpNhhZLkDP1BLHIr6jTEzk/KzumyV/XhsrtuHr3J3NH3
+ DbQsMp0EWzOL98CHSgckYVUA82bVnh1dyAJ0X1mv0j2Vn6O92vWOFIDabMdVFSRkDQp1rz
+ +SpQh4ao9U22JWqOjkMd7g6qZSAi2qKsnmCx/UZ9+gdaAzD6AO2yid+gd+x1G68eIdbATF
+ USQt1fFPv8RYL0VK/tY6YqCqB+da+OkBpaA3AQ9h9QkwjV0Uht6fnT68ioU4PFlMU4euNT
+ Kc3qclv+dBcRH8ZK7F/QOKBg5d23qzjbWqz79+98WA7CSUv5bv5DV0lo1joQ
+X-ME-Proxy: <xmx:0ZwDa49_YuQCF4Mo9AHVJW2wZhekAjaKTR819LkZLuFzvRh1h-c0Ow>
+ <xmx:0ZwDa6zUSO8BthJmbSFxf_YDKdDMTgpCc5AKH_udRAFoIF0_sq85lg>
+ <xmx:0ZwDay9hT5VgtEmitsxGZv60SdKXqqKKZgM-x4N8O2uknwnh1M9acw>
+ <xmx:0ZwDawN-XrdEWTXA8DtcR701m1jnCQeORtDUhls_3Ll39YtD4W6SEw>
+ <xmx:0pwDa7_3lTFE85EWzl6vgE4o5LcdeLFl0kMGcWbOmfEp15gaAMp_Rlp4>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Nov 2026 20:44:04 -0500 (EST)
-Message-ID: <eccb67cf4495cc3578123bd2cebf89ce9d9e6894.camel@alistair23.me>
+ 22 Nov 2026 20:54:21 -0500 (EST)
+Message-ID: <309f14662909643357b34507fedba3a120555f3a.camel@alistair23.me>
 Subject: Re: [PATCH 0/2] m25p80: Clear write enable latch (WEL) at the end
  of SPI operations
 From: Alistair <alistair@alistair23.me>
@@ -103,7 +103,7 @@ Cc: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Peter Maydell
  Vivier	 <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org,  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
  <hreitz@redhat.com>, qemu-block@nongnu.org
-Date: Mon, 23 Nov 2026 11:44:01 +1000
+Date: Mon, 23 Nov 2026 11:54:19 +1000
 In-Reply-To: <20261110-m25p80_write_enable_fix-v1-0-3a2abc0072b0@oss.tenstorrent.com>
 References: <20261110-m25p80_write_enable_fix-v1-0-3a2abc0072b0@oss.tenstorrent.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -111,8 +111,8 @@ Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.62.1 (by Flathub.org) 
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.147;
- envelope-from=alistair@alistair23.me; helo=fout-b4-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.156;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b5-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -163,7 +163,9 @@ ble before each page
 ram and flash erase
 > operation
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
