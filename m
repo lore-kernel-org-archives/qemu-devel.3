@@ -1,99 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C861C606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 11:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6029F606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 11:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vtzcodb8
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=iXbQBMfx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVSE1-0002n6-4U; Mon, 23 Nov 2026 06:28:45 -0500
+	id 1xVSEo-0003EI-UC; Mon, 23 Nov 2026 06:29:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVSDt-0002mi-Ff
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:28:38 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1xVSEm-0003Dr-M2
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:29:32 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVSDr-0001f3-BB
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:28:37 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-67921b515a7so3205195d50.2
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 03:28:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795433314; cv=none;
+ id 1xVSEl-0001jj-2n
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:29:32 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-67db6d4054eso3447754d50.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 03:29:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795433370; cv=none;
  d=google.com; s=arc-20260327;
- b=eXOvVNkZAj8fyhhqEYQQ9rgC+ppXMMAVrWviRy92ANq1hwAMF0q3S8QB2xSTC37j4i
- mb23qf+sEycwqqzrtgiOvIlTK91n4OuYznPtw+d7HyzHxmxs91X9EPWtcRcygODyohxx
- GlEWgTFPkJNEq/lvTNSyeoOQaNA3oab8us8O508b8bwJ6MyDfalvxmr3N3xWhc5OScpg
- V9CM2Q+xIFvi7FulXdlWRTBJX2+r2sCL/S7xPuGxfRobs7cPo0q7uIXiBKl4dj8bQxwy
- dKJBuHGT/zm79S5RE0PRrs5ZdkgrvLrjpz8NNvAElT9Y/CxhPwlKiDu+mt2yBPgL2zpZ
- rlFQ==
+ b=XWTwTCg04QUW+LyEPHZ2FSKDVgbzvVAr3j6Qf2em2JPdb6LsPseaS1fWaTQAElW8bu
+ I7pwfox5uHDCTMnTm4DucrNWJXTWcRNlkHtwlsCgqvbQlXg+hJEokjI54xuMwHgQFVHf
+ YLRNjqcX2GbnHct6M1gCr/z3LWspaJPKpP2aS8jJKggQCggQaofzFOCZAsfrACxC8FTg
+ ue+/nZg4vfZcaHoiu+SD1xvThNRTd25OYh/jb06xohFAl6wVe28oOjBgTIR+e7uqHdGG
+ PREHpUDFlNmz++XFD9yquTHI9piymd1qURA2m2LxXzvUPm/P8JKttOfYU6eBcKX+1dRM
+ wJOA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=D6JYfbVzOmCG6tYTaehEtn3ibekVe4GjRe8lJDd16ZU=;
- fh=6XnXMJYFRoy/vZiWCJijwFGoJ1wfuCrZrR2Dq+7S3/s=;
- b=eWqEUMT0kJnFI7FJJUOt4W9CNMEhcsEUCdKxWGZ5YGqJmGCqs6jRoiadXmLCqfHpcf
- TwbO7XglS5lCc2ZlbdaSpGUr0M4LG/LUbNFNA33i3pl7pr5DleIhpIDHBRh4v2TlDKVM
- 4wvaYLHlpo9gB3T9dYKv9rvtzXDl/ZpH4nI1ZvfYfIKIVU4Zj9UT4SjrTxNMzBXboNRy
- xK7u/+93iC2Sqb0il0R+tyfQWqfs1BNqvpaIb5+XxBcMa7Nt7YullSLQra6iF5CXddsX
- hzX75dNp51GQ1qB2UU8nXFdIsPBbp08kxu5VB+o4AN7C/5kYSI4nT6GZsPBn5N3GUrfc
- KAIQ==; darn=nongnu.org
+ bh=3RdOi4wLqZTBwfgnNypVHtyRHSmC50Q3tV7RvKHQy60=;
+ fh=nIsHTR/B6mc98C187SbmJh4x+ZkzMioxCZFk0oB2Ftk=;
+ b=dWbqTwFkTo4Nq/8wjGpxlxo4OC/UwA+dZJB7jR1Aw5XqoWnfGtoqgGoy+Jq1qqGwar
+ IZLJfsy3gNYI2Zlk38lW/iMdYxT9GOiCzN2YKyJaDp6WVM+Y29lj92rFsY5EsCeALXQi
+ JeINKXyGyMZH6t/mzU+hBWLQYbl4HQvsJePPzCII2o5ibB83qFzvMNy+1iDMUMkLOfXp
+ pB5f5wHnktlImEX1jaYF8y5SJCTVsD6vz4ca0JyNWi5iq2s/bRJnSxDYhHBIecoDNtrT
+ y40w70E1qzAXKh+BcVJ5OtRy6+Z+oYmsNOuQtA/SislmDOYgKmiDRs7E7PE7SVPdmUSe
+ 3uIQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795433314; x=1796038114; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795433370; x=1796038170; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=D6JYfbVzOmCG6tYTaehEtn3ibekVe4GjRe8lJDd16ZU=;
- b=vtzcodb8NyRZqEqY8e1GQWI/ecz5HNKQR3a35rIrivK9TQ1Ka6Lp+hfE2NCMK+1wWo
- z5HZy9pj9rU/vews4QQkmh5aPvHX73TjY523ezVuDvdu7CtUnQ2tVUxIuKI+oaPz7DjM
- MOIuZIYso2Crvg7yLrqfdP5wwLjae7MvSqOKsbpdhMSSVJ54BSS3i+AMoZJOpnMzW30I
- gjJJF6ZIuA+sSJsIFTCQ+sZwTB/WhVDAzB/pHUiwcfZRnGouJYWi3Lkuxpipih8TVaPO
- AeygfK3Nngzl6Unwluduvd+4KNWWVJfDrwRzZ5PmB3IFNCuyRnEQSyLbymwcWaQ2b2Cg
- jbRQ==
+ :content-type; bh=3RdOi4wLqZTBwfgnNypVHtyRHSmC50Q3tV7RvKHQy60=;
+ b=iXbQBMfxYuY8ln+qsgw8/L492XuLxmZOmPrC6+kdmkFhuVGPc/1OHIrS1uIP7uln14
+ nUAqywI/dZRo11QmKwbNLFJKKQaqksnjhzvk9AoWf3x2rilyP9aOrjF9o2dSOnFW5V5e
+ UNq0ERNqasQCplmVACCj93zHlAM2cyaxS6Q7tJ/dkSmX0D7zPn0eYU4WHlzM4gwRUtGX
+ FfVcKWfi+me8StIO3bCk4cRt1Rxg8z/D42f8/0MWsOrsajXb5ycnAh9t8cZBS2yv7n6a
+ 4HwbCWaLdjjfEPH3UpCKen7C+KSDr7zEa19Nal0uI9gvmRyeyHwcvqd+gAHWE4eRwGNH
+ /Avg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795433314; x=1796038114;
+ d=1e100.net; s=20260707; t=1795433370; x=1796038170;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=D6JYfbVzOmCG6tYTaehEtn3ibekVe4GjRe8lJDd16ZU=;
- b=xTGz6e5Ph6aNdP7G8gG1ySMEKYgx5r/UcxVYa0b7UMy1iz7lzNqRmfZgVc5t3SeZ7i
- vJcNhGhZk9XJVCDz5rNzIm1Dgq92SIjRcnwYmYqK/OLBkUOBK54mF9Ne4yMeCEzrY8rS
- GeiYoxWeeU6M4/x5LTbTZ7v5JgdE7yi8Nd4IZMQFk5DKnE/pvr5XxdwFfiriVX4vEFwr
- U7SY6uz2Rnoc0HZUzpmcMT+KjvBAKlrh2Son56uaGNLEneB8Ifeg6Rst8hNvajymBHdg
- jcdIH33Jb36K6/AV5MnqaKszksEL/lTfGzitMSqYskOyhLFZQVKHzDB1VVt7u6fIOuMf
- wpmA==
-X-Gm-Message-State: APuU4Z9brOap54Hppt/V+UKzZTjvOEZgy06EKLQE5hwkD1GF+WbzKjbJ
- 463Q7tj0udVdEcIBQXxkAG9yMI5G109IJw3ILcWip+XuqmixBMp5ugFrRnt6zJ6VCWCBJxCj/g6
- haaULvK7rUI+VpY0SdIUH24ANe0P/AKeWFQyTtbnoPfvvgQxyLTfw
-X-Gm-Gg: AZFdTZeN38jCu2OAbCzGVvBilXhPxEPyq8IqI/XZZnluyBNDa3ZYNzEpyLvIjaCDTXs
- AWhuoi8K1RQXohP3Z1UZ4mIJTdfz7tLtWMl0nggbHT42sXUD1P9pxdKMK0Ib5yqL9lnPrp8Edax
- R488P1iP3YyRiq4/b4atGocoXx2f+zksAiShzHY1ZrL6RxH4+OsjyTAuQfg5MjaFsbXRwiLoFWs
- KcuhMF0pAObHOqXjMRzTO3VZ0b/Tb7GWCXW+h9vDJlqiKNw0XSroGZ0oRX6xmTgozjBSHNye6Ue
- 67qz5ri1JWLtTQ0MMYahf5HQNPDAdFxW7UuKObw4lMlH95dOCS867g9A22kDd3z8dK6MROiBvTz
- sd/+fMjtgszWrjOuyyyn/2y7W3Gg8nRq5WVzbogs7w4QdnhtWIoe9kNRqX6E07E+p/bRQjsZ/VM
- 0+s2WQxtfWmSHaIchRN4wM3CmnpHtH9oiXgrSu4+A1PLQ=
-X-Received: by 2002:a05:690e:1919:b0:67c:1b89:b117 with SMTP id
- 956f58d0204a3-67df444fa54mr4956355d50.77.1795433313600; Mon, 23 Nov 2026
- 03:28:33 -0800 (PST)
+ bh=3RdOi4wLqZTBwfgnNypVHtyRHSmC50Q3tV7RvKHQy60=;
+ b=CzSJR/KJnzik1v8xBfoJcmVpxRGvYugidhU5o2+1f5X7QVw78qgXL5wj4XUKjPK8ag
+ X1oJS5Jz/n9QqhWzPIrCXBd4E43xtked5W6yjHVNHs5xkD9Waz2Dv0I4IGogbmxYGrB8
+ OhpgCs80hr86K0yzKTJ45YnjiOghpbZnFQw3aYMWQt+rjW3O2EnRF4z/TziuvHMcjz0Z
+ MQDtJysWrfb9rSBd9lFHt2WpGBzx+B/+tJwccFrqg08at/dNbR+OceV1KatFp+xLEMWc
+ FbyyBL2zaSMjX5KHYhcD+cCvRfarHQYvopNFVoqxOHQQBY0tuZ8EYp4e0mmn5XoYKpeB
+ 17nA==
+X-Gm-Message-State: APuU4Z8H3lWrng7WquDHYLsp1YNfNcV5FtUC5sQ21rWc6UutRtrMuBY/
+ +aMIUyngG8I5t7+YMDMTJXrGiau6/Ug/mw35R1qSMxq4TCmOwKAMUEHu+hesV1tLsUDX3/j97ID
+ PmU5yuyVkJVDK6tfoGaX8dlUPbScL6i01mM2DMAk2IA==
+X-Gm-Gg: AZFdTZeQqG0FDfO3HfJbnV94gKvOEOfxbI2ICvp/3L+jyjFRf8QDINZvm9YSJLy3mT5
+ WKUMXm8JSGYQwvykKMvyC9IYi4WObuPHUVr3R21hkBDb162k+De09TPfe+7bmobDAOYUwpSbc+E
+ Zww/2N8wYHSPwoZhfAGIaV84R03JfHr97iJe+T8wE3zNrvklmATty1CGvAjm7kXATdLfeWPsR1P
+ llYD3uNwrIsoV14/TecCWssLaF7IjMSXrVp+p9ubNwamDb1vQLg6vA8WV8S5/ByYE4AQFs9fBPE
+ SFvjb+DkKgN11TbP9cSXf7wK14NX3WHqlvifsUcCnz27FJYmrcov0GZHIwRvCcq8cQe4dOM/R7z
+ 5+SMEHvlCxSSEErCsX8OtMcT+lMiWyO0TZoPuHFqHM1V8cCSu28L0t9xSGhdAdPBfCYzT4L/Cx2
+ oh/N4mQrQKwAVEwFjiKXiRgqGFSPJ8YQaa0fh9EdjPh58=
+X-Received: by 2002:a05:690e:1247:b0:67d:ebad:8ca2 with SMTP id
+ 956f58d0204a3-67df4410cabmr3993514d50.53.1795433369558; Mon, 23 Nov 2026
+ 03:29:29 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261113165015.1150646-1-peter.maydell@linaro.org>
-In-Reply-To: <20261113165015.1150646-1-peter.maydell@linaro.org>
+References: <20261114132350.1456994-1-peter.maydell@linaro.org>
+ <dcdd8f95-024f-46b8-ad1c-42b7c8a047d5@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <dcdd8f95-024f-46b8-ad1c-42b7c8a047d5@rsg.ci.i.u-tokyo.ac.jp>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Nov 2026 11:28:21 +0000
-X-Gm-Features: Aa3M54pF30KXZOF89rftrHcDQk5mLTlHewNrDPDkXB0Uoxd2Su_hU3Fh8kjktGk
-Message-ID: <CAFEAcA--1GLGf=7tmkzQZ=QRPApLTdsdFskgbSibYPDF0o626w@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/rtl8139: Limit DMA transfers to plain memory
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Date: Mon, 23 Nov 2026 11:29:17 +0000
+X-Gm-Features: Aa3M54rYqepVcl9zQWl7apkrlUHu9_Q-6J_WLs9UBLQiDJCmKKKUHoXc0B_-HGQ
+Message-ID: <CAFEAcA8KK2=pm7oFOzqBxn+26HYNPTEHf6Wfjxu=xnotNMgWcA@mail.gmail.com>
+Subject: Re: [PATCH v2 for-11.2 0/2] net/checksum.c: Fix errors in dealing
+ with IP header length
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Jason Wang <jasowangio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,49 +121,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Ping -- could I get a reviewed-by for this CVE fix, please?
-I can fix up the unnecessary "inline" keyword.
+On Sun, 22 Nov 2026 at 06:28, Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/11/14 22:23, Peter Maydell wrote:
+> > The main point of this patchset is patch 1, which fixes a bug where a
+> > crafted packet whose header fields claimed a header length smaller
+> > than its total length could cause us to set ip_len to a negative
+> > value, which then (because of a signed vs unsigned comparison where
+> > ip_len gets promoted to unsigned) makes it through range checks so
+> > that we checksum 64K of data off the end of the packet buffer and then
+> > write the two byte checksum also potentially off the end of the packet
+> > buffer.
+> >
+> > This is CVE-2026-127233. The code is used by at least xen-nic,
+> > virtio-net and the COLO filter rewriter, as well as various
+> > out-of-security-scope devices, though it's not clear whether the bug
+> > is exploitable in all those scenarios.
+> >
+> > Patch 2 fixes something noted by one of the reporters in passing,
+> > which is that we don't account for IP options in figuring out the
+> > offset of the TCP or UDP header in the packet, which means that we
+> > will write the checksum to the wrong place. This is just incorrect
+> > behaviour, not a security issue.
+> >
+> > v1->v2 changes:
+> >   * use 'size_t' for length argument, and drop assert(length >= 0)
+> >   * use 'unsigned int' for mac_hdr_len, ip_len, ip_hdr_len
+> >   * use 'void *' for ip_payload, and drop casts
+> >
+> > thanks
+> > -- PMM
+> >
+> > Peter Maydell (2):
+> >    net/checksum.c: Correct handling of IP header length
+> >    net/checksum: Correct handling of checksums when IP options present
+> >
+> >   include/net/checksum.h |  2 +-
+> >   net/checksum.c         | 46 ++++++++++++++++++++++++++++++------------
+> >   2 files changed, 34 insertions(+), 14 deletions(-)
+> >
+>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+Thanks for the review. I've applied this to target-arm.next as
+I expect to send a pullreq out today.
 
 thanks
 -- PMM
-
-On Fri, 13 Nov 2026 at 16:50, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> There's no reason for the RTL8139 to be doing a DMA transfer to
-> something that isn't memory, and allowing it can cause weird
-> re-entrancy problems, such as a DMA to the PCI hot-unplug register
-> causing the device to be deleted while it's halfway through doing
-> something.
->
-> Replace the calls to pci_dma_read() and pci_dma_write() with
-> local functions that are identical except that they pass
-> a MemTxAttrs that forbids non-memory accesses.
->
-> This is the same approach we took to a similar problem with
-> the hcd-xhci USB controller in commit 89e653b7736 (but differs
-> from what we did for lsi53c895a in commit 4862d2c95104d).
->
-> The known trigger for this bug requires that you turned off
-> ACPI hotplug on the QEMU commandline with
->   -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off
-> so most configurations won't run into it.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 3ada003aee2004d24f2 ("rtl8139: Use PCI DMA stub functions")
-> Fixes: CVE-2026-128868
-> Reported-by: VictorCHEN <ahchen-yz@outlook.com>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I'm also wondering whether there's an approach to this class of
-> bugs that would avoid us having to modify specific devices to
-> insist on DMA-to-memory. It seems a bit dubious that writing to
-> the PCI hot-unplug register can cause us to unrealize the plugged
-> device even if lots of other things are still holding a reference
-> to it. Or else we need to be more specific that you can still
-> validly (in the sense of "doesn't break things") do things on or
-> as part of an unrealized-but-not-yet-freed device, and move
-> things like pci_config_free() from unrealize to deinit.
->
->  hw/net/rtl8139.c | 98 +++++++++++++++++++++++++++++-------------------
->  1 file changed, 60 insertions(+), 38 deletions(-)
 
