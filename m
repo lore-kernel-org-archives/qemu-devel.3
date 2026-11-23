@@ -1,106 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8DE606A321
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 11:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B646E606A31E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 12:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ul04TW2+
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=U6mp63M5;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Ww1K9ApE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVSeh-0008Un-SP; Mon, 23 Nov 2026 06:56:20 -0500
+	id 1xVSlY-0001Wk-M6; Mon, 23 Nov 2026 07:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVSeW-0008UQ-6p
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:56:08 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVSeU-0007SM-Hb
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 06:56:07 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-8b30cbfa628so21058787b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 03:56:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795434965; cv=none;
- d=google.com; s=arc-20260327;
- b=pascJUyfvYcv0Th65yuVfvDEehkZ+lAZaykTRRdhdK5byHekf3cxm92dYwT0QjX26/
- /49Awbca/bN0FkwnZxZjpSf1LPisYuLmHiuD0eAXXENf4hxdPrQWv5VfF1fYenUUf4NW
- bDz/h5lI/ktsNEGUbP/zNVv+3bJ6GMHUFkuADIqyy1+b3TOgHzj5LioIapuz06yjB2yj
- neJ89HTPhfqcPsOc9Oq035mbPqEfl3Pj+UoK87a1DptLXaPnEL6lCkMbnaDGQtFHEZhB
- d5jf+NUF7Sht1CHnuZGMVnowgWAWBRfZd67c6rC/cBagz04hmmZe4cuKYw4x2pX6bEW1
- eJFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=6zfdO2OzUreW8lGzz4kPeHrkisuJNtMzB/9BzM9B9mM=;
- fh=snxlMAIYg42qHdZMI+YhOCzMiAqS8e+xhFzZVt6ivAc=;
- b=YjZ1zCSjyALRuOYwK2lDnDtsbPlRlfbZBlHC9/DiCw5Ea4b73u3H9QKnizNtNoYLwE
- lYtNxzZ4HxxQHGZW7Q5aE+uUSpG9OHavPGws2d1DVYivBYSzuXkVocCI1PediGinzJ4h
- ulPpD2CI0M+SXsxcUHE24u7M0xdPE/34E4HxKZeNlEPtzoPw9s8Tsby5BtOAJfHSchF6
- ZV659R2TUFqD7yBgjqeNnrZvE5QyDlQvFxS74QUl1L2/ah2yHzt7a0xIqqk7Ka7gYfZc
- 9UJX7ttxzt3nceaVqEJgq/ePJWwUUGp48BZ+YG5Cu0ciAjJRusy1dapmMFn28aY8DLnt
- FndA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVSlU-0001Vh-Ud
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:03:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVSlR-0001Aq-NW
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 07:03:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795435394;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1onM7vQOH4ybeT1o/duq27rl7jDAlFyfvuCyzAHhmu4=;
+ b=U6mp63M5SshH1iD1j0+upRFuc3LXQpvnR02eHzmjcAdSx/Tf7/KybxAx9bPD/TDYQbLr9t
+ 0OcNUumspb4EjgKSt0XFRC8GuWZMNYCQE18//MGU4/oPIQulF76vRPzBMjT4cGR9etjscM
+ CDRYOB+DxxuiwR005Uh8MepYyZUrwLk=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-BicIy_IrMWKznazUCTWoIA-1; Mon, 23 Nov 2026 12:03:12 +0000
+X-MC-Unique: BicIy_IrMWKznazUCTWoIA-1
+X-Mimecast-MFC-AGG-ID: BicIy_IrMWKznazUCTWoIA_1795435391
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-8b4e8af48c8so42803627b3.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 04:03:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795434965; x=1796039765; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=6zfdO2OzUreW8lGzz4kPeHrkisuJNtMzB/9BzM9B9mM=;
- b=ul04TW2+fp/E8DUvvfk/uw/93u8LehVY/c5UjJtPHgDuj7MiK9FcWRHsjpL605hnLZ
- aR6Xn8GiauPi+JPSfW+ibb6UUWo01pDcqDsnmLGN31D/blCEjIzSlVFYsuqnBsQ7ZLNC
- +WoI6G3Fdd6fXcW287RKDtBflEaPXN2We7WAobq5JMtR+jk8BVcYfBZ+/Anr1uEyS3bf
- 2rLSBMSAkilueElfmbpcS92eT+RPvtNfTHQ75zqEZQfX3bbcNm+CK3EGhgU5WLXf6nn2
- MaEHlMAJQXXpnI9rLyJOovEyUerZr5hOOULOq5Myy1o0F/4U9653siAwLSqz9wrubtcG
- 68xQ==
+ d=redhat.com; s=google; t=1795435391; x=1796040191; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=1onM7vQOH4ybeT1o/duq27rl7jDAlFyfvuCyzAHhmu4=;
+ b=Ww1K9ApESDEVYyGxg2UoLS9PtiC8D5WNREBGCJKLIYfXFcQDyRaPNxP2H5y63mh1cu
+ Se0C+ZIP7cZxvfbL53+bsEflr8Kg4vrjTYTAxhCcHXFR50wEcpmGkMoBYD1rlytj5A12
+ B6U38DrE+6HviVXUZxSk01LQt1YDtKbx3H5yufD7AZnmvUpXeZYJBJyiPAORYMRZ0oYC
+ q8lMDXiPkxfyD06QHYV/j7uNAJ2uyhsk6TTZtR52PhKcWLnv4EYYqcGPWL4Vq3jQpn9H
+ 7m9G6xw+GJ0ZFp2xUAcKEOJsWegfg4RxqQK460/uCi7U5/TsfujliR1YgsaQYENtAgMt
+ UqKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795434965; x=1796039765;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=6zfdO2OzUreW8lGzz4kPeHrkisuJNtMzB/9BzM9B9mM=;
- b=hApPLVhWWJeBtK7PRRp+etqBZeabAXSBvjsOXVekopSyDIGjErTFMgBQRyBLvUz28h
- IgVOOd2eSzvmlHgvTAduSxV3Xmzhj3/wmbZAStZjQNm2hc0p0xwxmvmsQKSdMC+vv9Li
- jozOXJ1Iqqy444lMpNAFBk7SV7V7VNDjY3qOuziblZ2v6JaCOAxW/7nXg5N5vnHskeIZ
- DIA8oInOvF0PWrRpI2MXnuib9ryOzbGJnPljUMPTzj8XLIv1Zrl7LwHDCVMmRGXAgmnW
- kcPeGjkoYrTU2Dcuqw6lRMO8909Z+q62MCnXySpLC71putSMk7xAHGIIIWQuB55S7BzK
- wQSA==
-X-Gm-Message-State: APuU4Z/Rtz4Nrqbc9vY7simNrjVpdxBSNzRQ6T4rvFmRftsfDGcsxs+s
- L4KqWsOa93W6sN2wQKC75y023KAJ9fIIFphdUwj23dacXycZvLhlalqw/FqIekrN6kaO9AqUClQ
- sxZmZNNj3x5Xo/WNB++67BqsdTPTr0D2ZZU40gC4jhQ==
-X-Gm-Gg: AZFdTZc/jrukuZWdG9HT93W8qGBtbGqPu+UlPFcTJBOPfYUh/NLGy1JUCM5Z2TVChZV
- ZXEDdU1o+aUd5ZcqjCwSsHAbDmsh7zxV6rhinR2lXRAqXt1d0ZWJe/XmPdpYanoRPYqcR7/xU2c
- mRqALP4ilbnvexPtAhHwuapSq/m3CX8AdmcIgL99r5/+KqNtuJbjdR8ri5OceQK9vFo6gpxfqH9
- n6Z7EZRmREqreA9Wh7elphizr2sjkcBcWlHo08DV22ZcmVwXwWyAuvl6UPxPeyz8HMfgrz1PQ38
- PNrW9YiLMQvgHuLqlu/NH2HM169Auz2uovHSs8Oo8HsurXcnee8YTEFBwWg1nBTPlyPRiYJg1Ov
- kuQzq4FSo9pfropDMDY2xIEJJB3yiDtFKkYgVnESD/q21CFgdh6JhYzkD7sZjEKoWqCyVxyUrYy
- 6m18tIdxR0H+eeFrvYAy/F
-X-Received: by 2002:a05:690e:a45:b0:67d:e867:89a0 with SMTP id
- 956f58d0204a3-67df43ce3b5mr4534725d50.30.1795434964881; Mon, 23 Nov 2026
- 03:56:04 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795435391; x=1796040191;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=1onM7vQOH4ybeT1o/duq27rl7jDAlFyfvuCyzAHhmu4=;
+ b=W6mIJy3w6qUhVHYKQIGt2O9qag70JaUors1t50NQ/Wst2/DGU4PNtJjvuI33vJp42M
+ TOsnWC9qqkTG0W52yKUsunMZun5NlYnTwepw7FgSqR+kcX1Ad7hQPUNlqxBl8OC5CyIJ
+ pFpBxDXbLnOmK6TjmmNNvXP/upj16C+quJ9l2Q6r/ryAkyengWuHT4i9C6qDeUbeu6Eo
+ j2fSbAFAWlESLhDfL/S9pG/KBx1yquoyWbp2MDD8aBSPQX+wsnR07Pqb/0RmamkiETuZ
+ pcgj5XeohSUyOj0TffIxX0pKja2KjceFlRxMtKe3w1EpiITGwRnvgHoM6/kOJcFntJYX
+ Ohfg==
+X-Gm-Message-State: APuU4Z+jwtfjeZAG9rdZN55mljV7STQJ5I5XBqaUjG8DSqNCd5dV0ZEj
+ xE74zYh0JgULvi33chOWfu4YS/dQcCX7yGu4e/0dYHBAr5Zun/NmaxC40qQI7aZjWj32OzVEsbL
+ 4Kw2gysxh2qob6rZ6vfPn0D4mUKDqKtwMNNRG8EdGxBQVGf7digY0Df6Y
+X-Gm-Gg: AZFdTZcYYxdb3stOdL540oj1xcGFVuISCW61U7gTQF5jsUY+A56bqa3z+SF2n5UxmKg
+ f0f468z6Fw+0XPWYrkVfnS4frUfUwVwcqHMRAverTptT6gcWVLiaF8KU8YaDUP7HDYi3Sas2v89
+ lz8l8d3Qgg+SCnlmG92YYki35nx8xFyGmFrMYruk2UgAyWMX/3RRhL/HajRvbsfKvr5sDl27vBY
+ grWO/c9mrvD9tqTtKynUpDoPZcBHd2lXJKbK/tUEfgNMU2hrjnO/0mVPWvghk56/n/Y15gIk+y4
+ 1CgvpXWLmknshOTMlwmCyxYO8N5oZGJQ2XqpQPTPvYWbCildAywW5RmSDO2m2HKqSMe2IZRzyB0
+ 1401u1iKB5YYW0y7i3s85N0mld/EdFWi2szij5oGwNlBx
+X-Received: by 2002:a05:690c:c04:b0:8b4:c8c5:6b11 with SMTP id
+ 00721157ae682-8b5204f087fmr54864727b3.36.1795435391260; 
+ Mon, 23 Nov 2026 04:03:11 -0800 (PST)
+X-Received: by 2002:a05:690c:c04:b0:8b4:c8c5:6b11 with SMTP id
+ 00721157ae682-8b5204f087fmr54864177b3.36.1795435390614; 
+ Mon, 23 Nov 2026 04:03:10 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-949bb34a38bsm778661685a.13.2026.11.23.04.03.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Nov 2026 04:03:09 -0800 (PST)
+Date: Mon, 23 Nov 2026 07:03:08 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org
+Subject: Re: [PATCH for-12.0 5/6] rust: Replace vmstate_validate with post_load
+Message-ID: <awQrfKAyGDxxI3Gl@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261120124923.1656220-1-peterx@redhat.com>
+ <20261120124923.1656220-6-peterx@redhat.com>
+ <awBYUwFhba1AYpZb@intel.com>
+ <awBqoiy3zjHiXXEG@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <awO3EjQI/8QJsyZ9@intel.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261117193205.8236-1-agarwaljayesh03@gmail.com>
-In-Reply-To: <20261117193205.8236-1-agarwaljayesh03@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Nov 2026 11:55:53 +0000
-X-Gm-Features: Aa3M54qcfvLnmuQmOVFjmTs3WfpvouOrJyliMPqg8vjFnUH7_Br0-aVmcX4MCzU
-Message-ID: <CAFEAcA_4+PcP8f2DF+mtjkO5iO6eU6C6R6hjfBN7dg0o_TGPiw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/bcm2838: Route system timer interrupts to GIC
-To: Jayesh Agarwal <agarwaljayesh03@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, qemu-arm@nongnu.org, 
- s23adhik@csclub.uwaterloo.ca
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <awO3EjQI/8QJsyZ9@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,69 +119,87 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 17 Nov 2026 at 19:32, Jayesh Agarwal <agarwaljayesh03@gmail.com> wrote:
->
-> The system timer interrupts are only routed to the legacy interrupt
-> controller and not to the GIC, so a guest using the GIC (software that
-> relies on the system timer interrupts through the GIC, such as bare
-> metal programs or hobby kernels) never receives them.
->
-> A qemu_irq connection follows one output, one input. So also wiring the
-> timer to the GIC would replace its connection to the legacy controller.
->
-> Add a splitter per system-timer interrupt line so that each interrupt
-> reaches both the legacy controller (output 0 of the splitters) and the
-> GIC (output 1 of the splitters). The timer channel n goes to GIC SPI
-> 64+n, so channels 0-3 go to SPIs 64-67.
->
-> Testing:
-> The raspi4b machine started in the qtest mode:
->         qemu-system-aarch64 -M raspi4b -display none -accel qtest -qtest stdio
->
-> Ran following commands:
->         irq_intercept_in /machine/soc/peripherals
->         readl 0xfe003004
->         writel 0xfe00300c 1000
->         writel 0xfe003010 2000
->         writel 0xfe003014 3000
->         writel 0xfe003018 4000
->         clock_step 5000000
->         readl 0xfe003000
->
-> Before the fix:
->     clock_step 5000000
->     OK 5000000
->     readl 0xfe003000
->     OK 0x000000000000000f
-> The alarm fires correctly (status flag outputs 0xf), but no IRQ raise
-> 64-67 reaches the GIC.
->
-> After the fix:
->     clock_step 5000000
->     IRQ raise 64
->     IRQ raise 65
->     IRQ raise 66
->     IRQ raise 67
->     OK 5000000
->     readl 0xfe003000
->     OK 0x000000000000000f
-> The alarm fires, and all the four channels reached GIC lines 64-67.
->
-> Reported-by: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Jayesh Agarwal <agarwaljayesh03@gmail.com>
-> ---
-> This was picked up from Sourojeet's earlier patch, here is the link:
-> https://lore.kernel.org/qemu-devel/3cca4eb3-09d1-4467-81fd-27a5bfe19a3e@csclub.uwaterloo.ca/
+On Mon, Nov 23, 2026 at 11:46:26AM +0800, Zhao Liu wrote:
+> > > And I find C side (in patch 3) handles this differently via using the local
+> > > "num_timers".
+> > > 
+> > > In this case, I think we still have the option to keep the logic
+> > > consistent between C and Rust :). We can add VMSTATE_STRUCT_VARRAY_TEST
+> > > for C side:
+> > > 
+> > > #define VMSTATE_STRUCT_VARRAY_TEST(_field, _state, _field_num, _test,\
+> > >                                    _version, _vmsd, _type) {\
+> > >     .name         = (stringify(_field)),\
+> > >     .num_indirect = vmstate_field_offset(_state, _field_num),\
+> > >     .version_id   = (_version),\
+> > >     .field_exists = (_test),\
+> > >     .vmsd         = &(_vmsd),\
+> > >     .size         = sizeof(_type),\
+> > >     .flags        = VMS_STRUCT | VMS_VARRAY,\
+> > >     .offset       = vmstate_offset_varray(_state, _field, _type),\
+> > > }
+> > > 
+> > > and make C hpet use this:
+> > > 
+> > >         VMSTATE_STRUCT_VARRAY_TEST(timer, HPETState, num_timers_save,
+> > >                                    hpet_validate_num_timers, 0,
+> > >                                    vmstate_hpet_timer, HPETTimer),
+> > 
+> > One thing to mention is, here the test() function is not for validation,
+> > but for checking if the field exists.
+> > 
+> > It means, assuming dest QEMU has num_timers=8, source QEMU has
+> > num_timers=4, when migration happens with your VARRAY_TEST(), it won't
+> > sanity check it, but since it saw 4!=8 it will assume the whole VARRAY
+> > doesn't exist.
+> > 
+> > That's one reason why I want to get rid of VALIDATE(), because it's abusing
+> > field_exist() IMO, and we don't necessarily need such abuse when we have
+> > post_load.
+> 
+> I see, this makes sense.
+> 
+> > > 
+> > > Alternatively, we can also have Rust use num_timers (as u8) for timers
+> > > array VMState, but this will bring back the conversion issue between u8
+> > > and usize, which is the commit b3bf86b8936d & 6e85cfe44c0e want to fix...
+> > 
+> > Ohhh, I decided to not dig into this part. May I make a request instead? :)
+> 
+> Happy to help :-)
+> 
+> > Could you help me to come up with a Rust patch that does what's needed for
+> > this series to drop VALIDATE and VMS_MUST_EXIST and replace this one (drop
+> > my Author), meanwhile matches the best you'd like to?  It'll be much easier
+> > to me then because my Rust is rust (this is not strict; it never shined),
+> > so I can just pick it up when repost.
+> 
+> I find it's possible to use num_timers directly without going back to
+> u8 type. Since the commit 1f0b40dccfe5 ("migration: Remove redundant
+> flags"), C side has already dropped VMS_VARRAY_UINT8/16/32, so Rust
+> side can use usize as the array length type (without migrating it), like:
+> 
+> unsafe impl VMState for usize {
+>     const BASE: VMStateField = {
+>     	panic!("usize cannot be migrated, use a fixed-size integer type");
+>     };
+>     const VARRAY_FLAG: VMStateFlags = VMStateFlags::VMS_VARRAY;
+> }
+> 
+> I'll think more/cook a patch based on this approach.
 
-Thanks; applied to target-arm.next.
+Thank you!  For me I don't need everything, a minimum patch to make the
+next patch pass would work.  But anyway I'll wait for that.  If your series
+will be separate and stand on its own, I'll just rebase to it.
 
--- PMM
+-- 
+Peter Xu
+
 
