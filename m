@@ -1,97 +1,91 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C633606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 18:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CE7606A321
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 18:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XtrmDRkh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVYah-0000IQ-9k; Mon, 23 Nov 2026 13:16:35 -0500
+	id 1xVZ17-0005lf-Lu; Mon, 23 Nov 2026 13:43:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xVYad-0000I3-Gh; Mon, 23 Nov 2026 13:16:31 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xVYab-0004Sz-5U; Mon, 23 Nov 2026 13:16:31 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.100.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xVYaB-000000016iy-3kx9; Mon, 23 Nov 2026 19:16:03 +0100
-Message-ID: <52cc9199-8043-4068-83a3-f5462a236e68@maciej.szmigiero.name>
-Date: Mon, 23 Nov 2026 19:15:58 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVZ0m-0005jy-ES
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:43:33 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVZ0i-0006Jf-HI
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:43:32 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4a7b8abe209so2819420f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:43:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795459406; x=1796064206; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iIDeu641Hgg9gG+Jzk7r9/bqxi+GX+WV5MruQkwEdt8=;
+ b=XtrmDRkhjhaDIlaN/PlgDWcNvujHbf9iySxHZ6IXm6EPWjpHCYNbYnYk8MI+D9/Rsi
+ kUaeMScW9ZNa7xa8l0EFjgm0/HxiWpR5LrJfVMQ49Jgyd/vQMByVlUm+unNEf3YnyNsx
+ nlhJ9XjJHV3iHxX95MREe6BcftPg3QRVUPpWl+3NgYZxuRBHdbdROzzVWullMVq13oh/
+ Pn0q8q1NZLsCaYRRNuXIm7PFoaSD++PuAHTxs300X2H078mx4YZjKDXXHsZG84/z95PO
+ Wz0s6rE8QLi1z/IWwKOSdnK51K0ni1F1UMKNu5377WNKGQH2V9r8OJoIecRDxw7j8m/O
+ kATQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795459406; x=1796064206;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iIDeu641Hgg9gG+Jzk7r9/bqxi+GX+WV5MruQkwEdt8=;
+ b=Lhxw2VeyhjILRXaTAu1MFPeWbRKp2sOO/shAtSl7SkOrezIbSBtiLc6R0OPSJimEXt
+ lrnKbj/Qkv8r2NgL+hKF3c9kNxoWQfEwL9uKjebdiYBWE/My/ZJ0z6dF9lWzZp7gXkze
+ Z1TG74fgKSO7r+IN5RcVE++6Nr97qvz1q/xdpj77aQOJRZ/3EkOFjqFf+vt0xSjTXpR+
+ 1wGtRmPh+lOcou/nfRh/0W1HhW/JnO6PjBCq0O97yNVOWpHy6mjO8280VKgwntWh1/rw
+ 0YJJgkpwOj5lsx7TYJ2ktQBcwByIA03BY763VmpeTuFjXorn7nPf3RScDyc4pJJChX8D
+ sYJw==
+X-Gm-Message-State: APuU4Z/ragywhFuGVOQ7HCx7jWOL6bHDPDaxFr0T+EeClNgKLg3wrCtU
+ Y4L5hCq8PgWhm1g4Vn9QXBsuiXlc0y57XuuUAKnCDJHFWIvUOfmMQNu0Y+KmEcU16muSZ58utYy
+ cLTC7
+X-Gm-Gg: AZFdTZcy5LjaLAIb3usSY6ZEncEThlWwBg6T4tVN2WvaOAar2Mhzvc84VxU4B8ZW8II
+ 9iy2cNbkLB6Za4zGt7oNrdPscSlqWE9I+a9bKYEJpMMyuhNplX9k8l466/BgKqnsFhURa1TA9xy
+ 0Ahl97VxySVmncOmWfmdoJyYbfpkgbta3N2w6OFut0vRx8g9kDb+IjybdIu4YymSv9+2pWNNF9/
+ DdYlr6f3yKIa8IyS4d05lFU4GtQsl2n+UYILFbjGUaZ70o1NymcLAD1DyrHJn/WOcsX5vLZP5uS
+ Ai8CcOrU0HEgrL6w9AMOqm9havcx3mGyaz+QCcKLxWD6VXmdfjadEGkbJAU4dArPmfSmC22qRI+
+ mbM9QBE1149mqp9Os/wFyEZkUvLEj6Ndm6dNrChC5LvzYK3VkPTesfngYF5DIyWbUgCEwCkSNpX
+ rTMUVHtYHqCcNKeKHiQH2vKwxw+4klX/LxHTentjhSvUouhOxTfXPfSb//R6eyDrFQPsIKjBmrz
+ hznUBnliL8xJ6qk4sqn29hfv0ejSOND6HToy/7PUnmjuI0sEzuBEodsH1S7K/fEkO9uskLo6j6/
+ IOeOdvlG14JXJ51iMLvDmMlrYFJ3l8Y8AyU/2C0IIYMYrR7fbTCS+6j+0gxqlFCdsKjKyg8mdZA
+ 5GZWgnH7aG3iCfJqVJ3nNOUgLVuQ5i+lPcg==
+X-Received: by 2002:adf:e9cb:0:b0:4aa:f018:e063 with SMTP id
+ ffacd0b85a97d-4abb225e922mr17534662f8f.24.1795459406221; 
+ Mon, 23 Nov 2026 10:43:26 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab6a67fe75sm26826863f8f.24.2026.11.23.10.43.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Nov 2026 10:43:25 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH] block/vhdx-log: Fix loop index type in vhdx_log_flush_desc()
+Date: Mon, 23 Nov 2026 18:43:24 +0000
+Message-ID: <20261123184324.4085961-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] treewide: use qemu_dup() instead of dup()
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20261112-use-qemu-dup-v4-1-c9032f94bc2c@gmail.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20261112-use-qemu-dup-v4-1-c9032f94bc2c@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,111 +97,62 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 12.11.2026 17:17, Filip Hejsek wrote:
-> Move qemu_dup() out of an #ifndef so it can be called from code that
-> runs on Windows. Then use it instead of dup() to ensure the cloexec
-> flag is set on dup'd fds.
-> 
-> The only direct users of dup() are now guest syscalls in the user
-> emulators and the implementation of qemu_dup() itself.
-> 
-> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
-> ---
-> I fixed the Windows build now, checked with docker-test-mingw. I had
-> to remove ENABLE_RUST=1 in fedora-win64-cross.docker, because Rust
-> cross-compilation was broken.
-> 
-> Changes in v4:
-> - Fix Windows build
-> - Link to v3: https://lore.kernel.org/qemu-devel/20261015-use-qemu-dup-v3-1-ca02b5927725@gmail.com
-> 
-> Changes in v3:
-> - Also replace the use in migration/cpr-exec.c and the tests
-> - Link to v2: https://lore.kernel.org/qemu-devel/20261013-use-qemu-dup-v2-1-12ecd94263b7@gmail.com
-> 
-> Changes in v2:
-> - Replace the use in qemu-nbd.c too
-> - Changed commit message
-> - Link to v1: https://lore.kernel.org/qemu-devel/20261012-use-qemu-dup-v1-1-03d94852a6c8@gmail.com
-> ---
->   hw/virtio/virtio.c             |  2 +-
->   include/qemu/osdep.h           |  2 +-
->   io/channel-file.c              |  2 +-
->   migration/cpr-exec.c           |  2 +-
->   qemu-nbd.c                     |  2 +-
->   system/vl.c                    |  9 +--------
->   tests/qtest/bios-tables-test.c |  2 +-
->   tests/unit/test-util-sockets.c |  6 +++---
->   tests/unit/test-vmstate.c      |  2 +-
->   ui/dmabuf.c                    |  2 +-
->   util/osdep.c                   | 28 ++++++++++++++--------------
->   11 files changed, 26 insertions(+), 33 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index c9f9e5b511..70779fbd56 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3204,7 +3204,7 @@ VirtioSharedMemoryMapping *virtio_shared_memory_mapping_new(uint8_t shmid,
->           return NULL;
->       }
->   
-> -    fd = dup(fd);
-> +    fd = qemu_dup(fd);
->       if (fd < 0) {
->           error_report("Failed to duplicate fd: %s", strerror(errno));
->           return NULL;
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index b27d159d5b..b5dbfc8a8a 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -653,9 +653,9 @@ int qemu_open(const char *name, int flags, Error **errp);
->   int qemu_create(const char *name, int flags, mode_t mode, Error **errp);
->   int qemu_close(int fd);
->   int qemu_unlink(const char *name);
-> +int qemu_dup(int fd);
->   #ifndef _WIN32
->   int qemu_dup_flags(int fd, int flags);
-> -int qemu_dup(int fd);
->   int qemu_lock_fd(int fd, int64_t start, int64_t len, bool exclusive);
->   int qemu_unlock_fd(int fd, int64_t start, int64_t len);
->   int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
-> diff --git a/io/channel-file.c b/io/channel-file.c
-> index 4c9da6619b..548a633be8 100644
-> --- a/io/channel-file.c
-> +++ b/io/channel-file.c
-> @@ -54,7 +54,7 @@ qio_channel_file_new_fd(int fd)
->   QIOChannelFile *
->   qio_channel_file_new_dupfd(int fd, Error **errp)
->   {
-> -    int newfd = dup(fd);
-> +    int newfd = qemu_dup(fd);
->   
->       if (newfd < 0) {
->           error_setg_errno(errp, errno, "Could not dup FD %d", fd);
-> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-> index daa50916d2..2f38db30bb 100644
-> --- a/migration/cpr-exec.c
-> +++ b/migration/cpr-exec.c
-> @@ -44,7 +44,7 @@ bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
->   {
->       QIOChannelFile *fioc = QIO_CHANNEL_FILE(qemu_file_get_ioc(f));
->       /* coverity[leaked_storage] - mfd intentionally kept open across exec() */
-> -    int mfd = dup(fioc->fd);
-> +    int mfd = qemu_dup(fioc->fd);
->       char val[16];
->   
->       /* Remember mfd in environment for post-exec load */
-The code below immediately clears that CLOEXEC flag on this new fd
-so I'm not sure if there's any value in switching to qemu_dup() here.
+In vhdx_log_flush_desc(), the when the log descriptor is a zero
+descriptor it has a 64-bit "zero_length" field telling us how many
+bytes of zeroes we should be writing.  However, the 'i' variable we
+use as a loop index when we're actually writing out the zeroes is
+only of "int" type, so we will mishandle the descriptor if it
+specifies a large number of bytes.
 
-Thanks,
-Maciej
+Fix the type mismatch; since we're touching it anyway, restrict the
+variable to the minimum necessary scope (the loop).
+
+Note that although this bug could cause us to spin in this loop
+performing disk writes for 2^31 iterations, the image could equally
+well ask us to do that directly, since the file format permits a
+valid log descriptor to specify a very large length.  This is at most
+"guest self-DoS"; management applications should be imposing CPU and
+memory caps when they validate untrusted images.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4019
+Reported-by: Tristan <https://gitlab.com/TristanInSec>
+Fixes: 0a43a1b5d7c33 ("block: vhdx - log parsing, replay, and flush support")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ block/vhdx-log.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/block/vhdx-log.c b/block/vhdx-log.c
+index 5c20468e1e6..6f2996ee3b8 100644
+--- a/block/vhdx-log.c
++++ b/block/vhdx-log.c
+@@ -427,7 +427,6 @@ vhdx_log_flush_desc(BlockDriverState *bs, VHDXLogDescriptor *desc,
+     uint32_t offset = 0;
+     void *buffer = NULL;
+     uint64_t count = 1;
+-    int i;
+ 
+     buffer = qemu_blockalign(bs, VHDX_LOG_SECTOR_SIZE);
+ 
+@@ -473,7 +472,7 @@ vhdx_log_flush_desc(BlockDriverState *bs, VHDXLogDescriptor *desc,
+     file_offset = desc->file_offset;
+ 
+     /* count is only > 1 if we are writing zeroes */
+-    for (i = 0; i < count; i++) {
++    for (uint64_t i = 0; i < count; i++) {
+         ret = bdrv_pwrite_sync(bs->file, file_offset, VHDX_LOG_SECTOR_SIZE,
+                                buffer, 0);
+         if (ret < 0) {
+-- 
+2.43.0
 
 
