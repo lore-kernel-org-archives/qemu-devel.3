@@ -1,91 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CE7606A321
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 18:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA648606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 18:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XtrmDRkh
+	dkim=pass (2048-bit key) header.d=vrull.eu header.i=@vrull.eu header.a=rsa-sha256 header.s=google header.b=A6uSgjvl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVZ17-0005lf-Lu; Mon, 23 Nov 2026 13:43:53 -0500
+	id 1xVZ6W-0006zS-CU; Mon, 23 Nov 2026 13:49:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVZ0m-0005jy-ES
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:43:33 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philipp.tomsich@vrull.eu>)
+ id 1xVZ6U-0006yp-75
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:49:26 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVZ0i-0006Jf-HI
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:43:32 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-4a7b8abe209so2819420f8f.0
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:43:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philipp.tomsich@vrull.eu>)
+ id 1xVZ6S-0005VW-KC
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 13:49:25 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c50686daf9cso69198266b.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 10:49:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795459763; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FDsc/mKJ9omIKc7131DV9v2xksQGUM3WXOiKPhvuWIJoC0U23vpeAwJVg/IR5q5CQQ
+ mrsdCDRChTG8aaNrgCz7bVKggvAr8T9IjbD5v2txUq/u5L2vbeahZByiAYCUEgQCtAR9
+ WJ7qjiSOuHm1/8ScnQyJ+Bw2Zc4JMv/vlyCcOh8GZ7P9cjX/yac/nKkPGosdUe2oFoRn
+ RsevE/wEzmfkv2mVgTkQujmdCdhRmDHQFs6KKJ0bW6Kt6FGhykWWD1lSGaOw5gfLhbs3
+ 2mY9ZsEUYbUQ6nmk0aHhNny/OAIvO0Ut4847lU3UF4q7yVi6jEGuwFVutMdZa8Texn0p
+ nGWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=tJm/yeW80cQWpl+rJ31NlK8xX8dbaBfxOxkZ+dUOvEQ=;
+ fh=MvhRrqu2i8mxDRH1wr4tXkxOt0dA0cq3cs9EEHZHF+8=;
+ b=Mo74Yg5OmvuO2Vs9KhCIPKy4MRlaNy/C2x6lV+JGmyU8a/j1kAX3Qmz3riLjPuSNzv
+ JgVLQaK43a7CJsThzsL0QZ0TefB9+aBdxARZprb5SxVnn24WRGHFsyHp1ZZrO2sj2jPO
+ DRNisSBaCchiIP701tzuOhqfAb6sa0vb4+HBXgkCQgg+k3zayg6wo3bcbUPM73UgrGjI
+ PzUCtTohosmndnNC4k4grNQj31grq7CdiKaCDZvU1/MbhHGDbgyRaordhG1JmrwbGtrg
+ JnNyElrVVyZb5CnbZIFWcUcUsT6NhFwq+goizBXgOgBJfw3Z88wic8pxlMqyOZRGpOal
+ h5JA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795459406; x=1796064206; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=iIDeu641Hgg9gG+Jzk7r9/bqxi+GX+WV5MruQkwEdt8=;
- b=XtrmDRkhjhaDIlaN/PlgDWcNvujHbf9iySxHZ6IXm6EPWjpHCYNbYnYk8MI+D9/Rsi
- kUaeMScW9ZNa7xa8l0EFjgm0/HxiWpR5LrJfVMQ49Jgyd/vQMByVlUm+unNEf3YnyNsx
- nlhJ9XjJHV3iHxX95MREe6BcftPg3QRVUPpWl+3NgYZxuRBHdbdROzzVWullMVq13oh/
- Pn0q8q1NZLsCaYRRNuXIm7PFoaSD++PuAHTxs300X2H078mx4YZjKDXXHsZG84/z95PO
- Wz0s6rE8QLi1z/IWwKOSdnK51K0ni1F1UMKNu5377WNKGQH2V9r8OJoIecRDxw7j8m/O
- kATQ==
+ d=vrull.eu; s=google; t=1795459763; x=1796064563; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=tJm/yeW80cQWpl+rJ31NlK8xX8dbaBfxOxkZ+dUOvEQ=;
+ b=A6uSgjvlRykubiS/57ysMEzrAKKDzvh1NBTmsksFqaq7+QqzUFeLDYlaC6C6xtFou5
+ ae4lcqWeleBfj3PYUSmVfaOF7NQjQlOOVIZV17RYLhPzeLsOpIgATjmep1qE/FpxkVXg
+ gfEhJBXVmrJ22KgIfRHdSLmT7esexr6m5o/WEI7BXW648xP1n+CUCb5ARbju7remZGPJ
+ e4zoPZwkpic9TKCtryt7o7qAtQgui30QlmqgDiRgcd9d43dEHMXcX7Yyp1W9m9Ki458S
+ wmUU1Edoy8QIUydcZiqd5UVYo8Nb3M86EqKDeLgk26kOAMOt3KjTAEtTgrnTKJ8fK8R7
+ Qa3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795459406; x=1796064206;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iIDeu641Hgg9gG+Jzk7r9/bqxi+GX+WV5MruQkwEdt8=;
- b=Lhxw2VeyhjILRXaTAu1MFPeWbRKp2sOO/shAtSl7SkOrezIbSBtiLc6R0OPSJimEXt
- lrnKbj/Qkv8r2NgL+hKF3c9kNxoWQfEwL9uKjebdiYBWE/My/ZJ0z6dF9lWzZp7gXkze
- Z1TG74fgKSO7r+IN5RcVE++6Nr97qvz1q/xdpj77aQOJRZ/3EkOFjqFf+vt0xSjTXpR+
- 1wGtRmPh+lOcou/nfRh/0W1HhW/JnO6PjBCq0O97yNVOWpHy6mjO8280VKgwntWh1/rw
- 0YJJgkpwOj5lsx7TYJ2ktQBcwByIA03BY763VmpeTuFjXorn7nPf3RScDyc4pJJChX8D
- sYJw==
-X-Gm-Message-State: APuU4Z/ragywhFuGVOQ7HCx7jWOL6bHDPDaxFr0T+EeClNgKLg3wrCtU
- Y4L5hCq8PgWhm1g4Vn9QXBsuiXlc0y57XuuUAKnCDJHFWIvUOfmMQNu0Y+KmEcU16muSZ58utYy
- cLTC7
-X-Gm-Gg: AZFdTZcy5LjaLAIb3usSY6ZEncEThlWwBg6T4tVN2WvaOAar2Mhzvc84VxU4B8ZW8II
- 9iy2cNbkLB6Za4zGt7oNrdPscSlqWE9I+a9bKYEJpMMyuhNplX9k8l466/BgKqnsFhURa1TA9xy
- 0Ahl97VxySVmncOmWfmdoJyYbfpkgbta3N2w6OFut0vRx8g9kDb+IjybdIu4YymSv9+2pWNNF9/
- DdYlr6f3yKIa8IyS4d05lFU4GtQsl2n+UYILFbjGUaZ70o1NymcLAD1DyrHJn/WOcsX5vLZP5uS
- Ai8CcOrU0HEgrL6w9AMOqm9havcx3mGyaz+QCcKLxWD6VXmdfjadEGkbJAU4dArPmfSmC22qRI+
- mbM9QBE1149mqp9Os/wFyEZkUvLEj6Ndm6dNrChC5LvzYK3VkPTesfngYF5DIyWbUgCEwCkSNpX
- rTMUVHtYHqCcNKeKHiQH2vKwxw+4klX/LxHTentjhSvUouhOxTfXPfSb//R6eyDrFQPsIKjBmrz
- hznUBnliL8xJ6qk4sqn29hfv0ejSOND6HToy/7PUnmjuI0sEzuBEodsH1S7K/fEkO9uskLo6j6/
- IOeOdvlG14JXJ51iMLvDmMlrYFJ3l8Y8AyU/2C0IIYMYrR7fbTCS+6j+0gxqlFCdsKjKyg8mdZA
- 5GZWgnH7aG3iCfJqVJ3nNOUgLVuQ5i+lPcg==
-X-Received: by 2002:adf:e9cb:0:b0:4aa:f018:e063 with SMTP id
- ffacd0b85a97d-4abb225e922mr17534662f8f.24.1795459406221; 
- Mon, 23 Nov 2026 10:43:26 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6a67fe75sm26826863f8f.24.2026.11.23.10.43.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Nov 2026 10:43:25 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH] block/vhdx-log: Fix loop index type in vhdx_log_flush_desc()
-Date: Mon, 23 Nov 2026 18:43:24 +0000
-Message-ID: <20261123184324.4085961-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20260707; t=1795459763; x=1796064563;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=tJm/yeW80cQWpl+rJ31NlK8xX8dbaBfxOxkZ+dUOvEQ=;
+ b=GFmwnp0ofJRDHhrLDzSysmDx9tk4z9piIKLhzzRtChKOKJ5x/kntyE0EmPeXez+h4a
+ J9Fp7J/pdm4lIEsBKv3wKR9alhjS9PYB3l/sKyWRMoORNHVuFSNa/9j7bGw3qO5impI6
+ CaPdVKW6+WTLdOyr07/abKcTv98xwpzkf/E02W1JrQO/MwcAcI64YsmT5Q1fcdQOddiu
+ nINNESMB9+agE6D4q5JZcHwRg24cbVpAGy5P2t4OAS9bn1hO9aaxsumV0TLpgoF7II54
+ UamD95JXfYqIk+n1IuEasoLowVy20mNKSQ9Zjix86cDyokCRBiFoFOQatKREvfVc+TtY
+ SSWA==
+X-Gm-Message-State: APuU4Z9Q8DIJmVmnyqo8M8lVGk28lLKsFw12cC8Pd8pvjYqJv1L4rYP3
+ 7EtVdbnmTPt1NCnBtDqfG8X77YwWRi6q2y7HMyMrzFcfhHs+CeTahYvmPgqJEf0tpKd6XLQs1UB
+ ZXX+hRMX3uo4/PO3PbThCiSuUrA3x2j44JhM4HZ9bkg==
+X-Gm-Gg: AZFdTZcSOQdrBAFcb9tZPQOOmIwUmxKqiO6cTs5GSL43T3P7djCNmpS5hsvq4niBps6
+ ALb7FanJ7Sr6+MzR1QW+TVP2bpHq4vX7Ebc2weNZBqLFHvMc5VM2AhFxMHj96oucV4f/L+GjE07
+ X9BrNg4IH1Hs6lkxwontnkuK8+otPuTh4IHRaaA4U9MAjaeFtUs4hIh6k0jlBVqlcRAIpTGDVJj
+ uvUmYPwuKNFybwpQos03pDEmYWLPiteJs4ILijL/IL4rxPI/OkJGoMkHk9iSRVovHw66gzBszEC
+ xoNFQIN72KomDqZqWxEvaaNw7eLBgD4nbiOdD9wvaoW4wiYUNUEtUfd9vUpOy9hBD+EDzrmVEWn
+ Jsk8P6jasTQPoAvwMF+BX6+EObrLA7lh/t9Ek1Wqbr3pPTvHi0vHzkeql7bVveVA9NZIaNpt8rQ
+ 6P5eQEyLHAc+Ylzw==
+X-Received: by 2002:a17:907:932:b0:c51:8bf:9f22 with SMTP id
+ a640c23a62f3a-c513a5c0549mr910894866b.2.1795459762996; Mon, 23 Nov 2026
+ 10:49:22 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+References: <20261118-zl-master-v1-0-129f85e0f887@linux.alibaba.com>
+ <20261118-zl-master-v1-1-129f85e0f887@linux.alibaba.com>
+In-Reply-To: <20261118-zl-master-v1-1-129f85e0f887@linux.alibaba.com>
+From: Philipp Tomsich <philipp.tomsich@vrull.eu>
+Date: Mon, 23 Nov 2026 19:49:11 +0100
+X-Gm-Features: Aa3M54o-INz7dwpmjkFdIBYUDVeUs62n-0LCc8hpPoHaR8NShcyJR7cjP2Anhnk
+Message-ID: <CAAeLtUDm7zA3Y_c2QoBKL+oNGhbzm-B5Xg9jy+oyqPbjVuM6JA@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/8] disas/riscv: Reject incomplete instruction reads
+To: TANG Tiancheng <lyndra@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philipp.tomsich@vrull.eu; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,62 +117,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In vhdx_log_flush_desc(), the when the log descriptor is a zero
-descriptor it has a 64-bit "zero_length" field telling us how many
-bytes of zeroes we should be writing.  However, the 'i' variable we
-use as a loop index when we're actually writing out the zeroes is
-only of "int" type, so we will mishandle the descriptor if it
-specifies a large number of bytes.
+On Wed, 18 Nov 2026 at 10:03, TANG Tiancheng <lyndra@linux.alibaba.com> wrote:
+>
+> If a later parcel read fails, print_insn_riscv() decodes the available
+> bits with the missing bits left as zero. A truncated instruction can
+> therefore be displayed as a complete, unrelated instruction.
+>
+> Report every failed required read at its actual address and return -1.
+> If the first 2-byte read fails, return -1 instead of the error code from
+> read_memory_func(). The disassembly loops would otherwise treat the
+> positive error code as an instruction length.
+>
+> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-Fix the type mismatch; since we're touching it anyway, restrict the
-variable to the minimum necessary scope (the loop).
+Reviewed-by: Philipp Tomsich <philipp.tomsich@vrull.eu>
 
-Note that although this bug could cause us to spin in this loop
-performing disk writes for 2^31 iterations, the image could equally
-well ask us to do that directly, since the file format permits a
-valid log descriptor to specify a very large length.  This is at most
-"guest self-DoS"; management applications should be imposing CPU and
-memory caps when they validate untrusted images.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4019
-Reported-by: Tristan <https://gitlab.com/TristanInSec>
-Fixes: 0a43a1b5d7c33 ("block: vhdx - log parsing, replay, and flush support")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- block/vhdx-log.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/block/vhdx-log.c b/block/vhdx-log.c
-index 5c20468e1e6..6f2996ee3b8 100644
---- a/block/vhdx-log.c
-+++ b/block/vhdx-log.c
-@@ -427,7 +427,6 @@ vhdx_log_flush_desc(BlockDriverState *bs, VHDXLogDescriptor *desc,
-     uint32_t offset = 0;
-     void *buffer = NULL;
-     uint64_t count = 1;
--    int i;
- 
-     buffer = qemu_blockalign(bs, VHDX_LOG_SECTOR_SIZE);
- 
-@@ -473,7 +472,7 @@ vhdx_log_flush_desc(BlockDriverState *bs, VHDXLogDescriptor *desc,
-     file_offset = desc->file_offset;
- 
-     /* count is only > 1 if we are writing zeroes */
--    for (i = 0; i < count; i++) {
-+    for (uint64_t i = 0; i < count; i++) {
-         ret = bdrv_pwrite_sync(bs->file, file_offset, VHDX_LOG_SECTOR_SIZE,
-                                buffer, 0);
-         if (ret < 0) {
--- 
-2.43.0
-
+> ---
+>  disas/riscv.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+>
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index ca0d6e90b37321e8c2b7ec07f3ae51f0797585cc..eb4851b4cd4b14a43cc6592bd5011c6df53ec219 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -3510,12 +3510,8 @@ print_insn_riscv(bfd_vma memaddr, struct disassemble_info *info, rv_isa isa)
+>      for (n = 0; n < len; n += 2) {
+>          status = (*info->read_memory_func)(memaddr + n, packet, 2, info);
+>          if (status != 0) {
+> -            /* Don't fail just because we fell off the end.  */
+> -            if (n > 0) {
+> -                break;
+> -            }
+> -            (*info->memory_error_func)(status, memaddr, info);
+> -            return status;
+> +            (*info->memory_error_func)(status, memaddr + n, info);
+> +            return -1;
+>          }
+>          inst |= ((rv_inst) bfd_getl16(packet)) << (8 * n);
+>          if (n == 0) {
+>
+> --
+> 2.43.0
+>
+>
 
