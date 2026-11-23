@@ -1,66 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5180606A335
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62D8606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 09:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=qOum5Ggp
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TYdBNPZE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVQcu-0007tx-8f; Mon, 23 Nov 2026 04:46:20 -0500
+	id 1xVQdf-0008Ng-U5; Mon, 23 Nov 2026 04:47:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVQcp-0007rc-1f; Mon, 23 Nov 2026 04:46:16 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVQcm-0008AG-Bl; Mon, 23 Nov 2026 04:46:13 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id A864F20B7169; Mon, 23 Nov 2026 01:46:06 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A864F20B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795427166;
- bh=L0yzYuiLm3MzmX18B1X6RcdzbUJqDs+zRSufm5MWryg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=qOum5GgpAvh1KeSLOxuWTuzN8f1uri6BRU+EEto7dd2U9ib8Qp9iuGHtPDj3/HtGa
- GxoGayQfyLSgsRUG7vyO+a4we8vrlj2KjzJI7wB2QP/SnNVz7757SnEBhCRwyca3xS
- qn///UUFdBqi7HJ+Crx4qzOyNKvSQP6IuH0nQLWE=
-Date: Mon, 23 Nov 2026 01:46:06 -0800
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xVQdb-0008Mq-Jt
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:47:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xVQdW-0000Cr-RU
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 04:47:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795427217;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FW+YQVJV2Wr/PanDz3pUuTIXzvlW0oKXdbadxrtAinw=;
+ b=TYdBNPZE5kn2Q7kEp9UzTi/0yAvhjlEtNKn+STi7PWDAat8BFjCmH7bvUX6Ge7jZKOYWsI
+ 0C5H9KDK5HJSMVH9aiSAmgkWEMRwTe7x5Vl2QzRp1ISK6p47SeOAQrGd51wsmBDn7SDqWn
+ IE26HZ1HnpzvdrysWZoupAh/iTeJ/Xk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-M4_wU6KDMnK4S4J3G6haoA-1; Mon,
+ 23 Nov 2026 09:46:52 +0000
+X-MC-Unique: M4_wU6KDMnK4S4J3G6haoA-1
+X-Mimecast-MFC-AGG-ID: M4_wU6KDMnK4S4J3G6haoA_1795427209
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 471E31800607; Mon, 23 Nov 2026 09:46:48 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 72126343; Mon, 23 Nov 2026 09:46:42 +0000 (UTC)
+Date: Mon, 23 Nov 2026 09:46:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
- arch-specific
-Message-ID: <awQLXiXpv3jsD6s7@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
- <av8UyInK9UM/M3wV@example.com>
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-ppc@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: Re: [PATCH 02/12] tests/functional: update sha digests for tuxrun
+ kernels
+Message-ID: <awQLf03cS-zAN6jU@redhat.com>
+References: <20261120121458.3723625-1-berrange@redhat.com>
+ <20261120121458.3723625-3-berrange@redhat.com>
+ <CAJ+F1C+eBx6qUmtLGw2vSgk+Pp=Zpt92_tokyyGsrCREaE45gQ@mail.gmail.com>
+ <114d8912-4aee-4312-9527-69dce1b8d5e0@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <av8UyInK9UM/M3wV@example.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <114d8912-4aee-4312-9527-69dce1b8d5e0@linaro.org>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,156 +100,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 19, 2026 at 04:24:56PM +0100, Magnus Kulke wrote:
-> On Thu, Oct 01, 2026 at 10:52:48AM +0000, Aastha Rawat wrote:
-> > x86 specific migration handlers currently live in common MSHV code. Move
-> > these handlers into x86 backend and add a generic architecture migration
-> > initialization hook. ARM MSHV live migration support is not added yet,
-> > this will allow ARM to add an empty initialization hook.
+On Fri, Nov 20, 2026 at 01:54:10PM -0800, Richard Henderson wrote:
+> On 11/20/26 04:23, Marc-André Lureau wrote:
+> > On Fri, Nov 20, 2026 at 4:16 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > 
+> > > The images appear to have been regenerated since the recorded
+> > > digests no longer match
+> > > 
+> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> > ---
-> >  accel/mshv/mshv-all.c       | 35 ++++-------------------------------
-> >  include/system/mshv_int.h   |  1 +
-> >  target/i386/mshv/mshv-all.c | 34 ++++++++++++++++++++++++++++++++++
-> >  3 files changed, 39 insertions(+), 31 deletions(-)
-> > 
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index 860f511fcba..efe19a39140 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -60,30 +60,6 @@ static int init_mshv(int *mshv_fd)
-> >      return 0;
-> >  }
-> >  
-> > -static int mshv_load_cleanup(void *opaque)
-> > -{
-> > -    CPUState *cpu;
-> > -    int ret;
-> > -
-> > -    ret = mshv_arch_set_partition_msrs(first_cpu);
-> > -    if (ret < 0) {
-> > -        error_report("Failed to set partition MSRs: %s", strerror(-ret));
-> > -        return -1;
-> > -    }
-> > -
-> > -    CPU_FOREACH(cpu) {
-> > -        ret = mshv_arch_set_mp_state(cpu);
-> > -        if (ret < 0) {
-> > -            error_report("Failed to set mp state for vCPU %d: %s",
-> > -                         cpu->cpu_index, strerror(-ret));
-> > -            return -1;
-> > -        }
-> > -    }
-> > -
-> > -    return 0;
-> > -}
-> > -
-> > -
-> >  static int get_host_partition_property(int mshv_fd, uint32_t property_code,
-> >                                         uint64_t *value)
-> >  {
-> > @@ -519,10 +495,6 @@ static int mshv_init_vcpu(CPUState *cpu)
-> >      return 0;
-> >  }
-> >  
-> > -static SaveVMHandlers savevm_mshv = {
-> > -    .load_cleanup = mshv_load_cleanup,
-> > -};
-> > -
-> >  static int mshv_init(AccelState *as, MachineState *ms)
-> >  {
-> >      MshvState *s;
-> > @@ -574,9 +546,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
-> >                                    0, "mshv-memory");
-> >      memory_listener_register(&mshv_io_listener, &address_space_io);
-> >  
-> > -    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
-> > -
-> > -    mshv_clock_init();
-> > +    ret = mshv_arch_migration_init(s);
-> > +    if (ret < 0) {
+> > See also
+> > https://patchew.org/QEMU/20261112133320.418012-2-marcandre.lureau@redhat.com/
 > 
-> if this is fallible now, do we need to unwind the previous steps?
+> Indeed, Marc's use of dated urls should avoid some of the issues, until the
+> url is removed due to age.
 
-The existing initialization was infallible and ARM does nothing yet
-(currently a no-op). I will keep this hook returning `void`. If it
-becomes fallible later, then we will add a proper cleanup.
- 
-> > +        return ret;
-> > +    }
-> >  
-> >      return 0;
-> >  }
-> > diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> > index 0e68365c63f..31d2f4381c7 100644
-> > --- a/include/system/mshv_int.h
-> > +++ b/include/system/mshv_int.h
-> > @@ -109,6 +109,7 @@ void mshv_arch_disable_partition_proc_features(
-> >  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
-> >  int mshv_arch_post_init_vm(int vm_fd);
-> >  void mshv_setup_hvcall_args(AccelCPUState *state);
-> > +int mshv_arch_migration_init(MshvState *s);
-> >  int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
-> >  int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
-> >  typedef struct mshv_root_hvcall mshv_root_hvcall;
-> > diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
-> > index f0b43aa86f1..968fe2a4494 100644
-> > --- a/target/i386/mshv/mshv-all.c
-> > +++ b/target/i386/mshv/mshv-all.c
-> > @@ -78,3 +78,37 @@ int mshv_arch_post_init_vm(int vm_fd)
-> >  
-> >      return ret;
-> >  }
-> > +
-> > +static int mshv_load_cleanup(void *opaque)
-> > +{
-> > +    CPUState *cpu;
-> > +    int ret;
-> > +
-> > +    ret = mshv_arch_set_partition_msrs(first_cpu);
-> > +    if (ret < 0) {
-> > +        error_report("Failed to set partition MSRs: %s", strerror(-ret));
-> > +        return -1;
-> > +    }
-> > +
-> > +    CPU_FOREACH(cpu) {
-> > +        ret = mshv_arch_set_mp_state(cpu);
-> > +        if (ret < 0) {
-> > +            error_report("Failed to set mp state for vCPU %d: %s",
-> > +                         cpu->cpu_index, strerror(-ret));
-> > +            return -1;
-> > +        }
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +static SaveVMHandlers savevm_mshv = {
-> > +    .load_cleanup = mshv_load_cleanup,
-> > +};
-> > +
-> > +int mshv_arch_migration_init(MshvState *s)
-> 
-> mshv_clock_init() also covers pause/resume, so maybe
-> "mshv_arch_vm_state_init()" would be a better name?
+Agreed, consider this patch dropped in favour of that one.
 
-Definitely.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-> > +{
-> > +    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
-> > +    mshv_clock_init();
-> > +    return 0;
-> > +}
-> > 
-> > -- 
-> > 2.45.4
 
