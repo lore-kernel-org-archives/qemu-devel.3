@@ -1,109 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5077E606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 13:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54DB606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 13:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=bmcBBl7R
+	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=D+aOXwR8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVTu2-0003v2-5p; Mon, 23 Nov 2026 08:16:14 -0500
+	id 1xVTxH-0004mf-FK; Mon, 23 Nov 2026 08:19:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVTtx-0003rX-Lr
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:16:09 -0500
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVTtu-00040t-Qe
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:16:09 -0500
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-679a2b5fe87so3040528d50.3
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 05:16:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795439764; cv=none;
- d=google.com; s=arc-20260327;
- b=BqRpYgfNAveW5GcQEZZZBIsvzr6+0wKr+NLUsiBInCBdze3R9Uw7cXChGsNCW8RzHj
- nW9no7CbNP5VEUS8inE+ANhYdvkSN+RVgyK02ZYEK2Xs79x1jpog2s9op8ZJLOeBzqsu
- M2OxPLHXtezuYtKQxPG12GGAW8xTBqlqiiykTFSlHKZNuCM6LDPQvMe7D6EpUSWhXgwz
- DwKXH18Q9BstCgORPQmgMBMu3rWhZcAO05XhwWKzT55Jlw/7GbyS0yayYnfNjwuT8eim
- TY9e2vEB5MmYIphsG00m8UvBQwUARfNreCPLlyzJ8fjrV8w30DDcJMB7msVEZGqwts3j
- 7Gww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=L43OXU6mO+epKo6tJONydYsUT/d3OSbnv5ZMOpUIy0E=;
- fh=87w2ZXzcKlwYaqKr4L303vmIUxAkl6c0V+1BYZ5wPSc=;
- b=kXPrEM37FlokR8mzoeQNCLTFUWONaF8ZbAANaTfTG6sfozTi4Iw0DuU5ElTdLzOrIp
- dpKdpV1Qv/+nLo3d+QwPOHcuZA/9Y4caU52eqR3jM6pljaX45UQoD3QB3TQWdVrUrbP7
- mEkin4+ERnU6sff9Epg4oNlEw6gNtXAtvWEicwKrZFxjNOYy4y6AosKMX0NeNx/x5ihS
- PLQ2cj+PhR4SRBySU/WIMbhKPkwnqaMqFXh+sPVC2ZSxpQLsbzKIbaOk1fATryb1Xv2/
- rDuc63bybkV8C6YWTRoU5/HAUQelP2RPiT3arJZvA1XWuGx+HY1TtuO33Mr4vgGwnJ3U
- 7kYA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795439764; x=1796044564; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=L43OXU6mO+epKo6tJONydYsUT/d3OSbnv5ZMOpUIy0E=;
- b=bmcBBl7RtKV1oO6v7qgAazU4rnOcz4BmvamDMayUNaAlXbWd1X0BGYBd/a/bTU3mjx
- 8r7Ax//A6JyUa3bTKGlWTP8aIHf9JEUSIgh7A52JcyNMjjsMjRtqzKpvl6j0o8G2O4u4
- U4MErRaPKcdrEAvbTsY8+ewX/NF2X80f95yaW/Zp3jLbI66zdpbq7pAHQe64TR2opKKk
- /fPWpGUCSDlq4O9Tjx74dwSW+SrvxufkuJjpNPVEhkqiufTi2W2jHUywleJkMe67nYmJ
- TZEOLTV0HD7hg0LJVXbuxftfizQNLjWLQdCqUuB2kdJnzUqsQHe5K7eBojuu8BNywCB5
- A8Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795439764; x=1796044564;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=L43OXU6mO+epKo6tJONydYsUT/d3OSbnv5ZMOpUIy0E=;
- b=2eXG6Ammg+DnssVG8UB2NTgjyFTiIN1AdSrUtC3rxdLiwHRCn2Ba+VqYXbl4GE+Iag
- bj+08q2PsqLHyOVCVpKSXjZsM7hPyflETi4WSxYcwPgEM8n4EficNvzAr0J/991QJ8kg
- +8+/Wqu0P83PBgqrUbZiaBr8tpz8xhQM3yJnNGRgLw5gWETPSXvVaxe5r86rbNhH2jYY
- nWsuK+D13fMpQ4weL+1CdQAQJaEMFqbCglxF+jRBPeao5wxIz0lKXsDMYg2FtrWj9QdJ
- oMaDFcdpu3aKpC+13am+tSNDmEb1VcnRrEzkftVqe/50rjLSwqrrjM6kBaEMSJsTwNie
- j+Iw==
-X-Forwarded-Encrypted: i=1;
- AL+hErGi+vs7xsetW2+g618nN/wsPdoWXCqQKNByVGvrnWWacttwbRFh/Mm7UCWxSlmFZAbdm8//ZYdACqVy@nongnu.org
-X-Gm-Message-State: APuU4Z9dHM1zhUPWKvLlVLK76S2PoGxRbOeOAt/WPuK8OBg29LD+Jm6L
- 1hSBeqMvUu4327cA5/3/EOdb+SQKrWf5bx8yRFaxwSmLACt0w9z/hxQxSUS6f0yxgxBuI4GcJcc
- 0eS+jeOuqImjO/fn6JfOd2lN1chtfy5/9PmNn5ZsWWw==
-X-Gm-Gg: AZFdTZcBi3Ry/AErwIk0gfteAGhXcsGjQRlgt+KhYNk9/kmuZOxiZs9fXukQLV1nkvk
- ovmc2J+uL35HYEz7S0m43R3JGxTd3m9cboLhis2OFLTJzcbgezNih7I485gxNAGJD30snqVGU8w
- FCk0+3v+p+rqe1B6NA5Azkwm9TpGY+1HfBmIpmXAN1zc6J/WJ0KlKD6+ZELJ65XI5Dreds5G1F0
- llme/4ZCpOBKqkuiJafO70lZ5XchHjHvGCczsaqHHl+lBth+zLVec2jowlmKXaX8JkdZAFBiB0w
- b0RbFgAlOdPThJUnjvV7XWWJh52R7G12bhCV8ADsZph8b5xpD/VeoRHgH3c8hwmBVm7UYAOTuLC
- x0V5E2Q4kRQpM2PFXgwdwtO8ivK5uXd3rR3VuXwdvIbLJPLAp5fjosVIq3zG2REqOS65APG7rNF
- X/JPf0vlom8sF2NUHswpDsVRtyrw0mHz0s48YiMJrPKA==
-X-Received: by 2002:a05:690e:43d3:b0:67c:28fa:29bd with SMTP id
- 956f58d0204a3-67df42d04femr2084658d50.13.1795439764127; Mon, 23 Nov 2026
- 05:16:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xVTxF-0004ly-I4
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:19:33 -0500
+Received: from oxygen.pond.sub.org ([94.130.129.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xVTxC-0007eB-U9
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:19:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
+ t=1795439959; bh=dwyPXjMWccBlVtp5q9emcB0h4elN+/djqQMaMd8UFC8=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=D+aOXwR8Z+tnmCs80+EjmrmX7txK85YwkXOR60IH6FyoAqM+xJxoqNAdzhSYmjTa6
+ hYERXsmTDF+wtDJQ2uz59bCrIxKcPIZE55IspggAqAcqxVQPrDXsjfqaCnBRPnI8kM
+ Wsml+azpKFaeFc/MnzU5PKFFgLqrwHIV0tx6D0K4=
+Received: from blackfin.pond.sub.org (p4fd045cf.dip0.t-ipconnect.de
+ [79.208.69.207])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id 69E1520082;
+ Mon, 23 Nov 2026 14:19:18 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8148321E6A04; Mon, 23 Nov 2026 14:19:26 +0100 (CET)
+From: Markus Armbruster <armbru@pond.sub.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,  "Michael S . Tsirkin"
+ <mst@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alistair Francis
+ <alistair.francis@wdc.com>,  BALATON Zoltan <balaton@eik.bme.hu>,  Fabiano
+ Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Warner Losh
+ <imp@bsdimp.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <awQisiKRYpQSTmVy@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 23 Nov 2026 11:25:38 +0000")
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+ <ar_FXE5rzVqKcTc4@redhat.com> <87ik21vy11.fsf@pond.sub.org>
+ <CABgObfagz=EvmYtNFBo2xyDdXNkFPK8k0-YGDs7aVS6xRKEJTw@mail.gmail.com>
+ <awQisiKRYpQSTmVy@redhat.com>
+Date: Mon, 23 Nov 2026 14:19:26 +0100
+Message-ID: <87a4mzwuqp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261119165546.3050013-1-peter.maydell@linaro.org>
- <CAFEAcA91WC+x80j3Lh4wyOgzU=tdu8AQqAcDaXtpghw6wUm72g@mail.gmail.com>
-In-Reply-To: <CAFEAcA91WC+x80j3Lh4wyOgzU=tdu8AQqAcDaXtpghw6wUm72g@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Nov 2026 13:15:52 +0000
-X-Gm-Features: Aa3M54oyR_fnaP7bcOFVdd2g7NHu8G_Udw5VNpJDEihfNhjiG4X97NPKQewNauk
-Message-ID: <CAFEAcA--T+yq6_ZHNFQTbvgDKGN7fGnk0sMiJrtzzJ9P97ae4Q@mail.gmail.com>
-Subject: Re: [PATCH for-11.2] target/arm: Handle "PMU disabled" in migration
- validate functions
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
+ helo=oxygen.pond.sub.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,40 +80,98 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 23 Nov 2026 at 12:57, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Thu, 19 Nov 2026 at 16:55, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > In various test functions for VMSTATE_VALIDATE() fields, we check
-> > whether the migrated region number register is within bounds (i.e.
-> > less than the total number of configured regions).  These tests fail
-> > spuriously if there are zero configured regions, because then "x <
-> > cpu->pmsav7_dregion" is always false.
-> >
-> > When we allowed v6M CPUs to have PMSAv7 in commit 157f6c69edd06, this
-> > exposed a bug, because we now have a CPU which has PMSAv7 according
-> > to the pmsav7_needed() function but which is configured with 0 PMSA
-> > regions: the Cortex-M0.
-> >
-> > We could fix this by having pmsav7_needed() return false if there
-> > are 0 regions; however, the cpu/m-security vmstate struct does
-> > migration of the secure equivalents of these fields, and we also do
-> > a VMSTATE_VALIDATE that checks against the number of MPU regions
-> > there. Making those fields be migrated only if there is more than
-> > one region would be awkward (we'd need to pull them out into their
->
-> Just noticed that this should read "only if there is at least one
-> region".
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Also this is
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4905
+> On Wed, Nov 18, 2026 at 01:22:41PM +0100, Paolo Bonzini wrote:
+>> On Fri, Nov 13, 2026 at 11:14=E2=80=AFAM Markus Armbruster <armbru@redha=
+t.com> wrote:
+>> > David wants to do the same but with AI.  He "pre-arranges", and Bob
+>> > agrees to review.  Does Charlie get a vote?  What about me?
+>>=20
+>> Charlie the co-maintainer does "get a vote" on merging, yes, and she
+>> is free to leave the review to Bob as well. Well, technically we do
+>> not operate by voting, but co-maintainers are supposed to operate by
+>> consensus and this is no exception.
+>>=20
+>> You the QMP maintainer... it depends. Probably not if the only change
+>> is along the lines of:
+>>=20
+>> -{ 'enum': 'Accelerator', 'data': ['hvf', 'kvm', 'nvmm', 'qtest',
+>> 'tcg', 'whpx', 'xen'] }
+>> +{ 'enum': 'Accelerator', 'data': ['hvf', 'kvm', 'mshv', 'nvmm',
+>> 'qtest', 'tcg', 'whpx', 'xen'] }
+>>=20
+>> Even larger QMP interfaces may fall under bullet #3 - parts of large
+>> code changes - but you definitely get a vote if there are substantial
+>> changes to code you maintain. No doubt about that! This is just normal
+>> interaction between maintainers; I think we do well in that respect
+>> and I see no reason for LLMs to change that.
+>
+> This is a new situation with LLMs though, and it ties back to the
+> SFC's (IMHO impossible) guidance that is included in this patch:
+>
+>   "the project seeks to both support those contributors who outright reje=
+ct
+>    generative AI systems, and to not shun those who choose to use them;"
+>
+> If the contributor wants to use LLM, and some but not all maintainers
+> do not, then we've got an impossible situation where someone is going
+> to come away quite unhappy.
+>
+> I don't think the proposal to allow pre-arrangement between contributor
+> and /a/ maintainer is workable, unless we accept that manitainers of
+> common code are just going to have to accept the result.
+>
+> There are plenty of examples of series which start off self-contained,
+> but grow into changes in common library code maintained by other
+> people. Often the maintainer of the common code won't get looped in
+> until v5 or v10 posting of a series.
 
--- PMM
+Matches my experience.
+
+Such growth is commonly due to reviewers demanding improvements.  The
+reviewers are commonly right.
+
+>                                      By that point the LLM usage will
+> be present throughout the patch series.  There will be way too much
+> pressure to accept the LLM usage in the common code, for the other
+> maintainers to be able to say no.=20
+
+Oh yes.
+
+>> We may have to become more accustomed to saying no to contributors and
+>> even co-maintainers, but I think we're good at building/accepting
+>> consensus. I'm sure that stuff like the Meson migration was seen with
+>> skepticism by some members of the community, but it was accepted
+>> nevertheless. (I hope it has proven itself; and I was also on the
+>> other side of the fence with Pierrick's recent tests/tcg overhaul,
+>> btw).
+>
+> The meson migration was still ultimately a technically driven design
+> debate, where it was not entirely certain upfront that the proposal
+> would give the benefits over 'make' that we hoped it would. The proof
+> is in the end result of the implementation, if the end result is good,
+> we merge it, if not we re-evaluate.
+>
+> The difference with the LLM agent situation is that it is not merely
+> the end result that matters. The process that everyone lives through
+> to get to that end result is just as important and where alot of the
+> harmful impact on maintainers can come in.
+
+This.
+
+We don't just risk LLMs producing bad patches.  They can certainly do
+that, but so can humans.  We risk overloading reviewers and maintainers,
+deskilling and loss of theory building among developers, disagreements
+over ethics, and more.
+
+It's temping for technical people like us to focus on just the technical
+problems.  That's wrong.  The social problems matter at least as much.
 
