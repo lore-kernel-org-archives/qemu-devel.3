@@ -1,49 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45796606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20AB3606A32E
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 13:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EBf7ifhc
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FN+kvU/E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVTsp-0003KR-T4; Mon, 23 Nov 2026 08:14:59 -0500
+	id 1xVTsq-0003Kj-Ib; Mon, 23 Nov 2026 08:15:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xVTsf-0003Jr-SU
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:14:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xVTsh-0003Jv-Eu
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:14:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xVTsc-00080X-4H
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:14:49 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xVTse-0008Hg-4o
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 08:14:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795439679;
+ s=mimecast20190719; t=1795439681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
  bh=PIvK3Ky05562Cv6tR+TFF3YWEcnaxHFmzLlsCwJj24s=;
- b=EBf7ifhcwnscvMJFpWuxtxEIlWTQv3UX0CPSUc8a44TSUC2SIbAyOQeE+QRSaktpVP+tqL
- gEYXAgsPD6BBRg0l06e1CTDze2KYv8JEHS8ghAxVQ1DF5YJ7VAWgtybUoZLtkT/0MxqsOZ
- MoY83KNDC9jUOUqXBusfhGwOQEjzEyI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ b=FN+kvU/EGo1CzdPHufdByK6QhxNw3VKb9lbkouMN2ijifg5QDEjZ0PRt50iy9n5xkcHANp
+ bZU1h/UD2+e9Jz/h6jsJAKwjxfqau5LHiSklvVoIAEMUjv98IKUYZaZvX/Zz6OoHxKjPWe
+ jGqK/Jy39yCOrruSSm6mhx/RaBijZFs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-VT0Fu66sPdqJT-WW6g7s4g-1; Mon,
- 23 Nov 2026 13:14:35 +0000
-X-MC-Unique: VT0Fu66sPdqJT-WW6g7s4g-1
-X-Mimecast-MFC-AGG-ID: VT0Fu66sPdqJT-WW6g7s4g_1795439673
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-4Ql5TKa6NtKz9lVXBvXzZg-1; Mon,
+ 23 Nov 2026 13:14:39 +0000
+X-MC-Unique: 4Ql5TKa6NtKz9lVXBvXzZg-1
+X-Mimecast-MFC-AGG-ID: 4Ql5TKa6NtKz9lVXBvXzZg_1795439677
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E6C11955F0B; Mon, 23 Nov 2026 13:14:33 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26E3C195398E; Mon, 23 Nov 2026 13:14:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.corp
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C9E3195604C; Mon, 23 Nov 2026 13:14:29 +0000 (UTC)
+ id B4D40195604C; Mon, 23 Nov 2026 13:14:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -52,8 +53,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Stefan Weil <sw@weilnetz.de>,
  qemu-devel@nongnu.org
 Subject: [PATCH] gitlab-ci: Switch the msys2 job to use ucrt
-Date: Mon, 23 Nov 2026 14:14:26 +0100
-Message-ID: <20261123131427.209394-1-thuth@redhat.com>
+Date: Mon, 23 Nov 2026 14:14:27 +0100
+Message-ID: <20261123131427.209394-2-thuth@redhat.com>
+In-Reply-To: <20261123131427.209394-1-thuth@redhat.com>
+References: <20261123131427.209394-1-thuth@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
