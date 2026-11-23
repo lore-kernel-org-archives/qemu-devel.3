@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4A6606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE84606A31E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Nov 2026 22:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gB9Rqti9;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ZeWgQHMx
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JJmfmauP;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=go9KBqqj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVcvM-00014v-3N; Mon, 23 Nov 2026 17:54:12 -0500
+	id 1xVcvk-0001HY-8w; Mon, 23 Nov 2026 17:54:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVcvD-00012F-Ho
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:05 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xVcvi-0001Gv-0B
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:34 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVcvB-0004vA-8E
- for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:02 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xVcvg-0004yt-5O
+ for qemu-devel@nongnu.org; Mon, 23 Nov 2026 17:54:33 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ANJuS8A1332575
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:00 GMT
+ 6ANJu7In3513810
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yU9xXAdx/qDOBH3UsrpNBzEVfILsnlnL6cHSvR1auVQ=; b=gB9Rqti9ATD3A5op
- mxRsLZ4gm2/wxCMT98UUMDc3jLmn2Tyh0v9p8URmekOBi2VYzhypyiSvQW0XqQfr
- 3py2Egh+9VYJFRl35yuazArg8soxG+TZpAfMfXIRyqVUI3JcFsJ1TqIH14o0HJJP
- J5JbrKXXO3JbfTro0s6iFxsmMTZz2L5IWPKS3T/pTfSkX700/nvIqy/LDj0Z+pwT
- 3DvaS167culljF7FHE6sCM9XtBbilGRd4/n7gQgS1WS0oRDpNxKMEv5YvxTNrFnq
- 1TJ0IqW4/AqUE+Fpqj6Kd8zOt7ToVFdEXmOAXc9Mfj4nfnlY6pycOcaQd16xg+aB
- i1q0dQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4g743tg8-1
+ B7jJO3HEUukDtf1ptN4spynXKaPHLgUG88DcMNxtRv0=; b=JJmfmauPNLiNsI5b
+ nWMdJwWgta9/T3v4EaDjO9B+QHGsjcprjnrxNbv32+KDYLl4fy+ImEkqsARduQC3
+ omSMsdibZXSFfUSP+e4VOcmUocxX+SCCpvAnFQXY+dOBaP5j5CxRdEfABQZ98XRf
+ waup35R40Ov4bQuS0/kV4/hZTFaphLCmdKf3XZRh4LIxlvMEA+aVjXsR8+xrsR+9
+ 0LVhmtt5jyZkb1o7iGJVcoy82iwxLwmeENpruHVCnyBaIxVQr9KGSY4CthTKn1J5
+ 6RLl2DcGTip+pp3BHQQzCwqa8w4hg36E8TP681prrxVVWVsowUAx4KLkJOBZRqN6
+ WWzfDA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4ukr8q7r-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:00 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-921286add9fso12550216d6.3
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 14:53:59 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:54:30 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-9495a1f5e47so632540585a.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 14:54:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795474439; x=1796079239; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795474470; x=1796079270; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=yU9xXAdx/qDOBH3UsrpNBzEVfILsnlnL6cHSvR1auVQ=;
- b=ZeWgQHMxWplbVbCBDvifs3guOS+w0gJ8gqyxZr80NQBaHK8jT0ZpnFSGemzZ/AXlN3
- ko4MPeC22J3pgFDW70vDaSWEQz7oAzo0sWSvjshl2MEsxUR743w/IcsaRJeHTgmAoq2j
- jLtiFaAVM/qlKQb1nFfA/xKnq68uppCpqXuC9C4nZVyspJYXGKqL27/Cl2cRYqO0vdPP
- Xf4l5+4XmbmdBK1LL6f1S2/nkVE2sZ/XF3mSWplUjLIFRR2Wb6colk/QwXJ/Li+suYEs
- JgYAGM0GHh6b/CIFjVKyvaeijKMZLHY8y9lJQflXbRJdj+tjReRWsQlFMzq6E0wc62Vm
- D+Uw==
+ bh=B7jJO3HEUukDtf1ptN4spynXKaPHLgUG88DcMNxtRv0=;
+ b=go9KBqqjh5Cng568371obXvAth0NzO+rn9hZfCseV0b6QlpIExKNwWS9uBD04kIvnn
+ nWwKrb1J1PTF82z3QRQoPOTRxM6gQRXaRaahmv0h5I53TNr2fhzyembcP0PyYn7TWQ/A
+ S3/cJntrOlMkvTxjtyNmOjLn6rhYelOImsfK8d6+wNZG8O1HoICIhNbcM/fMqNcCsIC0
+ drY1eiR7RrC0MRXXzAMhFG4igWXwaAhYVYUHWN6KRLc7CTovebxhAOs0cpjSjPSFrCOW
+ Q1ZBJfdMpFaSp8D4xmh9gRPRQHfrtcqQK30Gp3WXILOATpu+hBU3J7QplW3ksUAu5NpY
+ XG4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795474439; x=1796079239;
+ d=1e100.net; s=20260707; t=1795474470; x=1796079270;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=yU9xXAdx/qDOBH3UsrpNBzEVfILsnlnL6cHSvR1auVQ=;
- b=qYH17NOs2a/zBZ6ONJatTzfsIAFaD/hqei84tAqdWiW8EEFmcvMOo9mCGoPVwEOiWW
- 0M+lW3Z4CQLiRhzOukWouHbKaVbqoQ7zRpuaayc++K7eC7KoHSQR87GwX7miMQyJGx60
- Fc5HFT1vfatSWmtP2Em2R2cDw2s7YOAy/sArtiyJr18Ennujys6BHNl3DDBXDY36dSxk
- Vf5JsCkCWvonkZzJjrF04gCxvPSlwBzXxe2eYSabCE+82c0pDads8v/iz/bRCK5Xx8zE
- Bt+HQJsBGes7P7vxmJ0B60IebHhDX+IW0maZ5VmpeDLQDpJMxYnZUubuEMLMzYXJLk5m
- vfBw==
-X-Gm-Message-State: APuU4Z/mrgrx7PPT/jm0f2fbL6YQoSP5mmzLuxf75QVaKDXbV3Hglkzs
- OcDQP+Z8TldD3+W1EI6w/fGmcYjXDWD4QF/tJslOCwKmkn7JrC9XPhWMvAOLLGiwz0Tl12k0nYW
- 4sxhhJLRLRqJu6iaDSTYY5jCNnUVkNeIsnMYrmwgUdLpv43N2pcPd70MKPFClEjJRz0za
-X-Gm-Gg: AZFdTZcR2UkWrXBlRmzG5b6PCFBHwHeeDto2fWx71TbhvegpRqrSqeq/OC5X+xifMOV
- CqVbMO4O3HNeq2/jXDOjTdDjfL1aluit3jdcMaMpGhT3UxlRu4gx9SYXrfdfzK7Peh9mLki/jA4
- L+/RASTq7mZJhaVpqAtigPgWVE590WDoWrg2SHUHNTQOOrBqW4x+lj9GR4FUlMh8ZZt/1nziXsE
- oomd2iLaNZf275W87rhrwXzmiD4x0cHDn2vXZNBa7cTG1bkRVieJF/Jjo4Mb9bjqZp3htrjZgYO
- BKH5wBoOTBq9yNIuVaItrD//aGSenOGAhFkMZkqsZSLqD6vV5lrTTuoN8Pnga4uoCy54JfxBhXr
- TQQmo4w7yOp5HVdRXkoitaYFHyujnQz4GzHTcxagxMJCuhcT4aqYPHc6Ru8PkCL7utimWgtNfFy
- fOjAAN9WZgdJGuWw==
-X-Received: by 2002:a05:620a:1b9b:b0:93e:c12c:9b6d with SMTP id
- af79cd13be357-949bab5446fmr2119619785a.72.1795474439444; 
- Mon, 23 Nov 2026 14:53:59 -0800 (PST)
-X-Received: by 2002:a05:620a:1b9b:b0:93e:c12c:9b6d with SMTP id
- af79cd13be357-949bab5446fmr2119618085a.72.1795474439061; 
- Mon, 23 Nov 2026 14:53:59 -0800 (PST)
+ bh=B7jJO3HEUukDtf1ptN4spynXKaPHLgUG88DcMNxtRv0=;
+ b=tQtqQbM7BjmZKAR2dQzsY0g7/bJXwUmZ8QGe1l7Lz/229H1ZM5EoSc/RNUlNFrv03C
+ swlTUmZHp3dIGK4+g8X4LLHCauEuakFAk5hOuihwGL+1aQseocBhGmuDTyghlRoNd8ZN
+ 7XQ15D351UXHY5a4ok64Rb87c/1tu4CfKKCQV+Cgm/3xmLcxa0NApmjF7Gu84E9UQKqi
+ lsvebnwH/1BW4d9wo6ZmGy7qifEmBCgOAIVTWL01N7xbG/S51wX1CTni5XOAEBlIsXzK
+ pagNTqUCwXnFbCWnvnqqWuk9ddAAnC3QYKU5bOz8HiPKCrWXXKJMtjs1fQjRID7UzuUA
+ moxA==
+X-Gm-Message-State: APuU4Z8ctgL2836RzKJi6Exu7LVRdzNv5kLZwYVAO3lAahkiFVTt2Oda
+ gODh+55BKg98tm3ux5oq52UsYdpVN++5n7/NbNFrO0PlBXZHn44UFzSKcEBTedCICl5y6IqrGyP
+ Di9MzInsSdp9qc4V92PT3QY/K91m/MHyYunagEb0oe3M4Gjn6en2ekuRUJXjlfJd0pM5r
+X-Gm-Gg: AZFdTZdjWOA+khXmbFHq+iVLUhnXv/aBsIpmMSXFN49H4ws50uQ3FAqKew9EfPmV96c
+ +SX3BYP8kMA2ve6yuMRy+lBLMa/SZkSPVN4ND7SCf7I5FRuIV00GzuZHieL90m/Vnj46jDF9FC0
+ 7LEFkkyy+UgWjerzqKFA/w8zIaKwte/qZQXZwcWMXL2QlFaHyBTcrEOZ92B40k0kkD0OCVViXrB
+ I9f4ZKN5Vd+aJzG6ca2EEbjYZMIhdp/1WabiZQmBM4/b8DzmlWsf9/WOlLHyfs0EWjV4Z/eJySv
+ Y8LFJWFlOUCxjMnBLsizRii/q1HAIZavv3dRzAPpdT1gjKjCF5mfoeD9wLFKBgu4XhgCS+uRvYT
+ dkqYMzXdYqWRlEEYJJAFgWxdqOfxOdsIqPOWyg+sAGDuEywpb7ysuP+od+p/rGPl1fEWJ48qypL
+ dqJE9rek8FRNF2NQ==
+X-Received: by 2002:a05:620a:2b46:b0:93f:3e45:a419 with SMTP id
+ af79cd13be357-949ba9b34e6mr2240587085a.38.1795474469719; 
+ Mon, 23 Nov 2026 14:54:29 -0800 (PST)
+X-Received: by 2002:a05:620a:2b46:b0:93f:3e45:a419 with SMTP id
+ af79cd13be357-949ba9b34e6mr2240584085a.38.1795474469242; 
+ Mon, 23 Nov 2026 14:54:29 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884c3063sm392016885e9.15.2026.11.23.14.53.58
+ 5b1f17b1804b1-4bb85399e2esm438045145e9.7.2026.11.23.14.54.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Nov 2026 14:53:58 -0800 (PST)
+ Mon, 23 Nov 2026 14:54:28 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-stable@nongnu.org
-Subject: [PATCH-for-11.2 1/9] hw/sd/sdcard: Reject zero block length (CMD16)
-Date: Mon, 23 Nov 2026 23:53:41 +0100
-Message-ID: <20261123225349.54981-2-philmd@oss.qualcomm.com>
+Subject: [PATCH-for-11.2 5/9] hw/sd/sdcard: Migrate the data transfer size
+Date: Mon, 23 Nov 2026 23:53:45 +0100
+Message-ID: <20261123225349.54981-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261123225349.54981-1-philmd@oss.qualcomm.com>
 References: <20261123225349.54981-1-philmd@oss.qualcomm.com>
@@ -104,35 +104,35 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: axOND8NSLREFGNenKa5wCyaG8aCBMU6C
-X-Proofpoint-ORIG-GUID: axOND8NSLREFGNenKa5wCyaG8aCBMU6C
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfX1TkqchZ37wFN
- 9JJakMLkojYhRQ6HJI16Y5UCXWMcIkf+ueeYFKdYLZ9wBHFZqMBeJnNamAEFPRedcewMrFqPL84
- RAAi5OXuzdfI0LYEpO3OiVPXMvGi8Jk=
-X-Authority-Analysis: v=2.4 cv=T/cZ3PKQ c=1 sm=1 tr=0 ts=6b04c408 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfXyd5xEO97PkPh
+ kSuB8+viq6Tt7rPgvTDHdcnszBEc7+/1CIYLGg4NPbyy16kuZqJ/UpI0lxQjfHfeVf33ehlrvUM
+ 7kF2mB1NAb8oj0pk/T9pNJP4vXWnAqk=
+X-Proofpoint-ORIG-GUID: VzdB7EDLUH-CNv7sqbXAmHbhHrSJ5CMC
+X-Authority-Analysis: v=2.4 cv=M+rYuCws c=1 sm=1 tr=0 ts=6b04c426 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=JfleF5YHFwbTGIRgw64A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfXzY+VIyU9Iz3i
- n1it5wD0qnIKZeOH+5J3b7Jy+302RwNrmm6zBW9PdiYKJq8GGoNYBOVhP8kKHJiJrlVhS6nt1HE
- vlnyDg2P5r6X8cDwbVC1uXM+p3CBipmd99dh7VRSWiwn6L7byNq4FcDLHcE+yPMZ0MJRYT7bnJk
- xyubg0jYQpj6dyEHIOyEgo5Dkh3escep9lYyh+pHTN2UyJfwl1LBMhFZ+zy5+NzzXes9NAygeC/
- G9QXvj7U+iV6CQ/UlCgIoFELYrLC5GWUxLmYRl2VMbNl8j99uuU1Ih6oHZHaRjw56+m4NtY8BeB
- MlH2e3LIZ9KrbS5681YKd++E9f2hcS8XlC2wErmXPhgx98xPx/ixJgqMOfnxvTpI50bWfCQx/y4
- vu2QO0LgTYMme3/6LQ0vbvhkeYebBc66f6aoqvtgZ8UBZ+dciSqicn1zPfhvJPJFXe449LkDIWf
- EBsvFwRbhBCR4QaBB5A==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=CPET_a92Nx1jWeZIcBwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA5MSBTYWx0ZWRfXyjI1+KgY7pNt
+ oZ2VbzfKrbNtt754SyGxjA4ON8ZOVaI9CMGVp0T5nmwXZecETe2O+EK9NjsT0a3RqSRaz7Aazdi
+ ZwwTMxFu6BijaRmDXTusZs0RInGiELrw2tV3g4/GY9mmzYkzfq7o/abq4KgftrR6Orr2iAaN6vJ
+ L+HzltqLeIKrCGbJ19fbYd5tLOWrTNe8Q1K/XRhx7wovFtCodZvXhYdrb9Ya/un+OsbWpBCnVPQ
+ w24VQJTSqPcoMZEb6JnxNK6wlcHt71+IdJUdDLb1Zq3lPtyeDC62C86Lx1tEZmvHsE/N/L8g6C2
+ 9rLWqXODymrj8USt45hHXTQ7KDzmP2hOp0tTqeTZGTwtW/3xMIamTRr+0TEC7StPjlIXCfI8uop
+ 1URK6cRsZEl9jhlOMCqZ0AG/XpxZAdpMrB/P4WogO6ymZm02ZL8fOQZKBApLtx7NqEPVRptLqxk
+ 3YMe4osBTEETSe1NmfQ==
+X-Proofpoint-GUID: VzdB7EDLUH-CNv7sqbXAmHbhHrSJ5CMC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-23_05,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611230091
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -158,41 +158,83 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-SET_BLOCKLEN (CMD16) accepts a zero block length. A following
-READ_SINGLE_BLOCK (CMD17) on a Standard Capacity card then reads 0
-bytes from the backing image and enters the sending-data state with
-the data size of the previous transfer, so the guest reads back
-stale SDState::data[] content, such as the password sent by a
-previous LOCK_UNLOCK (CMD42):
+Commit f486bf7d1092 introduced SDState::data_size, the size of the
+current data transfer, but did not migrate it. When migrating in the
+middle of a data transfer, the destination uses its reset value (0):
+the transfer completes after the next byte, so the guest receives a
+truncated data block.
 
-  CMD42 (set password "secret-password!")
-  CMD16 0
-  CMD17 -> data block contains "secret-password!"
-
-The spec only requires BLOCK_LEN_ERROR above 512 bytes, but a zero
-length cannot carry any data. Reject a zero block length: set
-BLOCK_LEN_ERROR and keep the current block length.
+Migrate data_size in a subsection, only needed while sending or
+receiving data. When the subsection is absent (older source), assume
+the whole data buffer. Use uint32_t, as the size never exceeds the
+512 byte data buffer.
 
 Cc: qemu-stable@nongnu.org
-Fixes: a1bb27b1e98a ("SD card emulation (initial implementation)")
+Fixes: f486bf7d1092 ("hw/sd/sdcard: Introduce sd_cmd_to_sendingdata and sd_generic_read_byte")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sd/sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/sd/sd.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 0083b8e064e9..6b817f11c5d2 100644
+index d922e813c102..cca8debc0938 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1961,7 +1961,7 @@ static sd_rsp_type_t sd_cmd_SET_BLOCKLEN(SDState *sd, SDRequest req)
-     if (sd->state != sd_transfer_state) {
-         return sd_invalid_state_for_cmd(sd, req);
+@@ -194,7 +194,7 @@ struct SDState {
+ 
+     uint64_t data_start;
+     uint32_t data_offset;
+-    size_t data_size;
++    uint32_t data_size;
+     uint8_t data[512];
+     struct {
+         uint32_t write_counter;
+@@ -1002,6 +1002,25 @@ static bool sd_ocr_vmstate_needed(void *opaque)
+     return !FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP);
+ }
+ 
++static bool sd_data_size_vmstate_needed(void *opaque)
++{
++    SDState *sd = opaque;
++
++    return sd->state == sd_sendingdata_state
++           || sd->state == sd_receivingdata_state;
++}
++
++static const VMStateDescription sd_data_size_vmstate = {
++    .name = "sd-card/data-size",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sd_data_size_vmstate_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(data_size, SDState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static const VMStateDescription sd_ocr_vmstate = {
+     .name = "sd-card/ocr-state",
+     .version_id = 1,
+@@ -1072,6 +1091,11 @@ static int sd_vmstate_pre_load(void *opaque)
+     if (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)) {
+         sd_ocr_powerup(sd);
      }
--    if (req.arg > (1 << HWBLOCK_SHIFT)) {
-+    if (req.arg == 0 || req.arg > (1 << HWBLOCK_SHIFT)) {
-         sd->card_status |= BLOCK_LEN_ERROR;
-     } else {
-         trace_sdcard_set_blocklen(req.arg);
++    /*
++     * The data size is not included by older versions: assume the
++     * whole buffer. Replaced by the state restore when included.
++     */
++    sd->data_size = sizeof(sd->data);
+ 
+     return 0;
+ }
+@@ -1110,6 +1134,7 @@ static const VMStateDescription sd_vmstate = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &sd_ocr_vmstate,
++        &sd_data_size_vmstate,
+         &emmc_extcsd_vmstate,
+         &emmc_rpmb_vmstate,
+         NULL
 -- 
 2.55.0
 
