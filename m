@@ -1,87 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95914606A326
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BA0606A32D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GKmIYnK8
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=QcCjnY4u
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVqaH-00059Q-He; Tue, 24 Nov 2026 08:29:21 -0500
+	id 1xVqa8-00055E-QA; Tue, 24 Nov 2026 08:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVqaB-00057D-Qq
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:17 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1xVqa5-00054R-Uh
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:10 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVqaA-0007OM-7A
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:15 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-48dfc0421d9so4286508f8f.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:29:13 -0800 (PST)
+ id 1xVqa4-0007NM-4V
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:09 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4bb6c7b6dbdso41921185e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:29:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795526953; x=1796131753; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=3H0fLgaXfYkSeAvWy/RU0AqvZSS+ka4mLFlMPqlDno4=;
- b=GKmIYnK8dJcjKGXKdG7Wg51i8+MfVkufSLeI+/ESYHpOExStauqfUf8irOaQbxxNH0
- nkdx5ZCpCe+ZDtNLl9hrxfadnA55GF10RP2xqKsSwcLjdRLoTSQ//CcFf1FBdJjGQuwh
- MJS9NDt9WKlX5upK+d1pxFw5AKpe/F+XEhHKwSpNHfDeh92MibHG3Qd+iI/fyO2URyZ9
- tAJjIO6yn807K/Xo6ulB5R537HuS6TQNbrQzXClhk8a0fu07GhTeVkw+DLGzeDiAqBVB
- f3VbbeDnotI2azojeBiusLBTsNpIDN/suCVL8lQIrTsOuq3dmAlJP2EKz7dsA2lTzpUS
- nAUA==
+ d=linaro.org; s=google; t=1795526946; x=1796131746; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=a1j+dqvk41rdeLoPHnPHelCKmFcC4w9ZK0uNbwh8VsE=;
+ b=QcCjnY4uv3WaYksYvO92waCeX/b9VpR2DNi6gRBWyc+xRDbZ5AVNU4HuQmz8fsuGew
+ 3Eod9De1pCdiSoDisYfrr27DXK5+9uARI6Lah66mlA3cssrFV1a2nq/ISzXD1XYUUY9K
+ sBpbdaICOWIgojU+SviRtaOo+xy/fq46fbjbEfNK5o8JhBFEc2ylJIRxMZ25JvzZKgf3
+ 2pyEAVUsoNt7aUEPqGHrAtDxRuBuJ877Nbf6z/fXOFWFOjZQ7tC4dRxzr90cRvDfH5W7
+ IjF+2JsknqvVe+GLsKIhGoMFa8p3zsbqogjSpGs6V2KlrTbDh9VoRfgxfECYWoayXtGm
+ xO7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795526953; x=1796131753;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=3H0fLgaXfYkSeAvWy/RU0AqvZSS+ka4mLFlMPqlDno4=;
- b=ky26CYncynXS4lPU1i/9NnMj9jgvDy2bbwDWpzAIE6D0OuaPTPtS6iAFWCid4LHf08
- /H8mLRXDwfa2LjidlF38zWfImTlyq7K+wDMpwRZWEwq9vF5u1aJ8A9DaLvQ+s36otWN3
- wdeDYJAv0rCBqXoSzj9BwP2f6JO3XI8KSOzt8vpfLz9Tr2/GGjnV1Kq7trrkSBu54KCm
- nvfHQ8XNp3td8WVPtZKDGHnenqeskMVS5rQaLgtAoCHM++neL6eE+Xyhki3H/L5UUKSm
- rwivVnrO3ANaoNJGQ5Cxzy2nms6IspHG84yH4uQQvCxLclMgDfSxa1k+piBurwlvZ2Vx
- rt/A==
-X-Gm-Message-State: APuU4Z/UGCSzZ8BPiiOT84zzsTD+46DW/FpdBgYPvI6fquXnAkMLO05z
- kI+hlwom/ULtEgbtee/8sDILwaMQoe9LHbaV0lVEDZI2O2MPYpUy1mg9RgijElrr/oT+LsMlq//
- qZumB
-X-Gm-Gg: AZFdTZdEhAJD1QJqBdxKYE05u5YSWPQ0+4gtXtesHtBmYjOhUzmJh/vXp1mKS0YPRXe
- o1nVzKh/5/oauYcsBQThelwi/ACatKM+9bN4UJjpon+zqCTMfXJuRXNupNQB/KYHCVSFyPRna13
- /dZqrb/9YQl/uFTAA3VoZaK4JOrGGLVbO6NpDvC71WPXgKJ9K9hSRWsEwa3voXjAfRD2Tmnprkm
- SvNyLWwRPIWbjInrS4pMxm/R6t2P3dSDDVq2ilQyNINWDCV4QVVkE9HCpGXJacA35vzSK5cuKJo
- jwQmQTl7WhbrAVy0RjNQkeThYIUnQCQNK4N2BF4fh1SOQw6Bnayj8mr9ST4QCvm7S2JoWIX+cnV
- RfwE01bGyMgBF14P2FiuL9qlgVubU82cHe+FoIJpGmrHeW1cP9QROl/FnhvH2At1PuEHakvk4pB
- /u7x6LfFB6F0mQIBzfDBaV4urDWjXEVw6vGig0MnfVNjTlSfS0EMo8UwqugkhhqKORKW8IKCJgP
- AQ1P+Uc9xWtTq7eLP+mdjZgaMdjYAwrGDdQTHPELeIOe/bVnIBOjDR9QBJOKOi7GwbNOY+cfDYZ
- IkqzQqFcuPoe5eNMmmo/BjYLE8Po/YvZcmBQE1AuHPAUS4k2vihLY33kHaQ/Bh7gctES6vKWuo6
- fIcdJa6acdCgmeGMqRwLZKjQlNqZIByL34g==
-X-Received: by 2002:a05:6000:299c:20b0:4a7:9630:7b4c with SMTP id
- ffacd0b85a97d-4abb9459073mr20803323f8f.47.1795526952722; 
- Tue, 24 Nov 2026 05:29:12 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795526946; x=1796131746;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=a1j+dqvk41rdeLoPHnPHelCKmFcC4w9ZK0uNbwh8VsE=;
+ b=2gapDCQgWm8fDk/oZXzzpvuaCQF7lIInr9AVIvIZmVRWVacUY7/zfNqCCledtWIbR6
+ VNXKSWbGIXaMaA+AteZDgpXe+an9OX13my+eHdr/qKXVv+YIobXYKMffk+9HGL5KqsK9
+ VzooWtdLB7uf2nxoN4L70bs0hF4LDT4Wfhp/FqfflTAi86rsF9dCEJRTBzR2OZgQRKZ3
+ wlmvtUHMZbV7tUG+qMNYqyr3sYfLlk4PCQkHE7Uc5BzMnlTr6UvlaCsAlgzZ72UXzGUg
+ zkZy3eCBh5k4aUFY7XZ3sWk6IDav0mqWImgP5ShDKou9v3nPf3h6AjkcFhONCp7v1tSp
+ +7zA==
+X-Gm-Message-State: APuU4Z8sG7xv/2Qx2rgzT01r/zse4wyD9Of/qdK3RoGJVSwZUtFJoekO
+ zBAHh7FYV/r/aoLT32I2B8PO1fzS/7PAL2FNSUKG4rrgItyyeedKWnUEJxZuFMCq2qgBKrlVGaf
+ 5FFju
+X-Gm-Gg: AZFdTZdGdbsmxpFKg0k/mT+6fqUtpW2DEGqJsBje+N5rTC7YbrWCB3dHQNaE6DsIQRu
+ ghYiLTR5CTGjuDj5d/aC3s2CTGS4mXOZgrerUoukR8N7APFFcn92XOTcbnMPFnshTTqOSzUkhFd
+ D/lpRuCwV0XavC4ntIMbV1yxPmCcC6hSDT6r+InEwpUpiodv4OHUjYB5wG/mpWqSh/sE3JJKnJK
+ ZWFV4g5BqhvJHp9gxvxEm2Q5/c8GrCBCfyCnxUprnH8JHgKPpp2Mz4KSPORlS7eT0bH8FN+tSZJ
+ usWP9Tcmk19tiP+HFqJD6ZCohJJPUHxOO87GnX16d7q4wf7jHgFfmO1/LWJQ8PC34oflJOhi9JC
+ hLVRAL3ExoOlPPUVznfvKmwKSmP2Cr48lLnvbM78buhVEkVixGrEVC1lCYovNLEAC++TU6VWMPD
+ RoIp9RrJ/Y3/fcolrKnvjSUj5++YZQoT/di6BrWeOeZ7FwCgG2ZZMMat/UvQiFjq9WnqFa0u+PG
+ YE8iHraJCUaMEPnEhp5wA0SdmvTteVbLRCZ6k6/CiwrnPXOFxOSNmymUJXw0/9BM6x5pskUUrB8
+ 7BKHn/TQGqTVztNv6y0LQ/QJYX5LWdsF6UDYElmIuvb7oYrp6064u44v/Rp9hY/bpSueiUkDA9A
+ p5Qu/xdfUjU1D/gQBQbkZbfj0H0X6jsnMJw==
+X-Received: by 2002:a05:600c:a51:b0:4bb:5f43:23bb with SMTP id
+ 5b1f17b1804b1-4bb88828173mr282616075e9.33.1795526945735; 
+ Tue, 24 Nov 2026 05:29:05 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6b10b2c9sm29098031f8f.31.2026.11.24.05.29.11
+ ffacd0b85a97d-4ab6b10b2c9sm29098031f8f.31.2026.11.24.05.29.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 05:29:11 -0800 (PST)
+ Tue, 24 Nov 2026 05:29:04 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 6/9] hw/intc/arm_gicv3_cpuif: Don't count a virtual EOI in
- EOImode 1
-Date: Tue, 24 Nov 2026 13:29:01 +0000
-Message-ID: <20261124132904.138731-7-peter.maydell@linaro.org>
+Subject: [PULL 0/9] target-arm queue
+Date: Tue, 24 Nov 2026 13:28:55 +0000
+Message-ID: <20261124132904.138731-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261124132904.138731-1-peter.maydell@linaro.org>
-References: <20261124132904.138731-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,55 +97,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+Hi; here's a target-arm pullreq for rc2. All bug fixes, mostly arm
+but a few in the net subsystem.
 
-icv_eoir_write() increments ICH_HCR_EL2.EOIcount for a virtual EOI with
-no matching list register, in either EOImode. The VirtualWriteEOIR0()
-and VirtualWriteEOIR1() pseudocode in the GICv3 architecture
-specification only does so in EOImode 0 (ICH_VMCR_EL2.VEOIM clear),
-since in EOImode 1 the DIR write increments EOIcount instead.
+thanks
+-- PMM
 
-In EOImode 1 an interrupt with no list register is therefore counted
-twice, and KVM running under TCG deactivates an interrupt that its guest
-has yet to deactivate.
+The following changes since commit 2bfbe39d0fff8af881cffe2bab9b615e77807c35:
 
-Increment EOIcount on EOIR only when EOImode is 0.
+  gitlab-ci: Switch the msys2 job to use ucrt (2026-11-23 09:13:18 -0800)
 
-Fixes: b3b48f529fe8 ("hw/intc/arm_gicv3: Implement ICV_ registers EOIR and IAR")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261119091922.1380805-1-fuad.tabba@linux.dev
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/intc/arm_gicv3_cpuif.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 67a0bba4b03..02e1e7c254e 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1617,9 +1617,10 @@ static void icv_eoir_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (idx < 0) {
-         /*
-          * No valid list register corresponding to EOI ID; if this is a vLPI
--         * not in the list regs then do nothing; otherwise increment EOI count
-+         * not in the list regs then do nothing; otherwise increment EOI count,
-+         * unless drop and deactivate are split, when the DIR write does so.
-          */
--        if (irq < GICV3_LPI_INTID_START) {
-+        if (irq < GICV3_LPI_INTID_START && !icv_eoi_split(env, cs)) {
-             icv_increment_eoicount(cs);
-         }
-     } else {
--- 
-2.43.0
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20261124
 
+for you to fetch changes up to c020bf46966ae4dbbf82efbc4c5f3435a2fda42f:
+
+  hw/intc/arm_gicv5: Fix value of the IRS_DEVARCH register (2026-11-24 12:55:53 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * net/checksum.c: Correct handling of IP header length
+ * net/checksum: Correct handling of checksums when IP options present
+ * hw/ssi/aspeed_smc: Correct minimum_version_id in vmstate
+ * hw/net/rtl8139: Limit DMA transfers to plain memory
+ * hw/arm/bcm2838: Route system timer interrupts to GIC
+ * hw/intc/arm_gicv3_cpuif: Don't count a virtual EOI in EOImode 1
+ * target/arm: Handle "PMU disabled" in migration validate functions
+ * hw/watchdog/wdt_imx2: Fix migration when pretimeout-support not enabled
+ * hw/intc/arm_gicv5: Fix value of the IRS_DEVARCH register
+
+----------------------------------------------------------------
+Fuad Tabba (1):
+      hw/intc/arm_gicv3_cpuif: Don't count a virtual EOI in EOImode 1
+
+Jayesh Agarwal (1):
+      hw/arm/bcm2838: Route system timer interrupts to GIC
+
+Peter Maydell (6):
+      net/checksum.c: Correct handling of IP header length
+      net/checksum: Correct handling of checksums when IP options present
+      hw/ssi/aspeed_smc: Correct minimum_version_id in vmstate
+      hw/net/rtl8139: Limit DMA transfers to plain memory
+      target/arm: Handle "PMU disabled" in migration validate functions
+      hw/watchdog/wdt_imx2: Fix migration when pretimeout-support not enabled
+
+Zenghui Yu (1):
+      hw/intc/arm_gicv5: Fix value of the IRS_DEVARCH register
+
+ include/hw/arm/bcm2835_peripherals.h |  1 +
+ include/hw/arm/bcm2838_peripherals.h |  4 ++
+ include/net/checksum.h               |  2 +-
+ hw/arm/bcm2835_peripherals.c         | 33 +++++++-----
+ hw/arm/bcm2838.c                     |  7 +++
+ hw/intc/arm_gicv3_cpuif.c            |  5 +-
+ hw/intc/arm_gicv5.c                  |  2 +-
+ hw/net/rtl8139.c                     | 98 ++++++++++++++++++++++--------------
+ hw/ssi/aspeed_smc.c                  |  7 ++-
+ hw/watchdog/wdt_imx2.c               | 28 +++++++++--
+ net/checksum.c                       | 46 ++++++++++++-----
+ target/arm/machine.c                 | 22 ++++++--
+ 12 files changed, 178 insertions(+), 77 deletions(-)
 
