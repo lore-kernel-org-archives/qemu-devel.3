@@ -1,87 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5FF606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDCA606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=R0c+XFdG
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZCXyWquH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVqa9-00056J-Mq; Tue, 24 Nov 2026 08:29:13 -0500
+	id 1xVqaG-000582-Pj; Tue, 24 Nov 2026 08:29:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVqa7-00054a-DX
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:11 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1xVqaA-00056i-Nt
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:15 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVqa5-0007NW-JI
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:11 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4bb68c197c7so57477895e9.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:29:09 -0800 (PST)
+ id 1xVqa8-0007OC-SO
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:14 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-490d59c3edaso3053567f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795526948; x=1796131748; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795526951; x=1796131751; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=MX3EvT9gWZIQrSqtLnfI9TAsoPsBd5+upIdgO+sQCF4=;
- b=R0c+XFdGhWr2kqsxhJcbbDGQc1W708AZs22EVjH+Kufiu5uKZAsaXPEhEXtvfFjlzD
- 3l8ICIZEJzvuUmSwGDG67KmAbyGm8ENeE5MzVJ8wlzbSdMfMl3qGwEQi2VgWpZtutUW1
- bkOrG738jVXP9zEBecmqk1/2zQNaReEZhBPW8spXJPyBq9RvDSa8zK1s5+96CV/Jv84X
- DNbFToIW9UEMm44BQioRHhONOKz8L62t5k1EEEaav632ocN7f/jrui+VOOGOlGKItl10
- AQ7551vL7sXOu2JcL76E4rXHMXAtpNSsAfEfGaNTkBquxKf9VF/Bz8L/kJtaFoLH0gE8
- 26Dw==
+ bh=yrZu0JxvfqtzMFa+0gsiObtAopJnpeWR2MUyCBVS6bI=;
+ b=ZCXyWquH7df/TS4akzFyOV0TuUkdR6WPFjilGmt35sdY2Nz3Baxf53GIDf4kuuqPNm
+ wE+nWTY3NWF8SFNWlnFlgdMHhx0yMZtMO9aTiB2HczcqF/iiI2XiAlelEfK/cYw9WI6u
+ 8mMkB5wbVmrB5g0lEm6tYAbMY9I2aHD1kAeIdAPjT9TwI79d9oMhT/c+TegvhD76fEaM
+ eqrLrAzYZfF1pY+6wxQjnxTomTBlTL7VzBsmOlfinmr9+yue2gQW8+m3S60VlIoJbN0N
+ wrkxyJ5ci++/uY3lCE72OGFB9TEpEARtPI1oYet/0lr/SQbeXtNlZjxPLCVZLwTX0YuQ
+ GfWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795526948; x=1796131748;
+ d=1e100.net; s=20260707; t=1795526951; x=1796131751;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=MX3EvT9gWZIQrSqtLnfI9TAsoPsBd5+upIdgO+sQCF4=;
- b=EX9p9AgF9MR2/QyNEpmDXci7I5FdsOYdJ8qLPUssJkz/BFB9WBFSeE7ctbPSLVDAdM
- 5X2ItuqR220h0h027iI9wCvxTIQBwTW+OWqTpjKwLoz3pa+ZxcTYUkQU77gjU6PN9EU6
- dKOlZB9ovIxU8NvfCzgw97QinNvoBRFpXM1jnF+CG3cPUFx1Tcvp4E7OPpQWtlFqudly
- oDQ19gC6Gf6xmpFQmXgB//tGI/zK6ZXHXoPR31+b1DiwCyN2YxGyS3SNDVTZ0l6Qw6ie
- K11KpgFKTGj831zIUMLPezX+vXV0bXCDxFxg/vA1f3WIvFRg8lPjtG5ndVKh9RAaa79E
- 35mQ==
-X-Gm-Message-State: APuU4Z8H+rFNrReKcQ5SkikZBbNszNLK0LalB+VIp/AFR3uBQLmYWliu
- d8lqxFTau85h2HeX74t+orIWMpLGLXaX2YGyEYiMjgeZAiGLr4VL0VSekzY4Hg+M81dx0hIPDOn
- erDke
-X-Gm-Gg: AZFdTZfTdfDLUc6a67XrRauJX/CvbhIOeNxhFrAD/Ttr03WsTNqeNxGG/Ok0R6VuCt6
- EszrRDqXo8UDled61h6flomVc9W1jLCJiU8cfIvWb4Ir6RSNjjA/zm5QMugb3jltPnzbTp8VrC1
- 2qD3AobiEWF9AtSvNDwrFhUqLYO47yvL4HOTXzQfymTTIrPtfjG2thwn4w6WYM9pgiqcFXM+5sy
- cWxxSLx9ViPLpVUXf8vDIwuDXduqZdEzB+nrL6s8fepzf04lDDKURmUu8xIbdKAyOilervpx/3J
- pqBko6BIVurLg3TfDY3WJzjLZ3+0r2WXrebrgK0UNMbybqLdhELOr6ECBwpb8iOvNgigtTb4Q3g
- e0d7i7b7Eow3iNDUOgp/AEeBQbUt6hqn/aDl1qk+LSD/T34ZzijNhKV/uUAccvQMGYX2i2R5agU
- 4S4tjjM1bYsYZWVa1yScnVbM0KjN+6EG35UFUpO/i7Dw1VX3XDIssvmU272qfBsTUO8824r9EV3
- HweTcI/Q+xL5c3FLmAGqx7B4Edr4zN0+bxQMN3X04B33JupOCDsV26TZkkPbiuR9ysyms/kkOz1
- cmOiR4QO4sz4o5WFVtSPS7sKNqnXNlQ+EtBekT9vfNALHgCM1i5lyYUYbUy8/JNf25kg7VL77fb
- LGggv5yoFECtErjwn2AwRH26/X5s9OY/jUA==
-X-Received: by 2002:a05:600c:3491:b0:4a2:c2b:a91b with SMTP id
- 5b1f17b1804b1-4bb8880014dmr309445135e9.10.1795526947965; 
- Tue, 24 Nov 2026 05:29:07 -0800 (PST)
+ bh=yrZu0JxvfqtzMFa+0gsiObtAopJnpeWR2MUyCBVS6bI=;
+ b=cILybSwzdlhnyLAUkhPeusL4eMxOBKpQIG+mZtenMwDMpuzdVEl//XrkTVtBdoLE4V
+ mICNbauveVtuA5qbnwUZ0dl8NDdhQk0IMll90xNkSlWgGTfAPiQTtkujPNQQuEHNYqjn
+ hx3fvknoSAITjgg04cSCpL5l/1lII5llZDX8N3FdRC2dYU7mN6Bbz1u6ksKHN7k+rRPp
+ N/ufTGrywytc3PBFZSc8uCde3C0wrA1pyWYIGt/dZC+itrxuQEQn66+jCoWc6wPb5IFm
+ UxP63XLFaUMmNJsSHV0cFbWvZdk6bDAaI2QgBxSgdCVpSebXavKMxkhIulBbrlugOXPZ
+ VD3w==
+X-Gm-Message-State: APuU4Z/Gi/w04s0rloVIcUBkaANMtddB4tzDVj8efPqNBhA22mrNf29J
+ FRFi/5gE7Umx9YfxlcuQhD2AVQkUyqNgfwlR1ZQb9aptGTmS0rYqdLRLg6yCFdFGPDNXD1k1Sq2
+ RSfAR
+X-Gm-Gg: AZFdTZcw3NPomLzdjtEO5U8cP7Wf3Mq7W/57DwiYUAVbQZOjSmqhYkccB0zQwVB4FrH
+ OPAfSiHMbma21hWq8M1jG7KdNsS7VjQ4BepwXxr160Oh3JgkkqXawNJIS1bEJ/Ozlynrryo4z23
+ biS5nTjBHMTfkvmOkTHnb04AAbavfRaESWz4Bfp5BUYFBEtZMMBGL3AY6cdffBMI9DhMlb0gO+m
+ UN7RLI8IPbQ6eT30qmk4BImTM1QDvG4OTDU4H/sE/gDvug27UyVAoKPV/XC50/LOD1of3URbrnD
+ GtAdZ9KPo3hqgMbgMb90O3W/J96Al755GUv1zInagAbYoqih3h0n//fWOeT5ZeOaYi+vl86ox7V
+ 9Ex3H+aKSI763QKm26ueWqk48C+MgaWMxwhqYuCHzv/uIfj3ZEzf5AMkybLUnfgsVHn3Fzl1EiI
+ dFg2wjUcpBVtokJEoQTK8amdUbjwwK8A+zckvemidLAbwDmyhod8xexE1qtsHxlfN217N+X9vRs
+ 6Cx43plOveC4UZcjhxxhtM5w33T25lKNZEzQHz6Fppl7I6tHzMRBuh+6BeNNgLKt7pCWfw+YK/D
+ wXcSzIRh6sQTwFTIDUTTY0pSz7yDpRNutVyBsufDnNcJvm7Or7NY5K7K6GDj/Bo2Fpy03iAVs5h
+ uZ+hQDmd21bLtPvjPNyAPnOjSgOsWJyezTQ==
+X-Received: by 2002:a05:6000:438a:b0:48e:127a:c914 with SMTP id
+ ffacd0b85a97d-4aa545e25cdmr38306844f8f.5.1795526951437; 
+ Tue, 24 Nov 2026 05:29:11 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6b10b2c9sm29098031f8f.31.2026.11.24.05.29.06
+ ffacd0b85a97d-4ab6b10b2c9sm29098031f8f.31.2026.11.24.05.29.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 05:29:07 -0800 (PST)
+ Tue, 24 Nov 2026 05:29:10 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/9] net/checksum: Correct handling of checksums when IP
- options present
-Date: Tue, 24 Nov 2026 13:28:57 +0000
-Message-ID: <20261124132904.138731-3-peter.maydell@linaro.org>
+Subject: [PULL 5/9] hw/arm/bcm2838: Route system timer interrupts to GIC
+Date: Tue, 24 Nov 2026 13:29:00 +0000
+Message-ID: <20261124132904.138731-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261124132904.138731-1-peter.maydell@linaro.org>
 References: <20261124132904.138731-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,108 +99,171 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In net_checksum_calculate() we calculate the position of the TCP or
-UDP header in the buffer with:
-  tcp_header *tcp = (tcp_header *)(ip + 1);
-where ip is a 'struct ip_header' (and similarly for udp).
+From: Jayesh Agarwal <agarwaljayesh03@gmail.com>
 
-This only gives the correct location if the IP packet has no options
-and its header is the minimum length.  Otherwise we will corrupt some
-part of the packet in writing the checksum word.
+The system timer interrupts are only routed to the legacy interrupt
+controller and not to the GIC, so a guest using the GIC (software that
+relies on the system timer interrupts through the GIC, such as bare
+metal programs or hobby kernels) never receives them.
 
-Fortunately packets with IP options are rare (and often get blocked
-by routers or firewalls), so this probably didn't often cause
-problems, and the incorrect offset we write to is always inside the
-packet, not out-of-bounds.
+A qemu_irq connection follows one output, one input. So also wiring the
+timer to the GIC would replace its connection to the legacy controller.
 
-Use the IP header length value from the packet to locate the TCP or
-UDP header, instead of the fixed minimum size.  While we're adjusting
-this code, make sure that we don't assign to the tcp_header or
-udp_header pointer until after we've made the length check that the
-buffer is big enough (the previous ordering of operations was
-harmless as we never used the resulting pointer, but not ideal).
+Add a splitter per system-timer interrupt line so that each interrupt
+reaches both the legacy controller (output 0 of the splitters) and the
+GIC (output 1 of the splitters). The timer channel n goes to GIC SPI
+64+n, so channels 0-3 go to SPIs 64-67.
 
-This was mentioned in passing in issue #4791 (which is otherwise
-a duplicate of #4720).
+Testing:
+The raspi4b machine started in the qtest mode:
+	qemu-system-aarch64 -M raspi4b -display none -accel qtest -qtest stdio
 
-Cc: qemu-stable@nongnu.org
-Fixes: 50dbce6538d1 ("net: improve UDP/TCP checksum computation.")
-Reported-by: Alex Meiburg <https://gitlab.com/timeroot.alex>
+Ran following commands:
+	irq_intercept_in /machine/soc/peripherals
+	readl 0xfe003004
+	writel 0xfe00300c 1000
+	writel 0xfe003010 2000
+	writel 0xfe003014 3000
+	writel 0xfe003018 4000
+	clock_step 5000000
+	readl 0xfe003000
+
+Before the fix:
+    clock_step 5000000
+    OK 5000000
+    readl 0xfe003000
+    OK 0x000000000000000f
+The alarm fires correctly (status flag outputs 0xf), but no IRQ raise
+64-67 reaches the GIC.
+
+After the fix:
+    clock_step 5000000
+    IRQ raise 64
+    IRQ raise 65
+    IRQ raise 66
+    IRQ raise 67
+    OK 5000000
+    readl 0xfe003000
+    OK 0x000000000000000f
+The alarm fires, and all the four channels reached GIC lines 64-67.
+
+Reported-by: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
+Signed-off-by: Jayesh Agarwal <agarwaljayesh03@gmail.com>
+Message-id: 20261117193205.8236-1-agarwaljayesh03@gmail.com
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jayesh Agarwal <agarwaljayesh03@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261114132350.1456994-3-peter.maydell@linaro.org
 ---
- net/checksum.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ include/hw/arm/bcm2835_peripherals.h |  1 +
+ include/hw/arm/bcm2838_peripherals.h |  4 ++++
+ hw/arm/bcm2835_peripherals.c         | 33 ++++++++++++++++++----------
+ hw/arm/bcm2838.c                     |  7 ++++++
+ 4 files changed, 33 insertions(+), 12 deletions(-)
 
-diff --git a/net/checksum.c b/net/checksum.c
-index 9e4ba1bc910..d6925e9a496 100644
---- a/net/checksum.c
-+++ b/net/checksum.c
-@@ -62,6 +62,7 @@ void net_checksum_calculate(void *data, size_t length, int csum_flag)
-     unsigned int mac_hdr_len, ip_len, ip_hdr_len;
-     struct ip_header *ip;
-     uint16_t csum;
-+    void *ip_payload;
+diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
+index cd66a734e7c..b262bdccb74 100644
+--- a/include/hw/arm/bcm2835_peripherals.h
++++ b/include/hw/arm/bcm2835_peripherals.h
+@@ -54,6 +54,7 @@ struct BCMSocPeripheralBaseState {
+     qemu_irq irq, fiq;
  
-     /*
-      * Note: We cannot assume "data" is aligned, so the all code uses
-@@ -140,20 +141,23 @@ void net_checksum_calculate(void *data, size_t length, int csum_flag)
+     BCM2835SystemTimerState systmr;
++    SplitIRQ systmr_irq_splitter[BCM2835_SYSTIMER_COUNT];
+     BCM2835MphiState mphi;
+     UnimplementedDeviceState txp;
+     UnimplementedDeviceState armtmr;
+diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
+index f9279daa4d0..bb188422013 100644
+--- a/include/hw/arm/bcm2838_peripherals.h
++++ b/include/hw/arm/bcm2838_peripherals.h
+@@ -20,6 +20,10 @@
+ /* SPI */
+ #define GIC_SPI_INTERRUPT_MBOX         33
+ #define GIC_SPI_INTERRUPT_MPHI         40
++#define GIC_SPI_INTERRUPT_SYS_TIMER0   64
++#define GIC_SPI_INTERRUPT_SYS_TIMER1   65
++#define GIC_SPI_INTERRUPT_SYS_TIMER2   66
++#define GIC_SPI_INTERRUPT_SYS_TIMER3   67
+ #define GIC_SPI_INTERRUPT_DWC2         73
+ #define GIC_SPI_INTERRUPT_DMA_0        80
+ #define GIC_SPI_INTERRUPT_DMA_6        86
+diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+index be40c6b92a4..5ab2bac4b11 100644
+--- a/hw/arm/bcm2835_peripherals.c
++++ b/hw/arm/bcm2835_peripherals.c
+@@ -95,6 +95,14 @@ static void raspi_peripherals_base_init(Object *obj)
+     /* SYS Timer */
+     object_initialize_child(obj, "systimer", &s->systmr,
+                             TYPE_BCM2835_SYSTIMER);
++    /*
++     * One splitter per system-timer interrupt line so that each interrupt
++     * reaches both the legacy controller and the GIC.
++     */
++    for (int n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
++        object_initialize_child(obj, "systmr-irq-splitter[*]",
++                                &s->systmr_irq_splitter[n], TYPE_SPLIT_IRQ);
++    }
+ 
+     /* UART0 */
+     object_initialize_child(obj, "uart0", &s->uart0, TYPE_PL011);
+@@ -304,18 +312,19 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
      }
+     memory_region_add_subregion(&s->peri_mr, ST_OFFSET,
+                 sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->systmr), 0));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 0,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER0));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 1,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER1));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 2,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER2));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 3,
+-        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
+-                               INTERRUPT_TIMER3));
++    for (n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
++        qdev_prop_set_uint32(DEVICE(&s->systmr_irq_splitter[n]),
++                "num-lines", 2);
++        if (!qdev_realize(DEVICE(&s->systmr_irq_splitter[n]), NULL, errp)) {
++            return;
++        }
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), n,
++                qdev_get_gpio_in(DEVICE(&s->systmr_irq_splitter[n]), 0));
++        qdev_connect_gpio_out(DEVICE(&s->systmr_irq_splitter[n]), 0,
++                qdev_get_gpio_in_named(DEVICE(&s->ic),
++                    BCM2835_IC_GPU_IRQ,
++                    INTERRUPT_TIMER0 + n));
++    }
  
-     ip_len -= ip_hdr_len;
-+    ip_payload = (uint8_t *)ip + ip_hdr_len;
+     /* UART0 */
+     qdev_prop_set_chr(DEVICE(&s->uart0), "chardev", serial_hd(0));
+diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
+index 1bde9e68af9..a88d750f76b 100644
+--- a/hw/arm/bcm2838.c
++++ b/hw/arm/bcm2838.c
+@@ -192,6 +192,13 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
+     qdev_connect_gpio_out(DEVICE(&ps_base->spi_irq_splitter), 1,
+                           qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_SPI));
  
-     switch (ip->ip_p) {
-     case IP_PROTO_TCP:
-     {
-+        tcp_header *tcp;
++    /* Connect the system timer interrupts to the interrupt controller */
++    for (int n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
++        int int_n = GIC_SPI_INTERRUPT_SYS_TIMER0 + n;
++        qdev_connect_gpio_out(DEVICE(&ps_base->systmr_irq_splitter[n]), 1,
++                              qdev_get_gpio_in(gicdev, int_n));
++    }
 +
-         if (!(csum_flag & CSUM_TCP)) {
-             return;
-         }
- 
--        tcp_header *tcp = (tcp_header *)(ip + 1);
--
-         if (ip_len < sizeof(tcp_header)) {
-             return;
-         }
- 
-+        tcp = ip_payload;
-+
-         /* Set csum to 0 */
-         stw_he_p(&tcp->th_sum, 0);
- 
-@@ -168,16 +172,18 @@ void net_checksum_calculate(void *data, size_t length, int csum_flag)
-     }
-     case IP_PROTO_UDP:
-     {
-+        udp_header *udp;
-+
-         if (!(csum_flag & CSUM_UDP)) {
-             return;
-         }
- 
--        udp_header *udp = (udp_header *)(ip + 1);
--
-         if (ip_len < sizeof(udp_header)) {
-             return;
-         }
- 
-+        udp = ip_payload;
-+
-         /* Set csum to 0 */
-         stw_he_p(&udp->uh_sum, 0);
- 
+     /* Connect VC mailbox to the interrupt controller */
+     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->mboxes), 0,
+                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_MBOX));
 -- 
 2.43.0
 
