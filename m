@@ -1,129 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C93606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02778606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=GBsXan3L
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OTwoZtXs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVlbK-00076k-Ka; Tue, 24 Nov 2026 03:10:06 -0500
+	id 1xVltd-0001lJ-4A; Tue, 24 Nov 2026 03:29:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVlbH-000741-QO
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 03:10:03 -0500
-Received: from smtpout8.mo539.mail-out.ovh.net ([51.210.91.47])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xVltb-0001kz-KX
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 03:28:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVlbD-0002zv-Nu
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 03:10:02 -0500
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [79.137.60.223])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4jYb7w3szVz4Dwr;
- Tue, 24 Nov 2026 08:09:48 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <aurelien@aurel32.net>; Tue, 24 Nov 2026 08:09:48 +0000 (UTC)
-Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.110])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jYb7w0Qhdz1xqZ; Tue, 24 Nov 2026 08:09:48 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
- (Authenticated sender: clg@kaod.org)
- by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 2D3329421AC; 
- Tue, 24 Nov 2026 08:09:46 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-100R003600335fe-df3c-490b-8935-daa458e95dc3,
- 8999D460E3350DC70288BFBB7677D99C31D99569) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d515161e-f382-4937-a342-4d21e16332eb@kaod.org>
-Date: Tue, 24 Nov 2026 09:09:45 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xVltX-0004IV-Nn
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 03:28:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795508934;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=8vlzd6uHwoh+xF21Z+R95e12Aq4GFF9NZ1PooLwbtqI=;
+ b=OTwoZtXsSpa8i28JPdDq2Z+tEXwdTEGhsLqn9oHY9wNC3MsIZEJsi8vsydoMFCcQ1iLnV0
+ 0tdY8pNYkamH+8SMcPZlLcixTVImtho1cxcP3SIV1STvSBU3kYCm3w/ZA6WXJnmugbN3Ix
+ wLcVf93L7EIdqT5ZP63Q0WqtFpCerSU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-Tqaq5QgQPqCchwA5NwlesA-1; Tue,
+ 24 Nov 2026 08:28:49 +0000
+X-MC-Unique: Tqaq5QgQPqCchwA5NwlesA-1
+X-Mimecast-MFC-AGG-ID: Tqaq5QgQPqCchwA5NwlesA_1795508927
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5B4919540E2; Tue, 24 Nov 2026 08:28:46 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70D1B1956088; Tue, 24 Nov 2026 08:28:39 +0000 (UTC)
+Date: Tue, 24 Nov 2026 08:28:36 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Filip Hejsek <filip.hejsek@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Laurent Vivier <laurent@vivier.eu>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v4] treewide: use qemu_dup() instead of dup()
+Message-ID: <awVKtNi4M_1BsZvt@redhat.com>
+References: <20261112-use-qemu-dup-v4-1-c9032f94bc2c@gmail.com>
+ <52cc9199-8043-4068-83a3-f5462a236e68@maciej.szmigiero.name>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PReP] Maintainer status check for PReP machine
-To: Utkarsh Verma <uverma@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth
- <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>,
- Aurelien Jarno <aurelien@aurel32.net>, Helge Deller <deller@gmx.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>, Chinmay Rath <rathc@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
- <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
- <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 5065423684397542607
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEZm84HoMj45sO/1x7YFO/ArULT2E04AS0QUOzHFkA7dYcGZyNVpVilCSAWYgem4C9ROrNfR/r3oTWHTX2cKifnCSLPpfKAqgP5V3AHJMVCP+RYrUteosKPn3w1kUz1T2GZ9ZAS602v3L1lONs3/QY175xMwAiNlKgHwDcICIJItKljq5Ia4W68XEd4+orGiKReK11WHT6ayykZkikFqzSTQ1E9aatrzyzVDCY2LiADSLizUCiSzeh8YVqmBzuDkMuymVeYNLb09SnEYVaLe8vHVfO9moJ26Q90QJciGHsyzbNArECenM0C1c6ofHM5MuGX9nmX9BEJ3VvNSlt10OmDOeOQiNibBuMXWN8ynv/preNWvbat1Bj9yk1hHwhZQcc1LjplAkw+CU2qxpc5LfZJLAZ2cf2lQsinTwwHNvQSd7zRPdZ5SHZ+qTQOhtdp8mMzq9E3DrJ0fUraE/nTBuK7eEYz2cc7bTdpbkrk79qsZocAZzr4fVRw69ftz7QTzTLsKNirWSLA6tCkL4ycm8BPSZqZfhwsWghRSNLOmwSKEjfAKxszVDeR7R0iuRS/1fTmEzdm4rF0Io13ccEr9HQ45R7GDjnuEZwcxvTmvdT2u6V4WiS4Mjd7wyiB4y9HEFbMGCEX0Ym1DvwjrK6LHq6AwrwGVLjwyRkRh2RrBNaARg
-DKIM-Signature: a=rsa-sha256; bh=gejiQBEZE8DX5Y6ZwHO/I/SjRJjUQYTxsqVb5kLCkUw=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1795507788; v=1;
- b=GBsXan3L5qM+I7zlAi1Qy2jgpBsQk25f05FcaA+6gicRFsnQlRdqLmFvcRh1cE+b27vzxZb6
- tHOB2RmPzjYgLRIe+ylqJCXTmiLXy5x0WaWS3jPmZpWOJ3C3mGbUdT28YImCiMhFQ1ZGP2u/kiy
- mSgpmm1JOyz9D6jJ5pYXxCtrZ7NMU/ecxWQrSfhWep5idgF5dJ5WuahCjAO6ootZzeO938gQGu+
- OuQJg1lmIoXesfhsNhIHsgVxPiIK6P3GFeUojTBzwV4Mp1VsrvoUJbDl1OE9dRsTeTDB91GXZVq
- GDDbxqO5tpHxq2uIu1oc+MoN/VRM6QFsRYa29LMvuhxeQ==
-Received-SPF: pass client-ip=51.210.91.47; envelope-from=clg@kaod.org;
- helo=smtpout8.mo539.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <52cc9199-8043-4068-83a3-f5462a236e68@maciej.szmigiero.name>
+User-Agent: Mutt/2.4.3 (2026-10-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,88 +91,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/24/26 06:59, Utkarsh Verma wrote:
-> Hi Philippe,
-> 
-> On 11/23/26 11:02 PM, Philippe Mathieu-Daudé wrote:
->> Hi Utkarsh,
->>
->> On 23/11/26 18:14, Utkarsh Verma wrote:
->>> Hi Hervé,
->>>
->>> I wanted to check whether you are still interested in maintaining the PReP machine in QEMU.
->>>
->>> Your name is currently listed as the maintainer for PReP in the MAINTAINERS file. However, we haven't seen much recent maintenance activity for this subsystem, and I wanted to check whether you would like to continue in this role.
->>>
->>> If you are still interested, it would be great to have you continue as the maintainer. Alternatively, if you are no longer actively involved or would prefer to step down, please let us know.
->>>
->>> In the absence of a response, we are considering sending a small MAINTAINERS cleanup patch to remove your name from the entry and mark PReP as Orphan, so that the file accurately reflects its current maintenance status. This would not affect the PReP implementation or its functionality.
->>>
->>> Please let us know your preference.
->>
->> Are there any PReP patches pending review / left unattended?
->>
->> This machine works well enough, is tested; what is your issue with it?
-> 
-> This is more about reflecting the correct status in MAINTAINERS file as the currently listed maintainer (Hervé) have been inactive for about 3 years, although the patches are getting reviewed by other community members.
+On Mon, Nov 23, 2026 at 07:15:58PM +0100, Maciej S. Szmigiero wrote:
+> On 12.11.2026 17:17, Filip Hejsek wrote:
+> > Move qemu_dup() out of an #ifndef so it can be called from code that
+> > runs on Windows. Then use it instead of dup() to ensure the cloexec
+> > flag is set on dup'd fds.
+> > 
+> > The only direct users of dup() are now guest syscalls in the user
+> > emulators and the implementation of qemu_dup() itself.
+> > 
+> > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> > ---
+> > I fixed the Windows build now, checked with docker-test-mingw. I had
+> > to remove ENABLE_RUST=1 in fedora-win64-cross.docker, because Rust
+> > cross-compilation was broken.
+> > 
+> > Changes in v4:
+> > - Fix Windows build
+> > - Link to v3: https://lore.kernel.org/qemu-devel/20261015-use-qemu-dup-v3-1-ca02b5927725@gmail.com
+> > 
+> > Changes in v3:
+> > - Also replace the use in migration/cpr-exec.c and the tests
+> > - Link to v2: https://lore.kernel.org/qemu-devel/20261013-use-qemu-dup-v2-1-12ecd94263b7@gmail.com
+> > 
+> > Changes in v2:
+> > - Replace the use in qemu-nbd.c too
+> > - Changed commit message
+> > - Link to v1: https://lore.kernel.org/qemu-devel/20261012-use-qemu-dup-v1-1-03d94852a6c8@gmail.com
+> > ---
+> >   hw/virtio/virtio.c             |  2 +-
+> >   include/qemu/osdep.h           |  2 +-
+> >   io/channel-file.c              |  2 +-
+> >   migration/cpr-exec.c           |  2 +-
+> >   qemu-nbd.c                     |  2 +-
+> >   system/vl.c                    |  9 +--------
+> >   tests/qtest/bios-tables-test.c |  2 +-
+> >   tests/unit/test-util-sockets.c |  6 +++---
+> >   tests/unit/test-vmstate.c      |  2 +-
+> >   ui/dmabuf.c                    |  2 +-
+> >   util/osdep.c                   | 28 ++++++++++++++--------------
+> >   11 files changed, 26 insertions(+), 33 deletions(-)
+> > 
+> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > index c9f9e5b511..70779fbd56 100644
+> > --- a/hw/virtio/virtio.c
+> > +++ b/hw/virtio/virtio.c
+> > @@ -3204,7 +3204,7 @@ VirtioSharedMemoryMapping *virtio_shared_memory_mapping_new(uint8_t shmid,
+> >           return NULL;
+> >       }
+> > -    fd = dup(fd);
+> > +    fd = qemu_dup(fd);
+> >       if (fd < 0) {
+> >           error_report("Failed to duplicate fd: %s", strerror(errno));
+> >           return NULL;
+> > diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> > index b27d159d5b..b5dbfc8a8a 100644
+> > --- a/include/qemu/osdep.h
+> > +++ b/include/qemu/osdep.h
+> > @@ -653,9 +653,9 @@ int qemu_open(const char *name, int flags, Error **errp);
+> >   int qemu_create(const char *name, int flags, mode_t mode, Error **errp);
+> >   int qemu_close(int fd);
+> >   int qemu_unlink(const char *name);
+> > +int qemu_dup(int fd);
+> >   #ifndef _WIN32
+> >   int qemu_dup_flags(int fd, int flags);
+> > -int qemu_dup(int fd);
+> >   int qemu_lock_fd(int fd, int64_t start, int64_t len, bool exclusive);
+> >   int qemu_unlock_fd(int fd, int64_t start, int64_t len);
+> >   int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
+> > diff --git a/io/channel-file.c b/io/channel-file.c
+> > index 4c9da6619b..548a633be8 100644
+> > --- a/io/channel-file.c
+> > +++ b/io/channel-file.c
+> > @@ -54,7 +54,7 @@ qio_channel_file_new_fd(int fd)
+> >   QIOChannelFile *
+> >   qio_channel_file_new_dupfd(int fd, Error **errp)
+> >   {
+> > -    int newfd = dup(fd);
+> > +    int newfd = qemu_dup(fd);
+> >       if (newfd < 0) {
+> >           error_setg_errno(errp, errno, "Could not dup FD %d", fd);
+> > diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+> > index daa50916d2..2f38db30bb 100644
+> > --- a/migration/cpr-exec.c
+> > +++ b/migration/cpr-exec.c
+> > @@ -44,7 +44,7 @@ bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
+> >   {
+> >       QIOChannelFile *fioc = QIO_CHANNEL_FILE(qemu_file_get_ioc(f));
+> >       /* coverity[leaked_storage] - mfd intentionally kept open across exec() */
+> > -    int mfd = dup(fioc->fd);
+> > +    int mfd = qemu_dup(fioc->fd);
+> >       char val[16];
+> >       /* Remember mfd in environment for post-exec load */
+> The code below immediately clears that CLOEXEC flag on this new fd
+> so I'm not sure if there's any value in switching to qemu_dup() here.
 
-yes. That happens very often for tree wide changes. Nothing worrying.
-PReP being an old and stable machine, not much is happening.
-
-Debian still boots :
-
-
-     >> =============================================================
-     >> OpenBIOS 1.1 [Jun 29 2026 21:11]
-     >> Configuration device id QEMU version 1 machine id 0
-     >> CPUs: 0
-     >> Memory: 128M
-     >> UUID: 00000000-0000-0000-0000-000000000000
-     >> CPU type PowerPC,604
-     milliseconds isn't unique.
-     Welcome to OpenBIOS v1.1 built on Jun 29 2026 21:11
-     Trying hd:,\\:tbxi...
-     >> Not a bootable ELF image
-     >> switching to new context:
-     loaded at:     04000400 04015218
-     relocated to:  00800000 00814E18
-     board data at: 07C9E870 07CA527C
-     relocated to:  0080B130 00811B3C
-     zimage at:     0400B400 0411DC98
-     avail ram:     00400000 00800000
-     
-     Linux/PPC load: console=/dev/ttyS0,9600 console=tty0 ether=5,0x210,eth0 ether=11,0x300,eth1 ramdisk_size=8192 root=/dev/sda3
-     Uncompressing Linux................................................done.
-     Now booting the kernel
-     
-     Debian GNU/Linux 3.0 6015 ttyS0
-     
-     6015 login: root
-     6015:~# uname -a
-     Linux 6015 2.4.18 #15 Tue May 20 15:11:37 AKDT 2003 ppc unknown
+The benefit is that we eliminate all use of plain 'dup', such that
+we know all FDs start with CLOEXEC set. Any code to then explicitly
+clear CLOEXEC then stands out as a deliberate design choice, as
+opposed to dup() usage which is mostly likely to be an accident.
 
 
-
-Kudos to Mark for the OpenBIOS support !
-
-  > It will be good to have someone listed in the MAINTAINERS entry for PReP who is active in the community or we should change the status to orphan, so that it encourages others to step up to maintain it.
-
-Do you plan to step forward as a PReP reviewer ? You could start
-by contributing some changes. That would be a good first step to
-show your interest in QEMU support.
-
-
-Thanks,
-
-C.
-
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
