@@ -1,124 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ECC606A33B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E57D606A68C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qOl6Es0D
+	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=n4HJijlR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVlxa-0002rO-25; Tue, 24 Nov 2026 03:33:06 -0500
+	id 1xVm49-0003uw-K8; Tue, 24 Nov 2026 03:39:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xVlxT-0002qh-V0; Tue, 24 Nov 2026 03:33:01 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xVm47-0003ud-MW; Tue, 24 Nov 2026 03:39:51 -0500
+Received: from oxygen.pond.sub.org ([94.130.129.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xVlxR-0005im-LC; Tue, 24 Nov 2026 03:32:59 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO34Zkv1260155; Tue, 24 Nov 2026 08:32:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=BaQ+It
- pVP/G6N4ajEQmJA0MclC0dhcbiE8ogDP/+z+Q=; b=qOl6Es0D/5E63mavsJx4s8
- knIlCzeTsTPy0XwiMd3oiC8x7zXsav8I/njxr9wf81vpomGZsasnqj7y+OY/MS/e
- /Xdr57gTZUp+48I38FwxQWmGfnyZo69saWXb478K2ORyKHhgJqgXGPRxMNF5+15a
- oxXlXjpo9T8D5WJyEiiZJOislL/WWum1nFqJR2HNFjqtzTaHZ2CsYcm2LmFXan8W
- r77mxS+sNPpmry6bLi04sdPF52WONwLPzO1vTarCCA9y/JEHtORE5luMH2S61wn2
- cf662tMToDvMI1xSbeSkbNecvLpIHrDiKGtmIi3hGB1gSt3TaamgV199oPjg+yyQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34fket45-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2026 08:32:31 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO2nFkh2740964; Tue, 24 Nov 2026 08:32:30 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j3nmqj2v5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2026 08:32:30 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AO8WSoG23003896
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Nov 2026 08:32:29 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CAD1C58061;
- Tue, 24 Nov 2026 08:32:28 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D81058043;
- Tue, 24 Nov 2026 08:32:24 +0000 (GMT)
-Received: from [9.123.12.1] (unknown [9.123.12.1])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Nov 2026 08:32:23 +0000 (GMT)
-Message-ID: <c12290ac-37da-408a-af6d-92a3c177a1cc@linux.ibm.com>
-Date: Tue, 24 Nov 2026 14:02:22 +0530
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xVm45-0003XT-L8; Tue, 24 Nov 2026 03:39:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
+ t=1795509576; bh=xzFCshCz1rK+8cgG47oxCDIeBJrZSvHc2zU0HDMSrhE=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=n4HJijlRXPjeohGxZ04ir+3mi6oVvgYpdDLSNJA/9/GDXEddG/FPctRBrq3mUye6a
+ py2kM+w/PrXcRWspJWFWvlY8za2pDgZ+9ZP00XpUS+hsmW6pB9HtgXGVLbSDxJ2aYp
+ xabXSEKBLfavRU67+Hme+p51ex1/fT2+cV6SG6xc=
+Received: from blackfin.pond.sub.org (p4fd045cf.dip0.t-ipconnect.de
+ [79.208.69.207])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id 7029D203B0;
+ Tue, 24 Nov 2026 09:39:36 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 746D121E6A04; Tue, 24 Nov 2026 09:39:44 +0100 (CET)
+From: Markus Armbruster <armbru@pond.sub.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: "Denis V. Lunev" <den@openvz.org>,  qemu-devel@nongnu.org,  Markus
+ Armbruster <armbru@redhat.com>,  "Dr. David Alan Gilbert"
+ <dave@treblig.org>,  qemu-stable@nongnu.org
+Subject: Re: [PATCH] monitor: fix abort when a rate-limited event races with
+ its timer
+In-Reply-To: <dec9aea7-8fc9-419b-8178-8e61917f02e2@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 24 Nov 2026
+ 00:03:02 +0100")
+References: <20261123212957.242482-1-den@openvz.org>
+ <dec9aea7-8fc9-419b-8178-8e61917f02e2@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 09:39:44 +0100
+Message-ID: <87o6be4o8f.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PReP] Maintainer status check for PReP machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth
- <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>,
- Aurelien Jarno <aurelien@aurel32.net>, Helge Deller <deller@gmx.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>, Chinmay Rath <rathc@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
- <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
- <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
- <d515161e-f382-4937-a342-4d21e16332eb@kaod.org>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <d515161e-f382-4937-a342-4d21e16332eb@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAzMiBTYWx0ZWRfX+NkPMR/EUmls
- DXFQqOJSiiRk5+mTCjehlchPQWFplzSLrZkLrQ+RiS2ehspR6wtwDun/rs9I89U5/OgtJGP5dZx
- Hj4TGH4vWsac9nMBXzgxpb/IxoCV9OTvrCUvJrzS1VXZY21QmM62lNjPZLg+YOScy5aNWJkfRob
- 3YeAtk23LnifcYMYkIwTLOhrTtrkgEy97lfnIybvT+kjGAEZ/+UQqp89JpmLCVLHvywbWjHgy/3
- vUAdlqeZ05yafV24TMZT78xOWo4CRUHWT6UODvH3kQkCna33vuuzDs/UnZae1IaFvyziK1UAAqg
- 0GG8qBOdq0RSzukZwuO8OiWYaz7iVC9JArql3DHlqyq47+2jpGRsccvRy0ZFI6o5F6wNVBXUSFH
- HdrRV/jxYGuWhhqiTAdqwLHjy4YLvy0ABw9ECQAMj8lRkiy90E/6P3/utphL3K/Iki2W9Ae0s24
- EWiICBVS/EUj1TE3AQg==
-X-Proofpoint-ORIG-GUID: 0TfFvmxGjRLtv97y2Lbm3arfHIwLcsOX
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAzMiBTYWx0ZWRfXzYm/z3z1ySNH
- 8ZPmvE+dXIQlma6bIzqCxCmMb9hNOavare4XuDD/gSpsFGpbhSvyS//g5ApRx9GoiYtVbJqSwzA
- Jxhw51pAakUKgo6nTVzi9RJ5nNIX1DI=
-X-Authority-Analysis: v=2.4 cv=A9z5rKWG c=1 sm=1 tr=0 ts=6b054ba0 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=Co1jgmpq9uk2YL5_-7YA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: KfvoDVA2X-jzW-z5kdhkYFBTOcmitaTG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240032
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
+ helo=oxygen.pond.sub.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,110 +70,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Cédric,
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-On 11/24/26 1:39 PM, Cédric Le Goater wrote:
-> On 11/24/26 06:59, Utkarsh Verma wrote:
->> Hi Philippe,
+> On 23/11/26 22:29, Denis V. Lunev wrote:
+>> From: Denis V. Lunev <den@openvz.org>
+>> Rate-limited events can be raised from iothreads, outside the BQL.
+>> QUORUM_REPORT_BAD always could be. Since 2155d2dd7f73 BLOCK_IO_ERROR is
+>> rate limited too, and any disk on an iothread raises it.
+>> The rate-limit timer runs in the main loop. timerlist_run_timers()
+>> takes it off the active list before it calls the handler, and only then
+>> does the handler take monitor_lock. An iothread raising the same event
+>> for the same device in between finds the rate-limit entry with a timer
+>> that is no longer pending, and QEMU aborts with:
+>>    Assertion `!evstate || timer_pending(evstate->timer)' failed.
+>> This hits virtio-blk on an iothread with an error policy other than
+>> stop when the storage goes away and every guest request fails.
+>> The state is fine, the assert is wrong. Once the timer has fired, the
+>> handler is committed to run: it takes the lock as soon as the iothread
+>> drops it, sends the stored event and re-arms the timer, exactly as for
+>> an event stored while the timer was pending. The event goes out at the
+>> same moment it would have had the iothread come in after the handler.
+>> The entry is only created, re-armed and freed under monitor_lock, so it
+>> cannot go away under the iothread. Drop the assert.
+>> Fixes: a24712af5425 ("monitor: Turn monitor_qapi_event_state[] into a ha=
+sh table")
+>> Fixes: 2155d2dd7f73 ("block-backend: per-device throttling of BLOCK_IO_E=
+RROR reports")
+>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>> Cc: Markus Armbruster <armbru@redhat.com>
+>> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+>> Cc: qemu-stable@nongnu.org
+>> ---
+>>   monitor/monitor.c | 7 ++++---
+>>   1 file changed, 4 insertions(+), 3 deletions(-)
+>> diff --git a/monitor/monitor.c b/monitor/monitor.c
+>> index 2654b81890..22c00b6195 100644
+>> --- a/monitor/monitor.c
+>> +++ b/monitor/monitor.c
+>> @@ -360,13 +360,14 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent even=
+t, QDict *qdict)
+>>          MonitorQAPIEventState key =3D { .event =3D event, .data =3D dat=
+a };
 >>
->> On 11/23/26 11:02 PM, Philippe Mathieu-Daudé wrote:
->>> Hi Utkarsh,
->>>
->>> On 23/11/26 18:14, Utkarsh Verma wrote:
->>>> Hi Hervé,
->>>>
->>>> I wanted to check whether you are still interested in maintaining 
->>>> the PReP machine in QEMU.
->>>>
->>>> Your name is currently listed as the maintainer for PReP in the 
->>>> MAINTAINERS file. However, we haven't seen much recent maintenance 
->>>> activity for this subsystem, and I wanted to check whether you would 
->>>> like to continue in this role.
->>>>
->>>> If you are still interested, it would be great to have you continue 
->>>> as the maintainer. Alternatively, if you are no longer actively 
->>>> involved or would prefer to step down, please let us know.
->>>>
->>>> In the absence of a response, we are considering sending a small 
->>>> MAINTAINERS cleanup patch to remove your name from the entry and 
->>>> mark PReP as Orphan, so that the file accurately reflects its 
->>>> current maintenance status. This would not affect the PReP 
->>>> implementation or its functionality.
->>>>
->>>> Please let us know your preference.
->>>
->>> Are there any PReP patches pending review / left unattended?
->>>
->>> This machine works well enough, is tested; what is your issue with it?
+>>          evstate =3D g_hash_table_lookup(monitor_qapi_event_state, &key);
+>> -        assert(!evstate || timer_pending(evstate->timer));
 >>
->> This is more about reflecting the correct status in MAINTAINERS file 
->> as the currently listed maintainer (Hervé) have been inactive for 
->> about 3 years, although the patches are getting reviewed by other 
->> community members.
-> 
-> yes. That happens very often for tree wide changes. Nothing worrying.
-> PReP being an old and stable machine, not much is happening.
-> 
-> Debian still boots :
-> 
-> 
->      >> =============================================================
->      >> OpenBIOS 1.1 [Jun 29 2026 21:11]
->      >> Configuration device id QEMU version 1 machine id 0
->      >> CPUs: 0
->      >> Memory: 128M
->      >> UUID: 00000000-0000-0000-0000-000000000000
->      >> CPU type PowerPC,604
->      milliseconds isn't unique.
->      Welcome to OpenBIOS v1.1 built on Jun 29 2026 21:11
->      Trying hd:,\\:tbxi...
->      >> Not a bootable ELF image
->      >> switching to new context:
->      loaded at:     04000400 04015218
->      relocated to:  00800000 00814E18
->      board data at: 07C9E870 07CA527C
->      relocated to:  0080B130 00811B3C
->      zimage at:     0400B400 0411DC98
->      avail ram:     00400000 00800000
->      Linux/PPC load: console=/dev/ttyS0,9600 console=tty0 
-> ether=5,0x210,eth0 ether=11,0x300,eth1 ramdisk_size=8192 root=/dev/sda3
->      Uncompressing 
-> Linux................................................done.
->      Now booting the kernel
->      Debian GNU/Linux 3.0 6015 ttyS0
->      6015 login: root
->      6015:~# uname -a
->      Linux 6015 2.4.18 #15 Tue May 20 15:11:37 AKDT 2003 ppc unknown
-> 
-> 
-> 
-> Kudos to Mark for the OpenBIOS support !
-> 
->   > It will be good to have someone listed in the MAINTAINERS entry for 
-> PReP who is active in the community or we should change the status to 
-> orphan, so that it encourages others to step up to maintain it.
-> 
-> Do you plan to step forward as a PReP reviewer ? You could start
-> by contributing some changes. That would be a good first step to
-> show your interest in QEMU support.
-> 
+>>          if (evstate) {
+>>              /*
+>>               * Timer is pending for (at least) evconf->rate ns after
+>> -             * last send.  Store event for sending when timer fires,
+>> -             * replacing a prior stored event if any.
+>> +             * last send, or it has expired and its handler has not
+>> +             * taken monitor_lock yet. Either way the handler will
+>> +             * send what is stored here. Store event for sending
+>> +             * then, replacing a prior stored event if any.
+>
+> How about:
+>
+>  +             * last send, or its handler has not taken monitor_lock
+>  +             * yet (the timer may have fired, or not been armed yet).
+>  +             * Either way the handler will send what is stored here.
+>  +             * Store event for sending then, replacing a prior stored
+>  +             * event if any.
+>
+> ?
 
-Currently I'm looking into pSeries and VOF, but sure will find time to 
-review and contribute to PReP as well.
+I find this version harder to understand.  What scenario exactly is
+missing from Denis's version?  And is it important here?
 
-Thanks,
-Utkarsh
-
-> 
-> Thanks,
-> 
-> C.
-
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+>
+>>                */
+>>               qobject_unref(evstate->qdict);
+>>               evstate->qdict =3D qobject_ref(qdict);
+>> base-commit: 8f66cb79044c370e3813c56ceb7a75a5ca2d0a0e
 
