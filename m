@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF26606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7A1606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pKJwgFyK
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=c9FiyRHA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVoGq-0000Zb-HO; Tue, 24 Nov 2026 06:01:08 -0500
+	id 1xVoGq-0000Zf-Im; Tue, 24 Nov 2026 06:01:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1xVoGb-0000X6-RT; Tue, 24 Nov 2026 06:01:06 -0500
+ id 1xVoGj-0000YE-Lr; Tue, 24 Nov 2026 06:01:06 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1xVoGY-0001Je-UI; Tue, 24 Nov 2026 06:00:53 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1xVoGh-0001Ka-FK; Tue, 24 Nov 2026 06:01:01 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO34wtc002250; Tue, 24 Nov 2026 11:00:46 GMT
+ 6AO35APT1271944; Tue, 24 Nov 2026 11:00:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=6H+y1C1ZM4c7IvNlJsWpjbAV9ZU8EeS6ndJN2qbC2
- /g=; b=pKJwgFyKh6E4jCqYmQ1L3WR6uVWCZ6fviHXugK6Jj+oHLeGz8yviYCsVU
- ubsWSDsONRombDp5IqoDU4FbQiEP28eZEw8J80zpNVVYuyL3gG4cNJ+k693qnoOE
- N8bWqCUuxQRBYbW+uipIfqQ8X5KyZGpFJKut5IWvnLkjyE8fsqwXssGZyylnvjRR
- 66JsBrry+hG6kM29eEg+rb4CwP0nHvkvIbj7VsrcWeXed0dCoG/oGvC5i9sycujz
- aQdQCMKDaAqxOWfQzMdjS4axf4ygDBGLo66DSdzz8ac54ssGjh6qL2FKZan3QaCL
- fbcLuZ9lDHIX+uRVLQnF8CdfJOpOQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34p4esx2-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=N8ogMGUUootNSdMUe
+ 70penjIxTPgD82KqMJylRFzaDI=; b=c9FiyRHAkMs8SDCe9f0s4thHLotUteZV9
+ siS18NtcJHr7AQ/pmJbuOFdalTCDywupg/zHOMEj+GsKDiG/9lut7cT2s5mBcfqX
+ 3MZ4H7/TKNAl6S9kmROHr0nAkYP2GAUfLtgxA3SkP42dXJoDP9WwsnC/Qr3nDjMB
+ 3HPkgrEG8eb+/RsGINStgfoOF+i32GRvkNWHi0hZaIaEEGd9ME2g+RZvV52eUBkI
+ isGeTO+1CUImhK0l9ILVqFhzTkNZWeCnGeNeObO45g01rAiqlAN5FTMjh204CesC
+ CmuM/Cj+GLU5333hvdZCmBo4kTR8TfPXS0WvdjRS0bT5iVS14r8vA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34g16xjh-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2026 11:00:45 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO8gfYY2087090; Tue, 24 Nov 2026 11:00:44 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j3p0vje62-1
+ Tue, 24 Nov 2026 11:00:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AO8w1UZ3890931; Tue, 24 Nov 2026 11:00:56 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4j3q4ha7kn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2026 11:00:44 +0000 (GMT)
+ Tue, 24 Nov 2026 11:00:56 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AOB0hXQ61997406
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6AOB0s8r21299760
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Nov 2026 11:00:43 GMT
+ Tue, 24 Nov 2026 11:00:54 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 527545805D;
- Tue, 24 Nov 2026 11:00:43 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BD3BA5805D;
+ Tue, 24 Nov 2026 11:00:54 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8EC6858052;
- Tue, 24 Nov 2026 11:00:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9EFE55806C;
+ Tue, 24 Nov 2026 11:00:49 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.39.26.151])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Nov 2026 11:00:38 +0000 (GMT)
+ Tue, 24 Nov 2026 11:00:49 +0000 (GMT)
 From: Anushree Mathur <anushree.mathur@linux.ibm.com>
 To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -66,40 +66,40 @@ Cc: Anushree Mathur <anushree.mathur@linux.ibm.com>,
  Miles Glenn <milesg@linux.ibm.com>,
  Aditya Gupta <adityag@linux.ibm.com>, misanjum@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>, Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [PATCH v3 0/4] tests/functional/ppc64: add pseries hotplug and caps
- tests
-Date: Tue, 24 Nov 2026 16:30:26 +0530
-Message-ID: <20261124110030.30097-1-anushree.mathur@linux.ibm.com>
+Subject: [PATCH v3 2/4] tests/functional/ppc64: add pseries security caps test
+Date: Tue, 24 Nov 2026 16:30:28 +0530
+Message-ID: <20261124110030.30097-3-anushree.mathur@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261124110030.30097-1-anushree.mathur@linux.ibm.com>
+References: <20261124110030.30097-1-anushree.mathur@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA0MSBTYWx0ZWRfX6opB1CfCeA4e
- BmSUM652MJ5X8/lKOG8Lt/BxA86pVuYbzZr/qnCDH/L5eulQqby7I9wgrllZejIN6fBxFL6c/t6
- jihB/uSnIDtkAqZneCUeyopBJkxRRXU=
-X-Proofpoint-GUID: uHpZPtcZ98LwVr7Su1HBgwqgcFATVEc1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA0MSBTYWx0ZWRfX6zDUf08p/jT2
- 6HaFNjb1JxBdqV37oXV7KqaRjmqbF+LIXF6Y1U0064SPC8YKvG3HjIeJq35WbiOb3BZU1dOl2U/
- +5K8Wveb2CXlJKHN0Lg2oPbed67HfPnjWExl1G1livlkLj81JfGZns72xxyvS0Bd/tuA0GFMJi0
- oAcxn1wfJjZN5Vf6cC30I5PY0g8JqEt+/wDRSDNQf2Qjpbv7P7HyFUnPjaxz+3pG4RweEeg3Xsg
- H85wjHlWZAD4fHZJn/Jdsm3stXCOYMQFpiaT+l2ES9Le6LuIqXZUJzxBnvzQsbPjq4nIrHHCxTQ
- r2DGEl0e22zhFayGEyTx7Y5XdnR1RJ1C46juFMDHMU6lH8UwpJCFwNsFaX79MR6uFpHr55VMQZe
- OxqKnV54nygr8ChQiGZihZBNNsvDDBkr+LZUqlPcNE+Va4e9lkXHj4m7l0D1eiw5AoAeAtBtzvn
- GaO2Ee/fwDre5rJ/JuA==
-X-Proofpoint-ORIG-GUID: PejHFZXuyeKZb_8KBSkK0qAHuCWx4J6V
-X-Authority-Analysis: v=2.4 cv=QabzLcbv c=1 sm=1 tr=0 ts=6b056e5d cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: DY-xMBfiihL_NhuHqx5G_GENwT3G7opS
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA0MSBTYWx0ZWRfX7UEXyJA3Yb2/
+ JTRNNreXAgz7mrlqWqjPLxmba1xAkgDRMVmKgyVMUzTT2n3yjtdS4Z+yMF9rEF/zjFjoG+cEm8h
+ vhq/4IDZD43Yhos+1hBWddXYGfjBJE8=
+X-Proofpoint-GUID: Dw8J6J9YCap70sfEIRmGCrroWF7FgbVP
+X-Authority-Analysis: v=2.4 cv=c8M+0h9l c=1 sm=1 tr=0 ts=6b056e68 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=ZSCl_0Pw3aZwxkiSnmcA:9
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=N76r180sS3mbWU9IQwwA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA0MSBTYWx0ZWRfX/PoeRyNQszbh
+ ZF+7tgQ674BEOClNl6s8qTKmF4vpY/vSO0IdjXDo7D2LPp0fSgSslu0M0szWq5q0004Fbhe/wiS
+ t9G8qywEpFYVSQWSYVJvidxS0N4HuWYiysJNeTpk4DDiGsXbeOcI1CbqlhC+lZsUjXpvlk1aG3A
+ 6p+jGKRN3CWjQ5zf2yR3dt1KPyeZ4Mrvrl/WNUM/tU2el3XrNuIQVKkzmJ3p6HIgnnz3mYdTSfO
+ lZ+RL2yTSAZH/rhqVNmD4OpCe6UyCFtI8mjWrPSy9QGvNuN4AJ7VrY38All6fFiUsLWdbtYZom0
+ jMn83XoYNjAbhBR36yUJk/tOTvf8EpSiDA1jWwt2gmTIu9I+x0JlgrGsTkCgW37ltsGGCn7u7w1
+ qIzcNffFR2O56pzMqlzKwYDvFdRfp60h6f/qxTIymAnfBudNAXfgYlBADN/UHBK6zcwrrEObqjr
+ keHD4f6qdmNgt2dz/RQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 impostorscore=0
+ impostorscore=0 clxscore=1015 malwarescore=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240041
 Received-SPF: pass client-ip=148.163.158.5;
@@ -123,117 +123,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi all,
+Add a quick functional test (no Linux boot required) that checks that
+the pseries machine type accepts its security capability options and
+reports them back with the configured values, and that backward-compatible
+versioned machine types can be instantiated, using the QMP interface.
 
-This series adds three new functional tests for the pseries (sPAPR/PAPR)
-machine type and registers them in MAINTAINERS.
+Each test starts QEMU with -S (halted) so no firmware or kernel is
+needed.  The tests cover:
 
-Patch 1 adds test_hotplug_cpu.py.  It boots a buildroot guest with one
-core (-smp 2,threads=2,cores=1,maxcpus=4), hot-adds a second core with
-QMP device_add and waits until /sys/devices/system/cpu/online changes
-from 0-1 to 0-3.  It then hot-removes the core with device_del, waits
-for the QMP DEVICE_DELETED event and for the guest to be back at 0-1.
-It runs with TCG and, if available, with KVM.
+  * test_pseries_in_query_machines: pseries appears in query-machines
+    and is marked is-default=true.
+  * test_pseries_security_caps_override: cap-cfpc, cap-sbbc, cap-ibs
+    and cap-ccf-assist overrides are accepted, the machine starts and
+    qom-get on /machine returns the values that were set.
+  * test_pseries_nested_hv_cap: cap-nested-hv=on is accepted and
+    qom-get reports it as on.
+  * test_pseries_compat_7_2/9_2/10_0: versioned compat machines can be
+    instantiated and are not marked is-default.
+  * test_pseries_cap_hpt_max_page_size: cap-hpt-max-page-size is
+    reachable via the QOM tree at /machine.
 
-Patch 2 adds test_pseries_caps.py, a quick test that does not boot a
-guest.  QEMU is started halted (-S) and QMP is used to check that
-pseries starts with the security capability options (cap-cfpc,
-cap-sbbc, cap-ibs, cap-ccf-assist, cap-nested-hv) and that qom-get
-returns the values that were set, that pseries-7.2, 9.2 and 10.0 can be
-instantiated, and that cap-hpt-max-page-size is visible under /machine
-in the QOM tree.
+All tests complete in under 5 seconds each and are registered in the
+tests_ppc64_system_quick list.
 
-Patch 3 adds test_hotplug_blk.py.  It boots a similar guest with a
-second PCI host bridge (phb1), hot-adds a virtio-blk-pci disk backed by
-a null-co node with QMP device_add and waits for /dev/vda to appear in
-the guest.  It then hot-removes the disk with device_del and waits for
-the DEVICE_DELETED event and for /dev/vda to disappear.  The guest
-needs rtas_errd and drmgr to enumerate the new device, so the test uses
-a rootfs that includes them.  I raised the patch that adds this image
-(rootfs-hotplug.ext2) to qemu-ppc-boot, see
-https://github.com/raphael502/qemu-ppc-boot/pull/1.  It has been merged,
-so the test downloads the image from that repository.  The test runs
-with TCG, and also with KVM if KVM is enabled.
+Signed-off-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+---
+v3: check the cap-cfpc, cap-sbbc, cap-ibs, cap-ccf-assist and
+cap-nested-hv values with qom-get instead of only checking that QEMU
+starts; dropped the redundant "pseries" from the -machine arguments;
+the compat machine check now looks at is-default (is-current is not a
+query-machines field, so the old assertion could never fail).
 
-Patch 4 adds the MAINTAINERS entries for the three tests.
-
-Testing
--------
-The three tests were run on a ppc64le POWER host with both TCG and KVM
-and pass.  checkpatch.pl reports no errors or warnings on any patch
-(apart from the expected "MAINTAINERS needs updating" notices on
-patches 1-3, resolved by patch 4), and pylint with
-tests/functional/pylintrc reports nothing for the new files.
-
-Links to previous versions:
-- v2:
-  https://lore.kernel.org/qemu-devel/20261119062951.83498-1-anushree.mathur@linux.ibm.com/
-- v1 for CPU hotplug and caps tests:
-  https://lore.kernel.org/qemu-devel/20261030131025.32219-1-anushree.mathur@linux.ibm.com/
-- RFC v1 for virtio-blk hotplug test:
-  https://lore.kernel.org/qemu-devel/20261103141938.41147-1-anushree.mathur@linux.ibm.com/
-
-Changes in v3 (review comments from Utkarsh Verma on v2):
-- Patch 1: put the -smp option on its own line and replaced the arrow
-  characters with ASCII; added snapshot=on to the rootfs drive; bounded
-  the guest wait loops to 45 seconds with a failure message; wait for
-  the QMP DEVICE_DELETED event after device_del.
-- Patch 2: the caps tests now check the values with qom-get instead of
-  only checking that QEMU starts; dropped the redundant "pseries" from
-  the -machine arguments; the compat machine check now uses is-default,
-  as is-current is not a query-machines field and the old assertion
-  could never fail.
-- Patch 3: the rtas_errd start and the initial /dev/vda checks matched
-  the echoed command and always passed, so they now use the shell
-  variable sentinel and rtas_errd is verified with pidof; bounded the
-  wait loops to 60 seconds with a failure message; assert that
-  DEVICE_DELETED was received.
-- Patch 4: no changes.
-
-Changes in v2:
-- Combined the two v1 postings above into one series.
-- Patch 1: buildroot kernel and rootfs assets now point to
-  raphael502/qemu-ppc-boot instead of legoater/qemu-ppc-boot.  They are
-  the same files; the sha256 values are unchanged and were re-verified.
-  Wrapped the long URL lines to keep checkpatch quiet.
-- Patch 2: reworded the commit message to say what is actually checked
-  (the options are accepted and the machine starts), fixed docstrings
-  that did not match the code, and dropped the skipped
-  query-cpu-model-expansion placeholder test.
-- Patch 3: no longer an RFC.  v1 was an RFC because rootfs-hotplug.ext2
-  was not available yet; it is now merged in qemu-ppc-boot and the
-  asset URLs point to it (the sha256 is unchanged).  The vmlinux asset
-  also points to qemu-ppc-boot, and the test file is now executable
-  like the other functional tests.
-- Patch 4: a single MAINTAINERS patch covering all three tests
-  (previously a separate patch for the CPU and caps tests, and an
-  entry inside the virtio-blk patch).
-- Rebased on current master (6883fb508c).
-
-Anushree Mathur (4):
-  tests/functional/ppc64: add pseries CPU hotplug test
-  tests/functional/ppc64: add pseries security caps test
-  tests/functional/ppc64: add pseries virtio-blk hotplug test
-  MAINTAINERS: add pseries hotplug and caps functional tests
-
- MAINTAINERS                                 |   3 +
- tests/functional/ppc64/meson.build          |   5 +
- tests/functional/ppc64/test_hotplug_blk.py  | 206 +++++++++++++++++++
- tests/functional/ppc64/test_hotplug_cpu.py  | 207 ++++++++++++++++++++
- tests/functional/ppc64/test_pseries_caps.py | 169 ++++++++++++++++
- 5 files changed, 590 insertions(+)
- create mode 100755 tests/functional/ppc64/test_hotplug_blk.py
- create mode 100755 tests/functional/ppc64/test_hotplug_cpu.py
+ tests/functional/ppc64/meson.build          |   1 +
+ tests/functional/ppc64/test_pseries_caps.py | 169 ++++++++++++++++++++
+ 2 files changed, 170 insertions(+)
  create mode 100755 tests/functional/ppc64/test_pseries_caps.py
 
-
-base-commit: 6883fb508cb7a93e2e7b44c0582bfd9fc2196d4d
+diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
+index 45468087cb..d91209f041 100644
+--- a/tests/functional/ppc64/meson.build
++++ b/tests/functional/ppc64/meson.build
+@@ -14,6 +14,7 @@ test_ppc64_timeouts = {
+ 
+ tests_ppc64_system_quick = [
+   'migration',
++  'pseries_caps',
+   'vmstate',
+ ]
+ 
+diff --git a/tests/functional/ppc64/test_pseries_caps.py b/tests/functional/ppc64/test_pseries_caps.py
+new file mode 100755
+index 0000000000..2b2d33229f
+--- /dev/null
++++ b/tests/functional/ppc64/test_pseries_caps.py
+@@ -0,0 +1,169 @@
++#!/usr/bin/env python3
++# Copyright (c) 2025 IBM Corporation
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest
++
++
++class PseriesCapsTest(QemuSystemTest):
++    """
++    Quick (no-boot) tests for pseries machine capabilities.
++
++    Each test starts QEMU with -S (halted) so no firmware or kernel is
++    needed.  The tests exercise the QMP interface to verify that:
++
++      * The machine type is visible in 'query-machines' output.
++      * Known security capability properties (cap-cfpc, cap-sbbc,
++        cap-ibs, cap-ccf-assist, cap-nested-hv) are accepted and read
++        back with the values that were set.
++      * Versioned compat machines (pseries-7.2, pseries-9.2 and
++        pseries-10.0) can be instantiated and are not marked
++        is-default.
++      * cap-hpt-max-page-size is reachable via the QOM tree.
++    """
++
++    timeout = 30
++
++    # ------------------------------------------------------------------ #
++    # Helpers
++    # ------------------------------------------------------------------ #
++
++    def _launch_stopped(self, machine='pseries', extra_args=None):
++        """Launch QEMU paused (-S) for the named machine and return."""
++        self.set_machine(machine)
++        self.vm.add_args('-S', '-nodefaults')
++        if extra_args:
++            self.vm.add_args(*extra_args)
++        self.vm.launch()
++
++    def _query_machine_info(self, name):
++        """Return the entry from query-machines that matches *name* or alias."""
++        machines = self.vm.cmd('query-machines')
++        for m in machines:
++            if m['name'] == name or m.get('alias') == name:
++                return m
++        return None
++
++    # ------------------------------------------------------------------ #
++    # Test: basic pseries machine is visible in query-machines
++    # ------------------------------------------------------------------ #
++
++    def test_pseries_in_query_machines(self):
++        """pseries (latest) must appear in query-machines output."""
++        self._launch_stopped('pseries')
++        info = self._query_machine_info('pseries')
++        self.assertIsNotNone(info,
++                             'pseries not found in query-machines output')
++        # The default/latest versioned machine carries is-default=True.
++        self.assertTrue(
++            info.get('is-default', False),
++            'pseries alias should be marked is-default=true',
++        )
++
++    # ------------------------------------------------------------------ #
++    # Test: security cap overrides are accepted without error
++    # ------------------------------------------------------------------ #
++
++    def test_pseries_security_caps_override(self):
++        """
++        Verify pseries accepts all well-known security cap overrides.
++
++        These are the options used by the KVM nested-HV path in
++        test_hv.py.  Check that QEMU starts cleanly and that each
++        capability reads back through qom-get with the value that was
++        set on the command line.
++        """
++        caps = (
++            'cap-cfpc=broken,'
++            'cap-sbbc=broken,'
++            'cap-ibs=broken,'
++            'cap-ccf-assist=off'
++        )
++        self._launch_stopped('pseries', extra_args=['-machine', caps])
++        for name in ('cap-cfpc', 'cap-sbbc', 'cap-ibs'):
++            self.assertEqual(
++                self.vm.cmd('qom-get', path='/machine', property=name),
++                'broken',
++                f'{name} should read back as broken',
++            )
++        self.assertFalse(
++            self.vm.cmd('qom-get', path='/machine',
++                        property='cap-ccf-assist'),
++            'cap-ccf-assist should read back as off',
++        )
++
++    # ------------------------------------------------------------------ #
++    # Test: nested-HV cap is accepted
++    # ------------------------------------------------------------------ #
++
++    def test_pseries_nested_hv_cap(self):
++        """pseries must accept cap-nested-hv=on and report it as on."""
++        self._launch_stopped(
++            'pseries',
++            extra_args=['-machine', 'x-vof=on,cap-nested-hv=on'],
++        )
++        self.assertTrue(
++            self.vm.cmd('qom-get', path='/machine',
++                        property='cap-nested-hv'),
++            'cap-nested-hv should read back as on',
++        )
++
++    # ------------------------------------------------------------------ #
++    # Test: versioned compat machines can be instantiated
++    # ------------------------------------------------------------------ #
++
++    def _test_compat_machine(self, version_str):
++        """
++        Helper: launch a versioned compat machine and verify that the
++        name appears in query-machines and that it is not marked
++        is-default (the default is always the latest version).
++        """
++        self._launch_stopped(version_str)
++        info = self._query_machine_info(version_str)
++        self.assertIsNotNone(
++            info,
++            f'compat machine {version_str!r} not found in query-machines',
++        )
++        # query-machines only reports is-default for the default (latest)
++        # machine, so it must be absent or False for a compat machine.
++        self.assertFalse(
++            info.get('is-default', False),
++            f'{version_str} should not be marked is-default=true',
++        )
++
++    def test_pseries_compat_7_2(self):
++        """pseries-7.2 (vmstate reference version) can be instantiated."""
++        self._test_compat_machine('pseries-7.2')
++
++    def test_pseries_compat_9_2(self):
++        """pseries-9.2 can be instantiated."""
++        self._test_compat_machine('pseries-9.2')
++
++    def test_pseries_compat_10_0(self):
++        """pseries-10.0 can be instantiated."""
++        self._test_compat_machine('pseries-10.0')
++
++    # ------------------------------------------------------------------ #
++    # Test: cap-hpt-max-page-size is reachable via the QOM tree
++    # ------------------------------------------------------------------ #
++
++    def test_pseries_cap_hpt_max_page_size(self):
++        """
++        Verify that pseries exposes cap-hpt-max-page-size in its
++        machine properties (it is used by migration compat checks).
++        """
++        self._launch_stopped('pseries')
++        # query-machine-props is not a real QMP command; we use the
++        # object model instead.
++        props = self.vm.cmd('qom-list', path='/machine')
++        prop_names = [p['name'] for p in props]
++        # The property should be reachable via the QOM tree.
++        self.assertIn(
++            'cap-hpt-max-page-size', prop_names,
++            'pseries /machine must expose cap-hpt-max-page-size via QOM',
++        )
++
++
++if __name__ == '__main__':
++    PseriesCapsTest.main()
 -- 
 2.55.0
 
