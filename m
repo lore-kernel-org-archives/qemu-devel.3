@@ -1,57 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6D3606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 07:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=rispop.dev header.i=@rispop.dev header.a=rsa-sha256 header.s=protonmail header.b=XLVX5ad8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C9A606A326
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 07:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVknv-0000y2-6g; Tue, 24 Nov 2026 02:19:03 -0500
+	id 1xVl0Y-0005IU-86; Tue, 24 Nov 2026 02:32:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rishab@rispop.dev>) id 1xVkns-0000xF-QT
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 02:19:00 -0500
-Received: from mail-06.mail-europe.com ([85.9.210.45])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rishab@rispop.dev>) id 1xVknq-0006Om-K2
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 02:19:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rispop.dev;
- s=protonmail; t=1795504726; x=1795763926;
- bh=mIhdL/ypndLUnsAlz5F8RrEfAfgnla7lyaO8fWcUYPQ=;
- h=From:To:Cc:Subject:Date:Message-ID:From:To:Cc:Date:Subject:
- Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=XLVX5ad8c/XTrgG6uNcQCnFbQrdTdpZxP/zM3gR9Mz0Hje1wWHUXpZ+w5K3oOTUlL
- uRmhy1lNmtb6MVohXOf1so6gdBHSV/xruyQm96dMfkEj1Cqlda/XiS5p7741Ra6Ir7
- jCD0WsV8tK6KLpJAYhJI2w6yDiNdbtp5sDcBR1kSY5nfPQFFXv/GAhR81BURuZOhGj
- R7qL0mWMxpSdAuvQv8Zxmsw202nqZRcPb6JpaM6ZxWZaUvrk86CqOmUO5upZc7TUNO
- iaI2iqenW0U/4HM0j6DP3dQsB+i826U0C1JZnAKBfEgipaLFiMhyHNMLqpZzRgGN0T
- 2AA5q1uYYYnyg==
-X-Pm-Submission-Id: 4jYZ0w5hH8z2ScdK
-From: Rishab Pradeep <rishab@rispop.dev>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com,
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, tarun.patanjali@utexas.edu,
- christopher.elwood2024@gmail.com, Rishab Pradeep <rishab@rispop.dev>
-Subject: [RFC PATCH 0/2] target/riscv: Check store permission before split
- AMOs with Zicfiss
-Date: Tue, 24 Nov 2026 01:18:34 -0600
-Message-ID: <20261124071836.208740-1-rishab@rispop.dev>
-X-Mailer: git-send-email 2.56.0
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xVl0U-0005Gp-BB
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 02:32:02 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xVl0R-000073-4j
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 02:32:02 -0500
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8BxNrVmPQVr1XwiAA--.4759S3;
+ Tue, 24 Nov 2026 15:31:50 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front2 (Coremail) with SMTP id qciowJAxjn9hPQVrL6YNAA--.315S5;
+ Tue, 24 Nov 2026 15:31:49 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 3/6] target/loongarch: Use common do_raise_exception() in
+ raise_mmu_exception()
+Date: Tue, 24 Nov 2026 15:33:18 +0800
+Message-ID: <20261124073321.3015041-4-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261124073321.3015041-1-maobibo@loongson.cn>
+References: <20261124073321.3015041-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=85.9.210.45; envelope-from=rishab@rispop.dev;
- helo=mail-06.mail-europe.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qciowJAxjn9hPQVrL6YNAA--.315S5
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZF4DWryrCF1fuF47ArWrJFc_yoW8AFWrpr
+ 9ru3yDK3W8GrWDZ3yvq34Y9Fn8CF4qg348XF4fGasIkFnIqr1I9r4kK39I9F48CaykX3Wj
+ vF4rAr18Wa4UAFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
+ kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j83kZUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,70 +72,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With Zicfiss, an ordinary AMO to a shadow-stack page must fault with a
-store/AMO access fault (cause 7).  When TCG lowers the AMO to a load
-followed by a store (!CF_PARALLEL), the load runs first.  That gives
-the wrong cause (15) when the PTE's A bit is clear under Svade, and it
-lets the load's side effects (e.g. a read watchpoint) happen when an
-earlier load has left a read-permitting TLB entry for the page.
+Common function do_raise_exception() is used in raise_mmu_exception(),
+so that exception_index is set in common API do_raise_exception().
 
-Patch 1 adds probe_access_perm(), a permission-only lookup that takes
-the real access size and skips watchpoints, dirty marking and the
-plugin slow path.  Patch 2 uses it from the RISC-V AMO/AMOCAS
-translation, only for TBs with shadow stacks enabled and !CF_PARALLEL
-(the parallel helpers already look up the store first).
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/tcg/tlb_helper.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-Tested on RV64 system emulation (debug, ASan, UBSan build):
- - cold-TLB AMO with A=D=0 on a shadow-stack page gives cause 7
-   (cause 15 on baseline), single-thread TCG
- - read watchpoint after a warming load does not stop with the
-   series, and stops on baseline, single-thread TCG
- - page-crossing Zama16b, page-crossing PMP and PMP-boundary AMOs,
-   single-thread TCG and MTTCG
- - unit and qtest pass
- - check-tcg: rv128-sstatus (UBSan, pmp.c) fails and the
-   interruptedmemory plugin test times out, both identically on master
- - check-functional (sanitized build): 4 timeouts, and three pass with
-   a longer limit.  sifive_u passes in about 5s on baseline and
-   patched builds without sanitizers.  I did not run check-functional
-   on a sanitized master build.
-
-Not tested: RV32 at runtime (including the amocas.d path in
-gen_cmpxchg64), and the cold-TLB A=D=0 case and the read watchpoint
-under MTTCG.  riscv32-softmmu and the linux-user targets compile.
-
-Open questions:
- - Is a permission-only helper in accel/tcg acceptable?  The
-   alternative is a RISC-V-local helper built on probe_access_flags(),
-   at the cost of early dirty marking.
- - The probe is a store lookup, so with hardware A/D updates it may set
-   D before the AMO's load phase runs.  If that load then faults, D is
-   set on a page the AMO never accessed.  I have not tested this.
- - The second-page probe for page-crossing Zama16b accesses mirrors
-   what the real operation does today.  A page-crossing access
-   arguably should fault, since a granule cannot cross a page.
-   Enforcing that would be a separate change.
-
-Rishab Pradeep (2):
-  accel/tcg: Add probe_access_perm()
-  target/riscv: Check store permission before split AMOs with Zicfiss
-
- accel/tcg/cputlb.c                            | 11 ++++++
- include/accel/tcg/probe.h                     | 20 ++++++++++
- target/riscv/helper.h                         |  5 +++
- .../riscv/tcg/insn_trans/trans_rvzacas.c.inc  |  2 +
- target/riscv/tcg/op_helper.c                  | 37 +++++++++++++++++++
- target/riscv/tcg/translate.c                  | 23 ++++++++++++
- 6 files changed, 98 insertions(+)
-
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 845a8a4613..238e9353f4 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -44,11 +44,13 @@ bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
+     return BIT_ULL(tlb_ps) & (sys->CSR_PRCFG2);
+ }
+ 
+-static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+-                                MMUAccessType access_type, TLBRet tlb_error)
++static G_NORETURN void raise_mmu_exception(CPULoongArchState *env,
++                                           vaddr address,
++                                           MMUAccessType access_type,
++                                           TLBRet tlb_error,
++                                           uintptr_t retaddr)
+ {
+     int32_t excp = 0;
+-    CPUState *cs = env_cpu(env);
+     CPUSysState *sys = env_sys(env);
+ 
+     switch (tlb_error) {
+@@ -103,7 +105,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+         sys->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
+     }
+ 
+-    cs->exception_index = excp;
++    do_raise_exception(env, excp, retaddr);
+ }
+ 
+ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+@@ -696,8 +698,8 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     if (probe) {
+         return false;
+     }
+-    raise_mmu_exception(env, address, access_type, ret);
+-    cpu_loop_exit_restore(cs, retaddr);
++
++    raise_mmu_exception(env, address, access_type, ret, retaddr);
+ }
+ 
+ G_NORETURN void loongarch_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
 -- 
-2.56.0
+2.54.0
 
 
