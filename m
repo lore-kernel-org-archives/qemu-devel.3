@@ -1,140 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A1B606A323
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 18:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87779606A339
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 18:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jbJ2O5eO;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dMB0cRSI
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fRabIGIL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVv06-0005jR-GY; Tue, 24 Nov 2026 13:12:18 -0500
+	id 1xVvAk-0000uh-Ni; Tue, 24 Nov 2026 13:23:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVv03-0005i9-Vz
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:12:16 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVv02-0002Fk-IY
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:12:15 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOHQX0t2852915
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:12:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=u/PHMfnWtPxz+ykyxSaNlb
- Y44n5dkkVivAEq/0deCCo=; b=jbJ2O5eOrCRquv1Kjbsj3j+eVmZ1o1AgRmFrNF
- L2ag6n5ATCR4k6LVx9j3PD2sTvIRneipYay/v0yzm3VQMjE3V3FlKXtejp7bO1xf
- /9S87hOnpgtt65syxY50y0al9HZBr6WbxsaA/DiwKRZeNEhSg8eEo4s/3I85PmjV
- RDOGVHYniuAPI677c6nnBPGRRG4+LC/SSjyG9Kpbqve+Iz0OnBhfEMZU41pXK98e
- /Yb8BLl42VB4jaiPRqg7GRnxY9pAtTH1GmV7YDy44Pv86ARGZYw6hDOhJVPBb+5A
- 1fZYW7bzau5dt522ErQjVU0ExUc7edKMuL5uOjgK1FYUh2gw==
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5f00g6pn-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:12:12 +0000 (GMT)
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-8b0f1c06332so74602697b3.3
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:12:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xVvAi-0000tB-Ka
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:23:16 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xVvAg-0001N5-VD
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:23:16 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-6b894a5ce3dso6608747a12.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:23:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795543932; x=1796148732; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=u/PHMfnWtPxz+ykyxSaNlbY44n5dkkVivAEq/0deCCo=;
- b=dMB0cRSIKxjMF/ISd+Pz847XtjG2j1nJPjJel0NQKV4RNwjxeGTCzGAv2rA2RfIoyE
- TpuadDMbaCDZQ4dZeK6GvGPkDzYUsmV6VizChQ+6kHMrUfj0PniqbNMIyi5o5tZTkaro
- vLxdU6pmGFZq1VIUW0TytH3zFSrYiXizt1iENge5NmpZn6OS0joyROPdI9NNAZzD1nYS
- 18W52tuLy+nqBoWl2aRr+IRJaMOqPO54ccghdHz0/Uh+Qt2d0TRcsH0/gQtvZcW6Q1OC
- QPmLmwEem4QZo0b11U/aU8RuFYMrvcxOxyt5cROFO3XTpQRbpzGQ6PIGfLc+ZZgvHUe9
- ruQw==
+ d=gmail.com; s=20260707; t=1795544593; x=1796149393; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:content-type
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=MP+m4Asao+3RWB2CqcWF0+IoZJje9lNxxgSHgbGIP0o=;
+ b=fRabIGILkCMohrlbcXm3xYjCwJ09y0VW4HFl2SOUjFu2n0uFdRHILINwkDsxOevNV1
+ CVUZtxcT4Td6+uL8a5EbrypEUMiA2+T7sAOppqX0FJJ570Ihj7X93XNWtKHERACMbTM+
+ egEegLKEhb11FkjnOMZQZ7nD+swwCT6dWrWm+yg8w+AeP7BVC7TwcrqmimFsxyA3h7/R
+ 6d00f9OOLoOff5/d/W9dZrOGNZLuXpdPY7uqzhjqFZ9efpZm9TfMO/CxDMx3df59PrUM
+ eUNUwIlebIOeISG9TbjEqhlleAqlIXwyOiNRN2qZyA6jUbgjn1tEdg9+nErUJohKQ8LS
+ pe8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795543932; x=1796148732;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=u/PHMfnWtPxz+ykyxSaNlbY44n5dkkVivAEq/0deCCo=;
- b=jfMOd+rnwqMSBsdq9IyFjMF8pmqsfWlR6UMBOMDmJ9KigX8VeOjtCD9C5Zyq15uJaH
- OKFFrBe4Nv0K49o0tKGLxASLnhoJKJRO3JZairyQs4F3OD3C3fOev4Xd6tBcn69Nmue5
- bWr3JNy43gDDrlEtPj16E1F/E/n01vvItxqhiH4Z57X70Qw5YMIVJIpoHjuSsqjuAxwd
- 5ED7EqjFvH0sszw1nrejtblN6NmDhoWlUFZ1/9hLjLzJlcMnC/J1dRMzEhiBBR+9hJNO
- lUhdZCbEil/Om5bf21TD1qMqq5Xf4JqPXGsQVX0J/6iIDinjTB6ZE+4sgR6U5uP2CSed
- 9Zwg==
-X-Gm-Message-State: APuU4Z9nUZB10zNVozoqYlA9+HvnQelC6KsAKgzMTKu1R+BLN6fOUuw2
- T39cEliT1CMP4JnXCih4F63tW+zTsbMOMgQlxEN+79obemYXhjzJYR342jLU+Z9hzJlI+IU9X9D
- 8MQ8wAjNGBqaumbXmxlUBRjvsr2BHXGNEsBUNsA2b/7oyBDWzhIfddnUymOzWj4icbhN9
-X-Gm-Gg: AZFdTZfLLBeJ2zE1PRONnypGKXoSdBWVYph/+31Hws0U/vcBYKdFS5VKjGqZkuoDFEV
- kBggMs9ci3SrjzaV9NkB46z1uZjRW92Y8O7PITvbNWA5T2eQWpUQDQ7BorgxOUga1VaIeJ/xivW
- WAIND75R7JoSR3oaOtL735fTFCvUn7NBfv6F39P5te5Ph86xgmhiLmoA6uxWpUXmyJI8vLYJJaZ
- rhq8eLX1qDUZJWcyLPpGypQz9m6O1vPUGB4p403y34J7+j3Gn2qPBkBa30T1cW0P/9VwpgGf37f
- gfIx/n1MrE+PrqWwvK8hB5s25o80DmVzHivKo0lnk73qNi/OD5mUd234p1oksgrpSRI16ZwrNz6
- K9IWr/ahEzhNsPpbUdXI95qkJu9SfHZ5FMDZfOsYz6JBboFpPzdBpB8O94RrKFMP+fHMQuCaIXB
- 851PWanOa3DztP1w==
-X-Received: by 2002:a05:690c:b86:b0:8b4:ed0e:7b11 with SMTP id
- 00721157ae682-8b52032939emr65411467b3.4.1795543931869; 
- Tue, 24 Nov 2026 10:12:11 -0800 (PST)
-X-Received: by 2002:a05:690c:b86:b0:8b4:ed0e:7b11 with SMTP id
- 00721157ae682-8b52032939emr65411327b3.4.1795543931374; 
- Tue, 24 Nov 2026 10:12:11 -0800 (PST)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ d=1e100.net; s=20260707; t=1795544593; x=1796149393;
+ h=user-agent:in-reply-to:content-disposition:content-type
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MP+m4Asao+3RWB2CqcWF0+IoZJje9lNxxgSHgbGIP0o=;
+ b=v759TV9B/0/MGMz4uiQP/E3YmKdbOj1OhK/rZKFmYBp1DdLsbO6XMp2Ku5yeW44o0+
+ K6cYaqtPX9fm85mqlcIS5CSfmQ5j68HiOm/qaww4VjM5/wFixYLiMuXZX963x32+ZZ0L
+ ymJ4hsou34sga2y7JnplI5IDgTUR3Iwnd1WTwLXcXfLXYledzDkG2Xrt61oEYH++4tiU
+ AN1Kza0VqkEFhBG3Ds31sjxJsw4hlf9i7k9J6YitNgSt9SukRcDlzwAPeT/1ASdL9Edj
+ iBpj7BlDGXHggEl1YRtaI+6gnnV0Z7j1HaxX9YduMyfDX9PjCZaumMqYJ8xisivYKbeE
+ BBvw==
+X-Gm-Message-State: APuU4Z84h4XtsYLVOSX4se/fRi5MB/M20Xnx+Y/kKEMQwVgTvefuqtpp
+ ggg627WgqxRe49mv35Kct5SZJCSnMvQYg2kLrcu9EE2tnPbfq8m9IhVa
+X-Gm-Gg: AZFdTZfznlyx6rbhwJPQVguKiC9aMzyi51IzCTTYzUv/0Ef6LJiCO5nI1Kqk4QYfw5u
+ h13/A/BsC5flCAF/E5/u9bdtGMKCG3OvOtXrpj0ToVt3kLsgd5vY9Tn44I4gBRr7G1ZGcapyAXm
+ Je1IDT6y6tZ3xRDYG78dp7R+vQB0EBs0wV34U3MepiVaUJk3hFNLGzNIgeRKiTKuFKTobN5liRb
+ EadGM/tXWZUvDhybF6EFpsXFyLGx0xXVl/WtR2Eme/+HtaeaeyybuY6y+FWGXq+Wk7eX9nnV2aL
+ 4SPmwqBdTcC3D36AvRF7SH0V3BA+hsmXedgycgZAvHRBkpJt8cG9BTtdtofUpzIuz/S8kJpQKEP
+ xew9JyOkJ+9XKGgjLPeOFxpFaNoSepmAjlsYPxbcMx9KS28gtUE+qewssQhmz8ydZ851Ju59QjC
+ 1rWkDQFxzd6cHLFp/Uh/nvd3FLLWTExgrSJwMd+Um1+MCx9QSHzMXU3cO3WNJQmWwajdHaC77Bd
+ BhB0kUsf6H8SI8pazUa7WyVazMn/tQ1hVy0glj0zP7o2sZw0/Xv9KB8TvMBmNfS/M+6V3aawO1d
+ Oc9T5dDCw00x2G35br/YeNOxbg5iuxT2p5DXi/g7tFqLd/wMC52jbjbUl+yGZQaoQ/VEfLV2NT8
+ nbghrG9yqnShbmmIhnoEBQQK5zw==
+X-Received: by 2002:a05:6402:2744:b0:6ba:9b98:7235 with SMTP id
+ 4fb4d7f45d1cf-6ba9b9875c9mr6669858a12.19.1795544592177; 
+ Tue, 24 Nov 2026 10:23:12 -0800 (PST)
+Received: from tulp
+ (2001-1c02-1a15-3000-2727-f7d1-9628-aa81.cable.dynamic.v6.ziggo.nl.
+ [2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6b2050f1sm29165373f8f.38.2026.11.24.10.12.10
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Nov 2026 10:12:10 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH] hw/block/pflash_cfi02: Return to read-array mode on reset
-Date: Tue, 24 Nov 2026 19:12:09 +0100
-Message-ID: <20261124181209.71534-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
+ 4fb4d7f45d1cf-6ba370e8adbsm7145753a12.17.2026.11.24.10.23.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Nov 2026 10:23:11 -0800 (PST)
+Date: Tue, 24 Nov 2026 19:22:36 +0100
+From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+To: Markus Armbruster <armbru@pond.sub.org>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 3/5] qga: implement 'guest-get-disks' for FreeBSD
+Message-ID: <awXV7HO6PXkc8XPC@tulp>
+References: <20261122090511.15121-1-bogorodskiy@gmail.com>
+ <20261122090511.15121-4-bogorodskiy@gmail.com>
+ <87ld6ifr14.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ifPNd0ajKBQ2wNROY71fMBiBHI-cwzxN
-X-Proofpoint-GUID: ifPNd0ajKBQ2wNROY71fMBiBHI-cwzxN
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA3MSBTYWx0ZWRfX75IURFI68lGs
- rHZM5VbjtG/J1JwMRJr2xpMRzygtvsqIqTRW8YHbfyA4hiZpENUa9ooWV+o4sQGddgykC2Htuau
- qhRFC9eaSVGnTZwEt/XVgfGV3ZQBhRI=
-X-Authority-Analysis: v=2.4 cv=JqtkP84C c=1 sm=1 tr=0 ts=6b05d37c cx=c_pps
- a=g1v0Z557R90hA0UpD/5Yag==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=v_A6ruy6FsjtNwel148A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=MFSWADHSvvjO3QEy5MdX:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA3MSBTYWx0ZWRfX9ngF1hWl9nqq
- TJwwA9VoWMjJS7rNYYUElSN+usMFUTCq6UWLMAUqYukezVjyRMV0sftsA4c4onA8Thue70hrSIs
- vMQLUPoqftfRtuJ9pDOYtfTZNndoGxnxiLH+NIVB5N4tVS60sX1fY8yiaQKVLIrxm1NtnZ0L2tk
- JOqSEZv7oAhCvMwAOLCd8aWgVoNY17ull01KenPAFweufuSeA1DoplnyatJO7aikOUDWNghndFD
- wVlIvT7wi5jh4Zxcz8V22LAMUvyR8ooZRayUdITgpV316lQqb/Shtzjb2+0xxBbrIfJG//LYPhm
- 0Xyp5cl4oQmc8n1idgy/Q1ZJTHnBuwNKZQIbgOcjEmsQxwUSelplxcmMHHAA7mk3eGBxKrGu2dw
- q3318rKp37T6WgGT3q5Gngyudb8zzj0fDw1DWuKk7Y4/cwFXWpDJ1rvhPzgsOJ9FD7cjVFozrot
- UTvoun8W1/gSl+t5ASg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_04,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611240071
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ld6ifr14.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,35 +105,101 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Reset left the ROM device in MMIO mode when reset in a command
-sequence, unlike pflash_cfi01. Use the read-array transition.
+  Markus Armbruster wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/block/pflash_cfi02.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Roman Bogorodskiy <bogorodskiy@gmail.com> writes:
+> 
+> > The implementation uses the "kern.geom.conftxt" sysctl.
+> > It resides under the "#ifdef __FreeBSD__" block as
+> > other BSDs do not have GEOM.
+> >
+> > Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> 
+> [...]
+> 
+> > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> > index 4856a549a6..35aaa040cf 100644
+> > --- a/qga/qapi-schema.json
+> > +++ b/qga/qapi-schema.json
+> > @@ -947,7 +947,7 @@
+> >             'media-errors-hi': 'uint64',
+> >             'number-of-error-log-entries-lo': 'uint64',
+> >             'number-of-error-log-entries-hi': 'uint64' },
+> > -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+> > +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV', 'CONFIG_FREEBSD' ] } }
+> >  
+> >  ##
+> >  # @GuestDiskSmart:
+> > @@ -961,12 +961,12 @@
+> >    'base': { 'type': 'GuestDiskBusType' },
+> >    'discriminator': 'type',
+> >    'data': { 'nvme': 'GuestNVMeSmart' },
+> > -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+> > +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV', 'CONFIG_FREEBSD' ] } }
+> >  
+> >  ##
+> >  # @GuestDiskInfo:
+> >  #
+> > -# @name: device node (Linux) or device UNC (Windows)
+> > +# @name: device node (Linux, FreeBSD) or device UNC (Windows)
+> >  #
+> >  # @partition: whether this is a partition or disk
+> >  #
+> > @@ -987,7 +987,7 @@
+> >    'data': {'name': 'str', 'partition': 'bool', '*dependencies': ['str'],
+> >             '*address': 'GuestDiskAddress', '*alias': 'str',
+> >             '*smart': 'GuestDiskSmart'},
+> > -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+> > +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV', 'CONFIG_FREEBSD' ] } }
+> >  
+> >  ##
+> >  # @guest-get-disks:
+> > @@ -995,13 +995,14 @@
+> >  # Returns: The list of disks in the guest.  For Windows these are only
+> >  #     the physical disks.  On Linux these are all root block devices
+> >  #     of non-zero size including e.g. removable devices, loop devices,
+> > -#     NBD, etc.
+> > +#     NBD, etc.  On FreeBSD these are nonzero-size GEOM DISK and PART
+> > +#     providers (since 12.0).
+> 
+> The (since 12.0) applies just to the sentence about FreeBSD.  Rather
+> subtle.
+> 
+> Elsewhere in this series, you don't add (since 12.0) when you implement
+> something for FreeBSD.  How useful is it here?
 
-diff --git a/hw/block/pflash_cfi02.c b/hw/block/pflash_cfi02.c
-index 4f72c438c0ca..8d130e14d1c1 100644
---- a/hw/block/pflash_cfi02.c
-+++ b/hw/block/pflash_cfi02.c
-@@ -958,7 +958,7 @@ static void pflash_cfi02_reset(DeviceState *dev)
- {
-     PFlashCFI02 *pfl = PFLASH_CFI02(dev);
+Yes, I have to admit that I was having a hard time deciding where to put
+that.
+
+This series actually adds "@bsd: FreeBSD (Since 12.0)" to
+"@GuestCpuStatsType" but that was an easy one as it's definitely useful
+to know that the new type has appeared.
+
+For the rest of the entries I'm not really sure. The example you're
+referring too can be confusing indeed.
+
+Should I use something like:
  
--    pflash_reset_state_machine(pfl);
-+    pflash_mode_read_array(pfl);
- }
- 
- static const Property pflash_cfi02_properties[] = {
--- 
-2.55.0
+# Since 5.2 (Linux only); 12.0 (FreeBSD)
 
+or omit these completely? 
+
+> >  #
+> >  # Since: 5.2
+> >  ##
+> >  { 'command': 'guest-get-disks',
+> >    'returns': ['GuestDiskInfo'],
+> > -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+> > +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV', 'CONFIG_FREEBSD' ] } }
+> >  
+> >  ##
+> >  # @GuestFilesystemInfo:
 
