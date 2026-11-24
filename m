@@ -1,101 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E24606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 06:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7989606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 06:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MV/MqDEx
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TB9dW1QF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVjum-0005mZ-Rr; Tue, 24 Nov 2026 01:22:04 -0500
+	id 1xVjx3-0007AG-43; Tue, 24 Nov 2026 01:24:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kmehltretter@gmail.com>)
- id 1xVjuj-0005la-KQ
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 01:22:01 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1xVjx1-000791-IQ
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 01:24:23 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kmehltretter@gmail.com>)
- id 1xVjui-00042O-5V
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 01:22:01 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4bb5b8ef642so35103655e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:21:59 -0800 (PST)
+ id 1xVjwz-0007CI-Ui
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 01:24:23 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4a35a60499eso32111715e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795501317; x=1796106117; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795501460; x=1796106260; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=pFZlD6TbAhtook5SW4q2fLh3I2rYl7pKA0DM+SwA75c=;
- b=MV/MqDExB7JeaX7bgoEB2Qvhb4seSlNxxnP2w5iVrhZtty/11o0LwMN12181U7gOxn
- JoshQjZq4xrO6C8axf9fZcZGFZC/JzgdDTsMMQHyzxis2b7nw7U/aR4SD8jPvdfqzcg5
- HSPB2sSUFCaMCeOlGn7cBxnxQBHJ58nZpPuDglcPrMJRDDVWszozL70I4caYN5xJUHmB
- VGmfbbNH/q8GOGriTRo5X5LcHn3U4mhLxlkCnjF1ULaVCgxKT4fbeNIk9AXC5bJm9XDU
- WuHHFNjvuPjftsIzuCirLDrExxBAKyFcpUekSuBEZ4jTudkF97d1JLAvMdgU5ovwUpwd
- L36w==
+ bh=QCNeZPPC7jI3AoRDxIeBb22KUrbwEP82qIapPPEzsF8=;
+ b=TB9dW1QFUlcweEbYpnxmMYOrHdLTQ6lRRaoL4qTD2EdAcupjdbJaGO83uVBTrhWssI
+ WyaoFnGs6TJLHgqaKSYGk/hY/sSEjVpRm0rzYWMPWYxr6ubJHy7I48//3DsVw1dhFuEJ
+ 1h7TY/6V7B2G/5niAwSRN6fEBjTKAaoFsNsPX6BaA2Y5/ECzKBW8C4FaECO2UKwiLQJy
+ n6fPNODuQz+oY1UWm1b8rbwq9TGGjlifFsZeTVrPeXsVnCmD2kT/LX4xXd1qS09tl9tT
+ 3DkekUByRGqd3ZkdqBNIyNc2cuK0PRUxByAmVOz3A+Uuf3RlHP1ndiPrrZB9k9dbzT7r
+ N+/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795501317; x=1796106117;
+ d=1e100.net; s=20260707; t=1795501460; x=1796106260;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pFZlD6TbAhtook5SW4q2fLh3I2rYl7pKA0DM+SwA75c=;
- b=olpyh4TyhSnsn62Qo9Demmra/r1N8X3kMjZ2glJ4MtnoNqsEE+xFUU7su29Wv4Mfrs
- Qz3fN5fB2je7mUgQhxjKS9Sa+FE7a9uutCjHifW6XGCD8fP3oT+BNwBsLD8KHeCR+g66
- TcScJvF7xmad2O040yw8Gq9i1B+cPIY69YUVtte2uQuutA+Gp7o1swfw0By2+g9QH77K
- 5CikyZvgXpY5BcqDVxjU1sEmW3vmAST6DezFJsDKe65QAl45MKmB46tEOeAbwKSHsPGp
- I2J/1bqIFSVBKXsUHailY7rdTJEWDyYLw+c0j4x34u6ZqE0sPvFgnesfESLgpXglie0h
- GJRw==
+ bh=QCNeZPPC7jI3AoRDxIeBb22KUrbwEP82qIapPPEzsF8=;
+ b=m97T9BAxcAIFsMaqbwUfXwr1/3KSGzoLJsXwbCsIgBj3YDOzXGq50q5mbUm43zZpwz
+ ZsmHUmv1Nmz3g1THHtmY1LFneBLKXAW/UIEnQaUdL9gvNFs+TE+SqdkUxG4BBoDVtaXx
+ ad67OfT56vkRvi027vZBRVRuy6NlebYfiT+Ok21OOBgb/0KP5MKRIuQwBHd4OJkvR0HL
+ mUrPDLvIHMj6nRGf+1nCYwhnuGomC4Lhx7xNKi3xy6TTiYCTl0ibGqX4YMr7imntYMeb
+ lyFOb5C9egTkHlck3k2EMG2dqVlYmHF6q1DQkJRjIOceVLhynSM27icpRBSalg0CPhtR
+ UbJw==
 X-Forwarded-Encrypted: i=1;
- AL+hErEsFPku3qvDeT8GIloE+L4DRDdjUxDG5Mg2tiCT/3akoHDHAl43eaVta8NnXSOK2oMQm2exOe1+x7fS@nongnu.org
-X-Gm-Message-State: APuU4Z9oHm2yKI/YDripBJfXMNkXFVTFt/hUdpN/cjf/mkZLwCHMqkSq
- YyqfoNqps009hCrgw8oBkei0jOAlIbxW/1XU8nbx5NzpLCvyaXmel/yv
-X-Gm-Gg: AZFdTZf6NTq2sPKsGxzAJZ7LNr5aDR12Cd3kP2uglQG557s/tFEZscWj+P8Jvs8B1bo
- Tnoj7XuXAXMu3wTz8livvjH6JaXS5k28v51nNTteoNqzJxkLxq0pKTsigoeGXL8uV6XXRreFY55
- EMcAS6ejfMThoGXN1wTQaAHYHzfLyvNwbYVmLdSNpCaIGTnKgP6IFwT+OB1xLXk2cuH6+h4F0qa
- e3kf5ALAOR3mOwa5kjmC/AM7nGLch3Z4FAFiHNSoyfsf8GGn/GRUX5ek0yoT4kKPuj/Tbn/AmXQ
- wFzx4HhtYgOXQrgE+DQSIrajcuXSzTs9uT9cymQfotyEuyHi4Gl0sMDw3lFW3Tc+rtf6/+xAC94
- XpfTnzxql2io+D2BvkAz8iTP7pVUIwWbGm9sNWkPpU0TpJHrqmBmWa4t7B7bLlYg4iEPQVTMn58
- V9ZOvH9S1c6Ib0s/5acLYiHOAv05nLj+MmVSctPbkeztXEmFlTT7fXnH/sWfqOyGdWKUdnowPel
- LO4+1IILHU0uy2HOiHe3hPMF8+D2G2DGReKANM27xxskkF1kTXGOerMfz0CbwehtaP3xyW4E4mc
- 0lwCsQqQnzj8s/ScCFWTzme3S68unyw/bNaoKeaUieMif7bVfmGuqOXnEJkUo7akhzJOpgPuHw+
- 7yKfkZuUjt19qqRtdeoa+AA4D+d178JXj7lHnCHZrF2VlCyzMP1SQER/auB+8ShbfbySGd4q/X2
- sHeQ==
-X-Received: by 2002:a05:600c:4fc1:b0:4bb:53e4:a7cc with SMTP id
- 5b1f17b1804b1-4bb88820741mr306002655e9.30.1795501316846; 
- Mon, 23 Nov 2026 22:21:56 -0800 (PST)
+ AL+hErHt1mgrsU1hkg0Ji+q3yh0nVMD4j3UlzP2BTiZrx7widY1vr7fB8urmJKcRonL0v2MlpHkyc/QhmiQQ@nongnu.org
+X-Gm-Message-State: APuU4Z8jP7Cj3dLrf8AHxR5y/OlYuwLYMLUt1gsVygdBoVfluFKS4EMk
+ z1vE3ku/EVtAUrrdp96/p41UyNWob2rVN4DS6eyxvkIwMZAUQTV4N6ln
+X-Gm-Gg: AZFdTZc6bjA+wG3AprPZozo9ixsFPi9i5n7IbGtM4KeNvx/m8I1ZU1fm3gwpaYRnOQo
+ 6lrIqiQMPNNgImbF34XV9PHybrTt6/5r8MJu0fSJeP+HFyrLsf1zO1Dk4s/SJKmPt4rtVEds2un
+ zWbFxr6rUIopVBmsjWAoCq1jfRpebCQepjoqk3QwrpNjfDrczIqp9zBkTyK6GSlog5Uh7/catin
+ C/FskyMUITGHsK08COLGFkB0kuUNvKiJLUB5s+pxQp7YuUyG0eBN8GH7hydfBW3BHhfIVI5KW3V
+ eOyWIoHmsfzui3DphfhkZ63espLIvrteqN8hW8iSdWzfbdi+jlI995Pw66Q2fLg/8K/AfLPJTyp
+ LTuWf7M6M+GqqmHGFi2NZkIZcwGja8CLEQz+9baGEW5eP3eFsY2EmRH1qjRbwBSJsNllHmDnHT7
+ SAcSHJq/fCQu6GTzL9dcrusEe4TLQsl4MMimc7v9YW2h2fxwV27rQGmrYXLUcJWVxh/T3k+uEGD
+ pbKR1wwO7ixDPgNKybHQ+Dw00Xp6prB32zLPq6xwGcPFKoS5HKb3SNY2k1d0tyepZOH32H40Csu
+ UBS+8YykdGzyNkp2S6+C6hVWAQzmBWXqmTYTNR+O+ZnHFr1o9EYkzjH8sYyYb62GHHzBSMCfkSW
+ 7OOmKo0rMfEE9bUC/N1plGn0tkHvyS+YAy/UilkUEJsZP1awBL+pxOQ5RtIrWm982DTf6UFAjAc
+ v3mA==
+X-Received: by 2002:a05:600c:5303:b0:4a2:fe11:9a8a with SMTP id
+ 5b1f17b1804b1-4bb88786cfamr260623525e9.0.1795501460088; 
+ Mon, 23 Nov 2026 22:24:20 -0800 (PST)
 Received: from MacBook-Pro-von-Karl.localdomain
  (dynamic-077-002-108-156.77.2.pool.telefonica.de. [77.2.108.156])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884b8429sm642583715e9.14.2026.11.23.22.21.56
+ 5b1f17b1804b1-4bb853ca452sm401547265e9.15.2026.11.23.22.24.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Nov 2026 22:21:56 -0800 (PST)
+ Mon, 23 Nov 2026 22:24:19 -0800 (PST)
 From: Karl Mehltretter <kmehltretter@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-Subject: Re: [PATCH for-11.2] target/arm: Handle "PMU disabled" in migration
- validate functions
-Date: Tue, 24 Nov 2026 07:21:50 +0100
-Message-Id: <20261124062150.75285-1-kmehltretter@gmail.com>
+To: Andrew Nguyen <xmphyr@gmail.com>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>, qemu-devel@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH] hw/net: always validate the interrupt index of the first
+ RX descriptor
+Date: Tue, 24 Nov 2026 07:24:14 +0100
+Message-Id: <20261124062414.76096-1-kmehltretter@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20261119165546.3050013-1-peter.maydell@linaro.org>
-References: <20261119165546.3050013-1-peter.maydell@linaro.org>
+In-Reply-To: <20261115-4729-out-of-bounds-rx-interrupt-idx-v1-1-164891765f6c@gmail.com>
+References: <20261115-4729-out-of-bounds-rx-interrupt-idx-v1-1-164891765f6c@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=kmehltretter@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=kmehltretter@gmail.com; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,25 +107,27 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 19 Nov 2026 at 16:55, Peter Maydell <peter.maydell@linaro.org> wrote:
-> @@ -693,14 +694,16 @@ static bool s_rnr_vmstate_validate(void *opaque, int version_id)
->  {
->      ARMCPU *cpu = opaque;
+On Sun, 15 Nov 2026 at 20:45, Andrew Nguyen <xmphyr@gmail.com> wrote:
+> Made it so that vmxnet3_validate_interrupts will always validate
+> s->rxq_descr[0].intr_idx.
 >
-> -    return cpu->env.pmsav7.rnr[M_REG_S] < cpu->pmsav7_dregion;
-> +    return cpu->env.pmsav7.rnr[M_REG_S] < cpu->pmsav7_dregion ||
-> +        (cpu->pmsav7_dregion == 0 && cpu->env.pmsav7.rnr[M_REG_NS] == 0);
->  }
+> Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4729
 
-the second clause checks rnr[M_REG_NS] == 0. Should this be M_REG_S too ?
+With this patch on master (2bfbe39d0fff) under UBSan, the #4729
+mutated migration stream (rxq_num == 0, rxq_descr[0].intr_idx == 25)
+is rejected in vmxnet3 post_load.
+
+Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
 
 Thanks,
 Karl
