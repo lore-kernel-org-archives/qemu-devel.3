@@ -1,64 +1,126 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179F606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 15:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0867E606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 15:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=RhfUq9sS
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=WPi8GN4A
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVs2C-0004aw-E2; Tue, 24 Nov 2026 10:02:16 -0500
+	id 1xVs3B-0004mB-EU; Tue, 24 Nov 2026 10:03:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xVs1w-0004Xz-Gl; Tue, 24 Nov 2026 10:02:01 -0500
-Received: from oxygen.pond.sub.org ([2a01:4f8:13b:3ad0:1::3])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVs2s-0004hV-6b
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 10:02:58 -0500
+Received: from smtpout10.mo536.mail-out.ovh.net ([51.210.91.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xVs1t-0007Si-9t; Tue, 24 Nov 2026 10:02:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
- t=1795532504; bh=twKTSQ0QC5e2S47pzOAamu8WvRskTQvlTXz+34XsnFk=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=RhfUq9sSiXT9RYDyNISz+4DwtoSQJJOdJaLNP9uuFu8FXMplBoPmnBYKCBvTzA2k/
- cdfDhWQrWFIA3BpEpFIdp9ZRgMnGWnmlEI7MqfND1ZkiYNT5jgPttgXRsKCfN4zIJQ
- wKdklIsUSp2mKVuG4fJfgk1l8L7ChmCpyatF8b14=
-Received: from blackfin.pond.sub.org (p4fd045cf.dip0.t-ipconnect.de
- [79.208.69.207])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- by oxygen.pond.sub.org (Postfix) with ESMTPSA id 24CAD2001B;
- Tue, 24 Nov 2026 16:01:43 +0100 (CET)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 76C5F21E6A04; Tue, 24 Nov 2026 16:01:51 +0100 (CET)
-From: Markus Armbruster <armbru@pond.sub.org>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Krempa <pkrempa@redhat.com>,  qemu-block@nongnu.org,
- stefanha@redhat.com,  afaria@redhat.com,  eblake@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 1/2] file-posix: Add 'accept-read-only-device' option
-In-Reply-To: <awWiQ7TcMEnpubDx@redhat.com> (Kevin Wolf's message of "Tue, 24
- Nov 2026 15:42:11 +0100")
-References: <20261029164522.103918-1-kwolf@redhat.com>
- <20261029164522.103918-2-kwolf@redhat.com>
- <au2qCGy-CttBaXoI@angien.pipo.sk> <87cxruh857.fsf@pond.sub.org>
- <awWD_4Y9xsYMKdS9@redhat.com> <87pkvue4ge.fsf@pond.sub.org>
- <awWiQ7TcMEnpubDx@redhat.com>
-Date: Tue, 24 Nov 2026 16:01:51 +0100
-Message-ID: <87cxrue0io.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVs2e-0007V6-VJ
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 10:02:49 -0500
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4jYmJJ3MBsz8Cwg;
+ Tue, 24 Nov 2026 15:02:40 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Tue, 24 Nov 2026 15:02:40 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.13])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jYmJJ2Gwjz6Mct; Tue, 24 Nov 2026 15:02:40 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 891CF192434E; Tue, 24 Nov 2026 15:02:38 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-96R00167194db8-a23b-4247-aaf0-6c7b13e87c66,
+ 8999D460E3350DC70288BFBB7677D99C31D99569) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <766971bd-722c-4c25-bea0-dd2040a8c862@kaod.org>
+Date: Tue, 24 Nov 2026 16:02:37 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=2a01:4f8:13b:3ad0:1::3;
- envelope-from=armbru@pond.sub.org; helo=oxygen.pond.sub.org
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] test/qtest/aspeed_smc-test: Send write enable
+ before each page program command
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+References: <20261123-m25p80_write_enable_fix-v2-0-0ac94f99e91f@oss.tenstorrent.com>
+ <20261123-m25p80_write_enable_fix-v2-1-0ac94f99e91f@oss.tenstorrent.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20261123-m25p80_write_enable_fix-v2-1-0ac94f99e91f@oss.tenstorrent.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 12038121805666626569
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGYSW5YyaWiQR9ynU6/phIMvr/+pl1OhkG1oEiyEQVGqRmxQ461yaBwg2e3w9Xgf+A1dCuLBbbcKG8uZsZ7fFyBO22euCYLPzhPxuHlwktgkyWKa9SvdlnyjhKMT61eKdDNEm0Og5EkQn2WpCh46WOG64osffeGh6C3TsfjegEh2C0O3IJkoRcs3Yl4x1DpyHlS+GlpBPR5XST4UbNVLsx59P2Mw+ffvkVn474VB5UwoXSIoKxWfqpthbc3CTHJMuj/EEuwfolNkMoZQZOoA4MgbLMI2G+ZpUPYAZvovNrW9Mhgz8XvIaoYxAQVHqKqEKzTyyQQzQis3zLZ8UolxR5HKGR0/LRx/0WRZ3SUDZKrvE7Qv4cncq2kFnzi0K1WyFuojdu0u9SUpabmOdEG8oWGKFIqe0iupKO8Zu7lqTCHsTia/nJcMskDfdezxlebyVrib/NO9pzLJenR2tZ4R3HB7GFZC6pQJReAgmXDHFfHiD646pxNT0bE2AIV9GAyyBIyXEcpAdv82VaEJXgaDFiLXTtEJdmIi4xb8JMNYa8P1Ww3S8JwXqPrNN9ioK7sIlLBkwyeKgzIY7laDV12IvP/RVMJInKwpjQMbHWuiRByCh6gZfm0esZEa/H1gvb4yPpPnHWj8Im/Br5fLuek2jX5QjPWV0gOvnGb1NHzqtl8GQ
+DKIM-Signature: a=rsa-sha256; bh=Jx3htNZVUdHWtBdyZLaq+qK5T0dO4pElSAkXYEBfbD8=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1795532561; v=1;
+ b=WPi8GN4APunRaQj+Vr876SHPILVfP6NzEy2k7N31DsbjynJQgl67ZBitZyMc/65gyPVaDHHh
+ KfcbYXnb7959pbg81sM1eZuJck/XSkHhhl+4D8h0ok8MmEzN4eVv2K9a5p5G0L6ZV8NG03XRxUq
+ Sf0UMpyK/chxZYKB6XoVS53vkquMSOfyxImBnDTy2fDLYplYsKxiJgGOG1H6+BNEzQwo2r6Regn
+ lYjpfv3rE4MPqRas4gMcVBM8k2pw0Ed7gmYcWws7bwWr3cucWFuxloNK0m5c+sDRHGthzRV404J
+ bCc4IAIAfcUQ44XY/VhbGc+5jyOFKNMKwmMwiUHlD3P6g==
+Received-SPF: pass client-ip=51.210.91.19; envelope-from=clg@kaod.org;
+ helo=smtpout10.mo536.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,158 +140,108 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Kevin Wolf <kwolf@redhat.com> writes:
+On 11/23/26 16:21, Anirudh Srinivasan wrote:
+> The M25P80 specification [1] dictates that a write enable (WREN) must
+> be sent before a page program (PP), and that the write enable latch
+> (WEL) is reset at some point before the PP command has finished.
+> 
+> The current tests that make use of page program send WREN only once at
+> the beginning, before issuing multiple PP commands. The m25p80
+> implementation in QEMU doesn't deassert WEL at the end of each PP
+> operation (so this isn't an issue currently), but real hardware would
+> unset WEL at the end of the first PP command the second PP command would
+> fail. Update the tests to send WREN before each PP command.
+> 
+> The current m25p80 model does not reset the WEL at the end of each PP
+> command. This is a bug, and a subsequent commit will fix this.
+> 
+> [1] https://www.alldatasheet.com/datasheet-pdf/download/22807/STMICROELECTRONICS/M25P80.html
+> 
+> Fixes: 3e62a32ddb89 ("test/qtest: Introduce a new aspeed-smc-utils.c to place common testcases")
+> Cc: qemu-stable@nongnu.org
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> ---
+>   tests/qtest/aspeed-smc-utils.c | 24 +++++++++++++++++++-----
+>   1 file changed, 19 insertions(+), 5 deletions(-)
+> 
+> diff --git a/tests/qtest/aspeed-smc-utils.c b/tests/qtest/aspeed-smc-utils.c
+> index 146332240d..85e883d0b8 100644
+> --- a/tests/qtest/aspeed-smc-utils.c
+> +++ b/tests/qtest/aspeed-smc-utils.c
+> @@ -218,12 +218,23 @@ static void read_page_mem(const AspeedSMCTestData *data, uint32_t addr,
+>   typedef void (*read_page_mem_fn)(const AspeedSMCTestData *data,
+>                                    uint32_t addr, uint32_t *page);
+>   
+> +static void flash_write_enable(const AspeedSMCTestData *data)
+> +{
+> +    spi_ctrl_start_user(data);
+> +    flash_writeb(data, 0, WREN);
+> +    spi_ctrl_stop_user(data);
+> +}
+> +
+>   static void write_page_mem(const AspeedSMCTestData *data, uint32_t addr,
+>                              uint32_t write_value)
+>   {
+> -    spi_ctrl_setmode(data, CTRL_WRITEMODE, PP);
+> -
+>       for (int i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
+> +        /* Send write enable before each Page Program */
+> +        flash_write_enable(data);
 
-> Am 24.11.2026 um 14:36 hat Markus Armbruster geschrieben:
->> Kevin Wolf <kwolf@redhat.com> writes:
->> 
->> > Am 24.11.2026 um 10:48 hat Markus Armbruster geschrieben:
->> >> I almost missed this.  My apologies for the delay!
->> >> 
->> >> Peter Krempa <pkrempa@redhat.com> writes:
->> >> 
->> >> > CC'd Markus for QAPI generator input.
->> >> >
->> >> > On Thu, Oct 29, 2026 at 17:45:21 +0100, Kevin Wolf wrote:
->> >> >> The host_device block driver refuses to open a block device read-write
->> >> >> if the BLKROGET ioctl tells it that it's actually read-only. For such
->> >> >> devices it's possible to open a read-write file descriptor, but any
->> >> >> writes to the device would fail.
->> >> >> 
->> >> >> There are valid use cases for which this check gets in the way, as
->> >> >> explained in the bug report:
->> >> >> 
->> >> >>     However, this behavior prevents a legitimate enterprise use case:
->> >> >>     running VMs against storage replication target LUNs in a disaster
->> >> >>     recovery configuration. Enterprise storage arrays (Dell Powermax,
->> >> >>     Pure Storage) set the SCSI Write Protect bit on replication target
->> >> >>     LUNs, causing the Linux kernel to mark them read-only via BLKROGET.
->> >> >>     The VMs on the passive DR site need to start with these LUNs
->> >> >>     attached - writes are expected to fail (the application middleware
->> >> >>     knows it's on the passive side), and after a DR role swap the LUN
->> >> >>     becomes writable and writes should succeed immediately without any
->> >> >>     VM restart.
->> >> >> 
->> >> >> In order to allow such use cases in which a currently read-only device
->> >> >> is deliberately opened read-write, add a new option to the host_device
->> >> >> driver that allows the user to skip the check.
->> >> >> 
->> >> >> Buglink: https://redhat.atlassian.net/browse/RHEL-186136
->> >> >> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->> >> >> Reviewed-by: Eric Blake <eblake@redhat.com>
->> >> >> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->> >> >> ---
->> >> >>  qapi/block-core.json | 19 ++++++++++++++++++-
->> >> >>  block/file-posix.c   | 23 ++++++++++++++++++++---
->> >> >>  2 files changed, 38 insertions(+), 4 deletions(-)
->> >> >> 
->> >> >> diff --git a/qapi/block-core.json b/qapi/block-core.json
->> >> >> index 741c8165c06..80272b878c5 100644
->> >> >> --- a/qapi/block-core.json
->> >> >> +++ b/qapi/block-core.json
->> >> >> @@ -3390,6 +3390,23 @@
->> >> >>    'features': [ { 'name': 'dynamic-auto-read-only',
->> >> >>                    'if': 'CONFIG_POSIX' } ] }
->> >> >>  
->> >> >> +##
->> >> >> +# @BlockdevOptionsHostDevice:
->> >> >> +#     Driver specific block device options for the host_device
->> >> >> +#     backend.
->> >> >> +#
->> >> >> +# @accept-read-only-device: allow opening a read-only device as
->> >> >> +#     read-write.  If this is false, opening a host device read-write
->> >> >> +#     requires on Linux that the BLKROGET ioctl considers the device
->> >> >> +#     writable.  If it is true, this check is skipped.  (since: 11.2,
->> >> >> +#     default: false)
->> >> >> +#
->> >> >> +# Since: 11.2
->> >> >> +##
->> >> >> +{ 'struct': 'BlockdevOptionsHostDevice',
->> >> >> +  'base': 'BlockdevOptionsFile',
->> >> >> +  'data': { '*accept-read-only-device': 'bool' } }
->> >> >> +
->> >> >>  ##
->> >> >>  # @BlockdevOptionsNull:
->> >> >>  #     Driver specific block device options for the null backend.
->> >> >> @@ -4777,7 +4794,7 @@
->> >> >>        'ftps':       'BlockdevOptionsCurlFtps',
->> >> >>        'host_cdrom':  { 'type': 'BlockdevOptionsFile',
->> >> >>                         'if': 'HAVE_HOST_BLOCK_DEVICE' },
->> >> >> -      'host_device': { 'type': 'BlockdevOptionsFile',
->> >> >> +      'host_device': { 'type': 'BlockdevOptionsHostDevice',
->> >> >>                         'if': 'HAVE_HOST_BLOCK_DEVICE' },
->> >> >>        'http':       'BlockdevOptionsCurlHttp',
->> >> >>        'https':      'BlockdevOptionsCurlHttps',
->> >> >
->> >> > After the two hunks above the 'host_device' type in the resulting QMP
->> >> > schema will no longer have the 'dynamic-auto-read-only' feature which it
->> >> > had when it used 'BlockdevOptionsFile' directly rather than the
->> >> > 'BlockdevOptionsHostDevice' type which 'inherits' from
->> >> > 'BlockdevOptionsFile'.
->> >> 
->> >> Reproduced.
->> >> 
->> >> > Markus, after chatting with Kevin, we're not sure if it's intention that
->> >> > features are not inherited in the above case, and thus the
->> >> > 'dynamic-auto-read-only' feature would need to be propagated also to
->> >> > 'BlockdevOptionsHostDevice' or it's a mistake in the generator.
->> >> 
->> >> The generator does what the programmer(s) intended it to do: 'base'
->> >> splices in the members, and nothing else.  Further evidence of intent:
->> >> the explanation of 'base' in docs/devel/qapi-code-gen.rst talks only
->> >> about members.
->> >> 
->> >> Should it do more?
->> >> 
->> >> Kevin, did you expect the feature to be inherited?  Or did you simply
->> >> not remember there's a feature, and therefore didn't think about what
->> >> the generator might do with it?
->> >
->> > I simply didn't think of it, and when Peter pointed it out, I was unsure
->> > what the behaviour really should be. I think inheriting would usually be
->> > what you want, but maybe not always.
->> >
->> > I think we have two options to fix the regression: Either change the
->> > QAPI generator to inherit features from 'base' (and avoid similar
->> > problems in the future), or just manually duplicate the feature in the
->> > schema for BlockdevOptionsHostDevice.
->> >
->> > Which one do you like better? I don't mind too much either way.
->> 
->> Let's duplicate manually at least for now.  We want a fix for 11.2, and
->> it's last minute.  I don't want to mess with the generator this late in
->> the freeze.  Manual duplication is simple and safe.
->> 
->> Bases with features are rare.  I can see three instances:
->> 
->>     Base                 of                         has feature
->>     BlockdevOptionsFile  BlockdevOptionsHostDevice  dynamic-auto-read-only
->>     SevCommonProperties  SevGuestProperties         confidential-guest-reset
->>     SevCommonProperties  SevSnpGuestProperties      confidential-guest-reset
->> 
->> I'm reluctant to accept generator complexity for something as rare as
->> this.
->
-> My concern is not about the existing cases, but rather the question if
-> we'll catch the fourth case when it is introduced (e.g. some field of a
-> struct used somewhere as a base is deprecated).
+aspeed_smc_test_write_page_mem() calls :
 
-Members are inherited with their features.  Features tacked to the base
-type aren't.  The former is a lot more common than the latter.
+       flash_writeb(test_data, 0, WREN);
 
->> On the other hand, all three need the feature duplicated, I think.
->
-> Yes, it looks like the feature in SevCommonProperties is invisible on
-> the external interface (which probably means that it isn't needed at
-> all).
->
->> On the third hand, we can manually add features, but not remove them.
->> So if we make the generator inherit them, we're stuck with them.
->> 
->> Would you like me to post patches?
->
-> That would be good, especially now that you found instances of the
-> problem outside the block layer.
 
-Okay!
+Should we keep it ?
+
+> +
+> +        /* move out USER mode to use direct writes to the AHB bus */
+
+why ?
+
+> +        spi_ctrl_setmode(data, CTRL_WRITEMODE, PP);
+> +
+>           flash_writel(data, addr + i * 4, write_value);
+>       }
+>   }
+> @@ -468,10 +479,13 @@ void aspeed_smc_test_write_page_mem(const void *data)
+>       flash_writeb(test_data, 0, WREN);
+>       spi_ctrl_stop_user(test_data);
+>   
+> -    /* move out USER mode to use direct writes to the AHB bus */
+> -    spi_ctrl_setmode(test_data, CTRL_WRITEMODE, PP);
+> -
+>       for (i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
+> +        /* Send write enable before each Page Program */
+> +        flash_write_enable(test_data);
+> +
+> +        /* move out USER mode to use direct writes to the AHB bus */
+> +        spi_ctrl_setmode(test_data, CTRL_WRITEMODE, PP);
+> +
+>           flash_writel(test_data, my_page_addr + i * 4,
+>                  make_be32(my_page_addr + i * 4));
+
+Can't we call write_page_mem() instead ? If possible, the helper
+flash_write_enable() becomes useless then.
+
+Anyhow why isn't flash_write_enable() used elsewhere ?
+
+Also, all these routines  :
+
+	aspeed_smc_test_erase_sector()
+	aspeed_smc_test_erase_all()
+	test_write_page()
+	test_read_page_mem()
+	aspeed_smc_test_write_page_qpi()
+	aspeed_smc_test_write_page_datafifo()
+	aspeed_smc_test_read_page_datafifo()
+
+call the page program OP. Probably PP is called only once and the
+routines are immune to the WEL clear in patch 2. Are we sure of that ?
+
+Thanks,
+
+C.
 
