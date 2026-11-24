@@ -1,148 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0813606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 17:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E98606A32C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 17:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Ugt46Wlv;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DRN3twZx
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ZMJQllMy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVuTV-0007zx-P5; Tue, 24 Nov 2026 12:38:38 -0500
+	id 1xVudK-0004xR-H9; Tue, 24 Nov 2026 12:48:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xVuTQ-0007vb-1g
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 12:38:33 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
+ id 1xVudJ-0004xJ-BP
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 12:48:45 -0500
+Received: from mail-eastus2azon11010046.outbound.protection.outlook.com
+ ([52.101.56.46] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xVuTN-0007eh-GU
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 12:38:31 -0500
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOFLMrL1184815
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 17:38:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ypQZhGOID9kvYSKvA3WyPN+AtwPytsxb9eTxQgf/PtU=; b=Ugt46WlvGtQ05eqj
- zGtUk/ypY8vxRfQkG1ti8LsXui9nd/Mtn//D5U6IXm2nWKQBn27u1NbtBR57QqCG
- KKCvBnAGnGrcfmaDVC3+g33QUl485QCydeBr0qMkIbrZ4BM4euIjGZk/zKUcbEnL
- ULNEPh6SgNTCqDdAMtmTWCM51nKoKSJoHk+OniTQLxXMY4czv8zwS7hEHHbFwAfO
- mQcHd4GbYYkrJDZq11xvBq3wNRBBgkMwojlH5IvA/xZqKwWVlGlr5aPVU1iIYruv
- NFPUMKxSxFcOKZuTilVV7clVCNHd7bPUJ6pVZ2XL4V0ul7EIcejp+p4PgVtOXvIj
- SR4fkQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j50ky419x-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 17:38:27 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-9211f05706bso61106496d6.2
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 09:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795541906; x=1796146706; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ypQZhGOID9kvYSKvA3WyPN+AtwPytsxb9eTxQgf/PtU=;
- b=DRN3twZxsUePgYCHVt8uNd08rqusM8EZv6OMwvBWEtjxzu1RufEprdDu8Z28YaPohx
- Ps7dzfy6Aik8keyKYCXIwHx7rNtSY6J8wPa+wJ93MBm38sHUkl9c9XR6AjiAZRZHc4fr
- oHrEuSz7SFZz6ZfFHCHenYguLqY3DTE7fS9fceNnNsLL6mwmHpC/zs3WHmPXlAJ35QyR
- nLuSeh2bg6G7f38wzf4DqjGvdbSIBtQ1X8Bonv+9/i69Q5S/FeBbDrCWiHbjPRbBXsGg
- UNfS3qiO1xZmrHpmegFRYlbDFlkFn7eJFYHSw6K26Ibmd5uhDpOqdC45UlMvuwPzGCyM
- P1Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795541906; x=1796146706;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ypQZhGOID9kvYSKvA3WyPN+AtwPytsxb9eTxQgf/PtU=;
- b=t4hJz098y5e7S46Ve9u2SndCaeoP1cb0tO/D+UC+S27HU8Trw/FORsWtRwqg/pvo4z
- 6o8Kqtiv0XsTjpJWM9Mhqz9xtfgbYyxPACR3q+LS7r74Z9AysugMMfkfEWzxrDw5b8Do
- QpV7t7C/qUA9e3UFxJfU28b4PChlfqPLYeZ6xNFukF9SsYnFEOA3qtUTbFipVn+qWwIt
- WpI0Jr9j2otO/C6QkIoad8cXQxw6ugMP2jjSodFNwpnKD3RU8DzOKj4K9ChHmsx9O4MS
- 8cJ9bgg0wlBiZXgUAL/MnHYjfZc5/loEAOYIAItZmBfwAUWDYzYv51N98qlbu5qJUvPj
- cozw==
-X-Forwarded-Encrypted: i=1;
- AL+hErH0uDIYcuXQ1pAM0GMLGTCFjOZZ/W/HX0yZCwXvCWVLehjGkWQnG43+Jq917oilV8Vy2S/hkh2Jdurq@nongnu.org
-X-Gm-Message-State: APuU4Z+64Xlq68Z3SkyKoT9ed1FC7BfEjp8lj3R+1tEl1pK1j7cJkFGI
- ddulW59EYerLYWS4cBJ4O7C+L7tWNr6MJrcP9AaXR1B1bbA3sTVqzETHTBzbaF7BoMCYPTolG3j
- 3AQoD07tC0IQzuku3hY56/w67BK0Jlqf0vfdtWYU3LHDbiU5xubpRNYvCaw==
-X-Gm-Gg: AZFdTZcWkYSad7N7KE2ADAvTBbtTucRzN9Vwi+8j3ovXUdyRz7WOjrjm+33h5Subuae
- UidWLF6tNx+up08VaI3hksB2zGCxWoxonkmHxaIUAz1sornK1fmmM9vhfVU4nA+rqg1B6Q5dBq3
- MdGqoZrcwKGqGB1nRzE7f2cdc0JFERBH6HI3K+ZE5RpESuj9Y+JpEGa+yBApUiUH32Z7A7x5VNG
- teqVXh7bAYR7/Pzc72s8QCYFQpo/S2i+u6xuXxEPLThwI/xkrfjhLn9c51dpw/HU5nDGhJJ6BIZ
- jkMSialvE0gksOGwFxRA6maRPKFiAAApKtdgs4amNAiPyf7PlYBzjLIjbmz+BL8DOQ42cVo5WiM
- I3ybM2E6M01yo80I3uelrgV2+ajGklldytePnzIATMlh6kzzSKomd24m7fP9O1tx+aDo79dP3uP
- ZU91x47ID5
-X-Received: by 2002:a05:6214:ca3:b0:921:2ea7:e42e with SMTP id
- 6a1803df08f44-9214820f61cmr204767046d6.41.1795541905853; 
- Tue, 24 Nov 2026 09:38:25 -0800 (PST)
-X-Received: by 2002:a05:6214:ca3:b0:921:2ea7:e42e with SMTP id
- 6a1803df08f44-9214820f61cmr204766406d6.41.1795541905282; 
- Tue, 24 Nov 2026 09:38:25 -0800 (PST)
-Received: from [192.168.68.101] ([189.110.107.17])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-921349b2af5sm141593486d6.11.2026.11.24.09.38.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Nov 2026 09:38:24 -0800 (PST)
-Message-ID: <ac5995d4-d1a7-4219-aa3f-0587e9f1ea35@oss.qualcomm.com>
-Date: Tue, 24 Nov 2026 14:38:22 -0300
+ (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
+ id 1xVudH-0003gR-DG
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 12:48:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P3XHKiaueWEScHibPBT9mrrjQHrRUfxRa8G9QrlvNu0KEcD9rrDeusUo5MA81SA0XBn7oBwv7Y32nVhrq2z/wiWz7TDFH3ETfKWug1gSrBlZt18zROp7UDueeOWoM/MUnQTF1rNxT6BcRyKGXYRsHP7hbQ9KwJEqTrmODNgH/4ttc5cGqQI65vhknrIW+4tYq5yk19NIt49A6owJ+lwctQc3G3JqHoPMq09LKWJqV9unLOy4emq6M9IqOjvBC8cZ3fYD4lV549fT8I8awNCBWaBX4w2J2kRkO36Cnb/cd83CMZ/fq0D3c9bxwAuLO5f7aEgpVer1onAYd8RvIYFa8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eobYjRFrPZpIZ4y1+1ihmTA/GUxAqKNIvjcdB5x3Qg4=;
+ b=FxRArFSHL0Njg47c17XS7dAR102zmpby0z2SXRtGmTu/QyhVyO5Uq3fxpzKX7nFWUdLiID0GuRDo2UcJKaFc9XSP+10Jbmnlz9FN7UloSLlEgbrSpK5Ry9qxbrL1upJTvha7v8lIbe+Gs8idsggrICAVGEeX59u1butkvCt/OzrUWDrSBUGWrYN1cUoZHbn8PC7LADu00Ymad9WZ/wi09BQKyuEWxsuqGtLBanWLeRq6pHgd1gd2czTw7RgWVYtAV4cdID99J+hsk32tYBbiGewrBftkb7kuCL/o7Fpeej6cTPb7eRPblPQ5O6oaSGWKe6D1yWGIcMf1TOUq8wpH6g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eobYjRFrPZpIZ4y1+1ihmTA/GUxAqKNIvjcdB5x3Qg4=;
+ b=ZMJQllMy+CU1zKA4tWGKGazVL0RD6ozi1jqV051KpiQvr+btkqWdiu0W+0vGlumItDxo++Gjz5GaXdvL2vPOKwX6+TAwitQNremHaMfaEHcYnmL+XR30oqDflz+M2vDF9KapCbsKzwvizY/nYQSZI7nneGIFzhIwi8e31tQ1Vuw=
+Received: from BN1PR10CA0006.namprd10.prod.outlook.com (2603:10b6:408:e0::11)
+ by SN7PR12MB6911.namprd12.prod.outlook.com (2603:10b6:806:261::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Tue, 24 Nov
+ 2026 17:43:34 +0000
+Received: from BN7PEPF00000097.namprd03.prod.outlook.com
+ (2603:10b6:408:e0:cafe::9c) by BN1PR10CA0006.outlook.office365.com
+ (2603:10b6:408:e0::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.639.14 via Frontend Transport; Tue,
+ 24 Nov 2026 17:43:34 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN7PEPF00000097.mail.protection.outlook.com (10.167.245.75) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.662.3 via Frontend Transport; Tue, 24 Nov 2026 17:43:34 +0000
+Received: from [10.236.181.204] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Tue, 24 Nov
+ 2026 11:43:33 -0600
+Message-ID: <4d2f11dd-46e4-49f1-97e3-30ea79244fbf@amd.com>
+Date: Tue, 24 Nov 2026 11:43:32 -0600
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/riscv: Rebuild cached TB flags at state changes
-To: SeungJu Cheon <suunj1331@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
- Chao Liu <chao.liu@processmission.com>
-References: <20261119164438.193579-1-suunj1331@gmail.com>
- <20261119164438.193579-3-suunj1331@gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH 0/6] QEMU: Add support for AMD EPYC Zen6 and Turin-v3
+ models
+To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <shivansh.dhiman@amd.com>, 
+ <babu.moger@amd.com>
+References: <20261029195623.2209-1-Benjamin.Cheatham@amd.com>
 Content-Language: en-US
-In-Reply-To: <20261119164438.193579-3-suunj1331@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Cheatham, Benjamin" <benjamin.cheatham@amd.com>
+In-Reply-To: <20261029195623.2209-1-Benjamin.Cheatham@amd.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Y+ptIReN c=1 sm=1 tr=0 ts=6b05cb93 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=XV2jNURMxb8a5ESxF98A:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: DXUC3s7yrkzQz3SRIhVxKaSjgWuPjYyT
-X-Proofpoint-ORIG-GUID: DXUC3s7yrkzQz3SRIhVxKaSjgWuPjYyT
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA2OSBTYWx0ZWRfX9OasksXKY64r
- Kv/7UXRM07uiB78iD72lk+FMrHXmXQ/ni2OswmPGycSq8XBGRuNDM90UL7+zln+DJa9N6lJmh/b
- 1IfErer07swA07msk32Qu0LgQIDB4G0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA2OSBTYWx0ZWRfX/jsL1965D/Do
- RjLL0lQvIWaJtvBIp1WYMIDFG/hAETipKnAYj65YESPgefDVNVVocWfxUEjmdHVQt815iOcQNjN
- TVd8+4cwkUl+xKoiK78b4BaXwig2MGHzUjNUHY0OBNkpp7Y/mGW4p3opBfccMIm550ATOOQodJ+
- Hi1TjjEggOFpSn4DUoYCq/c/05+bSAJwNqnyeYXte1WJS9jbmK/UurQd/j5GDbE9L39A8OVYCX7
- yETLzKbDIik5xqQ2HkoDENDmJZk44Q3bKmozPcmxSSJneqN7TJBosOo1SkDEGXTL2ysao8mGnQ7
- Zv4Xp4XkofuB1Inhy2qrDFHN2ZZ3EJ2y4KIbrfZSX/SzLYtF9dRuX/umhAsn0zcD3wcheuzR9sK
- oTzkWZDMevStGyd9JRSWUpoIi5QBHm7l3++ue6TTPpTNchJLc1QpIM+7T7nux9+w0/UaxuLOVwr
- nXJ1QtpEwJIwajTUyHQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_04,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240069
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN7PEPF00000097:EE_|SN7PR12MB6911:EE_
+X-MS-Office365-Filtering-Correlation-Id: 45361004-5723-48bb-905a-08df4a52768f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|30052699003|36860700016|1800799024|23010399003|82310400026|376014|261026121527099003|261022075727099003|261021135927099003|261021123027099003|10067099003|261021121427099003|261102123227099003|13003099007|261009223027099003|3023799007|18002099003|22082099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: lFk/LtP3pZDIHk4VFbE0EvEw9TGJnAskoj62HmYt+A67uRMzUIuALWvxyMS3ipaVsT6wzTx/HFIVqqd3SdnU7lBArWhvvrc8yDyBXFbkCt5eVDgm7AYMuUUlWObjn3xCHnxjuZz4O5s4rWDeF1PSTz3awXgf0K9DoOt33MvTsMnO1DEmOvppx7F6pj5l4HEbg4RzzWOhLFBMRJnU9MmOumeUU8c+lXNzRL9+Tl7CNtkMEdfP8e3eXzBc0FwXhxduC0WtEf+kz/EHgHKAIkZt6Z3DpTTmRbwoR5SG18FczExLwNBOhuF5qTT6OpZOifd3tImJ6g3MHKdTNevKQA6H5rcwFbKsb9EF5Eb1iJQrW7IBCKKUdUpKZ9+O3DS+j4pNEJERNvgcgEgZdpoe8CBa1Lv3BXj6tIGOiRmOFITmfx56nXT3YLn/PytxVSAhArVyuUNsEzbUrlYccNyEzlIExy033zDV8sgOXIUg4//VihTVhxL3ChVxNxBlaqolIZoau0lwnA8m1hlrnjH7tRmsix2yDgC8WUGykHUF+M28b5YOSEK1A0GY5pt0EoBMuEUKih9514v1W2eScwXKmzZNRXE3ZukfMNwM94V37eZprWif631X/F/BXWIXxoApVMDgs1sZNDxX50KVyZ19WN+d0T+2iZc7OQHzmMAxFmosdFA=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(30052699003)(36860700016)(1800799024)(23010399003)(82310400026)(376014)(261026121527099003)(261022075727099003)(261021135927099003)(261021123027099003)(10067099003)(261021121427099003)(261102123227099003)(13003099007)(261009223027099003)(3023799007)(18002099003)(22082099003)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: PfGvG1jg8j7cJ6Vi7MwfL3FutPzThUJ7nyZ+ggjZxIacv++574SlRXx4RCPlKm2Z3YH5M9b2LcLh4CjN2qtq+gxhDmCNVlU+8WjPjIDcPYymjOPCyjwwcpcRbPo2n06PovgNDyZc9Wsw40u3mWU3e0qqGvBmMZkmte6KVgHSDVgCJWjF3dAqDsafUp0N7+YOXmibITF6k74UaPuwfUQvMDH8Dbe91EMNQPZuIu9/YIi9QkvAMYiUVx1FWbXSbyP6dNiVYvODyCkSLeZbqnFJyySejAN/GrxaFzj4lTOtHni5w7TXfvfbQgKLwUSNJFWR03gaN36tZkoemJSQPn9+3NADhufmyscabEf//nQVEMrozJeiZ2zIbuVwlmxDey1q+in93taHxLge5KDQFSob9Uz087aobuOgDAxjzwpiepKhDB0xC2KP0n7Fx8nWESJ3
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2026 17:43:34.6323 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 45361004-5723-48bb-905a-08df4a52768f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN7PEPF00000097.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6911
+Received-SPF: permerror client-ip=52.101.56.46;
+ envelope-from=Benjamin.Cheatham@amd.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,209 +124,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Any chance I can get some eyes on this? We (AMD) would like for this to get into 11.2 if possible.
 
+Thanks,
+Ben
 
-On 11/19/2026 1:44 PM, SeungJu Cheon wrote:
-> Add tb_flags_cached, ext_tb_flags_cached and vlmax_cached to
-> CPURISCVState and riscv_rebuild_tb_flags() to fill them. Call it
-> where the inputs of riscv_compute_tb_flags() change: CSR writes,
-> riscv_cpu_set_mode() (trap entry, xRET and debug mode exit), vsetvl
-> and vtype invalidation, itrigger updates, reset and migration
-> post-load.
+On 10/29/2026 2:56 PM, Ben Cheatham wrote:
+> This series adds support for AMD's upcoming EPYC Zen6 CPU models
+> (EPYC-Venice). The first four patches add support for the EPYC-Venice
+> model while patch 6/6 adds the actual model.
 > 
-> riscv_get_tb_cpu_state() does not use the cached values yet.
+> The EPYC-Venice model is based on the EPYC-Turin model feature set with
+> the following feature additions:
 > 
-> Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-> ---
-
-The obvious drawback is that we'll have to manually invoke riscv_rebuild_tb_flags()
-every time we need the cached flagst to be refreshed.  I believe this is acceptable
-for the performance gain this provides.
-
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   target/riscv/cpu.c               |  1 +
->   target/riscv/cpu.h               | 19 +++++++++++++++++++
->   target/riscv/machine.c           |  1 +
->   target/riscv/tcg/cpu_helper.c    |  1 +
->   target/riscv/tcg/csr.c           |  8 +++++++-
->   target/riscv/tcg/debug.c         |  2 ++
->   target/riscv/tcg/tcg-cpu.c       |  7 +++++++
->   target/riscv/tcg/vector_helper.c |  2 ++
->   8 files changed, 40 insertions(+), 1 deletion(-)
+> 	ERAPS, TSC Adjustment, Flush l1d, Bus Lock Detect, and Shadow Stack
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 15c27f4ce4..aff6f373d3 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1122,6 +1122,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->           kvm_riscv_reset_vcpu(cpu);
->       }
->   #endif
-> +    riscv_rebuild_tb_flags(env);
->   }
->   
->   static void riscv_cpu_disas_set_info(const CPUState *s, disassemble_info *info)
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 49a1186bdb..517f6081d8 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -262,6 +262,20 @@ struct CPUArchState {
->       uint8_t vxsat;
->       bool vill;
->   
-> +    /*
-> +     * TB flags that depend only on state changed by CSR writes, traps,
-> +     * privilege changes and vsetvl; rebuilt by riscv_rebuild_tb_flags() at
-> +     * those points.  Bits that translated code changes directly between
-> +     * two lookups (FS/VS dirtying, elp, vstart, vl) are added on each
-> +     * lookup.  vlmax_cached is VLMAX for the current vtype when the
-> +     * VL_EQ_VLMAX fast path is allowed, else UINT32_MAX; vl is compared
-> +     * against it per lookup because fault-only-first loads shrink vl
-> +     * without a trap.
-> +     */
-> +    uint64_t ext_tb_flags_cached;
-> +    uint32_t tb_flags_cached;
-> +    uint32_t vlmax_cached;
-> +
->       uint64_t pc;
->       uint64_t load_res;
->       uint64_t load_val;
-> @@ -967,6 +981,11 @@ static inline uint32_t vext_get_vlmax(uint32_t vlenb, uint32_t vsew,
->   bool riscv_cpu_is_32bit(RISCVCPU *cpu);
->   
->   bool riscv_cpu_virt_mem_enabled(CPURISCVState *env, bool is_vm_ldst);
-> +#ifdef CONFIG_TCG
-> +void riscv_rebuild_tb_flags(CPURISCVState *env);
-> +#else
-> +static inline void riscv_rebuild_tb_flags(CPURISCVState *env) { }
-> +#endif
->   RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
->   RISCVPmPmm riscv_pm_get_vm_ldst_pmm(CPURISCVState *env);
->   uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 0de06e9588..f0aad72706 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -388,6 +388,7 @@ static int riscv_cpu_post_load(void *opaque, int version_id)
->       CPURISCVState *env = &cpu->env;
->   
->       env->xl = cpu_recompute_xl(env);
-> +    riscv_rebuild_tb_flags(env);
->       return 0;
->   }
->   
-> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-> index 58e98e975c..70c889aaa5 100644
-> --- a/target/riscv/tcg/cpu_helper.c
-> +++ b/target/riscv/tcg/cpu_helper.c
-> @@ -982,6 +982,7 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
->               riscv_cpu_interrupt(env);
->           }
->       }
-> +    riscv_rebuild_tb_flags(env);
->   }
->   
->   /*
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index af444e3e6f..3dbfe2dc80 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -5909,7 +5909,11 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
->   
->       /* execute combined read/write operation if it exists */
->       if (csr_ops[csrno].op) {
-> -        return csr_ops[csrno].op(env, csrno, ret_value, new_value, write_mask);
-> +        ret = csr_ops[csrno].op(env, csrno, ret_value, new_value, write_mask);
-> +        if (ret == RISCV_EXCP_NONE && write_mask) {
-> +            riscv_rebuild_tb_flags(env);
-> +        }
-> +        return ret;
->       }
->   
->       /*
-> @@ -5937,6 +5941,7 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
->                   return ret;
->               }
->           }
-> +        riscv_rebuild_tb_flags(env);
->       }
->   
->       /* return old value */
-> @@ -6015,6 +6020,7 @@ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
->                   return ret;
->               }
->           }
-> +        riscv_rebuild_tb_flags(env);
->       }
->   
->       /* return old value */
-> diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-> index 988bc815d7..e834f80ce2 100644
-> --- a/target/riscv/tcg/debug.c
-> +++ b/target/riscv/tcg/debug.c
-> @@ -822,6 +822,7 @@ void HELPER(itrigger_match)(CPURISCVState *env)
->               itrigger_set_pending(env, i, 1);
->   
->               env->itrigger_enabled = riscv_itrigger_enabled(env);
-> +            riscv_rebuild_tb_flags(env);
->               do_trigger_action(env, i);
->               itrigger_set_pending(env, i, 0);
->           }
-> @@ -922,6 +923,7 @@ static void itrigger_reg_write(CPURISCVState *env, target_ulong index,
->                             env->last_icount + itrigger_get_count(env, index));
->               } else {
->                   env->itrigger_enabled = riscv_itrigger_enabled(env);
-> +                riscv_rebuild_tb_flags(env);
->               }
->           }
->           break;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 5c5d8fcb94..a8e744bc26 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -183,6 +183,13 @@ static void riscv_compute_tb_flags(CPURISCVState *env, uint32_t *pflags,
->       *pvlmax = vlmax_cached;
->   }
->   
-> +void riscv_rebuild_tb_flags(CPURISCVState *env)
-> +{
-> +    riscv_compute_tb_flags(env, &env->tb_flags_cached,
-> +                           &env->ext_tb_flags_cached,
-> +                           &env->vlmax_cached);
-> +}
-> +
->   static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->   {
->       CPURISCVState *env = cpu_env(cs);
-> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-> index 917a48b510..f1898c52ff 100644
-> --- a/target/riscv/tcg/vector_helper.c
-> +++ b/target/riscv/tcg/vector_helper.c
-> @@ -56,6 +56,7 @@ static inline void reset_ill_vtype(CPURISCVState *env)
->       env->vtype = 0;
->       env->vl = 0;
->       env->vstart = 0;
-> +    riscv_rebuild_tb_flags(env);
->   }
->   
->   target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-> @@ -125,6 +126,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->       env->vtype = s2;
->       env->vstart = 0;
->       env->vill = 0;
-> +    riscv_rebuild_tb_flags(env);
->       return vl;
->   }
->   
+> and support for the following instructions:
+> 
+> 	AVX512 FP16, AVX512 IFMA, AVX NE-Convert, AVX VNNI Int8, and
+> 	AVX512 BMM instructions
+> 
+> as well as new cache values.
+> 
+> Some of these features (ERAPS, Bus Lock Detect) were only just recently
+> merged into the Linux kernel. It's recommended to use the latest kernel to
+> leverage the full support of the model.
+> 
+> This series also adds a new version of the EYPC-Turin model (patch 5/6)
+> that includes some of the features enabled as part of adding the
+> Venice model support. I've done this for convenience, but can split the
+> Turin model out into a separate series if needed. The only patches
+> required for the Turin support are 2/6, 3/6, and 4/6.
+> 
+> The Venice model had two revisions before this one, see [1]. Change log
+> from that is:
+> 	- Add Turin-v3 Model
+> 	- Add flush-l1d and bus-lock-detect to Venice model
+> 	- Add Bus Lock Detect DR6 support
+> 
+> [1]:
+> Link: https://lore.kernel.org/qemu-devel/20260825162544.18633-1-Benjamin.Cheatham@amd.com/
+> 
+> Amit Shah (1):
+>   target/i386: Add getting RAPSIZE for ERAPS enabled guests
+> 
+> Ben Cheatham (4):
+>   target/i386: Update RAPSIZE definition
+>   i386: Add Bus Lock Detect support
+>   target/i386: Add EPYC-Turin-v3 CPU model
+>   target/i386: Add EPYC-Venice CPU model
+> 
+> Nikunj A Dadhania (1):
+>   target/i386: Add AVX512 Bit Matrix Multiply (BMM) support
+> 
+>  target/i386/cpu.c     | 163 +++++++++++++++++++++++++++++++++++++++++-
+>  target/i386/cpu.h     |  10 ++-
+>  target/i386/kvm/kvm.c |   4 +-
+>  3 files changed, 170 insertions(+), 7 deletions(-)
+> 
 
 
