@@ -1,104 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3C1606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF02606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=MWsSc69I
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gdYax4BS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVp3d-0005eT-Eh; Tue, 24 Nov 2026 06:51:33 -0500
+	id 1xVp4g-0006k6-MK; Tue, 24 Nov 2026 06:52:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVp3Y-0005bf-AL
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:51:29 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1xVp4Z-0006f0-JC
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:52:33 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVp3W-0007Ku-ET
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:51:27 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-67c0ffaae1dso4472370d50.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 03:51:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795521085; cv=none;
+ id 1xVp4X-0007YX-Iq
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:52:31 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-67da69e7c31so4584749d50.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 03:52:29 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795521148; cv=none;
  d=google.com; s=arc-20260327;
- b=JaezGmbaeQZPCMdKbT4lUQz5UbDyZi1AR7VJGi4LOt6f2auZHZ32s/IqS+5yLh7DsW
- p8UxfYtZbfdi23D77emTqDqBReo5fmydKjcg+pjOxs9z2fGf3UwOtLWpuhFEIJHL7wVg
- dnRT9E3gKaP2fxCSIi+J4r+kvtCeWxTRAAlRtPhKfn/HZ5WXOLU8ELJ5/g1iK1r58SCh
- 4jPyKc7CMHDxTbZUPs+kYVb1dHUJjSzkJTk1DvvsXWHKiqtomH3eytecnNUQEao2vWM8
- ur4tXtpgJ7k9ue8VDKZv4yYZWkLpxNbhheZcDDZuwXqp2pNCztQmNHBl0tyRIJr0uRFj
- uXJQ==
+ b=rsmENWK/9idqMK4l67ubEhHv2mMxHE9UEDtSxL8j9SxehNdxERx2fgWzBF3zgf8dP1
+ LnUPGIyV393dsB4+6DaUaysA5s2meJW4UXFVi8ghqUhnHHBg1HJdWv6jXOvJruVHWD0H
+ pMK62sqprv/9tqwo+zZodRPGUhTINlFeNftnaJNG2KW9jLnHYF5Iw6ukWZty7xwL99V1
+ BM13an/QsKifk+0s8th2RiHFEy+8drsy7UpuxxPYBbamPyEc0wKI0Wj7e/+axM+lDyR4
+ eM8A+ze3C2TK7nrnCpz/4vTrPPbH4iqHItwazWLDHKSd3pOXOzV9QrQh9q53NBDPRBk/
+ P4qg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vjlb8k64PhCpMx4F2Ik2b1XYTzrg3aJBi0/0Ruaop5g=;
+ bh=GmrZTVnD4qHSCdHeLEXeCSuJkPlieGR3EuOjmjRaOPM=;
  fh=kjIIHBxOc2+eheqJ3UOmUVeT86hj4XqWJtrPoTu5ZIs=;
- b=sC8vuqgCvl6hpUjmXOBvQ1cBTiin4Ze97CzFiksasm5tIgABz5UIJv53kd6h+Km8Bo
- qJwt6/RYZLUitKFLJFvE3XgbgzkWxaeo7DRdpMQ9uK4g+YD/UQkU5klR3AF7FDKuKGzX
- hEuo0UCU5e8WFtzG0hW9HOiorpDEq3cxTtpXscbJyOMBWutO3oobe/LF3XaczBZhYZBI
- JknER63cJfbaTc+Tuo1MRDOGi4HSXZpF0aETQToHF5+E/SmanQ3Ft5HSppRr8e6OibtH
- kq/6a0FtRXx9JY1JvBUeKZUtbLav+OBRLr7fMX/94BeamnvAnr1ZgV8oTgJELs+8hupg
- /2TA==; darn=nongnu.org
+ b=fh7SYVKzSEY8NllkglUxQru+eNCGiMMeQpFE8Dk/kMokHiyLozPgUYYDewStiRtJWK
+ zCpx86JCNk1GxS4v4jo33C3o6zJmkBFvcYd33LwTXcLamd2aqneuvk7T+C/HPp/HV2f4
+ FZOVgKh34Ft3aK/YSkKN2usajXNf4Q0V5voKVYkZu1p0AZ5DSNwdUMjZYs3w+D/1/Idq
+ THIPKJbPyAB2A8tavqlG1wJxJE8FqsxHP9MOLCTIQFKZBtYETzm49uc3x7lQezLOERPh
+ MMi+yOI9hxqcjCdgHKEKeQpHQ86leccu7GvHpLth8t28n5xBVmR6FkzMmVl4AQytXFhq
+ f8tQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795521085; x=1796125885; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795521148; x=1796125948; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=vjlb8k64PhCpMx4F2Ik2b1XYTzrg3aJBi0/0Ruaop5g=;
- b=MWsSc69IjIQ8KFLJHAGAhD+20ZbUH4CqYgQg8UrklAfv875/9ieImwUGJQP8JsFuHX
- dHnDFkiXMvo4ArFRuHFcoPU/YoyvJ88sPsHYoybhyibYfMHHmR+igAz9ivGgobskxfFt
- hdZ6AO2/UtTWKb20ugEMrW4xMFZc6KmU/1ljZIoJD6wuf1UoZNBtJCNrDixOoF8lA+rh
- x7MJEfNQsG7UHVFbEpf6+A5jJVBtQR66NOxzJNtQSmr/L4fv0XwDmuQfOs+wR471iPGY
- 5RxCpHUR0FjDzdbOR0phz3t/itnRGE7PfVfveI0xjeai+tKwNJy5IYdeh5IfafbramXx
- 71Og==
+ bh=GmrZTVnD4qHSCdHeLEXeCSuJkPlieGR3EuOjmjRaOPM=;
+ b=gdYax4BSDeqQ6su3cWGE8NUrqhD/1rTR359glS144GiL4KRD0cxzzfQBQSE+LcxCQG
+ W+OZuUGb1fhLUevBx2Y1ZEJIUp6c31LYD6tqPxBmffki5F5qkC4vLZAc+h6pwibyJzTO
+ kAbY1iz3j6wbWoyI0exmzN4pyj5bhP+AVzMa95Abpj3MAh3WCRabXzmUqlgaIoeXHC9T
+ /y/E5TbQ+8S+kWZXjPMkRIPgL9LQChJiRuyhqLK8QbIKzvm1H3Yl/VrcwIZFFBDOzBbU
+ 3W+1ESRQ2cTztdittavcIoiJ84SSiREWYQ/h5VF1KRV69AAz6+L79zC6PI6rlXkuk09a
+ qTEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795521085; x=1796125885;
+ d=1e100.net; s=20260707; t=1795521148; x=1796125948;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=vjlb8k64PhCpMx4F2Ik2b1XYTzrg3aJBi0/0Ruaop5g=;
- b=pFI5AxFazk/P5PCCg1tztYNzeocqRKFmODbFEsUqLhbwkxPyGy6ntVwyeC3XRrLeVx
- HMb7TW4d4zk899KB7GIvVQkCOV2v2Kr5/7Qx+VlVPkw0E1oXioQ0lWAV0QvJXroaw4TM
- 7Nk3xqGB9hHJrvAfD5n9Lwn1UzfDle5MsT+i4m4cURCoTDJ+J5RObJGIolbSJMnAmYif
- fkzx316tGtd6RKqRclDfte9RUsiliMFaYOxzb2yJt7XSYl59Zi2nLxa4igKWG2ll3jF4
- odOqbEQlYULn4WNTi5UqYld1TO+t7zFAZrM66NcKUq2kV1ak742v7MD+TgnzvyKaCdIl
- WmIg==
-X-Gm-Message-State: APuU4Z9s2AWsY03tOAGlOuh+AB8SU7nu2aXggF/Twq3jFr8aETNSX2zm
- CD0SM+9LVxHr9qw6tjEOXhA6QqIcX7W90MNyS/cbq4yN14j+nViRhlfJJ1YQNuVEBL8dbnzmzlB
- Iy0g2gYo1j74LFL6EG1mgyQQXUrhlK9heGumFtnbmTQ==
-X-Gm-Gg: AZFdTZcdBZKTDdE6jDjHyUDmxDfQ8WLd2HSW/AVSyT5KZ5XNuXuLtKsagvZP0j0mBMI
- XwhxpPkACGIDZpVHwAzUd+ImXvBb8R1W3Y3cAV+3TMg/CX0TmwCBX233bVVgNhJUaHozze/5a99
- kvzBt6nt3v7EaiyAwMrj+guZGaX0dJwP8oQfLMPqhqRI5QvKZD4/Vc2n8ErF3msJ0zegKPiDvBy
- DoKXUaKsPB5K4ORev9SDFQW7MEXYJQSfRF33wrX1E+JwPWrAzGqMxqv5tHOfKn3/W1a8Qd83tma
- uePsppoWjMgAQCpf3MXyhFLFQqiV2pS4xB+L7HmjHRCCQZWdomX0ShsIs9qkusAqXyu/NoqraAR
- joAoeMiR8pNSDCJ0tTLSxpe/4wblvy5c54WlvykDM2b9NX9P1U/CJ0dqH2BFIENKfBYnziWLmTE
- 2CtvmWyppYhGIpTaAMnlq3
-X-Received: by 2002:a05:690e:144d:b0:67c:f8c:22ff with SMTP id
- 956f58d0204a3-67dec47acbfmr6562143d50.29.1795521084889; Tue, 24 Nov 2026
- 03:51:24 -0800 (PST)
+ bh=GmrZTVnD4qHSCdHeLEXeCSuJkPlieGR3EuOjmjRaOPM=;
+ b=d/BxSNFQ4Vyo5zwN2wF2BY1w5osZxH3j5It5qcKk7Ilvv7NjLtTfrPNWhHR7j2zOQZ
+ zi0gt0+vqv0H86MNG9v4i314Ges154lHY+MY5oWSkkd7oKVQR27iojXlEd96mm/JTWwt
+ ljOBo40iEgl+GXYrmJCC0prLiRprORuC2/MqMizyQoKp7JP/AAGZw+DcCy9JsHdTuS4K
+ jt5x1AqbaJGIkvbRn/JRoZzM3XxPbiMBJXeXBW67x37yywdogS9gU0rKR81k5Oveil+w
+ SqFQecfHZSC35lHY6rvlcrPMJfwhZgVSm2TTToCBTkWe/aQ+KmPDB7/YZgdEOJnkRPcR
+ sz2A==
+X-Gm-Message-State: APuU4Z+OZrLehP0o37TcTM9JhAaFKCMiM5iG75W85TjCUVIOFmCLzRQS
+ KySaYwzR9umEC+WDngTLidJcZ7fDT3U2UWmZdvxvgZgDeulzJq6kIlcKCKyp+/1YMEnSe6N/2OT
+ OxUdC3VkMDa9dea2EKTIVQC78vislWvctfVFHWu8bDA==
+X-Gm-Gg: AZFdTZevHH+gR3hRImuWogEPq2WNXLV6ykX007JhfvbUK8SSFJOeis1SaFTgKxlTIVN
+ +xzeSccvpBP29Wyny3a1jvjlAqMPsS4QjqaV2/tiRKVvr/Pe/9WghVAjLazq10+hexWRqdeCHhr
+ kC1WIbiaoJW6x5ggBm5cMvEE8UwUlwxGRuJ1vZpGVyAR18T/kvSjywxnocxq2ysEfC70gqCqE2N
+ iKX1z3Y2oLlp2MHxTlAxKpEsfqZjT9F8vmQNTf3Vh2/YRN/wsItYzoEblsTRQGKZ4MZmn89tHFd
+ slq/CvwpsKKVHcaEZrCFreGxGcDMcfd6DHisKOD8T4Qf0hFbQ4peZatOHD9hHsf41vc5LoGD1lb
+ VGa3zWED3n+9Lx4tU2Q+WE6fmEZ+3q02bs9AmF/0jV3AlWF38t/A2PreOsDZpaefKigmTOEJfy8
+ uX1GXkqQaSm4bvyQywjfXH
+X-Received: by 2002:a05:690e:4891:10b0:67d:be3c:9582 with SMTP id
+ 956f58d0204a3-67df449824cmr4474627d50.74.1795521148229; Tue, 24 Nov 2026
+ 03:52:28 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261123225349.54981-1-philmd@oss.qualcomm.com>
- <20261123225349.54981-3-philmd@oss.qualcomm.com>
-In-Reply-To: <20261123225349.54981-3-philmd@oss.qualcomm.com>
+ <20261123225349.54981-4-philmd@oss.qualcomm.com>
+In-Reply-To: <20261123225349.54981-4-philmd@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Nov 2026 11:51:13 +0000
-X-Gm-Features: Aa3M54qI-6nW5UUr0rN3DJ8LrR24Fmp9OT2iRL78zA4gSzdZPBgszGeKefYuDEc
-Message-ID: <CAFEAcA9Ypr6tDQzJjU2Tu9=nMxOwh=RYDSMm4DfunpxYgwQMvA@mail.gmail.com>
-Subject: Re: [PATCH-for-11.2 2/9] hw/sd/sdcard: Do not write data to
- write-protected areas
+Date: Tue, 24 Nov 2026 11:52:15 +0000
+X-Gm-Features: Aa3M54o6ijvzYlXZg-WhKcG2C314jwIuAho2FN0yeUkcCdGse3a8T1Qsst9Mezw
+Message-ID: <CAFEAcA9-TFZbOcPW8mrdC+LN5_AsxkCCkh16noLjYFhtf2UKUQ@mail.gmail.com>
+Subject: Re: [PATCH-for-11.2 3/9] hw/sd/sdcard: Do not abort when writing DAT
+ lines on invalid cmd state
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,107 +117,37 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On Mon, 23 Nov 2026 at 22:55, Philippe Mathieu-Daud=C3=A9
 <philmd@oss.qualcomm.com> wrote:
 >
-> WRITE_SINGLE_BLOCK (CMD24) and WRITE_MULTIPLE_BLOCK (CMD25) check
-> write protection when the command is received, set the WP_VIOLATION
-> status bit and enter the receiving-data state, relying on
-> sd_write_data() to ignore the data while WP_VIOLATION is set.
+> Since commit e2dec2eab04d, an illegal command resets
+> SDState::current_cmd to 0 but leaves the card in the receiving-data
+> state. Data written afterwards reaches the g_assert_not_reached()
+> in sd_write_data():
 >
-> However WP_VIOLATION is cleared on read: it is cleared when the R1
-> response of the write command is built, before any data is received.
-> The data is then committed to the backing image, bypassing:
+>   CMD24 (WRITE_SINGLE_BLOCK)   -> receiving-data state
+>   CMD2  (illegal in SPI mode)  -> current_cmd =3D 0
+>   data token + data            -> sd_write_data(): abort
 >
-> - the write protect groups (CMD28) for CMD24,
-> - the CSD TMP_WRITE_PROTECT / PERM_WRITE_PROTECT bits for CMD24
->   and CMD25 (CMD25 only re-checks the write protect groups).
+>   ERROR:../hw/sd/sd.c:<line>:sd_write_data: code should not be reached
 >
-> Introduce sd_wp_violation() and check it again when committing the
-> data.
+> Commit bd6207903eb8 already fixed the read side. Fix the write side
+> the same way: log the guest error and ignore the data.
 >
 > Cc: qemu-stable@nongnu.org
-> Fixes: a1bb27b1e98a ("SD card emulation (initial implementation)")
+> Fixes: e2dec2eab04d ("hw/sd/sdcard: Remove default case in read/write on =
+DAT lines")
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > ---
->  hw/sd/sd.c | 23 ++++++++++++++++++-----
->  1 file changed, 18 insertions(+), 5 deletions(-)
->
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 6b817f11c5d2..04870c7b3962 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -1481,6 +1481,17 @@ static inline bool sd_wp_addr(SDState *sd, uint64_=
-t addr)
->      return test_bit(sd_addr_to_wpnum(addr), sd->wp_group_bmap);
->  }
->
-> +/* Return true if writing at @addr violates a write protection */
-> +static bool sd_wp_violation(SDState *sd, uint64_t addr)
-> +{
-> +    /* Permanent or temporary write protection of the whole card */
-> +    if (sd->csd[14] & 0x30) {
-> +        return true;
-> +    }
-> +    /* Only SDSC cards support write protect groups */
-> +    return sd->size <=3D SDSC_MAX_CAPACITY && sd_wp_addr(sd, addr);
-> +}
 
-We could also call this from sd_cmd_WRITE_SINGLE_BLOCK(), I think
-(it currently has the same checks open-coded).
-
-> +
->  static void sd_lock_command(SDState *sd)
->  {
->      int erase, lock, clr_pwd, set_pwd, pwd_len;
-> @@ -2691,6 +2702,10 @@ static size_t sd_write_data(SDState *sd, const voi=
-d *buf, size_t length)
->      switch (sd->current_cmd) {
->      case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
->          if (sd_generic_write_data(sd, buf, &length)) {
-> +            if (sd_wp_violation(sd, sd->data_start)) {
-> +                sd->card_status |=3D WP_VIOLATION;
-> +                break;
-> +            }
-
-Is it correct to do this error check after calling
-sd_generic_write_data() rather than before ?
-
->              /* TODO: Check CRC before committing */
->              sd->state =3D sd_programming_state;
->              sd_blk_write(sd, sd->data_start, sd->data_offset);
-> @@ -2714,11 +2729,9 @@ static size_t sd_write_data(SDState *sd, const voi=
-d *buf, size_t length)
->                                    sd->data_start, blk_len)) {
->                  break;
->              }
-> -            if (sd->size <=3D SDSC_MAX_CAPACITY) {
-> -                if (sd_wp_addr(sd, sd->data_start)) {
-> -                    sd->card_status |=3D WP_VIOLATION;
-> -                    break;
-> -                }
-> +            if (sd_wp_violation(sd, sd->data_start)) {
-> +                sd->card_status |=3D WP_VIOLATION;
-> +                break;
-
-This is inside the "if (sd->data_offset =3D=3D 0)" block, so we
-will only check for the first time around. Is that sufficient?
-I guess so, as we presumably abort the command on the error
-so can't come back in here for more data unless it succeeded
-the first time.
-
->              }
->          }
->          sd->data[sd->data_offset++] =3D value[0];
-> --
-> 2.55.0
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
