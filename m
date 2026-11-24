@@ -1,141 +1,143 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE336606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 19:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B57F606A33E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 19:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZFmdqwxd;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=fANItIC/
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Y7Nd8mhq;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DrTkD+xE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVvrZ-00025Z-73; Tue, 24 Nov 2026 14:07:33 -0500
+	id 1xVvsn-0003RT-IN; Tue, 24 Nov 2026 14:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xVvrX-0001yV-UL
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 14:07:31 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVvsi-0003R5-SB
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 14:08:45 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xVvrW-0003sa-4W
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 14:07:31 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVvsh-0003wB-6J
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 14:08:44 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOIXcpq2037153
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 19:07:28 GMT
+ 6AOIXKNK1767112
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 19:08:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TqXYf7mj2lxRiI+Dd2OHCF7V23d8BqMgBl3jbXt5oqA=; b=ZFmdqwxds8GHshZm
- skHMtDR7XEjz7RtsaoPhOCvkml4nUAyVs0eLMWCIPoJ+5/mal5qc8qxDfaI6d23e
- O8BUugaI3kMADfDva/n2e4P/k85jjaXBTLR+xRokvXP0yoNX+KiV9sx+/ENeKXNt
- nVoRWQeDEfYVbrF6JxUrUTfvd8+yC+lJiM8roj1sXcN9MKfLfkwO2oeNuq9TmNiq
- 3Rt0lLgDZmX9BOuYx5xSYitQpm6YnlSn/yUxoI4W5yA9HMhznBElGu9UhYAhMBow
- L/uuimJECBHam2lxp2id7CZc4hrKjl6rwG1pQXLKrdSPnnPliqbhSUzASXWbmTFI
- HMg9Hg==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5dnggw79-1
+ S9J1lg0QvHYa65ulaElEr8MOiFfuspahAkzS0DlLT0U=; b=Y7Nd8mhqH3Tvfhs+
+ buqpwbf8lO8nAiwJ9koTCq2SkxCrdnNqo8SN5KXGK62ACPaqPILPMtfrs38KYact
+ qHco6LlOnL+Pi9CCyMA09HaIXy7DLQ4ubAlbQto8kzCgdWR0Mk2z+olTXHNQe4Q7
+ VEv7uh+8NL3vGWGgcQHNiEVm4tsWZtFbgaBlO3ozccve80NmHjoB7dT1TWT5Kdiz
+ 9009ZhJD6dvHDLN2TKFLc19f6+tXIt2p5olMNjYm/CZZqkQp2CCXrcX38tQBaGX2
+ T2ZphymF8cc3qsrZNU/IK/wmJpHlGy9Iy9olex5QBtkNcmTnU3NjaQmelNkUTYDU
+ eJJ2rQ==
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
+ [209.85.221.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5egs8n95-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 19:07:28 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-38355b03cb8so4825686eec.0
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 11:07:28 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 19:08:41 +0000 (GMT)
+Received: by mail-vk1-f200.google.com with SMTP id
+ 71dfb90a1353d-5edf86a8c00so1389484e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 11:08:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795547248; x=1796152048; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1795547321; x=1796152121; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=TqXYf7mj2lxRiI+Dd2OHCF7V23d8BqMgBl3jbXt5oqA=;
- b=fANItIC/SlVdGh2uqrbCKWX+0psObVeP+tc8y7K6kWkqPOxsrGYxBku2WqvkDYGWns
- VBEL4oFgsCi9hCYFf29aLibVePOiRt2MoxI5Llp8owArrRuN7c2ycNPJ/GyFKPN/OHgT
- Ga+++uHNtR/WkMr4CyzNbYPh7S4UWHG6DYc2CfaY6Hg5Z+WMEmYoy8zQBEKQ+ZRoAKv6
- 73eSCBiaLXX+MBZt2Fngf4kOV83MiT3v4397GNwC8duCF2x3VEpnTrFEErgalx42AUF8
- DjBTNXjN2Ep6Jw9TYVcEhqg5LfkGGSyRQOjJGI0JRu6Ul55lvvU7B4f4exH0SxUK7ytO
- LzeA==
+ bh=S9J1lg0QvHYa65ulaElEr8MOiFfuspahAkzS0DlLT0U=;
+ b=DrTkD+xE+Kk3F2iRrfHl8ZpRerHeOxFHA8S6nbfkv0IG5jclvLgEHbBzlE9YO/2xbE
+ PXmirf4HcPVp+HrC/AdZn4rS0qydOrTPTRF+WXkozZsFY0vhgeNIT9ZCsVXnFA4XRTxj
+ lg8puvRZdTAFMaIt2pCm/nV/JVQvKTEUJn3mvRN0fUki+5ztet5w8uJxzCaCsqkFUltQ
+ wU3Ci3w+LosiT+kHxqZ8BQxKpDyyEF18CIzOIA6xscM/XLJ6pBAJUiWv5qIFah0dWNMs
+ LRO26XUvKiffcUaaQ6fqeeBHpAa1+c0QFidbVZjctKqrG9GqWMkS3jRGcgMN92gv/Bgs
+ 4y1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795547248; x=1796152048;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1795547321; x=1796152121;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TqXYf7mj2lxRiI+Dd2OHCF7V23d8BqMgBl3jbXt5oqA=;
- b=dqKG6NteEXXTNwCZyTOAhxBqP7uDk9eBXXThSGMv9tb6SCth/eB0ov9E+762PPj0hg
- mJctaNtEmZDO1A7EApfWjNjw9KS+HRtbf2+zn60U1lZNbpMPu4lqIQDcAuvtSYVApsug
- zOB54UdWC4Ul1Zm2pkF1KnPvTjHwrWspNCNwwRhxVfRkYS1ius2jXPW0d6+c5IDzfh0k
- fcO9kEExRb33AplCOjDNUf85DVKbHIJCQ0f1wC1UVWJiBE52Ml7+vY2kgb12IfMUOawx
- IUykh/NnMFMfgPS9Py0Ov4jFqT5e3uouMHwD6FW0haVhOPdXx8q0CtOLAFRdVZgDRLwj
- eSOQ==
+ bh=S9J1lg0QvHYa65ulaElEr8MOiFfuspahAkzS0DlLT0U=;
+ b=aeY+R3pDgFq+Pe6lVbhCtJBUw3qj/TUQnn2eC7o96SIVruEpz1aSDgYP34d2Lq6o4H
+ 2JvSrwukB5HkBTl4q2SL+Q4rL42wL7tdkXBVF5gbanTSUbkgym72Qt7FBVeY/A7/6K7B
+ IK2jna1cE1ShKXsWSu2l7g4Y60Nfvsu8XOP+mNFQR2KERSj81dxam/2PLtFYXmd48rSZ
+ fBoE5fyMfLt+KyFHxwD7Lexw6hHv75b6V4sKl/tQhUA9r3qOJ0klJDWy+AIF1PRVQT6o
+ QYD2MbXfol9B/PwH89h5EoJDeMwXc9vgZefYTzsF2m4qayncrwtd9dYRzRWKcTaoxqop
+ vY8Q==
 X-Forwarded-Encrypted: i=1;
- AL+hErFm2C2blw+qaFylkaVBMhxmub0eDkGHdpe686CqTSJKJBrIo6HtfCZvPQIe49YboxV52OSJctUr+A2T@nongnu.org
-X-Gm-Message-State: APuU4Z+qMTx1z8fnmsORvqqSFgFvoKUJhtNBGnoBNvfW8fgR8WiNwiNH
- uhjZS1pe1BsCv7/NpQ7LNTXp0OhxZxmwUOOCyuDbqArOhhuD63xggOBC8JOa6pGarhctyJdanTv
- yYgS5whDred6fUh3UpY2tHGwgSXvAq5rhmxPnvn8JcGzfDoZ4T7V1eNjyDA==
-X-Gm-Gg: AZFdTZcFrijcYosz6ME9cjRca0719wi8HO31O3OkAdh0WWZSfAQqcglWjzWs3vy5JbY
- HPJegbJtQ5ngZxjO8GieaV2XApYeLJSd0HR6RRefivJWEs1LPaHDG2BcTGxwBstpbJhX+hfmqaa
- G/5ys4BnLJOpZaF738P4ZvZ9sOBP0B6c8AVB4b5HhTS7QeX2KVnkDXlilsdojYA32snJdPYTwBb
- mdVVI5qUwA4b5TWBwSIAZmZlm8rh0Kuyux1MTrHEf602VWUlb1OokNg4bwlycS1BvwTOP2kELKY
- cBIdXRyJOtTrN4coKghSqx1KLuCuhRvFRyY4pZk6IYBk+MxsdNyYayqjgPowzAVZ7cGHf2DWuFA
- I2Ly5HRB4/8wtW40tJmyAKLRG4/Xxz0efLD9bX5yadTjV0e98Icp+EmxCQFRJeWcGnZx93nnCgg
- RNbl3ycR8jwIsy6+EIL8mt/rWUQteh1Yh3RMSOizEmawU=
-X-Received: by 2002:a05:693c:87d6:20b0:386:b05f:2192 with SMTP id
- 5a478bee46e88-386b05f23e6mr7353376eec.21.1795547247872; 
- Tue, 24 Nov 2026 11:07:27 -0800 (PST)
-X-Received: by 2002:a05:693c:87d6:20b0:386:b05f:2192 with SMTP id
- 5a478bee46e88-386b05f23e6mr7353344eec.21.1795547247072; 
- Tue, 24 Nov 2026 11:07:27 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-386992b404bsm35037088eec.1.2026.11.24.11.07.26
+ AL+hErHQ+Xb6F4k5Ubo1+9Qi7fsv2jv0JZCvXGBaE1t50WBS4LBBY3ELqHHF4Fx/MyI4EeNHChbECKDDycfG@nongnu.org
+X-Gm-Message-State: APuU4Z8qVgYzguq9ii9S3Zcx0JUH/v8C6YjU4S/j6ZiNQZo0VlJT6KQJ
+ JLuijaULBvNM1AtsHZsR/VvSYZB3zJDCG+0dcFB31JK+StGU/YzrtjHPpDhFN0dRIHcpQ+jGoGI
+ XIU2+RiOZRw4EKRJSSCfW6fzewW6vpMzwteFlY3MKoRu/84YPhf1AIwfFGA==
+X-Gm-Gg: AZFdTZcmpjGr7lAKJV+/L08W2shOt6M9Uio2WFjFMsm1ESh1L7C1xZTu6v1oMnYyZcW
+ tGUiQc0ILMEzaMmERVd7QrwAIzYi95lz/D/6KgvCgiK1toMM1sQllfbOpDDW/Cdj2L2ZvJbRhGs
+ GhoJbUagUGksyFiT5lTynt1tU/PJxXFwJOpveYnhbfUCrmlacrm1iaMnOCVm5GNmbX4LXa3Z0NG
+ 8mUQxCBtJC+szHx0Y+7Ylg7RmJ/Ee0mrJ/AjMYM74TvlFuorwDYmmV8zZo32PswCIsqiSxb/Pfz
+ tAEIFwWPNndK0YaSQxeP4LB0Vee5cZcnMoauJlNw90NLQ8gIiSveVpx4VS57ivcSPkJGcMIcpVA
+ kkpPUX5V0VBtgjiXLkYtlhV/FjH6rHWkcQ6BPCVjGY35WDnBgwxd1FE0h7WLkSBk8Ukyfiq/hJw
+ h55yYxSQE=
+X-Received: by 2002:a05:6122:78c:b0:5ea:b9b5:8c43 with SMTP id
+ 71dfb90a1353d-5ee8af35e3fmr8874354e0c.18.1795547320403; 
+ Tue, 24 Nov 2026 11:08:40 -0800 (PST)
+X-Received: by 2002:a05:6122:78c:b0:5ea:b9b5:8c43 with SMTP id
+ 71dfb90a1353d-5ee8af35e3fmr8874317e0c.18.1795547319873; 
+ Tue, 24 Nov 2026 11:08:39 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb853ca452sm446441695e9.15.2026.11.24.11.08.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Nov 2026 11:07:26 -0800 (PST)
-Message-ID: <76763b46-f909-4e7b-a0ac-01aa4aaa237d@oss.qualcomm.com>
-Date: Tue, 24 Nov 2026 11:07:25 -0800
+ Tue, 24 Nov 2026 11:08:39 -0800 (PST)
+Message-ID: <a95ab43d-b61e-4818-a463-ce090d639b56@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 20:08:38 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.2 v3 7/7] hw/hexagon: honor configured RAM backends
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-References: <20261124190314.3882017-1-brian.cain@oss.qualcomm.com>
- <20261124190314.3882017-8-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 2/3] hw/dma/i8257: Zero the reserved bits of the mask
+ register
 Content-Language: en-US
-In-Reply-To: <20261124190314.3882017-8-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA3NSBTYWx0ZWRfX/gYR49RNGuom
- /kI733A+ZN6goizbDuvJ84zc2vN2wqUQ1/EEJaGnDx0U352H+hLXvBlvzN8uL/aGQsGFWAeLO+K
- Wq2p7v44/Sx3EmNyMpM4pX1yiAQ42NM=
-X-Proofpoint-ORIG-GUID: atFvRA0sdQsIaI30yeeXbYGPLAe57Xrb
-X-Proofpoint-GUID: atFvRA0sdQsIaI30yeeXbYGPLAe57Xrb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA3NSBTYWx0ZWRfXwjvYRAUaNMcZ
- OFQwvQGyRnp5GUXuefTKvElW+6WO8ksWyzYoN7uAB57do1MgZXv491Eb96croIA13q3KoG+5HfB
- RfaG7UkfPHFqtN67TPPTXxEWzaG0hJ1I99GyeJlSaNhhbUXkGg/zCY/lte8h9dCMBxncKDra7ug
- pFtzEklbdXJ8cipd8Wsu3U+ye2ZvgQbjMfrSNHWNYaDvQdaTicQ+2VaQQRE7DYbRjv7jPtPHhck
- o1JpOttU69kN8Im6tLE+3MEitiZjSAZ8P1NFupx1PM7dbbMNDO9ghObght9jpkyFuZS9of8UvOJ
- BA7EcFvbuHJOLJW33n5/i6m6uTYfV78ARyk5u3D1TGmdCe7AXr1vaUYOXQ43sutTHEDIoR5SXse
- QAbZW3VJqaoVLbmalJRSEHXi57H6Hfk0pnIFybeS08pooqV1dl0i2qfPJ+vT66/hVeQe6DIe3Ys
- R+UASv2fwKmsFX4O/Hg==
-X-Authority-Analysis: v=2.4 cv=U9cHnuru c=1 sm=1 tr=0 ts=6b05e070 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=bjMIgEwd9pQJBBK6TcUA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20261119220838.52034-1-philmd@oss.qualcomm.com>
+ <20261119220838.52034-3-philmd@oss.qualcomm.com>
+ <c2927ef9-3a99-4fa0-b708-474d7cdb34f2@ilande.co.uk>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <c2927ef9-3a99-4fa0-b708-474d7cdb34f2@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA3NSBTYWx0ZWRfX3qMyFHPl3gFB
+ VM3x7p2mRHZi/V8h3Qhh9RbUQK4iprg00ZrUAJ9aMWRbsgj/awa5mk1II8UXIxIoZBYlKDEUyKu
+ Xgac3ZBv9Mv7ZDNlLhYVIXPLbPGDQf5S1h8r9xTBIvHBGqAKZ6n/u/3I3fuLxDStVYvvn0xM0uo
+ 3O9FO/+1WHPtLUPBoCC3WmobMVdvpquwi5soEMhPqaTvjZfH7FQ32sja8kEJOWkmMig3P31rWgc
+ nsQAd9EkbkgknyMGGgoiFHTmfkvBqJr53srGqWCsy2lUeXcP9COBzx4VqAiMFKBeCKdNP0AZhld
+ m1Y1nUt/4mBxur895Q59COv980vxZ6wLI/+hPmxAjF2g3YuCnhY2/A6y6U8XsUwtE35IAWhU61C
+ ieMvKPxvVXxpV7Cvt7DewFb9ueQyqBbM2ayHKq9poqXtd97eBRoDUGGFOhJFStl0LxqT0zcVF5K
+ +yhtfd64yEPirQWVI3g==
+X-Proofpoint-GUID: iwoLKBfbRrhR0tOgzxNizkVcr-0RUT3X
+X-Proofpoint-ORIG-GUID: iwoLKBfbRrhR0tOgzxNizkVcr-0RUT3X
+X-Authority-Analysis: v=2.4 cv=Zt54uN7G c=1 sm=1 tr=0 ts=6b05e0b9 cx=c_pps
+ a=wuOIiItHwq1biOnFUQQHKA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=a21YVJ72y71kBvQZupwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=XD7yVLdPMpWraOa8Un9W:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA3NSBTYWx0ZWRfX7jIRXeK8nP+J
+ iR43R7xATPCD6KW3yWX0e3dQ5VHyJNTw+c4rSPfKsVtadQY8Ipu0WshFOKNagWeiYh0nbqJ8m0G
+ cVe5vFKRRkI+PPFvw2ruvY6s7UJ0mS8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_05,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
- malwarescore=0 bulkscore=0 impostorscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240075
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ malwarescore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ suspectscore=0 spamscore=0 phishscore=0 impostorscore=0 bulkscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611240075
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -162,23 +164,78 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/24/2026 11:03 AM, Brian Cain wrote:
-> The Hexagon machines consumed the MachineState memory-backend
-> configuration but always created and mapped a separate DDR region, so
-> a memory backend given with -machine memory-backend= was never used as
-> guest memory.  Map the machine's configured RAM when present, so that
-> file-backed and shared memory (as used by the migration tests) is
-> actually guest memory.  Keep the board-allocated RAM as the fallback.
+On 23/11/26 21:48, Mark Cave-Ayland wrote:
+> On 19/11/2026 22:08, Philippe Mathieu-Daudé wrote:
 > 
-> Add a regression test that writes guest DDR and verifies the bytes
-> through the backing file.  It fails without this change.
+>> The 82C37-compatible read/write-all-mask register has four
+>> channel-mask bits; the upper nibble is reserved and reads as
+>> zero (PIIX3 datasheet, section 2.5.1.5).
+>> The model reset it to all ones and exposed the reserved nibble.
+>> Keep only bits [3:0] in reset, write and read paths.
+>>
+>> Fixes: 27503323968 ("Soundblaster 16 support")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 > 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  hw/hexagon/hex-subsys.c           | 10 +++++++---
->  tests/qtest/hexagon-config-test.c | 26 ++++++++++++++++++++++++++
->  2 files changed, 33 insertions(+), 3 deletions(-)
+> Out of interest, does this solve a bug in that a guest OS functions 
+> incorrectly without the top nibble being all zero? Or is it just bring 
+> the emulated device in line with the behaviour described in the datasheet?
+
+I'm playing trying to model the MIPS Jazz ISA I/O ASIC (not datasheet).
+It is closer to the old i8257 but QEMU models via PIIX3, I don't want to
+break PIIX3 so use its datasheet, and was trying to avoid modelling
+i8257 differencies. I'll see what I can do, no hurry here.
+
+> 
+>> ---
+>>   hw/dma/i8257.c | 7 ++++---
+>>   1 file changed, 4 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
+>> index f44632de3db0..ade8609ff438 100644
+>> --- a/hw/dma/i8257.c
+>> +++ b/hw/dma/i8257.c
+>> @@ -242,7 +242,8 @@ static void i8257_write_cont(void *opaque, hwaddr 
+>> nport, uint64_t data,
+>>       case 0x05:                  /* reset */
+>>           d->flip_flop = 0;
+>> -        d->mask = ~0;
+>> +        /* bits [3:0] mask the four channels; bits [7:4] are reserved 
+>> 0 */
+>> +        d->mask = 0x0f;
+>>           d->status = 0;
+>>           d->command = 0;
+>>           break;
+>> @@ -253,7 +254,7 @@ static void i8257_write_cont(void *opaque, hwaddr 
+>> nport, uint64_t data,
+>>           break;
+>>       case 0x07:                  /* write mask for all channels */
+>> -        d->mask = data;
+>> +        d->mask = data & 0x0f;
+>>           i8257_dma_run(d);
+>>           break;
+>> @@ -282,7 +283,7 @@ static uint64_t i8257_read_cont(void *opaque, 
+>> hwaddr nport, unsigned size)
+>>           d->status &= 0xf0;
+>>           break;
+>>       case 0x07:                  /* read all mask bits (RWAMB) */
+>> -        val = d->mask;
+>> +        val = d->mask & 0x0f;
+> 
+> Is this one actually needed if the above hunks guarantee that all writes 
+> only affect bits 0-3?
+
+I guess not but that help to be closer to PIIX3 datasheet. Can drop.
+
+> 
+>>           break;
+>>       default:
+>>           val = 0;
+> 
+> 
+> ATB,
+> 
+> Mark.
+> 
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
