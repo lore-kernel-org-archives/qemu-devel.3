@@ -1,111 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8BF606A697
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE67606A696
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 21:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ju3h+sEC;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Qr9Ia9lv
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=DmHbNR6U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVxhv-000294-90; Tue, 24 Nov 2026 16:05:43 -0500
+	id 1xVxiJ-0002JB-E6; Tue, 24 Nov 2026 16:06:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVxhu-00028F-5z
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:05:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVxhs-0003bZ-GU
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:05:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795554338;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bu4NPkAfAAYUOpQXq+vjW8BMXDWwRj6cprg5oTgIVGI=;
- b=Ju3h+sECMRLauuglYF1DYN6QQcH0ld6i+mr4lSwvcMtd+SyQFOn39SQSfQ8COWC3JWIIvM
- dnSLfMWsOARrobobe23i/4Efn9lfOw6pV/9dvPXANGO2+ZTpxEDUz4lUOm2qwVqwPonpFe
- bXvd8tQY9jy6mM50azq8ZlGicuvAiHI=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-qJayNLbbMLSGYU9lONCXAw-1; Tue, 24 Nov 2026 21:05:35 +0000
-X-MC-Unique: qJayNLbbMLSGYU9lONCXAw-1
-X-Mimecast-MFC-AGG-ID: qJayNLbbMLSGYU9lONCXAw_1795554335
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-94975041698so1306466485a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 13:05:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVxiF-0002HZ-DZ
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:06:05 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVxiD-0003d3-1C
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:06:02 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-67db0791748so5735892d50.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 13:05:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795554357; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PeKoS1/NwOXQbyaTVs4KgEHHFvtSGphXqP8tdaiE8gdsA81bhzdp4+MX/meQ+iuD8p
+ 0qK9Yeu4B/bFZ3FkUC5ILFaATMfUpcWNJoaKHmi+nw7iSBQ5/1LG/M/mh8eCMvGjdjY8
+ s83BmgI3TPrRkhwFbezGAMQrVZqyN7x99EQ9DoKAclQ2ZK33zdwg/eZQMZpwjjJo3fD8
+ Tk6MHN9kaTT+oghBWvwoJquzr1qEtEKShMyqN9iQtqDMDKqAUWKfQCI0+03PGovbc2MM
+ zMdXXEck3/0V2ev20R2QXqT/FPFcoZaqRrO+Fx+YQKUh96zYRI6UVzv8ql7kCcF503oH
+ A6fw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=I/f6r/ExPk9REdTgv8EyfMo1qoPzQAZJRilFJwbfvMU=;
+ fh=WIdQJohB0vIqxKCdH0snD1wsfK/6NXLtzjVX+0IK7aE=;
+ b=kwrrjiisJgtgnS+HP3qPK8rLAizqhgZcy3uYIMZVCnn0Q1FWAi15SEoneHZsMhAyzo
+ pDixo974DgKTufwN5+tzEoGwEExVKx5Muv8sypyRl+vlbNkSfAAtijL74bRPaPrk/DDr
+ GC36m/nQ0vff3BEbnnzBFmE2LZdJV+nRuwLkLkPNBnyIyaooEBjblQSWR/dvDRRXUxjQ
+ L4OYxISuUfBhn2fPA6xlE8s8RZztDgKF3STkS6b+Pl5vrRoDpJB5a0z5PmJPPdr2Okdd
+ cJrP2Th8HN2oCaekOovCqnhBFa7u7CnqKcvV0NrucXWyhjfDbSWmF1GoVOZ20j0LdXU/
+ 8oFg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795554335; x=1796159135; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Bu4NPkAfAAYUOpQXq+vjW8BMXDWwRj6cprg5oTgIVGI=;
- b=Qr9Ia9lvJsKdAZ6FI2/wMjzcQhwJFhq1v6nY3cvj0MdGjFq7wPAVuRp1MjigxP8ywE
- 4FwRgBv8qrThmNUy1oZubciDDPVJo8bxIIk9xpNzm64UTHmh/9xGcS+Tno1ZrXK7CPZb
- BMl7bhTcD9RBqueKGUe6IcgL0i/EXbyGWC+93p0FUJ3ypom8e9svS3KUuNsrrTfA9ryu
- AR2easWNUyH6hcenZ2uU8oYUENtWRKdLinH0SVQt6tS2enCLMrjpZ7z7x+fOM9uYKY9S
- x0lRp+ZGCOQLleHh5K0mQayyfgXfjb2/SnJBspzg+KziUdd/3aNvaon64ylsBo8Vb3V1
- fhSg==
+ d=linaro.org; s=google; t=1795554357; x=1796159157; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=I/f6r/ExPk9REdTgv8EyfMo1qoPzQAZJRilFJwbfvMU=;
+ b=DmHbNR6U0N48QP+fK5N5Z8sZ9qaYSnIFzETixaINVBCz00NSDT20dKzfC/Hh3JD+te
+ xDQGVa/mvFiQFrnXxWsjYb8USJDzRq1XWZcYtB4y6W9SDZsT6CWMgzUhwiTNHZl67WBg
+ gvJRcOG8lqJknWpPYm4aTne4x/6Vg52LowpzK2Z+1pkw+Ryb2pasXggLm8mfYC1kyI0t
+ bPkTKz1MpQetJfAWi/blZlFHIzNphz/bPohfaxcE0xOP4iZcE+OAgI08K0QqlJbpM9Sf
+ eU/MS8NdBS/dhZkfwLffYUiwDRjUQZdSNDdzfReW4pBnuSTmCm6uVYJPF1UMXwZjrbE7
+ 2Guw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795554335; x=1796159135;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Bu4NPkAfAAYUOpQXq+vjW8BMXDWwRj6cprg5oTgIVGI=;
- b=2ql9jULV3kmZ3w3tmdjpX+J0y/GwVFt7d1ovPvmPBQojfbvFkJzy6cwWJsxjNNmL9f
- 6LFHAmOc1UiMbjbyaUNkYDXODuJeNAhx6D9kWys0bzaYj6+dzS0llyqbrgBCWEMRIVOi
- 2Fe/KL0sdXURHAEBlO129rUlv3DA4kI/ZKWUzJjj2CfPyjJcx1YlMIyVM0axwB3Ql5nv
- skeiASfUAB3Oo042WRHnBHIybsQ70q95Ml5Mwhsg6yCsS1aK7V6o8R3C8sAPBW92OGAY
- hqNsulVS5tTnCpK5XbiJGOzuSCBfT1iZEUcTKOaVgQ1anozTcPutDX9X5ws9C1+3AZnq
- i3Dw==
-X-Gm-Message-State: APuU4Z+gKnOEzbjjSKQfoiY9YU/0IiHVLmzvpSZRDgwvjr3GPS3f6KEC
- ObvFBUj/apOjDN6+vfFVfgjeo2dxd8tJ72mTj43g0Lf67c/Nn/tjjM6gvXqzdCw2JGLCQlZxpep
- AsqodzE/yOv2aPGSydlbhJGLiyp8eGsYqwGMZf94QCfyKKZG5gaYqOfXV
-X-Gm-Gg: AZFdTZeyatJjQPBfB7xmVY1L+w9oFEQO6xJDFvAmVmfHJxDWjxHihtjGCBvd+QM1J6Q
- TTAqVQovUkY5hluYYHtNSe/B8MpwaYr835EDetiSWiTGASp7aylew8DnN9QYVVhj3/KAAt/Yy+s
- ENbG0VbHDnkvFbyARAw6ScBbjvNa7UY5pLUCoFIZxS29liyo8X92T3zPI1sOS4yKzTz5ChC1tEA
- hDCXEueKC2XqSVaL199Z0Bz68ymwX0LCFjhERccUVqkh8GJPrTKe/e5PYZxu6DcEMzJyJxFh/cE
- McIYbR5A2elcljuuHvpL0V4xq+0m5vwoADT9uoVUZS9OsFW5HbEoQQt8Fla6jlL4MUJTI7TKmyN
- GOcD20YJnDW/EBzz68+nM7CcEAX27JooelELQ+yS5UufZ
-X-Received: by 2002:a05:620a:1b87:b0:949:7015:7968 with SMTP id
- af79cd13be357-949ba9a57f8mr2591854385a.18.1795554334923; 
- Tue, 24 Nov 2026 13:05:34 -0800 (PST)
-X-Received: by 2002:a05:620a:1b87:b0:949:7015:7968 with SMTP id
- af79cd13be357-949ba9a57f8mr2591847185a.18.1795554334304; 
- Tue, 24 Nov 2026 13:05:34 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-94a0189dbcesm91601885a.13.2026.11.24.13.05.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 13:05:33 -0800 (PST)
-Date: Tue, 24 Nov 2026 16:05:32 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com,
- peter.maydell@linaro.org, berrange@redhat.com, eblake@redhat.com,
- armbru@redhat.com, alex.bennee@linaro.org
-Subject: Re: [PATCH 1/3] docs/devel: relax policy on AI-generated contributions
-Message-ID: <awX8HEfLfE2x4hu7@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261124164217.1768040-1-pbonzini@redhat.com>
- <20261124164217.1768040-2-pbonzini@redhat.com>
+ d=1e100.net; s=20260707; t=1795554357; x=1796159157;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=I/f6r/ExPk9REdTgv8EyfMo1qoPzQAZJRilFJwbfvMU=;
+ b=rr8XXJzQwbgkKmTuf4cqdVOLUOvKMQiLBmG7iAhbM83oZg0SW1av5WWpoFAcoE2Jxs
+ cbd4nGQLhDYNICwrveQj6zNBVuhTo+P3/DZMnFpydyi6fHCBu4bI05MXTdqzNVq0VYxP
+ i0GuLG6QJdiJv8UQnjaGvimYfJaxTDipUlHSQw9eIAA/hjLBchApmLgqvd7rXnh2Vf+u
+ E4AH7dKgk2L94VAHN7knMsJkV/Cczd2i8I2iw8cG36bcJNCgRdaSgEOEUy8UCozuGET5
+ p9IPpW2xYFnfE+qy857x7f/SzYXXB3g3VZihl5i9o8DReV1n5qxr3zzSTiUWvTXMg81y
+ FR3g==
+X-Gm-Message-State: APuU4Z+CSMpdj1NBqDEuXzeBDYuAwQq7a7W3XupIp2WHr+ZgZS4KNI+o
+ Kh+Qk/a+QFxrD/dCmpKvkGeJmMTfOsn8JiDzA02m13U0ghmr1pN8lXeyuDIJjD217ul39mmSYYc
+ gKZ7oRCm01LBBkRIe0lLn+EyllURjslhcrhPEkzxb5Q==
+X-Gm-Gg: AZFdTZdB9CKzS0mVl3KP7DVIYXrUg5uViOf49CCOc144B8jD6AGzwD0k5OuN5mmyBxg
+ PLfkOZAVW9+AjBPBhwn5fMJ+1FpH9q/zjutHlZQ9eQdxtQ8otvtdoP1OUdKDP4lqmaf2Aic9g6n
+ 1z+o+k0kwHRlQJRnMmegtXAgUtPLDX/3ZfZOpuGumxyVT5N2/mUEzkoHbUNVZO9UZhXm8i2Upm4
+ EStJnmHrCIkhwQ8Vuz5bZE+NRR+7Vfqxsn0KbOgHojciIUSqqvl0fBFKarxkPanDOz5MpC7b0oX
+ nI9uZ88edCT3Z1ZfLuNHAiD1w03D8QKzUyvlUaOhFA0a3mServ8/6/7Xen6ayWUr9ueLS82iCZr
+ NexcLR+vYtUyvDM9FjPNbSUHkLVAbAkigfCxIC9IfA02FV5rPDh2hLL2YoU3gkKUtfhzW0G0AhO
+ 6Ck/d5nsefeCKsfYu3eykb
+X-Received: by 2002:a05:690e:400c:b0:67b:fdfb:1827 with SMTP id
+ 956f58d0204a3-67e44919570mr244291d50.60.1795554357072; Tue, 24 Nov 2026
+ 13:05:57 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261124164217.1768040-2-pbonzini@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261124185556.81132-1-philmd@oss.qualcomm.com>
+ <20261124185556.81132-4-philmd@oss.qualcomm.com>
+In-Reply-To: <20261124185556.81132-4-philmd@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Nov 2026 21:05:45 +0000
+X-Gm-Features: Aa3M54r2e2mQC9oXfZUC0xenHCX1Mke62gPIWj5cdx9pve6mws6-LqqeGjK_0Qw
+Message-ID: <CAFEAcA8+uzpn2HdNQF86_QE3E7jQL9hLvEyUqQKFTf96Tq=U6w@mail.gmail.com>
+Subject: Re: [PATCH-for-11.2? 3/3] hw/block/pflash_cfi01: Reject out-of-range
+ blk_offset on load
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,61 +118,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 24, 2026 at 05:42:15PM +0100, Paolo Bonzini wrote:
-> +The QEMU community is a collaboration between humans, not AI agent
-> +façades. The following items MUST be written by humans:
+On Tue, 24 Nov 2026 at 18:57, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> A migration stream can set blk_offset beyond the flash storage.
+> The write-confirm path would then write past the end of it.
+> Check that the pending write block fits in the storage in
+> pflash_post_load() and fail the load.
+>
+> Cc: qemu-stable@nongnu.org
+> Reported-by: phudd6 & kietvha1 from Viettel Cyber Security
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4388
+> Fixes: 284a7ee2e290 ("hw/pflash: implement update buffer for block writes=
+")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  hw/block/pflash_cfi01.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+> index 72c544dee8d2..7975d3578973 100644
+> --- a/hw/block/pflash_cfi01.c
+> +++ b/hw/block/pflash_cfi01.c
+> @@ -1028,6 +1028,13 @@ static void postload_update_cb(void *opaque, bool =
+running, RunState state)
+>  static int pflash_post_load(void *opaque, int version_id)
+>  {
+>      PFlashCFI01 *pfl =3D opaque;
+> +    uint64_t size =3D pfl->sector_len * pfl->nb_blocs;
 > +
-> +- cover letters and commit messages
-> +
-> +- responses to reviewer comments
-> +
-> +- issue descriptions or comments
+> +    if (pfl->blk_offset !=3D -1
+> +        && (pfl->blk_offset >=3D size
+> +            || size - pfl->blk_offset < pfl->writeblock_size)) {
+> +        return -EINVAL;
+> +    }
 
-[Just a pure comment, so not a request to change anything at v6 to block the
- pull at all]
+I was about to suggest we should check for other negative
+values that aren't -1, but it turns out blk_offset is a uint32_t.
+Using "-1" seems to be the style in the rest of the file for that
+sentinel value, so no objection to adding another use.
 
-I think this is the part I raised the pure question in the upstream call
-today, on that we won't really be able to identify what is written by AI,
-and what is written by human.
+(We could I think check more tightly because I believe that
+blk_offset is always a multiple of the writeblock_size, but
+the check above is enough to avoid an out of range access.)
 
-If we can't identify that in a realiable way, IMHO the policy here will be
-hard to carry out.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-It is also not nice to happen false positives that we assumed something AI
-generated but in reality written by the author, so we may always want to at
-least ask politely, or think twice before assuming the series contains AI
-generated contents of above just for courtesy.  It's just that the more we
-do so, the less helpful this rule is..
-
-The other thing is I need to confess new models can generate good commit
-messages, cover letters, etc.  at least when I tried, and at least
-sometimes.  I need to confess AI is also the best English teacher at least
-for me..
-
-I had this feeling that this rule will only add (some light) burden to
-whoever fully respect QEMU's policy, and even if AI could have generated
-something very usable as a base draft (obviously, above didn't even allow
-human updating the AI generated contents).  Then for many who have
-generated good AI commit messages and didn't notice this rule, we likely
-will just let those pass too assuming it's "human words".
-
-OTOH, to me it'll be very helpful if we could provide what we want exactly
-in cover letters and commit logs into AGENTS.md.  It can be either pure
-formats, styles of expressions, best practices of comments, etc.  But
-actually I'm not sure either, because IIUC very new models are getting rid
-of skills people wrote and can do sometimes even better with shorter prompt
-than complex + long prompts, so maybe we really only want to add the most
-important prompts when we really want to do so.
-
-Thanks,
-
--- 
-Peter Xu
+thanks
+-- PMM
 
