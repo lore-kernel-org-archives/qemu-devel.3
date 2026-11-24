@@ -1,66 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B67606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 12:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B746606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 12:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=RW4LgXTl
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XJ+uIdKX;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=aAnuw9A9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVpNL-0001bF-Ih; Tue, 24 Nov 2026 07:11:56 -0500
+	id 1xVpPL-0002yR-Hq; Tue, 24 Nov 2026 07:13:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVpN5-0001Re-Dn; Tue, 24 Nov 2026 07:11:40 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVpN1-0006BX-Rt; Tue, 24 Nov 2026 07:11:38 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id 324A920B7166; Tue, 24 Nov 2026 04:11:30 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 324A920B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795522290;
- bh=5zZm2d5/uS38ybaHOM4vGd+ktrfAZ84KDD+UdxKZUD4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=RW4LgXTleSebPzSb+pwmXX7EDK0PvxNrwjExOFtVp6RWiR9o6YxoP5M2fG488vF5g
- hMGRDXwm6A3ckOK14U/0e85p0gfzuyLD39aZC7FlQ4i20wHwJg1ETZoLMqweL5+6dT
- 6jqERdONwj5heZ8yXTiBZyNlTwRAFiZDSLIHoXYA=
-Date: Tue, 24 Nov 2026 04:11:30 -0800
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 07/14] target/arm/mshv: implement -cpu host for MSHV
-Message-ID: <awV+8sUxNslvNc4i@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-7-aefe5e76a0e3@linux.microsoft.com>
- <awBJC62/Pes+CtMc@example.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVpPJ-0002xk-S9
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:13:57 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVpPI-000754-DM
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:13:57 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AOCDMUT2848915
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 12:13:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ c5VpHWiFoK/H27Lbql3AFfyumLEtodqfBmX5nCBLmhs=; b=XJ+uIdKXh9JMfzek
+ rTGphFk0KQHpgI5RMw9qiSDe0ZkIzS9NQ5Q/9Ry/jlCsUen/j1GuHrcek/frFt15
+ aKw0K8IdpfSAg90JfgyDH23W/A7XzgdDXGSc1kDjBID5p99zjqie8pg1wwm8zRXV
+ BlkGQ8vP5r7T/9ml/zYdKCS/+b4adjC17oBBaMr8OeQ/a3UUR7BDbD2cFo+r32JK
+ HTwjtPX/o3Pk56Qf3VIsa6KuIJiT5abecuTOTw1pa8uV/4CJgyTvHeN+wGEF0Irg
+ nvHPRcXvsy3eosDEhXYqwQivtPnzpUC4ARI8WId4LCnbFaT5XvAOKgKp0dKsYVEo
+ /qTwPQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5ad7r034-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 12:13:54 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-94961511b61so749216585a.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 04:13:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1795522433; x=1796127233; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=c5VpHWiFoK/H27Lbql3AFfyumLEtodqfBmX5nCBLmhs=;
+ b=aAnuw9A9q7rgLjy3hUdkNkz5GfnANUGG1yhpPi8lV3X8sQjoKbYjfDKbCCkwmXLX+h
+ jjsTS6dFhcRm9CXyGdpnP1nuVldc350P//mu+0zHDaJcsni61TPw1cfTdllSK+thuA8r
+ kCxJOtTaP7iDPXu1ZqSaBz32poc9m6/taVLhHy3yPRvhV1aDY1AVJZM3YU87+y1zZ48l
+ EHvi827DW3lax5s7Qm+JkL1ELtGsRU3x7CQJJi9VBja/pHVCytaLJ5JhWUxCn0c8wP8l
+ ZTVnP0iIJQBONwNtsOjkInBJcUU3bpGTYLrjK59NLahrTAvKz56c95wy/CsWCgvvbgXS
+ nQcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795522433; x=1796127233;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=c5VpHWiFoK/H27Lbql3AFfyumLEtodqfBmX5nCBLmhs=;
+ b=wQGpIu3VM3qLuo9YRNH6L22tn3uKKbKOd2Rfbxu4KKPXjKC72xKmKQPaal5GB4t0DO
+ SZuXxybPWNylEkc/jPX5ytkIXMWBb7/5+4HAAegX8gahlcz+jM+j8jyXf2dkyOzz9M5J
+ MX/ykfVMzdftbJCE3ovZUUXUreCmYBkausiKsGpPC6Z9gqF2NJ3colvUVdp7sjNPN3cH
+ EneAiyO6aQdPhW5TNATWefH4uGSHB4lb0LDbzHuRDg4HsbMOrNzvYe6S7hzG7hoCpIbQ
+ PiNO+zkitW9g+zTjI7qvMaqKZQ07JojQeNZrbMHrAVCNfqebkjgNTqT5+CJEYfYO+Udd
+ Dblw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHlDR/amukZuTVRW6bu/NvWLNxbyfk4gmmMajKnm9cP6YvwR8ONwZgzchHdiHxK60ZPlatPOsGrygw2@nongnu.org
+X-Gm-Message-State: APuU4Z+YxoeypF75YDH/LT8T/cdU7KY01IEVWvT81HNG7rouT54aRskP
+ 9uTvL7c01civ+/WyQzyl6tPxUBqeJubvOszS2jcJqtEO0l2eUn0mcjWfZXhPKtuA/6DQlNzQpHO
+ BJueQ4sQDOqMq6rt/EmelbWdL1J1M3/NRqGh/GCe5YMJgtezZArvsmqMLHg==
+X-Gm-Gg: AZFdTZcJAELYNbevJwJhIu6ZzFZ+HWelpW9k3k2GloD71ObBJwgTDzrTkjM8yk7XViy
+ 1bbnSE9vYy/PxLxqkPyfUdbp/Eu7Y/amdDYI2Lai9Xe9M7RY1MZNQNTUx/zN1et7Bzj8cPfGk3Z
+ 5Ggb3rzgrFlf32JAxnXD06MItkNsJomi4B1BPVn741+II7RjU+DQg+fk5HF59+lahRzo63f3u1I
+ lWvTWezFtJ2f6oul4qyEg4bjh/X0rFZ5omBAGrbOzyFT118rWPuFojEuaN0uUQImKVLofkXin82
+ dd5bWSM5mEFbOtMmPSD3yVp+pFs/+p+bvA1nRfRr32U4jZYcq2h+APucc8ILsJkGyIZ15KfYCWP
+ aLA/Vk4J+QQbchmGG0+59oiaplbEax2wSJVp13hpKw/f90l0g5tEaOkqCXBL2eV1tVQyZGnw6M8
+ 6cxSiGpkU=
+X-Received: by 2002:a05:620a:44c2:b0:945:dd80:75d7 with SMTP id
+ af79cd13be357-949ba9a5803mr2576037885a.41.1795522433325; 
+ Tue, 24 Nov 2026 04:13:53 -0800 (PST)
+X-Received: by 2002:a05:620a:44c2:b0:945:dd80:75d7 with SMTP id
+ af79cd13be357-949ba9a5803mr2576032785a.41.1795522432816; 
+ Tue, 24 Nov 2026 04:13:52 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb906817ccsm228311165e9.5.2026.11.24.04.13.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Nov 2026 04:13:52 -0800 (PST)
+Message-ID: <648356a5-eade-4f18-b0c6-2a4800a1686f@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 13:13:51 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <awBJC62/Pes+CtMc@example.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/arm_gicv5: Fix value of the IRS_DEVARCH register
+Content-Language: en-US
+To: Zenghui Yu <zenghui.yu@linux.dev>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20261124120509.19746-1-zenghui.yu@linux.dev>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261124120509.19746-1-zenghui.yu@linux.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA0NyBTYWx0ZWRfX2XKUtRbNDd10
+ FhGDu26XnQmSXIw5Y4kcJyN1/QZe3tv+Ljpeu9A86oL+VCiO7DjemSFrabQWe0g0MhC1nVWXvjf
+ JH+tFC6zaQ5u8fGtxFCOgNvPPk1oZGY=
+X-Authority-Analysis: v=2.4 cv=cI51IVeN c=1 sm=1 tr=0 ts=6b057f82 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=nYj6kyQ59m4fXELB2ioA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA0NyBTYWx0ZWRfX3Cffb5tePr69
+ Y7YqF5sizc+kSvRvrY/t1Yswf5WcouRHl49a1+7vGD2IwV392n7vr2s9YzUeDKLePZoQPLwHSqF
+ PeLcWTFu0GCru0093HkumT/Wl76+U8JWGVoc9+qG1kTzNQt69VB1kJrlYV4A2Pr+swSseAizs/q
+ bYAmAZmbE1UNdchAnLrnpN9E2V9F7Tj9qqHmDNKZml4cz0a4c8gFkijrziiJtxCDxqO6APo/vBp
+ 4/tVe51FY9CSoRVvUm5gFbHWExtP5P0FGxWDT5aY9i3Cu8lLqdBr9pTKIat65PE7xMfgmH8sxjG
+ 97/3of7OalTugInBK4KEgmCCkMS1AB0qNYwWIxFHLSP/CmMw0TTBUu/l9Dj+xAgBMZ0sYG/NbQP
+ LnfmJnFwK+OCfTEqErgpTMQ+wykgx+9gQtBR9T8VvipZ1fW2v3YUQzf6v31cbZDBb7fDP2guJCR
+ CEqLMEVKZsIZ2MdEKBw==
+X-Proofpoint-ORIG-GUID: dadf9Mtd9lhvUAxamzerkKOrZffTaV2V
+X-Proofpoint-GUID: dadf9Mtd9lhvUAxamzerkKOrZffTaV2V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-24_02,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611240047
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,436 +153,24 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Nov 20, 2026 at 02:20:11PM +0100, Magnus Kulke wrote:
-> On Thu, Oct 01, 2026 at 10:52:52AM +0000, Aastha Rawat wrote:
-> > This commit enables support for the `-cpu host` option with MSHV
-> > accelerator on ARM64. The implementation queries the partition's CPU's
-> > ID registers and features via hypervisor interface, allowing to pass all
-> > CPU capabilities for the host CPU to the guest.
-> > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> > ---
-> >  hw/arm/virt.c                  |   3 +-
-> >  include/hw/hyperv/hvgdk_mini.h |  17 ++++
-> >  include/system/hw_accel.h      |   3 +-
-> >  target/arm/cpu.c               |   6 +-
-> >  target/arm/cpu64.c             |   2 +
-> >  target/arm/mshv/mshv-all.c     | 217 +++++++++++++++++++++++++++++++++++++++++
-> >  target/arm/mshv_arm.h          |  18 ++++
-> >  7 files changed, 262 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index bdac33a1de8..ee03a85f482 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -48,6 +48,7 @@
-> >  #include "system/kvm.h"
-> >  #include "system/hvf.h"
-> >  #include "system/whpx.h"
-> > +#include "system/mshv.h"
-> >  #include "system/qtest.h"
-> >  #include "system/system.h"
-> >  #include "hw/core/loader.h"
-> > @@ -4143,7 +4144,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-> >      if (target_aarch64()) {
-> >          g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-> >          g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
-> > -        if (kvm_enabled() || hvf_enabled() || whpx_enabled()) {
-> > +        if (kvm_enabled() || hvf_enabled() || whpx_enabled() || mshv_enabled()) {
-> checkpatch complains here
-
-Ack, will fix.
-
-> >              g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
-> >          }
-> >      }
-> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> > index b5bcea353aa..33c9e4f3e08 100644
-> > --- a/include/hw/hyperv/hvgdk_mini.h
-> > +++ b/include/hw/hyperv/hvgdk_mini.h
-> > @@ -67,6 +67,20 @@ typedef enum hv_register_name {
-> >      HV_ARM64_REGISTER_LR    = 0x0002001E,
-> >      HV_ARM64_REGISTER_PC    = 0x00020022,
-> >  
-> > +    /* AArch64 System Register Descriptions: ID Registers */
-> > +    HV_ARM64_REGISTER_ID_MIDR_EL1         = 0x00022000,
-> > +    HV_ARM64_REGISTER_ID_MPIDR_EL1        = 0x00022005,
-> > +    HV_ARM64_REGISTER_ID_AA64_PFR0_EL1    = 0x00022020,
-> > +    HV_ARM64_REGISTER_ID_AA64_PFR1_EL1    = 0x00022021,
-> > +    HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1   = 0x00022030,
-> > +    HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1   = 0x00022031,
-> > +    HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1   = 0x00022032,
-> > +    HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1   = 0x00022038,
-> > +    HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1   = 0x00022039,
-> > +    HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1   = 0x0002203a,
-> > +    HV_ARM64_REGISTER_ID_AA64_DFR0_EL1    = 0x00022028,
-> > +    HV_ARM64_REGISTER_ID_AA64_DFR1_EL1    = 0x00022029,
-> > +
-> >      /* AArch64 System Register Descriptions: General system control registers */
-> >      HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
-> >      HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
-> > @@ -988,6 +1002,9 @@ struct hv_cpuid {
-> >  #define HV_HYP_PAGE_SIZE        BIT(HV_HYP_PAGE_SHIFT)
-> >  #define HV_HYP_PAGE_MASK        (~(HV_HYP_PAGE_SIZE - 1))
-> >  
-> > +#define HV_ANY_VP               ((uint32_t)-1)
-> > +#define HV_VTL_ALL              0xF
-> > +
-> >  #define HVCALL_GET_PARTITION_PROPERTY    0x0044
-> >  #define HVCALL_SET_PARTITION_PROPERTY    0x0045
-> >  #define HVCALL_GET_VP_REGISTERS          0x0050
-> > diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-> > index f0c10b6d805..614ea60be3f 100644
-> > --- a/include/system/hw_accel.h
-> > +++ b/include/system/hw_accel.h
-> > @@ -51,7 +51,8 @@ static inline bool hwaccel_enabled(void)
-> >      return hvf_enabled()
-> >          || kvm_enabled()
-> >          || nvmm_enabled()
-> > -        || whpx_enabled();
-> > +        || whpx_enabled()
-> > +        || mshv_enabled();
-> >  }
-> >  
-> >  #endif /* QEMU_HW_ACCEL_H */
-> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> > index 10ac6c98318..8ad5e346d1a 100644
-> > --- a/target/arm/cpu.c
-> > +++ b/target/arm/cpu.c
-> > @@ -47,6 +47,7 @@
-> >  #include "system/tcg.h"
-> >  #include "system/qtest.h"
-> >  #include "system/hw_accel.h"
-> > +#include "system/mshv.h"
-> >  #include "kvm_arm.h"
-> >  #include "disas/capstone.h"
-> >  #include "fpu/softfloat.h"
-> > @@ -1843,8 +1844,9 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-> >       * this is the first point where we can report it.
-> >       */
-> >      if (cpu->host_cpu_probe_failed) {
-> > -        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled()) {
-> > -            error_setg(errp, "The 'host' CPU type can only be used with KVM, HVF or WHPX");
-> > +        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled() && !mshv_enabled()) {
-> > +            error_setg(errp,
-> > +                       "The 'host' CPU type can only be used with KVM, HVF, WHPX, or MSHV");
+On 24/11/26 13:05, Zenghui Yu wrote:
+> The GICv5 spec says bits [31:21] of IRS_DEVARCH are 0x23b. We wrongly
+> shifted it by 31 instead of 21, so guests read 0x80105a19 rather than
+> 0x47705a19.
 > 
-> checkpatch complains here
+> Fixes: 22232793ecb8 ("hw/intc/arm_gicv5: Implement CoreSight ID registers")
+> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> ---
+>   hw/intc/arm_gicv5.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Ack, will fix.
- 
-> >          } else {
-> >              error_setg(errp, "Failed to retrieve host CPU features");
-> >          }
-> > diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> > index a9e346049df..71fc6824188 100644
-> > --- a/target/arm/cpu64.c
-> > +++ b/target/arm/cpu64.c
-> > @@ -26,12 +26,14 @@
-> >  #include "qemu/units.h"
-> >  #include "system/kvm.h"
-> >  #include "system/hvf.h"
-> > +#include "system/mshv.h"
-> >  #include "system/whpx.h"
-> >  #include "system/hw_accel.h"
-> >  #include "system/qtest.h"
-> >  #include "system/tcg.h"
-> >  #include "kvm_arm.h"
-> >  #include "hvf_arm.h"
-> > +#include "mshv_arm.h"
-> >  #include "whpx_arm.h"
-> >  #include "qapi/visitor.h"
-> >  #include "hw/core/qdev-properties.h"
-> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> > index 29dd45a1231..d835614fd59 100644
-> > --- a/target/arm/mshv/mshv-all.c
-> > +++ b/target/arm/mshv/mshv-all.c
-> > @@ -18,10 +18,23 @@
-> >  
-> >  #include "system/cpus.h"
-> >  #include "target/arm/cpu.h"
-> > +#include "target/arm/internals.h"
-> > +#include "target/arm/mshv_arm.h"
-> >  
-> >  #include "system/mshv.h"
-> >  #include "system/mshv_int.h"
-> >  #include "hw/hyperv/hvgdk_mini.h"
-> > +#include "hw/hyperv/hvhdk_mini.h"
-> > +
-> > +typedef struct ARMHostCPUFeatures {
-> > +    ARMISARegisters isar;
-> > +    uint64_t features;
-> > +    uint64_t midr;
-> > +    uint32_t reset_sctlr;
-> > +    const char *dtb_compatible;
-> > +} ARMHostCPUFeatures;
-> > +
-> > +static ARMHostCPUFeatures arm_host_cpu_features;
-> >  
-> >  static const enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
-> >      HV_ARM64_REGISTER_X0,
-> > @@ -168,8 +181,46 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-> >      state->hvcall_args = (MshvHvCallArgs){0};
-> >  }
-> >  
-> > +
-> > +static uint32_t mshv_arm_get_ipa_bit_size(int mshv_fd)
-> > +{
-> > +    int ret;
-> > +    struct hv_input_get_partition_property in = {0};
-> > +    struct hv_output_get_partition_property out = {0};
-> > +    struct mshv_root_hvcall args = {0};
-> > +
-> > +    in.property_code = HV_PARTITION_PROPERTY_PHYSICAL_ADDRESS_WIDTH;
-> > +
-> > +    args.code = HVCALL_GET_PARTITION_PROPERTY;
-> > +    args.in_sz = sizeof(in);
-> > +    args.in_ptr = (uint64_t)&in;
-> > +    args.out_sz = sizeof(out);
-> > +    args.out_ptr = (uint64_t)&out;
-> > +
-> > +    ret = mshv_hvcall(mshv_fd, &args);
-> > +
-> > +    if (ret < 0) {
-> > +        error_report("Failed to get IPA size");
-> > +        exit(1);
-> > +    }
-> > +
-> > +    return out.property_value;
-> > +}
-> 
-> for consistency we might want to return the propery_value as an
-> out_param (int mshv_fd,  uint32_t *ipa_size) and propagate the error in
-> the return value instead of aborting here.
-
-Agreed.
- 
-> > +
-> >  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
-> >  {
-> > +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> > +    int pa_range;
-> > +    uint32_t ipa_size;
-> > +
-> > +    if (mc->get_physical_address_range) {
-> > +        ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
-> > +        pa_range = mc->get_physical_address_range(ms, ipa_size, ipa_size);
-> > +        if (pa_range < 0) {
-> > +            return -EINVAL;
-> > +        }
-> > +    }
-> > +
-> >      return 0;
-> >  }
-> >  
-> > @@ -198,3 +249,169 @@ int mshv_arch_migration_init(MshvState *s)
-> >  {
-> >      return 0;
-> >  }
-> > +
-> > +static void clamp_id_aa64mmfr0_parange_to_ipa_size(int mshv_fd,
-> > +                                                   ARMISARegisters *isar)
-> > +{
-> > +    uint32_t ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
-> > +    uint64_t id_aa64mmfr0;
-> > +
-> > +    /* Clamp down the PARange to the IPA size the kernel supports. */
-> > +    uint8_t index = round_down_to_parange_index(ipa_size);
-> > +    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
-> > +    id_aa64mmfr0 = FIELD_DP64(id_aa64mmfr0, ID_AA64MMFR0, PARANGE, index);
-> > +    SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
-> > +}
-> > +
-> > +static int mshv_get_partition_regs(int vm_fd, hv_register_name *names,
-> > +                             hv_register_value *values, size_t n_regs)
-> > +{
-> > +    int ret = 0;
-> > +    size_t in_sz, names_sz, values_sz;
-> > +    void *in_buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-> > +    void *out_buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-> > +    hv_input_get_vp_registers *in = in_buffer;
-> > +
-> > +    struct mshv_root_hvcall args = {0};
-> > +
-> > +    names_sz = n_regs * sizeof(hv_register_name);
-> > +    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
-> > +
-> > +    memset(in, 0, HV_HYP_PAGE_SIZE);
-> > +
-> > +    in->vp_index = HV_ANY_VP;
-> > +    in->input_vtl.target_vtl = HV_VTL_ALL;
-> > +    in->input_vtl.use_target_vtl = 1;
-> > +
-> > +    for (int i = 0; i < n_regs; i++) {
-> > +        in->names[i] = names[i];
-> > +    }
-> > +
-> > +    values_sz = n_regs * sizeof(hv_register_value);
-> > +
-> > +    args.code = HVCALL_GET_VP_REGISTERS;
-> > +    args.in_sz = in_sz;
-> > +    args.in_ptr = (uintptr_t)in_buffer;
-> > +    args.out_sz = values_sz;
-> > +    args.out_ptr = (uintptr_t)out_buffer;
-> > +    args.reps = n_regs;
-> > +
-> > +    ret = mshv_hvcall(vm_fd, &args);
-> > +
-> > +    if (ret == 0) {
-> > +        memcpy(values, out_buffer, values_sz);
-> 
-> we might want to assert that `args.reps == n_regs` here, since the
-> hypercall might return fewer registers than requested.
-
-Right, will add this.
-
-> > +    }
-> > +
-> > +    qemu_vfree(in_buffer);
-> > +    qemu_vfree(out_buffer);
-> > +
-> > +    return ret;
-> > +}
-> > +
-> > +static bool mshv_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> > +{
-> > +    int mshv_fd = mshv_state->fd;
-> > +    int vm_fd = mshv_state->vm;
-> > +    int i, ret;
-> > +    bool success = true;
-> > +    uint64_t pfr0, pfr1;
-> > +    gchar *contents = NULL;
-> > +
-> > +    static const struct {
-> > +        hv_register_name name;
-> > +        int isar_idx;
-> > +    } regs[] = {
-> > +        { HV_ARM64_REGISTER_ID_AA64_PFR0_EL1,  ID_AA64PFR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_PFR1_EL1,  ID_AA64PFR1_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1, ID_AA64ISAR2_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_DFR0_EL1,  ID_AA64DFR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_DFR1_EL1,  ID_AA64DFR1_EL1_IDX },
-> > +    };
-> > +
-> > +    size_t n_regs = ARRAY_SIZE(regs);
-> > +    hv_register_name *reg_names = g_new(hv_register_name, n_regs);
-> > +    hv_register_value *reg_values = g_new(hv_register_value, n_regs);
-> > +
-> > +    for (i = 0; i < n_regs; i++) {
-> > +        reg_names[i] = regs[i].name;
-> > +    }
-> > +
-> > +    ret = mshv_get_partition_regs(vm_fd, reg_names, reg_values, n_regs);
-> > +
-> > +    if (ret < 0) {
-> > +        error_report("Failed to get host ID registers");
-> > +        success = false;
-> > +        goto out;
-> > +    }
-> > +
-> > +    for (i = 0; i < n_regs; i++) {
-> > +        ahcf->isar.idregs[regs[i].isar_idx] = reg_values[i].reg64;
-> > +    }
-> > +
-> > +    /* Read MIDR_EL1 from sysfs */
-> > +    if (g_file_get_contents(
-> > +            "/sys/devices/system/cpu/cpu0/regs/identification/midr_el1",
-> > +            &contents, NULL, NULL)) {
-> > +        ahcf->midr = g_ascii_strtoull(contents, NULL, 0);
-> > +    } else {
-> > +        error_report("Failed to read MIDR_EL1 from sysfs");
-> > +        success = false;
-> > +        goto out;
-> > +    }
-> > +
-> > +    ahcf->dtb_compatible = "arm,armv8";
-> > +    ahcf->features = (1ULL << ARM_FEATURE_V8) |
-> > +                     (1ULL << ARM_FEATURE_AARCH64) |
-> > +                     (1ULL << ARM_FEATURE_PMU) |
-> > +                     (1ULL << ARM_FEATURE_GENERIC_TIMER) |
-> > +                     (1ULL << ARM_FEATURE_NEON);
-> > +
-> > +    clamp_id_aa64mmfr0_parange_to_ipa_size(mshv_fd, &ahcf->isar);
-> > +
-> > +    /*
-> > +     * SVE (Scalable Vector Extension) and SME (Scalable Matrix Extension)
-> > +     * require specific context switch logic in the accelerator.
-> > +     * Mask them out for now to ensure stability.
-> > +     */
-> > +    /* Mask SVE in PFR0 */
-> > +    pfr0 = GET_IDREG(&ahcf->isar, ID_AA64PFR0);
-> > +    pfr0 &= ~R_ID_AA64PFR0_SVE_MASK;
-> > +    SET_IDREG(&ahcf->isar, ID_AA64PFR0, pfr0);
-> > +
-> > +    /* Mask SME in PFR1 */
-> > +    pfr1 = GET_IDREG(&ahcf->isar, ID_AA64PFR1);
-> > +    pfr1 &= ~R_ID_AA64PFR1_SME_MASK;
-> > +    SET_IDREG(&ahcf->isar, ID_AA64PFR1, pfr1);
-> > +
-> > +out:
-> > +    g_free(contents);
-> > +    g_free(reg_names);
-> > +    g_free(reg_values);
-> > +    return success;
-> > +}
-> > +
-> > +void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> > +{
-> > +    if (!arm_host_cpu_features.dtb_compatible) {
-> > +        if (!mshv_enabled() ||
-> > +            !mshv_arm_get_host_cpu_features(&arm_host_cpu_features)) {
-> > +            /*
-> > +             * We can't report this error yet, so flag that we need to
-> > +             * in arm_cpu_realizefn().
-> > +             */
-> > +            cpu->host_cpu_probe_failed = true;
-> > +            return;
-> > +        }
-> > +    }
-> > +
-> > +    cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
-> > +    cpu->isar = arm_host_cpu_features.isar;
-> > +    cpu->env.features = arm_host_cpu_features.features;
-> > +    cpu->midr = arm_host_cpu_features.midr;
-> > +    cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
-> > +}
-> > diff --git a/target/arm/mshv_arm.h b/target/arm/mshv_arm.h
-> > new file mode 100644
-> > index 00000000000..a03f9a4405e
-> > --- /dev/null
-> > +++ b/target/arm/mshv_arm.h
-> > @@ -0,0 +1,18 @@
-> > +/*
-> > + * QEMU MSHV support
-> > + *
-> > + * Copyright Microsoft, Corp. 2026
-> > + *
-> > + * Authors: Aastha Rawat   <aastharawat@linux.microsoft.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef QEMU_MSHV_ARM_H
-> > +#define QEMU_MSHV_ARM_H
-> > +
-> > +#include "target/arm/cpu.h"
-> > +
-> > +void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu);
-> > +
-> > +#endif
-> > 
-> > -- 
-> > 2.45.4
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
