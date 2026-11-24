@@ -1,124 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB720606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E4A606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=dgcCxzbG
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LPlJaFxq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVnsJ-0001jy-2Y; Tue, 24 Nov 2026 05:35:47 -0500
+	id 1xVnsl-0001uV-3j; Tue, 24 Nov 2026 05:36:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVnsE-0001iD-2v
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:35:42 -0500
-Received: from smtpout7.mo539.mail-out.ovh.net ([51.210.91.46])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1xVnsi-0001tS-GE; Tue, 24 Nov 2026 05:36:12 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVns9-0003Dj-Nc
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:35:40 -0500
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4jYfN56HKqz4Dxs;
- Tue, 24 Nov 2026 10:35:33 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 24 Nov 2026 10:35:33 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.50])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jYfN41rQXz1ySW; Tue, 24 Nov 2026 10:35:32 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
- (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 534BF192434D; Tue, 24 Nov 2026 10:35:31 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-112S006fd1a8db2-ac81-471c-994e-842e0cd17772,
- 8999D460E3350DC70288BFBB7677D99C31D99569) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <2dd9fcd2-8fec-4b38-8900-24566d5ff3f7@kaod.org>
-Date: Tue, 24 Nov 2026 11:35:30 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1xVnsg-0003F8-2r; Tue, 24 Nov 2026 05:36:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1795516570; x=1827052570;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=1nunOaCofKheZ39A20r7xO5iVAxgTA5Vsl/6aqQpx78=;
+ b=LPlJaFxqKKeESOfqKCIanH51SeIC53Ss37s1s0KHO348yRSsxqInHGv5
+ 4e8DfGNzIsuMVC6A2WZdf8IPeckFX1DXCMh2ebY7sF0CdzDoqAqOrTLqF
+ mcHGqfkXUqh9nSORiuhMarj3lJ/xLBr4ep1SMf8LDYcsLtNN6jEKe0D/4
+ KTc6RaGVF0RkPZO+9DWY7GGbIUj9R1B30QaLPac6bwAIbx8s1nEW8ilX/
+ kAibTG5RT0XRPb0pRNE7MFk21g7/cqdpPtimmHChbhdgNCILF8E5+mbCk
+ /8r9VTa+x36D4QuRwOhcRX1SabY9PsJXHciYdKD8DsPalPpk/RI2FD5Nz w==;
+X-CSE-ConnectionGUID: DzVUJ+crSeSd9eacpXxjZg==
+X-CSE-MsgGUID: zw0H50OXT8O80VqO2h+JXQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11975"; a="4401954"
+X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; 
+   d="scan'208";a="4401954"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Nov 2026 02:36:06 -0800
+X-CSE-ConnectionGUID: 1qSAT6IaTNuyy5stn/c8kg==
+X-CSE-MsgGUID: vLoyiNA3QxK913Ry8FOyuA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; d="scan'208";a="11519695"
+Received: from zhaoliu1-desk.sh.intel.com ([10.112.226.173])
+ by orviesa007.jf.intel.com with ESMTP; 24 Nov 2026 02:36:05 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] rust: Fix `make rustfmt` failure
+Date: Tue, 24 Nov 2026 18:35:54 +0800
+Message-Id: <20261124103554.465545-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/11] Add SSP/TSP power control and DRAM remap support
- for AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20261124055150.1328856-1-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20261124055150.1328856-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 7526640879377820787
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEBPVgqrFemnpC8Revg92emahnBkFOgLtot8y3vVtEA/+R+WRwIPWPkIlB7S2wC9TB4RITTxZD5nFWCszet8I8iqGevlhYDnWJxJMNg4Qm/gwBhaM1RK9ZiID+XkQbpduu4gd73FCg+rTbPo+wpwroS9eStnj3RmT4XigGVkC5rGgpEtIuzTbMSs0RnTbwAjK/XtAknVu1DfcQ6SfLZGucu82wwivBT0OXJq9cTMm8nY9Pl1cHo5e3f1cXnhM419G6yJfkHpOCws68u+kDkrTvSw20DDqvj5CA3yUx6hgKD+knHXWrpdVrfjDEZ2MTxApS8wutA7sDq4SJH1oCB0IkHY3FKvy8cIoQ18Ml/FWsqzc/xJUdbvvirhfphVbvlNaj+TpGYY69HHgbNdse5p/eylm7A5lBpXgmTbNKE+Fh45Y7YX1nePoSfxFOGBMWKDWtj9Q3YnRADmuAK6clCyU7DUSAIqOWQ6Qo7rSnJozKN3QtOZUH35balehsM10Qz7PYMNx9qGiZdWfuLiMLliW/tlwNu9Y/bR9zA7sTYTwobTLPIfM2ZcCaxnU/PIBzT8IbIae0/Y6gYTfEXFCianyzdabd4Du5VZKeysN50wiG+SeF3SxGHFxdH2S6rigsPLgyPQhx2GbknN9n+L8d1CCoiKRMKG+GONHR7SveMrZINwg
-DKIM-Signature: a=rsa-sha256; bh=BV4BLuEJ2Ojuun4FlEPEEBMAX7vVBg05v654ZmGzoLg=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1795516534; v=1;
- b=dgcCxzbGFmUZRIB1ndAw+fNLcbVy8k9e4v1NDo/Butn9TsPoByigFFbiXHZy1+T9hLp2NAGj
- 4TwDtET/qeX7C4iyJ+0D2b/vIvbg+aZOImo77+Z6OsqUf/fiXRfwGm/quOkr2e2EFATjz4BDhd1
- Pf/VYTrMxLn39JL5DyFdOm6II+5724IU6Ed33PkgUuufqGAbaFX1nPB4hQHXZ2v9WjrmK64gbSr
- XW4uZD6IBHyuLVmOu2tCfK6K+rsy93qJ0+c+xkdEWOoyEEwK8OV32RZc+7h16zbMvArOF6cgKXG
- B8WslgEmed7GotZCsz5ABiziXLy5GMWbiFwhQVrh613pg==
-Received-SPF: pass client-ip=51.210.91.46; envelope-from=clg@kaod.org;
- helo=smtpout7.mo539.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,114 +75,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/24/26 06:51, Jamin Lin wrote:
-> This series improves AST2700 platform support by aligning SSP/TSP
-> power and reset behavior with hardware, and enabling DRAM remapping
-> required for proper firmware boot flow.
-> 
-> This series depends on:
-> [v4,0/9] Refactor AST2700 SCU preparation for coprocessors
-> https://www.mail-archive.com/qemu-devel@nongnu.org/msg1209540.html
-> 
-> v1:
->    1. The changes move DRAM/SDMC initialization earlier to support memory
-> aliasing, add DRAM aliases for SSP/TSP SDRAM remap, and implement
-> SSP/TSP reset, power-on, and remap controls via SCU registers.
->    2. With these updates, SSP and TSP can be booted via PSP and load their
-> binaries from DRAM. Functional tests and documentation are updated
-> accordingly.
-> 
-> v2:
->    Fix "make check" failure caused by both AST2700 and AST1700 realizing the same
->    TYPE_AST2700_SCU model.
->    
-> v3:
->   1. Drop "Move DRAM and SDMC initialization earlier to support memory aliasing"
->   2. Support SPI/FMC FIFO Mode
->   3. Add unimplemented devices
-> 
-> v4:
->   1. Introduce Aspeed2700SCU subclass and separate from generic SCU.
->   2. Add separate reset handler for AST2700 SCUIO
->   3. Add AST2700 SCUIO RNG control and data registers
->   4. Share single SCUIO instance across PSP, SSP, and TSP
->   5. Fix AST2700 FC hardware strap settings
-> 
-> v5:
->   1. To speed up the review process, move the following patches into a separate
->      patch series, as they are not directly related to the main topic of this series:
->   
->      [v4,01/21] hw/misc/aspeed_scu: Introduce Aspeed2700SCU subclass and separate from generic SCU
->      [v4,02/21] hw/misc/aspeed_scu: Add separate reset handler for AST2700 SCUIO
->      [v4,11/21] hw/arm/ast27x0: Share FMC controller with SSP and TSP
->      [v4,12/21] hw/arm/aspeed_ast27x0: Add unimplemented Privilege Controller MMIO regions for SSP/TSP (Merged)
->      [v4,13/21] hw/arm/aspeed_ast27x0: Add unimplemented OTP controller MMIO regions for SSP/TSP (Merged)
->      [v4,14/21] hw/block/m25p80: Implement volatile status register write enable for Winbond
->      [v4,15/21] hw/ssi/aspeed_smc: Add Data FIFO-based flash access support for AST2700
->      [v4,16/21] hw/misc/aspeed_scu: Drop noisy unhandled read logs for AST2700 SCU/SCUIO (Merged)
->      [v4,17/21] hw/misc/aspeed_scu: Add AST2700 SCUIO RNG control and data registers (Merged)
->      [v4,18/21] hw/arm/ast27x0: Share single SCUIO instance across PSP, SSP, and TSP
->      [v4,19/21] hw/arm/aspeed_ast27x0-fc: Fix hardware strap settings (Merged)
->      
->    2. Add memory_region_transaction_begin() and memory_region_transaction_commit()
->       to protect the transaction.
-> 
-> v6:
->    1. Move the DRAM remap MemoryRegions from the SCU to the SSP/TSP
->       coprocessor state itself.
->    2. Set ssp_cpuid/tsp_cpuid directly once the SSP/TSP's armv7m core is
->       realized, instead of pre-guessing them from board code via a QOM
->       property.
->    3. Correct AST2700 SCU to SCUIO to AST1700
-> 
-> v7:
->    1. SSP/TSP no longer write into the SCU; the board wires the remap
->       aliases and cpu_index after realize.
->    2. Drop the redundant AST2700 SCU realize wrapper.
-> 
-> Jamin Lin (11):
->    hw/arm/aspeed_ast1700: Correct AST2700 SCU to SCUIO
->    hw/arm/ast27x0: Start SSP in powered-off state to match hardware
->      behavior
->    hw/arm/ast27x0: Start TSP in powered-off state to match hardware
->      behavior
->    hw/arm/ast27x0: Add DRAM alias for SSP SDRAM remap
->    hw/arm/ast27x0: Add DRAM alias for TSP SDRAM remap
->    hw/misc/aspeed_scu: Implement SSP reset and power-on control via SCU
->      registers
->    hw/misc/aspeed_scu: Implement TSP reset and power-on control via SCU
->      registers
->    hw/misc/aspeed_scu: Add SCU support for SSP SDRAM remap
->    hw/misc/aspeed_scu: Add SCU support for TSP SDRAM remap
->    tests/functional/aarch64/test_aspeed_ast2700fc: Boot SSP/TSP via PSP
->      and load binaries from DRAM
->    docs: Add support vbootrom and update Manual boot for ast2700fc
-> 
->   docs/system/arm/aspeed.rst                    |  42 ++-
->   include/hw/arm/aspeed_ast1700.h               |   2 +-
->   include/hw/arm/aspeed_coprocessor.h           |   2 +
->   include/hw/misc/aspeed_scu.h                  |   5 +
->   hw/arm/aspeed_ast1700.c                       |  22 +-
->   hw/arm/aspeed_ast27x0-fc.c                    |  16 ++
->   hw/arm/aspeed_ast27x0-ssp.c                   |  31 +++
->   hw/arm/aspeed_ast27x0-tsp.c                   |  24 ++
->   hw/misc/aspeed_scu.c                          | 259 +++++++++++++++++-
->   .../aarch64/test_aspeed_ast2700fc.py          |  29 +-
->   10 files changed, 397 insertions(+), 35 deletions(-)
-> 
+At present, `make rustfmt` triggers the following error:
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+[0/1] Running external command rustfmt (wrapped by meson to set env)
+Failed to find targets
+This utility formats all bin and lib files of the current crate using rustfmt.
+...
+FAILED: meson-internal__rustfmt
 
-Thanks,
+Since commit 6d28fc60891f moved Cargo.toml to the top-level source
+directory, rust/ is neither the workspace root nor a package
+directory. Now "cargo fmt" only formats the package in the current
+directory, so running it from rust/ (i.e. @CURRENT_SOURCE_DIR@) finds no
+targets.
 
-C.
+So fix this by specifying the project source root (where Cargo.toml is),
+just like CI did in commit 6d28fc60891f.
+
+Fixes: 6d28fc60891f ("rust: switch to cargo subprojects")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ rust/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rust/meson.build b/rust/meson.build
+index c0c4e52c1b0c..08edbd50ad11 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -30,7 +30,7 @@ cargo = find_program('cargo', required: false)
+ if cargo.found()
+   run_target('rustfmt',
+     command: [config_host['MESON'], 'devenv',
+-              '--workdir', '@CURRENT_SOURCE_DIR@',
++              '--workdir', meson.project_source_root(),
+               cargo, 'fmt'],
+     depends: genrs)
+ endif
+-- 
+2.34.1
 
 
