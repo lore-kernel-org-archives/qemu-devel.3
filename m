@@ -1,121 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FCF606A322
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 06:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A387606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 06:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=VOmPnrwc
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HCKxjQl4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVjZe-0001CK-Ta; Tue, 24 Nov 2026 01:00:14 -0500
+	id 1xVjjS-0003qB-8U; Tue, 24 Nov 2026 01:10:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xVjZc-0001B8-Pq; Tue, 24 Nov 2026 01:00:12 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xVjZb-0000Aa-2I; Tue, 24 Nov 2026 01:00:12 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO359781261188; Tue, 24 Nov 2026 05:59:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nkHNLS
- AKjzUxIB1hIvJ21b+oil2FwtCGdwKIXUA+PA8=; b=VOmPnrwcFR3cG/8DqcxOJs
- mILP31ktY0N6exOZEreBmmOA16sbJ9uM1chEPjWrNlgOVcZqShIFBnPqAYRHnURi
- 7sOy3JVbGdwktDRdQNUq60mkuP2xOlPdRnxqO89GsXlgFEKNeyen17sWV3P8RE43
- XuTJJbczb9zehaeyMNAmQ2snu4LV5N2FveYkTzECvDED3c1Py0x2/5oqVQyqcXBp
- 406dgYav4ROCt/zK7j0jaGpYvp2bKvakIfKdTAx2rssdvgVLRsO+o9BxlWkojvAF
- 2YHXgInn4gS/FmNyvRE6M+kMWfCAJbGRmRCyIXdXxmi8BZ55uMdHSnERBM/EoM1w
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34fkeart-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2026 05:59:47 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO2nE891669359; Tue, 24 Nov 2026 05:59:46 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j3qufs9t1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2026 05:59:46 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AO5xjpn31064812
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Nov 2026 05:59:45 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 66AFA5805A;
- Tue, 24 Nov 2026 05:59:45 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D6115805E;
- Tue, 24 Nov 2026 05:59:40 +0000 (GMT)
-Received: from [9.43.59.24] (unknown [9.43.59.24])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 24 Nov 2026 05:59:39 +0000 (GMT)
-Message-ID: <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
-Date: Tue, 24 Nov 2026 11:29:38 +0530
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1xVjjQ-0003pu-Gc
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 01:10:20 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1xVjjO-00083T-D9
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 01:10:20 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6ba1e22ff4dso4723699a12.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 22:10:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795500616; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dxeByXjilqZgRlC1GFOZUEtHnqRHctpqJzt2Xo2XklfgliziCVS9o1yvXeYeyCp/Wv
+ Yd/QFNVbPkRyPUHVxVeGu6llW5OcC7Un2ft8/Na/8eZiJ1kXj6LOtE34NpzYoxwqA7vN
+ wbPKFdxoCLd1KxVrIW5pTQdrUyhBQX9WJOWEmjdvxw23xLr56JLvTNyiuMOgpXOZerts
+ 499MVl37dWKl2gcMHqrnwmJr7VavPJNjJwQgtr1LWIvx89/AcNelRa48cAwpXQQfxSlx
+ EeaLr6vjlSK92Xpsz1bHtNzQayifIwR2vj4Fe0zoHaV/PIXOhXv1qNqOBXCRhYUKfUlx
+ 4yyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kPXm0RgO/d3vLtZSDrKvQTAGdfZ5Y9SR93W6Tsz9glg=;
+ fh=aU1efp1Hqslajef9yw/kvM+9GDKW8LvzbV7DMPwJ+U0=;
+ b=LibJhobxkRx/jwOI/k7ooYtf1cV/KltVN5Otk9WnVPgiAe1P2v9NAVGioqBsP0vVgy
+ NDr7jMa0QhtgHymyr1BdSSMnmcETNsubFr4xmZgMAfqoofyF9MnCGMSUDaTWxSPAf/jh
+ EVBIhKgHpIQu35LOCXG3iqzeNsW25TFB3RZgIgjsflVVarutS18TA1aCrQOOLTwhnAGE
+ vQIMTxL3+cxKew1lDlcZavHeylLmHaqj9Qvb6wqpqLxkSzujIOdXte1K3BVw9iTFInnJ
+ QNK7D/4aL0O414aFYvWdG115+7tJ1aBt3S9RKkiJdZRb6nTsXRu7h0hFLDcHjO1+q3xo
+ wz8A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795500616; x=1796105416; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=kPXm0RgO/d3vLtZSDrKvQTAGdfZ5Y9SR93W6Tsz9glg=;
+ b=HCKxjQl49yBV3jRtXuCSDJtFFd5yQRz3R25PxN6QgFLZZplvdQkj43vqp0LqeWJA1/
+ uTjE3XaciGjAniDKHYSUkOqs47dS55iy+QcTJN/aeHSJMaGxzYQo7yal6xJ/RDrO4MIt
+ W+Ri+L7yT/zr38dkWniFDESmpPZKnCN6BlUF5OH1nZ8NlUdbI7oyRHHWs7lyOSCiKo66
+ J6si5JtCs5Hcxl4nUy2W30IPfPU04yh22u/OJp7bamx7b7uWbLCx2ZciSHp0PqFtWLmp
+ C3mvIcCR1pVGU2b+rr1K36kWscngieGM7jnvL6nb2cCnJO1SPixANTY+xBBH4OgguENv
+ C7+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795500616; x=1796105416;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kPXm0RgO/d3vLtZSDrKvQTAGdfZ5Y9SR93W6Tsz9glg=;
+ b=n2LIFlFRcHEuwW7n+j/NsJjngHVG7xzLCOq/M/YuS2XrVj8VqxS8Yh7gToaaSybeVK
+ KEOQwHDZ5RsgQsCc3Myk4BKGu5MDRAFvYbUwlVQW+2hxxEknq78JagMUTSzL5GFSx+aa
+ jFyJPaZ9wnhocxh5gJ//j4MotTCxhKP5p9gURHjK+VuRn27IuASRm2WBA2Tag9ZUVNN3
+ VxJSG1JeNyWfqtDfbVVWYkF69Eb8oHHOjvQa7zNEut3wEJ5v5gnatihR0O+7QKz2w5Lu
+ rrfJ5bSIuWR7MnwkEWZLtLne54qWYhnwpSZWp70FQo6DxSYuvaReA9Jxut327tIAxesS
+ oLsw==
+X-Gm-Message-State: APuU4Z9NHG3dbgrp0aAeG3We4xhwVnAPrCFVGiiF4tr8UvQHWxGmcJl+
+ RXkupOrSpVSF5QrVru4ivigvnF21LL3+QKagoOfJWljclnAJNemIJznH+uZPPPa2aHtHpDCLS2j
+ pG7HincvUOOxp8IIqgri9O++mkxWvJoxnMH9Q978=
+X-Gm-Gg: AZFdTZcBdLJoVuT7gQ97M+II05KB24jNiryj5LZoo5fmIWUkyH6eSpTHYyel7fmfKSI
+ aUT4DsP4S+9auD7G1L6TxE+iBGCirIDJANR+k/8QPEEBV0h4D/iqeIKVbpl1uB9srAhY2ZSJ48P
+ 8yy2+9eW/B6geamqZBPQmYkh7M0z9iDpKhBA7xpXubBG/l4o3moXd3cOUNe/BL44TQ6zKIRSJWj
+ bwXjbu3XaWFQXOV+/tcDq6QFbcXipMBfH17/Hm1amGgxnIZY/EmytCpj7VCVHRB7GYfbL8DQiGP
+ kaScPpJQQDYFUgYPqnMoB0m13ug0d5QK9BlvL3LsMNGZAv1pwi25dfq+PtUBcfG/gfIPiHBTLlY
+ jmk1NOq6AL4X+/JeL8wPplTlnEca0uzF3BQxfng==
+X-Received: by 2002:a05:6402:51d2:b0:6ba:4a8b:96ca with SMTP id
+ 4fb4d7f45d1cf-6ba4a8b9b95mr7600498a12.8.1795500615863; Mon, 23 Nov 2026
+ 22:10:15 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PReP] Maintainer status check for PReP machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth
- <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>,
- Aurelien Jarno <aurelien@aurel32.net>, Helge Deller <deller@gmx.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>, Chinmay Rath <rathc@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
- <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAyMiBTYWx0ZWRfX68cOC7ylMvMm
- 2Ekd4hEUtJMzG2TUb6nmlyFob5HANUvAh61mzv6owyUADt8DMGcsTQWFBZ2jFqBbm8kA45AQskM
- 8ndYjlSyPdhIJo3t0lJpBGst7fUAf0jSsB+NhmS/673tkluZ3kb9REyKgQiUbuO2R+LY1nPCfM2
- 004rDr6EhJXq+x4ItB1xk3lxXVHiPVPEKyJJkdwtdMfYgH3zlNMNlxeafmsvak36PMqGQd1FOph
- JlRa26VXxe1MHGvHjvMedHxE2qcrheZJi9Mdv/HQPCVVd55/EjDDmvbliPOsLmGyBID2/3t1QVh
- nWcQ5eKtB6xTqeXO/rLLSUw8ldrEUg+2JUE1Qa5t2nlWlLO45womZQrp9TDqaI39pTF5qDjBidM
- zQcolVt99WOmJ3SdnV5NJiiREzDbxZAZfXXCIezWvDmqT2ZxodSkBX6ws4rD9Ph2+/XOh83Hygz
- JoJ7Ur1AxkE94C0HRFw==
-X-Proofpoint-ORIG-GUID: th_CLyJtb1AZgGnTEF5YRNYZkkq4zWcQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAyMiBTYWx0ZWRfX41MCYiFpCOeo
- YkZmUtlnbP0DOX1YcLaLIgUGgBioyCEttYDnb/a/fyMGscvOSQhqzhOlkMuxMiCrVOaLX6StvZq
- ytq+e3Q0XF0o7V9bQ6jZd8ZL8VRDKME=
-X-Authority-Analysis: v=2.4 cv=A9z5rKWG c=1 sm=1 tr=0 ts=6b0527d3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=oQNAQU3PBjka-gP_mOQA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: FSkb9083FlEwmxdoyE7Qys27cAw8sOtn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20261113092605.942292-1-zhangckid@gmail.com>
+In-Reply-To: <20261113092605.942292-1-zhangckid@gmail.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 24 Nov 2026 14:09:37 +0800
+X-Gm-Features: Aa3M54qXzldpWwa_SaY7e73KeGTzMpkrb-gDgFRvOyfvFX2QK4iFJwEj6JOSWL8
+Message-ID: <CAK3tnv+rQ+fKF1UPGj7+RLt81PyULojVT6TG3pjbma3Fffr1dw@mail.gmail.com>
+Subject: Re: [PATCH V20 00/14] iothread: Support tracking and querying
+ IOThread holder
+To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,58 +116,185 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Philippe,
+Hi Stefan and Markus,
 
-On 11/23/26 11:02 PM, Philippe Mathieu-Daudé wrote:
-> Hi Utkarsh,
-> 
-> On 23/11/26 18:14, Utkarsh Verma wrote:
->> Hi Hervé,
->>
->> I wanted to check whether you are still interested in maintaining the 
->> PReP machine in QEMU.
->>
->> Your name is currently listed as the maintainer for PReP in the 
->> MAINTAINERS file. However, we haven't seen much recent maintenance 
->> activity for this subsystem, and I wanted to check whether you would 
->> like to continue in this role.
->>
->> If you are still interested, it would be great to have you continue as 
->> the maintainer. Alternatively, if you are no longer actively involved 
->> or would prefer to step down, please let us know.
->>
->> In the absence of a response, we are considering sending a small 
->> MAINTAINERS cleanup patch to remove your name from the entry and mark 
->> PReP as Orphan, so that the file accurately reflects its current 
->> maintenance status. This would not affect the PReP implementation or 
->> its functionality.
->>
->> Please let us know your preference.
-> 
-> Are there any PReP patches pending review / left unattended?
-> 
-> This machine works well enough, is tested; what is your issue with it?
+A gentle ping on v20. All 14 patches have Reviewed-by tags, and I
+checked that the series still applies cleanly to master (2bfbe39d0f).
 
-This is more about reflecting the correct status in MAINTAINERS file as 
-the currently listed maintainer (Hervé) have been inactive for about 3 
-years, although the patches are getting reviewed by other community members.
-It will be good to have someone listed in the MAINTAINERS entry for PReP 
-who is active in the community or we should change the status to orphan, 
-so that it encourages others to step up to maintain it.
+Thanks
+Chen
 
-Regards,
-Utkarsh
 
-> 
-> Regards,
-> 
-> Phil.
-
+On Fri, Nov 13, 2026 at 5:26=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> wr=
+ote:
+>
+> ### Motivation
+> Currently, the relationship between IOThreads and the resources using the=
+m is
+> opaque. From a management perspective, it is difficult to determine which
+> devices or block exports are currently associated with a specific IOThrea=
+d
+> via QMP or HMP.
+>
+> This series introduces a "holder" tracking mechanism based on QOM paths o=
+r
+> block exports to significantly improve IOThread observability.
+> In high-performance virtualization environments, users often pre-allocate
+> a set of IOThreads to serve as a persistent thread pool. During device
+> hotplug/unplug cycles, while IOThread objects remain persistent,
+> their attachment state changes dynamically.
+>
+> By tracking these "holders," administrators can use `query-iothreads` to
+> monitor the real-time load distribution of the thread pool and identify w=
+hich
+> specific devices (e.g., virtio-blk, BlockExport) are attached to which th=
+read.
+>
+> ### Technical Overview
+> * Holder tracking
+>
+>   Add a QAPI holder list to each IOThread.  A holder identifies either
+>   a QOM object by its canonical path or a block export by its unique
+>   BlockExportOptions ID.
+>
+> * Explicit reference lifecycle
+>
+>   Add iothread_ref_and_get_aio_context() and the matching
+>   iothread_unref_and_put_aio_context().  Acquiring an AioContext register=
+s a
+>   holder and keeps the IOThread alive until the matching put.
+>
+>   Legacy callers without a matching lifecycle use the explicitly named
+>   iothread_unsafe_get_aio_context().  The ambiguous legacy
+>   iothread_get_aio_context() is removed after all production callers
+>   are migrated.
+>
+> * Subsystem integration
+>
+>   Track holders for block exports, monitors, virtio-blk, virtio-scsi,
+>   virtio queue mappings, virtio balloon thread pinning, COLO compare,
+>   vfio-user proxy, and xen-block.
+>
+> * Introspection
+>
+>   Extend IOThreadInfo with a holders array returned by
+>   query-iothreads.  Display the same information with info iothreads.
+>
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> ### V20 -> V19 Changelog
+>   - Rebased onto upstream v11.2.0-rc0 (29760efaf96b).
+>   - Add the RB in the patch 14/14.
+>   - Adapted patches 1 and 5 to the updated QOM property registration
+>     context, and resolved patch 9's conflicts with vfio-user region
+>     FD cleanup. No functional changes to the series.
+>
+> ### V19 -> V18 Changelog
+>   - Added new patch in the last:
+>     docs/devel: document holder-aware IOThread AioContext APIs
+>   - Rebased on upstream code.
+>   - Added IOThread prepare_delete() to reject deletion while holders
+>     remain, preventing NULL IOThread lookups during virtqueue mapping
+>     cleanup.
+>
+> ### V18 -> V17 Changelog
+>   - Saved the COLO object's QOM path for finalization and guarded
+>     holder cleanup against incomplete initialization.
+>   - Used the owning PCI device's QOM path for vfio-user holders
+>     and saved it for disconnect().
+>   - Simplified the monitor QOM path field name and clarified
+>     PATCH 12's commit message.
+>   - Rebased on upstream and collected Reviewed-by tags.
+>
+> ### V17 -> V16 Changelog
+>   - Rebase code to resolve code conflicts for patch 8:
+>     "virtio-balloon: Update tracking iothread users with holder".
+>     This issue caused by latest merged patch "fdc3f9a83d".
+>
+> ### V16 -> V15 Changelog
+>   - Unified per-monitor IOThread checks and accesses through
+>     mon->iothread after initialization.
+>   - Simplified PATCH 13's commit message and clarified why blockdev
+>     cannot use the holder-aware get/put APIs.
+>   - Dropped the v15 Patch 1 in this series, It will be taken away
+>     independently by trivial-patches tree.
+>
+> ### V15 -> V14 Changelog
+>   - Moved monitor IOThread cleanup from unparent() to monitor_finalize(),
+>     pairing complete() with instance finalization.
+>   - Squashed V14 PATCH 04 and PATCH 14 into PATCH 13 and clarified the
+>     blockdev lifetime assumption. Since the additional changes are minima=
+l,
+>     PATCH 13 retains Stefan's Reviewed-by from V14 PATCH 04.
+>   - Rebased and adapted info iothreads to the MonitorHMP interface.
+>
+> ### V14 -> V13 Changelog
+>   - Renamed patch 3 and clarified that it introduces holder-tracking
+>     infrastructure, with users converted in subsequent patches.
+>   - Documented that monitor holders are not visible to management
+>     applications, while retaining the tracking for a consistent holder
+>     and IOThread reference lifecycle.
+>   - Rebased on the latest upstream.
+>
+>
+>
+> Zhang Chen (14):
+>   iothread: introduce holder tracking
+>   iothread: add holder-aware AioContext accessors
+>   block/export: track IOThread references
+>   monitor: track IOThread users with QOM paths
+>   virtio-vq-mapping: track iothread-vq-mapping references using device
+>     path
+>   virtio: track IOThread references for thread pinning
+>   net/colo: track IOThread references using path-based holder
+>   virtio-balloon: Update tracking iothread users with holder
+>   vfio-user/proxy: Update tracking iothread users with device QOM paths
+>   xen-block: Update tracking iothread users with holder name
+>   monitor/hmp: display IOThread holders
+>   iothread: make legacy AioContext getter explicitly unsafe
+>   tests/unit/iothread: update AioContext ref/put helpers
+>   docs/devel: document holder-aware IOThread AioContext APIs
+>
+>  block/export/export.c                   |  62 +++++++++++---
+>  blockdev.c                              |   9 ++-
+>  docs/devel/multiple-iothreads.rst       |  19 +++--
+>  hw/block/dataplane/xen-block.c          |  19 ++++-
+>  hw/block/virtio-blk.c                   |  21 +++--
+>  hw/scsi/virtio-scsi-dataplane.c         |  22 +++--
+>  hw/vfio-user/pci.c                      |   2 +-
+>  hw/vfio-user/proxy.c                    |  20 ++++-
+>  hw/vfio-user/proxy.h                    |   4 +-
+>  hw/virtio/iothread-vq-mapping.c         |  20 +++--
+>  hw/virtio/virtio-balloon.c              |  21 +++--
+>  include/block/export.h                  |   5 ++
+>  include/hw/virtio/iothread-vq-mapping.h |   6 +-
+>  include/hw/virtio/virtio-balloon.h      |   1 +
+>  include/system/iothread.h               |  38 ++++++++-
+>  iothread.c                              | 102 +++++++++++++++++++++++-
+>  monitor/hmp-cmds.c                      |  20 +++++
+>  monitor/monitor-internal.h              |   7 +-
+>  monitor/monitor.c                       |  36 ++++++---
+>  monitor/qmp.c                           |  14 ++--
+>  net/colo-compare.c                      |  36 ++++++---
+>  qapi/misc.json                          |  94 +++++++++++++++++++---
+>  tests/unit/iothread.c                   |  18 +++--
+>  tests/unit/iothread.h                   |   7 +-
+>  tests/unit/test-aio-multithread.c       |   5 +-
+>  tests/unit/test-bdrv-drain.c            |  18 +++--
+>  tests/unit/test-block-iothread.c        |  21 +++--
+>  27 files changed, 535 insertions(+), 112 deletions(-)
+>
+> --
+> 2.53.0
+>
 
