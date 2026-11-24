@@ -1,106 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F02606A322
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE36606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ou2QYUi8
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Q9Q17i16
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVoM1-0003RF-8U; Tue, 24 Nov 2026 06:06:29 -0500
+	id 1xVoPH-0004nw-BS; Tue, 24 Nov 2026 06:09:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVoLz-0003R3-Rk
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:06:27 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVoLy-0003sb-9p
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:06:27 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-67dae7d3f7dso5104412d50.2
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 03:06:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795518385; cv=none;
- d=google.com; s=arc-20260327;
- b=gCQDOt8zyY539ZD8SFnQQd+amKjpnQYfkDnc+pAK5l/ZM65Np9H05F8bwdcDCAeBpG
- y1tiPkYrGjE68FaWyQUrLwFEWnfR+rAWC5WZBwbEGUMN0GMk9gRcApOSzmIB7lWNTrUy
- DH/Npv+ZGH8Dnko261V0Ewmw4Szq6BtMQRhaNXJWivse9IKU3r9Z8xXe5oIUuaQ/p/+9
- 8gEMh9EXsddG6OwG1XLoYtSzxIi8ifYFQb8AiWPRxGdohMMDfzzRaFbexwACQhpJ/0bO
- EqmzffUSPm2tA5e2AFYqjG/fFFtpozOjSJx/YKuy0LAznfGH0VE+0xyfBbaBCyDUM+tp
- 654Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cBgeVjoqvdnSXa7fAAFeSaYbndoV9wYpbRfnRHvXy2M=;
- fh=7BEaqYZ8iuPFZ5YyJ096lw/mvD+raxD+LHDACGXjJYw=;
- b=MitK8FRPq4C52WFx2Suu62fmPzWdA1O1ASIC3BBXMPO60daWy6LZ0H9X7R8sIiXb/l
- mHfSseqD3hsBNhayiupZMsNYsQBNM6lAvyCT0JX3e51XTOTBnRWDuCF1Dbi+Wzql688m
- FuIm2Vwxv6wUAaGFGWhwXqI1ERmt6IBU43/PL3Thc9Jwtxlulb2H9szNMkwwWNxcJBUZ
- zmUZLi0hmCv3N3lbbYy33cvYq0LHbzXQfELWrxq/yMpOS/5rmQdtIl8Lvc78nXB706DT
- kYCH+qoJimXJgpDVejK/KxDnCUt/ygi4OKVHFXhZGXJYfOD86BHYCXk6jKt6LEkQ/WUY
- droQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795518385; x=1796123185; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=cBgeVjoqvdnSXa7fAAFeSaYbndoV9wYpbRfnRHvXy2M=;
- b=ou2QYUi8uEyGz+VsQ5LtOUYmPNnMAIHkpRVrZtiR2xxSFaG9cZQV8s8aTbhn3IAYQh
- cb7Gw1AUqFJiC+cIZ14RYtcMBIA/rDYWEfRQElnbcutIKx50OiwKNZr7TXyfNojXp1BL
- T5KD7+d+xTbh8faD7Nakzj3ZIXdD0LP92S8dQm1VfHLmE2fW7tsMSyyP4ElMzRbPNuEd
- IdM9VTNssyPrqQnY3aP2P7Ah9AkTRdA3Ukn1rDdpeeGHxRMQMxRBE4VjUanSYXrDnX5X
- 4rz5WyilNFFw4J23nVXoQ8D9WxoPlg+SXoS1D9bOsQkd0bfyz24Y5+g8V1m9jXZbNb0u
- 00eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795518385; x=1796123185;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=cBgeVjoqvdnSXa7fAAFeSaYbndoV9wYpbRfnRHvXy2M=;
- b=ADtieU5Ifd/fWJv/bEPvKQQELyPjw5CrEpfPjhHBrjPdviQIeBeDAppwszohgzYl2o
- sSZnOL5v+Awo0u27GcJRNwkKgOmO6UItJOHYY2ewywsMRkiPXhhwIVXroio/mtSewJSK
- HcI0oxKDn13Si5XLqcssr2cYeeXjVARlw4rwksIxaTxu9YMDCBmyN0B+F89rfqFDZ4yB
- Hkz98+U7zm/hCjuvzKAJ2HhzXTQMsX88v+bci0QcYJ7wPubdyKwMt/SnQylNmaiS1hr6
- y1W7BW/hRJduzRL+bIqatQNw2XH1y8fBQc8awDpL3K/+HMkfsCMH6EvFgAYfb17lPqXA
- +6rQ==
-X-Gm-Message-State: APuU4Z81tBQeqm9eQcqg8/GNU4quz1RlfQa4m2wDIi2THDKzoycsAzhn
- z32fP/6fJXU2Wknil2lDJ5/qnETtooDUfdQ8dDfM3J3S2F39ag/oqHk9pY07LkgfVhrqoOr69e5
- z3KWEQPf0P5WnH2GVPqFlWWHJpPW7lUlk3apfgNq58w==
-X-Gm-Gg: AZFdTZfbY1jiQgDVjiCiXaLzU6+WCZyOIpLUcjlx5JzSV/otmAzr4sO9/W4YcLXS8WI
- 1CCp0VcI+5FOKX1EWYjpnLSSv4Z7X7c/LIToGI1lRSoYphzku/+KLTh8H4PyV9iBZYcoo5UfT90
- I37UUjaOtDWXZvNOBMVSGrG8d3XkRFdXGh89Q7MJvlFhxiHnUyxL7ygKIVGiUhHsPW0kMTyUuam
- QmcMi44gr2vrNTgJyjZmkv58GihvWSM3hNWWVWIiR+OxYht9E1xctkPA6K9UJ708GkLL5ALgdew
- h9j50eizk7xMfWrEQU/DCHwdnZjvwSuT+ww9XHAB2ek7v1VY5k44QpvXP3x1/BWLdkzlAHTItL3
- fWNJE5i76XsSea0S6VK6R3c8oypvxsD+behr9tsmkxMuIEEND6xi3eVZ9t+j3p8evz3iMQ7RKNc
- JJ66K9UxsM+oqe8TRT0MfA
-X-Received: by 2002:a05:690e:440d:b0:67d:b94b:6021 with SMTP id
- 956f58d0204a3-67df44beeb3mr2313600d50.143.1795518384930; Tue, 24 Nov 2026
- 03:06:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xVoPF-0004nY-Po
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:09:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xVoPD-0004GO-Sm
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:09:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795518586;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qC7LhwYFT0RIC5t7Qq18dOJrfylyMvlslE87OLT/g8Y=;
+ b=Q9Q17i16TMmzL4NIyWOuyYfYY9lEIL0X7V0khnhTQS+2ourHhbNO/qALX8gDmysLh1s13j
+ xZ7hxEr7x+foBJBuFwyuTC/5gPPL10mJ8CUiPoCxZqsHKBjAcy1brCYQODH2Ay4jGbyg0Q
+ omrkT/03CpuSdTv+JKDZgDw/+0OKGSo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-3wVlUeGqPlq109ZdAiYFDA-1; Tue,
+ 24 Nov 2026 11:09:42 +0000
+X-MC-Unique: 3wVlUeGqPlq109ZdAiYFDA-1
+X-Mimecast-MFC-AGG-ID: 3wVlUeGqPlq109ZdAiYFDA_1795518581
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52BA81933E36; Tue, 24 Nov 2026 11:09:41 +0000 (UTC)
+Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0A17430001A2; Tue, 24 Nov 2026 11:09:39 +0000 (UTC)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH v3] hostmem: allow building without KVM support
+Date: Tue, 24 Nov 2026 12:09:38 +0100
+Message-ID: <20261124110938.1480880-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261115-4729-out-of-bounds-rx-interrupt-idx-v1-1-164891765f6c@gmail.com>
-In-Reply-To: <20261115-4729-out-of-bounds-rx-interrupt-idx-v1-1-164891765f6c@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Nov 2026 11:06:12 +0000
-X-Gm-Features: Aa3M54oHftfUJZOuQ61ToPKXQZAp66NiJuX71i-csMhJVvHZuRO8HIMezMKGxIU
-Message-ID: <CAFEAcA9bTiprK0J13YiXgA81Tpe16NuYU5ShFWGghc4bmd-Y_Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/net: always validate the interrupt index of the first
- RX descriptor
-To: Andrew Nguyen <xmphyr@gmail.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,42 +77,107 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 16 Nov 2026 at 03:34, Andrew Nguyen <xmphyr@gmail.com> wrote:
->
-> Made it so that vmxnet3_validate_interrupts will always validate
-> s->rxq_descr[0].intr_idx.
->
-> Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4729
-> ---
-> This is a resolution for issue #4729: https://gitlab.com/qemu-project/qemu/-/work_items/4729.
-> From the report, I got the impression that rxq_descr[0] will always "exist" even if the value
-> of rxq_num is 0. This is because RXQ_IDX is 0. Therefore, my solution is to always validate
-> rxq_descr[0].intr_idx.
+From: Michael Tokarev <mjt@tls.msk.ru>
 
-I think the problem here is that we shouldn't be allowing
-rxq_num or txq_num to be 0 in the first place. I don't think
-it makes any sense for the guest to configure the device with
-zero tx queues or zero rx queues. So we should fix this by
-having vmxnet3_validate_queues() insist that txq_num and rxq_num
-are at least 1, in the same way they already check that they're
-not larger than the maximum valid value.
+On architectures where KVM is not available and so including <linux/kvm.h>
+does not work, buildnig backends/hostmem-memfd.c fails since 7ca43d7ad02f:
 
-I'm not super familiar with this device, and unfortunately there's
-no public spec for it, but Linux at least doesn't try to program
-zero queues. Also our code in vmxnet3_activate_device() has a
-simple loop from 0 to rxq_num where it's setting up the RX
-queue data structures and doesn't special case "0 always exists".
-So I'm fairly sure that 0 isn't supposed to be special.
+ In file included from backends/hostmem-memfd.c:23:
+ linux-headers/linux/kvm.h:16:10: fatal error: asm/kvm.h: No such file or directory
+   16 | #include <asm/kvm.h>
 
-thanks
--- PMM
+Do not include <linux/kvm.h> because "system/kvm.h" already includes it for us
+when KVM is enabled, and guard the actual code using memfd definitions with
+
+Fixes: 7ca43d7ad02f ("hostmem: Support fully shared guest memfd to back a VM")
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Link: https://lore.kernel.org/r/20261119111050.1203459-1-mjt@tls.msk.ru
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build              |  3 +--
+ backends/hostmem-memfd.c | 10 +++++++++-
+ tests/qtest/libqtest.c   |  2 ++
+ 3 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 4d267e10b5f..303f57a7cb6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2422,11 +2422,10 @@ endif
+ 
+ config_host_data.set('HOST_' + host_arch.to_upper(), 1)
+ 
+-kvm_targets_c = '""'
+ if get_option('kvm').allowed() and host_os == 'linux'
+   kvm_targets_c = '"' + '" ,"'.join(kvm_targets) + '"'
++  config_host_data.set('CONFIG_KVM_TARGETS', kvm_targets_c)
+ endif
+-config_host_data.set('CONFIG_KVM_TARGETS', kvm_targets_c)
+ 
+ if get_option('module_upgrades') and not enable_modules
+   error('Cannot enable module-upgrades as modules are not enabled')
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 46489212a23..80ea5b9674d 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -20,9 +20,12 @@
+ #include "qom/object.h"
+ #include "migration/cpr.h"
+ #include "system/kvm.h"
+-#include <linux/kvm.h>
+ #include "qapi/qapi-type-infos-common.h"
+ 
++#ifdef CONFIG_KVM_TARGETS
++#include "linux-headers/linux/kvm.h"
++#endif
++
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+ 
+@@ -71,10 +74,15 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+             return false;
+         }
+ 
++#ifdef CONFIG_KVM_TARGETS
+         fd = kvm_create_guest_memfd(backend->size,
+                                     GUEST_MEMFD_FLAG_MMAP |
+                                     GUEST_MEMFD_FLAG_INIT_SHARED,
+                                     errp);
++#else
++        error_setg(errp, "guest-memfd=on requires KVM which is not enabled");
++        fd = -ENOSYS;
++#endif
+     } else {
+         fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+                                m->hugetlb, m->hugetlbsize, m->seal ?
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 7f66c1bbb3b..b859ff728bf 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -1165,6 +1165,7 @@ bool qtest_has_accel(const char *accel_name)
+     g_autofree char *accel_type = NULL;
+ 
+     if (g_str_equal(accel_name, "kvm")) {
++#ifdef CONFIG_KVM_TARGETS
+         int i;
+         const char *arch = qtest_get_arch();
+         const char *targets[] = { CONFIG_KVM_TARGETS };
+@@ -1176,6 +1177,7 @@ bool qtest_has_accel(const char *accel_name)
+                 }
+             }
+         }
++#endif
+         return false;
+     }
+ 
+-- 
+2.56.1
+
 
