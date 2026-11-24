@@ -1,67 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BFA606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA66E606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Y4FA9muY
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=lykpLDvQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVp8S-0000KM-2u; Tue, 24 Nov 2026 06:56:32 -0500
+	id 1xVp9J-0000uX-Ex; Tue, 24 Nov 2026 06:57:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVp8O-0000Jx-Oa; Tue, 24 Nov 2026 06:56:29 -0500
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xVp8M-0000nz-LJ; Tue, 24 Nov 2026 06:56:28 -0500
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id 0A7F520B7166; Tue, 24 Nov 2026 03:56:21 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0A7F520B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1795521381;
- bh=aiicujEDZYmx2arVeXVVt3SQuCIELZVhCwDebRn76Dc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Y4FA9muY1FiP5eIy2SRAJW6EXDT5/Zj0xsOi0gB5YdcsoLGHPak5DT3s2+Y5FwZwE
- +kwMULQHk8v8qHaNmUXfdOsNOMVZIh0Wv2hF9nYO4v3ki5PyWaIZljxlViRJB93SQ2
- MvbUh4siobNYTM+041nTPxUfbaZr3dJu7xvjRRD0=
-Date: Tue, 24 Nov 2026 03:56:21 -0800
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v6 05/14] target/arm/mshv: implement vcpu state
- operations for ARM64
-Message-ID: <awV7ZXgN2+6kuEVw@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
- <20261001-mshv_accel_arm64_supp-v6-5-aefe5e76a0e3@linux.microsoft.com>
- <av8guV6yQkrfIjFZ@example.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVp9F-0000sZ-5p
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:57:22 -0500
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVp9C-0005ME-Qe
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:57:20 -0500
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-67db0791748so4924890d50.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 03:57:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795521437; cv=none;
+ d=google.com; s=arc-20260327;
+ b=n1XJU+t/fAIYLJFBuj6B555f+NcwmMTq8+IEE072R2Y1tUpi0xq7XbCiWfIultADai
+ pB5CU3//oHC9+Zg2OfXu7tUeLdiybnMwpew/IGP8o8Y/6VfGEVlA+sc6kfW0OYZvcuW2
+ h+YMiJgQQ/5kjvEnDOL8S5QwNWbN5TcwdTsPJRrf9oCln17dP1tZ549A0qaKmH8MrKpS
+ OEIEoaveCwK8jVSkcxl9pr2RGSsHpqw4VPv1oBdxx7qSPEKSUtDAY3L+mY4x8SLNmlGi
+ 37BoapaJ9i7jG26Jd9EBBla+e8+DHdnl9aBi8uZ8VdQ9qyp3sVjqKUQdeU01n103NV+1
+ yUeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=0MDOHy2N6YmVjrGmAl4CImJR7XoBMdumWhtlCn4ZVzc=;
+ fh=kjIIHBxOc2+eheqJ3UOmUVeT86hj4XqWJtrPoTu5ZIs=;
+ b=G+qg8RsG5h1q84U02KCyWwJ815+CHhj2AaY8a1PJ74ud00xmN47EIS79KpyOZoeUvP
+ 1tzodXQSF5ILESSerIEL0sox/vAWGMpoEHAHvLmtokAFmDmTk+CTHCfjXxvrwfj+fGwl
+ bhXSu/RxhRgAvGb7rYECFsxKKzqh4LXEydbuSJhEKh2iMOBlkcYBium8UR1PajYMMhS2
+ pvRkQhtHha4GHQEeAwUOr4pNDExZeyXZhvN7hzihFL+qbFGPNUiOfNxBfZvnMB5hPN+a
+ oti+pkvKV9A6hMhhOgaPlbto0C+5PMARCMhWipsilF7QEIWdCsieQewqo3oB2+MDjXTc
+ 1miA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795521437; x=1796126237; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=0MDOHy2N6YmVjrGmAl4CImJR7XoBMdumWhtlCn4ZVzc=;
+ b=lykpLDvQI69iMNTP9dcTnYAyn/pUvNFGOqd+xvrXSUz6/e/nggeKNfivP92ISaB4mA
+ SeNYIpkKy056jtsaHe7Yx9x4h+MPehX0rXeDvGZeQjK3L6YSBRAStJexFB42eeODcFls
+ fQdKW+cMkRim0Idg5RAWyDEXE9ORlLf60iLrz0zr3eHecSYqaka0z6l9HABFuMxDB7vA
+ 0ey08+EZpmxFrcYeOPe6caaqQKNBzL72i13JaEHBFUKX84+FcEUWZn2Z4HXde3ZjFKOr
+ 21iXi7C+MevNXVahPmBDloTZXXqQvfxzlIwRk7acAHIA6KKR8RBPSaSZDpXJhHAWHqi+
+ oHOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795521437; x=1796126237;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=0MDOHy2N6YmVjrGmAl4CImJR7XoBMdumWhtlCn4ZVzc=;
+ b=kZSMOfFyz5IVQglXVuqvlw5uAhm9wnpC/u973ienmsvqqAZnP12/PhmsfaSwV5DQOI
+ 2ZOpHq1IpfgVAixf2kaPHw6MGgLpvUNyUDdnFqE73a6o4PHxR+mAReyqPc+5rJcToKm8
+ CqQDsnK6/qSvnToUhDAO0j3qQu5yhK47G+X5exOfYdK/xuNjlNR8NKfpSOrKqHnPNG1u
+ 7dtU3vVXgpZYpVQUiKOZRswraLFLRe/Jgs//DZHrPcYOQqbQ1zzltk5N8/383ROVdBDJ
+ xvRVr3pK85K/cwK0jRexzAgPrZDl6F8EaqoapvAxFQOKiC4TtFTDHZaOMocxnb8r6Yi1
+ gxjA==
+X-Gm-Message-State: APuU4Z8FuyN+6Syo1zDN83pQEwzufFG2H3gryTYQIiFNrroLEKt5JCh+
+ Hst5PnpiSQeFu2N2y49VMadz8zx48WZJsDoh5GU301bK0YruN99czm+b2jgIUVXGmlEjxjHitBz
+ RqvHBtI9PzjRHZW3LlrFVA6jgltGj1/5DGHV8/HOFPw==
+X-Gm-Gg: AZFdTZebUwSFoarC+KnN1oVwHMnnRppwH6JyAuE/uJHEEdZua9REYfGpVXyGgOSI7M6
+ baZ/GZA9t2EjU/PV3rk7EBuS6UpiT+RriqYTnIRndYAl2GVO2SXqUxE9LmENQJZgE8WzOPJgMks
+ 3PQi76o9f52P85mKtdztfutUEwM74TAu0zG2RLwPT5wuWx+QGbzH0mG+MikUFPmHOiVT6SkjpGe
+ DO2qXxxr5olV+Fe4eyEc99jSn1RfQoYEYxrczicT/6wdVLgObnhRKLUNq7Ow1aA3kLIKIjwFFTw
+ RFwcdPu598KD/yXHqQcKzTl/4IxZoCQuEQjlrFmiK+lzYpW+hbBz9DqPX2+iaV4n1iwnnL0RTCI
+ K5sUe/K4rw5kHGTfPqSWr9oIZoNqswe67L45NrNba0Y6rThjNgO1JuFNVd9XpK5wMCbVFOD2lOP
+ NoIrGEwf/KKvG0ZtfYQVjD
+X-Received: by 2002:a05:690e:1341:b0:67d:c045:d0ca with SMTP id
+ 956f58d0204a3-67df43cf81fmr5918841d50.25.1795521437383; Tue, 24 Nov 2026
+ 03:57:17 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <av8guV6yQkrfIjFZ@example.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20261123225349.54981-1-philmd@oss.qualcomm.com>
+ <20261123225349.54981-5-philmd@oss.qualcomm.com>
+In-Reply-To: <20261123225349.54981-5-philmd@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Nov 2026 11:57:03 +0000
+X-Gm-Features: Aa3M54pDBlE-WROAFL42lu1ICIfmJ-WIu5Mlw5YL1uqUYyTP-4V7l5d6Keb6xZg
+Message-ID: <CAFEAcA_gBnmP6Qj8-Zms7urRdDhrOv7d_t2Dc56_GUj-fF15pw@mail.gmail.com>
+Subject: Re: [PATCH-for-11.2 4/9] hw/sd/sdcard: Fix incoming migration of SPI
+ mode cards
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,246 +120,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 19, 2026 at 05:15:53PM +0100, Magnus Kulke wrote:
-> On Thu, Oct 01, 2026 at 10:52:50AM +0000, Aastha Rawat wrote:
-> > Add support for reading and writing ARM64 CPU registers in the MSHV
-> > accelerator. This includes functions to set and get registers,
-> > initialize and destroy VCPU state, and manage register state
-> > synchronization between QEMU and hypervisor.
-> > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> > ---
-> >  include/hw/hyperv/hvgdk_mini.h |  42 +++++++++++++++
-> >  target/arm/mshv/mshv-all.c     | 119 +++++++++++++++++++++++++++++++++++++++++
-> >  2 files changed, 161 insertions(+)
-> > 
-> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> > index a5527d49cf..b5bcea353a 100644
-> > --- a/include/hw/hyperv/hvgdk_mini.h
-> > +++ b/include/hw/hyperv/hvgdk_mini.h
-> > @@ -32,6 +32,46 @@ typedef enum hv_register_name {
-> >      HV_REGISTER_PENDING_EVENT0       = 0x00010004,
-> >      HV_REGISTER_PENDING_EVENT1       = 0x00010005,
-> >  
-> > +#if defined(__aarch64__)
-> 
-> do we need those ifdefs here (they create a checkpatch warning)? Since
-> they have a clear prefix and all values are explicitly assigned we
-> might not run into a conflict.
+On Mon, 23 Nov 2026 at 22:54, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> sd_vmstate_pre_load() powers up the card when the OCR state is not
+> part of the migration stream. Since commit b66f73a0cb31, SPI mode
+> cards are already powered up at reset, so the incoming migration
+> of a machine with an SPI mode card aborts in sd_ocr_powerup():
+>
+>   Assertion failed: (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)),
+>   function sd_ocr_powerup, file sd.c, line 409.
+>
+> Only power up the card if it is not already powered up.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: b66f73a0cb31 ("hw/sd: Add SDHC support for SD card SPI-mode")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  hw/sd/sd.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index d82aa35f6f87..d922e813c102 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -1067,8 +1067,11 @@ static int sd_vmstate_pre_load(void *opaque)
+>      /* If the OCR state is not included (prior versions, or not
+>       * needed), then the OCR must be set as powered up. If the OCR state
+>       * is included, this will be replaced by the state restore.
+> +     * In SPI mode the card is already powered up after reset.
+>       */
+> -    sd_ocr_powerup(sd);
+> +    if (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)) {
+> +        sd_ocr_powerup(sd);
+> +    }
+>
+>      return 0;
+>  }
 
-I believe it should be fine to get rid of the ifdefs, we won't run into
-any problems as long as we're writing architecture-specific code.
- 
-> > +    HV_ARM64_REGISTER_XZR   = 0x0002FFFE,
-> > +    HV_ARM64_REGISTER_X0    = 0x00020000,
-> > +    HV_ARM64_REGISTER_X1    = 0x00020001,
-> > +    HV_ARM64_REGISTER_X2    = 0x00020002,
-> > +    HV_ARM64_REGISTER_X3    = 0x00020003,
-> > +    HV_ARM64_REGISTER_X4    = 0x00020004,
-> > +    HV_ARM64_REGISTER_X5    = 0x00020005,
-> > +    HV_ARM64_REGISTER_X6    = 0x00020006,
-> > +    HV_ARM64_REGISTER_X7    = 0x00020007,
-> > +    HV_ARM64_REGISTER_X8    = 0x00020008,
-> > +    HV_ARM64_REGISTER_X9    = 0x00020009,
-> > +    HV_ARM64_REGISTER_X10   = 0x0002000A,
-> > +    HV_ARM64_REGISTER_X11   = 0x0002000B,
-> > +    HV_ARM64_REGISTER_X12   = 0x0002000C,
-> > +    HV_ARM64_REGISTER_X13   = 0x0002000D,
-> > +    HV_ARM64_REGISTER_X14   = 0x0002000E,
-> > +    HV_ARM64_REGISTER_X15   = 0x0002000F,
-> > +    HV_ARM64_REGISTER_X16   = 0x00020010,
-> > +    HV_ARM64_REGISTER_X17   = 0x00020011,
-> > +    HV_ARM64_REGISTER_X18   = 0x00020012,
-> > +    HV_ARM64_REGISTER_X19   = 0x00020013,
-> > +    HV_ARM64_REGISTER_X20   = 0x00020014,
-> > +    HV_ARM64_REGISTER_X21   = 0x00020015,
-> > +    HV_ARM64_REGISTER_X22   = 0x00020016,
-> > +    HV_ARM64_REGISTER_X23   = 0x00020017,
-> > +    HV_ARM64_REGISTER_X24   = 0x00020018,
-> > +    HV_ARM64_REGISTER_X25   = 0x00020019,
-> > +    HV_ARM64_REGISTER_X26   = 0x0002001A,
-> > +    HV_ARM64_REGISTER_X27   = 0x0002001B,
-> > +    HV_ARM64_REGISTER_X28   = 0x0002001C,
-> > +    HV_ARM64_REGISTER_FP    = 0x0002001D,
-> > +    HV_ARM64_REGISTER_LR    = 0x0002001E,
-> > +    HV_ARM64_REGISTER_PC    = 0x00020022,
-> > +
-> > +    /* AArch64 System Register Descriptions: General system control registers */
-> > +    HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
-> > +    HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
-> > +
-> > +#elif defined(__x86_64__)
-> >      /* X64 User-Mode Registers */
-> >      HV_X64_REGISTER_RAX     = 0x00020000,
-> >      HV_X64_REGISTER_RCX     = 0x00020001,
-> > @@ -188,6 +228,8 @@ typedef enum hv_register_name {
-> >      /* Other MSRs */
-> >      HV_X64_REGISTER_MSR_IA32_MISC_ENABLE = 0x000800A0,
-> >  
-> > +#endif
-> > +
-> >      /* Misc */
-> >      HV_X64_REGISTER_HYPERCALL       = 0x00090001,
-> >      HV_REGISTER_GUEST_OS_ID         = 0x00090002,
-> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> > index 00c54f5d66..29dd45a123 100644
-> > --- a/target/arm/mshv/mshv-all.c
-> > +++ b/target/arm/mshv/mshv-all.c
-> > @@ -10,17 +10,128 @@
-> >   */
-> >  
-> >  #include "qemu/osdep.h"
-> > +#include <sys/ioctl.h>
-> > +
-> > +#include "qemu/error-report.h"
-> > +#include "qemu/memalign.h"
-> >  #include "hw/arm/virt.h"
-> > +
-> > +#include "system/cpus.h"
-> > +#include "target/arm/cpu.h"
-> > +
-> >  #include "system/mshv.h"
-> >  #include "system/mshv_int.h"
-> > +#include "hw/hyperv/hvgdk_mini.h"
-> > +
-> > +static const enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
-> > +    HV_ARM64_REGISTER_X0,
-> > +    HV_ARM64_REGISTER_X1,
-> > +    HV_ARM64_REGISTER_X2,
-> > +    HV_ARM64_REGISTER_X3,
-> > +    HV_ARM64_REGISTER_X4,
-> > +    HV_ARM64_REGISTER_X5,
-> > +    HV_ARM64_REGISTER_X6,
-> > +    HV_ARM64_REGISTER_X7,
-> > +    HV_ARM64_REGISTER_X8,
-> > +    HV_ARM64_REGISTER_X9,
-> > +    HV_ARM64_REGISTER_X10,
-> > +    HV_ARM64_REGISTER_X11,
-> > +    HV_ARM64_REGISTER_X12,
-> > +    HV_ARM64_REGISTER_X13,
-> > +    HV_ARM64_REGISTER_X14,
-> > +    HV_ARM64_REGISTER_X15,
-> > +    HV_ARM64_REGISTER_X16,
-> > +    HV_ARM64_REGISTER_X17,
-> > +    HV_ARM64_REGISTER_X18,
-> > +    HV_ARM64_REGISTER_X19,
-> > +    HV_ARM64_REGISTER_X20,
-> > +    HV_ARM64_REGISTER_X21,
-> > +    HV_ARM64_REGISTER_X22,
-> > +    HV_ARM64_REGISTER_X23,
-> > +    HV_ARM64_REGISTER_X24,
-> > +    HV_ARM64_REGISTER_X25,
-> > +    HV_ARM64_REGISTER_X26,
-> > +    HV_ARM64_REGISTER_X27,
-> > +    HV_ARM64_REGISTER_X28,
-> > +    HV_ARM64_REGISTER_FP,
-> > +    HV_ARM64_REGISTER_LR,
-> > +    HV_ARM64_REGISTER_PC,
-> > +};
-> > +
-> > +static int set_standard_regs(const CPUState *cpu)
-> > +{
-> > +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-> > +    struct hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)] = {};
-> > +    int ret;
-> > +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> > +    CPUARMState *env = &arm_cpu->env;
-> > +
-> > +    for (size_t i = 0; i < n_regs - 1; i++) {
-> > +        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-> > +        assocs[i].value.reg64 = env->xregs[i];
-> > +    }
-> > +
-> > +    /* Last register is the program counter */
-> > +    assocs[n_regs - 1].name = STANDARD_REGISTER_NAMES[n_regs - 1];
-> > +    assocs[n_regs - 1].value.reg64 = env->pc;
-> > +
-> > +    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
-> > +    if (ret < 0) {
-> > +        error_report("failed to set standard registers");
-> > +        return -1;
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +static int get_standard_regs(CPUState *cpu)
-> > +{
-> > +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-> > +    struct hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)] = {};
-> > +    int ret;
-> > +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> > +    CPUARMState *env = &arm_cpu->env;
-> > +
-> > +    for (size_t i = 0; i < n_regs; i++) {
-> > +        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-> > +    }
-> > +    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-> > +    if (ret < 0) {
-> > +        error_report("failed to get standard registers");
-> > +        return -1;
-> > +    }
-> > +
-> > +    for (size_t i = 0; i < n_regs - 1; i++) {
-> > +        env->xregs[i] = assocs[i].value.reg64;
-> > +    }
-> > +    env->pc = assocs[n_regs - 1].value.reg64;
-> > +
-> > +    return 0;
-> > +}
-> >  
-> >  static int load_regs(CPUState *cpu)
-> >  {
-> > +    int ret;
-> > +
-> > +    ret = get_standard_regs(cpu);
-> > +    if (ret < 0) {
-> > +        error_report("Failed to load standard registers");
-> > +        return -1;
-> > +    }
-> > +
-> >      return 0;
-> >  }
-> >  
-> >  static int store_regs(const CPUState *cpu)
-> >  {
-> > +    int ret;
-> > +
-> > +    ret = set_standard_regs(cpu);
-> > +    if (ret < 0) {
-> > +        error_report("Failed to store standard registers");
-> > +        return -1;
-> > +    }
-> > +
-> >      return 0;
-> >  }
-> >  
-> > @@ -41,12 +152,20 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-> >  
-> >  void mshv_arch_init_vcpu(CPUState *cpu)
-> >  {
-> > +    AccelCPUState *state = cpu->accel;
-> >  
-> > +    mshv_setup_hvcall_args(state);
-> >  }
-> >  
-> >  void mshv_arch_destroy_vcpu(CPUState *cpu)
-> >  {
-> > +    AccelCPUState *state = cpu->accel;
-> > +
-> > +    if (state->hvcall_args.base) {
-> > +        qemu_vfree(state->hvcall_args.base);
-> > +    }
-> >  
-> > +    state->hvcall_args = (MshvHvCallArgs){0};
-> >  }
-> >  
-> >  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
-> > 
-> > -- 
-> > 2.45.4
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+I think it would also be fine to just drop the assert in
+sd_ocr_powerup() if you prefer.
+
+thanks
+-- PMM
 
