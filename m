@@ -1,64 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B866A606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A45606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=WlsXAbqE
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Gg8ji56s;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tWUgBa1E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVqho-0001JO-8w; Tue, 24 Nov 2026 08:37:08 -0500
+	id 1xVqoq-0003G2-1u; Tue, 24 Nov 2026 08:44:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xVqhe-0001Ih-TM; Tue, 24 Nov 2026 08:37:00 -0500
-Received: from oxygen.pond.sub.org ([94.130.129.15])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVqon-0003Fc-NT
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:44:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xVqhb-0001c2-OT; Tue, 24 Nov 2026 08:36:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
- t=1795527401; bh=8/aruCP7cSMSq5Z/emheyre1G6ZvOspS5m5x/o2PctU=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=WlsXAbqESrI9GN5UBb+8r8hqm9Aem2SkC5FzNye9oF9L7MdrsK1leOXLnG1xyAA35
- zRQqXQ2TsIQXj8ug5O9fWUkZXo4fvpawLc+7QOmENvUVqM81WRZ8LSTgRHnQFxvP4J
- Co1nZZV8Ic6nPL87nnU/D33BcLjFicGcFxcGe/M8=
-Received: from blackfin.pond.sub.org
- (p200300d36f05b900e5f885c0cd39d8e9.dip0.t-ipconnect.de
- [IPv6:2003:d3:6f05:b900:e5f8:85c0:cd39:d8e9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- by oxygen.pond.sub.org (Postfix) with ESMTPSA id 64E8620595;
- Tue, 24 Nov 2026 14:36:41 +0100 (CET)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 93D1821E6A04; Tue, 24 Nov 2026 14:36:49 +0100 (CET)
-From: Markus Armbruster <armbru@pond.sub.org>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Krempa <pkrempa@redhat.com>,  qemu-block@nongnu.org,
- stefanha@redhat.com,  afaria@redhat.com,  eblake@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 1/2] file-posix: Add 'accept-read-only-device' option
-In-Reply-To: <awWD_4Y9xsYMKdS9@redhat.com> (Kevin Wolf's message of "Tue, 24
- Nov 2026 13:33:03 +0100")
-References: <20261029164522.103918-1-kwolf@redhat.com>
- <20261029164522.103918-2-kwolf@redhat.com>
- <au2qCGy-CttBaXoI@angien.pipo.sk> <87cxruh857.fsf@pond.sub.org>
- <awWD_4Y9xsYMKdS9@redhat.com>
-Date: Tue, 24 Nov 2026 14:36:49 +0100
-Message-ID: <87pkvue4ge.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVqoj-0000SF-OV
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:44:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795527840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0FMTDULG/pucx2dip+XCKFbavpsZyl56W/eDimkin9I=;
+ b=Gg8ji56sQ9M2srjUvBfYZf/2qMlqbGXTkSxos9bi9f3SE1Jn9ARYSp6WwJ0Vb4htRZNQfA
+ C7c1Gk3+Dq6swmbTyx6i9LWHTrgVKVSnEd58avKX7V2DarfVVX2v8nzmi4bITLTx7vpX2x
+ JTy30CzQp/AGUe3yAnIoXqskZ8oMhOo=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-353-fGltIgmYP0aWRFQeH16Ktw-1; Tue, 24 Nov 2026 13:43:58 +0000
+X-MC-Unique: fGltIgmYP0aWRFQeH16Ktw-1
+X-Mimecast-MFC-AGG-ID: fGltIgmYP0aWRFQeH16Ktw_1795527838
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93f37c94ceeso922574585a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:43:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1795527838; x=1796132638; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=0FMTDULG/pucx2dip+XCKFbavpsZyl56W/eDimkin9I=;
+ b=tWUgBa1EgFlvqHmfsrMIAVnjj3Jj7CcRLx9ELhBEZ6BJTaUVYaxk5/SnHqurdCaDoG
+ s4NNk47SYFwSxrQ0+pMewRkri5PYmgSRI7qDF1MPkEj6neaFp7DuYHs8CfHWcz74GpZU
+ 9UvVeIuCtfoTMxWfAvliUjCQ8I+MqRhzaQFISq++1qNnkxBx9wYtdrcc38FbOwOGdmUH
+ XArsmwE4CLTZvze8f0D9YMKaMfEE88fuvyv+xid4JPF9wb9KThhUurHXvSmUzE40XTSY
+ u2a+7R8SYChBEKWiWOj3CWoXIASb4aqHz2r4LibTD/jLoSlNWrlAMpM2D4piFkvVgFtz
+ Nlkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795527838; x=1796132638;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=0FMTDULG/pucx2dip+XCKFbavpsZyl56W/eDimkin9I=;
+ b=Xp1jHNfJd678hypajWW+RvBwi6mf1hfIgUhUqLt0J4Yb8rmF38QbEcZVQUfZFpH3VS
+ v9vdi9r1S8kIvh4Ke2GPhqFk7t1Udxcm/IVv2M++ubLctfPbSM0yPxehalsmuN84oaKN
+ M2JKq13lQDYBI4X0IHMH9ndC6+E9tkMQwl6aUGRjmUnmTnX5TF70iHOr7T0vZIc6go0M
+ PKYfbitO0WiYoH2COOm/ZPET8EkhUg4GY7/VzHnW7N3zISPeufdBGa5GcrzcrUe65/UW
+ LeqrrJvnEUdg5sAnyY72XQ5ZBWL140CF7A+rLkdp+7UJu7CpXHAe3XlYxSs7yFkDoytW
+ J2yQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFg9wD1KS2xqwlqA8v8z4vUDBI9CO47b96FLr0+e6BhHlk4zFyHcmBdtOUvPBk5TA1u/gYrAlXTrYuB@nongnu.org
+X-Gm-Message-State: APuU4Z8fvw3fdrKyogucbk6cibLaXMcCGwtJLxlQtEmYG5vFifoHLmNO
+ X9RghON+VJ0+nQTn0Vtxm//gG86g84/3M4FYU49pfLEknR0sh4/4aOPkbgchz2gqYfQODeuA2G4
+ oGDn3aGfh/YTXl08ik78goBY3qx1b1g/R5F507/ik5RaXDBJWGoPq7YsB
+X-Gm-Gg: AZFdTZc16mzZe8cF909ITTQM26qpHp0z51sLYF/yiHjsWTCKbgFQf9YuboOGujmsHw4
+ s6F23pz0H0ZJp+nTFaosdFta9Qerl0KHblIgnQZwqaXFh2R/SRTG2AAI7gogIh6mYXFXDDYf9cD
+ KVZNcjaLls0HeJsrr2N1TNPKpqokkMYnbbq+gyzIdKWBQvbVSlCbbPWC6E87QEd0gH4DRfJEU/L
+ F+n23vgXU0td2k+n+uiaWMkBVWFBQGYFyUt+0Tt/kBH0smdevbkNVsmit7IGioDNDdJI3FB9YaD
+ OA5AzTuYiJWrD+C6YV1DsJfaTCvqUhxCWNc48xcTpHeJ5OvpkBioOPPmv1pGLL8PmQvAROvnCvA
+ DsUx4Mo5h9eZhVtktmNHHninH1Xi6VI2s54nIxsSnNuCJ
+X-Received: by 2002:a05:620a:4409:b0:949:5f22:e849 with SMTP id
+ af79cd13be357-949b37208dbmr2607780985a.35.1795527837674; 
+ Tue, 24 Nov 2026 05:43:57 -0800 (PST)
+X-Received: by 2002:a05:620a:4409:b0:949:5f22:e849 with SMTP id
+ af79cd13be357-949b37208dbmr2607776685a.35.1795527837172; 
+ Tue, 24 Nov 2026 05:43:57 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-949bb418241sm1023447185a.38.2026.11.24.05.43.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Nov 2026 05:43:56 -0800 (PST)
+Date: Tue, 24 Nov 2026 08:43:53 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2] docs: migration: Clarify the security posture
+Message-ID: <awWUmfW-p-dbJT3P@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261124130622.2296899-1-farosas@suse.de>
+ <CAFEAcA-g2KmgAH52gCTTa7O+xjUWoRuNxfgdKoXTbsmNM7gv6g@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
- helo=oxygen.pond.sub.org
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-g2KmgAH52gCTTa7O+xjUWoRuNxfgdKoXTbsmNM7gv6g@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,147 +117,44 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Kevin Wolf <kwolf@redhat.com> writes:
+On Tue, Nov 24, 2026 at 01:18:45PM +0000, Peter Maydell wrote:
+> On Tue, 24 Nov 2026 at 13:06, Fabiano Rosas <farosas@suse.de> wrote:
+> >
+> > We have documented[0] the scenarios in which a migration bug is
+                      ^^^
 
-> Am 24.11.2026 um 10:48 hat Markus Armbruster geschrieben:
->> I almost missed this.  My apologies for the delay!
->> 
->> Peter Krempa <pkrempa@redhat.com> writes:
->> 
->> > CC'd Markus for QAPI generator input.
->> >
->> > On Thu, Oct 29, 2026 at 17:45:21 +0100, Kevin Wolf wrote:
->> >> The host_device block driver refuses to open a block device read-write
->> >> if the BLKROGET ioctl tells it that it's actually read-only. For such
->> >> devices it's possible to open a read-write file descriptor, but any
->> >> writes to the device would fail.
->> >> 
->> >> There are valid use cases for which this check gets in the way, as
->> >> explained in the bug report:
->> >> 
->> >>     However, this behavior prevents a legitimate enterprise use case:
->> >>     running VMs against storage replication target LUNs in a disaster
->> >>     recovery configuration. Enterprise storage arrays (Dell Powermax,
->> >>     Pure Storage) set the SCSI Write Protect bit on replication target
->> >>     LUNs, causing the Linux kernel to mark them read-only via BLKROGET.
->> >>     The VMs on the passive DR site need to start with these LUNs
->> >>     attached - writes are expected to fail (the application middleware
->> >>     knows it's on the passive side), and after a DR role swap the LUN
->> >>     becomes writable and writes should succeed immediately without any
->> >>     VM restart.
->> >> 
->> >> In order to allow such use cases in which a currently read-only device
->> >> is deliberately opened read-write, add a new option to the host_device
->> >> driver that allows the user to skip the check.
->> >> 
->> >> Buglink: https://redhat.atlassian.net/browse/RHEL-186136
->> >> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->> >> Reviewed-by: Eric Blake <eblake@redhat.com>
->> >> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->> >> ---
->> >>  qapi/block-core.json | 19 ++++++++++++++++++-
->> >>  block/file-posix.c   | 23 ++++++++++++++++++++---
->> >>  2 files changed, 38 insertions(+), 4 deletions(-)
->> >> 
->> >> diff --git a/qapi/block-core.json b/qapi/block-core.json
->> >> index 741c8165c06..80272b878c5 100644
->> >> --- a/qapi/block-core.json
->> >> +++ b/qapi/block-core.json
->> >> @@ -3390,6 +3390,23 @@
->> >>    'features': [ { 'name': 'dynamic-auto-read-only',
->> >>                    'if': 'CONFIG_POSIX' } ] }
->> >>  
->> >> +##
->> >> +# @BlockdevOptionsHostDevice:
->> >> +#     Driver specific block device options for the host_device
->> >> +#     backend.
->> >> +#
->> >> +# @accept-read-only-device: allow opening a read-only device as
->> >> +#     read-write.  If this is false, opening a host device read-write
->> >> +#     requires on Linux that the BLKROGET ioctl considers the device
->> >> +#     writable.  If it is true, this check is skipped.  (since: 11.2,
->> >> +#     default: false)
->> >> +#
->> >> +# Since: 11.2
->> >> +##
->> >> +{ 'struct': 'BlockdevOptionsHostDevice',
->> >> +  'base': 'BlockdevOptionsFile',
->> >> +  'data': { '*accept-read-only-device': 'bool' } }
->> >> +
->> >>  ##
->> >>  # @BlockdevOptionsNull:
->> >>  #     Driver specific block device options for the null backend.
->> >> @@ -4777,7 +4794,7 @@
->> >>        'ftps':       'BlockdevOptionsCurlFtps',
->> >>        'host_cdrom':  { 'type': 'BlockdevOptionsFile',
->> >>                         'if': 'HAVE_HOST_BLOCK_DEVICE' },
->> >> -      'host_device': { 'type': 'BlockdevOptionsFile',
->> >> +      'host_device': { 'type': 'BlockdevOptionsHostDevice',
->> >>                         'if': 'HAVE_HOST_BLOCK_DEVICE' },
->> >>        'http':       'BlockdevOptionsCurlHttp',
->> >>        'https':      'BlockdevOptionsCurlHttps',
->> >
->> > After the two hunks above the 'host_device' type in the resulting QMP
->> > schema will no longer have the 'dynamic-auto-read-only' feature which it
->> > had when it used 'BlockdevOptionsFile' directly rather than the
->> > 'BlockdevOptionsHostDevice' type which 'inherits' from
->> > 'BlockdevOptionsFile'.
->> 
->> Reproduced.
->> 
->> > Markus, after chatting with Kevin, we're not sure if it's intention that
->> > features are not inherited in the above case, and thus the
->> > 'dynamic-auto-read-only' feature would need to be propagated also to
->> > 'BlockdevOptionsHostDevice' or it's a mistake in the generator.
->> 
->> The generator does what the programmer(s) intended it to do: 'base'
->> splices in the members, and nothing else.  Further evidence of intent:
->> the explanation of 'base' in docs/devel/qapi-code-gen.rst talks only
->> about members.
->> 
->> Should it do more?
->> 
->> Kevin, did you expect the feature to be inherited?  Or did you simply
->> not remember there's a feature, and therefore didn't think about what
->> the generator might do with it?
->
-> I simply didn't think of it, and when Peter pointed it out, I was unsure
-> what the behaviour really should be. I think inheriting would usually be
-> what you want, but maybe not always.
->
-> I think we have two options to fix the regression: Either change the
-> QAPI generator to inherit features from 'base' (and avoid similar
-> problems in the future), or just manually duplicate the feature in the
-> schema for BlockdevOptionsHostDevice.
->
-> Which one do you like better? I don't mind too much either way.
+> > considered for a security vulnerability but some ambiguity still
+> > remains, mostly because of the mention of live migration in the
+> > untrusted entities list. Remove that mention and expand the "Security
+> > boundary scope" and "Sensitive configurations" sections with migration
+> > content.
+> >
+> > 0 - commit 8b6405a493a ("docs: Add security considerations for migration")
+> 
+> What's this line ?
 
-Let's duplicate manually at least for now.  We want a fix for 11.2, and
-it's last minute.  I don't want to mess with the generator this late in
-the freeze.  Manual duplication is simple and safe.
+My bet is the reference [0] used above.
 
-Bases with features are rare.  I can see three instances:
+> 
+> >
+> > Co-authored-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > ---
+> > v2:
+> > Picked PeterM's version for the "Security boundary scope" part.
+> 
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-    Base                 of                         has feature
-    BlockdevOptionsFile  BlockdevOptionsHostDevice  dynamic-auto-read-only
-    SevCommonProperties  SevGuestProperties         confidential-guest-reset
-    SevCommonProperties  SevSnpGuestProperties      confidential-guest-reset
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-I'm reluctant to accept generator complexity for something as rare as
-this.
+-- 
+Peter Xu
 
-On the other hand, all three need the feature duplicated, I think.
-
-On the third hand, we can manually add features, but not remove them.
-So if we make the generator inherit them, we're stuck with them.
-
-Would you like me to post patches?
 
