@@ -1,122 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED13606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B20606A698
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=yS5VTtYZ
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=MfpUbKeC;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ap8eim1f
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVncu-0003x4-Oq; Tue, 24 Nov 2026 05:19:52 -0500
+	id 1xVndb-0004XA-58; Tue, 24 Nov 2026 05:20:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVncs-0003wl-N1
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:19:50 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVncr-0007RR-0M
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:19:50 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-679a2b5fe87so4111381d50.3
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:19:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795515587; cv=none;
- d=google.com; s=arc-20260327;
- b=S+H0BrKQvcvz3LIak+Ab6EoOwRdhmDm3xEMISZNgICcFulJKrO0g3BHv5lc1s9c433
- Eamu5dX3u406H4prNcKHOwtN4CLSDEx4b68gcbMWg8sTnSPj2vuiYH4q3drxpZEgjXx/
- CV7kAaWKXAxJ+kFptmLzn+bsw7v9SjTRJEjiLNgxeKDG5JdHUtYOmqBbDpeyP8XlxZ02
- DlZqFlzpRSF40A0kPYhbQ1Fo6O1U2h+bH/7MhNBvKs4QfmWwBkTkZtwrej0CS4rYcSRC
- PS/NFGdYx86qpUwmbJFXUjIirF+7U4B3orwBLFmj7zJNnZ3cf0OE0YQTXF9jhaaaLhwB
- twyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nOkSFZ9DCJRzUjukGwLhgBbkWXA+7KZKXcsQdbhpKb8=;
- fh=FzZ3BvsmT+R7+S/QSSfvr5c8Wgi11LrLsVHAGdCaYGc=;
- b=fn0ZwEWA13WNgWkZXglSScnP3CvMl87grbWYCOiZ0xoCa8j8Fb5HDOduEk+GULSTaq
- HddqrEhUT/kVi6IXCJw96O3Kxr25SJPqmO3KuuShA+FtMF4FcXIgwIi98fASY8Zz2QvT
- 9yKsjpONbFdTJCDNndvj+dF5F6fw5UCup9UIOnPlK7vJrxYgO3uOpjN/4T0PlPCmHL9w
- 1ncCgYMs5c0go99eZzcxs8UNVqaQ4zTv4QU9KlCgYKVMgcbsrdV0honaLzIUhSqtp1X/
- faKyWt+2EhNy3jaD575Gy63ICQ/9bt1MySyzZhrB6I93xOri6zqvkBRuWeU3s0IGNA1l
- jL0g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVndY-0004Wi-Ia
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:20:32 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xVndW-0007fs-Sp
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:20:32 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AO5m2s12848316
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:20:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rHtKYqXEeEJOF9cHpZiNL0PiDrdxLeIdvyvjvrzs9vQ=; b=MfpUbKeCruO6jrmt
+ s6p4S4zpjnqpwzEgH8B8T0ksBmAQyplhrxk/DpUWlNscE2IxW+VCN+J3VerbAxBZ
+ 9LI/1VAJtbLHHMt4YPQjnY0whilwvhQZvOhHaas/Y4DrgPo9eA9k25H6AXr+l58/
+ Qg6PwHn+Wee1J6u06DzoPdQ5wE3rEzGg+ctvWhFwtcG35ZhASZPAJBcyaLB0gfX+
+ +JhdEbDQTROKOCWt0rmvmMNUpMP2bAUFry9O3EOcs8a9kMQN0DmZxRijSG24MVnE
+ ni60pVQzPy9xvZ0IITBGaNO53aXM0crPyt7EyEk01vboeuaiMIJ0taqLEkCbuwbo
+ v/CP9A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j54rh93x0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:20:28 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-94961511b61so727876185a.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:20:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795515587; x=1796120387; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=nOkSFZ9DCJRzUjukGwLhgBbkWXA+7KZKXcsQdbhpKb8=;
- b=yS5VTtYZCHAdvdUDkmcnGYoFJ+Vvc9yEp0ybujlKRvrU0AsC9bLwXyk+WAyZp6GAZT
- bbPvsNKzkn+vZFUyaHMEacco9LXl3nbiqSUHfeu7TUDTPI2c7cZZgFJTGoxYJ82wk1q6
- TvBBihPZu+1nEhcZZzSSJt0RqCVkiNjNi734hjWDeX5ceg53q/nR8DNPqhD0AWyvQGoY
- jkYPg7K+POJ+IGxMQtGtfZm1ILlbQzaRVuw9UUTNfPPk1hosaQYGI9g0hHBfQHB62JTe
- IiqbteDtMmEXiw2Yp7m0qah+NtskCX89zVryJH+bj8QwtO9b5b55PpkOOCMxcaXxElJ/
- 3qvw==
+ d=oss.qualcomm.com; s=google; t=1795515627; x=1796120427; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rHtKYqXEeEJOF9cHpZiNL0PiDrdxLeIdvyvjvrzs9vQ=;
+ b=ap8eim1fbv8ftPQ+Fn4zExdUSWLJy9UPtjpN3mCRHCR7zWOsoWuY1eaA8SecF47Ojl
+ wZ/iBJAHGVgL9CwyZI1Dr7cpYxx66I9qUmw4DF37CeoCgo7pKPm+KC4NlysXYieH7+li
+ V9eYXY7HORsuY1vMzQCO8bFRfq7mINsPOwmCGtnCe63sM+35EjBeMQzcbGLiP1Km3q73
+ vuYeJvNWHWFECf28RNy1h7pq+n6elda7t2g8gc1xmFOJxAIImtomxGskD7c0Pet4lEoU
+ EBxpslgo2TNOCqsVAoEe7NzdF5YGIsOx5GKqo1qaW38CJxlAGQjjbJ6HidzOp24U+eiN
+ YWMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795515587; x=1796120387;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nOkSFZ9DCJRzUjukGwLhgBbkWXA+7KZKXcsQdbhpKb8=;
- b=QLpNF+u9F8BCcqTJ45TYGMcOS147ckQ9c7sIlGEdmwpg7bt33xvc4hpMRhWHzJJy5J
- Mwt/M8yRGH8+ctRkR8HesCNUQSRAt4SXqSPKZdkMA7edZ6SB6vGsopDupeVoH8OwDMuv
- F7jI6Py1TYeFvu4vXfX3SDo+BfF0ZeyEbkJPDAlyp1rm/UDae8yoTFyjZJLxcS9CkX4i
- 58CFC+LCwNfeVDqMouzJl42zsuCys0Ihk4RA1dWIGf4Tj5CtlPG3oimu9yRn/RR/zxXQ
- /hUS2z88boyyiyYXVyGlmvCmUhpaGVKM4lLFog2tCh5vRQ27DqtqZ66JRShXUPoywby6
- RM6Q==
+ d=1e100.net; s=20260707; t=1795515627; x=1796120427;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rHtKYqXEeEJOF9cHpZiNL0PiDrdxLeIdvyvjvrzs9vQ=;
+ b=BZEtN/VgE0QoO8rFUGsooCNKat7n1wMU04YSaQ0Ffr9CyWboreAcz1kXtY8cCPGMJG
+ Pvu0PqJ2f3xD0KJ6172SENk4PGBMEl6/IYBmNWp8Dkl6Kf7WJiTBcIjP/Io8cRLbA7gr
+ bFkZKwC3cEWdmOxP8puMdnfkMWvZF6G3f89pJO68zkM1AsdLcBU9gwqgGW2n08W8W2Qs
+ SS9Wbs8RTYnEe+h/sD3OvUwNWltLOEZwJSx7T51doIJBTe47DOaw+QaBiuq3kgGWOlT5
+ 5OoqvfEmLL02REqj560cOOV1NxR84ExCO3NQYhGb0WWORoTFw2ifphhpTUSsVvFiE+oB
+ LRHQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErEsWXS019NnWTRLlWiwtvPmVaZ9XkSopCbhw6No2+YX8SNS6HadTA7oZrZa/+3/n5wAp3syV/3VsXJw@nongnu.org
-X-Gm-Message-State: APuU4Z8ppU2SPXmc9fN9suirV60NJiLZrASNpD6iewjqrp1I6Y7mlP9t
- mV8iVkOo3A4PdZMdVGD5gQ+ObxMKG+fLu7yVmFMhKV1vceolaOFsdI7Idir5RXhidg/kxCU3OkS
- ZCm7R0wLElu4KmyWlmhbQEroE9phmMsZpX57ED3e8ng==
-X-Gm-Gg: AZFdTZfD5afQZuq3wuMnaXhMHCigcHXSNGQmBDCFIfKzj7o/y+hKoQU0A2+3RYIZs4C
- jzIV9PmMQNniPawfwsTjt9Ljbh8bXVTlGy/pFXwVYE+fUj0T4LoGa22Ttu2SvKLWhm9S+8qFAy4
- FhYB73Ky7LNF2heFizh7vZVBLngGHbJLbJaHbOH1ssez46keGsB4nvmO4KL5NzpwjHTQRZYmYHw
- 1aUsgB7EakWnb9Wt9bkQxIwrdvCj8FRy2Ccc6vZtpK1sT248aDOVkxnCN2dlb1GAhOjlHho2uZM
- nx3FHsrvaUg4LR8Yo69M4Q7N7yxysz9aRS4uKJiiVG22DfqlupPaIlVqyhvLgS19CwjYz8tQZYx
- sbDxc5q9Bf2LVh6SK3KAYBXgwcC3rX13sCPwjZCOTfzINvofCxcpgn5M11zgBWcqwhGsvvWD5Qk
- OHxP0SWmnhu+c5QlXev1jA
-X-Received: by 2002:a05:690e:4145:b0:67c:33ba:4367 with SMTP id
- 956f58d0204a3-67e314b00d2mr1207508d50.123.1795515587534; Tue, 24 Nov 2026
- 02:19:47 -0800 (PST)
+ AL+hErGarYOkPuy2aHMi5E8m3MvRUhbwf1GH8Q7zvbM/VmOaswpNN5A8lxRDodoDiKabE7yN0UNDnfE90Cih@nongnu.org
+X-Gm-Message-State: APuU4Z9bYFQWtYN0KWv+TWyEL2BYD8voCPNTaoeQvQcMLJzBB1RjsHpF
+ o0XVj2JSueKncDtENVqJcgADjsoXizIKVftYSJq/G1NtbYGCXcMdkyC7pU76MxqrDiHuuaqs2WI
+ kEO+WeAbAVZ8IuzLyz+Vw5f3HKbKlAILbGd5SIbbWPCZHAqT2D+nqtSCPoA==
+X-Gm-Gg: AZFdTZcTfcbUjU18oxDVFyVPdnRK/wyB4jpNpZ5y7WLYz3UYv98hYSeyLZj9WJZkhJN
+ vxhyZP4e9+xbeZfIPzzwAhs5Rg/C2lB42pMFicNKWHqg3fzHyUe+nqd4EShAQzgkuL+egW4czU/
+ D1JTaUYT03TeLFE6rXuK/fL4Bjbec3BfJZTrBCe6z6+WPm9zP5kBbj3UipALugVClvfCLYAMEES
+ KDllACm7p1+7lR2kbx4AFm7lg5XBMNIvUiTBDEpJ8TwL4567k6uRq/c65HBH/HmQPHtYTeWjGQm
+ Sb7LMGataFXm0YCpnkxuchqUc22+G9SqnZLqlbHH+nAllotO2hOwv9kdmFdbDR4+74XM7yDerCJ
+ L6z/OsuaUchPmNqO8nDSSRVM8pIQnmP2yHIma/HW8Qjiibg7BbX/gdQR1xbQbW+fEZZrBbvErwa
+ rUrVQQtsY=
+X-Received: by 2002:a05:620a:458d:b0:939:6dea:4f1a with SMTP id
+ af79cd13be357-949ba9c228amr2447605485a.48.1795515627460; 
+ Tue, 24 Nov 2026 02:20:27 -0800 (PST)
+X-Received: by 2002:a05:620a:458d:b0:939:6dea:4f1a with SMTP id
+ af79cd13be357-949ba9c228amr2447602785a.48.1795515627004; 
+ Tue, 24 Nov 2026 02:20:27 -0800 (PST)
+Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab6ae2dd55sm26493972f8f.30.2026.11.24.02.20.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Nov 2026 02:20:26 -0800 (PST)
+Message-ID: <69976e65-ae0d-4fe7-abe4-1894b4005873@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 11:20:25 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
- <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
- <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
- <87mrqyhb7l.fsf@pond.sub.org>
- <1fc28def-9c77-45a8-99d4-c1de8dd2d477@oss.qualcomm.com>
-In-Reply-To: <1fc28def-9c77-45a8-99d4-c1de8dd2d477@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Nov 2026 10:19:35 +0000
-X-Gm-Features: Aa3M54qZV3do6VLCattc0O3u0SKaIU2Z1-fpz0azQc995gIgLjIJo62EzaNP4-w
-Message-ID: <CAFEAcA88U2ef+1LWP7rP7d9=t8gtv8nOkzULBbTGG3D+ixOCSw@mail.gmail.com>
-Subject: Re: [PReP] Maintainer status check for PReP machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Markus Armbruster <armbru@pond.sub.org>,
- Utkarsh Verma <uverma@linux.ibm.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org, 
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <huth@tuxfamily.org>, 
- Laurent Vivier <laurent@vivier.eu>, Aurelien Jarno <aurelien@aurel32.net>,
- Helge Deller <deller@gmx.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>, 
- Chinmay Rath <rathc@linux.ibm.com>, Amit Machhiwal <amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.2 2/4] hw/display/vmware_vga: Check for bogus
+ FIFO_STOP and FIFO_NEXT values
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+References: <20261124095719.4126146-1-peter.maydell@linaro.org>
+ <20261124095719.4126146-3-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261124095719.4126146-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=BKkmP1QG c=1 sm=1 tr=0 ts=6b0564ec cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=hlCYXMhYWPKoYp4UXMcA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfX22bWxGQRJGvO
+ YPO+YEQ6C0ON3/P6Y7epccQEVjaUS7tr3erCQ05vxle7ekgdFz10X08c52T/7JwFGdc6n3j4+5u
+ gQKZiH7gHSm3pRv00dhQdBys8kbB8io=
+X-Proofpoint-GUID: L-CImttYteUvECN9zblrbckZ586Wm2jo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfXx/JRtcSEz1Uh
+ gzwcSmMJK0i1bp3Ddo+hHSUx53UQ3q/m5jOH91I/AjCqkeDbthP0aSXlj3GPdsRW6/ns5GCTF1e
+ F+Zr4ulhTv1RnvVIpkBfcQCIeOhwL9Q5JsphURmknK1zSpj956b+Vj80s2df8n4sNne+QZ/KPxI
+ QNtE7wmljQO2oRl+RxJOeDgCw1jeHpvbGgtTJXOdZnDQJV+32xks2bzJzF3mtfeap9XpyenJlgf
+ 0oSvrM78pcLjSvt05D/AiVW/MLlQ8SjE2n4oF9rllTfsKRFyW+4zhRTbe9Y6bcp09KUnkfsLiwO
+ HNbrCvoHCS0PXMBiHKJbQDX6X/ZNexrnzQVfwQJKuFjyK7HY+V0kAem8fPxluK9pM/sUulaPvsA
+ V2+ObHDeUjgvv+Sy+wm2e+Svhi+GqSQ0RRqhVVHrojfdofXldkAAHwsTVDn18Vx/iOAXgUEE1Ye
+ m9gbVDLIXKqvZIGJIzQ==
+X-Proofpoint-ORIG-GUID: L-CImttYteUvECN9zblrbckZ586Wm2jo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240039
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,49 +153,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 24 Nov 2026 at 10:06, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
-> I'm probably missing the point here, I'd rather look to help maintaining
-> unmaintained / broken subsystems. Why care about a well working area and
-> ask the maintainer to step down? Why not ask the same to ARM / RISCV /
-> X86 maintainers? What is the underlying problem?
+On 24/11/26 10:57, Peter Maydell wrote:
+> The guest should never program the FIFO head and tail offsets (in the
+> FIFO_NEXT and FIFO_STOP registers) to something outside the bounds of
+> the memory area it has defined as for the FIFO via the FIFO_MIN and
+> FIFO_MAX registers. If it does that, return a zero fifo length as
+> we do for various other bad values.
+> 
+> Bad values here won't cause any serious problems as we were rejecting
+> offsets that would cause us to index outside the s->fifo[] array; but
+> they're better rejected. For safety's sake we add an assertion on
+> the fifo cursor before we read it.
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/display/vmware_vga.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
 
-The underlying problem is that it gives a misleading view of
-whether something's actually maintained if you look at
-MAINTAINERS and there's an "S: Maintained" label but in fact
-that person hasn't been actively involved with the project
-for years and is probably not reading their qemu-devel email.
-If the real situation on the ground is "effectively this is
-Orphan and patches for it are unlikely to get review" then I
-think it's better to have MAINTAINERS say so.
 
-This is why at the beginning of the year I did a run through the
-MAINTAINERS file to look for "stale" entries and query whether
-the people listed still wished to be listed. (It was about 50:50
-whether they said "yeah, it would be better to not list me" versus
-"I do still want to be listed".)
+>   static inline uint32_t vmsvga_fifo_read_raw(struct vmsvga_state_s *s)
+>   {
+> -    uint32_t cmd = s->fifo[s->fifo_stop >> 2];
+> +    uint32_t cmd;
+> +
+> +    assert((s->fifo_stop >> 2) < SVGA_FIFO_SIZE);
 
-I don't view this as "kicking out maintainers" but rather trying
-to make our maintainer docs match reality: if anybody I contacted
-in my run through the MAINTAINERS file requested to retain their
-listing I did so.
+s->fifo is a uint32_t * array, shouldn't we check the index as:
 
-We can discuss whether it's better to do this as a coordinated
-process over the whole file versus single subsystems and who
-is best placed to be sending out the queries and whether that
-works better as private email vs cc to qemu-devel, but I think
-the general principle is right: many people who drift away from
-the project do not actively send us a MAINTAINERS update and
-so we do have to do a little active housekeeping on it from
-time to time.
+        assert((s->fifo_stop >> 2) < SVGA_FIFO_SIZE / 4);
 
-thanks
--- PMM
+?
+
+> +    cmd = s->fifo[s->fifo_stop >> 2];
+>   
+>       s->fifo_stop += 4;
+>       if (s->fifo_stop >= s->fifo_max) {
+
 
