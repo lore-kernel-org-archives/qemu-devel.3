@@ -1,97 +1,107 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA748606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 12:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD35606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 12:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AkVwvSqk
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AsgRoVpZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVpwO-0005S3-6k; Tue, 24 Nov 2026 07:48:08 -0500
+	id 1xVq4v-0002Ez-D6; Tue, 24 Nov 2026 07:56:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xVpwK-0005RL-Sw
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:48:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xVpwI-00009r-Vb
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:48:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795524480;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=e7E0PSjfMYKFzbxrMHUv/B6Q1F0N7L/0XuzsSTgbgys=;
- b=AkVwvSqkByEjna5iamyViC7bK8Oe+QpmSS74J68OgqCFoh2Ju1hYDgt+StuXmQ8L0dwH/u
- Ker8IdI89aG5fsY2DgPzvbFXtdcC8NDwGk/TEMWROxCIbJWXRhSbe/gofDF1USUmvnP8cp
- TmVAwQJ5E1ztGDqdQ3Qm5lef7Ea/fNs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-H8dY7qBVN6Wo887kHQy-EQ-1; Tue,
- 24 Nov 2026 12:47:57 +0000
-X-MC-Unique: H8dY7qBVN6Wo887kHQy-EQ-1
-X-Mimecast-MFC-AGG-ID: H8dY7qBVN6Wo887kHQy-EQ_1795524476
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED9BB195DE4A; Tue, 24 Nov 2026 12:47:54 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7C07A18011D8; Tue, 24 Nov 2026 12:47:53 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v4 0/6] vhost-user-gpu fixes
-Date: Tue, 24 Nov 2026 16:47:43 +0400
-Message-Id: <20261124-issue-4848-v4-0-24993c4766fc@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVq4p-0002D0-Be
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:56:52 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVq4n-0005ta-H2
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:56:50 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-677d35fd1d2so4444378d50.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 04:56:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795525008; cv=none;
+ d=google.com; s=arc-20260327;
+ b=O0XyMlohOUjgW+rPD+cO69BZ4FnmUaEIq9E69qIwNv4SbM8e/EmSpgLbqXIu+CuZhx
+ xjBmcsi5LICRP3KSmCMHcZWNeLRSzsMZM1N6r9g8gT6Zcyvk6XEksaqtJs0ZO8y0u6Lz
+ RPfwmf7Vv/hSxvIXiKC1ClH51L7UiRCInz0Ngh2JLK1/5ot32D4RCjClVwCO84nm0E9h
+ S00G3WbW+ssli8Y8uOxlTZGuyYaXi8XwTX3txKZQWSmX5WfcxyCYO6UHeYsuZgUw8mdG
+ K+Mu+F4yBk5/ZXc1/2/c5aCy8fmdKVwyWvRd9nt5125pwVDCVl1oizRG9ke0jS63EyLH
+ zORw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ptZydUdAO5gMrta7243uYozof6VkAuFmQ5fWWpC/dmA=;
+ fh=U0g1KGvIJG1SXS9gX0U+QQ//90eMkEVSf0mls2R54A0=;
+ b=P3hsf5zuDV9mflh6daf8SNKWMBubyhwAgChsQuJ9DKqF4llnLuhlAnHcDdfXfxlnGo
+ mdxi3L5DCXbjkU4xYxtymrUqrKaoKfEURfElx5bGS5RgEdv8f35jc7j2fS0E7tEv2lU4
+ a6LGgq4pfT6YixqGjiFhDP2T7JeEkXbtO4deUmYllLDNH1JMuMTE9lZ5kaKNXa8c+X86
+ JOGhnE+Dy+M4LCNb2Pl40Vd0Ys91Z4VPJn/+JtXjwkfV0nVt+BKvbIp+ARBjplH4t7dR
+ OE2gdDQWJLKZTWbAvu6b9aoclI+KP3C0eYs9PdLCN+rKSpLhLJ6LxPtwSRQZY6FX+6X8
+ 3W1w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795525008; x=1796129808; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ptZydUdAO5gMrta7243uYozof6VkAuFmQ5fWWpC/dmA=;
+ b=AsgRoVpZdWX81yLxUqjsm7iP4tPu9iqL9QYGeprAjiBu5qD+i5p4hHXSbnKNYPtrDq
+ byMRtkgIsb8rtp/5pNVpxCjZtl3yWdZV6Vdsw4pe59OGPAnFK91+MZSJe/hNnOZEKh/q
+ 6klhlIEwPTwkANGX0k6eADD5UBipRTxJrgu52389YLTMlcUjNu1iJxIDN0HjiUqb8Py1
+ CHNDNBsUBB6KQVphR6zKC0cprPWfcO4m7VpGXQczMEpMapFNFOZ2EoYTXV8VfDYEiXMp
+ K2jOgMVMoD/OGyNkwipq1aKrkSOUHdBeU5MmQESck0v7qYzi0Jb+yMu2rfyRiRo0ehit
+ IQ0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795525008; x=1796129808;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ptZydUdAO5gMrta7243uYozof6VkAuFmQ5fWWpC/dmA=;
+ b=Rx7OG6ftQyHInEMZpAnGPpYcc9Z1ea8U1NL+gMT71mTAAI+4uxozMARpu8FZ196Nuw
+ bT+foOJung+Qusw6iwJVpi+Vj5eK7wBD+erGsAhEpMJ1Ziu9SSvLo7wUIIEX2r5tPrWO
+ KWt6yT0xXrvQxcCWcRDeyRwap8+vFK0XNiplEezeOjIYWr+hQLgRSxC20hckbczdfEGA
+ /pAzGLwPCmPAbVl27HNgRCGYDH7ovuvQHkN5Z/hFY8c0CxoNa2WjwwfyIBBvKfwfM87Y
+ 9pM7Eqvzr1IAxKpGNqi/t1v9/gy/FkQL/QLnRPy9yH71w9eKA/EziKXYhHwFFCM2Ip8D
+ ebGg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEQOT8ZXHgqKR3t606ZtYVE40a5pgrS/VVA7DGY6oar7H81oZGr08YrCI3xAG3xob2FF2QMTuQu6PzA@nongnu.org
+X-Gm-Message-State: APuU4Z9cM6lJp2Gqi85k/NJBsNVyvpjfiyBVwDUgGOrs8KhjpXa1toXY
+ ljxt7uOxiTQuPHvDedHKdb/lJQC+aWk9acf8G/xlWtVPsH5XvhgH6a37PQTK03lkAU0sBAkVv2j
+ y/R9pEHP9h0KOkAks/WQS9EUjApITGCbLmT9cM0bIkA==
+X-Gm-Gg: AZFdTZfbCNebq9P+wmJhMViv/MfJroljZ8Gn0z+VAP1MMA7OkEiUXKSlEXrw2rjlMGw
+ q7wKFPfY4tMhEz4EXrB0TjDKUSnuRl1LM0etbneu5vfZ+x7lWvEW32UbGZiK3+dd5D7gY+YoQjy
+ 8GROqxr+KebM0JFj3z8snPsNiwSExe34e29zFv0p37h5PXQWnW7T0jxgoMbMk7q7bmNGALn4PuN
+ /xXnSn01hFexr+kn+0oKf/VDrt+R+br1aekoN4y/SVClMw3mKe3ZiT1c16vo566XWWeoQNyXTv7
+ sCgnglVj6QXza2wENeuG817Nzv1hHi2K0QA9VT1oJ+4g8O0QzkkD20uKusXouODC+RE/wRC9A8D
+ 6n97QQltpWEEm5q/EXUbb3SaGfgB7HdEPyOLNjbT21or+VrVxIvvZBD5fJoOknwef9i2BDLmCCe
+ pAY+p0ceZfboLQMp7cm4/t+veDfvGqds6gD6ocrW/R/w==
+X-Received: by 2002:a05:690e:150b:b0:67d:a73e:2b61 with SMTP id
+ 956f58d0204a3-67df4515518mr3773279d50.99.1795525006344; Tue, 24 Nov 2026
+ 04:56:46 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XNTQ6CMBCG4auQrq2h7aSAK+9hXPRnkJoIpoVGQ
- 7i7LW4k6vJL5nlnJgG9w0AOxUw8Rhfc0KcBu4KYTvUXpM6mTXjJJWOMUxfChBRqqKmFxkpta6w
- 0kATuHlv3WGOn83uHSV/RjLmQLzoXxsE/12+R5buf4choSRVqxUyL3JTi6NF2atyb4UZyOfJPK
- zaWJysFAwZSgjbqy4r/ViTb1AitElhVqDd2WZYXYw+w2i8BAAA=
-X-Change-ID: 20261112-issue-4848-d49d6bd8e7b4
-To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry R <rdmitry@taktcycles.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2269;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=awIdFKPYNR3Q3rDClrhWGXX0bWRYh0m7kUXMTqRHrSI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBrBYd16+OT/nlELdF3AbogmBtLd6M/MBsVxyWu0
- gjmlEIdQumJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCawWHdQAKCRDa6OEJdZac
- 5RImD/sHXDHNxwRcWVJfJKnBZ4448LaPJdT2DcG9OlXbFZJUcRrbZ7wOTv5Xcwg/HSAwFVB4s/u
- +RpWM7tjCJCAdKuzF7bRDyRhYPHELR8IgYRXOIlSEad+rtcBbdapx5YS/vLWyemA9Eo4Bpf+2yT
- WMexXxFKWdzoocho7daK2nMoZmaI61JlHDIzcYD1LcrbhcXTxDt+Kr2LNjXr7W23t1K7qG8J107
- AyPZibIppMrQsF7pat7p0kSkhbLKSFynMZBhtvFn8Vvqt/sW0pmBD29mw5NdDLlPbwPpZ+kOe/v
- NbVKkrjyEoPdv8dx95kBeZbjfngGUZnmQSSBWMnsHnHXp32Df4cpR1tQUVvSGdCG89ukwj9Y9ju
- geUnwJDM0DEKLr1iOZCsnrOKu/2haTE3llLtZOrhEAHy6meVJ4mOiRNIrHuGvyLmrKraN/TBpQR
- c3nhIA+NWJisQHY9vnlRfr5Dan3/S/kYViQo9aabp2AycBj8Ui6uXz8qFimZMV12SQqafr5mjZI
- THekt8R9paO2Tkr3yqhaPpX1xA7ENwYWoCkOMBzTGjgF7w9J9bNqci4YIqRKR9cekeGnM/di2p7
- uvRGC1Ft5t96rXi7opMrb8OMsrYIG8h/7kk0NCJtpTlLNv25YfKGdVP1f6howfFJaxiiJU+iCI3
- jHlkDZFTF99nl+A==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261124120509.19746-1-zenghui.yu@linux.dev>
+In-Reply-To: <20261124120509.19746-1-zenghui.yu@linux.dev>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Nov 2026 12:56:34 +0000
+X-Gm-Features: Aa3M54qmV3hocHyszUPPNH7EVmVJ8vtrw6upS3drb0PCtF4LVz2-o4_R30eLhww
+Message-ID: <CAFEAcA88=3CRBJQ5PSxrsb9F1yaL7ubF_hV8zxTQejKWnayGZA@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/arm_gicv5: Fix value of the IRS_DEVARCH register
+To: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,61 +113,23 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Dmitry reported a handful of vhost-user-gpu issues (#4847-4849): crash
-when a command waits for a reply and a fence is signaled (#4848), guest
-losing display when the device is restarted (#4849), or main loop
-spinning on bad descriptor (#4847). The first patches address those.
+On Tue, 24 Nov 2026 at 12:05, Zenghui Yu <zenghui.yu@linux.dev> wrote:
+>
+> The GICv5 spec says bits [31:21] of IRS_DEVARCH are 0x23b. We wrongly
+> shifted it by 31 instead of 21, so guests read 0x80105a19 rather than
+> 0x47705a19.
+>
+> Fixes: 22232793ecb8 ("hw/intc/arm_gicv5: Implement CoreSight ID registers")
+> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
 
-The rest are problems found while working through the code: console is
-not resized on dmabuf scanout, the 2d scanout path frees a surface it
-does not own, and the exported dmabuf is imported with the wrong stride
-in some setup.
+Whoops; thanks for the patch, applied to target-arm.next.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
-Changes in v4:
-- replace vg_wait_drop() with vg_wait_cancel() when queue stopped 
-- drop patch 3 & 4 #4846, waiting for Akihiko series ("[PATCH v3 0/9] virtio-gpu: Do not wait for the main thread during reset")
-- Link to v3: https://lore.kernel.org/qemu-devel/20261113-issue-4848-v3-0-98e4fa3e77eb@redhat.com
-
-Changes in v3:
-- fix crash on finalize
-- replace Dmitry email address
-- Link to v2: https://lore.kernel.org/qemu-devel/20261113-issue-4848-v2-0-631414664bca@redhat.com
-
-Changes in v2:
-- add "hw/display/vhost-user-gpu: reset scanouts on the main loop"
-  patch, similar to virtio-gpu
-- add Tested-by tags
-- Link to v1: https://lore.kernel.org/qemu-devel/20261112-issue-4848-v1-0-aeba1cfe2c03@redhat.com
-
----
-Marc-André Lureau (6):
-      contrib/vhost-user-gpu: don't fence commands waiting for a reply
-      contrib/vhost-user-gpu: reset the frontend socket on stop and start
-      hw/display/vhost-user-gpu: don't set an fd handler without a socket
-      hw/display/vhost-user-gpu: resize the console on dmabuf scanout
-      hw/display/vhost-user-gpu: fix scanout bookkeeping on the 2D path
-      contrib/vhost-user-gpu: use the stride of the exported dmabuf
-
- contrib/vhost-user-gpu/vhost-user-gpu.c | 169 ++++++++++++++++++++++++++------
- contrib/vhost-user-gpu/virgl.c          |  70 +++++++++++--
- contrib/vhost-user-gpu/vugpu.h          |   7 +-
- hw/display/vhost-user-gpu.c             |  56 +++++++++--
- 4 files changed, 250 insertions(+), 52 deletions(-)
----
-base-commit: 2bfbe39d0fff8af881cffe2bab9b615e77807c35
-change-id: 20261112-issue-4848-d49d6bd8e7b4
-
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
-
+-- PMM
 
