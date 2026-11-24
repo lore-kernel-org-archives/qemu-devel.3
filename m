@@ -1,41 +1,41 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355AD606A688
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33DF606A68E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=WRHaMACr
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=QhjGViLk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzqx-0000bP-Ny; Tue, 24 Nov 2026 18:23:11 -0500
+	id 1xVzqx-0000an-8a; Tue, 24 Nov 2026 18:23:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1xVzqp-0000Xc-LR
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:03 -0500
+ id 1xVzqs-0000Zr-BG
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:06 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1xVzqk-0006ZI-Eb
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:03 -0500
+ id 1xVzqk-0006ZL-Ea
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=ru4a8UM9O3xCvIpKu2plhw/a8+vAtA+xiCf/OELsEVY=; b=WRHaMACr7U547v9WsamrbQoawa
- fPF/kHI27grJEbdrnlIBH7N29jbWjnv+JfB7onyE9iPhQbUREJcwMWuM6vIHflMHMB1L7jIIyZs4f
- kcaFoK4GVkf7AJGpChTsP/9mne7aTYIroB4kGlo5ylsq92Id+x+cvsO13bR3/PlIiQrxjLOkvBxNW
- UMW9ANbOiPoPgglDCvH5Rl1or6RXkMCJpfVXn4EHvp3IusB5rAxM9TBvxAKuHTT77DVUiuDi1y0ue
- fiBe1ifeYtHBgOaf0NVIy8dPf0GGmyqMtxGj16/Z1LIv2CVHjWjqldYF+ps2Gyw/yNKlbNkOy+kG4
- sIt/Y2ww==;
+ bh=ik79pPafOlsmEIxdCKJuF0t0ouBbOJcNq4lchRAKKII=; b=QhjGViLkiYG22fvjKr9HGpi46Z
+ JriGCgqO0yPR36mLxKyfJnbU+UroM5TUpgI4NwZIjTz+VlEldiO0Y3ZM1fNwoqIy01kM8Lakkn6OT
+ sJX2Eku6voMijBMigxGnCNR8BJO2ILMZETmcc14VVu45zzBdlztWa/75YwiJ+Ye2MmK3I2d3FKSS5
+ TGfGpIhE0kisqLbFkofQTD5GPjRinpISLN8vGRNg6kC4reGg+PX7YwnKuarFmPb7EGG0Pm3+aVyQF
+ MScrmGwl873ca7Xn+7Ak8sG0MswIRGto6nqAVOtYjb3LuENHZhwCHxo9x40srLEJMclod4NYjDvlY
+ QyR4KRsg==;
 Received: from [2001:8b0:10b:1::425] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
- id 1xVzqc-00000004eV7-1qji; Tue, 24 Nov 2026 23:22:51 +0000
+ id 1xVzqc-00000004eUw-1qfw; Tue, 24 Nov 2026 23:22:51 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.99.5 #2 (Red
- Hat Linux)) id 1xVzqZ-00000000630-33i9;
+ Hat Linux)) id 1xVzqZ-0000000061q-10xa;
  Tue, 24 Nov 2026 23:22:47 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
@@ -52,9 +52,10 @@ Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Jason Wang <jasowangio@gmail.com>, Hui Peng <benquike@gmail.com>,
  Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
  David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH v1 19/21] hw/xen: Bound the rep count of PIO and MMIO ioreqs
-Date: Tue, 24 Nov 2026 23:22:45 +0000
-Message-ID: <20261124232247.23169-20-dwmw2@infradead.org>
+Subject: [PATCH v1 01/21] hw/xen: Fix partial request header handling in
+ emulated XenStore
+Date: Tue, 24 Nov 2026 23:22:27 +0000
+Message-ID: <20261124232247.23169-2-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261124232247.23169-1-dwmw2@infradead.org>
 References: <20261124232247.23169-1-dwmw2@infradead.org>
@@ -93,65 +94,32 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-cpu_ioreq_pio() and cpu_ioreq_move() iterated req->count times with no
-upper bound, so a count of UINT32_MAX kept the vCPU handler thread
-spinning through four billion iterations. Xen's instruction emulator
-clips a rep batch to at most 4096 repetitions (hvmemul_virtual_to_linear()
-and hvmemul_linear_to_phys() both apply that bound before an ioreq is
-sent), so reject larger counts as malformed, and reject a zero size, as
-the other framing checks here already do.
+When a XenStore request header is only partially received, QEMU copies
+XENSTORE_HEADER_SIZE bytes instead of only the remaining header bytes.
 
-Fixes: 9ce94e7c8a99 ("xen: Initialize event channels and io rings")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3756
+Fix the length calculation to copy only the missing part of the header.
+
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3644
+Fixes: f3341e7b915 ("hw/xen: Add basic ring handling to xenstore")
+Fixes: CVE-2026-61403
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 ---
- hw/xen/xen-hvm-common.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ hw/i386/kvm/xen_xenstore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index 62d88804c43..48ce655448b 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -321,10 +321,20 @@ void cpu_ioreq_pio(ioreq_t *req)
-     trace_cpu_ioreq_pio(req, req->dir, req->df, req->data_is_ptr, req->addr,
-                          req->data, req->count, req->size);
+diff --git a/hw/i386/kvm/xen_xenstore.c b/hw/i386/kvm/xen_xenstore.c
+index 0dc0edf3bfd..7d6d6d5cbb7 100644
+--- a/hw/i386/kvm/xen_xenstore.c
++++ b/hw/i386/kvm/xen_xenstore.c
+@@ -1218,7 +1218,7 @@ static unsigned int get_req(XenXenstoreState *s)
  
--    if (req->size > sizeof(uint32_t)) {
-+    if (req->size == 0 || req->size > sizeof(uint32_t)) {
-         hw_error("PIO: bad size (%u)", req->size);
-     }
+     if (s->req_offset < XENSTORE_HEADER_SIZE) {
+         void *ptr = s->req_data + s->req_offset;
+-        unsigned int len = XENSTORE_HEADER_SIZE;
++        unsigned int len = XENSTORE_HEADER_SIZE - s->req_offset;
+         unsigned int copylen = copy_from_ring(s, ptr, len);
  
-+    /*
-+     * Xen's instruction emulator clips a rep batch to at most 4096
-+     * repetitions (hvmemul_virtual_to_linear(), hvmemul_linear_to_phys()),
-+     * so the count of a well-formed ioreq is bounded. Don't spin for
-+     * 2^32 iterations on a corrupted one.
-+     */
-+    if (req->data_is_ptr && req->count > 4096) {
-+        hw_error("PIO: bad count (%u)", req->count);
-+    }
-+
-     if (req->dir == IOREQ_READ) {
-         if (!req->data_is_ptr) {
-             req->data = do_inp(req->addr, req->size);
-@@ -361,10 +371,15 @@ static void cpu_ioreq_move(ioreq_t *req)
-     trace_cpu_ioreq_move(req, req->dir, req->df, req->data_is_ptr, req->addr,
-                          req->data, req->count, req->size);
- 
--    if (req->size > sizeof(req->data)) {
-+    if (req->size == 0 || req->size > sizeof(req->data)) {
-         hw_error("MMIO: bad size (%u)", req->size);
-     }
- 
-+    /* As for PIO: Xen clips a rep batch to at most 4096 repetitions. */
-+    if (req->count > 4096) {
-+        hw_error("MMIO: bad count (%u)", req->count);
-+    }
-+
-     if (!req->data_is_ptr) {
-         if (req->dir == IOREQ_READ) {
-             for (i = 0; i < req->count; i++) {
+         copied += copylen;
 -- 
 2.43.0
 
