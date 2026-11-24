@@ -1,99 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8DA606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53229606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RbMtKBKU;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OvluwmNI
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=n+A2BC4F;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=EtL3ezhX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzeu-00012L-Ql; Tue, 24 Nov 2026 18:10:44 -0500
+	id 1xVzf7-00025f-Hm; Tue, 24 Nov 2026 18:10:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzeW-0000UC-Fy
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:10:22 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xVzf4-0001uT-TT
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:10:54 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzeT-0005A5-St
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:10:19 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xVzf2-0005DW-Su
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:10:54 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOMakar640308
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:10:16 GMT
+ 6AOMarXa886574
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:10:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZcTllCjqii8LmxjvrUAImvIZu9tcprX7igb13fW8lS8=; b=RbMtKBKUwkr9Pw21
- 2Xz+N3/zVLwjMEoI7nopHasnZ4mNoMLLM5p+nRCyej/NMLPCGnnjGRj00+YA8Zzi
- ZmUAvJEULFfwF1/sPMQpqBCUKbDM89qu5ii97FZPy9jeqUBzS24eTAiI4w0rfluI
- F/nsveyY+bpDE14xEBQWfyB4iTuega3i7Dx3wo18yqPCcKexhuUheRJBG6CFYuxg
- YxhNI/G+xv36HrNlcEFahC03vndOlCyhHk+2zHMAr8159D1BQNls6w1tWK8VOg21
- R5p3UDQczps8xYISEjAl1wikWs4oloD5EsPkmd7Cllgp3BQqFhIgHdKihfmZaKLv
- JmrKkQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5effse4q-1
+ NYGzcGt5u+ld6Gh1/kKDpuAQc+KMfZEk8DXqSuXx1V0=; b=n+A2BC4F2/zCFzpX
+ fx54nzUwpg1t3D+YRMuYJvlSCZJVH5kf7tjGD9cqrA96ADoq9GODEJprDWi0/Pzz
+ a6aY9sH8nrpAKsLQhDe1WccU2CKp+5wtfd+MTJbcdPma+4YiT28fQ7/VUmU7Rzvo
+ +gOt0Patlw/fF0rdE7XTXphzSG64nfKOJNsETu0OU/ulT6SkgeNybnQboBGC68f3
+ ixQ8ZKw3E48BX/BI099aaCs0z4IjAvAn8TVfe9IoTboYewobFKG95C+Gq9DUu6AU
+ 3/8yMvNbTOYxx6mPYbfV/YQKZ0RboZYqv1uuiFuIGeNyXcn2e6+6Zvksd5mRyb6p
+ 21rk+A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j54rhca3k-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:10:16 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-94967c6d4f4so546906885a.2
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:10:16 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:10:51 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-9495af07676so804012285a.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:10:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795561816; x=1796166616; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795561850; x=1796166650; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZcTllCjqii8LmxjvrUAImvIZu9tcprX7igb13fW8lS8=;
- b=OvluwmNI53cxY3dNJmdqNUtv4NdCJmADCQ1IIAED6Z/lQL5FhDp47HXDrmqCp+F5in
- EONi/yzaNnCM0ArVZCo4983ev9ipzxFNVPFE77OHw6FsYAQar3K8xrTFQVPHxW5BrUNS
- bOp80N+Xde6Nq4i4G8GRqdJxAbB5NGImZZyIZ/qtrk4Af7JN3aYDP9wwYMWf8I3tHyCb
- ithE0oQXkZccdj6NEfMfEEGOjU3/pAWXwCv/1suZKrToF97+WqWBFZly9dqeZHNRP+ej
- JiU3dANmi6/hlF4h0I21AmJqZ4B6tXqIv85YoTSd3ahLnvtwgbi6AqyYEbwvXvB05pUi
- wu8A==
+ bh=NYGzcGt5u+ld6Gh1/kKDpuAQc+KMfZEk8DXqSuXx1V0=;
+ b=EtL3ezhXErNN4NAnw+rr0PjUaj2EPtpd+OvHK5FLHMoyGPlkhDJS+fRZ+pUEoH79yX
+ eCngpON6ijotGMi6MJVHVa7aGkBAznTVldcFfb7lZTeHqZLi4aAE7GbucmtTyqGvzV00
+ cjBmdrfkUaY69a7g3b2WyNggE16cfN/DDLmS6MSunOIcd4wJhVDbyb8IzsJvwt+F4D5G
+ zY+JhIeW0EudQ2BpxDc21wh4D93h4glNC3MUDjcBFMTjE5UJN6tv7Qz9ecsKS3XR3Z+V
+ 62epX75iqBUMicK0kh22yxituE/oIfRtyzVTskHbwIGtE2iAivQj2ufxelwhoeLYUmN5
+ VEGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795561816; x=1796166616;
+ d=1e100.net; s=20260707; t=1795561850; x=1796166650;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZcTllCjqii8LmxjvrUAImvIZu9tcprX7igb13fW8lS8=;
- b=0aFeo9sfa1nYpSBxirzedaGqR4OEjb3CNm7NBVQHtDub/hpcrzA4X637Us2Rj3unK7
- YYetL1u5JhEr7nW/Nw7PhCmEUuxV+YurCDLdAvOZHP3AnLVNS9lBTPBimk38WmWKTzmX
- EsP7a56I5v3i8qZepEbEleYj3FQPY0dy5zo5geNs6TDQKXaBmQ9lEnf+D7PpAVN37RwG
- ZtQIKaoYcBGu+5GrJiHxGYw7qQTELvnP/iT1WtXU5riNo+pYpIe7+NtyQLYRd6yC/xq4
- jWwYPanOwS9vEUN2fcFhitv+KGxfApIvWPjHsNSpvk+fQzHarNCs6D+/NkgVHJ1xjDyq
- 2rQw==
-X-Gm-Message-State: APuU4Z/5NojxC3mQSnZuq/Tr3XMXB8bT5ouov9piWLEvsIRfR8/2taD8
- 6Bilh2V0HKYMT89slU4e+RmfHtEW64iUH+WgBrA/E38dtKqKasd3/KLzghmr9E07jFh8UhQ+6ES
- cTydAH32CP6PoH+RmP5aX03SqP9RCUpq2yXB3M85VmJ4eftaVAgyZhx0qcDZjOyLTy+xk
-X-Gm-Gg: AZFdTZdCvrLXTaDtfSNRtY+LOLx1u9vhg7KCfmomP2OX0zvJ0GEZrTGzgJ5B2eVr5Ne
- 6x1Tg9LCBUV1V3s4NZHBwRXuZEfmoVSbFZ6t01+dxnWBbW9shcjUQg08YUP4Mk2g2jHZZbihpEA
- xvl+YMUNDahFkI1MuubN3XYKu3CWXQBDKUYkl+DVC+Rz5CqHyTy+jKJFCVgsmFNS848P4xC9WMk
- j4hKs5DmkSEwa4qeu8qCQ8Zi56AeX8i7Fp/Cy6cwVc34c2xx3mvNSn+TMN2g6oGCrDb37NH9cp5
- pzeiIGLR+MUNztmklyd9Wz+BOFM8OiamCqBP5lhCbl0VDIFVlj7MPccH0tktXHVBFb2hKNBo1Te
- m6VT0WzvLOwFOwcttBHhebFQcuM8xS60Gndv/C9M1yKP3ZtoFCqmE584fcWS6T8IIiV0U0w4qV9
- OFQvTxJ2lm/2rVJA==
-X-Received: by 2002:a05:620a:628b:b0:93f:6f8:9d72 with SMTP id
- af79cd13be357-949bac7c684mr2561603385a.77.1795561816090; 
- Tue, 24 Nov 2026 15:10:16 -0800 (PST)
-X-Received: by 2002:a05:620a:628b:b0:93f:6f8:9d72 with SMTP id
- af79cd13be357-949bac7c684mr2561598985a.77.1795561815455; 
- Tue, 24 Nov 2026 15:10:15 -0800 (PST)
+ bh=NYGzcGt5u+ld6Gh1/kKDpuAQc+KMfZEk8DXqSuXx1V0=;
+ b=W+aERpghxHGsyjSPHbVCosDd3cokimz6Jf9fVLzpZ0gL9LsLOYiV+Bym6nGmLgIBlt
+ OWyYopnGe8+r1SU8319EQ9hs9Uk69dNetFytzVTe89s8FSRRgsrBjXocAczkW2DTfFa0
+ 3P/EEKYqhbLV71l4fNmqEe/QKQSz1my2qZNwjin1SzCBb24PyiwXHN9KpR4PrgDVttho
+ 7/jcWgWsj6ZX1BsKn+EB3D/PQZGiqJA/52bHIBmiVEY/MlTj2Ic937ieeC4LhnNHMLDB
+ w36kaza3z8BrRBvBuZuw+RB6H4qIAudYQtGOHhYQs1ujrUzz6tBWyefTEk3vN12S5CR5
+ yPUQ==
+X-Gm-Message-State: APuU4Z+nqpDUb9dv6KNL4vQCXweJ6+WhASOFGA020EE6W01v2bT0i109
+ uWZgAj+iwJ2Xs7ZsR7uePEB5MrVA+wx2ryeaY8EQnGYK6R4qKKdKnnXtUpXGybD1HnN8loJP98s
+ A8PMM26lp9BrX1t43V5vXI2x+Wx2LqPjgeZqLU7Loe+ip5CLI/flH5gIKfPg9yLMpFVy2
+X-Gm-Gg: AZFdTZe73QmsQVyoNQf9jWSef0F4rVVnSvAocb6wuChABCoiY3DQyHoD4cwkCvZBBKY
+ 7NQzdBm7aCczWX5jnumQsLcZQqxi1w2dJSfT/RoVPcXFl5yIVbA6HwdqOFmUJ1lFEpMlOv4B8Zo
+ JicIL9aPPTZyGOmmkMVAb54UvmIXiGI7kfmwhznNSSBojfaWIayGvMYvx+6FugD+6GaVTBIBDHI
+ G3uWoCJhwwIW/kiK+xjIljlGy+y+K/pHJHKVhn4fGLkvtXikka4F6LrzyaBqxfndLxnivYrt9tw
+ hA7PZf5dbpZvS6G6VGlZ5lAMq0+crQRvHs4ExE3O81RgeYE46TcRC1m9yZfM3gzwcF/BY7uxaVj
+ g6l4nuY5q2fssyUyc+2sLHnjMVP35ommOcBjePNeQRZfgUfazo/4vJCF5i7mvtF+HR7y4fIVkfq
+ 3J6R6fssJmCWuW2Q==
+X-Received: by 2002:a05:620a:3715:b0:949:a139:2f2a with SMTP id
+ af79cd13be357-949ba7ccbe4mr2766679285a.9.1795561850472; 
+ Tue, 24 Nov 2026 15:10:50 -0800 (PST)
+X-Received: by 2002:a05:620a:3715:b0:949:a139:2f2a with SMTP id
+ af79cd13be357-949ba7ccbe4mr2766675685a.9.1795561850035; 
+ Tue, 24 Nov 2026 15:10:50 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb906635c7sm273608475e9.2.2026.11.24.15.10.14
+ ffacd0b85a97d-4ab658e2c8csm31543194f8f.2.2026.11.24.15.10.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Nov 2026 15:10:14 -0800 (PST)
+ Tue, 24 Nov 2026 15:10:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/17] hw/display/vmware_vga: Zero-initialize scratch space
-Date: Wed, 25 Nov 2026 00:09:08 +0100
-Message-ID: <20261124230917.88704-9-philmd@oss.qualcomm.com>
+Subject: [PULL 13/17] hw/block/pflash_cfi01: Register VM change handler once
+Date: Wed, 25 Nov 2026 00:09:13 +0100
+Message-ID: <20261124230917.88704-14-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261124230917.88704-1-philmd@oss.qualcomm.com>
 References: <20261124230917.88704-1-philmd@oss.qualcomm.com>
@@ -101,36 +101,36 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=eo5KXYpX c=1 sm=1 tr=0 ts=6b061958 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Authority-Analysis: v=2.4 cv=BKkmP1QG c=1 sm=1 tr=0 ts=6b06197b cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8
- a=LSjrgreAm0ToU0vYokAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfXz4AvTTnfVMS6
- QOD8uEV/NDRz6xBWXT8Qe4dvWqt8o6rjwis5Q0i2QQUxHkgNO050PZchndzBO+fT+T4uQ7Sq3pR
- lfapl8X7L7Nt3O/fWxcU4vWk8D+CLNOs1JnFCOzjIfoUGzca36psUgRWQOu+UiBDPSWoqe+G32B
- sN5tZvtsKfF5a0cHQ2w++jXeF2Cl88YRKyg5sRMO1EN3M9+VeLM7Q2VLUb2ZUftatwjTbxJrgPh
- ISL8pvPHZ7VXTryVZ4WpCThmM3wTpVq/Asd6KTxm+weWpqcWITaHzK99CkrFbOoz1Cdfay8zkKN
- 2hZlr6ezKpjqluqCEYlhb44CAsAFU9uJyup8xjo6Yzvh959F9BItnSp/1sbhuQXq1tJHRrxLQqa
- Z1R4MpPKtbj0BnYayq5tuD5qHESKc7Od9RyC7fzOJjb9L+7dvAe9Bv99m1Z03Jv9yuAm9uHSTeX
- CVp/H4yhWK2ljt+n3aw==
-X-Proofpoint-GUID: VjZ6Wteo8oKBp-o07MfUwH-GYdqS8TJ9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfX5TvIjSWM4dPy
- HIjlJrDUHCfqnBcrj6AERs6nEFM2KuYiZCb5G//mRM1JMwBNjWsN352UU8FH5FkwnPt5q7rcbc2
- Xd1nXX2IjVxZwMYk4QfzPdinwsg0BQw=
-X-Proofpoint-ORIG-GUID: VjZ6Wteo8oKBp-o07MfUwH-GYdqS8TJ9
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=KKAkSRfTAAAA:8 a=Oz4jNdGFPLS9ddvAwioA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfX6wwsx6blGPPR
+ 1CVog4ccSqMLh0sCtDdYxWUoQENaHSURxty4eO24BtdiP7elOd+bpqx20p1XSu9lp9JUPwT7rrl
+ qRNu5o12HP8iMoeZwqDCjvVMP7uov2I=
+X-Proofpoint-GUID: z3FW-mQshmTQSVpX2jK96HtU3B2mjXy4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfX+t1H5MTiTCZH
+ enhT3A0Y5UbovKEsfnlGaIVfTL0hk5s97YdH7brtbneoLIIDjpkAuDraQ5OxW1+KcqkuYjPXY1W
+ Nhdcgq5b/Dii+YlfKyMaVYBIgp3MbWC/9PPeEaXJiZKMVo9inYy+kBQXu90q9h7yQ2EquvfOoOS
+ zcaV34pk21CGHEzX1PVud9UWbKFJnpQBSN0hnsk7HYDoVrlHmRuuG1Fbd42b9sxfopep7sKSiqH
+ MYP61QVIb2MWbvGEEw07YWt7qPSIOcnhufRw0xvGuM9v8e+JJeNZO0tnvMjOqMUnsL/J2NWLNnO
+ iK3gSyE4EggsgRXBOv/agurcbTgQt5ZPZKPDnbS6/KC0ttYFMCAPYKK6+9A7o5ylvTOJGPyZ78g
+ KJsNb94/1BbmGOhmBMhdR1hjf5Gkrn4W9wRYNOKRKoX67Zc2H9IrxVtORBT/OXmA5MVZvFd4f5u
+ FA18sxB6Ueuse9Zmm+w==
+X-Proofpoint-ORIG-GUID: z3FW-mQshmTQSVpX2jK96HtU3B2mjXy4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_06,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- phishscore=0 impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240091
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -157,43 +157,36 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
-
-The vmware_vga device has a set of scratch registers which the guest
-can use for anything it likes; we implement these by backing them
-with a lump of memory pointed to by s->scratch. However, we allocate
-it with g_malloc(), which means they start out with uninitialized
-contents. We should zero this memory so that we don't potentially
-leak host memory contents to the guest, and so that the guest will
-always see deterministic values.
-
-Since s->scratch has type "uint32_t *" and s->scratch_size is its
-size in 32-bit words, prefer g_new0() over g_malloc0() for this.
+Each pflash_post_load() added a VM change-state handler and
+overwrote pfl->vmstate. Loading twice before the VM resumes
+left the first entry on the list, and resuming then ran a
+freed entry. Register the handler only when none is held.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d34cab9f49bc3 ("VMware SVGA II emulation, by Andrzej Zaborowski.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4519
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261124095719.4126146-2-peter.maydell@linaro.org>
+Fixes: 90c647db8d59 ("Fix pflash migration")
+Reported-by: Wang Jianqiang <wjq.sec@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2635
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20261124185556.81132-2-philmd@oss.qualcomm.com>
 ---
- hw/display/vmware_vga.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/block/pflash_cfi01.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index 567806f0e47d..f72896873196 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -1256,7 +1256,7 @@ static void vmsvga_init(DeviceState *dev, struct vmsvga_state_s *s,
-                         MemoryRegion *address_space, MemoryRegion *io)
- {
-     s->scratch_size = SVGA_SCRATCH_SIZE;
--    s->scratch = g_malloc(s->scratch_size * 4);
-+    s->scratch = g_new0(uint32_t, s->scratch_size);
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 486fc6350d85..78cb221ddab0 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -1039,7 +1039,8 @@ static int pflash_post_load(void *opaque, int version_id)
+         memory_region_rom_device_set_romd(&pfl->mem, false);
+     }
  
-     s->vga.con = qemu_graphic_console_create(dev, 0, &vmsvga_ops, s);
- 
+-    if (!pfl->ro) {
++    /* A second load before the VM resumes must not add a duplicate entry */
++    if (!pfl->ro && !pfl->vmstate) {
+         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
+                                                         pfl);
+     }
 -- 
 2.55.0
 
