@@ -1,41 +1,41 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3913606A332
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8881606A68D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=ByYwvkFg
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=VPk73umi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzqs-0000Zo-CS; Tue, 24 Nov 2026 18:23:06 -0500
+	id 1xVzqv-0000al-Dd; Tue, 24 Nov 2026 18:23:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+7be3010b4cb4d9f5c1a9+8493+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1xVzqm-0000VV-2q
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:00 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ <BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1xVzqp-0000Xu-SF
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:03 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+7be3010b4cb4d9f5c1a9+8493+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1xVzqh-0006JQ-PI
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:22:59 -0500
+ <BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1xVzqk-0006ZT-Fh
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=7Q8vcK6pp8jnVnCjyRjbmOniJ69JnrySfnqcCaHpuRg=; b=ByYwvkFgRf+NraRIKwg2fC4EDw
- CmOLguurIyG6OgQEEKm1F6mB3yG70Z8RMXbB5UsF9zwGU+4Di0mNG2JjIuOoD7RMpDzEKKpgAvxRn
- 1z/ITJftIVEb3OKUXxcjYpBdrBlzT4kpDiXsbHwf+2LcESWmbnUMMDN2czKFZnVX9/zkVLZ6rZ6gM
- QWG0EmDqE6X3Fu1wgM5JXuaM3KUgJlEyhauqf0kiFxoqQzGaGfo/2htOB02X7L4eXi0BYPukwEuKK
- Hbb8xYQ3TxJ2jXbnctaD8vkMILe43Adp+suaI2YGl+aGUOxJQJb9QRjD371JRAyDGKpqsfs5UaWIL
- pkueEdZA==;
+ bh=gbvkt3Oepuml/pNsje0Ov8dVS+0VaVrs1jH1HkxnPHs=; b=VPk73umiR5GJfJ0+T5UgE0U/qR
+ bxw0kmsInIOWwFvbNRbHlZrBUjf9MrApQnrjgNpwnPjQOJ0HlpL3fr8+kxCfVZFvFk0iEbzUD7+vM
+ 0eXgnyVzz1Kzv1qM60QzxxlM7bqKcNQZ3PqLQ4j1nkzCrFUrqkqw2LHTMWBqJf8V4aRMyHYgbkQCz
+ yzEIwLngfM1EKNQJMmf6YHDg4OSGXAhg7Kh7ViV3HkKDtFLJDKrjE0q7vrlYYfwHOpe9+D4ixI4mt
+ wVPTi6Wa93HNEkrA3hlJI6flMHTFaKYM7OTi6AbThyUAWX0ORQAWD4HEGDqkZVtkvxTQr9TelykRY
+ wtS41DXw==;
 Received: from [2001:8b0:10b:1::425] (helo=i7.infradead.org)
- by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
- id 1xVzqZ-0000000Gdhz-45hv; Tue, 24 Nov 2026 23:22:49 +0000
+ by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+ id 1xVzqc-00000004eV4-1kK2; Tue, 24 Nov 2026 23:22:51 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.99.5 #2 (Red
- Hat Linux)) id 1xVzqZ-0000000062U-2B62;
+ Hat Linux)) id 1xVzqZ-0000000062c-2RFz;
  Tue, 24 Nov 2026 23:22:47 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
@@ -52,9 +52,10 @@ Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Jason Wang <jasowangio@gmail.com>, Hui Peng <benquike@gmail.com>,
  Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
  David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH v1 11/21] hw/i386/kvm/xen: Don't leak gnttab handle on reset
-Date: Tue, 24 Nov 2026 23:22:37 +0000
-Message-ID: <20261124232247.23169-12-dwmw2@infradead.org>
+Subject: [PATCH v1 13/21] hw/char/xen_console: Fix buffer trim when size
+ exceeds twice the limit
+Date: Tue, 24 Nov 2026 23:22:39 +0000
+Message-ID: <20261124232247.23169-14-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261124232247.23169-1-dwmw2@infradead.org>
 References: <20261124232247.23169-1-dwmw2@infradead.org>
@@ -62,10 +63,10 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+7be3010b4cb4d9f5c1a9+8493+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -87,56 +88,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-21.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-xen_xenstore_reset() and xen_primary_console_reset() open a new gnttab
-handle without closing the previous one, leaking it and its mappings on
-each guest soft reset. Close the old handle first; closing unmaps any
-remaining refs.
+In buffer_append() we handle a full buffer by discarding bytes from the
+*middle*, preserving the oldest and the newest data. When the overflow
+exceeded the max capacity (a limit set by the guest), the memmove()
+destination was miscalculated and ended up before the start of the
+buffer. In that case there is no older data worth preserving anyway;
+just keep the newest max_capacity bytes.
 
-Fixes: d05864d23b1a ("hw/xen: Map guest XENSTORE_PFN grant in emulated Xenstore")
-Fixes: a72ccc7fc449 ("hw/xen: add support for Xen primary console in emulated mode")
+Fixes: CVE-2026-123071
+Fixes: e57dd20bb706 ("xen: add console backend driver.")
+Reported-by: Giovanni Vignone <https://gitlab.com/gio24>
 Reported-by: Hui Peng <benquike@gmail.com>
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4525
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4191
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 ---
- hw/i386/kvm/xen_primary_console.c | 3 +++
- hw/i386/kvm/xen_xenstore.c        | 3 +++
- 2 files changed, 6 insertions(+)
+ hw/char/xen_console.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/hw/i386/kvm/xen_primary_console.c b/hw/i386/kvm/xen_primary_console.c
-index bf61f6235be..0a2a6de3ecb 100644
---- a/hw/i386/kvm/xen_primary_console.c
-+++ b/hw/i386/kvm/xen_primary_console.c
-@@ -184,6 +184,9 @@ int xen_primary_console_reset(void)
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index df6a708494d..849a93a8178 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -89,17 +89,25 @@ static bool buffer_append(XenConsole *con)
  
-     trace_xen_primary_console_reset(s->guest_port);
+     if (buffer->max_capacity &&
+         buffer->size > buffer->max_capacity) {
+-        /* Discard the middle of the data. */
+-
++        /*
++         * Discard the middle of the data: keep the head of the buffer
++         * up to where the overflowing data will be moved down to end
++         * at max_capacity, and the newest 'keep' bytes. If the buffer
++         * has grown to more than twice max_capacity (the frontend may
++         * set an arbitrarily small 'limit'), there is no head to keep
++         * and the newest max_capacity bytes alone remain.
++         */
+         size_t over = buffer->size - buffer->max_capacity;
+-        uint8_t *maxpos = buffer->data + buffer->max_capacity;
++        size_t keep = MIN(over, buffer->max_capacity);
  
-+    if (s->gt) {
-+        qemu_xen_gnttab_close(s->gt);
-+    }
-     s->gt = qemu_xen_gnttab_open();
-     uint32_t xs_gntref = GNTTAB_RESERVED_CONSOLE;
-     s->granted_xs = qemu_xen_gnttab_map_refs(s->gt, 1, xen_domid, &xs_gntref,
-diff --git a/hw/i386/kvm/xen_xenstore.c b/hw/i386/kvm/xen_xenstore.c
-index 7d6d6d5cbb7..ff0dfb1bff8 100644
---- a/hw/i386/kvm/xen_xenstore.c
-+++ b/hw/i386/kvm/xen_xenstore.c
-@@ -1490,6 +1490,9 @@ int xen_xenstore_reset(void)
-      * first place. Map the grant anyway, mostly for cosmetic purposes so
-      * it *looks* like it's in use in the guest-visible grant table.
-      */
-+    if (s->gt) {
-+        qemu_xen_gnttab_close(s->gt);
-+    }
-     s->gt = qemu_xen_gnttab_open();
-     uint32_t xs_gntref = GNTTAB_RESERVED_XENSTORE;
-     s->granted_xs = qemu_xen_gnttab_map_refs(s->gt, 1, xen_domid, &xs_gntref,
+-        memmove(maxpos - over, maxpos, over);
++        memmove(buffer->data + buffer->max_capacity - keep,
++                buffer->data + buffer->size - keep, keep);
+         buffer->data = g_realloc(buffer->data, buffer->max_capacity);
+         buffer->size = buffer->capacity = buffer->max_capacity;
+ 
+-        if (buffer->consumed > buffer->max_capacity - over)
+-            buffer->consumed = buffer->max_capacity - over;
++        if (buffer->consumed > buffer->max_capacity - keep) {
++            buffer->consumed = buffer->max_capacity - keep;
++        }
+     }
+     return true;
+ }
 -- 
 2.43.0
 
