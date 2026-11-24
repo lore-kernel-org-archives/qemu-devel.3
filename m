@@ -1,37 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E78606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF72606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=L9PfOE2y
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dUy6emtl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVmJj-0007sx-Tj; Tue, 24 Nov 2026 03:55:59 -0500
+	id 1xVmKC-0007zH-V8; Tue, 24 Nov 2026 03:56:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xVmJd-0007pp-2q; Tue, 24 Nov 2026 03:55:53 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1xVmJv-0007vv-Gc; Tue, 24 Nov 2026 03:56:12 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xVmJX-0006RK-DV; Tue, 24 Nov 2026 03:55:52 -0500
+ id 1xVmJt-0007xH-K9; Tue, 24 Nov 2026 03:56:11 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 3C763623DB;
- Tue, 24 Nov 2026 08:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F6E1F000D2;
- Tue, 24 Nov 2026 08:55:33 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 608DC4432A;
+ Tue, 24 Nov 2026 08:56:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334681F000EB;
+ Tue, 24 Nov 2026 08:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795510536;
- bh=WllkkGTF+X8CrBbxJWsNPAta/FmEI+EsRYxrsSLUItE=;
- h=From:To:Cc:Subject:Date;
- b=L9PfOE2y9qZAvVw9n6qpmVBqnn78g/QOvXf2MFNFFZNIMS8kRuOGu64o5UQrEVwIU
- LJ12r72K074JBQ/q7m4tHxjA0THBXO0rDHb4QQqKgmnqfUdCi2W8v9fA7ZBuTGx/e8
- 6FcsTd0xRk/Vq4dZ3NNoVjfySXZuIi5k8pZZUrGhe2spV6PAXWzZfVCyiSPCy+Mvwp
- QtXLgPtCBR1UVQ3igIrw/g5JEs2o+bw3u0xQ+WI5Q1S/nfPfTpvh+nyqWx1WSYF6Sa
- /HvbIQyh0i6yAz3YyhmgWFmlds4GYjO8O9mLA9SYYuDMP2CR1jzOxEyCeYra5OM4Qv
- TCuKMurtWogzA==
+ s=k20260515; t=1795510568;
+ bh=qAKGzn4kkqpjUy9ND825qhJax+gOt95YVI5RFezcb7Q=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=dUy6emtlzSVktOxV5+2ObyrhkDe0uyRHIJ8x1v+UKEhzIaxVuVrr+9xDqx1hebwVL
+ 0tvV4LAJyQ2WD5l9sMBU7iZFTz22uyl2xTk100RDRj/U6f/ZHIPm+rPfgFWIgNKEUR
+ BEnKVCpcLKI6P0O48rZVlaBZ5HrYtxQcYEUmqGsZiSce/k+aQID36EoykSZfoyqufK
+ MqwcCFNt967mzjHDlb6y5cytM+B5pyTS7CO0WwFtdHNDwhbFuZCwywjtcIXnrB0Mdn
+ u2FrEajEUudYNxHf4/f1hwSk/NkvvkSOpsQeRxg/oATiw88jWp04MyJ4amiA7ClZsR
+ yEPjcckrTcbEw==
 From: Niklas Cassel <cassel@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
@@ -42,15 +42,18 @@ Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
  Daejun Park <daejun7.park@samsung.com>, Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH v18 00/10] Add full zoned storage emulation to the qcow2 driver
-Date: Tue, 24 Nov 2026 09:55:19 +0100
-Message-ID: <20261124085529.1537572-1-cassel@kernel.org>
+Subject: [PATCH v18 08/10] virtio-blk: report zone errors with their zone
+ status codes
+Date: Tue, 24 Nov 2026 09:55:27 +0100
+Message-ID: <20261124085529.1537572-9-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261124085529.1537572-1-cassel@kernel.org>
+References: <20261124085529.1537572-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -71,129 +74,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This patch series adds a new extension - zoned format - to the
-qcow2 driver, allowing full zoned storage emulation on a qcow2
-image file. A user can attach such an image to a guest and have
-it appear as a host-managed zoned block device.
+virtio-blk completes a failed write with VIRTIO_BLK_S_IOERR, and a
+failed zone append or zone management request with
+VIRTIO_BLK_S_ZONE_INVALID_CMD. It never reports the zone status codes
+that virtio 1.4 (5.2.6.2) requires for a write off the write pointer
+or for a request that exceeds a zone resource limit.
 
-The zoned format is opt-in through a new qcow2 header extension
-that pins the zone geometry. Behind the extension is a dedicated
-zoned metadata region that stores one 8-byte write pointer (WP)
-per zone. The extension is gated by an incompatible bit, so an
-older qcow2 implementation cannot accidentally open the image.
+When VIRTIO_BLK_F_ZONED is negotiated, map the zone errors of the block
+layer to them:
 
-Each write pointer is routed through the write pointer cache,
-a Qcow2Cache object. The write pointer cache is written to disk
-after the qcow2 metadata is written, thus guaranteeing that
-the write pointer is updated after the corresponding data is
-written.
+  BLK_ZE_UNALIGNED_WRITE  VIRTIO_BLK_S_ZONE_UNALIGNED_WP
+  BLK_ZE_BOUNDARY         VIRTIO_BLK_S_ZONE_INVALID_CMD
+  BLK_ZE_OPEN_RESOURCE    VIRTIO_BLK_S_ZONE_OPEN_RESOURCE
+  BLK_ZE_ACTIVE_RESOURCE  VIRTIO_BLK_S_ZONE_ACTIVE_RESOURCE
+  BLK_ZE_FULL             VIRTIO_BLK_S_ZONE_INVALID_CMD
 
-Zone states are in memory. Read-only and offline states are
-device-internal events, which are not modelled in qcow2
-emulation for simplicity. The other zone states
-(closed, empty, full) can be inferred from write pointer
-values, persistent across QEMU reboots. The open states are
-kept in memory using open zone lists.
+Other errors keep their status code. A FINISH that exceeds a zone
+resource limit also gets a zone resource status code, which 5.2.6
+defines for any zone operation. Zone errors of writes are reported
+regardless of the rerror/werror policy, as they are the deterministic
+result of the request.
 
-To create a qcow2 file with the zoned format:
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ hw/block/virtio-blk.c | 49 +++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 45 insertions(+), 4 deletions(-)
 
-    qemu-img create -f qcow2 zbc.qcow2 \
-        -o size=768M \
-        -o zone.size=64M \
-        -o zone.capacity=64M \
-        -o zone.conventional_zones=0 \
-        -o zone.max_open_zones=6 \
-        -o zone.max_active_zones=8 \
-        -o zone.mode=host-managed
-
-Then attach it to a guest via the QEMU command line:
-    -blockdev node-name=drive1,driver=qcow2,file.driver=file,file.filename=zbc.qcow2 \
-    -device virtio-blk-pci,drive=drive1 \
-
-Tested with blktests, fio, zbd_state (an internal test suite) and
-zonefs, comparing a zoned qcow2 image attached via virtio-blk with
-zloop, null_blk and scsi_debug (passed/failed/skipped):
-
-    +--------------------+----------+---------+-----------+---------+
-    | Testrun            | blktests | fio     | zbd_state | zonefs  |
-    +--------------------+----------+---------+-----------+---------+
-    | zloop              | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
-    | null_blk           | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
-    | scsi_debug         | 10/0/12  | 61/0/14 | 29/0/8    | 113/0/0 |
-    | virtio-blk + qcow2 | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
-    +--------------------+----------+---------+-----------+---------+
-
-The last two patches are not used by the qcow2 driver. Both Daejun
-Park's zoned UFS series and an upcoming series that adds zoned support
-to ATA depend on this series, and both also require these two patches,
-so they are included here, to avoid both series needing to carry them
-separately as dependencies.
-
-Git branch can be found at:
-https://github.com/floatious/qemu/tree/qcow2-v18
-
-v17->v18:
-- Move the qcow2_cache_set_dependency() change out of "qcow2: add zoned
-  emulation capability" into its own patch, "qcow2: do not flush when a
-  cache dependency is already set", whose commit message explains why
-  skipping the flush is safe.
-- Reset bs->wps to NULL after freeing it in qcow2_do_close(), so that
-  closing the image again after a failed reopen, e.g. in
-  qcow2_co_invalidate_cache(), does not free it twice.
-
-Niklas Cassel (5):
-  block: define errnos for zone protocol errors
-  qcow2: validate the write pointer table when opening an image
-  virtio-blk: report zone errors with their zone status codes
-  block: add accessors for the zone model, capacity and open zone limit
-  scsi: add the sense codes of zoned block devices
-
-Sam Li (5):
-  docs/qcow2: add the zoned format feature
-  qcow2: add configurations for zoned format extension
-  qcow2: do not flush when a cache dependency is already set
-  qcow2: add zoned emulation capability
-  iotests: test the zoned format feature for qcow2 file
-
- MAINTAINERS                                   |    1 +
- block/block-backend.c                         |   33 +
- block/io.c                                    |   13 +-
- block/qcow2-cache.c                           |   11 +-
- block/qcow2-refcount.c                        |   18 +
- block/qcow2.c                                 | 1725 ++++++++++++++++-
- block/qcow2.h                                 |   86 +-
- block/trace-events                            |   10 +
- docs/interop/qcow2.rst                        |  115 +-
- docs/system/qemu-block-drivers.rst.inc        |   44 +
- hw/block/block.c                              |    7 +
- hw/block/virtio-blk.c                         |   49 +-
- include/block/block-common.h                  |   17 +
- include/block/block-io.h                      |    6 +
- include/block/block_int-common.h              |   12 +
- include/qemu/osdep.h                          |    6 +
- include/scsi/utils.h                          |    6 +
- include/system/block-backend-io.h             |    3 +
- qapi/block-core.json                          |   86 +-
- scsi/utils.c                                  |   15 +
- tests/qemu-iotests/031.out                    |    8 +-
- tests/qemu-iotests/036.out                    |    4 +-
- tests/qemu-iotests/061.out                    |   14 +-
- tests/qemu-iotests/082.out                    |  108 ++
- tests/qemu-iotests/303.out                    |    4 +-
- tests/qemu-iotests/tests/qcow2-encryption.out |    4 +-
- tests/qemu-iotests/tests/zoned-qcow2          |  379 ++++
- tests/qemu-iotests/tests/zoned-qcow2.out      |  267 +++
- 28 files changed, 3003 insertions(+), 48 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/zoned-qcow2
- create mode 100644 tests/qemu-iotests/tests/zoned-qcow2.out
-
-
-base-commit: 29760efaf96bbe5928f8111881eddbf5ac06439e
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 9b7c84fda6..81c68b0ee3 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -78,11 +78,45 @@ void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
+     virtio_notify(vdev, req->vq);
+ }
+ 
++/*
++ * Map a zone error (see include/block/block-common.h) to its virtio-blk
++ * status, or return VIRTIO_BLK_S_OK if @error is not one.
++ */
++static uint8_t virtio_blk_zone_status(VirtIOBlock *s, int error)
++{
++    if (!virtio_vdev_has_feature(VIRTIO_DEVICE(s), VIRTIO_BLK_F_ZONED)) {
++        return VIRTIO_BLK_S_OK;
++    }
++
++    switch (error) {
++    case BLK_ZE_UNALIGNED_WRITE:
++        return VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
++    case BLK_ZE_BOUNDARY:
++    case BLK_ZE_FULL:
++        return VIRTIO_BLK_S_ZONE_INVALID_CMD;
++    case BLK_ZE_OPEN_RESOURCE:
++        return VIRTIO_BLK_S_ZONE_OPEN_RESOURCE;
++    case BLK_ZE_ACTIVE_RESOURCE:
++        return VIRTIO_BLK_S_ZONE_ACTIVE_RESOURCE;
++    default:
++        return VIRTIO_BLK_S_OK;
++    }
++}
++
+ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+                                       bool is_read)
+ {
+     VirtIOBlock *s = req->dev;
+-    BlockErrorAction action = blk_get_error_action(s->blk, is_read, error);
++    uint8_t zone_status = virtio_blk_zone_status(s, error);
++    /*
++     * Zone errors are the deterministic result of the request, so they are
++     * reported whatever the rerror/werror policy: stopping the VM would only
++     * make the request fail the same way again when it is retried on resume,
++     * and ignoring the error would hide the failure from the guest.
++     */
++    BlockErrorAction action = zone_status != VIRTIO_BLK_S_OK ?
++                              BLOCK_ERROR_ACTION_REPORT :
++                              blk_get_error_action(s->blk, is_read, error);
+ 
+     if (action == BLOCK_ERROR_ACTION_STOP) {
+         /* Break the link as the next request is going to be parsed from the
+@@ -94,7 +128,8 @@ static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
+             s->rq = req;
+         }
+     } else if (action == BLOCK_ERROR_ACTION_REPORT) {
+-        virtio_blk_req_complete(req, VIRTIO_BLK_S_IOERR);
++        virtio_blk_req_complete(req, zone_status != VIRTIO_BLK_S_OK ?
++                                     zone_status : VIRTIO_BLK_S_IOERR);
+         block_acct_failed(blk_get_stats(s->blk), &req->acct);
+         g_free(req);
+     }
+@@ -781,7 +816,10 @@ static void virtio_blk_zone_mgmt_complete(void *opaque, int ret)
+     trace_virtio_blk_zone_mgmt_complete(vdev, req,ret);
+ 
+     if (ret) {
+-        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        err_status = virtio_blk_zone_status(s, -ret);
++        if (err_status == VIRTIO_BLK_S_OK) {
++            err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        }
+     }
+ 
+     virtio_blk_req_complete(req, err_status);
+@@ -841,7 +879,10 @@ static void virtio_blk_zone_append_complete(void *opaque, int ret)
+     uint8_t err_status = VIRTIO_BLK_S_OK;
+ 
+     if (ret) {
+-        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        err_status = virtio_blk_zone_status(s, -ret);
++        if (err_status == VIRTIO_BLK_S_OK) {
++            err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        }
+         goto out;
+     }
+ 
 -- 
 2.56.1
 
