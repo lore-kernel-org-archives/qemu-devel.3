@@ -1,99 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932F4606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16F5606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZtMPF0t+;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DAC9gJxl
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Mwr5G0dR;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=SsScGS3G
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzeb-0000Uq-QN; Tue, 24 Nov 2026 18:10:25 -0500
+	id 1xVzdu-00005x-RV; Tue, 24 Nov 2026 18:09:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzeJ-0000ED-6a
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:10:12 -0500
+ id 1xVzdq-00005B-Ke
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:09:39 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzeG-0004x2-CF
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:10:06 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xVzdo-0004tX-QE
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:09:38 -0500
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOMb8HP030759
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:10:03 GMT
+ 6AOMameW3274463
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:09:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- kMormZggJ4aPmuYWFqzzUvgyUjhm8iavim+c0g9rmPM=; b=ZtMPF0t+sb+koFrF
- RFy8j7BYoSYx/zF5tQoH7hwml8z2IHeq4HBenblsCFyCmmKIRyPa1Bp2pDrAe1nr
- 20sHVIQgmZhrXZ3zq5Qm1W94MC/diGyxJkKbroe79FpLiMUYlFLEFRW/H8Xeicfv
- /KOmaZ/vrtRg6hOPx2zf43QYzQ2/6w7NSmLDuhD6reW/rR9ha108Ka/qlUB8MsGM
- QQMYllL0Fxhshtsmm0phQxZkdrD7JkEYxAFsKlZhorQQgSxnOLEmjR3vTdhwhJdV
- IWX+U7O0+zEFn+dE3ITdLecIpZvVO8wSiZ3UKD7Y04xSrNnToxt/TVEweK6emBtJ
- 3F9GaA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5ad7tpgn-1
+ jEgjtKjEJ4sBVU94JZ7v4VmhSxWWRQKlw7vpgiN9DBg=; b=Mwr5G0dRMrmDHwRw
+ P01j0Jds5uD+elQ5vExsEUt3cvDnLsB6v67opYWm20EcdyQzQe0n7VF+ID3eufCc
+ NvJXS+NPvAWKtM/7vyFanwKzRsWe4rMxVgJ0HDmsgZC6qyb54DT7KsR+wjItOMc4
+ 1zoddn3KBw8PFUj/dOTYZIyn7aY5V74Oe77mh1E9Fogi4j2KIGafVhdn4Sq93Gaw
+ Iaolzf5CD+XtETGVl9GfLSrYMuV6wIT/ZT7eIQgRudq5T/09thnG5XqVnKN1AJvi
+ Pvk7CJUfg0fxLZbesUKgtUH2W9x+uiAAd7CX8n58H9Yuw4brmn/Oy5GEUnZtyHym
+ gYZi8g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5gnf8pvg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:10:03 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-94967c6d4f4so546882385a.2
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:10:03 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:09:35 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-94960bd17b5so836277385a.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:09:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795561803; x=1796166603; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795561775; x=1796166575; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kMormZggJ4aPmuYWFqzzUvgyUjhm8iavim+c0g9rmPM=;
- b=DAC9gJxlj+25w5lQyUvttDocpD+QtmeQ7A56Rr3q0LM9t/Rlq8vLFRrxPK8sxOPLR+
- ZnRWUeOdlEKEi9wM+R+llpsVmJYHL+IXkbqT7cBEKj4ryjrIEtp5vYi5DB8BpnqB2JIe
- bYYw9in4CYgwsoyhAw3UTwPtOh4+cAOQJHvFpjPFeUxTmvMV8WwPkqd7BSmS9JLF7sq3
- 9nQqUEZWvLcHP7+rySFxVqKbHPcvoBYoKlIVQhjdymaqeEfk6FUzzHD2nG7rVauTSyLy
- XfvCSuLojpmOHosa3hSUY/s/m3uKTQvT6wRfGUJEttxRNVLaWII1jiT3cBLAGqIjqPbT
- /KsA==
+ bh=jEgjtKjEJ4sBVU94JZ7v4VmhSxWWRQKlw7vpgiN9DBg=;
+ b=SsScGS3GRAlL7t6KcpXkuFKgh5PIAZHZiMdrE4gVr3tmJMwTjr+Mi40dkD2d5r45u+
+ 0MEu6f1g1PZa76eb9e483E/3TAlLHZIppon8rdj+NYIKJKCcirXH/yywmv6XptXyBrOl
+ 6BDsZbI2tX+VfYGGHJ1TS+W5Y2HBt/bWU9yI4g4QPxu8tRIH9IA1vpVGZMDsN0jKLr2y
+ 3Nq0b8TwwukpN3TtZX3JAkhRnlItuBX1Td+7UCdm9Jfh/4MEAwbHQxnqwFGWrcctZhXf
+ Kuv2P/G3G5ladau2f/6ojItcG/pKM1Uq/HvapQzySLKYU1rrMHjBLBaxZXD4YpR1NQ60
+ gxkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795561803; x=1796166603;
+ d=1e100.net; s=20260707; t=1795561775; x=1796166575;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kMormZggJ4aPmuYWFqzzUvgyUjhm8iavim+c0g9rmPM=;
- b=Mcv0fAOH83TSlt+xQT1PZqfYmT7vH3FaCsniiO575YwK+ifD5vJurcyoiMiFyB5wAm
- P5vlXjgiIN8wvxajmMmk/dcCDLJmfGghPBuvdfCGDlZ8xJ00rS8iXsG7kLEE7ueb/TZw
- 9e32aHICjIE12LM2mIFoOcxRDpf9kcOVvuqKGpOqzZhGnIxnw4aE1HY4pknl9QUon6S9
- qEqnSjNAtniwBcKt6i4aifV14AgFMo3lAd27+Fcyczjc7soexvPmCSaODMoihIFm43/g
- xUSmoGh8Ez4OPtjouR25qsZVupDN2aGvsteQ6UzoqWOikNgTwGsucleZ0XIqJn3HlTbW
- dtaQ==
-X-Gm-Message-State: APuU4Z+MLGx6q/buj8Nk5PDlzy1JsAA0xGKs9YoyH2Q9HphhGdv1CEfL
- 8jm2D6LFGiLQnZrm0OM3xMjriX6uA0r2npdS/6WzyuE81EuWuWaPJh19R3+zYXT4d8DC7bq52PY
- TwjzMBYKUZ6OaoT/V8zVoaYPxfFpFsjlE8pWZU4yuTTAud6rZQX0vhkWSO32CIWhGPuLs
-X-Gm-Gg: AZFdTZfCYEYIzFF5gvOfM4JPpK8rJ6AT0lbL4X/aTvBIBvVNuyV9Kz2VuqBRSlICl22
- nd1/xPfs5erWDVhTDcPr+hJ98Hozzh4Geg1ZNfImUGRgojV8MsFrkd8BdjgmXOPh/dWW+q+TKDN
- +30pjnHSJbCeuvElQTAwmeD9lAn9Cg1duYpH2aN0VKYIlbp3jYISGJT9EPe8mmqS9hxGeOB5BsF
- CkZMOQLgNC70Fu4Zy8fbFWb9Uw/xyKSYFU6KvcS5ZCwHHVfYsbZuiZhEFeAJAZ579QRh21ggZqq
- b2+TVJAHJikOW7+/xzaLxTTcM70OlSHJ4dCU+/PF7JgCVvgTC4ThfpEcHFZMP2vNIlXq78zmv1e
- DsFhvjXw4yRfAav7cA9D+vxSWUoajqrgfkN1Rwyt0TxZVh/qkf/9JrY1bkrgy1CPJTTeuD+0LrM
- vTJKzF4FWPOQBYMg==
-X-Received: by 2002:a05:620a:2906:b0:949:7781:6a2a with SMTP id
- af79cd13be357-949bab506d1mr3010074285a.63.1795561802476; 
- Tue, 24 Nov 2026 15:10:02 -0800 (PST)
-X-Received: by 2002:a05:620a:2906:b0:949:7781:6a2a with SMTP id
- af79cd13be357-949bab506d1mr3010068385a.63.1795561801912; 
- Tue, 24 Nov 2026 15:10:01 -0800 (PST)
+ bh=jEgjtKjEJ4sBVU94JZ7v4VmhSxWWRQKlw7vpgiN9DBg=;
+ b=vtyAGaxb77eVg2uM/4Hz7pyQBzhmYC4wFPeSDbwJNUam8pS9pX6f1ea9S79krpnLQZ
+ +O4qR1Y3NxPfBQNEW9ZHhFfmkZQOGu5oV5uM7zi0KKj1VAcdEEw8Mum+JulUc8Ostjty
+ iz1B3qDAEYJ4dAxgML5tq1EO86v44VWWjfE4xD0hORW5g+odNm5FVOFmots3gj+jlwCD
+ H4wkKVkXytK/qiNsOFGRNlCJctXMs6NRx6eZ5Dfv0R5VROoSCbN1xTQXwd8RjrnBfIaj
+ OfccqnEYyqwPB0QiRsu1sMMs1MRdVEDbmGwCY94g7+EZ0i033eMLeD7T3kv4OzRXaX0z
+ 0mZA==
+X-Gm-Message-State: APuU4Z/BbLDpztrY2W5WqYliut+OiOG5u0za7rs3uvRbjj1lmW4RVUiN
+ RuXDlvbDqRDLyNRaQKM695m/Hu4yGc8r6lIrvwFvNR7gTpPycs9uChRyq2qupgoTGAM0npdJ/cF
+ iNJg79HFxYxy3Sd0/4DSxKRzg9M4bQcrGHxt9tkfh4oDq/dzYmMzfs8ivr/4nTrn/Cf/w
+X-Gm-Gg: AZFdTZfRLV9kTbwJWlj40dIAyLF1FWl3WNQ+tfCLD6JGPZafTyBnCkzhZ1YmNEkj+us
+ IjuOIcc0RLTvXPEIzAYUR03J1sa4ybqQw4elU1QoZaRaQgaoDSD7yuF4xbuff10oli2JSgKRzzL
+ RMdjw4iWRrvqmaxQNifVWNZg2kdt5KxCtFOnj/b3NILf4LITcvJEQFyt3A0GHbfDF21yaDOycWU
+ w5l82Xt8rSwLtB3Ix/DGUKpOwZSpoQ/zR1Tm/VC87ObD1dSplosIL+CEK3nLevIVoDmHEo5cMqL
+ 6SRe0JGgRr4TK9WDeVz2zz6+A0WJTgabliqQtEAmg0CSSb1exJJZmGlI2jB/14AfrVSnfbyU7hi
+ NDm+vY1TvKj3MPkl9V4DhKdVOIozaeXTV2zNeu/wdIcmO2eDJ6iABpqqxxZJ1ZPkKlBsjIGPr2N
+ vvXJSqoA0XM2mRiA==
+X-Received: by 2002:a05:620a:1d0e:b0:949:6530:8170 with SMTP id
+ af79cd13be357-949ba95dfb8mr2878501085a.16.1795561774693; 
+ Tue, 24 Nov 2026 15:09:34 -0800 (PST)
+X-Received: by 2002:a05:620a:1d0e:b0:949:6530:8170 with SMTP id
+ af79cd13be357-949ba95dfb8mr2878496285a.16.1795561774147; 
+ Tue, 24 Nov 2026 15:09:34 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb853ca452sm458925905e9.15.2026.11.24.15.10.01
+ ffacd0b85a97d-4b3415763f7sm10799946f8f.9.2026.11.24.15.09.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Nov 2026 15:10:01 -0800 (PST)
+ Tue, 24 Nov 2026 15:09:33 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/17] hw/ide/atapi: fix abort on CD-ROM reads past LBA 2^31
-Date: Wed, 25 Nov 2026 00:09:06 +0100
-Message-ID: <20261124230917.88704-7-philmd@oss.qualcomm.com>
+Subject: [PULL 02/17] hw/sd/sdcard: Validate migrated blk_len in post_load
+Date: Wed, 25 Nov 2026 00:09:02 +0100
+Message-ID: <20261124230917.88704-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261124230917.88704-1-philmd@oss.qualcomm.com>
 References: <20261124230917.88704-1-philmd@oss.qualcomm.com>
@@ -101,34 +101,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfXwoiYr9aGqDcN
- UZVH4ia8fjkWntTr0ZR3ykuc9bKyKmXmy0V0chkolHrhzRUGhWmPzmceoqMv0YMgKqXSGCP++Kg
- /Z8elEPT+LxHz+rKIuE/pdWuzjvW60c=
-X-Authority-Analysis: v=2.4 cv=cI51IVeN c=1 sm=1 tr=0 ts=6b06194b cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfX/ooiMTgCWSXg
+ ugtZoVD9zNyDnisxbE6L4Y5Q16/T0jsEW9hlWfh4fl0lDAxcwSEfYpyr179fggKRtx2LsCsNERW
+ 89Jb5BiAF8/DDMOSC85aTCl81FyaohQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfX9hJSDDfdbskB
+ VOzVP9hcLOd08l3dqWkX7w1OWb2qrfMIgnwELv6hJy9ibwkc54Qzv/45HcDVylGNoxGswoKppNh
+ iUrgMghy73+XUTwF+qaJo+ISPkflPRsWejFJDMh9R7vi1PrlNZzIwJmwcKtVU6wWdH/Gk7K2yDb
+ TQ3DCKI8KEmDB1cSKKy2ArkU3QsqHohMTISsGB48sZQ5S/lI3/1zKnaNan19/12zfYHvGmbR9GU
+ Y8qAZZYK5KArI5X5VZW8vyxWiH1Tx4Fes/omwXgIbsxc+T+a/jVvQ+vBXl/bYnsf6fAdYozHJOX
+ urSleHUyGKzw+gwd8IvTbzWrsLa/HVT/oC+/zlib+AyzMBt5I40kE0LK25MFNKrs4TYUj+xTqL6
+ sbA1iJlOmWx/f+XPiWIJQb/FtyT1WoVr0FktL1pRtsjY5msRUnorPFYSVfOgl6XemqYzLJxPznG
+ hxNAX3qlTClKzh05jvg==
+X-Authority-Analysis: v=2.4 cv=f/Xdl+yM c=1 sm=1 tr=0 ts=6b06192f cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=6rqHouBjAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=UgY5qV0q_vMF1zRxwbcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=Hx1yvPaMooE3kwe23bt7:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MSBTYWx0ZWRfX6a4R9Ym9YGyh
- QEGjo80Wi9qHyRS6cX7PylPtC3JGjgMjPA1808oKmhtsuX8JAkOukvxdNsgP/nCSjjoArRLitF0
- d80A3xNyOHd6oFKhjUFpdirJK53y3lbZjZDrDX+VMxUhAxAV2Q3c2sa1re7tA50ZlZw2phY2ARY
- K4LQcTrkEdeimsH7zi7d8PJu9XFf806PGjcDKbpc5eyh9+QxCpCMTJLY8d0OMkuv1iwT5NIx12k
- oPxQGV0/Zrp2NhZfNGA4nexddgluoeUQSQqlKmmaBokGeK6eqOU/aqLZPYexjwx4cTmK7di+Wk7
- N4cjpi7EpI2qTxjPZX2jqhO81ijhjD0agNhrHCod83PZZVkYLDtZkysuhpA//5mza9Fe5MZPsor
- 7RjpHp+OY1uGcgrgHuBnVnDzNW3UyeWEJs+EbpAu9rTkxDxkRjORTlqdBTqb9y3saoiXcxL4Rre
- LXwLHtB6JTeFwZB8eoA==
-X-Proofpoint-ORIG-GUID: FM7U6n100L72XkDZpxkQ0zbCLGqBTnqW
-X-Proofpoint-GUID: FM7U6n100L72XkDZpxkQ0zbCLGqBTnqW
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=AS-B_AZf7FWz2WqFvX4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: ZZN0Dj3Y-ZaDc4TfMzFy51uNIXD5jiZ_
+X-Proofpoint-ORIG-GUID: ZZN0Dj3Y-ZaDc4TfMzFy51uNIXD5jiZ_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_06,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
- clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ lowpriorityscore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
  definitions=main-2611240091
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
@@ -150,233 +150,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Harshit Mukhedkar <harshit007k@gmail.com>
 
-cmd_read() and cmd_read_cd() check the 32-bit LBA from the CDB against
-the medium size, then pass it to ide_atapi_cmd_read() as an int. On a
-medium larger than 4 TiB, a read at LBA 2^31 or above passes the range
-check, turns negative and trips the assertion:
+Migration streams are untrusted input. A crafted stream can set
+blk_len larger than the 512 byte data[] buffer, so a later block
+read passes that length to blk_pread() and overflows data[] on
+the host heap.
 
-  hw/ide/atapi.c:315: ide_atapi_cmd_read_pio: Assertion
-  `0 <= lba && lba < (s->nb_sectors >> 2)' failed.
+Reject such state in post_load.
 
-Reading the last sector is enough, e.g. a UDF anchor probe, so the
-guest aborts QEMU just by looking at the disc.
-
-Pass the LBA as uint32_t, which is what the CDB carries, and widen
-IDEState.lba to int64_t so it holds every valid LBA and keeps -1 as
-the "not a sector read" marker. The field is not migrated.
-
-Fixes: b8d7f1bc5927 ("ide: atapi: check logical block address and read size (CVE-2020-29443)")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: John Snow <jsnow@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261112133455.604657-1-den@openvz.org>
-[PMD: Avoid wrapping at 2^32 in range check]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-Message-ID: <20261112133455.604657-1-den@openvz.org>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4725
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Harshit Mukhedkar <harshit007k@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/hw/ide/ide-dev.h |  2 +-
- hw/ide/atapi.c           | 22 +++++++++++-----------
- hw/ide/macio.c           |  2 +-
- tests/qtest/ahci-test.c  | 36 ++++++++++++++++++++++++++++++++++++
- hw/ide/trace-events      |  8 ++++----
- 5 files changed, 53 insertions(+), 17 deletions(-)
+ hw/sd/sd.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
-index f5eaaf68e650..c6fd8d7eb1fc 100644
---- a/include/hw/ide/ide-dev.h
-+++ b/include/hw/ide/ide-dev.h
-@@ -101,7 +101,7 @@ struct IDEState {
-     int packet_transfer_size;
-     int elementary_transfer_size;
-     int32_t io_buffer_index;
--    int lba;
-+    int64_t lba;
-     int cd_sector_size;
-     int atapi_dma; /* true if dma is requested for the packet cmd */
-     BlockAcctCookie acct;
-diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
-index 0ea149ad8c6d..aec20f968da0 100644
---- a/hw/ide/atapi.c
-+++ b/hw/ide/atapi.c
-@@ -47,7 +47,7 @@ static void padstr8(uint8_t *buf, int buf_size, const char *src)
-     }
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index f1b5dbe011ae..5a6045f1360a 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1073,11 +1073,24 @@ static int sd_vmstate_pre_load(void *opaque)
+     return 0;
  }
  
--static void lba_to_msf(uint8_t *buf, int lba)
-+static void lba_to_msf(uint8_t *buf, int64_t lba)
- {
-     lba += 150;
-     buf[0] = (lba / 75) / 60;
-@@ -71,7 +71,7 @@ static inline int media_is_cd(IDEState *s)
-     return (media_present(s) && s->nb_sectors <= CD_MAX_SECTORS);
- }
- 
--static void cd_data_to_raw(uint8_t *buf, int lba)
-+static void cd_data_to_raw(uint8_t *buf, int64_t lba)
- {
-     /* sync bytes */
-     buf[0] = 0x00;
-@@ -309,10 +309,10 @@ static void ide_atapi_cmd_reply(IDEState *s, int size, int max_size)
- }
- 
- /* start a CD-ROM read command */
--static void ide_atapi_cmd_read_pio(IDEState *s, int lba, int nb_sectors,
--                                   int sector_size)
-+static void ide_atapi_cmd_read_pio(IDEState *s, uint32_t lba,
-+                                   int nb_sectors, int sector_size)
- {
--    assert(0 <= lba && lba < (s->nb_sectors >> 2));
-+    assert(lba < (s->nb_sectors >> 2));
- 
-     s->lba = lba;
-     s->packet_transfer_size = nb_sectors * sector_size;
-@@ -409,10 +409,10 @@ eot:
- 
- /* start a CD-ROM read command with DMA */
- /* XXX: test if DMA is available */
--static void ide_atapi_cmd_read_dma(IDEState *s, int lba, int nb_sectors,
--                                   int sector_size)
-+static void ide_atapi_cmd_read_dma(IDEState *s, uint32_t lba,
-+                                   int nb_sectors, int sector_size)
- {
--    assert(0 <= lba && lba < (s->nb_sectors >> 2));
-+    assert(lba < (s->nb_sectors >> 2));
- 
-     s->lba = lba;
-     s->packet_transfer_size = nb_sectors * sector_size;
-@@ -427,7 +427,7 @@ static void ide_atapi_cmd_read_dma(IDEState *s, int lba, int nb_sectors,
-     ide_start_dma(s, ide_atapi_cmd_read_dma_cb);
- }
- 
--static void ide_atapi_cmd_read(IDEState *s, int lba, int nb_sectors,
-+static void ide_atapi_cmd_read(IDEState *s, uint32_t lba, int nb_sectors,
-                                int sector_size)
- {
-     trace_ide_atapi_cmd_read(s, s->atapi_dma ? "dma" : "pio",
-@@ -983,7 +983,7 @@ static void cmd_read(IDEState *s, uint8_t* buf)
-     }
- 
-     lba = ldl_be_p(buf + 2);
--    if (lba >= total_sectors || lba + nb_sectors - 1 >= total_sectors) {
-+    if (lba >= total_sectors || nb_sectors > total_sectors - lba) {
-         ide_atapi_cmd_error(s, ILLEGAL_REQUEST, ASC_LOGICAL_BLOCK_OOR);
-         return;
-     }
-@@ -1005,7 +1005,7 @@ static void cmd_read_cd(IDEState *s, uint8_t* buf)
-     }
- 
-     lba = ldl_be_p(buf + 2);
--    if (lba >= total_sectors || lba + nb_sectors - 1 >= total_sectors) {
-+    if (lba >= total_sectors || nb_sectors > total_sectors - lba) {
-         ide_atapi_cmd_error(s, ILLEGAL_REQUEST, ASC_LOGICAL_BLOCK_OOR);
-         return;
-     }
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index a95e68083f42..6f62d0188492 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -396,7 +396,7 @@ static void ide_dbdma_start(const IDEDMA *dma, IDEState *s,
-     MACIO_DPRINTF("\n\n------------ IDE transfer\n");
-     MACIO_DPRINTF("buffer_size: %x   buffer_index: %x\n",
-                   s->io_buffer_size, s->io_buffer_index);
--    MACIO_DPRINTF("lba: %x    size: %x\n", s->lba, s->io_buffer_size);
-+    MACIO_DPRINTF("lba: %" PRIx64 "    size: %x\n", s->lba, s->io_buffer_size);
-     MACIO_DPRINTF("-------------------------\n");
- 
-     m->dma_active = true;
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 291f29e762c4..37f6dee0a7f9 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1737,6 +1737,40 @@ static void test_cdrom_pio_raw(void)
-     ahci_test_cdrom_raw(3, false);
- }
- 
-+/* Regression test: read the last sector of a medium over 4 TiB. */
-+static void ahci_test_cdrom_high_lba(bool dma)
++static int sd_vmstate_post_load(void *opaque, int version_id)
 +{
-+    AHCIQState *ahci;
-+    g_autofree unsigned char *tx = g_malloc0(ATAPI_SECTOR_SIZE);
-+    uint64_t lba = (uint64_t)INT32_MAX + 1;
-+    AHCIOpts opts = {
-+        .size = ATAPI_SECTOR_SIZE,
-+        .lba = lba,
-+        .atapi = true,
-+        .atapi_dma = dma,
-+        .post_cb = ahci_cb_cmp_buff,
-+        .opaque = tx,
-+    };
++    SDState *sd = opaque;
 +
-+    ahci = ahci_boot_and_enable("-blockdev driver=null-co,node-name=cd0,"
-+                                "read-only=on,read-zeroes=on,size=%" PRIu64 " "
-+                                "-M q35 "
-+                                "-device ide-cd,drive=cd0 ",
-+                                (lba + 1) * ATAPI_SECTOR_SIZE);
-+    ahci_exec(ahci, ahci_port_select(ahci), CMD_ATAPI_READ_10, &opts);
-+    ahci_shutdown(ahci);
++    /* Check for blk_len that overflows data[] */
++    if (sd->blk_len > sizeof(sd->data)) {
++        return -EINVAL;
++    }
++
++    return 0;
 +}
 +
-+static void test_cdrom_dma_high_lba(void)
-+{
-+    ahci_test_cdrom_high_lba(true);
-+}
-+
-+static void test_cdrom_pio_high_lba(void)
-+{
-+    ahci_test_cdrom_high_lba(false);
-+}
-+
- /*
-  * Regression test: a buffered ATAPI read completing after a command
-  * engine restart must not dereference the cleared cur_cmd. Cover both
-@@ -2427,6 +2461,8 @@ int main(int argc, char **argv)
-     qtest_add_func("/ahci/cdrom/pio/single", test_cdrom_pio);
-     qtest_add_func("/ahci/cdrom/pio/multi", test_cdrom_pio_multi);
-     qtest_add_func("/ahci/cdrom/pio/raw", test_cdrom_pio_raw);
-+    qtest_add_func("/ahci/cdrom/dma/high_lba", test_cdrom_dma_high_lba);
-+    qtest_add_func("/ahci/cdrom/pio/high_lba", test_cdrom_pio_high_lba);
- 
-     qtest_add_func("/ahci/cdrom/pio/bcl", test_atapi_bcl);
-     qtest_add_func("/ahci/cdrom/eject", test_atapi_tray);
-diff --git a/hw/ide/trace-events b/hw/ide/trace-events
-index c44eec6c5852..dc34b09c613a 100644
---- a/hw/ide/trace-events
-+++ b/hw/ide/trace-events
-@@ -52,17 +52,17 @@ bmdma_write_via(uint64_t addr, uint64_t val) "bmdma: writeb 0x%"PRIx64" : 0x%02"
- 
- # atapi.c
- cd_read_sector_sync(int lba) "lba=%d"
--cd_read_sector_cb(int lba, int ret) "lba=%d ret=%d"
--cd_read_sector(int lba) "lba=%d"
-+cd_read_sector_cb(int64_t lba, int ret) "lba=%"PRId64" ret=%d"
-+cd_read_sector(int64_t lba) "lba=%"PRId64
- ide_atapi_cmd_error(void *s, int sense_key, int asc) "IDEState: %p; sense=0x%x asc=0x%x"
- ide_atapi_cmd_reply_end(void *s, int tx_size, int elem_tx_size, int32_t index) "IDEState %p; reply: tx_size=%d elem_tx_size=%d index=%"PRId32
- ide_atapi_cmd_reply_end_eot(void *s, int status) "IDEState: %p; end of transfer, status=0x%x"
- ide_atapi_cmd_reply_end_bcl(void *s, int bcl) "IDEState: %p; byte_count_limit=%d"
- ide_atapi_cmd_reply_end_new(void *s, int status) "IDEState: %p; new transfer started, status=0x%x"
- ide_atapi_cmd_check_status(void *s) "IDEState: %p"
--ide_atapi_cmd_read(void *s, const char *method, int lba, int nb_sectors) "IDEState: %p; read %s: LBA=%d nb_sectors=%d"
-+ide_atapi_cmd_read(void *s, const char *method, uint32_t lba, int nb_sectors) "IDEState: %p; read %s: LBA=%"PRIu32" nb_sectors=%d"
- ide_atapi_cmd(void *s, uint8_t cmd) "IDEState: %p; cmd: 0x%02x"
--ide_atapi_cmd_read_dma_cb_aio(void *s, int lba, int n) "IDEState: %p; aio read: lba=%d n=%d"
-+ide_atapi_cmd_read_dma_cb_aio(void *s, int64_t lba, int n) "IDEState: %p; aio read: lba=%"PRId64" n=%d"
- # Warning: Verbose
- ide_atapi_cmd_packet(void *s, uint16_t limit, const char *packet) "IDEState: %p; limit=0x%x packet: %s"
- 
+ static const VMStateDescription sd_vmstate = {
+     .name = "sd-card",
+     .version_id = 2,
+     .minimum_version_id = 2,
+     .pre_load = sd_vmstate_pre_load,
++    .post_load = sd_vmstate_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UNUSED(4),
+         VMSTATE_INT32(state, SDState),
 -- 
 2.55.0
 
