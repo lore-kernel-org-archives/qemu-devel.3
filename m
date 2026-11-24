@@ -1,83 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA640606A33A
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 21:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E7A606A329
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 21:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=LSJELLFH
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IOH2pST6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVxpf-0006jt-5y; Tue, 24 Nov 2026 16:13:43 -0500
+	id 1xVyDI-0003cQ-U3; Tue, 24 Nov 2026 16:38:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xVxor-0006Uz-EF
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:12:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xVxop-0002Mx-8D
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:12:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795554763;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HXTinqOEqkF57NIJ523/pUObeEcDUPTgTEl7pKhjiIg=;
- b=LSJELLFH5DTMEHt7s03Irr0VNj+89St8ENccxjyLxTV8C+vMK4fhbKtDMLhl+fYhpX/UzR
- zPoNiAchzWoc2RsAj1YCpdqjqKmrk6Au2ILGzFIhOlvGyJeEjgb/2ZGbVgVdxCnm47FxLw
- e8BNkyLxBFc0a6/Gt69vx2HPCa98AMY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-4HyTSmM_Px-UrKGi4957yg-1; Tue,
- 24 Nov 2026 21:12:37 +0000
-X-MC-Unique: 4HyTSmM_Px-UrKGi4957yg-1
-X-Mimecast-MFC-AGG-ID: 4HyTSmM_Px-UrKGi4957yg_1795554756
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30AC5195606F; Tue, 24 Nov 2026 21:12:35 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0673C41F; Tue, 24 Nov 2026 21:12:33 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Fam Zheng <fam@euphon.net>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Lamprecht <t.lamprecht@proxmox.com>, qemu-stable@nongnu.org,
- Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PULL for-11.2 1/1] fdmon-io_uring: avoid idle event loop being
- accounted as IO wait
-Date: Tue, 24 Nov 2026 16:12:30 -0500
-Message-ID: <20261124211230.1944962-2-stefanha@redhat.com>
-In-Reply-To: <20261124211230.1944962-1-stefanha@redhat.com>
-References: <20261124211230.1944962-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xVyDF-0003as-IP
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:38:05 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xVyDE-00070N-0d
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:38:05 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-3b3fb193c03so2152941a91.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 13:38:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795556282; x=1796161082; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zhcNQXedod9i5fkiIjQ4ZEhkhxml3kRh9gcExODqk7A=;
+ b=IOH2pST6VTZAwg9atx8mfGJT3g2s0vxHh58Vm7O1huQbr5mm2xmoHUS5BTKcEHwPIf
+ 3lyNAedbqsq7LErbYSptVAym+ChE2mmyafcxnAxta35PihBoUrv97nS1KJqvHDtdoSIz
+ sv3qU704bdF0MEf2+gTP1U13VdjkPBYvsRrjLfjuETnR2F1tQQbc6ewHC6A9lCh7NVTc
+ Pt8tjzgb5Bec4AQQ4vHLiBVYQIlC131S5cVwDLn1fcl2uhPxQ/ADtt/Y1L1vIT1OLSQi
+ q6eWSU8Acf8L+cZ0SWXfDT/HOa+XIGz+UitKyrMlqCdVzVZdeJX5wOcr/8Obm/sCXD2d
+ OsoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795556282; x=1796161082;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zhcNQXedod9i5fkiIjQ4ZEhkhxml3kRh9gcExODqk7A=;
+ b=dLdOkCWg0cbycXEd4BEr/F5D1XpLbj+GtzJuyViBlBYqW0/NPEGFtNzYrdfDF5RhYs
+ y1+iAdb7DtpvW42NPSvbwEjQG/FUAo8m+8/vpNC0lmY8OVjkvyZcHgumuYZaGdkKpgqv
+ +9holYaQbllGCLIH0qQwh1T0iltBXvKcwWQ8/zGLA0sd9FNXie/ulKhFV68B/K2cxW7W
+ 3pf4goRKoknwGYm2unPp9y80g2CRs5ObzBLAourRN5eTHAIJNLu67OFf/hGQxso3ObSm
+ Pz0he6TpXt6rlVQ+TwGlocBAmSbDyfoLWykeoR0X/kvH8VbWavFg0w4QrQo0WJR35AVE
+ wOug==
+X-Gm-Message-State: APuU4Z8xFh1y+wmcJMqbc0Em+dHdzptICprknI0582gIWtZtMpHGoJvh
+ eqbHrLatnt5Ok2zAi7GJbwpPVGoZXb0g7inRQFhvnJrS2u1MZZFiCvz85N9hO5AnPho=
+X-Gm-Gg: AZFdTZfx37Wa+E2GFoatTrTCNjBvyP8jrQA2jK3FayStZy6mf0QdN4aT6xaET6ffeXm
+ AF2dDoUw199FTwtm+F3yHek6s7dPJxeVfWWX7M8GnhCp2sNF/jJm4kSwvlpvNistnw+wMtKgXSG
+ GuGZabSOfqhZhZkTiPiSA3tQ09PIV7DJWhaZQ5Os0At1nBaf1VjdlCqGrswo20W1np6p3S2k8US
+ bxQ4yrt6cMQIOBrCyU2f0k/HY8KSV2TXCn2LwB+JXbUzsbkJW9RTad/JSi2VpvPiBq6YSGCDP2C
+ DU08QLzRptB5hP3WKcjXmNa/vPQLdsk8N/SRd/eVmXQbGS+bGe4CqzLQSSFag91tj9BTRcQbG4f
+ kV0LcO/KxcUXJS1oyf8ZoAY7qz+1M3epLTYs8tp1NTz8z8Pw33gEzF4FXaRZKmVTwVnQtTs+6P8
+ qLxRq+cZ4rKIHEJqJGuQK2j5pQTfGVY95tNP4gE7BmB4k2+9lrQoKb+TjBACbCt+igKZ4cwR7IS
+ pTA1VmjSGTpQttT4E/rrMqF9Jalr89BmczDZKRG+ALdA8a98krmNOPsBOKStwlJ9YVtNpq8cf/K
+ NaZMZXdnyg1GOb3qgDd0rEBlr8oHcRhK2Lk23Feh/d0=
+X-Received: by 2002:a17:90b:4c4e:b0:3b4:d22:85fa with SMTP id
+ 98e67ed59e1d1-3b41c98a150mr14722112a91.14.1795556282361; 
+ Tue, 24 Nov 2026 13:38:02 -0800 (PST)
+Received: from [172.20.3.121] ([156.19.246.27])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3b41ad0a33fsm24830193a91.6.2026.11.24.13.38.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Nov 2026 13:38:01 -0800 (PST)
+Message-ID: <0e0f553c-6741-4808-a138-bda1d327cba1@linaro.org>
+Date: Tue, 24 Nov 2026 13:38:00 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: memory_region_init_ram_ptr() handling of sizes that are less than
+ a page
+To: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+References: <CAFEAcA_77DxGK-26Z6=qx0a88Zd0KQgFjKgJc2CgTmm-iOzbsg@mail.gmail.com>
+ <CAFEAcA-o9DoPL1D0-S3hpB1bT6iSNgy4zm1VZRSjcjxHkmUfiQ@mail.gmail.com>
+ <awW88uEaJ2IKp-nY@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA-PB-tPvdXc6ZMMhanN0fPi9uvGQ=XtM0h2+uxt-JnrSg@mail.gmail.com>
+ <awXafWB2p8VuG_Qh@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <CAFEAcA8-UQPdJ4na2EXfFff+Nw547nYVDfQcK-pjLr6ykW=ThQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA8-UQPdJ4na2EXfFff+Nw547nYVDfQcK-pjLr6ykW=ThQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,223 +110,52 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+On 11/24/26 12:38, Peter Maydell wrote:
+> On Tue, 24 Nov 2026 at 18:42, Peter Xu <peterx@redhat.com> wrote:
+>>
+>> On Tue, Nov 24, 2026 at 05:37:23PM +0000, Peter Maydell wrote:
+>>> The atmega.c code explicitly calls
+>>>          vmstate_register_ram(&s->sram_io, dev);
+>>> which is why #4877 reports that we crash during migration.
+>>
+>> Ah...
+>>
+>> This seems a hack.  I don't see what we benefit from g_malloc0() rather
+>> than using memory_region_init_ram(), it's hand-coding how allocation is
+>> done.  IMO we should switch.
+> 
+> That's what it used to do before commit 9f99072fc08 last year,
+> though. I should check with RTH why it's doing that so we know
+> what we need to test to make sure we avoid breaking something.
+With respect to AVR, there were complications due to a change in 
+TARGET_PAGE_SIZE.
 
-Since QEMU 10.2, iothreads use io_uring for file descriptor monitoring
-when available at build time. The blocking wait in io_uring_enter()
-gets accounted as IO wait by the kernel even when only poll or timeout
-SQEs are present. The result is nearly 100% IO pressure in PSI on idle
-VMs.
+Leading up to 9f99, we allocated ram at a target-page-aligned location. 
+We still do that for certain cpu+board configurations (
 
-The Linux kernel also has a bug conflating reservations for task
-references and real in-flight requests [0], so the issue could occur
-even if no poll or timeout SQE was present.
+After 9f99, we still allocate ram at target-page alignment for certain 
+cpu+board configurations (mc->io_size >= TARGET_PAGE_SIZE).  But failing 
+that we must allocate ram at a non-target-page aligned address on the 
+same page as other I/O.  It's that sharing of the target page which 
+requires allocation "device ram" and not regular ram, so that it's all 
+considered I/O.  Thus memory_region_init_ram_device_ptr and not any 
+other api flavor.
 
-The io_uring_set_iowait() function is available since liburing 2.10,
-so create a stub when it's not available and accept that IOWAIT
-accounting includes POLL_ADD and TIMEOUT ops on older hosts.
+As for the question that Peter's actually asking: I have no idea why the 
+memory subsystem is requiring aligned addresses.  My first suspicion was 
+something related to qemu_ram_block_from_host, but that properly handles 
+arbitrary addresses.
 
-Track the number of in-flight requests that represent real block-layer
-IO (currently, anything submitted via aio_add_sqe() is) in a
-per-AioContext counter, and disable iowait accounting when the count
-is zero.
+My preference is that the APIs don't enforce host pointer alignment, 
+because I can't see a good reason for it.
 
-SQ-ring composition alone is not a usable signal here: poll SQEs get
-re-armed by process_cqe_aio_handler() on every fd-event cycle, so
-workloads with constant fd wakeups (observed with librbd) always leave
-a non-timeout SQE in the ring even when the guest is idle. Block
-drivers that do not go through aio_add_sqe() (e.g. librbd, libaio,
-thread-pool) never increment the counter and thus always get the flag
-passed, which matches the semantic intent: their iothreads block on
-completion notifications from other threads, not on IO they issued
-themselves.
 
-The iowait_accounting_reqs counter added to the AioContext struct must
-be accessed with atomics, since a vCPU thread can reach
-fdmon_io_uring_wait() via aio_poll() (for example via
-virtio_scsi_dataplane_stop()).
-
-[0]: https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@proxmox.com/T/
-
-Cc: qemu-stable@nongnu.org
-Fixes: ded29e64c6f3 ("aio-posix: integrate fdmon into glib event loop")
-Suggested-by: Fiona Ebner <f.ebner@proxmox.com>
-Link: https://lore.proxmox.com/pve-devel/525c4dad-6d04-41f0-8a21-9302b0c6baa4@proxmox.com/
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-id: 20261124113700.470090-1-f.ebner@proxmox.com
-Co-authored-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- meson.build           |  2 ++
- include/qemu/aio.h    | 15 ++++++++++++++
- util/fdmon-io_uring.c | 46 ++++++++++++++++++++++++++++++++++++++++---
- 3 files changed, 60 insertions(+), 3 deletions(-)
-
-diff --git a/meson.build b/meson.build
-index 4d267e10b5f..3c6c5380de7 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2717,6 +2717,8 @@ if linux_io_uring.found()
-                        cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
-   config_host_data.set('HAVE_IO_URING_CQ_HAS_OVERFLOW',
-                        cc.has_header_symbol('liburing.h', 'io_uring_cq_has_overflow'))
-+  config_host_data.set('HAVE_IO_URING_SET_IOWAIT',
-+                       cc.has_header_symbol('liburing.h', 'io_uring_set_iowait'))
- endif
- config_host_data.set('HAVE_TCP_KEEPCNT',
-                      cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPCNT') or
-diff --git a/include/qemu/aio.h b/include/qemu/aio.h
-index e65e90093a7..dbc5370eb03 100644
---- a/include/qemu/aio.h
-+++ b/include/qemu/aio.h
-@@ -55,6 +55,12 @@ struct CqeHandler {
- 
-     /* This field is filled in before ->cb() is called */
-     struct io_uring_cqe cqe;
-+
-+    /*
-+     * Whether the in-flight request should count towards IO wait.
-+     * Private to the fdmon layer; must not be touched outside of it.
-+     */
-+    bool iowait_accounting;
- };
- 
- typedef QSIMPLEQ_HEAD(, CqeHandler) CqeHandlerSimpleQ;
-@@ -295,6 +301,12 @@ struct AioContext {
- 
-     /* Pending callback state for cqe handlers */
-     CqeHandlerSimpleQ cqe_handler_ready_list;
-+
-+    /*
-+     * Number of in-flight requests that should count towards IO wait.
-+     * Must be accessed using atomics.
-+     */
-+    unsigned int iowait_accounting_reqs;
- #endif /* CONFIG_LINUX_IO_URING */
- 
-     /* TimerLists for calling timers - one per clock type.  Has its own
-@@ -843,6 +855,9 @@ static inline bool aio_has_io_uring(void)
-  * as soon as @prep_sqe() returns or it may take until the next event loop
-  * iteration.
-  *
-+ * The fdmon's IO wait accounting logic currently assumes that the request is
-+ * not multishot.
-+ *
-  * When the AioContext is destroyed, pending sqes are ignored and their
-  * CqeHandlers are not invoked.
-  *
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index b81e412402b..33e0eec9349 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -61,6 +61,32 @@ enum {
-     FDMON_IO_URING_DELETE_AIO_HANDLER = (1 << 3),
- };
- 
-+#ifndef HAVE_IO_URING_SET_IOWAIT
-+static inline int io_uring_set_iowait(struct io_uring *ring, bool enable_iowait)
-+{
-+    /*
-+     * Stub out this liburing 2.10 API on older hosts and accept that
-+     * IOWAIT accounting includes POLL_ADD and TIMEOUT ops. Build
-+     * against a newer liburing and a newer Linux kernel if you want to
-+     * fix IOWAIT accounting.
-+     */
-+    return 0;
-+}
-+#endif
-+
-+/*
-+ * Use before calling any liburing function that may call io_uring_enter().
-+ *
-+ * Configures IO wait accounting for the AioContext's ring depending on the
-+ * presence of real block-layer IO. Poll or timeout SQEs alone do not count
-+ * towards IO wait.
-+ */
-+static inline void configure_iowait_accounting(AioContext *ctx)
-+{
-+    io_uring_set_iowait(&ctx->fdmon_io_uring,
-+                        qatomic_read(&ctx->iowait_accounting_reqs) > 0);
-+}
-+
- static inline int poll_events_from_pfd(int pfd_events)
- {
-     return (pfd_events & G_IO_IN ? POLLIN : 0) |
-@@ -93,6 +119,7 @@ static struct io_uring_sqe *get_sqe(AioContext *ctx)
- 
-     /* No free sqes left, submit pending sqes first */
-     do {
-+        configure_iowait_accounting(ctx);
-         ret = io_uring_submit(ring);
-     } while (ret == -EINTR);
- 
-@@ -176,9 +203,14 @@ static void fdmon_io_uring_add_sqe(AioContext *ctx,
- {
-     struct io_uring_sqe *sqe = get_sqe(ctx);
- 
-+    /* Currently, IO wait should be accounted for all requests here. */
-+    cqe_handler->iowait_accounting = true;
-+
-     prep_sqe(sqe, opaque);
-     io_uring_sqe_set_data(sqe, cqe_handler);
- 
-+    qatomic_inc(&ctx->iowait_accounting_reqs);
-+
-     trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
-                                  cqe_handler);
- }
-@@ -286,6 +318,10 @@ static bool process_cqe(AioContext *ctx,
-         return false;
-     }
- 
-+    if (cqe_handler->iowait_accounting) {
-+        qatomic_dec(&ctx->iowait_accounting_reqs);
-+    }
-+
-     /*
-      * Special handling for AioHandler cqes. They need ready_list and have a
-      * return value.
-@@ -314,6 +350,7 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
- #ifdef HAVE_IO_URING_CQ_HAS_OVERFLOW
-     /* If the CQ overflowed then fetch CQEs with a syscall */
-     if (io_uring_cq_has_overflow(ring)) {
-+        configure_iowait_accounting(ctx);
-         io_uring_get_events(ring);
-     }
- #endif
-@@ -335,9 +372,11 @@ static void fdmon_io_uring_gsource_prepare(AioContext *ctx)
- {
-     fill_sq_ring(ctx);
-     if (io_uring_sq_ready(&ctx->fdmon_io_uring)) {
--        while (io_uring_submit(&ctx->fdmon_io_uring) == -EINTR) {
--            /* Keep trying if syscall was interrupted */
--        }
-+        int ret;
-+        do {
-+            configure_iowait_accounting(ctx);
-+            ret = io_uring_submit(&ctx->fdmon_io_uring);
-+        } while (ret == -EINTR); /* Keep trying if syscall was interrupted */
-     }
- }
- 
-@@ -424,6 +463,7 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
-      *    rather than -EINTR.
-      */
-     do {
-+        configure_iowait_accounting(ctx);
-         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
-     } while (ret == -EINTR ||
-              (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)));
--- 
-2.56.1
-
+r~
 
