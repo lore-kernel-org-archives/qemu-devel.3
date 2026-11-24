@@ -1,85 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561F9606A336
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563AF606A338
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zUllK/JE
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J4xnyk0e
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVnaj-0001qg-1x; Tue, 24 Nov 2026 05:17:37 -0500
+	id 1xVnai-0001qd-89; Tue, 24 Nov 2026 05:17:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xVnah-0001qN-69
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:17:35 -0500
-Received: from mail-pj2-x00.google.com ([2607:f8b0:4864:39::])
+ id 1xVnag-0001qE-EI
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:17:34 -0500
+Received: from mail-pi2-x09.google.com ([2607:f8b0:4864:3a::9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xVnaf-0004Xe-4y
+ id 1xVnae-0004Xa-LZ
  for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:17:34 -0500
-Received: by mail-pj2-x00.google.com with SMTP id
- 98e67ed59e1d1-3b411059cd2so985647a91.1
+Received: by mail-pi2-x09.google.com with SMTP id
+ 41be03b00d2f7-cdd9779aac8so743144a12.0
  for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795515452; x=1796120252; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795515451; x=1796120251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HkHhYkPvRYzpmxeD5z1O5pwdDg/dr3/spBsYEEDgr38=;
- b=zUllK/JEytwhSO7r08x9vZOue3gFm1LME61r19Q62P1N72wJ0TA1FCVwbrSdT25IjV
- uf3j6a0sb70FHxUhz1qwi3iukFLg6VgKYOZOltYjjinpiIlQRP/Fe2zeyPYLHWvP0PHZ
- S5pNKnZjQBww5jNwAru9zUq5opdWHAhKo5IoTsr32hgKN+oQOp/xh/L5vYjB4ft7nuG1
- 7COzsiDopM9Wt8JOGR+KUfLXzGkQHi2D8XPE33w3B99jJv/lcNt1I3HV9ZoS5Hs1m0hl
- YmUoG+LGy8Xp+J4soRBvjpxKTNyI+bQQU5ywqES/UbK3gohtuQaAbkv0/4i6fEtd18tk
- eAwQ==
+ bh=dd3Qh+cLFVuVabZEy0pFyjUo50S9bkDox3kUAgImQ64=;
+ b=J4xnyk0e1q+0Mxw8RjchHYvmP6v4u/VL8RCdVAPmh9XV8tlI7N/Q9jmhtggdFmv3kC
+ kQE0RTbRQs0CCDjk2FAGad02JGVA1Z8vdSPsWvr3tcrLbbQY6Lub5uMd2lWRAe47RYYM
+ 5TkliZFCE8xWHXb31GeUYAhIulMN5ztcx/BWkNIVHTpE63+nvip7jVT8Im27eE5ngHZC
+ /wexlzdwolcJl5hySVeRSQ+S/pelEd+7xoskmLDxTl+oxIFvVPjUgabCSg66edU2foHI
+ 7bvQ1rIa7kJKKwTQCszLpYuINlp/MCXzk1KYvZ19Zo2CnzeDkLVgUmZKUQLm/WYV6IoP
+ N9uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795515452; x=1796120252;
+ d=1e100.net; s=20260707; t=1795515451; x=1796120251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HkHhYkPvRYzpmxeD5z1O5pwdDg/dr3/spBsYEEDgr38=;
- b=G0PSJOaOZWcEF9ty02KSE2kxidc7wVypYKr7fThNNVOOvgGTBoh5MH2nfHPYTWRl9N
- EpIHVnRqcHSoqbWFOibdlSQqwtJHHSmakqwDNo7LZ0rxXLUzL8cwdHwWPB9QRnfySY68
- nbiNi61i8u94blx/pA5HuVAU3SQJ5VCQsizMkL/HdXCgYN6LUjkM1MJBKHR0uKhpWJrv
- 7DA2c4qh+pFAREGiyYvMNievLfinxXeElou+jMMbsc4hO9kCNC8Yi/rbviML4l2Y9I3H
- AmAa7ZqmIi8zeQ8Jh/W1Ih7KgSCu5c9HLyAnutGsTPUPKemXbHN+Pn4yqT4oE7VpolcN
- VKqw==
-X-Gm-Message-State: APuU4Z+L5Bp633HscvVLuSqVu9Mq9LLPM7GpmOCniCMA2r8g+HsW620E
- Kh7nnPJ10LBqDXOGt3Kk2uH30qc2tsW1DdolNCg7UgoxV8Zq9aQYy70r1fu4VbjQ
-X-Gm-Gg: AZFdTZfJ4PuerPi5w9QKQrRtTsFEBJ08H4usiejQ+MZ/6yL1SnScJsyfAehnRkTTpMw
- 1skMez/x7f00dvGoQrFD+OsqZnKeXc2amq1L51jzYMLNRh8QOFUCs4vt3RtMGY2a5xKnM1n3hsz
- KfLVIDhpoNdcAYdNSC/5Mpm+kEaBj2Ahm4BBiPvR5JpAhut72Q1Kap8NDa9FeutIg+tEs/1Owg9
- 3/XfwZ9+q2BaH+s7zVjnWszdiV8TBGkXmDu4I6ocEz5uQy9fsuU3YpL44qC0YvJh2LVlCHVZqvn
- 1Hk4RexfsJMoi2PAahoGFh+pVuMTSEF827Z6Ph+JlzCQda52KRxEFZbj6UguxWRUr3URkhJaO3p
- YuLYHjrhRFm5U6dwJHsWQO89fNy6STIplZvVpXVD7SXzGQPI8k+596TdgqhrzS2B4o1vrO28eHI
- ps2AOOMrzRjzZBamu9TWYmVVw1x3noEljTQmelHE7aLWB8q/7wlEn3shhQJCjv2NSAXVVxaRso1
- vB9S8dE+SZE0UDB69NXkDJjKhi4SRTfN7bDZYodyisnFI+GKQXpumBiD6etkaoDupt26TeA2YEG
- Cllmsf1gZ0t/uupZFaWdh5pVbyyQibM=
-X-Received: by 2002:a17:90b:4a48:b0:3b1:4018:bfdd with SMTP id
- 98e67ed59e1d1-3b41c7d5cc7mr11685234a91.7.1795515451756; 
- Tue, 24 Nov 2026 02:17:31 -0800 (PST)
+ bh=dd3Qh+cLFVuVabZEy0pFyjUo50S9bkDox3kUAgImQ64=;
+ b=LdxNlBuSMIm1zF7nfEl2O3col0QN2joEmC6Dcy20g2Dvy6UkgtOQRGSIPBBt1GTv13
+ kdy2ZsegRqevplPbnZR8NwLhxJIHdJBevl02tex1XgUFdt86RdIWTz5G0xxHe9BBq5fh
+ g9CzqIqy2B47FTo8OXPsXzgRKKxWUXCEyaNjgyuJLEVaFEKJKPcOFDcjdIbt+dwUeLmj
+ T3EsKe2pSk9NtUMaIWIPXt4a22+hhdbrz0cYTd4C9vAm+oc4uy7U2mZtbGYrGHc3abeF
+ uOa/e6ZL3gMl4t53eQd/rw67GLNX6uJocyvRgFQU5XkJuFL7fSR7fGCv18iyA7Ztoy0z
+ EIGQ==
+X-Gm-Message-State: APuU4Z+4Z8SXcDHVsF0mSu1NewRET14YVsVHj4lhCjA5qOJ1QmtjJr1a
+ 6Dh1HdGkYj3IbjGtueyVNeKiFPHu8H7tXNSf2dNbDFVdMJM/Le5SYWN1De/uiatetyY=
+X-Gm-Gg: AZFdTZf+OyW467SFmoMXTKhIsIEe0hGkvxdD4Ft4X4ObUqWeKPvl9vD+r3Leb/6EUsP
+ r+lVxbCishs+QcW+Og3TplUM6OJN9XMRn9bl0o0gOuI7IvOOU3ivAP1ye3Ew/FfA2uuuumuDgPN
+ o988DRteFKvh3zs/UuAXObEWwZt1A45pQcp4Zt0USfUZPfsVJ7Yn490EDhGkXu15I6RRSbG2K3m
+ hMKzeqByxNl4V6YO2D02T0wjGv7Q551UDciCx3kaCi0Uv3UWjlPTI+8DGB82UMvQmsUC85I6WoP
+ bOVv6PNHcNQnpMx2mU9+iw0rtlQHjObcCNsvEPuIK7d/F0Hf7kS6Y6Hhh5QKVIJB2/OaozPfB68
+ BTjjGOl0c38yATawVuqsz6c7JSDlPnsOoOeB8QkQJ1bAR3QWdZIpODGS9zZ5QpsN8oeQ1hY3iQ4
+ pBKkfCHGxG6mPY6CKbDL8Nkg7jNp5h4Urqd7p6s5Mlw0jIzc2S+2F5GqJsRzpktnkhsFCkZuHgv
+ Q42u97NvjvmvGuVtukIpkicF0ttG0irv19AYNsreYiebBPGtu8/ombDUudPh3RR63dEewebdx38
+ wQKGxzQsqFA0d73NYyMGbYk0F+TJ/jYkGWjpx0pybrQPGv7Iy0++
+X-Received: by 2002:a05:6a20:4304:b0:3e2:6ee4:a758 with SMTP id
+ adf61e73a8af0-4014e651327mr15560522637.54.1795515450971; 
+ Tue, 24 Nov 2026 02:17:30 -0800 (PST)
 Received: from computer ([2604:3d09:98d:800:e939:4613:1d28:dfcc])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cde6cea748csm6627920a12.4.2026.11.24.02.17.31
+ 41be03b00d2f7-cde6cea748csm6627920a12.4.2026.11.24.02.17.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 02:17:31 -0800 (PST)
+ Tue, 24 Nov 2026 02:17:30 -0800 (PST)
 From: Tim <mdspan.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, zhao1.liu@intel.com,
  Tim <mdspan.github@gmail.com>
-Subject: [PATCH v3 2/5] accel/tcg: compare large pages under the flush mask
-Date: Tue, 24 Nov 2026 10:16:51 +0000
-Message-ID: <20261124101655.2269531-3-mdspan.github@gmail.com>
+Subject: [PATCH v3 1/5] target/i386: mask the PML5 table address taken from CR3
+Date: Tue, 24 Nov 2026 10:16:50 +0000
+Message-ID: <20261124101655.2269531-2-mdspan.github@gmail.com>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261124101655.2269531-1-mdspan.github@gmail.com>
 References: <20261124101655.2269531-1-mdspan.github@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::;
- envelope-from=mdspan.github@gmail.com; helo=mail-pj2-x00.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3a::9;
+ envelope-from=mdspan.github@gmail.com; helo=mail-pi2-x09.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,39 +106,46 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-tlb_flush_range_locked() flushes entries whose address matches the
-range under @mask, the low @bits of the address.  Its large page
-check, however, compares the range end with the recorded large page
-in all bits.  If the large page was entered under an address that
-differs from the flushed range above @bits, the check fails, and the
-large page is not flushed.
-
-Compare under @mask as well.  This matters for the x86 LAM emulation
-in a later patch, which installs TLB entries under tagged addresses
-and flushes every tagged alias on INVLPG of the untagged address with
-tlb_flush_page_bits_by_mmuidx().
+The 5-level page walks in mmu_translate() and
+x86_cpu_translate_for_debug() take the PML5 table address from CR3
+with ~0xfff, which keeps CR3 bits 63:52.  The 4-level walks already
+use PG_ADDRESS_MASK.  Use PG_ADDRESS_MASK for the 5-level walks as
+well, so that CR3 control bits above the physical address width, such
+as the LAM bits 61 and 62, do not become part of the table address.
 
 Signed-off-by: Tim <mdspan.github@gmail.com>
 ---
- accel/tcg/cputlb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/i386/helper.c                 | 2 +-
+ target/i386/tcg/system/excp_helper.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index dc83f3ba..ad2a5aa1 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -691,8 +691,10 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-      * Check if we need to flush due to large pages.
-      * Because large_page_mask contains all 1's from the msb,
-      * we only need to test the end of the range.
-+     * Compare under @mask, ignoring bits above @bits.
-      */
--    if (((addr + len - 1) & d->large_page_mask) == d->large_page_addr) {
-+    if (((addr + len - 1) & d->large_page_mask & mask) ==
-+        (d->large_page_addr & mask)) {
-         tlb_debug("forcing full flush midx %d ("
-                   "%016" VADDR_PRIx "/%016" VADDR_PRIx ")\n",
-                   midx, d->large_page_addr, d->large_page_mask);
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index cb25018e..723e87fe 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -297,7 +297,7 @@ bool x86_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+             }
+ 
+             if (la57) {
+-                pml5e_addr = ((env->cr[3] & ~0xfff) +
++                pml5e_addr = ((env->cr[3] & PG_ADDRESS_MASK) +
+                         (((addr >> 48) & 0x1ff) << 3)) & a20_mask;
+                 pml5e = x86_ldq_phys(cs, pml5e_addr);
+                 if (!(pml5e & PG_PRESENT_MASK)) {
+diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
+index 44be98a3..6c48ccbd 100644
+--- a/target/i386/tcg/system/excp_helper.c
++++ b/target/i386/tcg/system/excp_helper.c
+@@ -173,7 +173,8 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+                 /*
+                  * Page table level 5
+                  */
+-                pte_addr = (in->cr3 & ~0xfff) + (((addr >> 48) & 0x1ff) << 3);
++                pte_addr = (in->cr3 & PG_ADDRESS_MASK) +
++                           (((addr >> 48) & 0x1ff) << 3);
+                 if (!ptw_translate(&pte_trans, pte_addr)) {
+                     return false;
+                 }
 -- 
 2.47.3
 
