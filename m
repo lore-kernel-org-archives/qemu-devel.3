@@ -1,159 +1,125 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99546606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C6B606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=oF399902;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OMxfFNHb
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=frqPUu6m
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVntf-0002r3-NL; Tue, 24 Nov 2026 05:37:11 -0500
+	id 1xVnxG-0004QA-BX; Tue, 24 Nov 2026 05:40:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVntd-0002q6-M7
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:37:09 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVntc-0003Hh-28
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:37:09 -0500
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO8QnuM3701759
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:37:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rFMX1GjX7d+af+dG47j3cZfwGXzeNKRyLeeK5SFrpD8=; b=oF399902XaAeTd8A
- OPG1R7Alg5XuRLkqPm+IbeuO4TQCnivxQTcNsB2BzvOuAzkCb9WM6/jzn9HC8cUh
- KgJ8uOn5kAyVYhuGt+2U4QIDF0GX3ySXHUbqLeIt1j+CXw7DlM5M30piTUI+rt4X
- Mx0rdGQtNdwOt+5kg1SOOBtAjqf114DTNocZ6w9JPvlDatSjiFkotQw5I92lYWvW
- Qk0HapEw91dvfiZYUf+qCVUOz/U+W2As3pgBmFYu2QGoyXlgVjNPQvMRyXcGg8AO
- /FH9LQqWQnO8ueLOWlImUZM0CpVAlzX7uEiTgPXVNOxYrtsDJ0T6nZClwvBvwPRO
- sdarhg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j50ky23sd-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:37:05 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-94961511b61so729799685a.3
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:37:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVnxB-0004PS-KR
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:40:49 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVnx9-00015j-QZ
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:40:49 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-67da7d18f2fso4902448d50.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:40:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795516846; cv=none;
+ d=google.com; s=arc-20260327;
+ b=S98wz0EmBrlTYijAAAeiT4ncWG3BNml7c8Wr2qEZuNuMbgQnlUOL4sxX60s4R6BTnD
+ JNwDWSnvzXTE2wuMHO+eI1GML0naIt1W3EWlgDMDV8Xkgn5Jb5Qkq8eRPJU0GwZQ5WGT
+ Av80j/wSsj+lfu5SVOh9QRkK3BDgOHJ6k3wiUhSqQNuR3lClmsYqXM3fdldYhl/r85ym
+ hr92WL0Rh1j21v2TJbDEy9ypvUm+MA0dt2I2nAIO9mekMjLZyn/IodplZ9tyhc5bYEk2
+ 7cIZqfuk9GRnxGOVaI/NzUXcwX9xIs1ql4KaBEc04GJa9sVi3CLqq6IsIkXJk2vIrlkx
+ 4hsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=EFuwYvEYSsINZDclvRW4Uqg7aHkv+AHDdxLIg+FxQxQ=;
+ fh=rh7+eygl3oD7YpqbjveebHdCZpX3Tl2dB611KSoMP5E=;
+ b=YuDzOfX09BWb7BGn5y6x7NhjZWtQJVW27o3CJ/hMro2iLHFklpLAzicVzax0k53tkP
+ vnLOpo7bNPFehiDGWpVUZv5n/lGNPTWh8Aoe0gradUdQo31R7SU9HezjzC5Q42y1ZOJV
+ ZlggEKf6sjfG7mg33qg0EJ05frmkK0mgCYyodEbtvZ4DXE/o9x3SP/A7PYrXzu3RNSMd
+ igG2GzArpnEmEpr8RKg0oMYYmBs44VGAXAZje9g7TqRGU7EnpGjuycAPTXE4EGNmfPVR
+ Qigup0lgJaMlXTVEvjbZPrjbZYOqdq8rOo1YcX6YLXcoP/JKSxAA8qonnmORprZ5njgR
+ E3Bw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795516625; x=1796121425; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rFMX1GjX7d+af+dG47j3cZfwGXzeNKRyLeeK5SFrpD8=;
- b=OMxfFNHbtzT/s7HKvpAGlPUyuLP4utk4dIlei6FBgoRxmN63lnvcQ+Tf9xKypzzBwA
- hRUYiU+STVWi0FvRQv+A9bRg/7y6KTZvdHdLfnRIMeP1aVOBQ295VKnnjYm/BtPnN0xQ
- jLiHBLvFOeKj+afoEt4rpUVS9Wsj70ZdxxEPxUUMwuAfTZWviFcCsS3DfmAo9sxaK71v
- e66jHn11Iqzw8fLwqG3agjnsS4r5k5/V++EcvK02l+ojFAwjZqcYK2sN6UIBFUIPE8Bw
- Gg7Pkv7Iyk6zJeVBp0gtgUNufilxRP7JKWhBBeD9vuCHkcWjhRAxouUK+sQxHOPVZ1wJ
- GciQ==
+ d=linaro.org; s=google; t=1795516846; x=1796121646; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=EFuwYvEYSsINZDclvRW4Uqg7aHkv+AHDdxLIg+FxQxQ=;
+ b=frqPUu6m+hg9wvwPAMk6RqUJZZcmOIqa7b5NSfl2jqZ3rE/RHx3W1n4JH+5Vrfvjss
+ HcJ9XfLTixLoLwA7ykE+airgNpH6N5swssHQiRDXFhZhdC+BzSazcOXyyEaU0JCu92FD
+ 9LhBgJgaoSyFr3tKKAx091ZF1PNyHK33T+nZeZC6DSbauheupXWod4dqKnd0706MAzuX
+ CItsY88/2adByZs8LsZ23tUD5lYrlY+Bxiuk96O5L9J5dAzs0QMhmnrfRbbPGKzgqZ33
+ dz4uh7O8+MtdhLjS0OsxfVbvI8awdKAhGLDmBcM3gGmkPkGLuKv2ESxmTLWzUYxEMD71
+ 4ehg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795516625; x=1796121425;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rFMX1GjX7d+af+dG47j3cZfwGXzeNKRyLeeK5SFrpD8=;
- b=QY34Z6BJ23c7vvDozqcr+xbqUdpTyqw7zPVLY8d0go/gMK6ErkkhwPhrktIC4c7eyJ
- TME6etJCwavUsX6URYWhv4pZdZW/+trUmTkn71XkX8ENkI6qBPkpqKYosi+Gfo+pXGnI
- fXIG2A7gg20EQyJqEmnkCGxVu9eKa6+VNqlzcd5dwyxCFQmZh53sya5BNKqZQNyn201H
- 5Ly/elSsfkaieDP23efHK61bi8NAa3OIeXrFatvqribHXay1PWASdiSMsQD3noR/0GVr
- lj78JQUUlhQwtZtCYKrPJe1INbztHDssYnuGQpBivu5YBhgxGiZOhysl83HHI7cD9X2x
- dfzQ==
+ d=1e100.net; s=20260707; t=1795516846; x=1796121646;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=EFuwYvEYSsINZDclvRW4Uqg7aHkv+AHDdxLIg+FxQxQ=;
+ b=vUXBsd0yc5FHfEznDS1bdd+V64YP9WkbC+HMStUutyzhjlwOdfNA4DHHXfLMa9wdWX
+ Fk5rbIiSiML7HmBWV4fzGUbaIT5siZrntIcReUIe9A9JnuFZlBuqse7Xy91sv0L0p2Ky
+ VTMeONAO3Mw+pOmn+W4zkMZD6lgCVVeJ7khsIGnh3b5SH0uzFK9rTpONvn+gjVDd+U5e
+ qG0WE48Q1hvlFyZUuVGkhiS6GqF1KyHyrRqowtpF6dQjgzWAxUeQHYwezfUneGZrAiEl
+ A0czhpVxp4dsQzD9nElWyFgeYXNRg1S7rwubdOkUEdSyXa3fhVoNouB4jI6pKvqvSpTL
+ Uytg==
 X-Forwarded-Encrypted: i=1;
- AL+hErFma2rtGMCgtFXz5Mbvx8D5c2xZi7oBL7i/moFXzcoFK+S9+XrV0Vu41onWmFk+VmTHOhKOrQ8v/5O7@nongnu.org
-X-Gm-Message-State: APuU4Z+uNSvbsMnniWgJ+DRphO5zhQKZX78iRvA02hCpjuRkNN2IFIP+
- aEOf9iKLicJMbTrF2LbYCHlFGKJNeqPOF1s1HPlzNQP4XKL/IFSIZcUPVf2bR+7kbiXUFuqW3ms
- RGNmhyUIfrbXQBuX4AK363GJK1AeDASsXuyUMjYpRYFd7YaX7mvxta6D5Sg==
-X-Gm-Gg: AZFdTZfXUgiIBz3Afx5hka3ocMeqP8DTMqY0sM+PQ61GruiCIiT3dW9p71daMFFlB2x
- J4hrYD8gp1ZziThsLJro9iHw53bv8Blpa9nnuU5xwANR/MmpYaEp2CyKppdw6cj6+TXSxoG6kvK
- 34cCSvY+Hj3d8fEOfe5gmA12dsOF4ufHbIS5NEwBmz3YThyn85HmGD/sZAkZxzmArnTwLY5IPlF
- lem+3X0NgW8X9cDtrGzICZgtLudG0KfkPz2qPXnAoQfnVFmcljuyU5FV72n1gzqLYlcOxbkQm1S
- bUcnKRyD9yhVZKOAnTaSFUhEyNEGcsyaJaRoflVF4MfCeTnH7DN/d7TgmqEcOiyaONpp5mPsV0P
- 9SqlFKVNW2kIEqsvZ9AOkrcH6dcX30J5ezHAbOpXC0iMOeYmlWaAq3v/6qLtYahD1397+pbtvsM
- BkRKxkAK8=
-X-Received: by 2002:a05:620a:45a3:b0:93f:568d:ebbc with SMTP id
- af79cd13be357-949ba98e6dfmr2367365285a.32.1795516624812; 
- Tue, 24 Nov 2026 02:37:04 -0800 (PST)
-X-Received: by 2002:a05:620a:45a3:b0:93f:568d:ebbc with SMTP id
- af79cd13be357-949ba98e6dfmr2367362285a.32.1795516624296; 
- Tue, 24 Nov 2026 02:37:04 -0800 (PST)
-Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb884865b1sm420209335e9.5.2026.11.24.02.37.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Nov 2026 02:37:03 -0800 (PST)
-Message-ID: <2216d59f-1c2e-4c15-9018-f63cce8ceb3b@oss.qualcomm.com>
-Date: Tue, 24 Nov 2026 11:37:02 +0100
+ AL+hErEBlxq4a2PqAuShfz4MJZy/c2tnjbLLcYIvScbWlcmadvEBjmllqYPXxG15TGotT8h/1QaRWNkrm3rb@nongnu.org
+X-Gm-Message-State: APuU4Z/u74Q3QHaij7TRwuEuWu6oe2qI7+Nwtz4Y9qNoty4QOuWbe8V4
+ d0PLVTTJ+QxAwHdev/rUe3iPoRm07XaI0ePtwQhQ40ADHI6+hmZcANuYur35xBZ/giEaAJ5MbsO
+ ppCG7BAXBQoEmuHOC9ESCEaStagiWPfGyk6eaRX9Y4A==
+X-Gm-Gg: AZFdTZdfBfEzNf5kdXe71v9iCibkjjfxi6c0TXShqnxQtsbOea7MFjCZ7PweLWHDIgH
+ dOrijjdESfAIALRW4zK2hXAdJsNd0+DqBWgOi/iOfnCHt+eJNynGZxm6J+Z/vw+C6CiMLVAxc6K
+ xxe4D1xaHzOOTaBkSRsflPgsA1rwaHRu2Zd9MJEgPKGFrK3vGpcV5ZbkuMaFyDOiWaqem6SRCYT
+ CSXhHJhoxoYZoj6H2p0UMvUYzw50LusTpkpYiRG0fx+waqFKNVmsbzi3dib1SEX5SSIxufpKBVw
+ MgSfi8lO9GbME+UWm+NEteNvyzZm4GN/gnsxgSddxWKrvwuWi4Jb1gwOn5doTsk2m+N55Oe34Or
+ v4qhluyDFR/whJXWDOXfeDsfjLEZtTjc66V3/NfKc+U2lbiqNFtlvSPYOcH2hgc7/jZahgDJm5z
+ /4ovyaCSrFrhbLYWmPqjlr
+X-Received: by 2002:a05:690e:1241:b0:67d:ac2d:d81a with SMTP id
+ 956f58d0204a3-67dec50bcf3mr6351225d50.52.1795516846290; Tue, 24 Nov 2026
+ 02:40:46 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PReP] Maintainer status check for PReP machine
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Markus Armbruster <armbru@pond.sub.org>,
- Utkarsh Verma <uverma@linux.ibm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth
- <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>,
- Aurelien Jarno <aurelien@aurel32.net>, Helge Deller <deller@gmx.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>, Chinmay Rath <rathc@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
 References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
  <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
  <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
  <87mrqyhb7l.fsf@pond.sub.org>
  <1fc28def-9c77-45a8-99d4-c1de8dd2d477@oss.qualcomm.com>
  <CAFEAcA88U2ef+1LWP7rP7d9=t8gtv8nOkzULBbTGG3D+ixOCSw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA88U2ef+1LWP7rP7d9=t8gtv8nOkzULBbTGG3D+ixOCSw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Y+ptIReN c=1 sm=1 tr=0 ts=6b0568d1 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=vUPDPdP7UYfhdZFVvZ8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: psyZtb08u4AqRGuzW9-CIXrMD-v4BXUC
-X-Proofpoint-ORIG-GUID: psyZtb08u4AqRGuzW9-CIXrMD-v4BXUC
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA0MSBTYWx0ZWRfX7GECG9o3ghVl
- 7esFMilzi7PFAj8JY06Dk9viTQ4GfPFtrfmytCwt3EXq+hDXWRud24E8gCdcqxM5pUtwDat/EkM
- qHco2TIxpTuFfxHkbxtg14EC74ETUKI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA0MSBTYWx0ZWRfXzVACa/pxEapo
- 0ncq8uQ0wMNetjhX4+3+KNFHGKr4IenVElQXw10VLvkcn/xMm5OuLWQ6ALlgG63AmjZKBcHZ2vP
- VQ58K0lgT09zAPrM6bw1THmcFtl2foqRfNQXPzKixz7bcIZOtSlmWL61YaHUpjL51Ux74GzSj4S
- +4JWyz9I985u6EByoJAMj+B2ptOopw6l7BC+iENLNAUxoRVd2b1Nr9PUW6oP6TrS0kL+OH+PXZz
- 0hte2aw6oDQOjIZzNqy41lJDQCfdTgSayuxPyBJKo/umt+Bz4EYEVO5f/lQPv0zqLSsOm3pqjAO
- DrBs9x2jGC/bw4+89z+aMj/VmiRenBOe0EamA9UTaW9/L21JUkNCcnZ7eCmNrO0ziMgsPAx9F4V
- I10UwZhGK0VlG/7pEb7rd3DAQW43JfE6Qk46P43RYIHVnzUqJwMW1QN5DlGn25XzsMDBwYdE7OM
- 3ckNyLC+ZIA72qgB/+g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240041
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ <2216d59f-1c2e-4c15-9018-f63cce8ceb3b@oss.qualcomm.com>
+In-Reply-To: <2216d59f-1c2e-4c15-9018-f63cce8ceb3b@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Nov 2026 10:40:34 +0000
+X-Gm-Features: Aa3M54qwtc9nGOU2i9gywqOyABxwd3NetD5-2njxpFfOzgz_Iw4X88nIrb1GD1s
+Message-ID: <CAFEAcA-dFzpiYDmphruEwdrvQt1xwtn-BVG1W_7OQU+hiccaSA@mail.gmail.com>
+Subject: Re: [PReP] Maintainer status check for PReP machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Markus Armbruster <armbru@pond.sub.org>,
+ Utkarsh Verma <uverma@linux.ibm.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <huth@tuxfamily.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Aurelien Jarno <aurelien@aurel32.net>,
+ Helge Deller <deller@gmx.de>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Amit Machhiwal <amachhiw@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,63 +131,68 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 24/11/26 11:19, Peter Maydell wrote:
-> On Tue, 24 Nov 2026 at 10:06, Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->> I'm probably missing the point here, I'd rather look to help maintaining
->> unmaintained / broken subsystems. Why care about a well working area and
->> ask the maintainer to step down? Why not ask the same to ARM / RISCV /
->> X86 maintainers? What is the underlying problem?
-> 
-> The underlying problem is that it gives a misleading view of
-> whether something's actually maintained if you look at
-> MAINTAINERS and there's an "S: Maintained" label but in fact
-> that person hasn't been actively involved with the project
-> for years and is probably not reading their qemu-devel email.
-> If the real situation on the ground is "effectively this is
-> Orphan and patches for it are unlikely to get review" then I
-> think it's better to have MAINTAINERS say so.
-> 
-> This is why at the beginning of the year I did a run through the
-> MAINTAINERS file to look for "stale" entries and query whether
-> the people listed still wished to be listed. (It was about 50:50
-> whether they said "yeah, it would be better to not list me" versus
-> "I do still want to be listed".)
+On Tue, 24 Nov 2026 at 10:37, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 24/11/26 11:19, Peter Maydell wrote:
+> > On Tue, 24 Nov 2026 at 10:06, Philippe Mathieu-Daud=C3=A9
+> > <philmd@oss.qualcomm.com> wrote:
+> >> I'm probably missing the point here, I'd rather look to help maintaini=
+ng
+> >> unmaintained / broken subsystems. Why care about a well working area a=
+nd
+> >> ask the maintainer to step down? Why not ask the same to ARM / RISCV /
+> >> X86 maintainers? What is the underlying problem?
+> >
+> > The underlying problem is that it gives a misleading view of
+> > whether something's actually maintained if you look at
+> > MAINTAINERS and there's an "S: Maintained" label but in fact
+> > that person hasn't been actively involved with the project
+> > for years and is probably not reading their qemu-devel email.
+> > If the real situation on the ground is "effectively this is
+> > Orphan and patches for it are unlikely to get review" then I
+> > think it's better to have MAINTAINERS say so.
+> >
+> > This is why at the beginning of the year I did a run through the
+> > MAINTAINERS file to look for "stale" entries and query whether
+> > the people listed still wished to be listed. (It was about 50:50
+> > whether they said "yeah, it would be better to not list me" versus
+> > "I do still want to be listed".)
+>
+> Hmm. Utkarsh should have mentioned that context first, hard to
+> otherwise guess.
+>
+> Are we trying to address a 3rd class of your survey, people who
+> didn't even replied?
 
-Hmm. Utkarsh should have mentioned that context first, hard to
-otherwise guess.
+No. People who didn't reply I treated as not wanting to be listed.
 
-Are we trying to address a 3rd class of your survey, people who
-didn't even replied?
+> > I don't view this as "kicking out maintainers" but rather trying
+> > to make our maintainer docs match reality: if anybody I contacted
+> > in my run through the MAINTAINERS file requested to retain their
+> > listing I did so.
+> >
+> > We can discuss whether it's better to do this as a coordinated
+> > process over the whole file versus single subsystems and who
+> > is best placed to be sending out the queries and whether that
+> > works better as private email vs cc to qemu-devel, but I think
+> > the general principle is right: many people who drift away from
+> > the project do not actively send us a MAINTAINERS update and
+> > so we do have to do a little active housekeeping on it from
+> > time to time.
+>
+> Since you sent the survey, I'd expect you to send the finalMAINTAINERS
+> update.
 
-> I don't view this as "kicking out maintainers" but rather trying
-> to make our maintainer docs match reality: if anybody I contacted
-> in my run through the MAINTAINERS file requested to retain their
-> listing I did so.
-> 
-> We can discuss whether it's better to do this as a coordinated
-> process over the whole file versus single subsystems and who
-> is best placed to be sending out the queries and whether that
-> works better as private email vs cc to qemu-devel, but I think
-> the general principle is right: many people who drift away from
-> the project do not actively send us a MAINTAINERS update and
-> so we do have to do a little active housekeeping on it from
-> time to time.
+I did; see commit 250c9de78044 and preceding ones from back in April.
 
-Since you sent the survey, I'd expect you to send the finalMAINTAINERS 
-update.
-
-Instead of having individual status checks, the process should
-be automated with a script, likely running during the -rc tags.
-
-Regards,
-
-Phil.
+thanks
+-- PMM
 
