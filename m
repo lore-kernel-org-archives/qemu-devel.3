@@ -1,159 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7183606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C11D606A680
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YdvJDNZU;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=KcID1rko
+	dkim=pass (2048-bit key, unprotected) header.d=aol.com header.i=@aol.com header.a=rsa-sha256 header.s=a2048 header.b=BJRT6joD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzzc-0000WV-Tb; Tue, 24 Nov 2026 18:32:08 -0500
+	id 1xW0Aw-0004zq-Ke; Tue, 24 Nov 2026 18:43:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzzV-0000SI-M2
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:32:02 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzzT-0002rD-WC
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:32:01 -0500
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOMaa7c2830185
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:31:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- G1ZAm7akP9D8mbltmYnzmqncqYxXc4x3mIjxdEr9bU4=; b=YdvJDNZUyxhdhS6J
- arsYzy3lKCqdBPApC8vjWOmux1EIZ/i1OW6ayttqTLrpcttLnVewWbiIMUWRLJz0
- RmmzuEZZCfCRwALk8iiU5w1FrdEn80w8EaCCPuo1QryLIYZsv52MaPN7dB5/Fx6z
- l6jCl47R23yif+/qQfkM5FhT8f14UNd2fOQ2jupj4TKMNHZrqVPmmT6zOyrtzDL+
- 5l4JKsIwHiZQIhO4ZAJ6D3jyEh4dbR9gTyjgAnpZqeLCk36mMOeNAxvWBa4P3WlY
- +e2yGHnhMeCh/SpVzWeo/Iwoh3bYrLMJDCh6MNDsq527n5lkVfRmsYCXMJgLDRBL
- uQNQSA==
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5cxka0b2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:31:55 +0000 (GMT)
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-8b4bfc0b441so68552947b3.2
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:31:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795563115; x=1796167915; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=G1ZAm7akP9D8mbltmYnzmqncqYxXc4x3mIjxdEr9bU4=;
- b=KcID1rkoY4pmQwxiKteVmSba5SeQDSGcN8V8/uQ+OQjMT1epFXB9UlsPAKtQabiRbS
- 31yWoszppNUQY8nDVX3A/BqoMhkW++w42AQ8LJ6HfATT+m60livrR8yjg1WOcnuWoTVz
- vT6tqX8PIwsv9jBSr2qd8GR4B+RYJIHWks+H6fN23o1ezS9xl+qARBHD4gP2h2m79OMG
- v76CIPzAD6OJaIwdrEXE+ZjdCJdqvaqQdzXLmA2XcAJ9qVKxGxm2GxpUFYX+CJvsS+1l
- ulgPzrTkrmJ/Un3xjen7J8jfmlDIZ5se4l8+Y5auq5iEoQbJxKKA1X2rdS8L/SDqHlGa
- WODQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795563115; x=1796167915;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=G1ZAm7akP9D8mbltmYnzmqncqYxXc4x3mIjxdEr9bU4=;
- b=0dnRetAwAoIGvNnxHvlRdguAUXzuoK1Lk9kIhwtU36IFpCI979Hf9J2mtilmUnzy4s
- +S0k69O5hv6uSXjlmYBFIR67eAfKRNy6a8SLOSMipF5OM8k4rGNisvYtnJ7W60XxnTHy
- sTMuBVP+DmUkX1Pp36ico0+FsYF9Z+o9IOjeJfbzAHMwKtfNPKvz5O0czbSzlh1ZP79B
- ieFpxIIxZsvQBpJSD/qgu3ODV2sWEOGuWCx/xs048W82US8HTGkS1XRv3JFMOSJgS9It
- jt2xQ+I5ZQjBCU5YIUHKBePjUuuW8E4PZigx7hhfUSek2cZXADEUErzKb+7X/VKbMSZ5
- sIug==
-X-Forwarded-Encrypted: i=1;
- AL+hErFttlBgrH1rsWXNu46qEt8uTtPDbIZ9kHaLd+IjHzue+fThlhTXg2cWJjVAZcT+BsEeF99sojwfj5Wt@nongnu.org
-X-Gm-Message-State: APuU4Z8Koq15Jw4pxL92Jz/6h7+19qekYBm0MNO7jEPFeaz/02DW+YLu
- g5wA5c/tl1DhKIOv8Oi0xph6be9vtgj5pJH+pEXnIzcFIRL+wVvFBDkyo+IGEj4xmvQOfEJ3y47
- 2bP93yLBCSs50ESMDuhynwqgCA07510ceTy231wGpAgt/OucVHKKkZtrqqQ==
-X-Gm-Gg: AZFdTZd/rGvOTh0Gb+sZ1V7ur8t0EpyhsoXFdnM9crF64ODu/7xx544q+BePatXvjlx
- Rr97GPLE4E87jIIE2fUbTBLzYg5n635eDfm3W4DVcEvcamM4FV5doAkyvmaQlsyK/neBANQjqOY
- JXu/kD2PoVElWebU0rTP2WdO0X86r89BIsmDCURZB0rvdvLEBC1QYe3hEAuEuD/J8F1LJ4K/qK/
- fsMThrQkhbMzfYuKbJxhNlq7GCKHOr/buLbV+jO2bueKJIWM5LPkC3Gf+ibENW7V1M70p5phAqZ
- vBFbvoLQv41qe21Ol3t6Tna52eX017BTDEJlnC/Sh/bLqq2Cumfi3S/nn2ZjiJ/ql2XrUjdBbFp
- zhLho21cE17//f/4Shm/xBBNe4buJcgfULlbN7Dy5tIINmCVXQpXOH7ucxPvaXeYlTddJVvEhK1
- eS6EolYm4=
-X-Received: by 2002:a05:690c:e3d2:b0:873:5c0f:27c with SMTP id
- 00721157ae682-8b5204ad248mr71151047b3.38.1795563114715; 
- Tue, 24 Nov 2026 15:31:54 -0800 (PST)
-X-Received: by 2002:a05:690c:e3d2:b0:873:5c0f:27c with SMTP id
- 00721157ae682-8b5204ad248mr71150797b3.38.1795563114026; 
- Tue, 24 Nov 2026 15:31:54 -0800 (PST)
-Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6b110c3csm29788684f8f.36.2026.11.24.15.31.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Nov 2026 15:31:53 -0800 (PST)
-Message-ID: <2f326926-16e7-478d-bc57-86052033199b@oss.qualcomm.com>
-Date: Wed, 25 Nov 2026 00:31:52 +0100
+ (Exim 4.90_1) (envelope-from <m.seker@aol.com>) id 1xW0Au-0004zA-9h
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:43:48 -0500
+Received: from sonic311-25.consmr.mail.ne1.yahoo.com ([66.163.188.206])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <m.seker@aol.com>) id 1xW0As-0003WM-4y
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:43:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
+ t=1795563822; bh=pdHiI/kLAcMhDk25SJ6172x6S6YekHKCD0TIhqG1oEw=;
+ h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To:Content-Type;
+ b=BJRT6joDL3fkANILSeyOiVz/xlatCYuaWhFUns67hj2ISz0S92RAcNaQZfLcGBoBR2lF7TZ9md8VYG+dlIE3xyGmoNozNR/v0QrJUkSgOyljx6CbE7ddgYgTldXfVubfhCJo03IDoDk/DDrEMGh/tH/a5nnPsm4zxNUmEXmnDGylARKRqn7tyathFFV4Y1GrxWSWfWDLZPW99rApra/EtPU/5kU9D1KlyfABL4QGrFlAG9/Q6ROrFQzV/A4Hu5UwR3w34pnLviUEjvnDMSM4Sq5oyubBAoqOwewOThNOUycKXv25K7rB269LBvYN13XL9q/WQtRpQ2Ut9nqjoUzVuQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1795563822; bh=/WHpSO1wXufh9PUU9rb/ew725QkRdlvWYCtUBm9BJgl=;
+ h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
+ b=Fttt0/pCYXdsTPaJSzrt/vjLz7rK/w6riO6EL8GBLThGAK2uZmosCYDjCUSwLgUGlimrj9MXqvo0+mVq7PTbd0TztDp8+CvkslADhBfE6kes/s4w0K8JJR5Wv115CNn63hDqimWFE8qRIGel6qib4wyTNDGe8IKJKAM3weALacd/jd9+yE/iT6hIEMXt/4ZE/cuazRrWFJyQTVZ4yOMv976TfYyHAFjWHOzC3+jbvJsQjFMImFQMbruIJAY0BvR4XXOZ1HIZLbweCVlNQCZSp8trd99INz6Rwqrjo5m0GM2ghaxxWRzr1E6r8TsqcGIbAieY8QG0tE8YVJ2+pl71AQ==
+X-YMail-OSG: RHEgiLYVM1lMk.pLwAE2d7oBIQs.aQvX1BDtu6di3jEfwORv9IY1uuKz5Iny7ZE
+ 97rw1cFYIq5GrNu1uoK.7.aDNBDYp7XyMZYNTVxo5OJs4t83B9fd_8x1k7qw3OScilIPZP13H08s
+ b0RXDAC5lztYRNzuUrcu98G9GU80YEQH5PuiCC0td4n8VNginbU0a2EjU7vi9M1qzZWvW.g1ukN3
+ 45VCbuvgFE8YCsP2NM2udBWulUZ2ahcX_0aGn8kTax3cEAgbykHVmfLbMt_aV6wnVcf1NnPsRaJ0
+ psHcfWLPqCKuSvee9NPZxMjCYDJMr7N7fpD4zz..G1jQROUeRH3UyvhDhDSesZc8x5LgJR5RA.qk
+ dBgHaOL147k6FbEeJ.393HGPnmyJ6rcS0SDMtj82T0pYdoC7hMB2NoghrLgRVyoDbFIslFYp6I9P
+ MG8aQhAnOIXOXkZ_GyLU1y06sfFRG0Do0YQLllHp2MVUt0uI4t.gfZds7dDIywa6HmghHIXwB_AC
+ 4tlKWBSBV3uMQXr4irSYj52gaQyPV3.z1Yu3Skxgq6BSfNJEu44vZPHKc1Kh0ENbY78n3rUOxr7S
+ .u._X_eg9bBFChrwG8cYDmNFYL6y6zj8fi.UAVdTTMc2T3JknHQgGvDpZ05unIJeXNLXHCp876te
+ poz4JJKyLgWjvLVa.fMq7QqAB0vieOjg7dwXW17kom8p7L_bTv43LDy0NEYlhXmXXX1luanpmUsS
+ zD13uSP5qc0yAbDH022tc59TZCs6yAExptIO1Dbg7Pmw6XZkmoMt_vG_AsvukasBe28CdNO8h1EF
+ IT1Kv7Sh6WGDIfvzsvr3Kf.jRUnw1IOkm9wmzenzpMz8QFA6i0p6i_1DcjAkdC9UXB.anIyfnOdq
+ 5vPXioxUKt2pl8oARYWZw0d2O2oJlMij5OZ8PbcL6Mwoa9Or_LyjcRIN_wQeNklSlUJPJrhQDbCp
+ 96Mk_3hlBTbm7Y4fyz_FOBNjRyA28OIVM9QZWhsq6r7enrjRD.z70CNiYfEypytbekrEi3uNodVT
+ fdJkLdDp4Bqmhvxblgyg1AZjEpAavgb95qdaAZKvsVJIXa1RClFljyhpYDgCqSFKw8ZFWwuxUfbQ
+ W5HKZkdx1YVAHidUN9q8YiKnCg9lWquDAM8LyB3Bgq02wHtC5hhX3BgrAtuZwP.1aYxWCye1eyJe
+ zBydtaIfm77i.e44_D7XUSI1MqzdqofQjZsMr978JBBxtW1vdraWG1xO5faMxUw_nR4mTT8t4lWo
+ mEqKf5p9JXnLCKFBhPlOoZWYdk9X3v5QSHqXs8KFRs.lANUF4079gyk1.lon5Xn.se4deZOH.c62
+ n_xhXja4qn_y6ioH.5ORSlf5zhCF.0yjR8jQolMWiGY1VIH8IpZkURDvqatYIMaj.vVAmvFFlq3a
+ JYItX1OsSU_yVpgr95esNorzVvoPmNb8_Zn4diVhm_aymOY0rm5bQUXKQRiAla8lPoFzSSi0wRVb
+ o6JfCEy3AiPYmnrPSihhEsy4dZHNFOIo_FRpKyp2ef8i2UXYZFpoOc4TL61mAn8wvsVGmkx2v0vg
+ sFgH5hGGtZmeIDMsdkZ552G8SroieXEOTg8cqns0DdYxWSKe4zrMjA3RtjAjloUpf3Dz_IZslVMT
+ 1FGn69tTq7XHeS0PTOs384eJcpkpAVQ0JQoeKBnGduz1zFytrkvEXinwVIcujCFbr19yzVkoPkaz
+ HIZjsBAejr2f2DCEWajEsj5BtdERMvNuvq6DHzwwNCQFFTTp5TGKsG38AZcdmt_MtdjZAzyhIUSD
+ 1fFON2y10ldrQRvsPfT9_ImYW73HucV7KiPzdrtlJvemd1L3wTpJT8igGA4CBkR8hQKoPmeIhZ.T
+ mKRcVgfTsq17zAa.vkvXW04Z0wYXDX2WxWgILkWqyhRxFchgVUI62clgF_E8kX.wwh4mkxC6Pk17
+ Sw7TqiSnDMCBJVGUZ3avx4yEtCFBaNXu_GktVDQzCXgtHU2HSwEQyVY41hK2m9S9RydLDQXbYZ4m
+ 5sD2xCzUEjut7JQX5hxkwIkKARYwxPlP.zeu5KY1ULXM_2Zs_4CssPKSrvMJigP8cVT7Rqjs.0el
+ r2q1vsP48IfhzsdmEYdKkHFmR6GOWuL9SwGzYcz2lGQuWB2vTpp8ed9TzC9JQjIWWK456rrvJtqt
+ wNMqc0bDlsDegNog0xMJviqGZameGnht5bUKZDB6Ydgkh29_ngm0RFNh8IIJcuMQXZYi1zdCNUxu
+ 9BHViPq41yTxbb7bnePTiciP6h3bl1mJGmOtX2bA8QuaYT7TBTBBTuFBravw-
+X-Sonic-MF: <m.seker@aol.com>
+X-Sonic-ID: 17ab4107-ea1a-4f4f-8da2-9ab3f2a88c21
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic311.consmr.mail.ne1.yahoo.com with HTTP; Tue, 24 Nov 2026 23:43:42 +0000
+Received: by hermes--production-ir2-7c4859dc89-5jcb7 (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 3b8f81a9f960c94d9317978dc48cbc1f; 
+ Tue, 24 Nov 2026 23:43:38 +0000 (UTC)
+From: Murat Seker <m.seker@aol.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2] accel/tcg: Skip clean MMU modes when resetting TLB dirty
+ flags
+Date: Tue, 24 Nov 2026 23:43:29 +0000
+Message-ID: <20261124234329.20579-1-m.seker@aol.com>
+X-Mailer: git-send-email 2.53.1
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 09/21] i386/xen: Don't inject event on invalid port in
- qmp_xen_event_inject()
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
-Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Paul Durrant <paul@xen.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Hui Peng <benquike@gmail.com>,
- Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
- David Woodhouse <dwmw@amazon.co.uk>
-References: <20261124232247.23169-1-dwmw2@infradead.org>
- <20261124232247.23169-10-dwmw2@infradead.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261124232247.23169-10-dwmw2@infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MiBTYWx0ZWRfX5obnvLo/4aVl
- x0Xni+quh7ldLoy/kSqRHK3aDNDxcPn+TQKW1uF3+FO7b0pp2wP6CM12Y6xX0yZTjPPH9RHcjrF
- ryCNM9txnx5jsuQbov/RLcDdxBCCEULab0ea+c4AAnxAQw8eazGXmVYYKAcJ+3ABufFHLaNReQO
- YDNaOSRC0fs2RCYUGY8M84TImXKAVxZc4MPoVDmyoqIreEMHAPdpnftn4L+/Bj9Tz11KuCB1FuS
- dXUPp7QFb8RjeUt8vkxYbfQQAdGoa6ei9Pe4pRIT23x5SEUx3yDVYJiqrASad0EY2HXTnHiwaz5
- 9871yN4byu8hSFpdkHwx0F87Nz1wNSkWEJuui/rzqfRFAPAyTVErw94+IjDyLlmNe+fpvlK4dsd
- PfWc63eqFD5ZAS/+H7HLNu72+ydmLF/cqT7vTtvR5TWh+DhQiE3wqzdg/fMzbINYLq3X3OjWJgP
- egaNrZoF/OO9KIqptWA==
-X-Proofpoint-GUID: nZxzPATZCNSt05i38i3XZZyABQfm0mDF
-X-Proofpoint-ORIG-GUID: nZxzPATZCNSt05i38i3XZZyABQfm0mDF
-X-Authority-Analysis: v=2.4 cv=TLbQ2Fla c=1 sm=1 tr=0 ts=6b061e6b cx=c_pps
- a=g1v0Z557R90hA0UpD/5Yag==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=p0WdMEafAAAA:8 a=pBOR-ozoAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=MFSWADHSvvjO3QEy5MdX:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MiBTYWx0ZWRfXyJvf9YnEffh/
- f/7vFPbM/ILj3x/tVlz43b0YiIo10T0sT0MMHRuzfQCqdL2iNdxGv3EvFwyqOLok5eRmu3he+Tj
- sAPc4cS8Ubl4hEtL4ZnuAaUVSOXak+I=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_06,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0
- malwarescore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261124234329.20579-1-m.seker.ref@aol.com>
+Received-SPF: pass client-ip=66.163.188.206; envelope-from=m.seker@aol.com;
+ helo=sonic311-25.consmr.mail.ne1.yahoo.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -166,28 +96,80 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 25/11/26 00:22, David Woodhouse wrote:
-> From: David Woodhouse <dwmw@amazon.co.uk>
-> 
-> qmp_xen_event_inject() reported the invalid port with error_setg() but
-> then carried on regardless, passing it to set_port_pending(). Return
-> after setting the error.
-> 
-> Fixes: 507cb64d6e66 ("i386/xen: add monitor commands to test event injection")
-> Reported-by: Hui Peng <benquike@gmail.com>
-> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4525
-> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-> ---
->   hw/i386/kvm/xen_evtchn.c | 1 +
->   1 file changed, 1 insertion(+)
+tlb_reset_dirty() is called for every vCPU from
+tlb_reset_dirty_range_all() whenever a RAM dirty range is cleared
+(e.g. for migration, display updates and code page tracking). It
+walks the main and victim TLBs of all NB_MMU_MODES, even modes that
+are known to be empty, and does so while holding the TLB lock.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+cpu->neg.tlb.c.dirty already tracks which MMU modes may hold entries:
+the bit for a mode is set in tlb_set_page_full() before an entry is
+installed, and is only cleared in tlb_flush_by_mmuidx_async_work()
+when that mode is flushed. A clear bit therefore guarantees that the
+mode's TLBs contain no valid entries, so there is nothing to reset.
+
+Skip MMU modes whose bit is clear in c.dirty. A plain bit test is
+used rather than iterating with ctz32(), so hosts without a native
+count-trailing-zeros instruction do not pay for it; the per-mode
+check is negligible next to the TLB walk it avoids.
+
+Signed-off-by: Murat Seker <m.seker@aol.com>
+---
+v2:
+- Use a plain bit test on c.dirty instead of iterating the set bits
+  with ctz32(), which avoids the cost on hosts without a ctz
+  instruction (e.g. riscv without Zbb) (Richard)
+- Expand the commit message to explain why a clean bit implies an
+  empty TLB
+- Timing, edk2 boot on aarch64 virt -cpu max (TCG), total time in
+  tlb_reset_dirty() per boot, base -> v2: 10.2 ms -> 0.53 ms at
+  -smp 4, 261 ms -> 1.6 ms at -smp 100, 1.56 s -> 6.6 ms at -smp 512
+  (parked secondaries, so best case; details in reply to v1)
+
+v1: https://lore.kernel.org/qemu-devel/20261102022732.2418106-1-muratseker@meta.com/
+
+ accel/tcg/cputlb.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index d79eae58df..5b10eb0175 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -883,15 +883,25 @@ static inline void copy_tlb_helper_locked(CPUTLBEntry *d, const CPUTLBEntry *s)
+  */
+ void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
+ {
++    MMUIdxMap dirty;
+     int mmu_idx;
+ 
+     qemu_spin_lock(&cpu->neg.tlb.c.lock);
++    dirty = cpu->neg.tlb.c.dirty;
+     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
+         CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
+         CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
+         unsigned int n = tlb_n_entries(fast);
+         unsigned int i;
+ 
++        /*
++         * An mmu_idx that is clean in c.dirty has been flushed since it
++         * last had an entry installed, so there is nothing to reset.
++         */
++        if (!(dirty & (1 << mmu_idx))) {
++            continue;
++        }
++
+         for (i = 0; i < n; i++) {
+             tlb_reset_dirty_range_locked(&desc->fulltlb[i], &fast->table[i],
+                                          start, length);
+-- 
+2.53.1-Meta
+
 
