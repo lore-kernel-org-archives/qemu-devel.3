@@ -1,114 +1,150 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E57B606A32A
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 18:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AA3606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 18:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Pm3nZ52V;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=l5aCsoJa
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OEfm/7M8;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OddqSBPX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVvT5-0006nV-7c; Tue, 24 Nov 2026 13:42:15 -0500
+	id 1xVvTb-00072K-2o; Tue, 24 Nov 2026 13:42:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVvT3-0006n2-Ti
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:42:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xVvTX-00071p-Ri
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:42:44 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVvT2-0001PP-4R
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:42:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795545730;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=30AEXkKjLqeVxYQ/oyouIfeeA2jGldNC9PpofuUv4UY=;
- b=Pm3nZ52VuzqvbhMvbyZtCUM8AQ/vXZY+NACXeBz8n3r8GP/UBFhAO3ztSXgegxbLbxBOiI
- 0xhZlHCz5oo0k8yzsINoOMb9OUx1EnkmczlIByQJnUWrHh/yXjGN4QMIq5SDiYXZYJyb3o
- QMQyQ3WObYt9wQtnTGOc3sIoWZaENNs=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-miHBAc4oMTau6-Si0Q7r3w-1; Tue, 24 Nov 2026 18:42:08 +0000
-X-MC-Unique: miHBAc4oMTau6-Si0Q7r3w-1
-X-Mimecast-MFC-AGG-ID: miHBAc4oMTau6-Si0Q7r3w_1795545728
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-92179251e32so192076d6.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:42:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xVvTW-0003NL-Ag
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 13:42:43 -0500
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AOIXJpa119520
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:42:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cxpoWgHQqt2hbfkPA+aU8hUPX3t2PqgAkidOp3MiNIo=; b=OEfm/7M8WI41wtXy
+ MCqZG9xQu8/MYjqMLP4bS5NqManxWlu9mHBdiFZk3P45i3kHNnm2W0J6vgwKxmhB
+ RPydZqGltTBhL6W4IsYv8pn53XNN0Bhon5Nx/BpYxI0wAO0y9i2ZxII9XjBN3n2n
+ L1+VkNjcyoFu8dmoEIEXvE6p1BXF9Ua4lNfw0xRD3LRH9fVaahui1L1BZr5AqMAt
+ xX/O5cZsAvlZkv1FHXuojec/rQHyvEH1rJttzFTrLDoc/NTffcqheayOTgOa0U3R
+ pM3aIV0FTFvGQrYQUQOGnTbtYwqEPPXhb8pSe7yW+ufg7UViaM+D+g6Kg3pQax+B
+ idYBog==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5effrjst-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:42:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-9495a1f5e47so775896285a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:42:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795545728; x=1796150528; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=30AEXkKjLqeVxYQ/oyouIfeeA2jGldNC9PpofuUv4UY=;
- b=l5aCsoJaYS5RVZEL+N7IRnxKFnPNa80mZKR31iILPyC/+42SNn5DauwNXfYQGtDthS
- GJK0gpkITfF2/QPqVBPru9oh6IPljcvBrIfTRw/M1EoRM8d1ZpYCovW5z+BnKuBmpnTw
- xfDnYu4Sk+QELZ/91jRNnl2Eeo5/1gVRp2l0yDtIhf9tt7QAm2JZen3CBc1nrFxOc8TI
- iUXk7HoFLe1R9mLRRcN/klvxKYVvFHHJgvgoWW2XytnrD5VkOj8Kk4WEx0I0+xDVB5zk
- 5TMSYD3sJoiVWWN5mCWMDvpmDZAaddzOdwiT5gebBMLiZ8jbu55QSGoGdsfZb5i1KkSG
- n/ag==
+ d=oss.qualcomm.com; s=google; t=1795545760; x=1796150560; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cxpoWgHQqt2hbfkPA+aU8hUPX3t2PqgAkidOp3MiNIo=;
+ b=OddqSBPXJAH1YNXoWxWOvDtVd7pQY2ypt19waz/3mYUYp+bt2qrUCvxyvz/u0us0MZ
+ 4U2pmAGdTVpVVKd1CBAJr+AjkbvErU+Ut1wYkuO9L9bjYNVAiOvu5oaeJwfnNMRavhVz
+ c57J8+HAt1iNCqm/XGFE+JkicI3d8k0i3dF9G3hO3eRNyyGPhKFfhFVT5z6lGftvva5Z
+ CI5BwrMX1vqDHfLGEwrAnD2CXBOYIUI14NDSviaGNqwAgmN+Z/a/a7tZQ8ZxHAQjVtSc
+ OIiqVz5i17maLISBpJqwfrYB9mvbNFwSjSzLcvDoZ0vetLjLtn42QQFrRIetAAZ97bWl
+ zZ5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795545728; x=1796150528;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=30AEXkKjLqeVxYQ/oyouIfeeA2jGldNC9PpofuUv4UY=;
- b=W9RcqhvDe+ntB9pInrrBXZeIxeQIX203zfvH1VsaOIrhuTUby7VDl/PNzrUedjJ3Hx
- ab2SsDQcTU3cULgBe0Ed8bgAdFQGcyD2V0WixuySQwIvwPRkdNPaEqqG2XAgpcvHQmBM
- exbo6zgbjEomvUucvOT9EIHIKV45gS2LxBP6la1NooJI5jGDaeOZLa4imY7VG5+uy/TZ
- ZzcLd4OHUCLReVPJyWi5vhLpTar+nxLAMQHHAod0NKniDsOEjaj5v+ghM6uKzx6sDk86
- OjJ7nF2QTG8mExXnocJ0inXcZY4wZOiht2hur0MNyRj8HbRWk24287pmviTmsXRv2Rph
- 0gsA==
-X-Gm-Message-State: APuU4Z/LBVRtNiIujYFs25afqccijOWYi20zyxMdpbflGa2KId+uV2rq
- JAlLejKU7lHMYK8I6iOB/rg1oA2StGc1X+wE/39sAePGfH8/q7SR7RTHNEAYaR2k+l+h+kopaGq
- NDWHujVnXDUYiDKohLV2Dqimxv4CU6tY6pNocfVUvgtmukR+zrhO3vznd
-X-Gm-Gg: AZFdTZdNhimkRi+yJeFYDx+wtUQluhbM1bodrYKAecmvzay/h2lwAV4+xemMnWAQCaz
- IZuLmCVLNa4Wg7rKo88wpzHymnlkWDnONklggXJuKi3pF+8dS8Hq3QT2OgNILgaA7J7IrWFDQTs
- wgi/D5a+SoyxzT3eQT6xykr0i9OIknbMTFEBBvdNvQ9nOtQdqDscfNcv12exURuaN1RzxdT87MW
- QmQykDEoFAk9KrZMRIX8tUZZYuGA1uTPdO51SCOksjU66Iuh/v1oZI9Sr/O1Es33a0ExEUt/6l3
- x6q5muYJpYhUfbtac0Q1A6yY/oQMbbzBcUwocfaJFmx7NYHrk93Lu6XdSRQGLDYHZNkz8ZxKDMF
- dkzUxxjfo/K10gnAjylXv+RLUk+aOwaURZKSblarpyiBC
-X-Received: by 2002:a05:6214:300b:b0:921:645f:7408 with SMTP id
- 6a1803df08f44-921645f7595mr83409416d6.53.1795545727825; 
- Tue, 24 Nov 2026 10:42:07 -0800 (PST)
-X-Received: by 2002:a05:6214:300b:b0:921:645f:7408 with SMTP id
- 6a1803df08f44-921645f7595mr83408856d6.53.1795545727211; 
- Tue, 24 Nov 2026 10:42:07 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-921349b456csm143598236d6.13.2026.11.24.10.42.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 10:42:06 -0800 (PST)
-Date: Tue, 24 Nov 2026 13:42:05 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Rolnik <mrolnik@gmail.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: Re: memory_region_init_ram_ptr() handling of sizes that are less
- than a page
-Message-ID: <awXafWB2p8VuG_Qh@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <CAFEAcA_77DxGK-26Z6=qx0a88Zd0KQgFjKgJc2CgTmm-iOzbsg@mail.gmail.com>
- <CAFEAcA-o9DoPL1D0-S3hpB1bT6iSNgy4zm1VZRSjcjxHkmUfiQ@mail.gmail.com>
- <awW88uEaJ2IKp-nY@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAFEAcA-PB-tPvdXc6ZMMhanN0fPi9uvGQ=XtM0h2+uxt-JnrSg@mail.gmail.com>
+ d=1e100.net; s=20260707; t=1795545760; x=1796150560;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cxpoWgHQqt2hbfkPA+aU8hUPX3t2PqgAkidOp3MiNIo=;
+ b=tDAMkrt8ZlSPyts5XtWKU98zlckoWwBmWWP/JfuTuF8Tg/tdp/rC7da83TIhemPQAu
+ zV0ByS7FpTUyrpkxhG/rV3SxL58gnE6c6kL7YbrGTPVWGSkXRHNEhmLiTTgR2SQXXm4n
+ m6VHMds9y3lVbfs4QtYgskCypIcKSY17n4crR8akuLyctfXA2peQKk0gfs/aLeOvlVEA
+ DpiUd700JVwX0300qmakkzIxuyXNdmWuBcLZ1ytJl1l/qQGbsTdxHFqVljRVf1TpNyRK
+ WV90LCrlwzMigSGzgy/ZjCkulSe00coRxEgVGxbbklnvOWH1TJpw+VHJSXSQZ9qHlKLQ
+ SVJg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEsY/RsmxSniPe2MC/Yzp5maV3Slja0MSIde+po5g/HBxEvg0FT1r9cYmtf1DfG0zCZDTcxlhcZM2pK@nongnu.org
+X-Gm-Message-State: APuU4Z9ncxFy9bGjUCXbWCGXewchV9qXPzeFVn282KOeObGDpn0z1B7C
+ rOIFm1E+pp5Nn4eVATeW1pYbsQA/QfT705b/UuhvR4ajESe4NyMEY90BN29HaH94CFpFvx10o5X
+ XKQuQ+Hck04wq1zE3nGdb7E9UilOmlkDH/j5Rxhn33b2ne4TQeHnwLvt6eQ==
+X-Gm-Gg: AZFdTZed2TiFIjiJyYIVmghGc5h25ajzX9ihW6WXzzdIamxnBjxv65gBqRYBzy2Zg4D
+ oZSiuHJ9DaJpmgsQpyRfH/xdZ3fjPb1u27Z67Wr8Nm277rc/mjfoFaLiAWiKidL+RXO0x5Le4Jj
+ QKfQexax2GOrky1Zt8C/jvesJJ0t+86r02kNCp4nGfCq/i861mbp2JuUocswp1P8OCuW3LWJXK4
+ JMxAhv7APOncOz9gnw7eKlr17rHPqD/Ps2V3MZRCUHgzKHa+ecBehCwGfce5tRd3T+Lwds5UIF1
+ DP0Q3+eHKEMsj5+JPwzzna1rVKt4RkuVtoCWHQGRcWeX6O1ix/vuUcHRvGNmXLHwpZlISAfzfs6
+ scXXkcKo2/IqERFkqv0Rohq6SRES39J29MHudMCyq8qQ0FYcd4Fht9+t6Qi9/v/DEEhLwBvof/h
+ 6/3dDrgNLd
+X-Received: by 2002:a05:620a:2996:b0:949:74d8:4719 with SMTP id
+ af79cd13be357-949ba9b802cmr2630279585a.44.1795545760159; 
+ Tue, 24 Nov 2026 10:42:40 -0800 (PST)
+X-Received: by 2002:a05:620a:2996:b0:949:74d8:4719 with SMTP id
+ af79cd13be357-949ba9b802cmr2630274585a.44.1795545759628; 
+ Tue, 24 Nov 2026 10:42:39 -0800 (PST)
+Received: from [192.168.68.101] ([189.110.107.17])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-949bb0315f4sm1100251285a.3.2026.11.24.10.42.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Nov 2026 10:42:39 -0800 (PST)
+Message-ID: <098d1da6-b17d-40f3-9917-eace9774c216@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 15:42:36 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-PB-tPvdXc6ZMMhanN0fPi9uvGQ=XtM0h2+uxt-JnrSg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Provide weaker memory ordering for RISC-V guest FENCE
+ instructions.
+To: WX Chen <wxchen0913@gmail.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ Tao Tang <tangtao1634@phytium.com.cn>
+References: <20261120-fix-riscv-fence-20261119-v1-1-aeb9ba142598@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261120-fix-riscv-fence-20261119-v1-1-aeb9ba142598@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=eo5KXYpX c=1 sm=1 tr=0 ts=6b05daa0 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=pGLkceISAAAA:8 a=QxFdwG9AeuzbvbumJb4A:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA3MiBTYWx0ZWRfX5sXoNl7h/SsW
+ mnEkB16TWtiu4xvDSVi+tGAs59uwusowhcylSZ2AnOT7Ebo+HdXxfdXkcGpSkVs5glJW03Np9/y
+ w4AlYxM7QpLbZ9cRGjq2bVXinRBNkOTg7org0pmoQvInqg9HP+NVQPrrVE4WRai5yGLaC6qJwQW
+ BYitxQGvJ7zU3+VxzTwO6RG0LinDdgGXGU1jWAGhC5UUKfG2wucL9PI7eUJCzfQbs8OnISeKaLo
+ 3C6CYTI71UwXeofduAFgVuWe4Z0qTkmv1OBSqBYRnf5J8Ebiw4fe7zokMmFSX4EBJEbNkBcU4T0
+ tElf07aesKhDWQzUg6QfAztry8v15tfdV9oKgApr2YusuXiM66Q2iXtVUfivOGNKAPd31GhQESo
+ QfBIpN5oLvsAGl8oULgpkJ9tVtY2cciIx/VX7doKei0wCdY2f8aN9H7swPKI/a/r2P3GQ9CFwZQ
+ yWvg+G4NR/lJQiGDmhg==
+X-Proofpoint-GUID: WxE7pARmZN-2ynvXGn0qoYpjHlY9FuBF
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA3MiBTYWx0ZWRfXyQDtAlm5O22Q
+ TQyHZZy2nO0iWQj1agExg9WAKxSGyVZ8LCyxFigQkUe0Jg1DYQJqpfNIYMliue3ixDGCb8z5RfD
+ 0sozwVVlOBv0/JLctiEVDbI3FwE36MA=
+X-Proofpoint-ORIG-GUID: WxE7pARmZN-2ynvXGn0qoYpjHlY9FuBF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-24_05,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ phishscore=0 impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240072
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,122 +156,94 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 24, 2026 at 05:37:23PM +0000, Peter Maydell wrote:
-> On Tue, 24 Nov 2026 at 16:36, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Tue, Nov 24, 2026 at 03:52:22PM +0000, Peter Maydell wrote:
-> > > Hi -- can I ping people on this memory subsystem question
-> > > again, now that hopefully those at KVM Forum have been able
-> > > to dig themselves out from any email backlog? I'm really
-> >
-> > Not yet for me, maybe it's because I'm slow.. :( Also because new things
-> > keep coming too.
-> >
-> > > not sure what the intentions of the MR and RAMBlock APIs
-> > > are here w.r.t. alignment...
-> > >
-> > > thanks
-> > > -- PMM
-> > >
-> > > On Mon, 16 Nov 2026 at 15:03, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > > >
-> > > > memory_region_init_ram_ptr() (and memory_region_init_ram_device_ptr())
-> > > > create a MemoryRegion backed by a lump of memory provided by the caller.
-> > > > They do this by calling qemu_ram_alloc_from_ptr(), passing the size
-> > > > and pointer along. However, qemu_ram_alloc_from_ptr() does this,
-> > > > regardless of whether it was given a host pointer or not:
-> > > >
-> > > >     align = qemu_real_host_page_size();
-> > > >     align = MAX(align, TARGET_PAGE_SIZE);
-> > > >     size = ROUND_UP(size, align);
-> > > >     max_size = ROUND_UP(max_size, align);
-> > > >
-> > > > The result is that if the caller passed us a lump of memory that's
-> > > > not a multiple of both the host and target page sizes then we create
-> > > > a RAMBlock whose used_length and max_length fields claim that it's
-> > > > larger than the actual backing memory. Any user of RAMBlocks that
-> > > > trusts that information (such as the migration code) will then
-> >
-> > I don't think I fully digested everything, so I just quickly glimpsed over
-> > the conext so far just to start replying something..
-> >
-> > One thing about migration: I don't think we will migrate these ramblocks,
-> > because we need to register them via memory_region_register_ram(), and we
-> > don't do that for ram pointer based MRs, AFAIU.
+Hi,
+
+Looks good overall.  A few comments: the commit title
+
+"Provide weaker memory ordering for RISC-V guest FENCE instructions."
+
+We add the submodule we're changing in it.  For this patch it could be:
+
+"target/riscv: weaker memory ordering for guest FENCE instructions"
+
+One more thing:
+
+On 11/20/2026 6:34 AM, WX Chen wrote:
+> Currently, they are implemented as full memory barriers, which may introduce stronger host barriers than the guest actually requires.
 > 
-> The atmega.c code explicitly calls
->         vmstate_register_ram(&s->sram_io, dev);
-> which is why #4877 reports that we crash during migration.
-
-Ah...
-
-This seems a hack.  I don't see what we benefit from g_malloc0() rather
-than using memory_region_init_ram(), it's hand-coding how allocation is
-done.  IMO we should switch.
-
+> Signed-off-by: WX Chen <wxchen0913@gmail.com>
+> ---
+>   target/riscv/tcg/insn_trans/trans_rvi.c.inc | 36 +++++++++++++++++++++++++++--
+>   1 file changed, 34 insertions(+), 2 deletions(-)
 > 
-> The TPM code does as well:
->         vmstate_register_ram(&s->ppi.ram, dev);
-> but because it ensures it creates the backing ram both aligned to
-> the host page size and oversized to a multiple the host page size,
-> the migration code works even though it is accessing something
-> larger than the MemoryRegion itself says is valid.
+> diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+> index 4784ea1607e74eb5b0076425a732b5d3817b3482..6e094e5886360c2f9f7c187e82e6f60da36b84e4 100644
+> --- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+> @@ -968,8 +968,40 @@ static bool trans_pause(DisasContext *ctx, arg_pause *a)
+>   
+>   static bool trans_fence(DisasContext *ctx, arg_fence *a)
+>   {
+> -    /* FENCE is a full memory barrier. */
+> -    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+> +    /*
+> +     * FENCE.TSO orders all R/W pairs except W -> R.
+> +     * For TSO, the pred and succ should all be RW,
+> +     * otherwise it should be treated as normal FENCE.
+> +     */
+> +    if ((ctx->opcode & 0xf0000000) == 0x80000000 &&
+> +        a->pred == 3 && a->succ == 3) {
+> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_SC);
+> +        return true;
+> +    }
+> +
+> +    /* Reserved case, choose the strongest ordering.  */
+> +    if (ctx->opcode & 0xf0000000) {
+> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+> +        return true;
+> +    }
+> +
+> +    /* Normal FENCE. I/R for BIT 3/BIT 1, O/W for BIT 2/BIT 0 */
+> +    TCGBar ordering = 0;
 
-For this one, I think we need to allow user specify MR alignment for
-APIs like memory_region_init_ram(), instead of playing trick with self
-allocation with ram_pointer assignments.
+For our current code style, unless we're in a ifcond branch or switch, var declarations
+are always in the beginning of functions.
 
-Actually, I am aware of a kubevirt demand to enable 2M alignment for shmem
-backends, which needs exactly the same thing.
-
-> 
-> > > > happily read or write off the end of the backing memory.
-> > > >
-> > > > This obviously isn't right, but is the problem:
-> > > >  * that qemu_ram_alloc_from_ptr() shouldn't align if it's given
-> > > >    a host pointer, and all users of RAMBlock need to be able to
-> > > >    cope with unaligned base pointers and sizes?
-> > > >  * that qemu_ram_alloc_from_ptr() should complain (assert?) about
-> > > >    unaligned base pointers and sizes, and all callers trying to
-> > > >    use it for smaller MRs need to be fixed?
-> >
-> > Didn't read deep into below two use cases, if they're valid
-> > not-page-size-aligned ram pointer, we can't go with 2) anymore because we
-> > don't want to break them?  Or.. do we?
-> 
-> Well, that's the question. We can probably find other ways of
-> implementing the things they're trying to do with tiny ram MRs,
-> if we really have to. Or we can require that (similar to what
-> TPM does now) the backing store must always be aligned and
-> allocated oversized so that code using the RAMBlock API can
-> do that kind of page-sized overread.
-> 
-> I'm just not sure why the RAMBlock code is enforcing this alignment,
-> i.e. what other code would we need to change if we wanted to drop it?
-> Hard to make the choice if I only know the costs on one side of
-> the balance.
-
-I didn't check through ramblock code on subpage, but I feel like there can
-be things off.
-
-If above works, then we can switch these users to use the API which will be
-page aligned.
-
-I added both maintainers in CC in case they'd comment.
-
-Cc: Michael Rolnik <mrolnik@gmail.com>
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>
 
 Thanks,
+Daniel
 
--- 
-Peter Xu
+> +    if ((a->pred & 0xa) && (a->succ & 0xa)) {
+> +        ordering |= TCG_MO_LD_LD;
+> +    }
+> +    if ((a->pred & 0xa) && (a->succ & 0x5)) {
+> +        ordering |= TCG_MO_LD_ST;
+> +    }
+> +    if ((a->pred & 0x5) && (a->succ & 0xa)) {
+> +        ordering |= TCG_MO_ST_LD;
+> +    }
+> +    if ((a->pred & 0x5) && (a->succ & 0x5)) {
+> +        ordering |= TCG_MO_ST_ST;
+> +    }
+> +    if (ordering) {
+> +        tcg_gen_mb(ordering | TCG_BAR_SC);
+> +    }
+>       return true;
+>   }
+>   
+> 
+> ---
+> base-commit: 08ed97c33c3818ef51a7c852347a28e9f66807b5
+> change-id: 20261120-fix-riscv-fence-20261119-10a425b78673
+> 
+> Best regards,
 
 
