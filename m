@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDD0606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 09:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63DB606A334
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 09:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mvnmF6sY
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RdW8ogKE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVnId-0003Sd-N5; Tue, 24 Nov 2026 04:58:55 -0500
+	id 1xVnId-0003SH-6L; Tue, 24 Nov 2026 04:58:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xVnIc-0003Ro-7J; Tue, 24 Nov 2026 04:58:54 -0500
+ id 1xVnIa-0003RL-S0; Tue, 24 Nov 2026 04:58:53 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xVnIY-0003K3-GD; Tue, 24 Nov 2026 04:58:53 -0500
+ id 1xVnIX-0003Jp-Un; Tue, 24 Nov 2026 04:58:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1795514331; x=1827050331;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=DVwYvVWxMY1PdzYQsm5pfXAd4doI2HvJzCprfOKzqDU=;
- b=mvnmF6sY4jdJYF/lVetLkOn/GNZ4J7T2NkZNppse1/TqtG/NvWxpvj4C
- 6tGDuXc72fJB6/UuS2qUiWZQWPzei0fqXsL0Ju1Qgb+D00GQ5w6/CNF2m
- s3b3NAq7r3w6jgkrzHXUbx3YInPIEKpTJpHO8UmKZdV9LO1X4r6sfm7in
- R2Aj3O5PCnHe1f5Mp6ugR20sitpEogd9TdTJyo7fsEZK8ajG/kr7W2h68
- 0WruAQM+bX4mrB8htDVQBdBK4PXXiv7fpCo5Q465qNELoxm2tWTcz9Z8Y
- hAwFsGOZ3iveGiN8zBJALwBvyKw5dTI00oWXw6zzOpEgUqy39pthOaCmq A==;
-X-CSE-ConnectionGUID: KlhQL6AgRO2gQZ5FbfPCrQ==
-X-CSE-MsgGUID: PNOL+sp3SNqN8NXBVzkl0w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11975"; a="4398007"
+ t=1795514330; x=1827050330;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=RVkiBoVvSOoXwqJfQ+Lt7OYY8hilo7s21vw5yY3QFuA=;
+ b=RdW8ogKEg6jvCbfPjAo8TaCzu1lrolRMF2LBwgWFNEUG+3uVqiib9PUy
+ u7F6iingGHi3jtCdlh6+06IlsmZ+wByO3li15q8qTSvGyi59eDZ9INArl
+ TwU4ApF6APglUlvaL38LZENDGk/hOl1C7LIs3o8f7RPvqZrBLx/n4UVtj
+ 4mzSXJwsLBB+DQYXRC/aylSJmkKIgqBN7VobIWi9i7CQ3uiHBa/JB7Jpr
+ 69At5ekR2ipUcSfUPjT4pi23bdJXDptzc/4FFmDRA7pgtRxrgNEE1SmDG
+ qEnIqSOaCYsBXnUQLKcvbQPwlJFHt37ZhigOpAArrCHnWo85f1zJM4oX8 Q==;
+X-CSE-ConnectionGUID: Q1gzxq/BShe7erp/ysSCsA==
+X-CSE-MsgGUID: TD9QQsn8TlukTvD+kM6/fQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11975"; a="4397992"
 X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; 
-   d="scan'208";a="4398007"
+   d="scan'208";a="4397992"
 Received: from fmviesa012.fm.intel.com ([10.60.135.152])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Nov 2026 01:58:33 -0800
-X-CSE-ConnectionGUID: WINqE3TUSgqXfFoOCfiSEQ==
-X-CSE-MsgGUID: clquDMuMQ8qenzg5u+Az4Q==
+ 24 Nov 2026 01:58:31 -0800
+X-CSE-ConnectionGUID: M6An0f1jTVO0/O/EQ5bm5g==
+X-CSE-MsgGUID: 2qMXlEw1TxqnnUBrS+F1YA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; d="scan'208";a="13206390"
+X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; d="scan'208";a="13206386"
 Received: from zhaoliu1-desk.sh.intel.com ([10.112.226.173])
- by fmviesa012.fm.intel.com with ESMTP; 24 Nov 2026 01:58:31 -0800
+ by fmviesa012.fm.intel.com with ESMTP; 24 Nov 2026 01:58:29 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 1/3] rust/migration: Allow usize as the length of a varray
-Date: Tue, 24 Nov 2026 17:58:12 +0800
-Message-Id: <20261124095814.437738-2-zhao1.liu@intel.com>
+Subject: [PATCH 0/3] rust/migration: Remove vmstate_validate!() and
+ VMS_MUST_EXIST
+Date: Tue, 24 Nov 2026 17:58:11 +0800
+Message-Id: <20261124095814.437738-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261124095814.437738-1-zhao1.liu@intel.com>
-References: <20261124095814.437738-1-zhao1.liu@intel.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -77,126 +77,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Since commit f9f70b50e3eb ("migration: Introduce VMStateStructMember")
-and commit 1f0b40dccfe5 ("Rmigration: Remove redundant flags"), the
-length of a varray is no longer tied to a specific integer type.
+Hi,
 
-This makes it possible to use `usize` type for varray length. It's safe
-since it is used only to resolve varray lengths in the local vmstate
-code and is not used for migration.
+This simple series is based on Peter Xu's series [*] and mainly refines
+patch 5 — removing `vmstate_validate!()` from Rust HPET (while
+maintaining consistency logic with C HPET as much as possible).
 
-Thus, implement a "dummy" VMState for `usize` so that it can provide
-VARRAY_FLAG, and panic when anyone tries to define VMStateField with
-`usize` type (including integers, pointers, [usize; N], Box<usize>,
-BqlCell<usize>, etc).
+I originally planned to use a single patch, but breaking it up this way
+makes it easier to review. I suppose these three small patches could
+also replace Peter's patch 5 :-).
 
-In addition, add a test case for such case.
+There is also some cleanup work left (e.g., support post_load_errp() in
+Rust); I will address this in some separate patch later (without
+blocking the current effort to remove `vmstate_validate!()`).
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+[*]: https://lore.kernel.org/qemu-devel/20261120124923.1656220-6-peterx@redhat.com/
+
+Thanks and Best Regards,
+Zhao
 ---
- rust/migration/src/vmstate.rs     | 16 ++++++++--
- rust/tests/tests/vmstate_tests.rs | 49 +++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 2 deletions(-)
+Zhao Liu (3):
+  rust/migration: Allow usize as the length of a varray
+  rust/hpet: Move vmstate_validate!() check into post_load
+  rust/migration: Remove vmstate_validate!() macro and test
 
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 5ed061f2abb6..0b05db4e7049 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -97,8 +97,8 @@ pub unsafe trait VMState {
- 
-     /// A flag that is added to another field's `VMStateField` to specify the
-     /// length's type in a variable-sized array.  If this is not a supported
--    /// type for the length (i.e. if it is not `u8`, `u16`, `u32`), using it
--    /// in a call to [`vmstate_of!`](crate::vmstate_of) will cause a
-+    /// type for the length (i.e. if it is not `u8`, `u16`, `u32`, `usize`),
-+    /// using it in a call to [`vmstate_of!`](crate::vmstate_of) will cause a
-     /// compile-time error.
-     #[doc(hidden)] // https://github.com/rust-lang/rust/issues/149635
-     const VARRAY_FLAG: VMStateFlags = {
-@@ -256,6 +256,18 @@ unsafe impl $crate::vmstate::VMState for $type {
- impl_vmstate_scalar!(vmstate_info_uint64, u64);
- impl_vmstate_scalar!(vmstate_info_timer, util::timer::Timer);
- 
-+// SAFETY: BASE is never produced (any use of a usize as migrated data will
-+// always result in a compile-time error). VARRAY_FLAG only tells the C code to
-+// read `size_of::<usize>()` bytes (see `size_of_field_type!`) at the length's
-+// offset.
-+unsafe impl VMState for usize {
-+    #[doc(hidden)] // https://github.com/rust-lang/rust/issues/149635
-+    const BASE: VMStateField = {
-+        panic!("usize cannot be migrated, use a fixed-size integer type");
-+    };
-+    const VARRAY_FLAG: VMStateFlags = VMStateFlags::VMS_VARRAY;
-+}
-+
- #[macro_export]
- macro_rules! impl_vmstate_c_struct {
-     ($type:ty, $vmsd:expr) => {
-diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-index 6578d54b37d4..b680cfd3c783 100644
---- a/rust/tests/tests/vmstate_tests.rs
-+++ b/rust/tests/tests/vmstate_tests.rs
-@@ -483,3 +483,52 @@ fn test_vmstate_validate() {
-     // The last VMStateField in VMSTATE_FOOD.
-     assert_eq!(foo_fields[3].flags, VMStateFlags::VMS_END);
- }
-+
-+// =========================== Test VMSTATE_FOOE ===========================
-+// Test the use cases of the vmstate macro, corresponding to the following C
-+// macro variants:
-+//   * VMSTATE_FOOE:
-+//     - VMSTATE_VARRAY with a `usize` length
-+#[repr(C)]
-+#[derive(Default)]
-+struct FooE {
-+    arr: [u8; FOO_ARRAY_MAX],
-+    num: usize,
-+}
-+
-+static VMSTATE_FOOE: VMStateDescription<FooE> = VMStateDescriptionBuilder::<FooE>::new()
-+    .name(c"foo_e")
-+    .version_id(1)
-+    .minimum_version_id(1)
-+    .fields(vmstate_fields! {
-+        vmstate_of!(FooE, arr[0 .. num]),
-+    })
-+    .build();
-+
-+#[test]
-+fn test_vmstate_varray_usize() {
-+    let foo_fields: &[VMStateField] =
-+        unsafe { slice::from_raw_parts(VMSTATE_FOOE.as_ref().fields, 2) };
-+
-+    // 1st VMStateField ("arr") in VMSTATE_FOOE
-+    assert_eq!(
-+        unsafe { CStr::from_ptr(foo_fields[0].name) }.to_bytes_with_nul(),
-+        b"arr\0"
-+    );
-+    assert_eq!(foo_fields[0].offset, 0);
-+    assert_eq!(
-+        foo_fields[0].num_indirect.offset,
-+        std::mem::offset_of!(FooE, num) as u32
-+    );
-+    assert_eq!(foo_fields[0].num_indirect.size, size_of::<usize>() as u8);
-+    assert_eq!(foo_fields[0].info, unsafe { &vmstate_info_uint8 });
-+    assert_eq!(foo_fields[0].version_id, 0);
-+    assert_eq!(foo_fields[0].size, 1);
-+    assert_eq!(foo_fields[0].num, 0);
-+    assert_eq!(foo_fields[0].flags, VMStateFlags::VMS_VARRAY);
-+    assert!(foo_fields[0].vmsd.is_null());
-+    assert!(foo_fields[0].field_exists.is_none());
-+
-+    // The last VMStateField in VMSTATE_FOOE.
-+    assert_eq!(foo_fields[1].flags, VMStateFlags::VMS_END);
-+}
+ rust/hw/timer/hpet/src/device.rs  | 45 +++++++++----------
+ rust/migration/src/prelude.rs     |  1 -
+ rust/migration/src/vmstate.rs     | 33 ++++++--------
+ rust/tests/tests/vmstate_tests.rs | 72 ++++++++++---------------------
+ 4 files changed, 59 insertions(+), 92 deletions(-)
+
 -- 
 2.34.1
 
