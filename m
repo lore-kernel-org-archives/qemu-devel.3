@@ -1,131 +1,131 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80123606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6F2606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HJA+ANLi;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=R1AvBnDp
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RhlGGoa/;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=fllhK8+K
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVnU3-0000Cw-TP; Tue, 24 Nov 2026 05:10:43 -0500
+	id 1xVnVJ-0000so-3S; Tue, 24 Nov 2026 05:12:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVnU2-0000CG-87
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:10:42 -0500
+ id 1xVnVG-0000sU-3E
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:11:58 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVnTv-0003g8-Ov
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:10:41 -0500
+ id 1xVnVE-0007ra-1S
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:11:57 -0500
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO8LZiN901943
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:10:33 GMT
+ 6AO87Jrb901866
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:11:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hkU8X3tHOGWlAcedfuWRYJ/hstIcvgCRRyGQkHGo/wQ=; b=HJA+ANLiJYpemiiw
- 8Wv+UaynXZkikl1+xB/latNwYggicheM9ORTVii6nqDjm9LDWu/8uvv6AZVAPWZ9
- tc4JPiaZ1RsaaD6sM3VSAbV+WT+Kut4hsOGsdIbWR1lV1jrV4PS+9Krylh0OslKW
- kHsBgnTwii0GLVTOEulf9YpPbmcQSX/tLiOpcV/TsNXS55+NoZY9xDeNNJ8f5NQC
- Ik4++LZfdSAwl2xPGHstqEyMi8yVBt5kgPPTcBZnDxeken73veE2RDandThjQc7n
- vD4vwv4Wd4zIAklOmQ1Q8rZh8gawKf0isyxH0mjONsU8zQLk834+ywIKCypH2Uaf
- ngDvkg==
+ v0+LEj/fI1GBgn+O0B4Y4CFXU25e/qj4jggK6TUMfcM=; b=RhlGGoa/ajdOdOTC
+ nHg2avbzFJNOriF0XeFU0tCQQGyzNJt3fMaQLz2JFiwNVILNyj81HogUrv3pb7Sl
+ s8BXvdn3YFAU8IgzHCNTZyU/IGV7XvyCje97XnkEl5Kd+aJQQLhzTdU2b1l3LTLH
+ 0SuxrUXzRsUKx0RCl5xnuwNVYIPnj1h5RBPoH3eI/TXYHMQSYO6E56aRkJxBWIrQ
+ QHJgCeEEFQPkFg1Nb3d9LnIXosM16ovLLZ5fa303DNB0Oe+YFco771grQM70o0N9
+ 8iqohzW8yIaJ7lW8dpZ06/YwH8Deoj6J44CS4RvONeKcgKXI5tzkvXhvts1ARs7m
+ 7zn50w==
 Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
  [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4w6stpxe-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4w6stq54-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:10:33 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 10:11:54 +0000 (GMT)
 Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-947a607ec40so412929585a.3
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:10:33 -0800 (PST)
+ af79cd13be357-93f37c94ceeso892641685a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:11:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795515032; x=1796119832; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795515113; x=1796119913; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=hkU8X3tHOGWlAcedfuWRYJ/hstIcvgCRRyGQkHGo/wQ=;
- b=R1AvBnDpHu5D2LP7pfS3DGau9Q+DIzjTzCvOVMGLbwetCv+AmfvYuzV6wQJ9paDWM4
- aWb4gfQMLJMqhqft7LUDIcioLOqcGbvHA0R/7XgZHcZQurxLHFTAsLj4v2fZkblaUoSV
- yqXxzawr6ThNQXZyFRxuLJIglDjduGCilL0U9EWOI8F/G81mEm0vWrfsRzV/jg+dLK2L
- fD6cM/7idB0VY3SUw6+IoS5mDyE5FGfWfzxaUALu6hjLnWudc9lzT7jaLXAkAzfxWDm2
- 0C5Xq7I16uLEFdaTbctj4PfREwgTD1tyhV7ZzP08wSVdhLzZ6iJbKVz232FF2ZQhBriy
- qNhw==
+ bh=v0+LEj/fI1GBgn+O0B4Y4CFXU25e/qj4jggK6TUMfcM=;
+ b=fllhK8+KQvVWXLnxQpZwZOc5KJnWLULpkN5HGrp1Nv+mJb1EP21hj7KzkMqsL3aN+Q
+ GuxU6gVxrWtV8otxs+awuxvYfCkekbWJ1m3wr7reNiFIDdLqD5M1NWMl1geWOeGbTk6n
+ ItxN27smEdw1GrXD11DF7QDNW76Ut3NliyGq4foM2jH+KjSsuBeG/0wMrGNYBfyyzaeb
+ fk3MQbQuFvWqeDhnn+OODhlMS0hmLKVw4pzBOop8j3zrNUk/LdNQ9veFW7MHJ+526Uky
+ KxhPex2llQfg3CKQyt9121C23EMktOmOgen5a6GLl4H9FFhXciqrWqEOQv5EFMT0+bg/
+ RkTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795515032; x=1796119832;
+ d=1e100.net; s=20260707; t=1795515113; x=1796119913;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hkU8X3tHOGWlAcedfuWRYJ/hstIcvgCRRyGQkHGo/wQ=;
- b=FoLNCAd7nYbqpOhrZ5pslTHB0geZfp5WRIDmTq4LtyE3ixUwzbmC5fGvCyt7TXSQ13
- lb56pQUmr12CP0VvnNH6Q7/LHYQoFcBa8sAZ0+jsL/qvYuIF/UFVnXnQE9iheg4LJYXk
- 66tV4hBVg7OhnqIDa5GhNJbPXr/zLxgprJJuGiEh8p91S4kpkvgW3LEEawAObqRWJyXv
- X8rqv1NYJM2c3g3scoD6V3fhE/NxlOWa6cZpqKqUZEbC4uHcwSxNihXm6fIqn9JgXxhg
- XUO8KJ6R1kIU+uPE/ZgVmvUzgO8Zrc1IlOFzTKx5iV2mLWOC+i6Engaoco1o5O6b/kbK
- 1meA==
-X-Gm-Message-State: APuU4Z9A/Nf6/j8CX4nTQmFXQN5Q03WK4JOnew8kGYd7fKZq7LJlWm+n
- QGC8YjdJLIiGPTsKM2ZFBbux2pt+Rnk3nMfvcg+T1BhBZi/ERP2kNQfxPIY6HrArSwB2fc5Vo3/
- eCb+3mPVFsWigySvZoOKk8thfPvW6j42QCKfVFj22bU7TOWAnUwzGg0nigA==
-X-Gm-Gg: AZFdTZcF9Yq3uQY71JwDTPfZjyME4uUhTleuCNk5mTjVePjxRkWamaFxpPgOdthBNYq
- 26GTYNsxyG4+VOrBGy9AcRCOG9e8LmUDMMR0q5Q3vviD0Aeg1KPyszPGuzM18F558jX7g73Wnjx
- pnKIaxDNbQD1RpLiN/wnzHYc1P7bA46U9gufh/1/K5P/c8bPVGgXysZFv1lESM6dctDj8+keDsP
- ikILqCQkODqeNpc+diXN4IR0+IAbYscpUPvH87rnaCMPFXqR6tuKmkXqAVHQaPcXIrnJumXfqq5
- UG7jHgG5XPzK57d/QJjp1YCfWOCwdbkNdBSDDjriM1PfPHvqJi4rSiBXyjVbuVQ4Pu592zvIFoI
- apwXky4N8z3c4nwOUho84wE8n3PEjg9bot7NYRxWL4uOWpakni1sbxKjpDnpgcBHRLA+J20k6lp
- vpM4lCSg4=
-X-Received: by 2002:a05:620a:450e:b0:949:8901:dc67 with SMTP id
- af79cd13be357-949ba9b8cb7mr2519316685a.29.1795515032500; 
- Tue, 24 Nov 2026 02:10:32 -0800 (PST)
-X-Received: by 2002:a05:620a:450e:b0:949:8901:dc67 with SMTP id
- af79cd13be357-949ba9b8cb7mr2519313585a.29.1795515032048; 
- Tue, 24 Nov 2026 02:10:32 -0800 (PST)
+ bh=v0+LEj/fI1GBgn+O0B4Y4CFXU25e/qj4jggK6TUMfcM=;
+ b=A5MfuYiMRYzQgObCrK69E3ys9H42k1nSgs4AOuezDfN8V2yUTSx8U6KQrXrigoWHtz
+ SQJxrRYtXoAV+kKPyTpnBn0syDcC1A89+FUGhXdzzFtm+K4X6xFrtWPWHi7pIhkS75RR
+ aqHvmpKbuixhnsvLM5HvRD8tGkCYd08sAyFAGmk/ZsCJsm+tJN5nkOAZeZlO6lkx3VFk
+ iHaPtWESfEi7L+MoIbGiIfqbX/Od9934b05VgQxkSTjRtCFa9lgRvHUzmXLVmEQdga0t
+ v0MLyFoA1sIyT9ycir8WcWsVmGFxHFyjQ8+dCc1CTpssRXye2FAVdhOPAu84aIh376Xn
+ MJyA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErH7+hhhokvvdCBEDeC7ysTixgvkQlicYMbSbVDvdv1fHPBigz4ogPydJTlkuPFxxRzfBVyEUSRaR5SV@nongnu.org
+X-Gm-Message-State: APuU4Z8nJS20tOwSFk0/PmSdJif0sg0tF7rlQZKt/6qksMIJif9aE7B9
+ UmbnxnK87XF8Ybz0Hm6hp+r9hRLQ+96MfnuHRiZxbNgS0H3OCPJ5RNi/scYsOemmVWZAVJA5C3D
+ KpqgR5mD/cdAcfIFlM1i1vHZsnzRrq532VT/6HtNzibOcy/5OUL3n8LkUxw==
+X-Gm-Gg: AZFdTZc2M0BXwEoJExjc4cjWNkgc7b2CkhSISQtKFoVvVY5qB8yjsF7Z5AxClOm9/JE
+ Pm39q+t6JGk9uhdOs9lJ7e/l/5Mii0bm+F8/pD4pjWEJaPGnuC6FjAW9U6qXOYdWSY54S+Csy0i
+ NwaAPPqGB1yTLDqHYRr95fyxUCzVTyOi8jYCwE1vX+quOvzs7t0+0q7Gt6Lco7YqsyHQ3oQ2GhG
+ iKF1ACPaXMZUbKfLmWhHDhgrI+4nFHtWOXpBcGDmKZZh8pLQItnyuIp8bO6qeCvJAL+bpmXD998
+ p1lJZSRjht8nqCSO+XulL8HoPuhqNI6autbvzj3yhWYOcBpOPYj8ysbJRuej6WJ0x/rjw8puPdF
+ U0/fKbrNXD7pXgrKerHXCKR/g4PGSiSSLxSuSH+d8IETemHZ1QHI7s9ELu92ew8IkCjLSUHwdvf
+ D70DFwJLw=
+X-Received: by 2002:a05:620a:2585:b0:949:7058:dbcb with SMTP id
+ af79cd13be357-949b35723b2mr2670006985a.14.1795515113453; 
+ Tue, 24 Nov 2026 02:11:53 -0800 (PST)
+X-Received: by 2002:a05:620a:2585:b0:949:7058:dbcb with SMTP id
+ af79cd13be357-949b35723b2mr2670005185a.14.1795515112974; 
+ Tue, 24 Nov 2026 02:11:52 -0800 (PST)
 Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab69bf680fsm30886311f8f.14.2026.11.24.02.10.30
+ 5b1f17b1804b1-4bb906e4ce6sm228682885e9.4.2026.11.24.02.11.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Nov 2026 02:10:31 -0800 (PST)
-Message-ID: <ae1dc71f-ca73-4175-af3b-767c0adedc79@oss.qualcomm.com>
-Date: Tue, 24 Nov 2026 11:10:30 +0100
+ Tue, 24 Nov 2026 02:11:52 -0800 (PST)
+Message-ID: <50aa4c62-1b91-4a9d-893b-c455d9396ba4@oss.qualcomm.com>
+Date: Tue, 24 Nov 2026 11:11:51 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] rust/hpet: Move vmstate_validate!() check into
- post_load
+Subject: Re: [PATCH for-11.2 1/4] hw/display/vmware_vga: Zero-initialize
+ scratch space
 Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20261124095814.437738-1-zhao1.liu@intel.com>
- <20261124095814.437738-3-zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+References: <20261124095719.4126146-1-peter.maydell@linaro.org>
+ <20261124095719.4126146-2-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261124095814.437738-3-zhao1.liu@intel.com>
+In-Reply-To: <20261124095719.4126146-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: lwhhg7rj-GPCm4bzeGaKaW7F88U7BhEi
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfXyEAB9SLxUcXt
- ZdKfW0I/hUAfncHektsotD9RUfqeY60YxVXnP2Psd1JWgBOuSzkpW8JamAcZrSpY0AAWVexYUGG
- vvnU5Z7S26+kiXns5n2/3QvwXuAjkzQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfX0sHvondKGUyn
- GbjfS1zzB9zZ/A+27Hw/qJq/TeRk60r3F4PWII//J9FLHAzhWvaR4M+qP+x4T+sjkqWRyXJxJLx
- Vzf1sILytQbXMpRiFNXHoVZGf4F6vJ9SVsAmy/yDNF1S/5+T3zBP+Wa5uVKdFIjD7a3W/u1ZBPr
- cq9VAr2Uj8ztxdiGZJ+AQSrs5MMHkmCb2QDt8v5x+CRbzEKz0gkd2aAis28JZHerWe1ScTCX4cP
- Hl2IguywF5Zwq1ekq0FrNJWXnUM1l6CPKCC4C2He5yBsbquenLGdMU++y9QYkusI62Ro/p7zWw6
- kdhBlnnV32FUjQrWkt8DsQ/uFnlOk4JY82BDZ7qvdfW08tSEmKlrP6+uVZoz3pWf7MNpAG9FmZc
- Ljt8/ptZM1CgOGRUd4VhMxJpBajFx1KNDgEx/Cco6M/KaMMmjhTs5VXj13tgXcTDmp/dIB+AMAA
- o7Lg+9iv+jLgtd2FEog==
-X-Proofpoint-ORIG-GUID: lwhhg7rj-GPCm4bzeGaKaW7F88U7BhEi
-X-Authority-Analysis: v=2.4 cv=V8DoQuni c=1 sm=1 tr=0 ts=6b056299 cx=c_pps
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: etqg8POaGfWHPzwKDQqcoQxkugtiS1U7
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfX/LeSfqyCJYn7
+ kMA17ixLmkQIzQxRYRnU8l4S9v9E0CDMfKeBa3j3lLYyqcEuZkLNWLqky6/x6wGdhEtbEc4nL30
+ GadTanWxbNoRxJDMWC9PHDwepSiedic=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAzOSBTYWx0ZWRfX2PzIbJKJ9hZH
+ PVbqibMvZ4FsZ16Dhd/QZyCfcBCWVKaVogUqXKUftrzJ2mpuIiNq+MwZ27Z5odLSBk6UDN6nYwv
+ VEha2Ko6Da5s5vdjY72PCmYwmd7ZnNvuuW0X/GXFxI5FvZiNTVO7iPhHMXzOYvazggc8F/5mZQO
+ tEGOAVWoZiUp8Nv5xEytb7ZCHs+vKS04QRCW7g8a54Fw3Wh+4wVRBlCuyEuW9SGyUsawX5K/khn
+ XMk60Cl//JOvDQk+kq8kEKiVwDO9JAU/dd4Fc0HkRZojxynvbAOPnWzba92Qmx/jH+LA9Lyc9BF
+ kCW8Ro/eVLdzBPfca1vAbuN0mnbSzoOA+s8Bkp+0dDdkuZZOnNtccbQ1Ide4aHgQpyyppO7uSIu
+ caaMnKF3jBmmcScgUrKTiM2Ea1gVZtBUpRru5y6q35dXeYh83CS7PDbd8IUfWiYn6Ffeuja2FVj
+ ezDxMhCXJl34grGVGvg==
+X-Proofpoint-ORIG-GUID: etqg8POaGfWHPzwKDQqcoQxkugtiS1U7
+X-Authority-Analysis: v=2.4 cv=V8DoQuni c=1 sm=1 tr=0 ts=6b0562ea cx=c_pps
  a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8 a=rvb3tsV_-39S2AzPs34A:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
+ a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
@@ -155,68 +155,37 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 24/11/26 10:58, Zhao Liu wrote:
-> To pave way for removing VMSTATE_VALIDATE() (and vmstate_validate!()),
-> move the usage of hpet into post_load. To make it safer, loading the
-> timers with the num_timers, then only check against the wire number at
-> last.
+On 24/11/26 10:57, Peter Maydell wrote:
+> The vmware_vga device has a set of scratch registers which the guest
+> can use for anything it likes; we implement these by backing them
+> with a lump of memory pointed to by s->scratch. However, we allocate
+> it with g_malloc(), which means they start out with uninitialized
+> contents. We should zero this memory so that we don't potentially
+> leak host memory contents to the guest, and so that the guest will
+> always see deterministic values.
 > 
-> In addition, drop the test_fn() in the VMStateField of HPETState.timers
-> - this was duplicated, but now the check in post_load is enough
-> (and test_fn should not be used for validation).
+> Since s->scratch has type "uint32_t *" and s->scratch_size is its
+> size in 32-bit words, prefer g_new0() over g_malloc0() for this.
 > 
-> Originally-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Cc: qemu-stable@nongnu.org
+> Fixes: d34cab9f49bc3 ("VMware SVGA II emulation, by Andrzej Zaborowski.")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4519
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> Copy Peter's commit message from his C HPET patch because now this patch
-> has the (almost) same logic.
+> 4519 reports multiple things in one bug report; of the three,
+> this is the most interesting, so I put the Resolves tag here;
+> the others are addressed by other patches in this series.
 > ---
->   rust/hw/timer/hpet/src/device.rs | 45 ++++++++++++++++----------------
->   1 file changed, 23 insertions(+), 22 deletions(-)
+>   hw/display/vmware_vga.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-> -const VMSTATE_HPET: VMStateDescription<HPETState> =
-> -    VMStateDescriptionBuilder::<HPETState>::new()
-> -        .name(c"hpet")
-> -        .version_id(2)
-> -        .minimum_version_id(2)
-> -        .pre_save(&HPETState::pre_save)
-> -        .post_load(&HPETState::post_load)
-> -        .fields(vmstate_fields! {
-> -            vmstate_of!(HPETState, regs),
-> -            vmstate_of!(HPETState, num_timers_save),
-> -            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
-> -            vmstate_of!(HPETState, timers[0 .. num_timers_save], HPETState::validate_num_timers).with_version_id(0),
-> -        })
-> -        .subsections(vmstate_subsections!(
-> -            VMSTATE_HPET_RTC_IRQ_LEVEL,
-> -            VMSTATE_HPET_OFFSET,
-> -        ))
-> -        .build();
-> +const VMSTATE_HPET: VMStateDescription<HPETState> = VMStateDescriptionBuilder::<HPETState>::new()
-> +    .name(c"hpet")
-> +    .version_id(2)
-> +    .minimum_version_id(2)
-> +    .pre_save(&HPETState::pre_save)
-> +    .post_load(&HPETState::post_load)
-> +    .fields(vmstate_fields! {
-> +        vmstate_of!(HPETState, regs),
-> +        vmstate_of!(HPETState, num_timers_save),
-> +        vmstate_of!(HPETState, timers[0 .. num_timers]).with_version_id(0),
-> +    })
-> +    .subsections(vmstate_subsections!(
-> +        VMSTATE_HPET_RTC_IRQ_LEVEL,
-> +        VMSTATE_HPET_OFFSET,
-> +    ))
-> +    .build();
-
-Doing the indentation change in a preliminary patch would ease review.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
