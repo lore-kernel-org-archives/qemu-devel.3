@@ -1,89 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C11D606A680
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65205606A323
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aol.com header.i=@aol.com header.a=rsa-sha256 header.s=a2048 header.b=BJRT6joD
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GaHoq9Bq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW0Aw-0004zq-Ke; Tue, 24 Nov 2026 18:43:50 -0500
+	id 1xW0EF-0006Tk-1r; Tue, 24 Nov 2026 18:47:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <m.seker@aol.com>) id 1xW0Au-0004zA-9h
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:43:48 -0500
-Received: from sonic311-25.consmr.mail.ne1.yahoo.com ([66.163.188.206])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xW0E1-0006Sn-8m
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:47:01 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <m.seker@aol.com>) id 1xW0As-0003WM-4y
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:43:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1795563822; bh=pdHiI/kLAcMhDk25SJ6172x6S6YekHKCD0TIhqG1oEw=;
- h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To:Content-Type;
- b=BJRT6joDL3fkANILSeyOiVz/xlatCYuaWhFUns67hj2ISz0S92RAcNaQZfLcGBoBR2lF7TZ9md8VYG+dlIE3xyGmoNozNR/v0QrJUkSgOyljx6CbE7ddgYgTldXfVubfhCJo03IDoDk/DDrEMGh/tH/a5nnPsm4zxNUmEXmnDGylARKRqn7tyathFFV4Y1GrxWSWfWDLZPW99rApra/EtPU/5kU9D1KlyfABL4QGrFlAG9/Q6ROrFQzV/A4Hu5UwR3w34pnLviUEjvnDMSM4Sq5oyubBAoqOwewOThNOUycKXv25K7rB269LBvYN13XL9q/WQtRpQ2Ut9nqjoUzVuQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1795563822; bh=/WHpSO1wXufh9PUU9rb/ew725QkRdlvWYCtUBm9BJgl=;
- h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
- b=Fttt0/pCYXdsTPaJSzrt/vjLz7rK/w6riO6EL8GBLThGAK2uZmosCYDjCUSwLgUGlimrj9MXqvo0+mVq7PTbd0TztDp8+CvkslADhBfE6kes/s4w0K8JJR5Wv115CNn63hDqimWFE8qRIGel6qib4wyTNDGe8IKJKAM3weALacd/jd9+yE/iT6hIEMXt/4ZE/cuazRrWFJyQTVZ4yOMv976TfYyHAFjWHOzC3+jbvJsQjFMImFQMbruIJAY0BvR4XXOZ1HIZLbweCVlNQCZSp8trd99INz6Rwqrjo5m0GM2ghaxxWRzr1E6r8TsqcGIbAieY8QG0tE8YVJ2+pl71AQ==
-X-YMail-OSG: RHEgiLYVM1lMk.pLwAE2d7oBIQs.aQvX1BDtu6di3jEfwORv9IY1uuKz5Iny7ZE
- 97rw1cFYIq5GrNu1uoK.7.aDNBDYp7XyMZYNTVxo5OJs4t83B9fd_8x1k7qw3OScilIPZP13H08s
- b0RXDAC5lztYRNzuUrcu98G9GU80YEQH5PuiCC0td4n8VNginbU0a2EjU7vi9M1qzZWvW.g1ukN3
- 45VCbuvgFE8YCsP2NM2udBWulUZ2ahcX_0aGn8kTax3cEAgbykHVmfLbMt_aV6wnVcf1NnPsRaJ0
- psHcfWLPqCKuSvee9NPZxMjCYDJMr7N7fpD4zz..G1jQROUeRH3UyvhDhDSesZc8x5LgJR5RA.qk
- dBgHaOL147k6FbEeJ.393HGPnmyJ6rcS0SDMtj82T0pYdoC7hMB2NoghrLgRVyoDbFIslFYp6I9P
- MG8aQhAnOIXOXkZ_GyLU1y06sfFRG0Do0YQLllHp2MVUt0uI4t.gfZds7dDIywa6HmghHIXwB_AC
- 4tlKWBSBV3uMQXr4irSYj52gaQyPV3.z1Yu3Skxgq6BSfNJEu44vZPHKc1Kh0ENbY78n3rUOxr7S
- .u._X_eg9bBFChrwG8cYDmNFYL6y6zj8fi.UAVdTTMc2T3JknHQgGvDpZ05unIJeXNLXHCp876te
- poz4JJKyLgWjvLVa.fMq7QqAB0vieOjg7dwXW17kom8p7L_bTv43LDy0NEYlhXmXXX1luanpmUsS
- zD13uSP5qc0yAbDH022tc59TZCs6yAExptIO1Dbg7Pmw6XZkmoMt_vG_AsvukasBe28CdNO8h1EF
- IT1Kv7Sh6WGDIfvzsvr3Kf.jRUnw1IOkm9wmzenzpMz8QFA6i0p6i_1DcjAkdC9UXB.anIyfnOdq
- 5vPXioxUKt2pl8oARYWZw0d2O2oJlMij5OZ8PbcL6Mwoa9Or_LyjcRIN_wQeNklSlUJPJrhQDbCp
- 96Mk_3hlBTbm7Y4fyz_FOBNjRyA28OIVM9QZWhsq6r7enrjRD.z70CNiYfEypytbekrEi3uNodVT
- fdJkLdDp4Bqmhvxblgyg1AZjEpAavgb95qdaAZKvsVJIXa1RClFljyhpYDgCqSFKw8ZFWwuxUfbQ
- W5HKZkdx1YVAHidUN9q8YiKnCg9lWquDAM8LyB3Bgq02wHtC5hhX3BgrAtuZwP.1aYxWCye1eyJe
- zBydtaIfm77i.e44_D7XUSI1MqzdqofQjZsMr978JBBxtW1vdraWG1xO5faMxUw_nR4mTT8t4lWo
- mEqKf5p9JXnLCKFBhPlOoZWYdk9X3v5QSHqXs8KFRs.lANUF4079gyk1.lon5Xn.se4deZOH.c62
- n_xhXja4qn_y6ioH.5ORSlf5zhCF.0yjR8jQolMWiGY1VIH8IpZkURDvqatYIMaj.vVAmvFFlq3a
- JYItX1OsSU_yVpgr95esNorzVvoPmNb8_Zn4diVhm_aymOY0rm5bQUXKQRiAla8lPoFzSSi0wRVb
- o6JfCEy3AiPYmnrPSihhEsy4dZHNFOIo_FRpKyp2ef8i2UXYZFpoOc4TL61mAn8wvsVGmkx2v0vg
- sFgH5hGGtZmeIDMsdkZ552G8SroieXEOTg8cqns0DdYxWSKe4zrMjA3RtjAjloUpf3Dz_IZslVMT
- 1FGn69tTq7XHeS0PTOs384eJcpkpAVQ0JQoeKBnGduz1zFytrkvEXinwVIcujCFbr19yzVkoPkaz
- HIZjsBAejr2f2DCEWajEsj5BtdERMvNuvq6DHzwwNCQFFTTp5TGKsG38AZcdmt_MtdjZAzyhIUSD
- 1fFON2y10ldrQRvsPfT9_ImYW73HucV7KiPzdrtlJvemd1L3wTpJT8igGA4CBkR8hQKoPmeIhZ.T
- mKRcVgfTsq17zAa.vkvXW04Z0wYXDX2WxWgILkWqyhRxFchgVUI62clgF_E8kX.wwh4mkxC6Pk17
- Sw7TqiSnDMCBJVGUZ3avx4yEtCFBaNXu_GktVDQzCXgtHU2HSwEQyVY41hK2m9S9RydLDQXbYZ4m
- 5sD2xCzUEjut7JQX5hxkwIkKARYwxPlP.zeu5KY1ULXM_2Zs_4CssPKSrvMJigP8cVT7Rqjs.0el
- r2q1vsP48IfhzsdmEYdKkHFmR6GOWuL9SwGzYcz2lGQuWB2vTpp8ed9TzC9JQjIWWK456rrvJtqt
- wNMqc0bDlsDegNog0xMJviqGZameGnht5bUKZDB6Ydgkh29_ngm0RFNh8IIJcuMQXZYi1zdCNUxu
- 9BHViPq41yTxbb7bnePTiciP6h3bl1mJGmOtX2bA8QuaYT7TBTBBTuFBravw-
-X-Sonic-MF: <m.seker@aol.com>
-X-Sonic-ID: 17ab4107-ea1a-4f4f-8da2-9ab3f2a88c21
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic311.consmr.mail.ne1.yahoo.com with HTTP; Tue, 24 Nov 2026 23:43:42 +0000
-Received: by hermes--production-ir2-7c4859dc89-5jcb7 (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 3b8f81a9f960c94d9317978dc48cbc1f; 
- Tue, 24 Nov 2026 23:43:38 +0000 (UTC)
-From: Murat Seker <m.seker@aol.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xW0Dz-0003qe-Lg
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:47:00 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4a9be758734so3214431f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:46:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795564017; x=1796168817; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=+CjRTWznI/DieEMibp13lhrGBosFJP3Y8S+JTPO6RbU=;
+ b=GaHoq9Bq7J3UHoKkawz8BROzTXkOuldwX0k7Wg19tixgkCfoAOQIebzITfa+jV7hkg
+ Cmq8ROGcVmgCiPp6wmWeoKUZqWVTtlpMxHT4SQaorBVMno8axZ/Yz5GJBuXSIjElGPIh
+ cMsz+mRUn1Oeb1Ay+o3Ozy9pyjMJ31O5D0EDOkGelc9UvXtjCHtNaw/KGQ8o2DFdJuHI
+ IcZrcyT1bRqrx65tr0NLe58pKGL9h6N8QMphZSz1EfH5+GwoISUaBpiUX6OEAkJleXRf
+ Ows7zpJO5BsG7VnGWSDrEg3bD7vKpcXR2xNGMTTM4brNp+fKJ73tVk/4gLTPXOCACvXi
+ P81Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795564017; x=1796168817;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+CjRTWznI/DieEMibp13lhrGBosFJP3Y8S+JTPO6RbU=;
+ b=UAvgafYQa5HY0UDqaO0ncOueLst4J/Z0YNwO/cp/ROVMynxzw2dI4nkEiPkzerl11O
+ vBtn2VRDIeHpsyWyjhtayNl8EjVjSEr4/lFSFxvKmsULImmNiQ6sO7amtgKetTEa6ONA
+ UUKkRHxZvD0OlmgIlPOJcorixjOCZuA7BTTNZ8YeiF7wOFOzGnNUPmpgAByWP8lFo4ii
+ 6GrsBKr01yZOiL6bgnVMmkMbwDGiy5Zai7ihT5xRFwDVAhFkdQWo0oZWz/UHnUwXbvqF
+ XmtkHLI2o5FeajfFnM4y2mDO4798YjZQOSpBYyuTYxYs6ZJ1+YvcVXGsdzTmU7ySt5a8
+ rsnw==
+X-Gm-Message-State: APuU4Z96YUGeAMkzq7+sVSNvY+AJedgitbZy7oT/bHi56KFCtz240pLI
+ vrrR6p/XbC/nlS6MlmlZaPDCxyFOOgmZZo6DfrjqfKKyIF4t7ky1uribZak6hufCrKo=
+X-Gm-Gg: AZFdTZfF9qwUIX51vBu+BGLbEhsTdd49zmZ+dYBWIlUna/dSZtZA6I+ufaUD1OfjPmT
+ 7xV5sVuI5Ak/zQf8LTUr2IOhKcC7ND4NRCmB9x2N7eGyLzpCbOT6OCfIhu6MVBpwnI1KukTi8B2
+ geX8A3LrYBnpzfdC7w0YnlzFrUIWOuA5LCBUMvBUUxPStyxBKHOshJiXZ6yaZTHCeG669n/vFhy
+ nyhtwH3Y3ytqSoCiQA+WwhvlzoUVUKmhwz8F2bDr5O68OJxRTmCAIxJtsjbp04t/Jl8QMeJtwRt
+ rfRDD7q5SIzSzXjVt2bzZfZBkfmg4DBd/UHwbjR2s77tYW7CTPQImphOzHZQ6NYH+xVsxhvuOn+
+ 0lLWpe7QCTzpppWU43z60+PXhxVla8+m+R94IBzcp13oRgb2P/4u+M7waqHocDKeaVnjql+5LL9
+ X6WCEwZvxLryinuDy5GauEonEYObEGWGs/sozDzUCbAeD4VowYrXlDOwrAJHxitPj6tCphuJMI+
+ k1FWT5eCQ6fpdJ118lhZE1HjgDu3vKLOWnTuEvAhR6R8zWx90FZe50XQh30MXILIsLZl6v/GKNU
+ MdGv+M2mTLANqMeTmi7Au9d9FU1qGlA29+cBZa598S0WcG9Gow==
+X-Received: by 2002:a05:6000:186b:b0:4a6:4f35:336b with SMTP id
+ ffacd0b85a97d-4abab02c60amr32233923f8f.5.1795564017309; 
+ Tue, 24 Nov 2026 15:46:57 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab6bc8ce06sm30064948f8f.47.2026.11.24.15.46.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Nov 2026 15:46:56 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3A9345F7E4;
+ Tue, 24 Nov 2026 23:46:54 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2] accel/tcg: Skip clean MMU modes when resetting TLB dirty
- flags
-Date: Tue, 24 Nov 2026 23:43:29 +0000
-Message-ID: <20261124234329.20579-1-m.seker@aol.com>
-X-Mailer: git-send-email 2.53.1
+Subject: [RFC PATCH] accel/tcg: update stale comment for cpu_io_recompile
+Date: Tue, 24 Nov 2026 23:46:50 +0000
+Message-ID: <20261124234650.1891639-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-References: <20261124234329.20579-1-m.seker.ref@aol.com>
-Received-SPF: pass client-ip=66.163.188.206; envelope-from=m.seker@aol.com;
- helo=sonic311-25.consmr.mail.ne1.yahoo.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,80 +99,41 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-tlb_reset_dirty() is called for every vCPU from
-tlb_reset_dirty_range_all() whenever a RAM dirty range is cleared
-(e.g. for migration, display updates and code page tracking). It
-walks the main and victim TLBs of all NB_MMU_MODES, even modes that
-are known to be empty, and does so while holding the TLB lock.
+since 18a536f1f8d6 ("accel/tcg: Always require can_do_io") we always
+trigger a recompile when we detect i/o mid-block. Update the comment
+to reflect that.
 
-cpu->neg.tlb.c.dirty already tracks which MMU modes may hold entries:
-the bit for a mode is set in tlb_set_page_full() before an entry is
-installed, and is only cleared in tlb_flush_by_mmuidx_async_work()
-when that mode is flushed. A clear bit therefore guarantees that the
-mode's TLBs contain no valid entries, so there is nothing to reset.
-
-Skip MMU modes whose bit is clear in c.dirty. A plain bit test is
-used rather than iterating with ctz32(), so hosts without a native
-count-trailing-zeros instruction do not pay for it; the per-mode
-check is negligible next to the TLB walk it avoids.
-
-Signed-off-by: Murat Seker <m.seker@aol.com>
+Fixes: 18a536f1f8d6 ("accel/tcg: Always require can_do_io")
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
-v2:
-- Use a plain bit test on c.dirty instead of iterating the set bits
-  with ctz32(), which avoids the cost on hosts without a ctz
-  instruction (e.g. riscv without Zbb) (Richard)
-- Expand the commit message to explain why a clean bit implies an
-  empty TLB
-- Timing, edk2 boot on aarch64 virt -cpu max (TCG), total time in
-  tlb_reset_dirty() per boot, base -> v2: 10.2 ms -> 0.53 ms at
-  -smp 4, 261 ms -> 1.6 ms at -smp 100, 1.56 s -> 6.6 ms at -smp 512
-  (parked secondaries, so best case; details in reply to v1)
+ accel/tcg/translate-all.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-v1: https://lore.kernel.org/qemu-devel/20261102022732.2418106-1-muratseker@meta.com/
-
- accel/tcg/cputlb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index d79eae58df..5b10eb0175 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -883,15 +883,25 @@ static inline void copy_tlb_helper_locked(CPUTLBEntry *d, const CPUTLBEntry *s)
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index ea8257935ed..59991339620 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -566,8 +566,10 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr)
+ 
+ #ifndef CONFIG_USER_ONLY
+ /*
+- * In deterministic execution mode, instructions doing device I/Os
+- * must be at the end of the TB.
++ * Instructions doing device I/Os must happen at the end
++ * of the TB as they can change system state affecting following
++ * instructions. When we detect mid-block IO we trigger a re-compile
++ * with cflags
+  *
+  * Called by softmmu_template.h, with iothread mutex not held.
   */
- void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
- {
-+    MMUIdxMap dirty;
-     int mmu_idx;
- 
-     qemu_spin_lock(&cpu->neg.tlb.c.lock);
-+    dirty = cpu->neg.tlb.c.dirty;
-     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
-         CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
-         CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
-         unsigned int n = tlb_n_entries(fast);
-         unsigned int i;
- 
-+        /*
-+         * An mmu_idx that is clean in c.dirty has been flushed since it
-+         * last had an entry installed, so there is nothing to reset.
-+         */
-+        if (!(dirty & (1 << mmu_idx))) {
-+            continue;
-+        }
-+
-         for (i = 0; i < n; i++) {
-             tlb_reset_dirty_range_locked(&desc->fulltlb[i], &fast->table[i],
-                                          start, length);
 -- 
-2.53.1-Meta
+2.47.3
 
 
