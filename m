@@ -1,148 +1,128 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7D606A32E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 07:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C93606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 08:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PH9ql3T7;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=kxPQf06/
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=GBsXan3L
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVl9O-000258-Jy; Tue, 24 Nov 2026 02:41:14 -0500
+	id 1xVlbK-00076k-Ka; Tue, 24 Nov 2026 03:10:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVl9M-00024u-90
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 02:41:12 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVlbH-000741-QO
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 03:10:03 -0500
+Received: from smtpout8.mo539.mail-out.ovh.net ([51.210.91.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVl9K-0006uL-7s
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 02:41:12 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AO2k68m3225389
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 07:41:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0O0TNazQUKLQQxcvaX7GBcTQ7n7vJtd5fRE9qKl8x88=; b=PH9ql3T7CZRvpNXB
- 0Aov7fWt4cd5f0dmbatmT0KC3kN1sIlLwMxGlG7IJUZbV+lVHu/1aabQtE+zzZ60
- Pay5h2+AxOEXfEclpQjpPUDnUeCT7A2x/7QKtrIK4HnQJgu6so6OnNf9Oxi13H1R
- EPcRzriOvQec8tb4o1Olz7abw/Kd8On5h96DGrxPI6izURxegqbV9L7nBS7APWl8
- T+khFBrfIdYfMcKu98EaGpyppWulJIMqTum9uzZczhCoWTS85gFleIwJKnxf3sdN
- msCJvJWCRONYAqiD+HFKz1aqfOpItr5QQfO4GeA4t2xOeVaJTBTo0/hTtQ/3S4fK
- +YFaZw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4x8f1sx6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 07:41:08 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93f1f2fafeaso487621385a.2
- for <qemu-devel@nongnu.org>; Mon, 23 Nov 2026 23:41:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795506067; x=1796110867; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0O0TNazQUKLQQxcvaX7GBcTQ7n7vJtd5fRE9qKl8x88=;
- b=kxPQf06/GBsAyn/SwHc4Ki51xDZYip9emIOASGlejIcPubnz11b4Ijsl2eerGwnisc
- ZwjK0SEVINWmbduDdT5bIFYw0hUqQpLH5HjdnNL5RbItwTdaKhDgnUajbYt2qwAO/9/U
- 2M4w67HOgw5zN8FvHMV0+4nuSTTnpI6xgUanmhA8Kx3HH2Vgmggxfr+VSZsnS+r/7MFb
- U49l2LtlnBmpW1VZb9sgGMcNOjtX7hKgscVkOL+fPnE7/SkHc/F+0ePyARG2jgXjwXSZ
- 7/r/jlM2sq6dbP6nf73Fn4+JEKWvmW2/QUHWBRFMtS041CQebW4FqZaThNAj88t0z5Ti
- fn3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795506067; x=1796110867;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0O0TNazQUKLQQxcvaX7GBcTQ7n7vJtd5fRE9qKl8x88=;
- b=AfAaxFXypeNSwdQ6y8qAzWMeiHRZHqAZsM9uIvN4FgDfWmleiupXIR2MJWngS11p2W
- sUknj2j7qedxMC8JTPHhi9jowrFuDkj8EGXoo+dNW2boYJESJ3CDYYXHrAsOgzYXN0Sj
- klalM/ck7AOjDG9T0DDz0kFiqbSgDUBrjZuM7g9pYmnMS1bECNk+w7i6l32U+fsuj9v4
- YV4Y9NVO3VN2NJaEHNMsvOUwgKVWz9Cup+2beN3ccD1Bdfe5yjc0ACtTUmBrODGA5qPx
- FmUWqUtiDeEvLubh+gwrIjdn9nxcZNxjC5fQCIATFXtXwSEJJ6pW9Omln6S94Bt49bCN
- OP8A==
-X-Forwarded-Encrypted: i=1;
- AL+hErGaywcZ8zQONCr+GE86SfvqH4ehbSrrt1IhtPZ9tBZZDj5YFCzoIlQt5jtdSGA8o7yq7zazY97C0VBc@nongnu.org
-X-Gm-Message-State: APuU4Z9gawJLioh29LQl5cz1plKr5bfOCv7b7rnwnmHMToJ214mFqpeR
- 13dodl8qZvkUb5N6Zuo62sGWUxs8M1YRoUcgnLSmcey3EkzY5lpXokYV3/qjti0sA0HUJALxbyf
- SZLWejyGw2bL78xzKTfv1bXMNut6xzBP0OHhITfncHJmVtV0ttuOx0eDtzg==
-X-Gm-Gg: AZFdTZdFGZImDnrI68fhniNh2t/D8KOZCIKD6Ljgmpbq6L467U5inrXAj7+rq4N29/G
- bY/8PMxGWW+9s7YLeaVRlL4WmnAiCj4U1dI8mDPPw+Bw59vx5QQ/Ozw86ZAPLrYjlvSXcr3ebw2
- 99sT2OaUmeciewj4xqxzPn7zCUgvVEX+mlVfuJr0pJJsiWtiaG43et6vQQ1oQ/qSvoyzixO6sNG
- 48fpfopIC1rmw5Z7VVrC9aQ/fe9MQ/cCW9b1qYC8cA3vGuI+SIvUOT3/81v1+q+j4NpgtmfmVqJ
- spD6UQxTUt0ho4mtEtqsBUNPhBCzS0PfcbZAVHuXsKyv2BKvo14Yc0ynswidJ+awI+iQ7BtsAa5
- 9DAzVK1cIns1O/m7QZjlr24uy9KWdEd7BGmNpYHRVfnmlItWKRg+EhsrvXQHidVnEDalKgdItsH
- UURGmaF+U=
-X-Received: by 2002:a05:620a:6011:b0:949:733e:ddd8 with SMTP id
- af79cd13be357-949ba9ef1c1mr2159741585a.54.1795506067103; 
- Mon, 23 Nov 2026 23:41:07 -0800 (PST)
-X-Received: by 2002:a05:620a:6011:b0:949:733e:ddd8 with SMTP id
- af79cd13be357-949ba9ef1c1mr2159740385a.54.1795506066694; 
- Mon, 23 Nov 2026 23:41:06 -0800 (PST)
-Received: from [192.168.69.234] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6bb989eesm26403633f8f.50.2026.11.23.23.41.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Nov 2026 23:41:06 -0800 (PST)
-Message-ID: <e271405f-b7fe-48fa-bca2-964945c38994@oss.qualcomm.com>
-Date: Tue, 24 Nov 2026 08:41:04 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xVlbD-0002zv-Nu
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 03:10:02 -0500
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [79.137.60.223])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4jYb7w3szVz4Dwr;
+ Tue, 24 Nov 2026 08:09:48 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <aurelien@aurel32.net>; Tue, 24 Nov 2026 08:09:48 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.110])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jYb7w0Qhdz1xqZ; Tue, 24 Nov 2026 08:09:48 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 2D3329421AC; 
+ Tue, 24 Nov 2026 08:09:46 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-100R003600335fe-df3c-490b-8935-daa458e95dc3,
+ 8999D460E3350DC70288BFBB7677D99C31D99569) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <d515161e-f382-4937-a342-4d21e16332eb@kaod.org>
+Date: Tue, 24 Nov 2026 09:09:45 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio/vhost-shadow-virtqueue: clear ndescs after use
-Content-Language: en-US
-To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20261123231319.377104-1-connorkite@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261123231319.377104-1-connorkite@gmail.com>
+Subject: Re: [PReP] Maintainer status check for PReP machine
+To: Utkarsh Verma <uverma@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth
+ <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>,
+ Aurelien Jarno <aurelien@aurel32.net>, Helge Deller <deller@gmx.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Chinmay Rath <rathc@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
+ <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
+ <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDAzMCBTYWx0ZWRfX17NVFo+GDAi1
- OsZyiWi4H6zD9tE4FwG7EkxvIXS6bk67oEQGcVl8sbXZ53cdO6HWlo3agazjMxspNNjyZfBF7gg
- ZiSoPZi0D+TCV4KwKPfSiN3ntkbKFdQ=
-X-Authority-Analysis: v=2.4 cv=JbgpPkKV c=1 sm=1 tr=0 ts=6b053f94 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=69wJf7TsAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=Tgs5-w0UsqH80BqOBvgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: lFb5mO7yoaZ0tNSvbfqTa_UbVjEF8ZLj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDAzMCBTYWx0ZWRfX4Mdr3bVHmEdX
- OSvzJq5MFiASfUpCiqG5k/1HKphrGm3mHCaqS0qqpO8fRB50GfQoIx5X1FNF6QWksTNqEufcRKP
- SzhM/7ETJ3eqX2oS9EaBCMIOEwtySzmp8fK7QuZKBf5P6TIpm76GsumGRHYRlBhPeSJaUl9RuBR
- 59O2wIJTkdKlZNHoqkk1EcwlO3iXcVv/F6lGSkNy6kTfT16bc2Wi+XbbTXkNdi7xD1IVaMJbw3j
- HjltU/FhUm+llRNI1yj0ooyDVCobbXl3FVQk9rW6Yt1O0z8UnAihh8WGZWdEGE/mPiMwaSQFa9y
- XyJCoPvzDlPFXztwJ8dQac1T6K1CdPylynA9mtWX0V38OQmPLIvz7U3ttpawgf+LUwwoFXFwZeU
- WXUwdznUYM3J22W/ZIHX7Q+q1JMKWYevgj4v/898mVN0zmqbBRx9061nK5m7oiHRnP4Jb1Bf1+Y
- ZpVvkFsrypwkqga72Hg==
-X-Proofpoint-ORIG-GUID: lFb5mO7yoaZ0tNSvbfqTa_UbVjEF8ZLj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_01,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240030
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+x-ovh-tracer-id: 5065423684397542607
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEZm84HoMj45sO/1x7YFO/ArULT2E04AS0QUOzHFkA7dYcGZyNVpVilCSAWYgem4C9ROrNfR/r3oTWHTX2cKifnCSLPpfKAqgP5V3AHJMVCP+RYrUteosKPn3w1kUz1T2GZ9ZAS602v3L1lONs3/QY175xMwAiNlKgHwDcICIJItKljq5Ia4W68XEd4+orGiKReK11WHT6ayykZkikFqzSTQ1E9aatrzyzVDCY2LiADSLizUCiSzeh8YVqmBzuDkMuymVeYNLb09SnEYVaLe8vHVfO9moJ26Q90QJciGHsyzbNArECenM0C1c6ofHM5MuGX9nmX9BEJ3VvNSlt10OmDOeOQiNibBuMXWN8ynv/preNWvbat1Bj9yk1hHwhZQcc1LjplAkw+CU2qxpc5LfZJLAZ2cf2lQsinTwwHNvQSd7zRPdZ5SHZ+qTQOhtdp8mMzq9E3DrJ0fUraE/nTBuK7eEYz2cc7bTdpbkrk79qsZocAZzr4fVRw69ftz7QTzTLsKNirWSLA6tCkL4ycm8BPSZqZfhwsWghRSNLOmwSKEjfAKxszVDeR7R0iuRS/1fTmEzdm4rF0Io13ccEr9HQ45R7GDjnuEZwcxvTmvdT2u6V4WiS4Mjd7wyiB4y9HEFbMGCEX0Ym1DvwjrK6LHq6AwrwGVLjwyRkRh2RrBNaARg
+DKIM-Signature: a=rsa-sha256; bh=gejiQBEZE8DX5Y6ZwHO/I/SjRJjUQYTxsqVb5kLCkUw=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1795507788; v=1;
+ b=GBsXan3L5qM+I7zlAi1Qy2jgpBsQk25f05FcaA+6gicRFsnQlRdqLmFvcRh1cE+b27vzxZb6
+ tHOB2RmPzjYgLRIe+ylqJCXTmiLXy5x0WaWS3jPmZpWOJ3C3mGbUdT28YImCiMhFQ1ZGP2u/kiy
+ mSgpmm1JOyz9D6jJ5pYXxCtrZ7NMU/ecxWQrSfhWep5idgF5dJ5WuahCjAO6ootZzeO938gQGu+
+ OuQJg1lmIoXesfhsNhIHsgVxPiIK6P3GFeUojTBzwV4Mp1VsrvoUJbDl1OE9dRsTeTDB91GXZVq
+ GDDbxqO5tpHxq2uIu1oc+MoN/VRM6QFsRYa29LMvuhxeQ==
+Received-SPF: pass client-ip=51.210.91.47; envelope-from=clg@kaod.org;
+ helo=smtpout8.mo539.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,72 +135,87 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Connor,
-
-On 24/11/26 00:13, Connor Kite wrote:
-> When a shadow virtqueue detaches the buffer associated with a used element,
-> it adds the descriptor chain to the head of the free-elements list. However,
-> this currently happens after svq->desc_state[last_used].ndescs is set to 0
-> in vhost_svq_get_buf, introducing a bug.  Only the first element in the used
-> descriptor chain is added back into the free-elements list, with subsequent
-> elements being potentially orphaned.
-
-Not really added to the 'head of the free-elements list', but the former
-chain tail to free_head, then makes id the new head. Suggested reword:
-
-   vhost_svq_detach_buf() uses the head descriptor's ndescs to find the
-   last descriptor of the chain and reinsert the whole chain into the
-   free list. vhost_svq_get_buf() currently clears ndescs before calling
-   it, so multi-descriptor buffers are recycled as single descriptors and
-   the remaining descriptors are orphaned.
-
+On 11/24/26 06:59, Utkarsh Verma wrote:
+> Hi Philippe,
 > 
-> Zero out ndescs only after the buffer is detached.
+> On 11/23/26 11:02 PM, Philippe Mathieu-Daudé wrote:
+>> Hi Utkarsh,
+>>
+>> On 23/11/26 18:14, Utkarsh Verma wrote:
+>>> Hi Hervé,
+>>>
+>>> I wanted to check whether you are still interested in maintaining the PReP machine in QEMU.
+>>>
+>>> Your name is currently listed as the maintainer for PReP in the MAINTAINERS file. However, we haven't seen much recent maintenance activity for this subsystem, and I wanted to check whether you would like to continue in this role.
+>>>
+>>> If you are still interested, it would be great to have you continue as the maintainer. Alternatively, if you are no longer actively involved or would prefer to step down, please let us know.
+>>>
+>>> In the absence of a response, we are considering sending a small MAINTAINERS cleanup patch to remove your name from the entry and mark PReP as Orphan, so that the file accurately reflects its current maintenance status. This would not affect the PReP implementation or its functionality.
+>>>
+>>> Please let us know your preference.
+>>
+>> Are there any PReP patches pending review / left unattended?
+>>
+>> This machine works well enough, is tested; what is your issue with it?
 > 
+> This is more about reflecting the correct status in MAINTAINERS file as the currently listed maintainer (Hervé) have been inactive for about 3 years, although the patches are getting reviewed by other community members.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 86f5f2546f03 ("vhost: use SVQ element ndescs instead of opaque 
-data for desc validation")
+yes. That happens very often for tree wide changes. Nothing worrying.
+PReP being an old and stable machine, not much is happening.
 
-(Please check this is the correct commit introducing the
-zero-before-detach behavior).
+Debian still boots :
 
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->   hw/virtio/vhost-shadow-virtqueue.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-> index 462c86dc1e..1afd3edf87 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.c
-> +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> @@ -604,6 +604,7 @@ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
->                                              uint32_t *len)
->   {
->       uint16_t last_used;
-> +    VirtQueueElement *detached_buf;
->   
->       if (!vhost_svq_more_used(svq)) {
->           return NULL;
-> @@ -637,9 +638,10 @@ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
->           return NULL;
->       }
->   
-> +    detached_buf = vhost_svq_detach_buf(svq, last_used);
->       svq->num_free += svq->desc_state[last_used].ndescs;
->       svq->desc_state[last_used].ndescs = 0;
-> -    return vhost_svq_detach_buf(svq, last_used);
-> +    return detached_buf;
->   }
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+     >> =============================================================
+     >> OpenBIOS 1.1 [Jun 29 2026 21:11]
+     >> Configuration device id QEMU version 1 machine id 0
+     >> CPUs: 0
+     >> Memory: 128M
+     >> UUID: 00000000-0000-0000-0000-000000000000
+     >> CPU type PowerPC,604
+     milliseconds isn't unique.
+     Welcome to OpenBIOS v1.1 built on Jun 29 2026 21:11
+     Trying hd:,\\:tbxi...
+     >> Not a bootable ELF image
+     >> switching to new context:
+     loaded at:     04000400 04015218
+     relocated to:  00800000 00814E18
+     board data at: 07C9E870 07CA527C
+     relocated to:  0080B130 00811B3C
+     zimage at:     0400B400 0411DC98
+     avail ram:     00400000 00800000
+     
+     Linux/PPC load: console=/dev/ttyS0,9600 console=tty0 ether=5,0x210,eth0 ether=11,0x300,eth1 ramdisk_size=8192 root=/dev/sda3
+     Uncompressing Linux................................................done.
+     Now booting the kernel
+     
+     Debian GNU/Linux 3.0 6015 ttyS0
+     
+     6015 login: root
+     6015:~# uname -a
+     Linux 6015 2.4.18 #15 Tue May 20 15:11:37 AKDT 2003 ppc unknown
+
+
+
+Kudos to Mark for the OpenBIOS support !
+
+  > It will be good to have someone listed in the MAINTAINERS entry for PReP who is active in the community or we should change the status to orphan, so that it encourages others to step up to maintain it.
+
+Do you plan to step forward as a PReP reviewer ? You could start
+by contributing some changes. That would be a good first step to
+show your interest in QEMU support.
+
+
+Thanks,
+
+C.
+
 
 
