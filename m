@@ -1,90 +1,121 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F01606A336
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED13606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Idy1/H5N
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=yS5VTtYZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVnal-0001ry-PQ; Tue, 24 Nov 2026 05:17:39 -0500
+	id 1xVncu-0003x4-Oq; Tue, 24 Nov 2026 05:19:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xVnaj-0001qj-23
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:17:37 -0500
-Received: from mail-pj2-x09.google.com ([2607:f8b0:4864:39::9])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVncs-0003wl-N1
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:19:50 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mdspan.github@gmail.com>)
- id 1xVnag-0004Xv-U7
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:17:36 -0500
-Received: by mail-pj2-x09.google.com with SMTP id
- 98e67ed59e1d1-3b3fa8df5c4so2095608a91.0
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:17:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xVncr-0007RR-0M
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:19:50 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-679a2b5fe87so4111381d50.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 02:19:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795515587; cv=none;
+ d=google.com; s=arc-20260327;
+ b=S+H0BrKQvcvz3LIak+Ab6EoOwRdhmDm3xEMISZNgICcFulJKrO0g3BHv5lc1s9c433
+ Eamu5dX3u406H4prNcKHOwtN4CLSDEx4b68gcbMWg8sTnSPj2vuiYH4q3drxpZEgjXx/
+ CV7kAaWKXAxJ+kFptmLzn+bsw7v9SjTRJEjiLNgxeKDG5JdHUtYOmqBbDpeyP8XlxZ02
+ DlZqFlzpRSF40A0kPYhbQ1Fo6O1U2h+bH/7MhNBvKs4QfmWwBkTkZtwrej0CS4rYcSRC
+ PS/NFGdYx86qpUwmbJFXUjIirF+7U4B3orwBLFmj7zJNnZ3cf0OE0YQTXF9jhaaaLhwB
+ twyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nOkSFZ9DCJRzUjukGwLhgBbkWXA+7KZKXcsQdbhpKb8=;
+ fh=FzZ3BvsmT+R7+S/QSSfvr5c8Wgi11LrLsVHAGdCaYGc=;
+ b=fn0ZwEWA13WNgWkZXglSScnP3CvMl87grbWYCOiZ0xoCa8j8Fb5HDOduEk+GULSTaq
+ HddqrEhUT/kVi6IXCJw96O3Kxr25SJPqmO3KuuShA+FtMF4FcXIgwIi98fASY8Zz2QvT
+ 9yKsjpONbFdTJCDNndvj+dF5F6fw5UCup9UIOnPlK7vJrxYgO3uOpjN/4T0PlPCmHL9w
+ 1ncCgYMs5c0go99eZzcxs8UNVqaQ4zTv4QU9KlCgYKVMgcbsrdV0honaLzIUhSqtp1X/
+ faKyWt+2EhNy3jaD575Gy63ICQ/9bt1MySyzZhrB6I93xOri6zqvkBRuWeU3s0IGNA1l
+ jL0g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795515453; x=1796120253; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zMpaEscxKPbTPmtI2BRHefK4YkqR6gJfr/SCIzxGkeY=;
- b=Idy1/H5NT8NNaJS4TE30quOgp+Ho1qQ3yFf4pIOy1zigloaQd41sVvQdkHK9NPwZcK
- utZz6W8s83vD01/NHS/cihaCBwKw54UD0em7XBEi+tKGcONykR6pbZtSS0CYtoQ9vRa+
- J9y5CaNL+fgA7KD1bW3MRBuck1rW0AdTprY+b0jzUl/yHICpXq5QYVT60vBVtm+IVOMz
- u06ZT5LMDyqHC1t0NSCW09kgNdBkofwG0WFbOq0ZVczawe3kY59u+TQjnvaxv8713/Lv
- lgoLquXTv/Dkix3PGVKJlFW8mY0oFetgAnhwrlBubGnj0CWnYNcAgmXkB/IQuB4dv7zm
- UA3Q==
+ d=linaro.org; s=google; t=1795515587; x=1796120387; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nOkSFZ9DCJRzUjukGwLhgBbkWXA+7KZKXcsQdbhpKb8=;
+ b=yS5VTtYZCHAdvdUDkmcnGYoFJ+Vvc9yEp0ybujlKRvrU0AsC9bLwXyk+WAyZp6GAZT
+ bbPvsNKzkn+vZFUyaHMEacco9LXl3nbiqSUHfeu7TUDTPI2c7cZZgFJTGoxYJ82wk1q6
+ TvBBihPZu+1nEhcZZzSSJt0RqCVkiNjNi734hjWDeX5ceg53q/nR8DNPqhD0AWyvQGoY
+ jkYPg7K+POJ+IGxMQtGtfZm1ILlbQzaRVuw9UUTNfPPk1hosaQYGI9g0hHBfQHB62JTe
+ IiqbteDtMmEXiw2Yp7m0qah+NtskCX89zVryJH+bj8QwtO9b5b55PpkOOCMxcaXxElJ/
+ 3qvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795515453; x=1796120253;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zMpaEscxKPbTPmtI2BRHefK4YkqR6gJfr/SCIzxGkeY=;
- b=WuABh8EY7GlyUWg/04FPW6jmTBt+ut4OngdjN+J5PE1CcDbT21MI8U7lfn2BvFaIph
- vwwQ2kfdLe2As8m4ciaUjiI1QYEOa0395RRLB7o9xrAa+V4yxh8KtdzBuQfRhacIHKlq
- Tx4cOoFslLZoOGpLR3mqWq6mh7MsqO3XtISG5lLlDLpWrjsOGOz5R9lKzWt1vIMYKiUC
- hCRa1CDupcWPF2vzy21VG1MzprGRRJKI2ywK2uxLjW41KMiulCnhXsZZHXkbjrI3jNJr
- PD0OpXDxolcjmMCfiX+A9ojG+uBfsXsiTHmCmISEFecnpxgRCCViQi7AfwAdk/2okUzE
- z8Ng==
-X-Gm-Message-State: APuU4Z/NiPSLWAuIHI8ZNucGDagjtVqA0snBZE5+EwmP3PWAFY0p519k
- q4Sov57kBvYDxVku1qiEtdxHIehJj6HVT0oTmodfHBxCqu6CsnQov1zOzfWGLVBrdhM=
-X-Gm-Gg: AZFdTZdSj+pSK1pbS5gsj0vwsqfT6PrsWgn2s88H+5OzlVxZGxS/MFKJSe23d+UdClC
- 5KHgJqWsjERqq3DMYYSa88iqnvsa1AcHQEcGFIDo2TRhbhHPwgH2YeKB0A4QmdNWzeoTDVBeopd
- n1VBiiAiH2h7iZsNRTsXoYLIOS7k/NUCSD/cT9snJm7yC2psQSdJnvy7HhnNFLWQULAip1VXeFC
- IrsKM2MPv62JTGya//MUlBmxpwaSz2Xw+H1GX3l/3MhwGDA/iPsH+77OjWSDnc59JqC9DM88CSU
- 8b4t44atrTJ6ExtpU1JZqjUGQDvT5EewaG/kC067yg9FMGe1HuIpmt2cY+BtfiVORLjUDJAxdrh
- /3yQ22H3cIEV7GF+ZVIx5iwpjfvJn7LmOrwQNJ7GeKnF6L+ee1RjL6iRbfRi5Z6e0TYK7Qd1m3L
- YhYyA4WSWH8w4kBpuzP4FI0FuppvnEfOIJYa3rkxvvsgnp/Yi/BZwvj1fI2GOjXJIxCvYNXKG1S
- Zbs2QaCTbWOzvK8CCScOvQr4EKmHjRroubMX7OCa46+UIMnUbVaiEnhs1gLtzFrnU/sU+xFahBK
- aZc0n0m9UCibhi/IW0EJQFIc5Xwb850=
-X-Received: by 2002:a05:6a20:2448:b0:3dd:a197:ede6 with SMTP id
- adf61e73a8af0-4014dd64312mr16195396637.53.1795515453390; 
- Tue, 24 Nov 2026 02:17:33 -0800 (PST)
-Received: from computer ([2604:3d09:98d:800:e939:4613:1d28:dfcc])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cde6cea748csm6627920a12.4.2026.11.24.02.17.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 02:17:33 -0800 (PST)
-From: Tim <mdspan.github@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, zhao1.liu@intel.com,
- Tim <mdspan.github@gmail.com>
-Subject: [PATCH v3 4/5] target/i386: emulate LAM in TCG
-Date: Tue, 24 Nov 2026 10:16:53 +0000
-Message-ID: <20261124101655.2269531-5-mdspan.github@gmail.com>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261124101655.2269531-1-mdspan.github@gmail.com>
-References: <20261124101655.2269531-1-mdspan.github@gmail.com>
+ d=1e100.net; s=20260707; t=1795515587; x=1796120387;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nOkSFZ9DCJRzUjukGwLhgBbkWXA+7KZKXcsQdbhpKb8=;
+ b=QLpNF+u9F8BCcqTJ45TYGMcOS147ckQ9c7sIlGEdmwpg7bt33xvc4hpMRhWHzJJy5J
+ Mwt/M8yRGH8+ctRkR8HesCNUQSRAt4SXqSPKZdkMA7edZ6SB6vGsopDupeVoH8OwDMuv
+ F7jI6Py1TYeFvu4vXfX3SDo+BfF0ZeyEbkJPDAlyp1rm/UDae8yoTFyjZJLxcS9CkX4i
+ 58CFC+LCwNfeVDqMouzJl42zsuCys0Ihk4RA1dWIGf4Tj5CtlPG3oimu9yRn/RR/zxXQ
+ /hUS2z88boyyiyYXVyGlmvCmUhpaGVKM4lLFog2tCh5vRQ27DqtqZ66JRShXUPoywby6
+ RM6Q==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEsWXS019NnWTRLlWiwtvPmVaZ9XkSopCbhw6No2+YX8SNS6HadTA7oZrZa/+3/n5wAp3syV/3VsXJw@nongnu.org
+X-Gm-Message-State: APuU4Z8ppU2SPXmc9fN9suirV60NJiLZrASNpD6iewjqrp1I6Y7mlP9t
+ mV8iVkOo3A4PdZMdVGD5gQ+ObxMKG+fLu7yVmFMhKV1vceolaOFsdI7Idir5RXhidg/kxCU3OkS
+ ZCm7R0wLElu4KmyWlmhbQEroE9phmMsZpX57ED3e8ng==
+X-Gm-Gg: AZFdTZfD5afQZuq3wuMnaXhMHCigcHXSNGQmBDCFIfKzj7o/y+hKoQU0A2+3RYIZs4C
+ jzIV9PmMQNniPawfwsTjt9Ljbh8bXVTlGy/pFXwVYE+fUj0T4LoGa22Ttu2SvKLWhm9S+8qFAy4
+ FhYB73Ky7LNF2heFizh7vZVBLngGHbJLbJaHbOH1ssez46keGsB4nvmO4KL5NzpwjHTQRZYmYHw
+ 1aUsgB7EakWnb9Wt9bkQxIwrdvCj8FRy2Ccc6vZtpK1sT248aDOVkxnCN2dlb1GAhOjlHho2uZM
+ nx3FHsrvaUg4LR8Yo69M4Q7N7yxysz9aRS4uKJiiVG22DfqlupPaIlVqyhvLgS19CwjYz8tQZYx
+ sbDxc5q9Bf2LVh6SK3KAYBXgwcC3rX13sCPwjZCOTfzINvofCxcpgn5M11zgBWcqwhGsvvWD5Qk
+ OHxP0SWmnhu+c5QlXev1jA
+X-Received: by 2002:a05:690e:4145:b0:67c:33ba:4367 with SMTP id
+ 956f58d0204a3-67e314b00d2mr1207508d50.123.1795515587534; Tue, 24 Nov 2026
+ 02:19:47 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::9;
- envelope-from=mdspan.github@gmail.com; helo=mail-pj2-x09.google.com
+References: <250f899a-51c0-4007-99dc-54bd336f0693@linux.ibm.com>
+ <e29c8bc1-0a25-4dfc-b429-6805c373b5cd@oss.qualcomm.com>
+ <7672e73a-2945-49d9-94a8-a3d187be300d@linux.ibm.com>
+ <87mrqyhb7l.fsf@pond.sub.org>
+ <1fc28def-9c77-45a8-99d4-c1de8dd2d477@oss.qualcomm.com>
+In-Reply-To: <1fc28def-9c77-45a8-99d4-c1de8dd2d477@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 24 Nov 2026 10:19:35 +0000
+X-Gm-Features: Aa3M54qZV3do6VLCattc0O3u0SKaIU2Z1-fpz0azQc995gIgLjIJo62EzaNP4-w
+Message-ID: <CAFEAcA88U2ef+1LWP7rP7d9=t8gtv8nOkzULBbTGG3D+ixOCSw@mail.gmail.com>
+Subject: Re: [PReP] Maintainer status check for PReP machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Markus Armbruster <armbru@pond.sub.org>,
+ Utkarsh Verma <uverma@linux.ibm.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-ppc@nongnu.org, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <huth@tuxfamily.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Aurelien Jarno <aurelien@aurel32.net>,
+ Helge Deller <deller@gmx.de>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Amit Machhiwal <amachhiw@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,227 +129,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Linear Address Masking (LAM) lets software keep metadata in bits
-62:57 or 62:48 of 64-bit data addresses.  CR3.LAM_U57 and CR3.LAM_U48
-enable it for user addresses, and CR4.LAM_SUP for supervisor
-addresses.  Implement it in TCG and add it to TCG_7_1_EAX_FEATURES.
+On Tue, 24 Nov 2026 at 10:06, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+> I'm probably missing the point here, I'd rather look to help maintaining
+> unmaintained / broken subsystems. Why care about a well working area and
+> ask the maintainer to step down? Why not ask the same to ARM / RISCV /
+> X86 maintainers? What is the underlying problem?
 
-get_physical_address() masks the address and runs the canonical check
-and the page walk on the result.  Since masking keeps bit 63, this is
-the canonical check that the SDM specifies for LAM.  CR2 receives the
-masked address on #PF.  The TLB entry is installed under the tagged
-address, which is the same way target/arm does it for top-byte-ignore.
-Only accesses with the LAM MMU indexes are masked.  Instruction fetches
-always use the normal indexes, and data accesses use the LAM indexes
-while LAM is enabled, so fetch and data entries for a tagged address do
-not share a TLB.
+The underlying problem is that it gives a misleading view of
+whether something's actually maintained if you look at
+MAINTAINERS and there's an "S: Maintained" label but in fact
+that person hasn't been actively involved with the project
+for years and is probably not reading their qemu-devel email.
+If the real situation on the ground is "effectively this is
+Orphan and patches for it are unlikely to get review" then I
+think it's better to have MAINTAINERS say so.
 
-Since each tag of a page has its own entry, INVLPG and INVLPGA flush
-every tagged alias with tlb_flush_page_bits_by_mmuidx(), and a change
-of CR4.LAM_SUP flushes the TLB.
+This is why at the beginning of the year I did a run through the
+MAINTAINERS file to look for "stale" entries and query whether
+the people listed still wished to be listed. (It was about 50:50
+whether they said "yeah, it would be better to not list me" versus
+"I do still want to be listed".)
 
-MOV to CR3 and VMRUN accept the CR3 LAM bits if CPUID reports LAM.
-Masking checks CPUID too, since RSM and gdbstub load CR3 without
-checking reserved bits.
+I don't view this as "kicking out maintainers" but rather trying
+to make our maintainer docs match reality: if anybody I contacted
+in my run through the MAINTAINERS file requested to retain their
+listing I did so.
 
-x86_cpu_translate_for_debug() masks addresses as for a data access,
-for gdbstub, monitor, and qemu_plugin_translate_vaddr().  With LAM_U48
-and 5-level paging, it therefore translates an instruction address at
-or above 2^47 differently from a fetch.
+We can discuss whether it's better to do this as a coordinated
+process over the whole file versus single subsystems and who
+is best placed to be sending out the queries and whether that
+works better as private email vs cc to qemu-devel, but I think
+the general principle is right: many people who drift away from
+the project do not actively send us a MAINTAINERS update and
+so we do have to do a little active housekeeping on it from
+time to time.
 
-Signed-off-by: Tim <mdspan.github@gmail.com>
----
-v3: mask only for the LAM MMU indexes.
-v2: mask only for non-fetch MMU indexes.
-
- target/i386/cpu.c                    |  2 +-
- target/i386/cpu.h                    | 43 ++++++++++++++++++++++++++++
- target/i386/helper.c                 |  6 +++-
- target/i386/tcg/system/excp_helper.c | 12 ++++++--
- target/i386/tcg/system/misc_helper.c | 24 ++++++++++++++--
- target/i386/tcg/system/svm_helper.c  |  3 +-
- 6 files changed, 82 insertions(+), 8 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index eab0d5a4..ad5d90d5 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1006,7 +1006,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
- #define TCG_7_0_EDX_FEATURES (CPUID_7_0_EDX_FSRM | CPUID_7_0_EDX_KERNEL_FEATURES)
- 
- #define TCG_7_1_EAX_FEATURES (CPUID_7_1_EAX_FZRM | CPUID_7_1_EAX_FSRS | \
--          CPUID_7_1_EAX_FSRC | CPUID_7_1_EAX_CMPCCXADD)
-+          CPUID_7_1_EAX_FSRC | CPUID_7_1_EAX_CMPCCXADD | CPUID_7_1_EAX_LAM)
- #define TCG_7_1_ECX_FEATURES 0
- #define TCG_7_1_EDX_FEATURES CPUID_7_1_EDX_APXF
- #define TCG_7_2_EDX_FEATURES 0
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 0923ab4f..fe32a434 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -3147,6 +3147,49 @@ static inline uint64_t cr4_reserved_bits(CPUX86State *env)
-     return reserved_bits;
- }
- 
-+/* Reserved CR3 bits in IA-32e mode */
-+static inline uint64_t cr3_reserved_bits(CPUX86State *env)
-+{
-+    uint64_t reserved_bits = ~0ULL << env_archcpu(env)->phys_bits;
-+
-+    if (env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM) {
-+        reserved_bits &= ~(CR3_LAM_U57_MASK | CR3_LAM_U48_MASK);
-+    }
-+    return reserved_bits;
-+}
-+
-+/* LAM width of @addr: 57 or 48, or 64 without LAM. IA-32e mode only. */
-+static inline unsigned x86_lam_addr_bits(CPUX86State *env, uint64_t addr)
-+{
-+    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-+        return 64;
-+    }
-+    if (addr >> 63) {
-+        if (!(env->cr[4] & CR4_LAM_SUP_MASK)) {
-+            return 64;
-+        }
-+        return env->cr[4] & CR4_LA57_MASK ? 57 : 48;
-+    }
-+    if (env->cr[3] & CR3_LAM_U57_MASK) {
-+        return 57;
-+    }
-+    if (env->cr[3] & CR3_LAM_U48_MASK) {
-+        return 48;
-+    }
-+    return 64;
-+}
-+
-+/* @addr with its LAM metadata masked, keeping bit 63. IA-32e mode only. */
-+static inline uint64_t x86_lam_mask_addr(CPUX86State *env, uint64_t addr)
-+{
-+    unsigned lam_bits = x86_lam_addr_bits(env, addr);
-+
-+    if (lam_bits == 64) {
-+        return addr;
-+    }
-+    return deposit64(sextract64(addr, 0, lam_bits), 63, 1, addr >> 63);
-+}
-+
- static inline bool ctl_has_irq(CPUX86State *env)
- {
-     uint32_t int_prio;
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index e116ae27..3ff00b10 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -216,7 +216,8 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
- #endif
-     if ((new_cr4 ^ env->cr[4]) &
-         (CR4_PGE_MASK | CR4_PAE_MASK | CR4_PSE_MASK |
--         CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_LA57_MASK)) {
-+         CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_LA57_MASK |
-+         CR4_LAM_SUP_MASK)) {
-         tlb_flush(env_cpu(env));
-     }
- 
-@@ -303,6 +304,9 @@ bool x86_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-             uint64_t pml4e_addr, pml4e;
-             int32_t sext;
- 
-+            /* LAM: translate as for a data access */
-+            addr = x86_lam_mask_addr(env, addr);
-+
-             /* test virtual address sign extension */
-             sext = la57 ? (int64_t)addr >> 56 : (int64_t)addr >> 47;
-             if (sext != 0 && sext != -1) {
-diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index 6c48ccbd..9c204ded 100644
---- a/target/i386/tcg/system/excp_helper.c
-+++ b/target/i386/tcg/system/excp_helper.c
-@@ -587,9 +587,17 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-             in.pg_mode = get_pg_mode(env);
- 
-             if (in.pg_mode & PG_MODE_LMA) {
--                /* test virtual address sign extension */
-                 int shift = in.pg_mode & PG_MODE_LA57 ? 56 : 47;
--                int64_t sext = (int64_t)addr >> shift;
-+                int64_t sext;
-+
-+                /* LAM masks data addresses but not instruction fetches */
-+                if (is_mmu_index_lam(mmu_idx)) {
-+                    addr = x86_lam_mask_addr(env, addr);
-+                    in.addr = addr;
-+                }
-+
-+                /* test virtual address sign extension */
-+                sext = (int64_t)addr >> shift;
-                 if (sext != 0 && sext != -1) {
-                     *err = (TranslateFault){
-                         .exception_index = EXCP0D_GPF,
-diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
-index a77da599..be4f553c 100644
---- a/target/i386/tcg/system/misc_helper.c
-+++ b/target/i386/tcg/system/misc_helper.c
-@@ -90,8 +90,7 @@ void HELPER(write_crN)(CPUX86State *env, int reg, target_ulong t0)
-         cpu_x86_update_cr0(env, t0);
-         break;
-     case 3:
--        if ((env->efer & MSR_EFER_LMA) &&
--                (t0 & ((~0ULL) << env_archcpu(env)->phys_bits))) {
-+        if ((env->efer & MSR_EFER_LMA) && (t0 & cr3_reserved_bits(env))) {
-             cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
-         }
-         if (!(env->efer & MSR_EFER_LMA)) {
-@@ -504,6 +503,27 @@ void HELPER(rdmsr)(CPUX86State *env)
- 
- void HELPER(flush_page)(CPUX86State *env, target_ulong addr)
- {
-+#ifdef TARGET_X86_64
-+    if (env->hflags & HF_LMA_MASK) {
-+        int shift = env->cr[4] & CR4_LA57_MASK ? 56 : 47;
-+        int64_t sext = (int64_t)addr >> shift;
-+        unsigned lam_bits;
-+
-+        /* no LAM for the operand: non-canonical is a no-op */
-+        if (sext != 0 && sext != -1) {
-+            return;
-+        }
-+
-+        /* TLB entries are per tag: flush every tagged alias */
-+        lam_bits = x86_lam_addr_bits(env, addr);
-+        if (lam_bits < 64) {
-+            tlb_flush_page_bits_by_mmuidx(env_cpu(env), addr,
-+                                          MAKE_64BIT_MASK(0, NB_MMU_MODES),
-+                                          lam_bits);
-+            return;
-+        }
-+    }
-+#endif
-     tlb_flush_page(env_cpu(env), addr);
- }
- 
-diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
-index 9c040422..0e3cf6fe 100644
---- a/target/i386/tcg/system/svm_helper.c
-+++ b/target/i386/tcg/system/svm_helper.c
-@@ -315,8 +315,7 @@ void HELPER(vmrun)(CPUX86State *env, int aflag, int next_eip_addend)
-         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
-     }
-     new_cr3 = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb, save.cr3));
--    if ((env->efer & MSR_EFER_LMA) &&
--            (new_cr3 & ((~0ULL) << cpu->phys_bits))) {
-+    if ((env->efer & MSR_EFER_LMA) && (new_cr3 & cr3_reserved_bits(env))) {
-         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
-     }
-     new_cr4 = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb, save.cr4));
--- 
-2.47.3
-
+thanks
+-- PMM
 
