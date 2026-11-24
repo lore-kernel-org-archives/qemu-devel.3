@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AD5606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 12:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2CF606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 12:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Lro6Tf2x
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Xm7+Z9Ff
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVpwT-0005T5-CW; Tue, 24 Nov 2026 07:48:13 -0500
+	id 1xVpwh-0005VY-US; Tue, 24 Nov 2026 07:48:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xVpwP-0005SN-46
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:48:10 -0500
+ id 1xVpwe-0005Uu-VN
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:48:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xVpwN-0000Xd-7V
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:48:08 -0500
+ id 1xVpwc-0000oF-He
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 07:48:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795524486;
+ s=mimecast20190719; t=1795524501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z98A9rIP2nR7c3tTTgbNJ6F3GigxYJtMR/9JLE+pLP4=;
- b=Lro6Tf2xDbKivlJxX7R41pxfIAav4L4fmBKPcQJTR7IdyWYRdaSvlq72xU3/xhQg8VMkbO
- hTbS51HmKVEsq+bUYy04nfxPeqDJoNTVw4HUBQjoXrgvgznoZjBvC57cyxwCNpKHEFUDLy
- aLsUK8WzoJ8WAgLIvwk2SRabfRkY0Zc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=op7BkSuNZ8Zbo574r/FSSFlJolfv/40A7UhIg6j8YTE=;
+ b=Xm7+Z9FfAiHEO3lJBxDxQVD88LWX4eyAe7cmpsa05/6KgWouj/+jZYTNjZ5Ic1pEyhdvkH
+ Z6AG5QOgm7e+2PXz0DFcqlbnY4cNlbGe1ucQQlTooPFKb7WloB66PdWmwOnNRSjJJSbale
+ i3uIGw6iI8lKLjWWRHnBWh1cJ7/3mTE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-pUSX-2EzP86H_QTDNDoV1Q-1; Tue,
- 24 Nov 2026 12:48:01 +0000
-X-MC-Unique: pUSX-2EzP86H_QTDNDoV1Q-1
-X-Mimecast-MFC-AGG-ID: pUSX-2EzP86H_QTDNDoV1Q_1795524479
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-LTqOEgDpNj6VAP5bcWzD-w-1; Tue,
+ 24 Nov 2026 12:48:19 +0000
+X-MC-Unique: LTqOEgDpNj6VAP5bcWzD-w-1
+X-Mimecast-MFC-AGG-ID: LTqOEgDpNj6VAP5bcWzD-w_1795524498
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 383011955F56; Tue, 24 Nov 2026 12:47:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59F451800347; Tue, 24 Nov 2026 12:48:18 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 61EC51956042; Tue, 24 Nov 2026 12:47:56 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2001F1800548; Tue, 24 Nov 2026 12:48:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 24 Nov 2026 16:47:44 +0400
-Subject: [PATCH v4 1/6] contrib/vhost-user-gpu: don't fence commands
- waiting for a reply
+Date: Tue, 24 Nov 2026 16:47:49 +0400
+Subject: [PATCH v4 6/6] contrib/vhost-user-gpu: use the stride of the
+ exported dmabuf
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261124-issue-4848-v4-1-24993c4766fc@redhat.com>
+Message-Id: <20261124-issue-4848-v4-6-24993c4766fc@redhat.com>
 References: <20261124-issue-4848-v4-0-24993c4766fc@redhat.com>
 In-Reply-To: <20261124-issue-4848-v4-0-24993c4766fc@redhat.com>
 To: qemu-devel@nongnu.org
@@ -64,35 +64,34 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5480;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3629;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=39Q+R4sAfZGE7WjSR5Oi5ET2yCyP2B22tc6Keb0uD/U=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBrBYd2KYY5ngKoxwcQrzsHQ50CPNWs47SJfhXs9
- xBgXVzr3uKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCawWHdgAKCRDa6OEJdZac
- 5av/D/4llAJo3kjfFLAJFhUT3hjnCyGH2SFRA71xOvHUIVeYScb/WYj8UTbYgN9PdbMwG37MJ5j
- nrsEOkPGXLbiiRbbtmW7ZNN29l9XgFJppe3E1IyLWA+tTrKBdg/MVy/lHuoT/p+NMOv0XnyBA9t
- F4pvQfCveobwPvlQliXO87dkU6dxt3RemGlUFYHNPnGeUdG0OXOtgMlFI31xIuycIS1iviuu7FT
- +hqtrbhUdAyzYo36YuEQAABXiox+jzEH+2AKPd4gQe6dkXFHvnnltidYT8QyU6Dd09CRe1EG9Hx
- QV2/jfTW23uUwiHYEyRRcl2z5+ilV2pokpk2n8go2DQvmdcqXlBtd4Ow5gCPyxTrH8GHwd06c+m
- V12XC8Ao6nayaF1MkmqnwA4ScMcSoB70Tj/unignIHwFCDwpXA7MC93qlCQA94A/zM92Dv1IZI3
- itFfZMgiCzCwrUJc7A+3VusXCxohIJsJP+KBnPgPI2K/wAncPXzFrCMMqvaOv8FHKNzr+LBsRey
- uljUa3USjcluKMOs/6NUD4iaqxW1RnkoM7pRYxwoqy6b0HscfRvFh1sO0qqQUieR4FI/5eD0QfO
- jhgixMmLXE/Yt3caPqo4W+PzABRHkE0/W2mswMcokJn54VgJ7G+kINIcwzAbX67PYRhoPL7Osy+
- LSzVhQzCraJmh1w==
+ bh=JgsUB5ABXypFnT7exHfSKyy7d0nafDLzLCjvZIaAWyk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBrBYd2ERxzxj7JLeYK84W/l+t2QaRRj1X85Qwmd
+ 8U8n3/r57OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCawWHdgAKCRDa6OEJdZac
+ 5a5pD/98li9pmFqgJac9ya/wkBCEfuobZuegE+MsrSTHXMmuGQArBrjEM/0X5Cbz2/fKZ5uzL6/
+ P/j9+0u/UE/UF0Rt9pYvxNNI5XP6Sqc/142PG5zzDaXFtO26yfTrGUu4l7+3NRz1pZmoOs0v0gA
+ qfdZiBpnn9XYHxcMwr/QYBeGWNUELIAdPv54iUkM5lbDYXQSe647Kos7YP4H8xml1S7MAHb3O65
+ uXSQcCLKchjSRUAabgY/b+gxNH4fioNjgjGyvZRn1pV8fraN2QgQ6L79kyXXbgE/NEqt5F8DeFx
+ Et45/JFsksjJoZEfiCvTrOLk0Lc5RbJDC6uBNGy784iJ6F7w8M0IZZLNB1AM5nqk5wBFPnRa9j+
+ C/G8jL5nVgBrix8y25jd/riKZRgWO3L5zQbmSssQDea8Fl4RetROpcDbeHzWUrOe7In4O5k5ICW
+ CkoqTnwccF2OysERluo8ns0PB3nXRGlLh52XHTsNuvYuh9r5VtdHE9u+qL7IPKYrfT6046zFe+n
+ BygxcN+0BfuVED4EYcqUtygdhQVyEv2O14VW+1KmRi96dnOWDCQJ2sM7/mJsAQ/PwJ+0+Bg520u
+ huxwotLkOcem1GBhYdkvwa45sp6FWl7ZUwdYovDBippZJi8s91m7S8sB2vELJeDE6Wx+iYcVwNX
+ 2Y4pzPp6RdgHmYg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,143 +103,103 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-virgl_write_fence() completes and frees every command on fenceq whose
-fence_id is not above the signalled fence, without checking its state.
-GET_DISPLAY_INFO and GET_EDID wait for a reply from the frontend on that
-same queue, in VG_CMD_STATE_PENDING with a zero fence_id, so the next
-signalled fence frees them. The reply callback then takes QTAILQ_LAST()
-of the queue, which is either empty or another command, and crashes or
-trips the type assertion.
+virgl_renderer_get_fd_for_texture2() returns the stride and offset that
+eglExportDMABUFImageMESA() gave the exported dmabuf. Use that stride.
+Reject a scanout with a non-zero offset, as the scanout message has no
+field to carry it.
 
-Keep the command that waits for the frontend reply in VuGpu instead,
-free it from the reply callback, and don't put it on fenceq at all, so
-that the queue and the inflight count only track commands submitted to
-virglrenderer.
+This fixes dmabuf import/sheared with Intel driver when the resolution
+stride is not 256-byte aligned.
 
-Fixes: bd690feb1554 ("vhost-user-gpu: handle display-info in a callback")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4848
-Reported-by: Dmitry R <rdmitry@taktcycles.com>
-Tested-by: Dmitry R <rdmitry@taktcycles.com>
+Left for later (after 11.2 release), add new message / field for offset.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- contrib/vhost-user-gpu/vhost-user-gpu.c | 21 +++++++++++++++------
- contrib/vhost-user-gpu/virgl.c          |  4 ++++
- contrib/vhost-user-gpu/vugpu.h          |  3 +++
- 3 files changed, 22 insertions(+), 6 deletions(-)
+ contrib/vhost-user-gpu/virgl.c | 48 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 43 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index f70b34c179f3..5240b171d538 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -268,17 +268,18 @@ get_display_info_cb(gint fd, GIOCondition condition, gpointer user_data)
- {
-     struct virtio_gpu_resp_display_info dpy_info = { {} };
-     VuGpu *vg = user_data;
--    struct virtio_gpu_ctrl_command *cmd = QTAILQ_LAST(&vg->fenceq);
-+    struct virtio_gpu_ctrl_command *cmd = vg->pending_cmd;
- 
-     g_debug("disp info cb");
--    assert(cmd->cmd_hdr.type == VIRTIO_GPU_CMD_GET_DISPLAY_INFO);
-+    assert(cmd && cmd->cmd_hdr.type == VIRTIO_GPU_CMD_GET_DISPLAY_INFO);
-     if (!vg_recv_msg(vg, VHOST_USER_GPU_GET_DISPLAY_INFO,
-                      sizeof(dpy_info), &dpy_info)) {
-         return G_SOURCE_CONTINUE;
-     }
- 
--    QTAILQ_REMOVE(&vg->fenceq, cmd, next);
-+    vg->pending_cmd = NULL;
-     vg_ctrl_response(vg, cmd, &dpy_info.hdr, sizeof(dpy_info));
-+    free(cmd);
- 
-     vg->wait_in = 0;
-     vg_handle_ctrl(&vg->dev.parent, 0);
-@@ -297,6 +298,7 @@ vg_get_display_info(VuGpu *vg, struct virtio_gpu_ctrl_command *cmd)
-     assert(vg->wait_in == 0);
- 
-     vg_send_msg(vg, &msg, -1);
-+    vg->pending_cmd = cmd;
-     vg->wait_in = g_unix_fd_add(vg->sock_fd, G_IO_IN | G_IO_HUP,
-                                get_display_info_cb, vg);
-     cmd->state = VG_CMD_STATE_PENDING;
-@@ -307,17 +309,18 @@ get_edid_cb(gint fd, GIOCondition condition, gpointer user_data)
- {
-     struct virtio_gpu_resp_edid resp_edid;
-     VuGpu *vg = user_data;
--    struct virtio_gpu_ctrl_command *cmd = QTAILQ_LAST(&vg->fenceq);
-+    struct virtio_gpu_ctrl_command *cmd = vg->pending_cmd;
- 
-     g_debug("get edid cb");
--    assert(cmd->cmd_hdr.type == VIRTIO_GPU_CMD_GET_EDID);
-+    assert(cmd && cmd->cmd_hdr.type == VIRTIO_GPU_CMD_GET_EDID);
-     if (!vg_recv_msg(vg, VHOST_USER_GPU_GET_EDID,
-                      sizeof(resp_edid), &resp_edid)) {
-         return G_SOURCE_CONTINUE;
-     }
- 
--    QTAILQ_REMOVE(&vg->fenceq, cmd, next);
-+    vg->pending_cmd = NULL;
-     vg_ctrl_response(vg, cmd, &resp_edid.hdr, sizeof(resp_edid));
-+    free(cmd);
- 
-     vg->wait_in = 0;
-     vg_handle_ctrl(&vg->dev.parent, 0);
-@@ -344,6 +347,7 @@ vg_get_edid(VuGpu *vg, struct virtio_gpu_ctrl_command *cmd)
-     assert(vg->wait_in == 0);
- 
-     vg_send_msg(vg, &msg, -1);
-+    vg->pending_cmd = cmd;
-     vg->wait_in = g_unix_fd_add(vg->sock_fd, G_IO_IN | G_IO_HUP,
-                                get_edid_cb, vg);
-     cmd->state = VG_CMD_STATE_PENDING;
-@@ -940,6 +944,11 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-             }
-         }
- 
-+        if (cmd->state == VG_CMD_STATE_PENDING) {
-+            /* freed by the frontend reply callback */
-+            continue;
-+        }
-+
-         if (cmd->state != VG_CMD_STATE_FINISHED) {
-             QTAILQ_INSERT_TAIL(&vg->fenceq, cmd, next);
-             vg->inflight++;
 diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 0ef4b9d8c903..3242bf13586d 100644
+index c33b3dbeb8b7..4ab2c5fcdafc 100644
 --- a/contrib/vhost-user-gpu/virgl.c
 +++ b/contrib/vhost-user-gpu/virgl.c
-@@ -608,6 +608,10 @@ virgl_write_fence(void *opaque, uint32_t fence)
-          * the guest can end up emitting fences out of order
-          * so we should check all fenced cmds not just the first one.
-          */
-+        if (cmd->state == VG_CMD_STATE_PENDING) {
-+            /* not fenced, completed by the frontend reply */
-+            continue;
-+        }
-         if (cmd->cmd_hdr.fence_id > fence) {
-             continue;
-         }
-diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-index aaf2870cb24d..1c2b0ed4fbe8 100644
---- a/contrib/vhost-user-gpu/vugpu.h
-+++ b/contrib/vhost-user-gpu/vugpu.h
-@@ -147,6 +147,9 @@ typedef struct VuGpu {
-     struct virtio_gpu_scanout scanout[VIRTIO_GPU_MAX_SCANOUTS];
-     QTAILQ_HEAD(, virtio_gpu_simple_resource) reslist;
-     QTAILQ_HEAD(, virtio_gpu_ctrl_command) fenceq;
-+
-+    /* command waiting for a reply from the frontend */
-+    struct virtio_gpu_ctrl_command *pending_cmd;
- } VuGpu;
+@@ -18,6 +18,23 @@
  
- enum {
+ #include <epoxy/gl.h>
+ 
++/*
++ * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fixed
++ * in 1.1.0. Undefine bugged version of the macro and provide our own.
++ */
++#if defined(VIRGL_CHECK_VERSION) && \
++    VIRGL_VERSION_MAJOR == 1 && VIRGL_VERSION_MINOR < 1
++#undef VIRGL_CHECK_VERSION
++#endif
++
++#ifndef VIRGL_CHECK_VERSION
++#define VIRGL_CHECK_VERSION(major, minor, micro) \
++    (VIRGL_VERSION_MAJOR > (major) || \
++     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR > (minor) || \
++     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR == (minor) && \
++     VIRGL_VERSION_MICRO >= (micro))
++#endif
++
+ void
+ vg_virgl_update_cursor_data(VuGpu *g, uint32_t resource_id,
+                             gpointer data)
+@@ -409,12 +426,33 @@ virgl_cmd_set_scanout(VuGpu *g,
+         }
+ 
+         int fd = -1;
+-        if (virgl_renderer_get_fd_for_texture(info.tex_id, &fd) < 0) {
+-            g_critical("%s: failed to get fd for texture\n", __func__);
+-            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+-            return;
++        int stride = info.stride;
++        int offset = 0;
++        bool exported = false;
++
++#if VIRGL_CHECK_VERSION(0, 7, 0)
++        exported = virgl_renderer_get_fd_for_texture2(info.tex_id, &fd,
++                                                      &stride, &offset) == 0;
++#endif
++        if (!exported) {
++            stride = info.stride;
++            offset = 0;
++            if (virgl_renderer_get_fd_for_texture(info.tex_id, &fd) < 0) {
++                g_critical("%s: failed to get fd for texture\n", __func__);
++                cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++                return;
++            }
+         }
+         assert(fd >= 0);
++
++        if (offset) {
++            /* the scanout message has no field to carry the buffer offset */
++            g_critical("%s: unsupported dmabuf offset %d\n", __func__, offset);
++            close(fd);
++            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++            return;
++        }
++
+         VhostUserGpuMsg msg = {
+             .payload.dmabuf_scanout.scanout_id = ss.scanout_id,
+             .payload.dmabuf_scanout.x =  ss.r.x,
+@@ -423,7 +461,7 @@ virgl_cmd_set_scanout(VuGpu *g,
+             .payload.dmabuf_scanout.height = ss.r.height,
+             .payload.dmabuf_scanout.fd_width = info.width,
+             .payload.dmabuf_scanout.fd_height = info.height,
+-            .payload.dmabuf_scanout.fd_stride = info.stride,
++            .payload.dmabuf_scanout.fd_stride = stride,
+             .payload.dmabuf_scanout.fd_flags = info.flags,
+             .payload.dmabuf_scanout.fd_drm_fourcc = info.drm_fourcc
+         };
 
 -- 
 2.56.0.116.g6de20f6092dc
