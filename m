@@ -1,100 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB220606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE5C606A33A
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Sa5ML54g;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Kp0SImR4
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YF4JFbBp;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=aH3drdtg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzxN-0004HX-Ss; Tue, 24 Nov 2026 18:29:52 -0500
+	id 1xVzwu-0003su-F0; Tue, 24 Nov 2026 18:29:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzwy-0003zU-AE
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:29:25 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xVzwq-0003jO-VW
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:29:17 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xVzww-00084X-IC
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:29:23 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xVzwp-00083u-86
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:29:16 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AOMaerJ3520116
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:29:21 GMT
+ 6AOMbLE9031619
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:29:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- q/r4AwdbfkN7HW14k94mwfZ7+ibhnteT/J9qc9kufWQ=; b=Sa5ML54gzpI9xvD+
- sjM9XSSi5aRRGatBhKvc63yVR0R+K35AkB5CAo0QqDJbcrMnqxPMfX9VUtAeEcNe
- oGBKrziolsKTuwq/CerL2aWFSaqySXFknRyU3kMXKZhegzK8lYKgCasza6D45dlH
- CMJjc9vy0MoOaYRcqKRw0Nc1zWAYKspZx7Tu+Yz4H49REcHDyVq8sd9T0QMMZwoW
- XvYm/q11SebKslRCc45b35gIgaSMXMLX+xZM32DnO6WV9EMRwaVYxX51YTA19Vbw
- WRbQpASqZA5NoCVy4e/DoTlxyRt3e6mhO+24tgiDFyzoDQ1TBuSK1eaV2F6jfFLg
- 3H49vg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5f00h9h6-1
+ 6xsZVswq+G0zVU7hNJZq2lQp8BbpzMYxppw0olqX62s=; b=YF4JFbBp/iYXLSfb
+ uu2XIUDt6B6djIa+YV+rXYaDUELCO17JwGwySZT+CJ4MlpJ76Z24qjp4qtV+KJIl
+ DnBRelcJ9JjeUGybSTYdwfAIoKnmZMRX4Is6tF2qUcmT17Fae9MQGhm5//c7CqsJ
+ SrjAGU5DB22q7srOmCBTB+NOjkuIYv01ZV+59NBY5GNxL/laN63SAnW04RlVUoFv
+ zNhrGUR7T1BSZ7Jho15YHtiql3ABP/FuoqSx/mordKjrdMTGFomuU7UxlDrj88+x
+ DdDxAOvKd6nf1U1VNwPsVgQtVqFxbI/rO7RaR3Fc88u4qfkDpkWKrvkfOX8TykjP
+ N8UVew==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5ad7tr3d-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:29:21 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93f33438950so893699685a.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:29:20 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 23:29:14 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-921286add9fso31444496d6.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 15:29:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795562960; x=1796167760; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795562953; x=1796167753; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=q/r4AwdbfkN7HW14k94mwfZ7+ibhnteT/J9qc9kufWQ=;
- b=Kp0SImR4wKuxHTqmRNQ27GoBHaTkOAWGeYrLmPT28ah2BNOfUeunos7wNtK/nIBUHG
- aedRIzywMvqx4v0oNa46dHJ+QS9vxARcaSZv/dRN+H289Td0Xv2PqVOJcYPH6YK+LTxX
- hYoW2taFDMVhnEfUMjH0pjvsTV+4YkLTAblI+mfzVsqiv4LMqW4UG1ujlpBlpe4J2bkx
- mwAjMkcmAEaqDSt62yd16Dqlt2w8hc2CXQMFHiBJJ6Bvy3kQJcxJnGSlr5K54LJV0PA2
- QkoFtaXz0UKK+TjuoN5FsMSLVxb1u4zhndGdoDxD1ymx/pd29J4nw4aUwIycCvFJCvnq
- +Esg==
+ bh=6xsZVswq+G0zVU7hNJZq2lQp8BbpzMYxppw0olqX62s=;
+ b=aH3drdtgtZKxVn4NliM/HGz6/BOWS6DYp5NP9yZ4pG4JYOQTHq0/25ydbKdUL0rVog
+ 5QcgP4j9dRsaQwtiYQOgQHDJdlsqrkY7LtD7Axh4hHxVKQ41RB/DadbMCCY3FFmavjOL
+ /DuASI6QcQVG8O4F3y/ZdD+4fne/NiDD521N9Gto+8HECFgJTK7znbOoC2z2lNeUIO9m
+ E5lSocDw1UCUtsdzmM5hC7ZJBv8FmjZGc0c09L3qwwKN2NLLonU5aLSYNm+w/mjipr15
+ 4KLfh3kbMEPoWpaADPJV4gEW2G9mmz2oN3PdQ/NHDVRYP/zVs8rsC3/5hvpNlPt8kLfc
+ KoaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795562960; x=1796167760;
+ d=1e100.net; s=20260707; t=1795562953; x=1796167753;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=q/r4AwdbfkN7HW14k94mwfZ7+ibhnteT/J9qc9kufWQ=;
- b=nBpDt+eCmmlo+oELfujb/FBUjTQpqIfDhESTVXqzz56wnnk6XVHU1MUPAW67eGjnpV
- C5PdMAaaL/xmO4LDx7P0a7uboSh3tqZb82xu0mupu/NVDZujKSJ6evmDHg93milZ1UTt
- ABVnBrJgq1BQsWMVwRDZGIqgvjS51LNnTlpFwTFEntXGxrnCkQUAvIOE4AnZ2BjhqirU
- 6HCRDoxZE2JXvBMmfhJ+yLehzdcE9aGKzi5QTCYPJVIEMHmB3Ke86tKXAZeVzmVq67jj
- xXY+cLy+Pupfyb6e62bRVOH4M7CJNGAUqka+BqBeelbYIM39NQGzM4Ncd61L4rEgMR1E
- 0zwQ==
-X-Gm-Message-State: APuU4Z92lKhWvH7ljkbnXC+OFKzB7ZcLC3f6tA1qJNpiv0K6jz8WrY3N
- U3mBHueLrCUpCaS6vM515pVjlc6fBasD8UfRUx0/taPKw2Uo2xLo8OXi5OxCW3N5zcotGkSRHhT
- dqPYZ14gbMpp7thzxsw2AQst3vCRJkufvDRBVk5HUMHUVlxfFGLbt4nYJreldfnDvYBmH
-X-Gm-Gg: AZFdTZck5XCKOw+ECGZiUTK7Q6pxVLcT8glhpju2aB4fWPrPwYrBplv76q8x+WoYNui
- 0rqC4nnt0kfrgvtLhwOwBiyQy8pSYEeWDPucDlsSNRqMt1El4w4PUuPPdH7RVc0SSeqqANPw10c
- 7bbqgCqop9uptip+k4ax+2QV8xrfjkjd4/HyAQfv0XOAwHZseLCZH0g8I7pwWwpsByLneNam8Hz
- zs9NOYz4o+6QF/wBTC2Lp5QmFbHOWV2GJVwKZ0+ILGR24hsd0U5SR+6lW0ZuWOfexL0txjZpdAL
- 2eFRy+XBzYKnr0ZSpsH0NDogaWN567/uR7BrCb3rn7Kd56sORL0SmGK0+0hcTfqnrG3XKwl9h3B
- nmdvwuf9Ml5mtcYdYY1xp8EhSnvroU2dExnAIjPXBjNey3QYuLLK73xexg9VoN7ni1Y5YBLq/Ty
- T0xyATxl8MD669OA==
-X-Received: by 2002:a05:620a:2913:b0:93e:5fff:db07 with SMTP id
- af79cd13be357-949ba9a9ae3mr2957709885a.40.1795562960177; 
- Tue, 24 Nov 2026 15:29:20 -0800 (PST)
-X-Received: by 2002:a05:620a:2913:b0:93e:5fff:db07 with SMTP id
- af79cd13be357-949ba9a9ae3mr2957706485a.40.1795562959707; 
- Tue, 24 Nov 2026 15:29:19 -0800 (PST)
+ bh=6xsZVswq+G0zVU7hNJZq2lQp8BbpzMYxppw0olqX62s=;
+ b=TGSjgdwVPkcIcw8kTCa5SprFdAlkcMEGRG8vaV/sJpK6ArLBgvzK/Zil9O10DiP7UE
+ biDsHs4hKQes8TPJiWX58GfsI/uaGsbCWrk2RkFPyYT7pq8gPAVNCmxWggNFRPli8GFD
+ CEAmfQ18SsxxA9+U9AYOwmKUJzxRtuvWoMLR4ChpxinRH6hvQZk66IjJsrmSy8uGvXBr
+ I4FoX3CITJlaKL5hxpgD44wMiFGRAaDIGbxZMzPbkagCb5sVbmFuxPSclMbX7pCyPyNj
+ AsGHTPGQuubTLIuFuhyfapbtqGpSqBrvy3qXnr2HQdX2kcHFcwaZfgQQLSkvlDj1bO2L
+ cYpQ==
+X-Gm-Message-State: APuU4Z9t3N6kpizecmSOyp9OTuwmBCWhkUHoFZdpVQq+nHiBwn9D0VXZ
+ qDifS0QIkl1j1uGHGiSxITzCt4LYv4jy3f87Tbh717n5L/562uGE4G+9YZU5IZcCRdG6ZWiIGlR
+ otbHlnqlKgzvasvfOKYESOVBgSPdu8/vqqkfDQRuLI0zG9NJWaZzUrLa37dHakdf++hNe
+X-Gm-Gg: AZFdTZdb5BjrhlASlicwFQuOM31XgAQFkAQUvtprDXH7YQ6iG4BI0CGCuUV/RYia4pa
+ HXeE0TRBoiKHfVKm4JFc3PadJhFHGdGTuSliC98WHi8rwAVn9lnB8nGMxQTskd4YwnNKA7bBbXH
+ Xt82IlMsW/KLj7b3TWvAg/Zk93HCb/wKgjNINjEoGOFpxhhNuYHQI8UBD3d2bq4J5Nn6qchWOGY
+ Qt9DygaKL52ZT/XRkzbTQTfZMTzAonQSWMy6yRFeHot6838kWyvC2l6cNSL3enEQXJf/5YqwrLF
+ wuqAP6ESr7n2WevULtfyXxBiFtGb+8Y4SWRfLZOSvbSDYryEdYzS5kTE2Vzz0JuRNijDx1pJLbk
+ xukd5X2yOGfB9EjGi5P53jNGXze9egikO7kvIwhRWD7PX1aHLr6x4yl1IhdlCaFU6jEJkhlVQEk
+ 7v/uKCtrXZf3u9kQ==
+X-Received: by 2002:a05:620a:4110:b0:949:a690:d9c3 with SMTP id
+ af79cd13be357-949bab39bacmr2846649085a.62.1795562953462; 
+ Tue, 24 Nov 2026 15:29:13 -0800 (PST)
+X-Received: by 2002:a05:620a:4110:b0:949:a690:d9c3 with SMTP id
+ af79cd13be357-949bab39bacmr2846645685a.62.1795562952991; 
+ Tue, 24 Nov 2026 15:29:12 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb8533579csm413696615e9.2.2026.11.24.15.29.18
+ ffacd0b85a97d-4ab5ffcad11sm29533648f8f.0.2026.11.24.15.29.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Nov 2026 15:29:19 -0800 (PST)
+ Tue, 24 Nov 2026 15:29:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/18] target/mips: Pass the nanoMIPS BREAK code to
- generate_exception_break()
-Date: Wed, 25 Nov 2026 00:27:20 +0100
-Message-ID: <20261124232722.90234-17-philmd@oss.qualcomm.com>
+Subject: [PULL 15/18] target/mips: Fix nanoMIPS BC1EQZC/BC1NEZC always raising
+ RI
+Date: Wed, 25 Nov 2026 00:27:19 +0100
+Message-ID: <20261124232722.90234-16-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261124232722.90234-1-philmd@oss.qualcomm.com>
 References: <20261124232722.90234-1-philmd@oss.qualcomm.com>
@@ -102,36 +102,36 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: bMsd0MzQoMLp8InN48lPsM0Ehtqtmgn2
-X-Proofpoint-GUID: bMsd0MzQoMLp8InN48lPsM0Ehtqtmgn2
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MiBTYWx0ZWRfXx7MPFPwZzaZm
- EK/CmP4DjD6I4I9dwq48nqdoy7sLMArqigloZ74b9dJBe1NX95VVTnxX+U0SzsiDIKYWNZXp1sH
- 7k1/jR6lscwmbRBraH/nyr7PvewcGAg=
-X-Authority-Analysis: v=2.4 cv=JqtkP84C c=1 sm=1 tr=0 ts=6b061dd1 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA5MiBTYWx0ZWRfX2WObdEwbs1mg
+ F1xGI2p46YuSKsg3WB+WJtHDlB1qlmyTPLpj8yAyHDNavcnkNcImY76RX2L5Yuf/1aG/O0/Kjuo
+ c3RRYR838d0rW+Zlh6U4a643ItkbELw=
+X-Authority-Analysis: v=2.4 cv=cI51IVeN c=1 sm=1 tr=0 ts=6b061dca cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=8IlIMGR4T542jAIm1n4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MiBTYWx0ZWRfX3761dntF9nPI
- 0ttyjp+2UvAT6iDR0XhugWD2SS70FusiY8fBgVjkkN0QlX0wxC4+/qXgkY3iskdIiGllGhhs7SO
- tEambJB9oaIz9tGzVs18QXkQ9VHhEgvsN6wIEj5ELNPmlO4C39PttyGvo4iCt4zz5TabBVPiS6H
- iELxr/xz9wL2GrKzC7rYI1oqtLcFAP9kWVdDj3t/QyWfXgBF7Ubblpc+cXrw/j/LnltVninJJLU
- Az8pircAuKakNTK3OGpO40xEfwYLyW1loH3bcWTFVjN8l+yY77b82zE4Mehwd9SnXb8L/HTrGF+
- FVni3S51LKIEqtitQQfeFW58nWDIrzc0LKEkGarL4uY+rxHigJQ4LG3ag75pjTnzU5F26Dciizv
- 2GonPoTTGkCVJG3NE0xkOPCvc8xLC+vU36S3etLaeCotthjYQ75P9pgOre5QTMy7eO7RuxB/TcK
- D//s55Z4+Bawmp/VODQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=snbnvTbt-5-dSQZ-83gA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA5MiBTYWx0ZWRfX3h00pCht5ZFB
+ a7nZfy1zLE/lpv+5PPUonu+rGtrUXaPC6ZzlYWFARdpkgWFwecNfHKZl2mwYigzznWBM3hQCaHj
+ MsvvbmUm9EsKqQW6FFaAIqrX67uFI/jAhBlG+nL3wgrt4y3/hVz8i27Q5CL58d0vVY+OTySmjGk
+ M0waN345g8/MYNS3H/9qSjJ7i9g0A05uYa3A36UW8rOo0FMQ4x2L2e0QDHXlEzI1/czVZdFMUzb
+ dGnnrvav92LKBYUvo7TEFiQdBLd/Qg5+xY3yKFlWhSVxWNi3NV6H1n6MavF2pPb/zsQrW0/CxP9
+ fxTfQL+Z1toAzDV3fIiVPBOhfCg9MFj5TzSkQiZSghOjckg5y4QCHa8ysrmLPIPbNI/SQTEmsXF
+ QOnmUbWCjybxPx2OsaZ3ltUE/j8b8cBMm/UsK80wDUIFOC0cMPIAeJb9T9tjv079ipC5Ri2jMR7
+ WdpnnjvuDnEkS6iw8VQ==
+X-Proofpoint-ORIG-GUID: 7cKJSjwELyBn00XiCddi37SNnj0U_61L
+X-Proofpoint-GUID: 7cKJSjwELyBn00XiCddi37SNnj0U_61L
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-24_06,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
  definitions=main-2611240092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -157,46 +157,40 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The nanoMIPS BREAK[32] and BREAK[16] decoders call
-generate_exception_end() and drop the break code, leaving a
-stale env->error_code for linux-user. Pass the encoded 'code'
-19 bits for BREAK[32], 3 bits for BREAK[16] (MD01247 rev 01.01,
-p.59).
+The P.BR3A decoder passes OPC_BC1EQZ / OPC_BC1NEZ (the MIPS CP1
+opcodes) to gen_compute_branch_cp1_nm(), but the function switches
+on the nanoMIPS pool values NM_BC1EQZC (0) and NM_BC1NEZC (1). No
+call could match, so both instructions raised Reserved Instruction.
 
-Complete 6f3533dd1b6a ("target/mips: Extract break code into
-env->error_code").
+The P.BR3A encoding is in MD01247 rev 01.01, printed page 288.
+Switch on the values the callers pass.
 
-Fixes: c02809830346 ("target/mips: Add emulation of some nanoMIPS 32-bit")
-Fixes: 8869ad02bfd9 ("target/mips: Add emulation of nanoMIPS 16-bit misc")
+Fixes: 11d0fc10b7ef ("target/mips: Add emulation of nanoMIPS 32-bit branch")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261113161158.25811-16-philmd@oss.qualcomm.com>
+Message-ID: <20261113161158.25811-13-philmd@oss.qualcomm.com>
 ---
  target/mips/tcg/nanomips_translate.c.inc | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index dcee8df333f4..19cca9463de4 100644
+index 39ba96230596..dcee8df333f4 100644
 --- a/target/mips/tcg/nanomips_translate.c.inc
 +++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -3573,7 +3573,7 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
-                 }
-                 break;
-             case NM_BREAK:
--                generate_exception_end(ctx, EXCP_BREAK);
-+                generate_exception_break(ctx, extract32(ctx->opcode, 0, 19));
-                 break;
-             case NM_SDBBP:
-                 if (is_uhi(ctx, extract32(ctx->opcode, 0, 19))) {
-@@ -4508,7 +4508,7 @@ static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
-                 }
-                 break;
-             case NM_BREAK16:
--                generate_exception_end(ctx, EXCP_BREAK);
-+                generate_exception_break(ctx, extract32(ctx->opcode, 0, 3));
-                 break;
-             case NM_SDBBP16:
-                 if (is_uhi(ctx, extract32(ctx->opcode, 0, 3))) {
+@@ -2558,11 +2558,11 @@ static void gen_compute_branch_cp1_nm(DisasContext *ctx, uint32_t op,
+     btarget = addr_add(ctx, ctx->base.pc_next + 4, offset);
+ 
+     switch (op) {
+-    case NM_BC1EQZC:
++    case OPC_BC1EQZ:
+         tcg_gen_xori_i64(t0, t0, 1);
+         ctx->hflags |= MIPS_HFLAG_BC;
+         break;
+-    case NM_BC1NEZC:
++    case OPC_BC1NEZ:
+         /* t0 already set */
+         ctx->hflags |= MIPS_HFLAG_BC;
+         break;
 -- 
 2.55.0
 
