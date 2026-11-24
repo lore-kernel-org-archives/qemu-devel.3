@@ -1,41 +1,41 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F3A606A6A0
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C119E606A684
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 23:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=psysTftX
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=VZI6SFsB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVzr0-0000cz-Ro; Tue, 24 Nov 2026 18:23:14 -0500
+	id 1xVzqs-0000ZO-9q; Tue, 24 Nov 2026 18:23:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1xVzqq-0000ZJ-8Y
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:06 -0500
-Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ <BATV+7be3010b4cb4d9f5c1a9+8493+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1xVzqm-0000Vq-Fd
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:00 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1xVzqk-0006ZM-Fl
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:03 -0500
+ <BATV+7be3010b4cb4d9f5c1a9+8493+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1xVzqh-0006JR-O8
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 18:23:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:
- To:From:Reply-To:Content-ID:Content-Description;
- bh=OFnO+yDa1ZmaA/R14QNLcscazCGJjNcIgEoVI8ugoEQ=; b=psysTftXmhA2M/i2DJl5n05FHQ
- YEihJUcA70x2jaMkwy7shi63x1e+4RR2zpn9A34T+C2xx4UmrkzE41sjhqPOzFbP4rkKS6B6/2EIK
- KIB+0q5IeoWJV+95HQf6PO1/9had2W/fybDhqxoPXMjnGScMoZdLhJ+OKglpSLbSEs+VzjwD9nr0b
- qjO61STD8KCMk3m9fosBpIk4ATbqXltZabXfmQgct2oLJg+jJjOMT3qvju5Lg2P4UBmlI1tbvhGbb
- 4pKfhXfHQ5nW/F9oFNTtnNVqsutodaerl05oORbETSyQ26DCWmQ0SGNngFdSqMe1Tuie31OGp8NX2
- cTMZC1EQ==;
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:
+ Content-ID:Content-Description:In-Reply-To:References;
+ bh=UhsfjYUkefenudq7k8katnMa4HWcZvDO5UQ4amhsZi0=; b=VZI6SFsB2tJKEOmodYze3pyZs9
+ HXpSlLdbJq8Wdo0KwYk9sO31sebtfK8VlPb681SrMYvbbuLVMv/Y9uLJkS2beE/ETTmYItpIjbM2s
+ CDN1Hcz4cXNMLgG7MCzU56p2Sc0zcRZoIGV4+kwaEjUkKTSjS1wp07Csa0OiF7rqTPbyphlykT93J
+ opLHI76b9QL/WWjV00+UzTGtP/lCmuu333SObyfXcDPVRTbWmZCzC+DDc3b1S6SGml1LTdGkUcEck
+ H/ci+Onlp9Yir3guE5WjZF3Bzd+g/wcz31/ax0czz/01msyfjuCe8ipUumCLSwVkUcP7SaCcUofoQ
+ 8Nr0Ccug==;
 Received: from [2001:8b0:10b:1::425] (helo=i7.infradead.org)
- by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
- id 1xVzqc-00000004eUy-1kfJ; Tue, 24 Nov 2026 23:22:51 +0000
+ by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+ id 1xVzqZ-0000000Gdhw-3GD6; Tue, 24 Nov 2026 23:22:48 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.99.5 #2 (Red
- Hat Linux)) id 1xVzqZ-0000000061w-1JuJ;
+ Hat Linux)) id 1xVzqZ-0000000061n-0jZH;
  Tue, 24 Nov 2026 23:22:47 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
@@ -52,22 +52,19 @@ Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Jason Wang <jasowangio@gmail.com>, Hui Peng <benquike@gmail.com>,
  Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
  David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH v1 03/21] i386/xen: Free Xen vCPU timers when a vCPU is
- destroyed
-Date: Tue, 24 Nov 2026 23:22:29 +0000
-Message-ID: <20261124232247.23169-4-dwmw2@infradead.org>
+Subject: [PATCH v1 00/21] hw/xen, i386/xen: security and robustness fixes
+Date: Tue, 24 Nov 2026 23:22:26 +0000
+Message-ID: <20261124232247.23169-1-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261124232247.23169-1-dwmw2@infradead.org>
-References: <20261124232247.23169-1-dwmw2@infradead.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
- envelope-from=BATV+8ed7664ba4dc972f2276+8493+infradead.org+dwmw2@desiato.srs.infradead.org;
- helo=desiato.infradead.org
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+7be3010b4cb4d9f5c1a9+8493+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -86,137 +83,115 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-kvm_xen_init_vcpu() allocates the per-vCPU timers with the CPUState as
-callback opaque, and nothing freed them on vCPU destruction. So a guest
-could arm the periodic timer for a vCPU (VCPUOP_set_periodic_timer
-always reaches QEMU; the kernel doesn't handle it) and eject that vCPU
-via ACPI hotplug, leaving the armed timer pointing at a freed X86CPU.
+Addressing the backlog of mostly AI-discovered issues in the KVM/Xen
+support.
 
-Free both timers in kvm_xen_destroy_vcpu(), called from
-kvm_arch_destroy_vcpu(). That runs under the BQL, as do the timer
-callbacks, so it cannot race an in-flight callback. It *can* race a
-timer hypercall from another vCPU — hypercalls don't take the BQL,
-which is why xen_timers_lock exists — so clear the pointers under that
-lock and have the periodic timer paths return -ENOENT when the timer is
-gone, as for a nonexistent vCPU. The singleshot ops act only on the
-calling vCPU, so cannot race its destruction.
+Disclaimer: The fixes here were diagnosed by AI, fixed by AI, the
+commit messages written by AI, and all the testing done by AI. And
+then the new things which I would *never* have found if I'd have to do
+all the typing myself were also fixed the same way. All under my close
+direction, occasionally completely redirecting the way it wanted to do
+things and rewriting its prose from scratch — but still AI first.
 
-Also move the timer_del() in do_set_periodic_timer() inside the lock,
-where it should have been all along.
+You can stop reading now if that's a problem. I was hoping to see the
+policy changes¹ go in first and send these fixes afterwards, but that
+still hasn't happened. Nevertheless, I have neither the time nor the
+inclination to do a complete clean room implementation with my own
+meat fingers. Take it or leave it, or tell me to wait for the official
+policy change.
 
-Fixes: CVE-2026-123069
-Fixes: b746a779264f ("i386/xen: handle PV timer hypercalls")
-Reported-by: MyeonghunPak <https://gitlab.com/mhun512>
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4098
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
----
- target/i386/kvm/kvm.c     |  6 ++++++
- target/i386/kvm/xen-emu.c | 36 ++++++++++++++++++++++++++++++++++--
- target/i386/kvm/xen-emu.h |  1 +
- 3 files changed, 41 insertions(+), 2 deletions(-)
+This fixes:
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 76528f1123f..302621f30af 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2556,6 +2556,12 @@ int kvm_arch_destroy_vcpu(CPUState *cs)
-     X86CPU *cpu = X86_CPU(cs);
-     CPUX86State *env = &cpu->env;
- 
-+#ifdef CONFIG_XEN_EMU
-+    if (cs->kvm_state->xen_version) {
-+        kvm_xen_destroy_vcpu(cs);
-+    }
-+#endif
-+
-     g_free(env->xsave_buf);
- 
-     g_free(cpu->kvm_msr_buf);
-diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
-index 7337561b159..67d1379e024 100644
---- a/target/i386/kvm/xen-emu.c
-+++ b/target/i386/kvm/xen-emu.c
-@@ -276,6 +276,28 @@ int kvm_xen_init_vcpu(CPUState *cs)
-     return 0;
- }
- 
-+void kvm_xen_destroy_vcpu(CPUState *cs)
-+{
-+    CPUX86State *env = &X86_CPU(cs)->env;
-+
-+    /*
-+     * This runs on the vCPU's own thread with the BQL held, and the
-+     * timer callbacks run from the main loop thread also with the BQL
-+     * held, so freeing the timers cannot race against an in-flight
-+     * callback. It *can* race against a Xen hypercall from another
-+     * vCPU targeting this one (hypercalls are handled without the
-+     * BQL), so clear the pointers under xen_timers_lock to let those
-+     * paths observe the vCPU's demise.
-+     */
-+    QEMU_LOCK_GUARD(&env->xen_timers_lock);
-+
-+    timer_free(env->xen_singleshot_timer);
-+    env->xen_singleshot_timer = NULL;
-+
-+    timer_free(env->xen_periodic_timer);
-+    env->xen_periodic_timer = NULL;
-+}
-+
- uint32_t kvm_xen_get_caps(void)
- {
-     return kvm_state->xen_caps;
-@@ -1079,10 +1101,15 @@ static int do_set_periodic_timer(CPUState *target, uint64_t period_ns)
-     CPUX86State *tenv = &X86_CPU(target)->env;
-     int64_t qemu_now;
- 
--    timer_del(tenv->xen_periodic_timer);
--
-     qemu_mutex_lock(&tenv->xen_timers_lock);
- 
-+    if (!tenv->xen_periodic_timer) {
-+        qemu_mutex_unlock(&tenv->xen_timers_lock);
-+        return -ENOENT;
-+    }
-+
-+    timer_del(tenv->xen_periodic_timer);
-+
-     qemu_now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     timer_mod_ns(tenv->xen_periodic_timer, qemu_now + period_ns);
-     tenv->xen_periodic_timer_period = period_ns;
-@@ -1120,6 +1147,11 @@ static int vcpuop_stop_periodic_timer(CPUState *target)
- 
-     qemu_mutex_lock(&tenv->xen_timers_lock);
- 
-+    if (!tenv->xen_periodic_timer) {
-+        qemu_mutex_unlock(&tenv->xen_timers_lock);
-+        return -ENOENT;
-+    }
-+
-     timer_del(tenv->xen_periodic_timer);
-     tenv->xen_periodic_timer_period = 0;
- 
-diff --git a/target/i386/kvm/xen-emu.h b/target/i386/kvm/xen-emu.h
-index fe85e0b1958..467b9f088ae 100644
---- a/target/i386/kvm/xen-emu.h
-+++ b/target/i386/kvm/xen-emu.h
-@@ -25,6 +25,7 @@
- 
- int kvm_xen_init(KVMState *s, uint32_t hypercall_msr);
- int kvm_xen_init_vcpu(CPUState *cs);
-+void kvm_xen_destroy_vcpu(CPUState *cs);
- int kvm_xen_handle_exit(X86CPU *cpu, struct kvm_xen_exit *exit);
- int kvm_put_xen_state(CPUState *cs);
- int kvm_get_xen_state(CPUState *cs);
+ • CVE-2026-61403: xen_xenstore get_req() copies a full header length
+   regardless of how much was already consumed, so a guest feeding the
+   header in two parts overshoots req_offset and the next length
+   calculation underflows: a guest-controlled linear heap overwrite.
+ • CVE-2026-123069: the per-vCPU Xen timers survive ACPI ejection of
+   their vCPU, with the freed CPUState as the callback opaque.
+ • CVE-2026-123070: PHYSDEVOP_eoi and irq_status_query index the PIRQ
+   tables with no bounds check (OOB read).
+ • CVE-2026-123071: the xen-console output trim underflows when the
+   frontend sets a small enough 'limit' — up to ~2 KiB of
+   guest-controlled bytes written *before* the buffer.
+ • CVE-2026-123072: xen-9p-backend re-reads the guest's ring indices
+   after validating the request, so the iovecs can reach up to 1 MiB
+   past the end of the ring mapping (OOB read, disclosable via Twrite).
+ • CVE-2026-123074: grant copy segments weren't validated against the
+   page size. I don't believe this one is guest-reachable in-tree
+   (xen-block already bounds its segments), so this is hardening to
+   match Xen's GNTST_bad_copy_arg.
+
+(CVE-2026-123073 was also assigned from the same combined report, but
+it's simply a duplicate of CVE-2026-61403 above. I think that wants
+rejecting.)
+
+Followed by a handful of other issues found on the journey, including
+the XenBus InitWait ordering regression reported by Mark Syms².
+
+Patches 20-21 fix the two Coverity CIDs (1527403, 1507603) and
+conflict textually with the lock-guard conversion recently posted³.
+That conversion doesn't actually fix the bug that Coverity was whining
+about, so I'd suggest these go first.
+
+Testing: each original report's reproducer triggers its ASan signature
+on the unfixed tree and is clean with the fix applied; the KVM/Xen
+functional tests pass; a real Fedora guest with PV console and disk
+survives kexec soft-reset cycles (although that surfaces a handful of
+kexec and kdump issues which I'm looking at separately).
+
+¹ https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg00260.html
+² https://lore.kernel.org/qemu-devel/178912129220.24041.799369954881004447@citrix.com
+³ https://lore.kernel.org/qemu-devel/20261101150847.29157-1-drifabdelmalekmohamedsaid@gmail.com
+
+
+David Woodhouse (21):
+  hw/xen: Fix partial request header handling in emulated XenStore
+  i386/xen: Don't resample GSI when per-vCPU upcall vector is in use
+  i386/xen: Free Xen vCPU timers when a vCPU is destroyed
+  hw/xen: Publish backend features before setting state to InitWait
+  hw/i386/kvm/xen_gnttab: Fix error handling in xen_be_gnttab_map_refs()
+  hw/xen: Validate grant copy segments against the page size
+  hw/i386/kvm/xen_evtchn: Validate PIRQ numbers in physdev operations
+  hw/i386/kvm/xen_evtchn: Fix off-by-one in do_remove_pci_vector()
+  i386/xen: Don't inject event on invalid port in qmp_xen_event_inject()
+  hw/i386/kvm/xen_evtchn: Reuse existing backend port in find_be_port()
+  hw/i386/kvm/xen: Don't leak gnttab handle on reset
+  hw/i386/kvm/xen_xenstore: Apply offset before truncation in
+    xs_append_strings()
+  hw/char/xen_console: Fix buffer trim when size exceeds twice the limit
+  hw/9pfs/xen-9p-backend: Use validated snapshot for request iovecs
+  hw/9pfs/xen-9p-backend: Validate the request header size field
+  hw/9pfs/xen-9p-backend: Validate frontend-supplied connect parameters
+  hw/9pfs/xen-9p-backend: Close event channel handle on disconnect
+  hw/net/xen_nic: Bound the TX and RX rings' producer index
+  hw/xen: Bound the rep count of PIO and MMIO ioreqs
+  hw/i386/kvm/xen_evtchn: Hold port_lock for whole of bind_pirq_op
+  hw/i386/kvm/xen_evtchn: Allow unmapping an emulated MSI PIRQ
+
+ hw/9pfs/xen-9p-backend.c          | 65 +++++++++++++++++--------------
+ hw/char/xen_console.c             | 20 +++++++---
+ hw/i386/kvm/xen_evtchn.c          | 59 ++++++++++++++++++----------
+ hw/i386/kvm/xen_gnttab.c          | 22 ++++++++++-
+ hw/i386/kvm/xen_primary_console.c |  3 ++
+ hw/i386/kvm/xen_xenstore.c        | 31 +++++++++------
+ hw/net/xen_nic.c                  |  9 ++++-
+ hw/xen/xen-bus.c                  | 16 +++++++-
+ hw/xen/xen-hvm-common.c           | 19 ++++++++-
+ hw/xen/xen-operations.c           | 11 ++++++
+ target/i386/kvm/kvm.c             |  6 +++
+ target/i386/kvm/xen-emu.c         | 49 ++++++++++++++++++++++-
+ target/i386/kvm/xen-emu.h         |  1 +
+ 13 files changed, 235 insertions(+), 76 deletions(-)
+
 -- 
 2.43.0
 
