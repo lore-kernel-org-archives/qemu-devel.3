@@ -1,69 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E4A606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988CD606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 10:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LPlJaFxq
+	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=rg5nlr0B
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVnsl-0001uV-3j; Tue, 24 Nov 2026 05:36:15 -0500
+	id 1xVntM-0002d0-89; Tue, 24 Nov 2026 05:36:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xVnsi-0001tS-GE; Tue, 24 Nov 2026 05:36:12 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xVntK-0002ce-Bw
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:36:51 -0500
+Received: from oxygen.pond.sub.org ([2a01:4f8:13b:3ad0:1::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xVnsg-0003F8-2r; Tue, 24 Nov 2026 05:36:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1795516570; x=1827052570;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=1nunOaCofKheZ39A20r7xO5iVAxgTA5Vsl/6aqQpx78=;
- b=LPlJaFxqKKeESOfqKCIanH51SeIC53Ss37s1s0KHO348yRSsxqInHGv5
- 4e8DfGNzIsuMVC6A2WZdf8IPeckFX1DXCMh2ebY7sF0CdzDoqAqOrTLqF
- mcHGqfkXUqh9nSORiuhMarj3lJ/xLBr4ep1SMf8LDYcsLtNN6jEKe0D/4
- KTc6RaGVF0RkPZO+9DWY7GGbIUj9R1B30QaLPac6bwAIbx8s1nEW8ilX/
- kAibTG5RT0XRPb0pRNE7MFk21g7/cqdpPtimmHChbhdgNCILF8E5+mbCk
- /8r9VTa+x36D4QuRwOhcRX1SabY9PsJXHciYdKD8DsPalPpk/RI2FD5Nz w==;
-X-CSE-ConnectionGUID: DzVUJ+crSeSd9eacpXxjZg==
-X-CSE-MsgGUID: zw0H50OXT8O80VqO2h+JXQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11975"; a="4401954"
-X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; 
-   d="scan'208";a="4401954"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Nov 2026 02:36:06 -0800
-X-CSE-ConnectionGUID: 1qSAT6IaTNuyy5stn/c8kg==
-X-CSE-MsgGUID: vLoyiNA3QxK913Ry8FOyuA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,230,1787036400"; d="scan'208";a="11519695"
-Received: from zhaoliu1-desk.sh.intel.com ([10.112.226.173])
- by orviesa007.jf.intel.com with ESMTP; 24 Nov 2026 02:36:05 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] rust: Fix `make rustfmt` failure
-Date: Tue, 24 Nov 2026 18:35:54 +0800
-Message-Id: <20261124103554.465545-1-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xVntI-0003Gv-7c
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 05:36:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
+ t=1795516596; bh=wpRm6/SvpfGcBOahBiTAc0ENTvxsatAHAxrgew4ODnk=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=rg5nlr0B2RIc7i4JJFwlm3iW0nUcB4vmdf1IypF2PDmciPl8EvjDw0/qZFRdDeOOA
+ l4lntNLPtOPN0yo5vSQoKRBu42VLi0Vq6rBly3JVCfOmouIQ4aApyqSLTH+UWGTZX8
+ DWQoGfTUTWQdUaxt8iWS6Nl8IBzH5X+mhqKg9TUY=
+Received: from blackfin.pond.sub.org
+ (p200300d36f05b900e5f885c0cd39d8e9.dip0.t-ipconnect.de
+ [IPv6:2003:d3:6f05:b900:e5f8:85c0:cd39:d8e9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id 2A16820C58;
+ Tue, 24 Nov 2026 11:36:34 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8054C21E6A04; Tue, 24 Nov 2026 11:36:41 +0100 (CET)
+From: Markus Armbruster <armbru@pond.sub.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  Jag Raman
+ <jag.raman@oracle.com>,  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: x-remote-object breaks QOM introspection
+In-Reply-To: <awAKcZ-HG5M7qjVQ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Fri, 20 Nov 2026 08:53:05 +0000")
+References: <87jymbjyia.fsf@pond.sub.org>
+ <E30ADD82-0779-4294-B235-D27FD379C9D6@oracle.com>
+ <877bi9e4mi.fsf@pond.sub.org>
+ <C03B480F-3701-4DEB-A9DD-6C0F80A62568@oracle.com>
+ <av8i7zkyTMX91FZs@redhat.com> <87mrr484cq.fsf@pond.sub.org>
+ <awAKcZ-HG5M7qjVQ@redhat.com>
+Date: Tue, 24 Nov 2026 11:36:41 +0100
+Message-ID: <87pkvufrd2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a01:4f8:13b:3ad0:1::3;
+ envelope-from=armbru@pond.sub.org; helo=oxygen.pond.sub.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,50 +78,75 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-At present, `make rustfmt` triggers the following error:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-[0/1] Running external command rustfmt (wrapped by meson to set env)
-Failed to find targets
-This utility formats all bin and lib files of the current crate using rustfmt.
-...
-FAILED: meson-internal__rustfmt
+> On Fri, Nov 20, 2026 at 06:21:57AM +0100, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Thu, Nov 19, 2026 at 04:13:31PM +0000, Jag Raman wrote:
 
-Since commit 6d28fc60891f moved Cargo.toml to the top-level source
-directory, rust/ is neither the workspace root nor a package
-directory. Now "cargo fmt" only formats the package in the current
-directory, so running it from rust/ (i.e. @CURRENT_SOURCE_DIR@) finds no
-targets.
+[...]
 
-So fix this by specifying the project source root (where Cargo.toml is),
-just like CI did in commit 6d28fc60891f.
+>> >> When x-remote-object is instantiated, the PCI device identified by o-=
+>devid may not
+>> >> yet exist because it appears later in QEMU=E2=80=99s command-line opt=
+ions. As a result,
+>> >> qdev_find_recursive() may fail to find it. Deferring the lookup until=
+ machine init done
+>> >> ensures that all devices have been instantiated and can be found usin=
+g qdev_find_recursive().
+>> >
+>> > We've already got hacks to process different -object classes at
+>> > different phases of command line processing. It sounds like
+>> > x-remote-object needs to be set to be processed after -device.
+>> >
+>> > ie we need a new object_create_very_late() to be run after
+>> > qemu_create_cli_devices()
+>>=20
+>> Many devices interact with supporting objects.  We have a common
+>> frontend / backend pattern:
+>>=20
+>> * The device (frontend) has a property identifying the object (backend).
+>>   The property setter resolves the property value to an object of the
+>>   required type, and fails if it can't.  This also fails device
+>>   creation.
+>>=20
+>>   CLI works, because we execute -object before -device.
+>>=20
+>>   Monitor works as long as users object_add before device_add.
+>>=20
+>> * Ideally, the device can work with any object of the required kind.
+>>   When it can't, which isn't rare, its .realize() checks the object is
+>>   suitable, and fails if it isn't.  This also fails device creation.
+>>=20
+>> Why isn't this workable here?
+>
+> The relationship between the object and device is reversed from
+> the normal direction in the case of x-remote-object.
+>
+> Normally an object provides some kind of backend service that
+> is consumed by the device.
+>
+> In this case the device can be any PCI endpoint and x-remote-object
+> is consuming the device, in order to export it over the network
+> to another "client" QEMU process which uses the x-pci-proxy-dev.
+>
+>
+> So in the monitor you would use object_add x-remote-object after
+> device_add <whatever>, and likewise the CLI should create
+> "x-remote-object" after processing all -device.
 
-Fixes: 6d28fc60891f ("rust: switch to cargo subprojects")
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I see.
 
-diff --git a/rust/meson.build b/rust/meson.build
-index c0c4e52c1b0c..08edbd50ad11 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -30,7 +30,7 @@ cargo = find_program('cargo', required: false)
- if cargo.found()
-   run_target('rustfmt',
-     command: [config_host['MESON'], 'devenv',
--              '--workdir', '@CURRENT_SOURCE_DIR@',
-+              '--workdir', meson.project_source_root(),
-               cargo, 'fmt'],
-     depends: genrs)
- endif
--- 
-2.34.1
-
+The CLI should execute options left to right, just like the monitor
+executes commands in order.  It doesn't, and we've worked around the
+resulting problems since forever.  Fixing it for good would be hard and
+painful.
 
