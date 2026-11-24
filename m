@@ -1,104 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D97606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 20:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E48606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 20:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xVs+Jlxd
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Tq/56pZY;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=HxDV5p5n
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVws3-0006ot-Rh; Tue, 24 Nov 2026 15:12:07 -0500
+	id 1xVx0k-00018B-D8; Tue, 24 Nov 2026 15:21:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavogyn@gmail.com>)
- id 1xVws1-0006o3-EL
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 15:12:05 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavogyn@gmail.com>)
- id 1xVwry-0002zV-Fn
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 15:12:05 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c4d427836e9so681551866b.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 12:12:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795551120; cv=none;
- d=google.com; s=arc-20260327;
- b=AgmQx073xwsLz5zv0ZWUdVB3Y1gxm+RzaDGZYYJbowioPLY77nZNu/eDpsIMYTbusl
- 7z9c4xe6vRYgACuG8fNpkTQJYVALhsWQ5T2TF38x4qSAL1hu5bqpzrBBp9NNHlZ+VZd7
- p4v7vAxaJD8lRWymwCvO04PXeakr/VFSUCqctEBvoalwkSEPN+igiNmqMEWhAa+vWuxx
- xade7zCGd4Gh0VND87bNtpsQL6eoIHJ9XRi/8I6bjdoBm1K/Cg/Zssrzf10rAmlqFfdX
- q3WHp3U9w7vDmIKw5YwGvF20OWxFW1rPa7an3qvafjcQfdGrNO/XyEmPEwKqZOvQNBxS
- Z+PA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=m8J61ssBQ3siUwz2aS+2pvfGvkYvFivWnsmhf8SQBmI=;
- fh=2tLSd4TCpvZvZN2g21t8VLm2BXyMdemyFybvVLISJQ8=;
- b=LCGoxqsuRhG0R23UbCcAF8oiRYzTVmU1VDAvFo20UcZTYMHuVG7Wqid8O87FUyGYqJ
- hqTQVtkiU2nCQ51HRA5E026/ygLZpQ4zE5mlLRHpWzj/virPEf3w5jHVKoagTK+LS3r4
- tywJcdcYfBGXnN2AUv7raEJIRz1ST5LvjXx9vv5Ua8RXN/RiR21ue7Vyv/qQb90sqwQ7
- zT6E8C/Mcy0fY2oszfjtwn261rewfi5ttS+XPnCtnK3bQpP212FmNIRH2dwAcTJ0TGaZ
- GXEuZe5xGxk3UNQlAKRMvprUhb2vpSdVnKmmnR36KurvhxCp4f/xrM7gRsjBG/G0dmIZ
- Ec3w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVx0h-00017l-R4
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 15:21:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xVx0f-0005On-Rh
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 15:21:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795551659;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yaulq4y3ELiEFgVuqEHf0lQSRwxHx4J3Ck4C/YJtzd8=;
+ b=Tq/56pZYvoxak+CHUcwuy+PFRwe5Ccqw/RY1iIBXivIFuXOLJ1y7azBCXHtHb7vQomeax7
+ bRtorFfkjsJB/DMMFc7Gm/1jvRyGUucNLD93WpA2/X6rgXnW8+72NFT797Spe4gJJk4f3N
+ zJZx/B3/o5iwDNIeQhLQoo5BCKWfGjg=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-7JCs1dnSMZqfYp9nGSvMAw-1; Tue, 24 Nov 2026 20:20:57 +0000
+X-MC-Unique: 7JCs1dnSMZqfYp9nGSvMAw-1
+X-Mimecast-MFC-AGG-ID: 7JCs1dnSMZqfYp9nGSvMAw_1795551657
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-9213730b07eso84653806d6.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 12:20:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795551120; x=1796155920; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=m8J61ssBQ3siUwz2aS+2pvfGvkYvFivWnsmhf8SQBmI=;
- b=xVs+JlxdlTofDTCg/5t3WF67ZRuSMMg26WrIW3/5yOf1+35QSKg+tYRp0HOiqL4K1z
- OjLxDaak6Yul+1xGWwMuIwrA/s1CEK1Roy0y3wuCV+p+r1PkBeNmjWHlQ56/LqBQ2TG+
- lXNpP3rIu03UpWbH4EP6Caj+2Ee7jB6UJC73BoXtcWlZt4efc+oWgP1LNfoA7roIWi3N
- BhRxgIvnkd2krI0Gg9bP/Pos2w9SqnwZdJQBSZWqxFjV2FUVx9T2Gv+XJVMhoYjSi1IO
- C/+Mv7WFoW2HTKU2X0iPg3Y2VDL/ksfzMq1PN5G4LFnVNnMGRSPPnTUkaL0MnPCWKCT9
- BGqQ==
+ d=redhat.com; s=google; t=1795551657; x=1796156457; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yaulq4y3ELiEFgVuqEHf0lQSRwxHx4J3Ck4C/YJtzd8=;
+ b=HxDV5p5n0954WdaBayPj/Jtx/UKa3eIUEVPsj+nLvTj1kY7B1N5C7v3n4TKwG8xcif
+ CZBR9fofH6h71NBHk2D0PID8f9mCJuyl1x3eaWahOtG91i1dPn93KvYE96lKzRdhxWGF
+ 2A22pGDqDdHq2I5dJStQbZc6HAbwZWq9mrkZFEreKZzsWqOZ4ahLUPJy3OIgW2Au4ya/
+ gR0RgyzMG5ASOc1ERQFmiCGlDBJiUlzk9myAK9vI99E3gheb1g79q2luyIoPrqJfHkOT
+ IHumzmCv8pX+ZApf7XivTxFZs35fTokl8ENuxZpalM67fSBvoMduRlFDMfGxKDx/c2Jw
+ 9m1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795551120; x=1796155920;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20260707; t=1795551657; x=1796156457;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=m8J61ssBQ3siUwz2aS+2pvfGvkYvFivWnsmhf8SQBmI=;
- b=OomIbLibFvIiE8Tnjc2p5dv3tDue2do86ywujjIkHG3uCiBd7G8Lk2yyh1s1Py3I4t
- lEgKbzCgZ3gFxDjrcC2o3WCXT7I+1lWqiN+XIYBrvAlDBgqniVx2gkqNkQ4LIyu3FyHr
- ueW8XCHNUwnqFwbeTYasKQm4UU+oaEP2w4JzZBM+tZWr5Xrce7lxFDOawGLPFUSJUBOQ
- uRr4Xip36b2AWB57S+b3AW2dDvtJnODgLWwXT85gXAI3MO8lUM4ZXjnEvSPUp7gm63X1
- cKUcZyKpIt/3JZ9qvwdHMu8v3BKU3LXNEGQOdgXGUxfmEe6p1jEL7AmMiFyNa5q5Ld3W
- AUxg==
-X-Gm-Message-State: APuU4Z8hJ8ahqSB2Ytl5rMiTaVqaGMUOYFxjsD5V7xAfOeF1IUoXB6E6
- yHmVQRYmDpaQ5F8oWw/s2XTiHX0ex54zN8mM1s06itgM5KpACmjczpIbD4hcKwvr8gAYtNhzMD6
- zizTK7f5db9Gvtl/SSKbM/Uw/40ErBkNxgnl4
-X-Gm-Gg: AZFdTZdTSzuDz03G+0dypEFBOHbxWNVszeDMnw973v6jQJChbqhFzZs67Zrzi+WlZxC
- aL0WYKDzW+vcgyogXO7hION/gaBG9s+uZL/jCP9/ItRA9hL7HHdi6KBbRVEmqK93wAN/95YGNvn
- imR6YCQnIywXrPNg97HYV6XskcjzlqNyDZsXOZf8WdicSYmh5AUJ1/9+75roja79/+5pRlsfFA7
- sIO0b64/oFXjL27/PDplwClgNMj/fsg7ttNfPP/S7O4VHqBno1rCeOuqKAdhajshe7eQXeX9S4k
- DXuRUHRGP45bfZe4FJ5ifYeeaUKj/CvOW5sK3E4UOBrSFeHwLqmw8N//GplQN3cvdCWkqfJ0VS2
- lxMJ6b8eXCPOjKCQs+mTuW216dMfQOrK3WLMl/Y5sECsMUZ56gyfg60bgYmATG3IpcIpL
-X-Received: by 2002:a17:907:ea8e:b0:c49:a235:8e0c with SMTP id
- a640c23a62f3a-c513aadb22dmr1240681566b.22.1795551119990; Tue, 24 Nov 2026
- 12:11:59 -0800 (PST)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST; 
- Tue, 24 Nov 2026 12:11:59 -0800
+ bh=yaulq4y3ELiEFgVuqEHf0lQSRwxHx4J3Ck4C/YJtzd8=;
+ b=lr1fQU/e2GIE6xN0uqEvQZzhRZBi12FeDsof+EsqLe++mYsbQ5RBd7sYq6ID9GA+lD
+ p+G+f2K8TGx2NP3OVQsxGtNfLil2F42IRtywqH8C4MBOSXuIjcK6ATHDh3vI5JbSJwtM
+ pjW6JhKcPY+j1k+psjFiG+LL8YmtIThjnjfiAVyCTkXKlT8wQWIcEW92/8tGXn33STpA
+ yEsua5e5NMK73is7fg6griydY8Bhzh5QV5otEYj2kmhVJVpqk7epKnNz7LhUZtdpa5zP
+ Ry98zK1SI+zk18y1h6sewbpwKlAzdqULd7Mr2ycVIzea69N0EboMqiRemP/JGTTWFxVC
+ Q0oA==
+X-Gm-Message-State: APuU4Z+rcJ6NIoVq7T8L7WlZyu7Liue3DK+0LIUQWbMIDrb/z0+1KOtF
+ DTHDSR+s/zTyRYvbx3/O3RhZuxtOV1L5deF8/UwDSeAT0s7OJN+ccbBpqwcSpw6RDZ/XQz7raKj
+ Ya/f7fIspyFPEQy5aW1LjCHS7vBt0jReA9n66ivKb06BVihX4llkxS6RL
+X-Gm-Gg: AZFdTZfpHjflvi8/mWhFZ0cWaD8TNkpUGoaNtCgJcJ00Lu6jn7MclGGEkI4M5x0mhPv
+ 20dTjGUu8Df1tyZj3779tjvq+QYylET2p5NgHjtvfHorT3Bo0d3Lz7DU4B4fbaLmTkcTad4o1wY
+ YA5VeT+81purMWKS59cfS084/WXxdZ3NyIXrvFMCH7nk/Qjcts9K23MdREns3mnj0qq8HCgSRI+
+ ZjDEmMiHN/In9x0MGE/mTHcGEAJJgq0cAOXCVNLZ/ZGQ0ucgwdP0rqwuUAPYdoFFA1x68FuS91p
+ hszzwH4R6wquQ5M8/3AJuEpy4i38co72o4x5oCFUVGjtHGMqtXYFscmQDXhh60eQfQI/DxXxe3P
+ POYzdbD881QQ9MoedDh6hMa4iZGgwt+DxOdAltqy1ycsF
+X-Received: by 2002:a05:6214:124e:b0:921:2a6:c6d9 with SMTP id
+ 6a1803df08f44-92134ade7cbmr297400246d6.51.1795551656688; 
+ Tue, 24 Nov 2026 12:20:56 -0800 (PST)
+X-Received: by 2002:a05:6214:124e:b0:921:2a6:c6d9 with SMTP id
+ 6a1803df08f44-92134ade7cbmr297399656d6.51.1795551656164; 
+ Tue, 24 Nov 2026 12:20:56 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-921347a0b79sm142821446d6.5.2026.11.24.12.20.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Nov 2026 12:20:55 -0800 (PST)
+Date: Tue, 24 Nov 2026 15:20:54 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-stable@nongnu.org, Elliot Berman <eberman@anduril.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH-for-11.2?] system/memory: Invalidate TBs on ROM device
+ mode switch
+Message-ID: <awXxps0Z4PjS85DT@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261124182722.78535-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: Gustavo Andrade <gustavogyn@gmail.com>
-Date: Tue, 24 Nov 2026 12:11:59 -0800
-X-Gm-Features: Aa3M54oQ-pWgeOXptQkgHU5tey2Tasnk-epleFbl6eU3WIWKDbbszd5TyWeTnEg
-Message-ID: <CAPZV9qUfPnXf_UN0A99VQ0rSiU2VmROGxjjjJ3_UhjT2+St1YA@mail.gmail.com>
-Subject: [RFC PATCH v2] vfio/pci: Wait for RTX 5090 firmware after reset
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=gustavogyn@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261124182722.78535-1-philmd@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,375 +119,117 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Gustavo A." <gustavogyn@gmail.com>
+On Tue, Nov 24, 2026 at 07:27:22PM +0100, Philippe Mathieu-Daudé wrote:
+> A ROM device changes its contents with direct stores while in MMIO
+> mode. TCG does not see these stores, so translated blocks built from
+> the old contents survive the switch back to ROMD mode and the guest
+> executes stale code.
+> 
+> Make memory_region_rom_device_set_romd() drop the TBs of the whole
+> region on both transitions: before leaving ROMD mode (if currently
+> in it), and after entering ROMD mode, for TBs another vCPU built
+> before its TLB was flushed.
 
-Updating the host from CachyOS 7.2.10 to 7.3 exposed grey display output
-on an RTX 5090 passthrough setup after the guest booted Linux. The
-triggering kernel change is unknown. Restricting BAR1 to 4 KiB mappings
-masks the failure; waiting for firmware readiness also restores output
-with stock KVM, unmodified VFIO and verified 1 GiB BAR1 mappings.
+Pure question: should we flush once, but only when ROMD->MMIO?  Said that,
+IIUC we need to flush after switching to MMIO to avoid the race you
+mentioned, that is something like:
 
-The RTX 5090's Firmware Security Processor (FSP) can still be
-initializing after PCI reset completes. Poll for the BAR firewall to
-open and the FSP boot status to report ready before guest firmware runs.
-Match the physical RTX 5090 PCI ID before applying guest overrides,
-prevent guest overrides from selecting Radeon reset quirks on an RTX
-5090, and honor x-no-geforce-quirks.
+  if (mr_is_romd(mr) && romd_mode) {
+      set_romd(false);
+      flush();
+  }
 
-Run the wait in the reset exit phase rather than a device resetfn.
-During a VM reset, VFIO's shared bus reset handler runs in the hold
-phase and can execute after the GPU's own reset callback. Guest config
-writes requesting FLR or a D3hot-to-D0 transition go through VFIO
-separately from this QEMU reset path.
+It's based on my limited understanding / assumption that during MMIO state
+TCG won't be able to cache invalid TB on these regions.
 
-Use raw VFIO region access for the config and BAR reads. Temporarily
-enable PCI memory decoding via byte writes (preserving the kernel-managed
-INTx-disable bit) if needed, then restore it on exit. Bound both polls
-with one five-second monotonic deadline. A completed read of all ones
-can occur while registers are inaccessible and satisfies neither
-readiness check, so polling continues until ready or timeout while
-explicit VFIO I/O errors return immediately. Report readiness and
-cleanup failures separately without terminating QEMU.
-
-Link: https://github.com/NVIDIA/open-gpu-kernel-modules/blob/e6a2e01579fbbd1ca2ed43fef2ee2589e9bd8bd9/src/nvidia/src/kernel/gpu/fsp/arch/blackwell/kern_fsp_gb202.c
-Link: https://github.com/NVIDIA/open-gpu-kernel-modules/blob/e6a2e01579fbbd1ca2ed43fef2ee2589e9bd8bd9/src/nvidia/src/kernel/gpu/bif/arch/blackwell/kernel_bif_gb202.c
-Signed-off-by: Gustavo A. <gustavogyn@gmail.com>
----
-
-Hi Alex,
-
-Resending as v2 because Gmail's web UI wrapped lines in v1 and broke the
-diff on Patchew.
-
-I moved the wait out of resetfn into ResettableClass phases.exit since a
-shared VFIO bus reset in the hold phase can still run after the GPU's
-own reset callback. Other changes since v1:
-
-- Detect the physical RTX 5090 in vfio_pci_config_setup() before guest
-  ID overrides, block Radeon resetfn selection for it, and honor
-  x-no-geforce-quirks.
-- Poll with raw VFIO region_read() at 10 ms intervals under a single 5 s
-  deadline; keep polling on transient 0xffffffff reads and return
-  immediately on VFIO I/O errors.
-- Retry -EINTR and report PCI_COMMAND_MEMORY restore failures separately.
-- Rebased onto master (6bf90d4fc502).
-
-Note that AI tools assisted with this patch. I know QEMU declines
-AI-derived submissions unless an exception is granted, so let me know if
-an exception makes sense here or if the findings are only useful as
-reference for a clean-room implementation.
-
-Hardware display testing on the RTX 5090 (1 GiB BAR1, stock KVM, native
-VFIO) was done on the earlier revision; this reset_exit revision has
-been build- and smoke-tested on master and 11.1.3.
-
-Main thing I'd like feedback on is whether phases.exit is the right
-place for this wait, and whether the 5 s timeout and report-and-continue
-behavior look reasonable.
+So when switching ROMD->MMIO, invalidated TBs can exist, hence flush only
+once, after updating romd=false.  When switching back from MMIO->ROMD, no
+chance caching anything wrong.
 
 Thanks,
-Gustavo
 
- hw/vfio/pci-quirks.c | 129 +++++++++++++++++++++++++++++++++++++++++++
- hw/vfio/pci.c        |  36 +++++++++---
- hw/vfio/pci.h        |   6 ++
- hw/vfio/trace-events |   1 +
- 4 files changed, 163 insertions(+), 9 deletions(-)
+> 
+> Measured with a guest that repeatedly leaves and re-enters read-array
+> mode on a pflash, once with no code cached from the flash, and once
+> with a function in the flash called after every read-array transition.
+> The flush is almost free where code isn't cached in flash, and costs
+> about one retranslation per cycle when it is.
+> 
+> The pflash models are the only callers of this function. Other ROM
+> devices (nrf51_nvm, amigaone) flush from their own write callbacks.
+> 
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Elliot Berman <eberman@anduril.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4490
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>  include/system/memory.h |  3 +++
+>  system/memory.c         | 14 +++++++++++++-
+>  2 files changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index 027ca81bd2e1..8dbe37e60ad5 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -1959,6 +1959,9 @@ void memory_region_set_nonvolatile(MemoryRegion *mr, bool nonvolatile);
+>   * device is mapped to guest memory and satisfies read access directly.
+>   * When in MMIO mode, reads are forwarded to the #MemoryRegion.read function.
+>   * Writes are always handled by the #MemoryRegion.write function.
+> + * Switching to MMIO mode when currently in ROMD mode, and switching to ROMD
+> + * mode, both drop the translated blocks of the whole region, so the device
+> + * may modify its contents while in MMIO mode.
+>   *
+>   * @mr: the memory region to be updated
+>   * @romd_mode: %true to put the region into ROMD mode
+> diff --git a/system/memory.c b/system/memory.c
+> index 56c5dd6c8abd..f01470993914 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2249,7 +2249,8 @@ void memory_region_set_nonvolatile(MemoryRegion *mr, bool nonvolatile)
+>      }
+>  }
+>  
+> -void memory_region_rom_device_set_romd(MemoryRegion *mr, bool romd_mode)
+> +static void memory_region_rom_device_set_romd_mode(MemoryRegion *mr,
+> +                                                   bool romd_mode)
+>  {
+>      if (mr->romd_mode != romd_mode) {
+>          memory_region_transaction_begin();
+> @@ -2259,6 +2260,17 @@ void memory_region_rom_device_set_romd(MemoryRegion *mr, bool romd_mode)
+>      }
+>  }
+>  
+> +void memory_region_rom_device_set_romd(MemoryRegion *mr, bool romd_mode)
+> +{
+> +    if (romd_mode) {
+> +        memory_region_rom_device_set_romd_mode(mr, true);
+> +        memory_region_flush_rom_device(mr, 0, memory_region_size(mr));
+> +    } else if (memory_region_is_romd(mr)) {
+> +        memory_region_flush_rom_device(mr, 0, memory_region_size(mr));
+> +        memory_region_rom_device_set_romd_mode(mr, false);
+> +    }
+> +}
+> +
+>  void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
+>                                 hwaddr size, unsigned client)
+>  {
+> -- 
+> 2.55.0
+> 
 
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index a38a0e7..6b03d8b 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -1354,8 +1354,137 @@ out:
-     return ret;
- }
-
-+/*
-+ * GB202's Firmware Security Processor can still be initializing when PCI
-+ * reset completes.
-+ */
-+#define NVIDIA_GB202_BAR_FIREWALL 0x2b8
-+#define NVIDIA_GB202_BAR_BLOCKED BIT(24)
-+#define NVIDIA_GB202_FSP_STATUS 0xad00bc
-+#define NVIDIA_GB202_FSP_READY 0xff
-+
-+/*
-+ * PCI_COMMAND_MEMORY is in the low byte. Leave the kernel-managed INTx
-+ * disable bit in the high byte alone, and verify that the write took effect.
-+ */
-+static int vfio_gb202_set_memory_decode(VFIOPCIDevice *vdev, bool enable,
-+                                        bool *restore_decode)
-+{
-+    bool wrote = false;
-+    uint8_t command;
-+    int ret, retries = 3;
-+
-+    /* Cleanup must also be able to retry after the readiness timeout. */
-+    do {
-+        ret = vfio_pci_config_space_read(vdev, PCI_COMMAND, 1, &command);
-+        if (ret != 1) {
-+            continue;
-+        }
-+        if (command == UINT8_MAX) {
-+            return -EIO;
-+        }
-+        if (!!(command & PCI_COMMAND_MEMORY) == enable) {
-+            return 0;
-+        }
-+        if (wrote) {
-+            return -EIO;
-+        }
-+
-+        /* Even a failed write may have changed the device. */
-+        if (restore_decode) {
-+            *restore_decode = true;
-+        }
-+        command ^= PCI_COMMAND_MEMORY;
-+        ret = vfio_pci_config_space_write(vdev, PCI_COMMAND, 1, &command);
-+        wrote = ret == 1;
-+    } while (ret == 1 || (ret == -EINTR && retries-- > 0));
-+
-+    return ret < 0 ? ret : -EIO;
-+}
-+
-+static int vfio_gb202_poll(VFIODevice *vbasedev, uint8_t region, off_t offset,
-+                           uint32_t mask, uint32_t expected, int64_t deadline)
-+{
-+    for (;;) {
-+        int64_t remaining;
-+        uint32_t value;
-+        int ret;
-+
-+        ret = vbasedev->io_ops->region_read(vbasedev, region, offset,
-+                                            sizeof(value), &value);
-+        if (ret == sizeof(value)) {
-+            /* An all-ones read during reset matches neither ready state. */
-+            if ((le32_to_cpu(value) & mask) == expected) {
-+                return 0;
-+            }
-+        } else if (ret != -EINTR) {
-+            return ret < 0 ? ret : -EIO;
-+        }
-+
-+        remaining = deadline - g_get_monotonic_time();
-+        if (remaining <= 0) {
-+            return -ETIMEDOUT;
-+        }
-+        g_usleep(MIN(remaining, 10 * G_TIME_SPAN_MILLISECOND));
-+    }
-+}
-+
-+void vfio_pci_gb202_wait_ready(VFIOPCIDevice *vdev)
-+{
-+    VFIODevice *vbasedev = &vdev->vbasedev;
-+    VFIORegion *bar0 = &vdev->bars[0].region;
-+    int64_t deadline = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
-+    bool restore_decode = false;
-+    int ret, restore_ret;
-+
-+    if (vdev->config_size < NVIDIA_GB202_BAR_FIREWALL + sizeof(uint32_t) ||
-+        vdev->bars[0].ioport || !(bar0->flags & VFIO_REGION_INFO_FLAG_READ) ||
-+        bar0->size < NVIDIA_GB202_FSP_STATUS + sizeof(uint32_t)) {
-+        ret = -ENODEV;
-+        goto out;
-+    }
-+
-+    /* The BAR firewall must open before BAR0 can be accessed. */
-+    ret = vfio_gb202_poll(vbasedev, VFIO_PCI_CONFIG_REGION_INDEX,
-+                          NVIDIA_GB202_BAR_FIREWALL, NVIDIA_GB202_BAR_BLOCKED,
-+                          0, deadline);
-+    if (ret) {
-+        goto out;
-+    }
-+    ret = vfio_gb202_set_memory_decode(vdev, true, &restore_decode);
-+    if (!ret) {
-+        ret = vfio_gb202_poll(vbasedev, VFIO_PCI_BAR0_REGION_INDEX,
-+                              NVIDIA_GB202_FSP_STATUS, UINT32_MAX,
-+                              NVIDIA_GB202_FSP_READY, deadline);
-+    }
-+
-+out:
-+    if (ret) {
-+        error_report("vfio: %s: GB202 firmware readiness check failed: %s",
-+                     vbasedev->name, strerror(-ret));
-+    }
-+    if (restore_decode) {
-+        restore_ret = vfio_gb202_set_memory_decode(vdev, false, NULL);
-+        if (restore_ret) {
-+            error_report("vfio: %s: failed to restore GB202 PCI memory "
-+                         "decoding: %s", vbasedev->name,
-+                         strerror(-restore_ret));
-+            if (!ret) {
-+                ret = restore_ret;
-+            }
-+        }
-+    }
-+    trace_vfio_quirk_nvidia_gb202_reset(vbasedev->name, ret);
-+}
-+
- void vfio_setup_resetfn_quirk(VFIOPCIDevice *vdev)
- {
-+    /* Guest ID overrides must not select a Radeon reset on an RTX 5090. */
-+    if (vdev->is_rtx_5090) {
-+        vdev->resetfn = NULL;
-+        return;
-+    }
-+
-     switch (vdev->vendor_id) {
-     case 0x1002:
-         switch (vdev->device_id) {
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9607866..791a116 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1141,8 +1141,8 @@ static bool vfio_pci_load_rom(VFIOPCIDevice
-*vdev, Error **errp)
- }
-
- /* "Raw" read of underlying config space. */
--static int vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
--                                      uint32_t size, void *data)
-+int vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
-+                               uint32_t size, void *data)
- {
-     return vdev->vbasedev.io_ops->region_read(&vdev->vbasedev,
-                                               VFIO_PCI_CONFIG_REGION_INDEX,
-@@ -1150,8 +1150,8 @@ static int
-vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
- }
-
- /* "Raw" write of underlying config space. */
--static int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
--                                       uint32_t size, void *data)
-+int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
-+                                uint32_t size, void *data)
- {
-     return vdev->vbasedev.io_ops->region_write(&vdev->vbasedev,
-                                                VFIO_PCI_CONFIG_REGION_INDEX,
-@@ -3428,6 +3428,12 @@ bool vfio_pci_config_setup(VFIOPCIDevice *vdev,
-Error **errp)
-         return false;
-     }
-
-+    /* Match the host RTX 5090 before applying guest PCI ID overrides. */
-+    vdev->is_rtx_5090 = !vbasedev->proxy && !vbasedev->mdev &&
-+        pci_get_word(pdev->config + PCI_VENDOR_ID) == PCI_VENDOR_ID_NVIDIA &&
-+        pci_get_word(pdev->config + PCI_DEVICE_ID) == 0x2b85 &&
-+        pdev->config[PCI_CLASS_DEVICE + 1] == PCI_BASE_CLASS_DISPLAY;
-+
-     /* vfio emulates a lot for us, but some bits need extra love */
-     vdev->emulated_config_bits = g_malloc0(vdev->config_size);
-
-@@ -3767,9 +3773,9 @@ static void vfio_exitfn(PCIDevice *pdev)
-     }
- }
-
--static void vfio_pci_reset(DeviceState *dev)
-+static void vfio_pci_reset_hold(Object *obj, ResetType type)
- {
--    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(dev);
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-
-     /* Do not reset the device during qemu_system_reset prior to cpr load */
-     if (cpr_is_incoming()) {
-@@ -3811,6 +3817,16 @@ post_reset:
-     vfio_pci_post_reset(vdev);
- }
-
-+static void vfio_pci_reset_exit(Object *obj, ResetType type)
-+{
-+    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-+
-+    /* Shared VFIO bus resets also run in the hold phase. */
-+    if (vdev->is_rtx_5090 && !vdev->no_geforce_quirks && !cpr_is_incoming()) {
-+        vfio_pci_gb202_wait_ready(vdev);
-+    }
-+}
-+
- static void vfio_pci_init(Object *obj)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(obj);
-@@ -3952,8 +3968,10 @@ static void vfio_pci_class_init(ObjectClass
-*klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-
--    device_class_set_legacy_reset(dc, vfio_pci_reset);
-+    rc->phases.hold = vfio_pci_reset_hold;
-+    rc->phases.exit = vfio_pci_reset_exit;
-     device_class_set_props(dc, vfio_pci_properties);
-     object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
-     dc->vmsd = &vfio_cpr_pci_vmstate;
-@@ -4019,8 +4037,8 @@ static void vfio_pci_class_init(ObjectClass
-*klass, const void *data)
-                                           "clique for device [0-15]");
-     object_class_property_set_description(klass, /* 2.12 */
-                                           "x-no-geforce-quirks",
--                                          "Disable GeForce quirks
-(for NVIDIA Quadro/GRID/Tesla). "
--                                          "Improves performance");
-+                                          "Disable GeForce MMIO quirks and "
-+                                          "the RTX 5090 firmware wait");
-     object_class_property_set_description(klass, /* 2.12 */
-                                           "display",
-                                           "Enable display support for
-device, ex. vGPU");
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 7ff52e9..951b77a 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -179,6 +179,7 @@ struct VFIOPCIDevice {
-     bool no_kvm_msi;
-     bool no_kvm_msix;
-     bool no_geforce_quirks;
-+    bool is_rtx_5090;
-     bool no_kvm_ioeventfd;
-     bool no_vfio_ioeventfd;
-     bool enable_ramfb;
-@@ -226,6 +227,10 @@ void vfio_pci_intx_eoi(VFIODevice *vbasedev);
- void vfio_pci_teardown_msi(VFIOPCIDevice *vdev);
-
- /* Config space */
-+int vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
-+                               uint32_t size, void *data);
-+int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
-+                                uint32_t size, void *data);
- uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len);
- void vfio_pci_write_config(PCIDevice *pdev,
-                            uint32_t addr, uint32_t val, int len);
-@@ -256,6 +261,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr);
- void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr);
- void vfio_bar_quirk_finalize(VFIOPCIDevice *vdev, int nr);
- void vfio_setup_resetfn_quirk(VFIOPCIDevice *vdev);
-+void vfio_pci_gb202_wait_ready(VFIOPCIDevice *vdev);
- bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
- void vfio_rom_quirk_setup(VFIOPCIDevice *vdev);
- void vfio_quirk_reset(VFIOPCIDevice *vdev);
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index bfdaf22..7c64373 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -80,6 +80,7 @@ vfio_quirk_ati_bonaire_reset_no_smc(const char *name) "%s"
- vfio_quirk_ati_bonaire_reset_timeout(const char *name) "%s"
- vfio_quirk_ati_bonaire_reset_done(const char *name) "%s"
- vfio_quirk_ati_bonaire_reset(const char *name) "%s"
-+vfio_quirk_nvidia_gb202_reset(const char *name, int ret) "%s ret %d"
- vfio_ioeventfd_exit(const char *name, uint64_t addr, unsigned size,
-uint64_t data) "%s+0x%"PRIx64"[%d]:0x%"PRIx64
- vfio_ioeventfd_handler(const char *name, uint64_t addr, unsigned
-size, uint64_t data) "%s+0x%"PRIx64"[%d] -> 0x%"PRIx64
- vfio_ioeventfd_init(const char *name, uint64_t addr, unsigned size,
-uint64_t data, bool vfio) "%s+0x%"PRIx64"[%d]:0x%"PRIx64" vfio:%d"
 -- 
-2.56.1
+Peter Xu
+
 
