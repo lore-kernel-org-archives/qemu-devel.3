@@ -1,52 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6110606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 21:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFB7606A326
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 21:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SII9QT30
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FdOyZ9OA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVxj4-0003Rk-9k; Tue, 24 Nov 2026 16:06:54 -0500
+	id 1xVxj6-0003XQ-31; Tue, 24 Nov 2026 16:06:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVxiy-0003Is-CT
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:06:49 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVxj1-0003PU-Sd
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:06:51 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVxiw-0003hG-Li
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:06:48 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xVxiy-0003hr-U5
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 16:06:50 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id B1302628B3;
- Tue, 24 Nov 2026 21:06:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D641F000C0;
- Tue, 24 Nov 2026 21:06:43 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 33294628BF;
+ Tue, 24 Nov 2026 21:06:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959F91F000C0;
+ Tue, 24 Nov 2026 21:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795554404;
- bh=HfYwX+vjayMvrw17yCvyS9NzmI+jw1A0lHezqO5mt3w=;
+ s=k20260515; t=1795554407;
+ bh=QD7z2CD4DX1nXkS/WCN/jP04M1iOizaOnLgZeBaYXGQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SII9QT30mFplViHCIvnDbLjfSlLAcBQjAWNJ5nlsS1z4orgujTPY4VK+sm8q9pA6S
- UAQ2sPW6O+qDX7YVW0aWzkccQ958hZn/g/V5sl/jcsJwdEK7DoxC/iDFukcI1sCkCA
- A9vY/i3IKMXUTp+Oqu0khlPM+iOw5eg4K4d6B5Q1e5j1BCPda33z03L3T8jOIt7NPa
- b8B96AVDHHzbIYxQpcwtKxSK43wdzr69WvtFwdisAWEtWI8zljsfFLl1TiA1dWpHOP
- 9xUgefvLw0OIVgF8JfIgy9kwItiCdR3y9UGaEPB/IKHqzym5cOTR4ESwW8b+Mg6krP
- H6m/fjn0sF7eA==
+ b=FdOyZ9OAuLQYgbXkN6JsEHFAa6kqjv7aaY1S0kt/JeV4QVQeAiLkTjkxwckOZkgcT
+ eqGKpgALaNU9EgG0gh9IbU2mvC8Mv4n76yFDp3OVUtfk3T9XAFmAtAvLiG1RKmSICD
+ LHl6+FxQVQRkbLrKdovXbqw3uxQlh78mUva2GeECpXdU2BP3OtBg1L8dwc2BG74CNB
+ R8bHQDVHSDIKx1IM7RVM2BM9qtGjQ1oiTB4L8C30UFxEbCAd8O9VS8Ec/dSOqEZXSd
+ pHt0sUJzNK+95iC+QZ0iOuDPE6UrvJWaAX73+HRD3Na+ert5W8qyIaW1Eqcxb9mUv5
+ 3Vnz2WMC3BeoA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Brad Smith <brad@comstyle.com>,
  "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 1/3] hw/hppa: fix OpenBSD boot on B160L emulation
-Date: Tue, 24 Nov 2026 22:06:37 +0100
-Message-ID: <20261124210639.133084-2-deller@kernel.org>
+Subject: [PATCH v2 3/3] hw/hppa: adjust CPU HPA on 715 to avoid broadcast
+ address
+Date: Tue, 24 Nov 2026 22:06:39 +0100
+Message-ID: <20261124210639.133084-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261124210639.133084-1-deller@kernel.org>
 References: <20261124210639.133084-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -74,40 +75,30 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Helge Deller <deller@gmx.de>
 
-OpenBSD 8.0 hangs on boot since commit 98c37479afc7 ("target/hppa: Map
-CPUs at same addresses as on physical machines"):
+Change the CPU HPA for the monarch CPU on the 715 machine to 0xfffa0000
+if more than 2 CPUs are configured, as otherwise the second CPU would be
+on HPA 0xfffc0000 which conflicts with the global broadcast HPA
+(HPPA_BROADCAST_HPA).
 
-"Advanced audio (ext.)" at gsc0 (type a sv 7b mod 3 hv d4) offset 4000 not configured
-"Core Centronics" at gsc0 (type a sv 74 mod 3 hv d0) offset 2000 not configured
-dino0 at phantomas0 offset ff80000: can't map space
-panic: trap: uvm_fault(0xaf8560, 0, 0, 2): 14
-syncing disks... done
-dump to dev 301 not possible
-rebooting...SeaBIOS wants SYSTEM RESET.
-
-On a physical machine, the boot CPU HPA is 0xfffbe000, so let's use
-0xfffa0000 instead of the current (invalid) HPA of 0xfff10000 to allow
-space for multiple CPUs.
-
-Reported-by: Kirill A. Korinsky <kirill@korins.ky>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/machine.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 3b83968f33..8dd9023058 100644
+index 8dd9023058..333ab7ba3a 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -716,7 +716,7 @@ static void machine_HP_B160L_init(MachineState *machine)
-     PCIBus *pci_bus;
+@@ -629,7 +629,8 @@ static void machine_HP_715_init(MachineState *machine)
+     ISABus *isa_bus;
  
      /* Create CPUs and RAM.  */
--    translate = machine_HP_common_init_cpus(machine, 0xfff10000);
-+    translate = machine_HP_common_init_cpus(machine, 0xfffa0000);
+-    translate = machine_HP_common_init_cpus(machine, 0xfffbe000);
++    translate = machine_HP_common_init_cpus(machine,
++                    machine->smp.cpus <= 3 ? 0xfffbe000 : 0xfffa0000);
  
      if (hppa_is_pa20(&cpu[0]->env)) {
-         error_report("The HP B160L workstation requires a 32-bit "
+         error_report("The HP 715/64 workstation requires a 32-bit "
 -- 
 2.54.0
 
