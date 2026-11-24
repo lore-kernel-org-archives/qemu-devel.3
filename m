@@ -1,111 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF02606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BFA606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 11:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gdYax4BS
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Y4FA9muY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVp4g-0006k6-MK; Tue, 24 Nov 2026 06:52:40 -0500
+	id 1xVp8S-0000KM-2u; Tue, 24 Nov 2026 06:56:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVp4Z-0006f0-JC
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:52:33 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVp4X-0007YX-Iq
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 06:52:31 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-67da69e7c31so4584749d50.3
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 03:52:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795521148; cv=none;
- d=google.com; s=arc-20260327;
- b=rsmENWK/9idqMK4l67ubEhHv2mMxHE9UEDtSxL8j9SxehNdxERx2fgWzBF3zgf8dP1
- LnUPGIyV393dsB4+6DaUaysA5s2meJW4UXFVi8ghqUhnHHBg1HJdWv6jXOvJruVHWD0H
- pMK62sqprv/9tqwo+zZodRPGUhTINlFeNftnaJNG2KW9jLnHYF5Iw6ukWZty7xwL99V1
- BM13an/QsKifk+0s8th2RiHFEy+8drsy7UpuxxPYBbamPyEc0wKI0Wj7e/+axM+lDyR4
- eM8A+ze3C2TK7nrnCpz/4vTrPPbH4iqHItwazWLDHKSd3pOXOzV9QrQh9q53NBDPRBk/
- P4qg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GmrZTVnD4qHSCdHeLEXeCSuJkPlieGR3EuOjmjRaOPM=;
- fh=kjIIHBxOc2+eheqJ3UOmUVeT86hj4XqWJtrPoTu5ZIs=;
- b=fh7SYVKzSEY8NllkglUxQru+eNCGiMMeQpFE8Dk/kMokHiyLozPgUYYDewStiRtJWK
- zCpx86JCNk1GxS4v4jo33C3o6zJmkBFvcYd33LwTXcLamd2aqneuvk7T+C/HPp/HV2f4
- FZOVgKh34Ft3aK/YSkKN2usajXNf4Q0V5voKVYkZu1p0AZ5DSNwdUMjZYs3w+D/1/Idq
- THIPKJbPyAB2A8tavqlG1wJxJE8FqsxHP9MOLCTIQFKZBtYETzm49uc3x7lQezLOERPh
- MMi+yOI9hxqcjCdgHKEKeQpHQ86leccu7GvHpLth8t28n5xBVmR6FkzMmVl4AQytXFhq
- f8tQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795521148; x=1796125948; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GmrZTVnD4qHSCdHeLEXeCSuJkPlieGR3EuOjmjRaOPM=;
- b=gdYax4BSDeqQ6su3cWGE8NUrqhD/1rTR359glS144GiL4KRD0cxzzfQBQSE+LcxCQG
- W+OZuUGb1fhLUevBx2Y1ZEJIUp6c31LYD6tqPxBmffki5F5qkC4vLZAc+h6pwibyJzTO
- kAbY1iz3j6wbWoyI0exmzN4pyj5bhP+AVzMa95Abpj3MAh3WCRabXzmUqlgaIoeXHC9T
- /y/E5TbQ+8S+kWZXjPMkRIPgL9LQChJiRuyhqLK8QbIKzvm1H3Yl/VrcwIZFFBDOzBbU
- 3W+1ESRQ2cTztdittavcIoiJ84SSiREWYQ/h5VF1KRV69AAz6+L79zC6PI6rlXkuk09a
- qTEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795521148; x=1796125948;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GmrZTVnD4qHSCdHeLEXeCSuJkPlieGR3EuOjmjRaOPM=;
- b=d/BxSNFQ4Vyo5zwN2wF2BY1w5osZxH3j5It5qcKk7Ilvv7NjLtTfrPNWhHR7j2zOQZ
- zi0gt0+vqv0H86MNG9v4i314Ges154lHY+MY5oWSkkd7oKVQR27iojXlEd96mm/JTWwt
- ljOBo40iEgl+GXYrmJCC0prLiRprORuC2/MqMizyQoKp7JP/AAGZw+DcCy9JsHdTuS4K
- jt5x1AqbaJGIkvbRn/JRoZzM3XxPbiMBJXeXBW67x37yywdogS9gU0rKR81k5Oveil+w
- SqFQecfHZSC35lHY6rvlcrPMJfwhZgVSm2TTToCBTkWe/aQ+KmPDB7/YZgdEOJnkRPcR
- sz2A==
-X-Gm-Message-State: APuU4Z+OZrLehP0o37TcTM9JhAaFKCMiM5iG75W85TjCUVIOFmCLzRQS
- KySaYwzR9umEC+WDngTLidJcZ7fDT3U2UWmZdvxvgZgDeulzJq6kIlcKCKyp+/1YMEnSe6N/2OT
- OxUdC3VkMDa9dea2EKTIVQC78vislWvctfVFHWu8bDA==
-X-Gm-Gg: AZFdTZevHH+gR3hRImuWogEPq2WNXLV6ykX007JhfvbUK8SSFJOeis1SaFTgKxlTIVN
- +xzeSccvpBP29Wyny3a1jvjlAqMPsS4QjqaV2/tiRKVvr/Pe/9WghVAjLazq10+hexWRqdeCHhr
- kC1WIbiaoJW6x5ggBm5cMvEE8UwUlwxGRuJ1vZpGVyAR18T/kvSjywxnocxq2ysEfC70gqCqE2N
- iKX1z3Y2oLlp2MHxTlAxKpEsfqZjT9F8vmQNTf3Vh2/YRN/wsItYzoEblsTRQGKZ4MZmn89tHFd
- slq/CvwpsKKVHcaEZrCFreGxGcDMcfd6DHisKOD8T4Qf0hFbQ4peZatOHD9hHsf41vc5LoGD1lb
- VGa3zWED3n+9Lx4tU2Q+WE6fmEZ+3q02bs9AmF/0jV3AlWF38t/A2PreOsDZpaefKigmTOEJfy8
- uX1GXkqQaSm4bvyQywjfXH
-X-Received: by 2002:a05:690e:4891:10b0:67d:be3c:9582 with SMTP id
- 956f58d0204a3-67df449824cmr4474627d50.74.1795521148229; Tue, 24 Nov 2026
- 03:52:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1xVp8O-0000Jx-Oa; Tue, 24 Nov 2026 06:56:29 -0500
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1xVp8M-0000nz-LJ; Tue, 24 Nov 2026 06:56:28 -0500
+Received: by linux.microsoft.com (Postfix, from userid 1236)
+ id 0A7F520B7166; Tue, 24 Nov 2026 03:56:21 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0A7F520B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1795521381;
+ bh=aiicujEDZYmx2arVeXVVt3SQuCIELZVhCwDebRn76Dc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Y4FA9muY1FiP5eIy2SRAJW6EXDT5/Zj0xsOi0gB5YdcsoLGHPak5DT3s2+Y5FwZwE
+ +kwMULQHk8v8qHaNmUXfdOsNOMVZIh0Wv2hF9nYO4v3ki5PyWaIZljxlViRJB93SQ2
+ MvbUh4siobNYTM+041nTPxUfbaZr3dJu7xvjRRD0=
+Date: Tue, 24 Nov 2026 03:56:21 -0800
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v6 05/14] target/arm/mshv: implement vcpu state
+ operations for ARM64
+Message-ID: <awV7ZXgN2+6kuEVw@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+ <20261001-mshv_accel_arm64_supp-v6-5-aefe5e76a0e3@linux.microsoft.com>
+ <av8guV6yQkrfIjFZ@example.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261123225349.54981-1-philmd@oss.qualcomm.com>
- <20261123225349.54981-4-philmd@oss.qualcomm.com>
-In-Reply-To: <20261123225349.54981-4-philmd@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Nov 2026 11:52:15 +0000
-X-Gm-Features: Aa3M54o6ijvzYlXZg-WhKcG2C314jwIuAho2FN0yeUkcCdGse3a8T1Qsst9Mezw
-Message-ID: <CAFEAcA9-TFZbOcPW8mrdC+LN5_AsxkCCkh16noLjYFhtf2UKUQ@mail.gmail.com>
-Subject: Re: [PATCH-for-11.2 3/9] hw/sd/sdcard: Do not abort when writing DAT
- lines on invalid cmd state
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <av8guV6yQkrfIjFZ@example.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,38 +73,249 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 23 Nov 2026 at 22:55, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Since commit e2dec2eab04d, an illegal command resets
-> SDState::current_cmd to 0 but leaves the card in the receiving-data
-> state. Data written afterwards reaches the g_assert_not_reached()
-> in sd_write_data():
->
->   CMD24 (WRITE_SINGLE_BLOCK)   -> receiving-data state
->   CMD2  (illegal in SPI mode)  -> current_cmd =3D 0
->   data token + data            -> sd_write_data(): abort
->
->   ERROR:../hw/sd/sd.c:<line>:sd_write_data: code should not be reached
->
-> Commit bd6207903eb8 already fixed the read side. Fix the write side
-> the same way: log the guest error and ignore the data.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: e2dec2eab04d ("hw/sd/sdcard: Remove default case in read/write on =
-DAT lines")
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
+On Thu, Nov 19, 2026 at 05:15:53PM +0100, Magnus Kulke wrote:
+> On Thu, Oct 01, 2026 at 10:52:50AM +0000, Aastha Rawat wrote:
+> > Add support for reading and writing ARM64 CPU registers in the MSHV
+> > accelerator. This includes functions to set and get registers,
+> > initialize and destroy VCPU state, and manage register state
+> > synchronization between QEMU and hypervisor.
+> > 
+> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> > ---
+> >  include/hw/hyperv/hvgdk_mini.h |  42 +++++++++++++++
+> >  target/arm/mshv/mshv-all.c     | 119 +++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 161 insertions(+)
+> > 
+> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> > index a5527d49cf..b5bcea353a 100644
+> > --- a/include/hw/hyperv/hvgdk_mini.h
+> > +++ b/include/hw/hyperv/hvgdk_mini.h
+> > @@ -32,6 +32,46 @@ typedef enum hv_register_name {
+> >      HV_REGISTER_PENDING_EVENT0       = 0x00010004,
+> >      HV_REGISTER_PENDING_EVENT1       = 0x00010005,
+> >  
+> > +#if defined(__aarch64__)
+> 
+> do we need those ifdefs here (they create a checkpatch warning)? Since
+> they have a clear prefix and all values are explicitly assigned we
+> might not run into a conflict.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+I believe it should be fine to get rid of the ifdefs, we won't run into
+any problems as long as we're writing architecture-specific code.
+ 
+> > +    HV_ARM64_REGISTER_XZR   = 0x0002FFFE,
+> > +    HV_ARM64_REGISTER_X0    = 0x00020000,
+> > +    HV_ARM64_REGISTER_X1    = 0x00020001,
+> > +    HV_ARM64_REGISTER_X2    = 0x00020002,
+> > +    HV_ARM64_REGISTER_X3    = 0x00020003,
+> > +    HV_ARM64_REGISTER_X4    = 0x00020004,
+> > +    HV_ARM64_REGISTER_X5    = 0x00020005,
+> > +    HV_ARM64_REGISTER_X6    = 0x00020006,
+> > +    HV_ARM64_REGISTER_X7    = 0x00020007,
+> > +    HV_ARM64_REGISTER_X8    = 0x00020008,
+> > +    HV_ARM64_REGISTER_X9    = 0x00020009,
+> > +    HV_ARM64_REGISTER_X10   = 0x0002000A,
+> > +    HV_ARM64_REGISTER_X11   = 0x0002000B,
+> > +    HV_ARM64_REGISTER_X12   = 0x0002000C,
+> > +    HV_ARM64_REGISTER_X13   = 0x0002000D,
+> > +    HV_ARM64_REGISTER_X14   = 0x0002000E,
+> > +    HV_ARM64_REGISTER_X15   = 0x0002000F,
+> > +    HV_ARM64_REGISTER_X16   = 0x00020010,
+> > +    HV_ARM64_REGISTER_X17   = 0x00020011,
+> > +    HV_ARM64_REGISTER_X18   = 0x00020012,
+> > +    HV_ARM64_REGISTER_X19   = 0x00020013,
+> > +    HV_ARM64_REGISTER_X20   = 0x00020014,
+> > +    HV_ARM64_REGISTER_X21   = 0x00020015,
+> > +    HV_ARM64_REGISTER_X22   = 0x00020016,
+> > +    HV_ARM64_REGISTER_X23   = 0x00020017,
+> > +    HV_ARM64_REGISTER_X24   = 0x00020018,
+> > +    HV_ARM64_REGISTER_X25   = 0x00020019,
+> > +    HV_ARM64_REGISTER_X26   = 0x0002001A,
+> > +    HV_ARM64_REGISTER_X27   = 0x0002001B,
+> > +    HV_ARM64_REGISTER_X28   = 0x0002001C,
+> > +    HV_ARM64_REGISTER_FP    = 0x0002001D,
+> > +    HV_ARM64_REGISTER_LR    = 0x0002001E,
+> > +    HV_ARM64_REGISTER_PC    = 0x00020022,
+> > +
+> > +    /* AArch64 System Register Descriptions: General system control registers */
+> > +    HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
+> > +    HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
+> > +
+> > +#elif defined(__x86_64__)
+> >      /* X64 User-Mode Registers */
+> >      HV_X64_REGISTER_RAX     = 0x00020000,
+> >      HV_X64_REGISTER_RCX     = 0x00020001,
+> > @@ -188,6 +228,8 @@ typedef enum hv_register_name {
+> >      /* Other MSRs */
+> >      HV_X64_REGISTER_MSR_IA32_MISC_ENABLE = 0x000800A0,
+> >  
+> > +#endif
+> > +
+> >      /* Misc */
+> >      HV_X64_REGISTER_HYPERCALL       = 0x00090001,
+> >      HV_REGISTER_GUEST_OS_ID         = 0x00090002,
+> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+> > index 00c54f5d66..29dd45a123 100644
+> > --- a/target/arm/mshv/mshv-all.c
+> > +++ b/target/arm/mshv/mshv-all.c
+> > @@ -10,17 +10,128 @@
+> >   */
+> >  
+> >  #include "qemu/osdep.h"
+> > +#include <sys/ioctl.h>
+> > +
+> > +#include "qemu/error-report.h"
+> > +#include "qemu/memalign.h"
+> >  #include "hw/arm/virt.h"
+> > +
+> > +#include "system/cpus.h"
+> > +#include "target/arm/cpu.h"
+> > +
+> >  #include "system/mshv.h"
+> >  #include "system/mshv_int.h"
+> > +#include "hw/hyperv/hvgdk_mini.h"
+> > +
+> > +static const enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
+> > +    HV_ARM64_REGISTER_X0,
+> > +    HV_ARM64_REGISTER_X1,
+> > +    HV_ARM64_REGISTER_X2,
+> > +    HV_ARM64_REGISTER_X3,
+> > +    HV_ARM64_REGISTER_X4,
+> > +    HV_ARM64_REGISTER_X5,
+> > +    HV_ARM64_REGISTER_X6,
+> > +    HV_ARM64_REGISTER_X7,
+> > +    HV_ARM64_REGISTER_X8,
+> > +    HV_ARM64_REGISTER_X9,
+> > +    HV_ARM64_REGISTER_X10,
+> > +    HV_ARM64_REGISTER_X11,
+> > +    HV_ARM64_REGISTER_X12,
+> > +    HV_ARM64_REGISTER_X13,
+> > +    HV_ARM64_REGISTER_X14,
+> > +    HV_ARM64_REGISTER_X15,
+> > +    HV_ARM64_REGISTER_X16,
+> > +    HV_ARM64_REGISTER_X17,
+> > +    HV_ARM64_REGISTER_X18,
+> > +    HV_ARM64_REGISTER_X19,
+> > +    HV_ARM64_REGISTER_X20,
+> > +    HV_ARM64_REGISTER_X21,
+> > +    HV_ARM64_REGISTER_X22,
+> > +    HV_ARM64_REGISTER_X23,
+> > +    HV_ARM64_REGISTER_X24,
+> > +    HV_ARM64_REGISTER_X25,
+> > +    HV_ARM64_REGISTER_X26,
+> > +    HV_ARM64_REGISTER_X27,
+> > +    HV_ARM64_REGISTER_X28,
+> > +    HV_ARM64_REGISTER_FP,
+> > +    HV_ARM64_REGISTER_LR,
+> > +    HV_ARM64_REGISTER_PC,
+> > +};
+> > +
+> > +static int set_standard_regs(const CPUState *cpu)
+> > +{
+> > +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
+> > +    struct hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)] = {};
+> > +    int ret;
+> > +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> > +    CPUARMState *env = &arm_cpu->env;
+> > +
+> > +    for (size_t i = 0; i < n_regs - 1; i++) {
+> > +        assocs[i].name = STANDARD_REGISTER_NAMES[i];
+> > +        assocs[i].value.reg64 = env->xregs[i];
+> > +    }
+> > +
+> > +    /* Last register is the program counter */
+> > +    assocs[n_regs - 1].name = STANDARD_REGISTER_NAMES[n_regs - 1];
+> > +    assocs[n_regs - 1].value.reg64 = env->pc;
+> > +
+> > +    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
+> > +    if (ret < 0) {
+> > +        error_report("failed to set standard registers");
+> > +        return -1;
+> > +    }
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +static int get_standard_regs(CPUState *cpu)
+> > +{
+> > +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
+> > +    struct hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)] = {};
+> > +    int ret;
+> > +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> > +    CPUARMState *env = &arm_cpu->env;
+> > +
+> > +    for (size_t i = 0; i < n_regs; i++) {
+> > +        assocs[i].name = STANDARD_REGISTER_NAMES[i];
+> > +    }
+> > +    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+> > +    if (ret < 0) {
+> > +        error_report("failed to get standard registers");
+> > +        return -1;
+> > +    }
+> > +
+> > +    for (size_t i = 0; i < n_regs - 1; i++) {
+> > +        env->xregs[i] = assocs[i].value.reg64;
+> > +    }
+> > +    env->pc = assocs[n_regs - 1].value.reg64;
+> > +
+> > +    return 0;
+> > +}
+> >  
+> >  static int load_regs(CPUState *cpu)
+> >  {
+> > +    int ret;
+> > +
+> > +    ret = get_standard_regs(cpu);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to load standard registers");
+> > +        return -1;
+> > +    }
+> > +
+> >      return 0;
+> >  }
+> >  
+> >  static int store_regs(const CPUState *cpu)
+> >  {
+> > +    int ret;
+> > +
+> > +    ret = set_standard_regs(cpu);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to store standard registers");
+> > +        return -1;
+> > +    }
+> > +
+> >      return 0;
+> >  }
+> >  
+> > @@ -41,12 +152,20 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+> >  
+> >  void mshv_arch_init_vcpu(CPUState *cpu)
+> >  {
+> > +    AccelCPUState *state = cpu->accel;
+> >  
+> > +    mshv_setup_hvcall_args(state);
+> >  }
+> >  
+> >  void mshv_arch_destroy_vcpu(CPUState *cpu)
+> >  {
+> > +    AccelCPUState *state = cpu->accel;
+> > +
+> > +    if (state->hvcall_args.base) {
+> > +        qemu_vfree(state->hvcall_args.base);
+> > +    }
+> >  
+> > +    state->hvcall_args = (MshvHvCallArgs){0};
+> >  }
+> >  
+> >  int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+> > 
+> > -- 
+> > 2.45.4
 
