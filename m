@@ -1,78 +1,78 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDCA606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFA6606A32D
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Nov 2026 13:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZCXyWquH
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hX4ETx4w
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xVqaG-000582-Pj; Tue, 24 Nov 2026 08:29:20 -0500
+	id 1xVqaJ-0005B3-3h; Tue, 24 Nov 2026 08:29:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVqaA-00056i-Nt
+ id 1xVqaA-00056c-74
  for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:15 -0500
 Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xVqa8-0007OC-SO
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:14 -0500
+ id 1xVqa8-0007O0-3q
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 08:29:13 -0500
 Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-490d59c3edaso3053567f8f.1
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:29:12 -0800 (PST)
+ ffacd0b85a97d-492fcbfaa88so2911553f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 05:29:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795526951; x=1796131751; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795526950; x=1796131750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=yrZu0JxvfqtzMFa+0gsiObtAopJnpeWR2MUyCBVS6bI=;
- b=ZCXyWquH7df/TS4akzFyOV0TuUkdR6WPFjilGmt35sdY2Nz3Baxf53GIDf4kuuqPNm
- wE+nWTY3NWF8SFNWlnFlgdMHhx0yMZtMO9aTiB2HczcqF/iiI2XiAlelEfK/cYw9WI6u
- 8mMkB5wbVmrB5g0lEm6tYAbMY9I2aHD1kAeIdAPjT9TwI79d9oMhT/c+TegvhD76fEaM
- eqrLrAzYZfF1pY+6wxQjnxTomTBlTL7VzBsmOlfinmr9+yue2gQW8+m3S60VlIoJbN0N
- wrkxyJ5ci++/uY3lCE72OGFB9TEpEARtPI1oYet/0lr/SQbeXtNlZjxPLCVZLwTX0YuQ
- GfWA==
+ bh=clQ6ZjUmB8+bHcpHqj8LWyFKCgkw91ddZzcsW3agfrQ=;
+ b=hX4ETx4wmqgarC+/iyzhe94qgQECKvno8FyAZa7Drx8xLznp6seoZwypwmYD/HY//3
+ aWibk3TaLq6N5uVE9sqeRWvcWWrc6m7QF4g9W0aRb//QtaPZ7tjLZN6nyxNzIm7xFx/X
+ rNsPopJBq7LKzKM7L6Blyuahl6RnqjpAtDVa/SwHGgpwOpILPGvNk9idXTRFgoqEI+VG
+ ncfjC0ExVm/RHhEpvGmrOmpJh1bYe46fBHm63Fg6QsEKJUzQI9c7L4sopYkEZgJsPPR5
+ aEYEQNwAyG5T01pTBQ6+TIHdFaVk9eXRwG0zNSHsD5L7CH6JKpqdO2Lk/CSiSMXyYdQ9
+ H1rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795526951; x=1796131751;
+ d=1e100.net; s=20260707; t=1795526950; x=1796131750;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=yrZu0JxvfqtzMFa+0gsiObtAopJnpeWR2MUyCBVS6bI=;
- b=cILybSwzdlhnyLAUkhPeusL4eMxOBKpQIG+mZtenMwDMpuzdVEl//XrkTVtBdoLE4V
- mICNbauveVtuA5qbnwUZ0dl8NDdhQk0IMll90xNkSlWgGTfAPiQTtkujPNQQuEHNYqjn
- hx3fvknoSAITjgg04cSCpL5l/1lII5llZDX8N3FdRC2dYU7mN6Bbz1u6ksKHN7k+rRPp
- N/ufTGrywytc3PBFZSc8uCde3C0wrA1pyWYIGt/dZC+itrxuQEQn66+jCoWc6wPb5IFm
- UxP63XLFaUMmNJsSHV0cFbWvZdk6bDAaI2QgBxSgdCVpSebXavKMxkhIulBbrlugOXPZ
- VD3w==
-X-Gm-Message-State: APuU4Z/Gi/w04s0rloVIcUBkaANMtddB4tzDVj8efPqNBhA22mrNf29J
- FRFi/5gE7Umx9YfxlcuQhD2AVQkUyqNgfwlR1ZQb9aptGTmS0rYqdLRLg6yCFdFGPDNXD1k1Sq2
- RSfAR
-X-Gm-Gg: AZFdTZcw3NPomLzdjtEO5U8cP7Wf3Mq7W/57DwiYUAVbQZOjSmqhYkccB0zQwVB4FrH
- OPAfSiHMbma21hWq8M1jG7KdNsS7VjQ4BepwXxr160Oh3JgkkqXawNJIS1bEJ/Ozlynrryo4z23
- biS5nTjBHMTfkvmOkTHnb04AAbavfRaESWz4Bfp5BUYFBEtZMMBGL3AY6cdffBMI9DhMlb0gO+m
- UN7RLI8IPbQ6eT30qmk4BImTM1QDvG4OTDU4H/sE/gDvug27UyVAoKPV/XC50/LOD1of3URbrnD
- GtAdZ9KPo3hqgMbgMb90O3W/J96Al755GUv1zInagAbYoqih3h0n//fWOeT5ZeOaYi+vl86ox7V
- 9Ex3H+aKSI763QKm26ueWqk48C+MgaWMxwhqYuCHzv/uIfj3ZEzf5AMkybLUnfgsVHn3Fzl1EiI
- dFg2wjUcpBVtokJEoQTK8amdUbjwwK8A+zckvemidLAbwDmyhod8xexE1qtsHxlfN217N+X9vRs
- 6Cx43plOveC4UZcjhxxhtM5w33T25lKNZEzQHz6Fppl7I6tHzMRBuh+6BeNNgLKt7pCWfw+YK/D
- wXcSzIRh6sQTwFTIDUTTY0pSz7yDpRNutVyBsufDnNcJvm7Or7NY5K7K6GDj/Bo2Fpy03iAVs5h
- uZ+hQDmd21bLtPvjPNyAPnOjSgOsWJyezTQ==
-X-Received: by 2002:a05:6000:438a:b0:48e:127a:c914 with SMTP id
- ffacd0b85a97d-4aa545e25cdmr38306844f8f.5.1795526951437; 
- Tue, 24 Nov 2026 05:29:11 -0800 (PST)
+ bh=clQ6ZjUmB8+bHcpHqj8LWyFKCgkw91ddZzcsW3agfrQ=;
+ b=HyFBGKaajflx5CV58yQ1nuT9bH7LaZKk6bNG/HpQZAJnC0qjALk5Hakjvw0qtg1/Bd
+ HrVH95CCIBUTxwAhr4PszjoOH/vD3stQPJsVk47T1ViqpC2teSSe/BHTs30qhz0DZsw5
+ loTEW3hBOf4hDAsy3HbowCfFqg8anQEVGUETRTtS8A5CgYNIn24svc7EFn9iN+QoFAon
+ 7XzcRzwuS6VP7yhCvDckPcUcNETFMTZa4H1zyI7ymGMPg58s4uBVS2T060zDshMpnJ82
+ YGUvnv+T2FqRqaPIBFuH3qu21KmaRSsW4Eq9nmGPBWgKPS9RkuEw9PiPyPPZmwc16urG
+ 5aFA==
+X-Gm-Message-State: APuU4Z8CdM373my0AX2jREN/yGM+EL4mb4cFxdC10aQbFkH18LkcV8Jx
+ /XWU7xbujsk8za1oiIcBCSpvrXWoWwXj3jFH/0LclU8UfZN+umcXuR8diur47vaFEX65MJAfX8W
+ 8jeQa
+X-Gm-Gg: AZFdTZeSVUGmAENKdhwMLqUqwd3JcPIo0iMtgtyYaRUX+pTknoqhMtJCzJ1nKViyiOR
+ chZ5/JboToogcBdUTenqrNj2/0je3LnWzCMS+w5ZW8+hMBxFwWsRlzFaEPTdIvEIG0/sQeDC9sO
+ ZfovyF6w5CuGrnnOgsy5k2446dSdZfsU4LPjm0IgpmzUrMn75ZHf/AlZ7u22RhzK4sdln2G0CM3
+ t731HtnlPAc+W0vR1FhPvR8Vw1eQxYhELbDflQJHNBHWTuYmxASBK5PAX8lzGUNsJtQhtB1fwNu
+ Tlc1btpEJ/thBaUhgPs70qXtxu27n4mouRM6ibDAHac9RN+SVm1EV1nmqGcGtTFkXMr23yu91/f
+ QJFQYrVdJf2xhkal3XGivPXpIn9ic6LsgtCeaQRJ1Nv3j4Q4/fKzwTbkYSKoErLaI2VCmDbutUN
+ U+KL06RjbmdUgs7dkGe0WaApFJmnSx8z7pQ+9QH/7gmpmXyUAlMGovZ0q+HI7mkcd4XJyPtgUG4
+ lHXShwk2MgheAudQcBNtoLCSgr7H93Gh/AYXGlAX4HQPDTmkgl3EB8y1nHMjoq49/AdXWcG2VA7
+ Sn96wrQ3FYQ1FR7UXquu43HZ9l4Z/7bdoc9Xi6O39SGLEdL27+maeGKE981vH+iac0381ai0L2C
+ LX0fGhO3Ct+MXoVTeXvaj9TEz9vqNoaPRqw==
+X-Received: by 2002:a05:6000:248a:b0:487:b50:101c with SMTP id
+ ffacd0b85a97d-4abaa97702bmr27080197f8f.5.1795526950393; 
+ Tue, 24 Nov 2026 05:29:10 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6b10b2c9sm29098031f8f.31.2026.11.24.05.29.10
+ ffacd0b85a97d-4ab6b10b2c9sm29098031f8f.31.2026.11.24.05.29.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 05:29:10 -0800 (PST)
+ Tue, 24 Nov 2026 05:29:09 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 5/9] hw/arm/bcm2838: Route system timer interrupts to GIC
-Date: Tue, 24 Nov 2026 13:29:00 +0000
-Message-ID: <20261124132904.138731-6-peter.maydell@linaro.org>
+Subject: [PULL 4/9] hw/net/rtl8139: Limit DMA transfers to plain memory
+Date: Tue, 24 Nov 2026 13:28:59 +0000
+Message-ID: <20261124132904.138731-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261124132904.138731-1-peter.maydell@linaro.org>
 References: <20261124132904.138731-1-peter.maydell@linaro.org>
@@ -106,164 +106,259 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Jayesh Agarwal <agarwaljayesh03@gmail.com>
+There's no reason for the RTL8139 to be doing a DMA transfer to
+something that isn't memory, and allowing it can cause weird
+re-entrancy problems, such as a DMA to the PCI hot-unplug register
+causing the device to be deleted while it's halfway through doing
+something.
 
-The system timer interrupts are only routed to the legacy interrupt
-controller and not to the GIC, so a guest using the GIC (software that
-relies on the system timer interrupts through the GIC, such as bare
-metal programs or hobby kernels) never receives them.
+Replace the calls to pci_dma_read() and pci_dma_write() with
+local functions that are identical except that they pass
+a MemTxAttrs that forbids non-memory accesses.
 
-A qemu_irq connection follows one output, one input. So also wiring the
-timer to the GIC would replace its connection to the legacy controller.
+This is the same approach we took to a similar problem with
+the hcd-xhci USB controller in commit 89e653b7736 (but differs
+from what we did for lsi53c895a in commit 4862d2c95104d).
 
-Add a splitter per system-timer interrupt line so that each interrupt
-reaches both the legacy controller (output 0 of the splitters) and the
-GIC (output 1 of the splitters). The timer channel n goes to GIC SPI
-64+n, so channels 0-3 go to SPIs 64-67.
+The known trigger for this bug requires that you turned off
+ACPI hotplug on the QEMU commandline with
+  -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off
+so most configurations won't run into it.
 
-Testing:
-The raspi4b machine started in the qtest mode:
-	qemu-system-aarch64 -M raspi4b -display none -accel qtest -qtest stdio
-
-Ran following commands:
-	irq_intercept_in /machine/soc/peripherals
-	readl 0xfe003004
-	writel 0xfe00300c 1000
-	writel 0xfe003010 2000
-	writel 0xfe003014 3000
-	writel 0xfe003018 4000
-	clock_step 5000000
-	readl 0xfe003000
-
-Before the fix:
-    clock_step 5000000
-    OK 5000000
-    readl 0xfe003000
-    OK 0x000000000000000f
-The alarm fires correctly (status flag outputs 0xf), but no IRQ raise
-64-67 reaches the GIC.
-
-After the fix:
-    clock_step 5000000
-    IRQ raise 64
-    IRQ raise 65
-    IRQ raise 66
-    IRQ raise 67
-    OK 5000000
-    readl 0xfe003000
-    OK 0x000000000000000f
-The alarm fires, and all the four channels reached GIC lines 64-67.
-
-Reported-by: Sourojeet Adhikari <s23adhik@csclub.uwaterloo.ca>
-Signed-off-by: Jayesh Agarwal <agarwaljayesh03@gmail.com>
-Message-id: 20261117193205.8236-1-agarwaljayesh03@gmail.com
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jayesh Agarwal <agarwaljayesh03@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: 3ada003aee2004d24f2 ("rtl8139: Use PCI DMA stub functions")
+Fixes: CVE-2026-128868
+Reported-by: VictorCHEN <ahchen-yz@outlook.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20261113165015.1150646-1-peter.maydell@linaro.org
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/arm/bcm2835_peripherals.h |  1 +
- include/hw/arm/bcm2838_peripherals.h |  4 ++++
- hw/arm/bcm2835_peripherals.c         | 33 ++++++++++++++++++----------
- hw/arm/bcm2838.c                     |  7 ++++++
- 4 files changed, 33 insertions(+), 12 deletions(-)
+ hw/net/rtl8139.c | 98 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 60 insertions(+), 38 deletions(-)
 
-diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
-index cd66a734e7c..b262bdccb74 100644
---- a/include/hw/arm/bcm2835_peripherals.h
-+++ b/include/hw/arm/bcm2835_peripherals.h
-@@ -54,6 +54,7 @@ struct BCMSocPeripheralBaseState {
-     qemu_irq irq, fiq;
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 38bc16f312f..f3d1718921a 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -513,6 +513,28 @@ struct RTL8139State {
+     int rtl8139_mmio_io_addr_dummy;
+ };
  
-     BCM2835SystemTimerState systmr;
-+    SplitIRQ systmr_irq_splitter[BCM2835_SYSTIMER_COUNT];
-     BCM2835MphiState mphi;
-     UnimplementedDeviceState txp;
-     UnimplementedDeviceState armtmr;
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index f9279daa4d0..bb188422013 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -20,6 +20,10 @@
- /* SPI */
- #define GIC_SPI_INTERRUPT_MBOX         33
- #define GIC_SPI_INTERRUPT_MPHI         40
-+#define GIC_SPI_INTERRUPT_SYS_TIMER0   64
-+#define GIC_SPI_INTERRUPT_SYS_TIMER1   65
-+#define GIC_SPI_INTERRUPT_SYS_TIMER2   66
-+#define GIC_SPI_INTERRUPT_SYS_TIMER3   67
- #define GIC_SPI_INTERRUPT_DWC2         73
- #define GIC_SPI_INTERRUPT_DMA_0        80
- #define GIC_SPI_INTERRUPT_DMA_6        86
-diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
-index be40c6b92a4..5ab2bac4b11 100644
---- a/hw/arm/bcm2835_peripherals.c
-+++ b/hw/arm/bcm2835_peripherals.c
-@@ -95,6 +95,14 @@ static void raspi_peripherals_base_init(Object *obj)
-     /* SYS Timer */
-     object_initialize_child(obj, "systimer", &s->systmr,
-                             TYPE_BCM2835_SYSTIMER);
-+    /*
-+     * One splitter per system-timer interrupt line so that each interrupt
-+     * reaches both the legacy controller and the GIC.
-+     */
-+    for (int n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
-+        object_initialize_child(obj, "systmr-irq-splitter[*]",
-+                                &s->systmr_irq_splitter[n], TYPE_SPLIT_IRQ);
-+    }
- 
-     /* UART0 */
-     object_initialize_child(obj, "uart0", &s->uart0, TYPE_PL011);
-@@ -304,18 +312,19 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
-     }
-     memory_region_add_subregion(&s->peri_mr, ST_OFFSET,
-                 sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->systmr), 0));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 0,
--        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
--                               INTERRUPT_TIMER0));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 1,
--        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
--                               INTERRUPT_TIMER1));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 2,
--        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
--                               INTERRUPT_TIMER2));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), 3,
--        qdev_get_gpio_in_named(DEVICE(&s->ic), BCM2835_IC_GPU_IRQ,
--                               INTERRUPT_TIMER3));
-+    for (n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
-+        qdev_prop_set_uint32(DEVICE(&s->systmr_irq_splitter[n]),
-+                "num-lines", 2);
-+        if (!qdev_realize(DEVICE(&s->systmr_irq_splitter[n]), NULL, errp)) {
-+            return;
-+        }
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->systmr), n,
-+                qdev_get_gpio_in(DEVICE(&s->systmr_irq_splitter[n]), 0));
-+        qdev_connect_gpio_out(DEVICE(&s->systmr_irq_splitter[n]), 0,
-+                qdev_get_gpio_in_named(DEVICE(&s->ic),
-+                    BCM2835_IC_GPU_IRQ,
-+                    INTERRUPT_TIMER0 + n));
-+    }
- 
-     /* UART0 */
-     qdev_prop_set_chr(DEVICE(&s->uart0), "chardev", serial_hd(0));
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index 1bde9e68af9..a88d750f76b 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -192,6 +192,13 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
-     qdev_connect_gpio_out(DEVICE(&ps_base->spi_irq_splitter), 1,
-                           qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_SPI));
- 
-+    /* Connect the system timer interrupts to the interrupt controller */
-+    for (int n = 0; n < BCM2835_SYSTIMER_COUNT; n++) {
-+        int int_n = GIC_SPI_INTERRUPT_SYS_TIMER0 + n;
-+        qdev_connect_gpio_out(DEVICE(&ps_base->systmr_irq_splitter[n]), 1,
-+                              qdev_get_gpio_in(gicdev, int_n));
-+    }
++/*
++ * There's no reason for the RTL8139 to do DMA to something that
++ * isn't memory, and it can cause weird re-entrancy problems if e.g.
++ * a DMA write targets the PCI hot-unplug register for the device.
++ * Set memory=1 in the memory attributes to avoid that kind of thing.
++ */
++static MemTxResult rtl8139_dma_write(PCIDevice *dev, dma_addr_t addr,
++                                     const void *buf, dma_addr_t len)
++{
++    const MemTxAttrs attrs = { .memory = true };
++    return pci_dma_rw(dev, addr, (void *)buf, len,
++                      DMA_DIRECTION_FROM_DEVICE, attrs);
++}
 +
-     /* Connect VC mailbox to the interrupt controller */
-     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->mboxes), 0,
-                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_MBOX));
++static inline MemTxResult rtl8139_dma_read(PCIDevice *dev, dma_addr_t addr,
++                                           void *buf, dma_addr_t len)
++{
++    const MemTxAttrs attrs = { .memory = true };
++    return pci_dma_rw(dev, addr, buf, len,
++                      DMA_DIRECTION_TO_DEVICE, attrs);
++}
++
+ /* Writes tally counters to memory via DMA */
+ static void RTL8139TallyCounters_dma_write(RTL8139State *s, dma_addr_t tc_addr);
+ 
+@@ -756,15 +778,15 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
+ 
+             if (size > wrapped)
+             {
+-                pci_dma_write(d, s->RxBuf + s->RxBufAddr,
+-                              buf, size-wrapped);
++                rtl8139_dma_write(d, s->RxBuf + s->RxBufAddr,
++                                  buf, size - wrapped);
+             }
+ 
+             /* reset buffer pointer */
+             s->RxBufAddr = 0;
+ 
+-            pci_dma_write(d, s->RxBuf + s->RxBufAddr,
+-                          buf + (size-wrapped), wrapped);
++            rtl8139_dma_write(d, s->RxBuf + s->RxBufAddr,
++                              buf + (size - wrapped), wrapped);
+ 
+             s->RxBufAddr = wrapped;
+ 
+@@ -773,7 +795,7 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
+     }
+ 
+     /* non-wrapping path or overwrapping enabled */
+-    pci_dma_write(d, s->RxBuf + s->RxBufAddr, buf, size);
++    rtl8139_dma_write(d, s->RxBuf + s->RxBufAddr, buf, size);
+ 
+     s->RxBufAddr += size;
+ }
+@@ -971,13 +993,13 @@ static ssize_t rtl8139_receive(NetClientState *nc,
+ 
+         uint32_t val, rxdw0,rxdw1,rxbufLO,rxbufHI;
+ 
+-        pci_dma_read(d, cplus_rx_ring_desc, &val, 4);
++        rtl8139_dma_read(d, cplus_rx_ring_desc, &val, 4);
+         rxdw0 = le32_to_cpu(val);
+-        pci_dma_read(d, cplus_rx_ring_desc+4, &val, 4);
++        rtl8139_dma_read(d, cplus_rx_ring_desc + 4, &val, 4);
+         rxdw1 = le32_to_cpu(val);
+-        pci_dma_read(d, cplus_rx_ring_desc+8, &val, 4);
++        rtl8139_dma_read(d, cplus_rx_ring_desc + 8, &val, 4);
+         rxbufLO = le32_to_cpu(val);
+-        pci_dma_read(d, cplus_rx_ring_desc+12, &val, 4);
++        rtl8139_dma_read(d, cplus_rx_ring_desc + 12, &val, 4);
+         rxbufHI = le32_to_cpu(val);
+ 
+         DPRINTF("+++ C+ mode RX descriptor %d %08x %08x %08x %08x\n",
+@@ -1040,12 +1062,12 @@ static ssize_t rtl8139_receive(NetClientState *nc,
+ 
+         /* receive/copy to target memory */
+         if (dot1q_buf) {
+-            pci_dma_write(d, rx_addr, buf, 2 * ETH_ALEN);
+-            pci_dma_write(d, rx_addr + 2 * ETH_ALEN,
+-                          buf + 2 * ETH_ALEN + VLAN_HLEN,
+-                          size - 2 * ETH_ALEN);
++            rtl8139_dma_write(d, rx_addr, buf, 2 * ETH_ALEN);
++            rtl8139_dma_write(d, rx_addr + 2 * ETH_ALEN,
++                              buf + 2 * ETH_ALEN + VLAN_HLEN,
++                              size - 2 * ETH_ALEN);
+         } else {
+-            pci_dma_write(d, rx_addr, buf, size);
++            rtl8139_dma_write(d, rx_addr, buf, size);
+         }
+ 
+         if (s->CpCmd & CPlusRxChkSum)
+@@ -1055,7 +1077,7 @@ static ssize_t rtl8139_receive(NetClientState *nc,
+ 
+         /* write checksum */
+         val = cpu_to_le32(crc32(0, buf, size_));
+-        pci_dma_write(d, rx_addr+size, (uint8_t *)&val, 4);
++        rtl8139_dma_write(d, rx_addr + size, (uint8_t *)&val, 4);
+ 
+ /* first segment of received packet flag */
+ #define CP_RX_STATUS_FS (1<<29)
+@@ -1101,9 +1123,9 @@ static ssize_t rtl8139_receive(NetClientState *nc,
+ 
+         /* update ring data */
+         val = cpu_to_le32(rxdw0);
+-        pci_dma_write(d, cplus_rx_ring_desc, (uint8_t *)&val, 4);
++        rtl8139_dma_write(d, cplus_rx_ring_desc, (uint8_t *)&val, 4);
+         val = cpu_to_le32(rxdw1);
+-        pci_dma_write(d, cplus_rx_ring_desc+4, (uint8_t *)&val, 4);
++        rtl8139_dma_write(d, cplus_rx_ring_desc + 4, (uint8_t *)&val, 4);
+ 
+         /* update tally counter */
+         ++s->tally_counters.RxOk;
+@@ -1291,43 +1313,43 @@ static void RTL8139TallyCounters_dma_write(RTL8139State *s, dma_addr_t tc_addr)
+     uint64_t val64;
+ 
+     val64 = cpu_to_le64(tally_counters->TxOk);
+-    pci_dma_write(d, tc_addr + 0,     (uint8_t *)&val64, 8);
++    rtl8139_dma_write(d, tc_addr + 0,     (uint8_t *)&val64, 8);
+ 
+     val64 = cpu_to_le64(tally_counters->RxOk);
+-    pci_dma_write(d, tc_addr + 8,     (uint8_t *)&val64, 8);
++    rtl8139_dma_write(d, tc_addr + 8,     (uint8_t *)&val64, 8);
+ 
+     val64 = cpu_to_le64(tally_counters->TxERR);
+-    pci_dma_write(d, tc_addr + 16,    (uint8_t *)&val64, 8);
++    rtl8139_dma_write(d, tc_addr + 16,    (uint8_t *)&val64, 8);
+ 
+     val32 = cpu_to_le32(tally_counters->RxERR);
+-    pci_dma_write(d, tc_addr + 24,    (uint8_t *)&val32, 4);
++    rtl8139_dma_write(d, tc_addr + 24,    (uint8_t *)&val32, 4);
+ 
+     val16 = cpu_to_le16(tally_counters->MissPkt);
+-    pci_dma_write(d, tc_addr + 28,    (uint8_t *)&val16, 2);
++    rtl8139_dma_write(d, tc_addr + 28,    (uint8_t *)&val16, 2);
+ 
+     val16 = cpu_to_le16(tally_counters->FAE);
+-    pci_dma_write(d, tc_addr + 30,    (uint8_t *)&val16, 2);
++    rtl8139_dma_write(d, tc_addr + 30,    (uint8_t *)&val16, 2);
+ 
+     val32 = cpu_to_le32(tally_counters->Tx1Col);
+-    pci_dma_write(d, tc_addr + 32,    (uint8_t *)&val32, 4);
++    rtl8139_dma_write(d, tc_addr + 32,    (uint8_t *)&val32, 4);
+ 
+     val32 = cpu_to_le32(tally_counters->TxMCol);
+-    pci_dma_write(d, tc_addr + 36,    (uint8_t *)&val32, 4);
++    rtl8139_dma_write(d, tc_addr + 36,    (uint8_t *)&val32, 4);
+ 
+     val64 = cpu_to_le64(tally_counters->RxOkPhy);
+-    pci_dma_write(d, tc_addr + 40,    (uint8_t *)&val64, 8);
++    rtl8139_dma_write(d, tc_addr + 40,    (uint8_t *)&val64, 8);
+ 
+     val64 = cpu_to_le64(tally_counters->RxOkBrd);
+-    pci_dma_write(d, tc_addr + 48,    (uint8_t *)&val64, 8);
++    rtl8139_dma_write(d, tc_addr + 48,    (uint8_t *)&val64, 8);
+ 
+     val32 = cpu_to_le32(tally_counters->RxOkMul);
+-    pci_dma_write(d, tc_addr + 56,    (uint8_t *)&val32, 4);
++    rtl8139_dma_write(d, tc_addr + 56,    (uint8_t *)&val32, 4);
+ 
+     val16 = cpu_to_le16(tally_counters->TxAbt);
+-    pci_dma_write(d, tc_addr + 60,    (uint8_t *)&val16, 2);
++    rtl8139_dma_write(d, tc_addr + 60,    (uint8_t *)&val16, 2);
+ 
+     val16 = cpu_to_le16(tally_counters->TxUndrn);
+-    pci_dma_write(d, tc_addr + 62,    (uint8_t *)&val16, 2);
++    rtl8139_dma_write(d, tc_addr + 62,    (uint8_t *)&val16, 2);
+ }
+ 
+ static void rtl8139_ChipCmd_write(RTL8139State *s, uint32_t val)
+@@ -1810,7 +1832,7 @@ static int rtl8139_transmit_one(RTL8139State *s, int descriptor)
+     DPRINTF("+++ transmit reading %d bytes from host memory at 0x%08x\n",
+         txsize, s->TxAddr[descriptor]);
+ 
+-    pci_dma_read(d, s->TxAddr[descriptor], txbuffer, txsize);
++    rtl8139_dma_read(d, s->TxAddr[descriptor], txbuffer, txsize);
+ 
+     /* Mark descriptor as transferred */
+     s->TxStatus[descriptor] |= TxHostOwns;
+@@ -1886,13 +1908,13 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+ 
+     uint32_t val, txdw0,txdw1,txbufLO,txbufHI;
+ 
+-    pci_dma_read(d, cplus_tx_ring_desc,    (uint8_t *)&val, 4);
++    rtl8139_dma_read(d, cplus_tx_ring_desc, (uint8_t *)&val, 4);
+     txdw0 = le32_to_cpu(val);
+-    pci_dma_read(d, cplus_tx_ring_desc+4,  (uint8_t *)&val, 4);
++    rtl8139_dma_read(d, cplus_tx_ring_desc + 4, (uint8_t *)&val, 4);
+     txdw1 = le32_to_cpu(val);
+-    pci_dma_read(d, cplus_tx_ring_desc+8,  (uint8_t *)&val, 4);
++    rtl8139_dma_read(d, cplus_tx_ring_desc + 8, (uint8_t *)&val, 4);
+     txbufLO = le32_to_cpu(val);
+-    pci_dma_read(d, cplus_tx_ring_desc+12, (uint8_t *)&val, 4);
++    rtl8139_dma_read(d, cplus_tx_ring_desc + 12, (uint8_t *)&val, 4);
+     txbufHI = le32_to_cpu(val);
+ 
+     DPRINTF("+++ C+ mode TX descriptor %d %08x %08x %08x %08x\n", descriptor,
+@@ -1986,8 +2008,8 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+             DMA_ADDR_FMT" to offset %d\n", txsize, tx_addr,
+             s->cplus_txbuffer_offset);
+ 
+-    pci_dma_read(d, tx_addr,
+-                 s->cplus_txbuffer + s->cplus_txbuffer_offset, txsize);
++    rtl8139_dma_read(d, tx_addr,
++                     s->cplus_txbuffer + s->cplus_txbuffer_offset, txsize);
+     s->cplus_txbuffer_offset += txsize;
+ 
+     /* seek to next Rx descriptor */
+@@ -2017,7 +2039,7 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+ 
+     /* update ring data */
+     val = cpu_to_le32(tx_status);
+-    pci_dma_write(d, cplus_tx_ring_desc, (uint8_t *)&val, 4);
++    rtl8139_dma_write(d, cplus_tx_ring_desc, (uint8_t *)&val, 4);
+ 
+     /* Now decide if descriptor being processed is holding the last segment of packet */
+     if (txdw0 & CP_TX_LS)
 -- 
 2.43.0
 
