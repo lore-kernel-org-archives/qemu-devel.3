@@ -1,53 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC186606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC7B606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cJLqB1Qh
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Pj2n6WTf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW35A-000834-6C; Tue, 24 Nov 2026 21:50:04 -0500
+	id 1xW35C-00085d-UP; Tue, 24 Nov 2026 21:50:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW356-000825-3N
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:00 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35A-00084L-Rb
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:05 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW353-0006m5-CU
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:49:58 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW359-0006nk-3G
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:04 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id D81B64368E;
- Wed, 25 Nov 2026 02:49:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB051F000C4;
- Wed, 25 Nov 2026 02:49:53 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 16D0544F24;
+ Wed, 25 Nov 2026 02:50:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD211F000C0;
+ Wed, 25 Nov 2026 02:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795574995;
- bh=xyBPF/nugxmLTKRC36/Hvr5WLNvAXrRmNPi78wqjMF0=;
- h=From:To:Cc:Subject:Date;
- b=cJLqB1QhxN36eCX3cmF9vbUXsGUcy5tyNbyi/zTEWCjJlNoVTDuHqmar3jbtvjfnB
- V8d3o9LAyXyTNmV5OwZ7oMmxZZEhK4rCAjSiQwl5OLJpupIAm7BpsyF7lHiuUHhCt+
- 6F6hWjLlRuvBYzcGjByzIL38KZuw7XhNXrSoJPMpYDM0FjkrJU7iTo2YvzQsIWdA+d
- TaQSJsOcyJMcHTGbdm55hvmcmL7cAiSQw7pYQu8WS54pxmlpeEkTRpSkhWyv2GCX+6
- T7F1XMcd5ju7YTWmWGICEeNCc8juCfF9/bp/reBwMa96neZAL4iV0Cus+2TdZUhgqK
- hsKugzHWUtw8Q==
+ s=k20260515; t=1795575001;
+ bh=7IU8YoBie5x5o1YgHstYGphVVsfWjlAuy/s7lk8EbPE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=Pj2n6WTfykLgqjQ3XNHkvQ63QNKUH2uM9roaCf79i4nElASzbcgE1t60/icQVhvyW
+ eFVFuw9SBsmhk5h9HgPJEct9p79tMxLJXgK4UG8/bp67PKnkfKOlndMEnjSO/hgiNP
+ /Eer/rExE2lRav6qTxGmag+/PBlvYlVAK5qudOM4cJ7ZXWBodrXU0StlIc06doRU5X
+ kXEfSbyB1Tso20q5nppw8cDweIT5OL23OMXpQ9CmxGWoWLV5yFav+Z5ugWjgVIIUO8
+ Hd3HlgEfOpygw7mlakI0QdYQRl2ecx6KHiOng0b2++PyVQ3MT0eQezgHi/z7bVcFJo
+ KJj97FWIWE1iA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Keith Monahan <keith@techtravels.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL for 11.2 00/14] ncr53c710 driver rewrite
-Date: Wed, 25 Nov 2026 03:49:37 +0100
-Message-ID: <20261125024951.10428-1-deller@kernel.org>
+Subject: [PULL for 11.2 03/14] hw/scsi/scsi-disk: Add
+ quirk_mode_page_no_flexible_disk, use it on the 715
+Date: Wed, 25 Nov 2026 03:49:40 +0100
+Message-ID: <20261125024951.10428-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261125024951.10428-1-deller@kernel.org>
+References: <20261125024951.10428-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -66,86 +69,122 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Helge Deller <deller@gmx.de>
+From: Keith Monahan <keith@techtravels.org>
 
-The following changes since commit 225d5bd4691fc75e32536428fc9a23ddb8e30784:
+scsi-disk answers MODE SENSE for page 05h (flexible disk geometry)
+for every disk. Per the commit author, real SCSI hard disks of that era
+reject this page with CHECK CONDITION, ILLEGAL REQUEST, INVALID FIELD IN
+CDB, as only floppy drives implement it. This has not been verified
+against real hardware or a datasheet here.
 
-  Merge tag 'pull-nvme-20261120' of https://gitlab.com/birkelund/qemu into staging (2026-11-20 11:44:53 -0800)
+Per the commit author, HP-UX 9 on the HP 715 probes page 05h on the open
+root disk and, when the page is returned, treats the disk as a floppy
+and leaves it out of the ioscan listing, so SAM shows no hard disk.
+This guest behaviour has not been reproduced here.
 
-are available in the Git repository at:
+Add the quirk_mode_page_no_flexible_disk property, which makes page 05h
+an invalid field in the CDB, and enable it for scsi-hd on the HP 715
+machine through its compat properties. The property is also defined for
+scsi-cd, like the other mode page quirks, as both device types share
+mode_sense_page() and the same quirks bitmap; the 715 does not enable
+it there.
 
-  https://github.com/hdeller/qemu-hppa.git tags/hppa715-scsi-v6-pull-request
+The array name hw_compat_715 suggested a versioned machine compat
+table, which it is not; call it hp_715_scsi_quirks.
 
-for you to fetch changes up to a4de3d6e91850c2e7ccfe4e0bda86959f5b4fbe0:
+AI-used-for: Patch series decomposition (commit splitting and ordering)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ hw/hppa/machine.c      | 10 ++++++++++
+ hw/scsi/scsi-disk.c    | 13 +++++++++++++
+ include/hw/scsi/scsi.h |  1 +
+ 3 files changed, 24 insertions(+)
 
-  hw/scsi/ncr53c710: Bump the migration version (2026-11-25 03:23:47 +0100)
-
-----------------------------------------------------------------
-NCR53c710 driver rewrite
-
-Rewrite the NCR 53C710 model with a SCRIPTS engine derived from QEMU's
-LSI53C895A model (hw/scsi/lsi53c895a.c), an actively maintained sibling
-in the same NCR/LSI SCRIPTS family, adapted to the 53C710: its register
-map, single byte (DSTAT/SSTAT0) interrupt model, big endian SCRIPTS and
-table indirect fetch (the part sits on the big endian PA-RISC LASI bus),
-and 24 bit DMA counts.  Behaviour follows the NCR 53C710 Data Manual
-(Jun 1992) and Programmer's Guide (Oct 1990).
-
-The driver is only used by the HP-PARISC emulation in the 715 machine
-and was tested with:
-  - HP-UX 10.20 installs and reboots into the installed system, on both
-    the Ignite (16700A) media and a software install that overlaps
-    tagged commands.
-  - Linux lasi700/53c700 installs and boots Debian off the 710.
-  - NetBSD/hppa 9.4 and 10.1 (osiop) boot and enumerate disk and CD-ROM.
-
-----------------------------------------------------------------
-
-Keith Monahan (9):
-  hw/scsi/scsi-disk: Add quirk_mode_page_no_flexible_disk, use it on the
-    715
-  hw/scsi: Move shared LSI/NCR definitions to lsi_scsi.h
-  hw/scsi/ncr53c710: Rewrite the 53C710 SCRIPTS engine
-  hw/scsi/ncr53c710: Deliver completions from bottom halves
-  hw/scsi/ncr53c710: Drain asynchronous transfers in the register write
-  hw/scsi/ncr53c710: Append SAVE DATA POINTERS after MESSAGE REJECT for
-    HP-UX
-  hw/scsi/ncr53c710: Guard SCRIPTS reentrancy and cancel requests on
-    soft reset
-  hw/scsi/lasi_ncr710: Map the full LASI SCSI module page
-  hw/scsi/ncr53c710: Bump the migration version
-
-Philippe Mathieu-Daudé (5):
-  hw/scsi/ncr53c710: Cancel the in-flight request on soft reset
-  hw/scsi/ncr53c710: Do not load SBCL from DBC after a SCRIPTS phase
-    move
-  hw/scsi/lasi_ncr710: Limit max_target and max_lun to 7
-  hw/scsi/ncr53c710: Keep DCNTL.EA and DMODE.FC1 across an ISTAT.RST
-    reset
-  hw/scsi/ncr53c710: Document the SIGP latch deviation
-
- MAINTAINERS            |    1 +
- hw/hppa/machine.c      |   10 +
- hw/scsi/lasi_ncr710.c  |  135 +-
- hw/scsi/lasi_ncr710.h  |   28 +-
- hw/scsi/lsi53c895a.c   |   79 +-
- hw/scsi/lsi_scsi.h     |  104 ++
- hw/scsi/ncr53c710.c    | 2959 +++++++++++++++-------------------------
- hw/scsi/ncr53c710.h    |  287 ++--
- hw/scsi/scsi-disk.c    |   13 +
- hw/scsi/trace-events   |   43 +-
- include/hw/scsi/scsi.h |    1 +
- 11 files changed, 1446 insertions(+), 2214 deletions(-)
- create mode 100644 hw/scsi/lsi_scsi.h
-
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 3b83968f33..04c4b2a8d8 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -1020,6 +1020,14 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_size = 1024 * MiB;
+ }
+ 
++/*
++ * HP-UX 9 ioscan sends MODE SENSE page 5 to the open root disk and leaves
++ * the disk out of its listing if the page is returned.
++ */
++static GlobalProperty hp_715_scsi_quirks[] = {
++    { "scsi-hd", "quirk_mode_page_no_flexible_disk", "on" },
++};
++
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+@@ -1041,6 +1049,8 @@ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+     mc->max_cpus = MIN_CONST(HPPA_MAX_CPUS, 8);
+     mc->default_ram_size = 256 * MiB;
+     mc->default_nic = TYPE_LASI_82596;
++    compat_props_add(mc->compat_props, hp_715_scsi_quirks,
++                     G_N_ELEMENTS(hp_715_scsi_quirks));
+ }
+ 
+ 
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index a2df3a4ec4..ce43ddf6c0 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1156,6 +1156,15 @@ static int mode_sense_page(SCSIDiskState *s, int page, uint8_t **p_outbuf,
+         return -1;
+     }
+ 
++    /*
++     * The flexible disk page is only implemented by floppy drives.  Some
++     * guests (HP-UX 9 ioscan) take a disk that returns it for a floppy.
++     */
++    if (page == MODE_PAGE_FLEXIBLE_DISK_GEOMETRY &&
++        (s->quirks & (1 << SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK))) {
++        return -1;
++    }
++
+     /*
+      * If Changeable Values are requested, a mask denoting those mode parameters
+      * that are changeable shall be returned. As we currently don't support
+@@ -3293,6 +3302,8 @@ static const Property scsi_hd_properties[] = {
+                     0),
+     DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
+                     quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
++    DEFINE_PROP_BIT("quirk_mode_page_no_flexible_disk", SCSIDiskState,
++                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK, 0),
+     DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
+ };
+ 
+@@ -3401,6 +3412,8 @@ static const Property scsi_cd_properties[] = {
+                     SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED, 0),
+     DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
+                     quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
++    DEFINE_PROP_BIT("quirk_mode_page_no_flexible_disk", SCSIDiskState,
++                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK, 0),
+ };
+ 
+ static void scsi_cd_class_initfn(ObjectClass *klass, const void *data)
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index a2f6f0be7f..0efa62554d 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -264,5 +264,6 @@ bool scsi_generic_pr_state_cleanup(SCSIDevice *s, Error **errp);
+ #define SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE    2
+ #define SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED                3
+ #define SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE           4
++#define SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK         5
+ 
+ #endif
 -- 
 2.54.0
 
