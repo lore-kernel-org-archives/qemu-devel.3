@@ -1,93 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04931606A326
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5940D606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qG4AIyt9
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pC2JVv/A
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWBWz-0000IC-FL; Wed, 25 Nov 2026 06:51:21 -0500
+	id 1xWBbS-0002pd-8E; Wed, 25 Nov 2026 06:55:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xWBWw-0000Hj-NK
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:51:18 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xWBbK-0002p0-PM
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:55:50 -0500
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xWBWt-00079b-RY
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:51:17 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-48e47347279so3409070f8f.1
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:51:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xWBbJ-0007Fo-5M
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:55:50 -0500
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-3282db206d3so5587467eec.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:55:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795607744; cv=none;
+ d=google.com; s=arc-20260327;
+ b=m5Kn1JoI/zjNIcLcEztDb/qYCi1JpeB9qFiz+tqmNCJl3QI01t+7Snc0vDBRg+NnIf
+ viriKkvTOUMOEuFBeNPmrRtNlcUw94qMuV6h7HYeT9rRGf91AASGofd/f85DC8xGbklc
+ DMBPVGu+71qFikpu51DEprvxfXEIbwyNBXfDzWgfd0vKPY1qwwKtLf/7vTWmTmGvqLfB
+ jg2S3rKuqMA8MmOXCBRO8EyxlIs33Twb1uHehejPq7q6yffvAtpocsDD1m8FVYgGcH8G
+ lTMlK921THzbBHn12grBxZtTNbP0lB5w+rlC8m5Fwx18VTdx1GlVVq4a9vY2eA9JVUhj
+ F3sQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=bn+dO0n3bk+migXhjDAF6gZlaXEfYXlOJ4PYBUJygJA=;
+ fh=SQBxbTsCFw5PmNdG123aODHkmhBo7PKmFA7+bzIBQT4=;
+ b=Dqd1+SMV2NEFyW2QOmiAeLVt6JaLP/vBPZuY49tIrZGlfoql+dSTDZAVl+ntPtQ1hl
+ aEYBi8amJkz/+edrw/nBwCYLsRDEL8NeyBbUlKhX4y3QRrJM9azL2M1Cn5CNEi7zLqjP
+ MdcxxWXo6kfb3680zHAmZGWOKYStIdmHVObKg1wj/qvtwOLSeZc+TTavp0/XMp+mQwN5
+ t+26bKBSUPeH9+AZ5spCEWVLWCM0Dj65CEPthnFCD8FawyYk+yFbtfiCVNoEt1DKrVs3
+ sNp5W6DKy5YGTHfPxZ5Cn8jXSoHP3Vrs75//oTCMaWxp+e75Ocqi0OzjLb7VFzsUW/W0
+ rkZg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795607472; x=1796212272; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=GwAtmDCe//Z2bLe2BjvW49FxQ4gH31Rh0S8RN5kLGIc=;
- b=qG4AIyt9H5X0mq+3O2Ss3LxtHOdSDbEWoW/R06SMRhb0guqE6Rvv/Jk/B55uId1Bxi
- gH4fthzM4Mi5E6lOle5Rwk29DU1iobowNI3nWFsfv4h26HnXnR7W13CCVSbgpMs/8MXA
- 9D46QtTNvQ+OgwiPDt5i0mRB2CYWdCxQi9CfXaVTow0Zys7A6qyyC7lbAX7cpC+adBWH
- WhP9u6SM35C/RNnLE1ByhyA8aB6P0QSeNqbsE8EpxPXBFoYCERPmz6KL6Db/rrIfiH4s
- Z/KFb+JdJBbz/uwqZx/Esfs6Fda7D3Xzo+OBJtDwDuGPNo/jIMu2PrXPvH+0vMdQuRGJ
- FOzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795607472; x=1796212272;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=gmail.com; s=20260707; t=1795607744; x=1796212544; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=GwAtmDCe//Z2bLe2BjvW49FxQ4gH31Rh0S8RN5kLGIc=;
- b=E25WMlpkhMLSND5aygD7v42jhq+YWAvli4KBUIUkQSss9kQ07wRYh48KwmF7j2VBhP
- ZmSowzpgn079dLk5puKDyEnZLm2rLhO+e9Fyoc2jVEO3CKLhlUQQHkiizNKYrfBgxgI3
- zlVsEqD45pWW82TjrJLfI9O3eUfYkW1A/MbS+l+HcOsn141cTpkl/qVx1yv+lL6Z3tLm
- xqsItu40QJrpOdwUSYkRIyN+BX7U4+fsoVGBPmmfpuVewZaHNTibT2Mmme/NlbKOXnJn
- z7RQKZiSbvP11VgzaLz0EfY7eOr6ZhGJq4JPE5aCEOLD1wLZs8aCtZq1MgjPwc2LsGjM
- 2pNw==
-X-Gm-Message-State: APuU4Z88djPrXNc9BdI7GPg7sHIIEBfLCPZY3iNjdsV/TBwdvMKK0Vs2
- 1aVQxKIoZARnh376iyHUvdiqQO+yXwE50B8MKoB+FYLc11+QDP0ixRlutlWfmnpoufg=
-X-Gm-Gg: AZFdTZfpGVghaSMbL2VHqH90Jt30iw2q/XN6RkY/5AhItSI/7AqRyocVKC4bcH+d+ZZ
- +UQ5OaXONOl5WxeGQ2u/iRJEJ+R50df9IszYJ2aeyq+zS/XwCtAU6WpeNnLMOb0UfCdxxdp2GxI
- b+Szt9fDWiV8uPjAPGAMOOSXv7IqpPTaGeYxw66b5io6c1Zy7tC3ybF1XE23L04GlX7nuY6PXzN
- BaFnpnSf9XdhEMhS5HqFMFokW7yy7Zljh9G6Kxolyzn+yljzVUMlmgw0LCz33Rmmc8xdwblQbkY
- 3w0RwcDERepqGNZjp5M/fj7V2xmB18a6zHtRGB9Emk2dPfYKpcMMIT3cOV0lmMm+PjOaJc1cFdp
- LRvb6RvE1fOAmuqto4bJ3AGvrXfPGRt0sQr6d9W9INoLs18mUwkiCpI5xSlqgCyedEHK7uzPWvi
- UP3FBoKbcanvH4YpITookUSRX+4Y2TMz3lOQrBPHej/rbdVixYn7mkp3tam20ojMJwNoK0406t+
- X6Xf/+w8nPnGyhdN/Ue79bdV2GcAyEnQodFy8Th1ZUBd3gsgFFZqIXlVjdsBUOMmAVbGk1EjhJD
- Stg1gOdof0AC8rTOK2vWCd2+nrdG
-X-Received: by 2002:a05:6000:4310:b0:4a7:b365:19df with SMTP id
- ffacd0b85a97d-4abb5eabd28mr34240489f8f.35.1795607472120; 
- Wed, 25 Nov 2026 03:51:12 -0800 (PST)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6c61e53asm35587314f8f.59.2026.11.25.03.51.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2026 03:51:11 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 363C05F857;
- Wed, 25 Nov 2026 11:51:10 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [RFC PATCH] docs/virtio: add note about virtio-gpu acceleration
-Date: Wed, 25 Nov 2026 11:51:04 +0000
-Message-ID: <20261125115104.2002188-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ bh=bn+dO0n3bk+migXhjDAF6gZlaXEfYXlOJ4PYBUJygJA=;
+ b=pC2JVv/A/6TVlPDdYF0n/KCsSjl59ddFbhlKYWQUDRMEtJ3VKFaBT4u8SAQTHgRJzD
+ J959u0uGgDDuvku8fhUHeNn2PCdXjRg4Hyjhe1D6ekip4GUvl48V0smCzl9qd186JjlP
+ EEv42nXqGWwesHe+Fv3+Z7AALm9CNFEq9+jvjDEeQEBP0wGC/oKA6aXhOEgiBj69mRw8
+ RL0jhZ20vz5R3Y2+ekrP+8m+fRcfn6s36Evt9inSMpu6Q49X3Qiw9w1zvcqFx+Czfm4V
+ /xBfq9zyOAzYS/ds01eDc7FwW9F0AE7kUJuF7vSSqUOWi0DWQ+FOSvmJzROoR0gVjFlb
+ 2wsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795607744; x=1796212544;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=bn+dO0n3bk+migXhjDAF6gZlaXEfYXlOJ4PYBUJygJA=;
+ b=L3vk2l20YXdrO+Ej+oQg1cJaC7+QvonrxWOfxV4D1bMHP7Ne2RnP6K271LqiWt5UM6
+ Gz71sJh1ghYA91B10fHrCbpOozzh+tx62i6Mj3qgiKA4sXUQ565BC/o0Yd6BrtuMFVOQ
+ TMc/I6wigpqKEvGIf3DNwXtiCUMkX58hh0N93wzuUvtDutuXple0cGwWMb/32KihaVMx
+ VRhaCs5mJjfNVhXOX2XXDWSLNmzBipGO06OhXf6v8EkCzkwviwdnyJ80ITYbz1M21f8i
+ Lps6U8W2n+TDb386wU6FpDugY7AF5krH8fLfvRn/KO9rDCPi95XPOivpS7IGzy+tW4Yj
+ jAOg==
+X-Gm-Message-State: APuU4Z+OlnnH35N2QynN2ItA8I6F0E6zh6GdCuZvwe3yB5PKioc3DdlX
+ vd7I8txaUUBNqQLGPZ7FcGzUE42BeVQY4KeW1JaRUdf65HF+O6ptW1DcA/vr+wpQJu3nk/b6koX
+ 0QRV9znjDsA8JQDhAy0DOCCsVp+0BzmA=
+X-Gm-Gg: AZFdTZcFNnY+l62MWh/Xq4XdiqTxiNbqqmYc07MyS4Y6cKMvK+3L5aRD3XohKCi3H0u
+ P0R3OpuXhAPcoFPtyKQUX6oUavk+H4HjQSQeZikBHf9F/gKmC8yeEIMM/qQxRNU3/nPOopDX2S7
+ zuCcaOFJ1zOmYGoJpWLOJr/mcIF9VTjgAx1vvdu8ZPzRSr7V3i/PIKll1bv5cCQI3UIuDZ/81p5
+ m5GDDabQENisChNHJ2MgLHHPZjo69i0lV0XuQPJgOF9yE9gG//1MmNxbqwa8GSBmMNyXjR7HN84
+ 5yKvJjO+8pCY/Cu4TiZXvvoJ/m5Earnyl9frKdAh1V/DeRLu3Tv+c5ANMTCOH2h6x5Cpbs5dhMB
+ QGrD1G02xblG4l3HREh74xrpNvTbrXNpdHCzm0BCbBGune6cbDOq0BhdamXTq+49FemZRtRP23D
+ Fhhu/xf01lgMxs/A==
+X-Received: by 2002:a05:7300:d108:b0:386:c6dd:2616 with SMTP id
+ 5a478bee46e88-386c6dd29ffmr3962730eec.41.1795607743913; Wed, 25 Nov 2026
+ 03:55:43 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+References: <20261125115104.2002188-1-alex.bennee@linaro.org>
+In-Reply-To: <20261125115104.2002188-1-alex.bennee@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 25 Nov 2026 15:55:32 +0400
+X-Gm-Features: Aa3M54rk07xsLsdlidxDWWQ8gi28HlEhkgb1F9Kfd_RzWRsc-XMS6tNbt0p1LBM
+Message-ID: <CAJ+F1C+KJXJvVAYchd3eWxDVCMW0UNYiGs92nssyDwwdJiicRw@mail.gmail.com>
+Subject: Re: [RFC PATCH] docs/virtio: add note about virtio-gpu acceleration
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,46 +117,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-3d acceleration has a bunch of issues and is considered hard to secure
-in our current setup. As we have dropped it from the virtualisation
-use case lets call that out in the docs.
+On Wed, Nov 25, 2026 at 3:52=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+>
+> 3d acceleration has a bunch of issues and is considered hard to secure
+> in our current setup. As we have dropped it from the virtualisation
+> use case lets call that out in the docs.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/system/devices/virtio/virtio-gpu.rst | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index d05f8cb8e3f..06e60ec6782 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -29,6 +29,18 @@ host's GPU and for the best performance be able to reliably share GPU
- memory with the guest. Details of 3D acceleration requirements are
- described in a further sections.
- 
-+.. warning::
-+
-+   As 3D acceleration by its very nature involves giving the guest
-+   fairly complete access to a bus master processing unit in the host
-+   GPU we consider this outside the virtualisation use case with
-+   respect to security. You should only ever enable 3D acceleration
-+   with trusted guests. There is still the option of off-loading 3D
-+   acceleration to a separate process via :ref:`vhost_user_proto`
-+   depending on what guarantees that process can make and how well
-+   confined it can be if things go wrong.
-+
-+
- QEMU virtio-gpu variants
- ------------------------
- 
--- 
-2.47.3
+> ---
+>  docs/system/devices/virtio/virtio-gpu.rst | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devi=
+ces/virtio/virtio-gpu.rst
+> index d05f8cb8e3f..06e60ec6782 100644
+> --- a/docs/system/devices/virtio/virtio-gpu.rst
+> +++ b/docs/system/devices/virtio/virtio-gpu.rst
+> @@ -29,6 +29,18 @@ host's GPU and for the best performance be able to rel=
+iably share GPU
+>  memory with the guest. Details of 3D acceleration requirements are
+>  described in a further sections.
+>
+> +.. warning::
+> +
+> +   As 3D acceleration by its very nature involves giving the guest
+> +   fairly complete access to a bus master processing unit in the host
+> +   GPU we consider this outside the virtualisation use case with
+> +   respect to security. You should only ever enable 3D acceleration
+> +   with trusted guests. There is still the option of off-loading 3D
+> +   acceleration to a separate process via :ref:`vhost_user_proto`
+> +   depending on what guarantees that process can make and how well
+> +   confined it can be if things go wrong.
+> +
+> +
+>  QEMU virtio-gpu variants
+>  ------------------------
+>
+> --
+> 2.47.3
+>
+>
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
