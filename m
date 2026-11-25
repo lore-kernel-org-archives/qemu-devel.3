@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6792B606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83408606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E/INBgSY
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N5boDIT8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW35V-0008QT-L3; Tue, 24 Nov 2026 21:50:25 -0500
+	id 1xW35X-0008Sq-SD; Tue, 24 Nov 2026 21:50:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35O-0008LM-JL
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:18 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35S-0008Mw-1H
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:24 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35M-0007Bc-6t
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:18 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35Q-0007UH-Dz
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:21 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4CA5D42D87;
- Wed, 25 Nov 2026 02:50:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20041F000C4;
- Wed, 25 Nov 2026 02:50:13 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id B416861D0B;
+ Wed, 25 Nov 2026 02:50:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F071F000E0;
+ Wed, 25 Nov 2026 02:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795575015;
- bh=48IxpumhJRtCu3TTRI4qML5lbHy7SsuH902QC9ovIuU=;
+ s=k20260515; t=1795575019;
+ bh=6h/r0YKygUfB7ok54mrhPjn5vosDt4iggoM1VMx4nFs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=E/INBgSYlD1zmj99PqpQdes0HGintCRuN53koWlrljcsK7tsDcGivt0o5ilwPothk
- 0QJpWtwg3/ZSC3mi48Z72EiNQiENEPos6XQULxgJVfyG4z/hupS9QmYT+WYlfx4CO9
- wnMJ0t4u4xIlb3v0I1GSGpZ4GHh4eAB+ChnE0BCqMm9RQ1sfzqYw6EZ6KBAktoe+YS
- D9BmVpb03/FOMOLIajcnlRjldxHR4rrGlSOualqsUnpfeLjMaqh1k+kZPJRDlLQkNx
- +UfMoeAVNk3R8j0uPCQda4a4a4PbUS4lGW9Sjd3dPgrq5l332oFFI1KrStnL10kQRD
- u1vEFTEt2h0/w==
+ b=N5boDIT8IvVQ6MbiAGx5PSU9tCryU3SxyXzxcvyMPaRZgp0ndoNvRQ4kjss7iXEkD
+ I1I4JI6SCXLtrR2YBIhTZ0N5USPWdu82WBrKqIGFcTSb54KdY3ZgZHUUdGV78pYSUF
+ vSnYqQLrouaHv5E7A7kUHztHFrA86olGL2GFCJuoZr9o3UMoWloKNLyNXWGX2xO4Yz
+ JUK5od6lsozXOgtqpyUWxGd9Amy7StDDNRyWTgr3fjc4+acOTloiI2uxUo5G9GNX4R
+ ck9e4yQRZ3cO2RXTIiX9pYzFZOdg2mI5paAOf4RGpqwVpWwrvwx/rfj0P74Zh7dJJ2
+ r0xokUxg6+BFw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Keith Monahan <keith@techtravels.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL for 11.2 09/14] hw/scsi/ncr53c710: Drain asynchronous transfers
- in the register write
-Date: Wed, 25 Nov 2026 03:49:46 +0100
-Message-ID: <20261125024951.10428-10-deller@kernel.org>
+Subject: [PULL for 11.2 11/14] hw/scsi/ncr53c710: Guard SCRIPTS reentrancy and
+ cancel requests on soft reset
+Date: Wed, 25 Nov 2026 03:49:48 +0100
+Message-ID: <20261125024951.10428-12-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261125024951.10428-1-deller@kernel.org>
 References: <20261125024951.10428-1-deller@kernel.org>
@@ -49,8 +49,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -78,82 +78,128 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Keith Monahan <keith@techtravels.org>
 
-The c720 driver of HP-UX 10.20 needs the completion interrupt ordering
-hardware provides, starting a command with interrupts masked and then
-spinning.  So after a register write starts an asynchronous transfer
-the model drives it to completion before returning to the guest (a
-bounded synchronous drain under the BQL, as IDE and MegaSAS do, falling
-back to asynchronous completion if it cannot advance).
+The SCRIPTS interpreter guards against CVE-2023-0330. When a command finishes
+while the interpreter is running, the interpreter moves on to the next
+instruction without restarting itself. If a script keeps triggering itself, the
+interpreter stops it after 8 nested restarts.
+
+A guest ISTAT.RST soft reset cancels the connected and any queued
+tagged requests, so a stale s->current cannot dangle into the next
+command and queued requests are not leaked, mirroring the SCNTL1.RST
+bus reset teardown.
 
 Signed-off-by: Keith Monahan <keith@techtravels.org>
 AI-used-for: Patch series decomposition (commit splitting and ordering)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c  | 29 +++++++++++++++++++++++++++++
- hw/scsi/trace-events |  1 +
- 2 files changed, 30 insertions(+)
+ hw/scsi/ncr53c710.c | 41 +++++++++++++++++++++++++++++++++++++++--
+ hw/scsi/ncr53c710.h |  5 +++++
+ 2 files changed, 44 insertions(+), 2 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 9a7b76a597..25469c7d7d 100644
+index 39a20ba90e..4b1853a391 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -54,6 +54,12 @@
+@@ -104,8 +104,23 @@ static int lsi_id_from_bits(unsigned bits)
  
- #define LSI_BUF_SIZE     4096
- 
-+/*
-+ * Safety bound on the synchronous completion drain loop in ncr710_reg_write();
-+ * it then falls back to asynchronous completion.
-+ */
-+#define LSI_DRAIN_MAX_ITERS  100000
-+
- static const char *const lsi_reg_names[64] = {
-     "SCNTL0", "SCNTL1", "SDID", "SIEN", "SCID", "SXFER", "SODL", "SOCL",
-     "SFBR", "SIDL", "SBDL", "SBCL", "DSTAT", "SSTAT0", "SSTAT1", "SSTAT2",
-@@ -1561,7 +1567,30 @@ uint64_t ncr710_reg_read(NCR710State *s, hwaddr addr, unsigned size)
- 
- void ncr710_reg_write(NCR710State *s, hwaddr addr, uint64_t val, unsigned size)
+ void ncr710_soft_reset(NCR710State *s)
  {
-+    unsigned drained = 0;
++    lsi_request *p, *p_next;
 +
-     lsi_reg_writeb(s, addr & 0xff, val & 0xff);
-+
+     trace_ncr710_reset();
+ 
 +    /*
-+     * Drive any asynchronous SCSI transfer the register write kicked off to
-+     * completion before returning to the guest, so its completion interrupt is
-+     * raised first.  A deferred continue (lsi_issue_bh) has not issued its
-+     * backing I/O yet, so pump it inline; otherwise blk_drain the backend.
++     * A guest ISTAT.RST soft reset can land with commands still in flight.
++     * Cancel them so no stale pointer survives the reset.
 +     */
-+    while (s->waiting == LSI_DMA_IN_PROGRESS && s->current != NULL &&
-+           s->current->req != NULL) {
-+        if (drained++ >= LSI_DRAIN_MAX_ITERS) {
-+            trace_ncr710_drain_exhausted(drained);
-+            break;
-+        }
-+        if (s->issue_pending) {
-+            lsi_issue_bh(s);
-+        } else if (s->current->req->dev->conf.blk != NULL) {
-+            blk_drain(s->current->req->dev->conf.blk);
-+        } else {
-+            break;      /* nothing deferred and no backend to drain */
++    if (s->current && s->current->req) {
++        scsi_req_cancel(s->current->req);
++    }
++    QTAILQ_FOREACH_SAFE(p, &s->queue, next, p_next) {
++        if (p->req) {
++            scsi_req_cancel(p->req);
 +        }
 +    }
++
+     s->carry = 0;
+     s->msg_action = LSI_MSG_ACTION_COMMAND;
+     s->msg_len = 0;
+@@ -115,6 +130,11 @@ void ncr710_soft_reset(NCR710State *s)
+     s->command_complete = 0;
+     s->script_running = false;
+     s->sigp_pending_resume = false;
++    /*
++     * Do not reset reentrancy_level here.  A SCRIPTS driven soft reset can run
++     * while lsi_execute_script frames are still on the stack; those frames
++     * decrement the counter as they unwind.
++     */
+ 
+     s->scntl0 = 0xc0;       /* full arbitration */
+     s->scntl1 = 0;
+@@ -258,6 +278,16 @@ static int lsi_bad_phase(NCR710State *s, int new_phase)
+ static void lsi_resume_script(NCR710State *s)
+ {
+     trace_ncr710_resume_script(s->waiting);
++    if (s->reentrancy_level > 0) {
++        /*
++         * A completion fired synchronously while the SCRIPTS interpreter is
++         * already on the stack.  Do not recurse: release the wait so the outer
++         * loop continues to the next instruction, which the completion has
++         * already armed.
++         */
++        s->waiting = LSI_NOWAIT;
++        return;
++    }
+     if (s->waiting != LSI_DMA_SCRIPTS) {
+         s->waiting = LSI_NOWAIT;
+         lsi_execute_script(s);
+@@ -858,13 +888,18 @@ static void lsi_execute_script(NCR710State *s)
+         s->waiting = LSI_NOWAIT;
+     }
+ 
++    s->reentrancy_level++;
+     s->script_running = true;
+ again:
+-    /* Yield to the CPU after LSI_MAX_INSN instructions. */
+-    if (++insn_processed > LSI_MAX_INSN) {
++    /*
++     * Yield to the CPU after LSI_MAX_INSN instructions, and guard against a
++     * script that retriggers itself (CVE-2023-0330).
++     */
++    if (++insn_processed > LSI_MAX_INSN || s->reentrancy_level > 8) {
+         trace_ncr710_script_yield(insn_processed);
+         s->waiting = LSI_WAIT_SCRIPTS;
+         lsi_scripts_timer_start(s);
++        s->reentrancy_level--;
+         return;
+     }
+ 
+@@ -1218,6 +1253,8 @@ again:
+             goto again;
+         }
+     }
++
++    s->reentrancy_level--;
  }
  
- static int lsi_pre_save(void *opaque)
-diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
-index f0eb145702..843d8f1a1e 100644
---- a/hw/scsi/trace-events
-+++ b/hw/scsi/trace-events
-@@ -340,6 +340,7 @@ ncr710_memmove(uint32_t dest, uint32_t src, int count) "MOVE MEMORY dest=0x%08x
- ncr710_do_dma_unavailable(void) "DMA: data not yet available"
- ncr710_wait_disconnect(void) "Wait Disconnect"
- ncr710_illegal_insn(uint32_t insn) "ILLEGAL instruction 0x%08x"
-+ncr710_drain_exhausted(unsigned iters) "synchronous completion drain gave up after %u iters"
- 
- # lasi_ncr710.c
- lasi_ncr710_device_realize(void) "Device realized"
+ static uint8_t lsi_reg_readb(NCR710State *s, int offset)
+diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
+index 8b5cbfc135..9a4816794e 100644
+--- a/hw/scsi/ncr53c710.h
++++ b/hw/scsi/ncr53c710.h
+@@ -101,6 +101,11 @@ typedef struct NCR710State {
+     bool sigp_pending_resume;
+     /* A SCSI continue was deferred to lsi_issue_bh. */
+     bool issue_pending;
++    /*
++     * SCRIPTS interpreter recursion depth; always 0 outside
++     * lsi_execute_script, so it is not migrated.
++     */
++    int reentrancy_level;
+     lsi_request *current;
+     /* Disconnected tagged commands awaiting reselection. */
+     QTAILQ_HEAD(, lsi_request) queue;
 -- 
 2.54.0
 
