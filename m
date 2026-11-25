@@ -1,78 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77892606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 21:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861DA606A338
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 21:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IjKzjX3X
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BVQVeRTR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWK6w-0002IK-AY; Wed, 25 Nov 2026 16:01:02 -0500
+	id 1xWKQ2-0007dL-Vt; Wed, 25 Nov 2026 16:20:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xWK6X-0002EI-TI
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 16:00:48 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1xWKPv-0007d0-TK
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 16:20:40 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xWK6W-0006y1-68
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 16:00:37 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-8a594d313a3so4168640b3a.1
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:00:33 -0800 (PST)
+ id 1xWKPr-0003h7-Mk
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 16:20:37 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3b3a914e4c8so3468990a91.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795640432; x=1796245232; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795641633; x=1796246433; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gEio/QiKIukLuSNl7u4faB7v8jeOwZE8spenjdeHZAk=;
- b=IjKzjX3XNbw4aMvjI0KV2XFWyOejq5dbYafZbOp9PYHoANx1e2JWR6sATRwqql3Q4L
- /NOSDhffs53g0Dl7fzUGiYvklp9SN0YacVMzg12z8O6op45saaHlhK2vfjE9EC1PWNyJ
- mW4/uFlNe8L9O+XQEdufbAqntIhl2CNiADVQMj5HV7tVscs/ZiwyX9o8xTDnaI40yHw0
- rxot+cJpOpWgNQxpKvRNazE63Yfjyl4A8r7gonZcOahVSnkWtykfwpE3VemaCB6/3t/v
- 3zBPQmjLDXrM36GJiVLOOcubcNCdlOGVObMdHbSoUbyL6yeQm538PXDBKo/UT8wJqYkC
- ln+A==
+ bh=POMjowG126XnQibLE5jeJpWU/Av6GVTdrJ43gyabHnI=;
+ b=BVQVeRTRNV9BBm89720Hby6Rn5KIuWh8BT88Htm22tjY01wjEaZ9Iq/nqjizQxcUfx
+ mNJEi0WhL977qZDMmL2bNM5BAXeB+1pERq9UgCLUG/f8A7QSpnSOgqSXOqUbSM+BNvcS
+ utDcEMF+d2f2P9ExVwzwxIbCdVGTvA+yflmR9J9+mlnG4valyBY/DMAvuneT+iGqN06J
+ D0zMfIq7Hq6nUOwmN3yiWj7pFcGwup6An+2JBpo/FOKqJDezx6Ry0s2SaXfip/sjmaHV
+ a8FL93OaU5UUF2m9Tiz/FJOiAXiG5DbbdnWUhNgQddtcg0I+AV3oAAyGzemxqPhNJh18
+ IHzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795640432; x=1796245232;
+ d=1e100.net; s=20260707; t=1795641633; x=1796246433;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gEio/QiKIukLuSNl7u4faB7v8jeOwZE8spenjdeHZAk=;
- b=d9jRYVrA7os1/6PbBGPF70hhrEJ+jIC6aIcTC78IoM06C3tBVWvr7v/JRKZi+fMJev
- d9TL4VJnJcMQCvbISIHBlNSs4ofwctEKLj7h/LnrAHa2y9MYBgiIhSqgjV68WBTJ74XW
- 8TsEnXG6B4Fis9+1zUrLtFVzLwAw3jY3wAZmwlsm3y322wF/BtypjFEzPBO2Kl4YvYSf
- s4hUUuQ55VLc25De2fs22dzkLaEO2zCgwtIJRDUngwDg6Z7OaUjve6ZevSfrrnl4yJJi
- T8BcuA1nshp2fpyHJ3kqRDPruPdeyi7F/Q+s0c0FzMXXpbCYVCkkfhHUho6QQkzmuYDx
- ZKaQ==
-X-Gm-Message-State: APuU4Z/dXOj0+o72ojOfOWkG1tCMbxmEoAzZsBV6jB+DK+RemDSuhIdK
- s1+LICP/gvw6Ofh7KUoiRbNQhXVPJMK/WwElqz8AJM4D26dYL9I68WOoyfqPq4b7U2w=
-X-Gm-Gg: AZFdTZfs6csf/ho9Ao4pafxSBxWnwxg7S6TTv0gPcH2d9h0NpsF5wqKMbj8PolQWX1i
- IyakP9H3FWFr766zI0V9sUhdBUym+X7qTZiZya35aGDslG3MnSxI2ApXIJkusq4MbYqvXIbywcf
- 5jUXuo7OiUCTwG6C+PP7TWuI0KvyfsN9AdUY8glE/h53nfceSjOAC4RfAyAsUL5nphBzhHCgOkI
- 64if51A/RUn999pXuAqz0vc9TPuGo/K5ZE59vHYyIGpqczASxpD8g65EfKiq/h3joX8fzxiWkFe
- C1iyz2s0KgENc5qpyDtmKu0NN751MFjb2V96BliBbavE3/YsV2OESYc94QLW7wajSQNg6wwe6Xa
- otKUZ0QZ3zpJgHDadRZK0QIQTcche83MrfnFdDrc09u4ciNG0wo4Z3LMej4378BDPjSPZ2Aaw+X
- oZ8CVgpjym2wTAY3caM/r4VcUJ1upqxvg9tgalkRZWci1dhdhFNEpCw4OVzipISO22lJAtJxUvu
- WL4GBXi9j4AS35dr5WjrhHVOJUZsyFUfWiXGf3e3Mof6kBJDecBAOvtSpYdOsY+ijgjLRt1BsWp
- +X+Bx6MRxh5bE2nwrwez92wEx/6peX+7HC8V0nlc8Ts=
-X-Received: by 2002:a05:6a00:4605:b0:880:fe7b:bc56 with SMTP id
- d2e1a72fcca58-8c87d32ad6fmr19223322b3a.50.1795640431873; 
- Wed, 25 Nov 2026 13:00:31 -0800 (PST)
+ bh=POMjowG126XnQibLE5jeJpWU/Av6GVTdrJ43gyabHnI=;
+ b=dQUw9mbW1cLB585LeO8uBdFJDLwUGzLYC1BVzkixivhGEwLYDVC8pT8+sZ6jEaAPOn
+ QjBabz8lcfWYnPSROs2Anu5FNjmxxM36jAKY2EJoLUHXqDKE0X1hoOMAB7WtxL5bryWZ
+ 3/9CaJ4MezqpQMkOkXatAk9bwaF/rjWudFldcxt8K5s1ULmZbWlLffoALglv8QCHvhGy
+ TGaO6glrpsJCZsWUZLlV7IGNSLI7vr4GoTUcnMa923MLW6yFrhC3oviz7qBzXy62Dv03
+ CRXXH5Qb2qHLKOy2VplhXojuvPIFdYvViTuMKhg29WtMzI7AgBsczcnNkXvAta62B3oy
+ VvEw==
+X-Gm-Message-State: APuU4Z/gJ2gcirhAs6/2ri2P+pgDcrPP4HiHkQCZMhdFZ5bIVxmQcWK8
+ lgGLTW+EuBSGXFWVuIAGsMXhqrBvk1TiQJfw6kdH/eK7nnjtUm6PH+0FGthYVIShSiI=
+X-Gm-Gg: AZFdTZftKsUZ2qgpZRn7pyAsxl2xP0UuPmGjC/k4kvmEr+9rWp0AU1RrhAv/7Nm+1qQ
+ u3gSKvRiNWd42B2Q/5XbOG0VtLDUf+8/ZcjyCPRx2b5QVw9wjcxcybwSWg43lGNuBQX16kctqzU
+ QbpBLdayup0aNJSoTSuYDPsc8zFXbNXVZiXZsFWtM7Ol3BVZX5wET8HA1kLHTglqCAzUP7YOy2w
+ LK+A0emEe7h+nL411oZkhgSDGUkNXFZikWLmR6WVGeoCg6NEa4izkpzgWFz7r8xj01MmaHpiJ42
+ g/ayLdP54EpkekactlkbO50trHZhElDrn17O4tzewCHDjR5INqz5HHFJnhs/e+LN8Lbwl6bPw5F
+ 7l2WJykQHxkIq5UEIlaNvzGU2hl/bUGKilP9xcRAme9wSYKJzchfmyJB+dJvFTjmW/vn2Z0CKcG
+ HVFDTqL31d5VR9FtHLQ1MY7/fWnVmgms9IIGg73Ul2czbWSb2ZDJwUOsLDEz301YutNtYqdPucY
+ PD/8Fgv6M5M7CZEfGJaqacIujuVEVJNmh0beqLw81F9aV53GBGJsPqGZpzcG+AbJgXZCpICw1ol
+ Ln/hZwwDnHrkv7qXk+gNqUaJfbRb5z0SdN2AyZAQ2BOa4Fz5MDRwlwEKv+N0jD6a
+X-Received: by 2002:a17:90b:3d92:b0:3ac:83c1:2c0 with SMTP id
+ 98e67ed59e1d1-3b41c9b2de6mr16464541a91.64.1795641633404; 
+ Wed, 25 Nov 2026 13:20:33 -0800 (PST)
 Received: from [172.20.3.121] ([156.19.246.27])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8c873b2434asm9466895b3a.45.2026.11.25.13.00.29
+ 98e67ed59e1d1-3b44b792474sm13736191a91.3.2026.11.25.13.20.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Nov 2026 13:00:31 -0800 (PST)
-Message-ID: <6da6b191-6ec2-49bf-b25d-aeedac071b40@linaro.org>
-Date: Wed, 25 Nov 2026 13:00:27 -0800
+ Wed, 25 Nov 2026 13:20:33 -0800 (PST)
+Message-ID: <2d3db874-3510-4f3e-8784-f86721c858f7@linaro.org>
+Date: Wed, 25 Nov 2026 13:20:30 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-11.2?] system/memory: Invalidate TBs on ROM device
  mode switch
+From: Richard Henderson <richard.henderson@linaro.org>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -84,13 +85,13 @@ References: <20261124182722.78535-1-philmd@oss.qualcomm.com>
  <eecb8487-0fca-4028-823d-f70215628f20@oss.qualcomm.com>
  <awbpz7SZ5grn9gyi@zhexu-thinkpadt14gen5.rmtcaon.csb>
  <5cb298ce-7f9b-40fd-b553-879a567e78a5@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+ <6da6b191-6ec2-49bf-b25d-aeedac071b40@linaro.org>
 Content-Language: en-US
-In-Reply-To: <5cb298ce-7f9b-40fd-b553-879a567e78a5@oss.qualcomm.com>
+In-Reply-To: <6da6b191-6ec2-49bf-b25d-aeedac071b40@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,106 +110,22 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/25/26 11:11, Philippe Mathieu-Daudé wrote:
-> On 25/11/26 14:59, Peter Xu wrote:
->> On Tue, Nov 24, 2026 at 11:29:15PM +0100, Philippe Mathieu-Daudé wrote:
->>> On 24/11/26 21:20, Peter Xu wrote:
->>>> On Tue, Nov 24, 2026 at 07:27:22PM +0100, Philippe Mathieu-Daudé wrote:
->>>>> A ROM device changes its contents with direct stores while in MMIO
->>>>> mode. TCG does not see these stores, so translated blocks built from
->>>>> the old contents survive the switch back to ROMD mode and the guest
->>>>> executes stale code.
->>>>>
->>>>> Make memory_region_rom_device_set_romd() drop the TBs of the whole
->>>>> region on both transitions: before leaving ROMD mode (if currently
->>>>> in it), and after entering ROMD mode, for TBs another vCPU built
->>>>> before its TLB was flushed.
->>>>
->>>> Pure question: should we flush once, but only when ROMD->MMIO?  Said 
->>>> that,
->>>> IIUC we need to flush after switching to MMIO to avoid the race you
->>>> mentioned, that is something like:
->>>>
->>>>     if (mr_is_romd(mr) && romd_mode) {
->>>>         set_romd(false);
->>>>         flush();
->>>>     }
->>>>
->>>> It's based on my limited understanding / assumption that during MMIO 
->>>> state
->>>> TCG won't be able to cache invalid TB on these regions.
->>>>
->>>> So when switching ROMD->MMIO, invalidated TBs can exist, hence flush 
->>>> only
->>>> once, after updating romd=false.  When switching back from MMIO- 
->>>> >ROMD, no
->>>> chance caching anything wrong.
->>>
->>> This doesn't run. Its flush comes after romd is cleared, and
->>> memory_region_flush_rom_device() asserts that the region is still in
->>> romd mode. The reproducer aborts with:
->>>
->>> Assertion failed: (memory_region_is_romd(mr)), function
->>> memory_region_flush_rom_device
->>
->> IIUC that assertion was not required and can be removed, based on its
->> comment?
->>
->> So my pure question was really about why we need two TB flushes rather 
->> than
->> one: the pflash changed causing stale TB which I can understand.  What I
->> suggested was "making sure nobody caches this pflash, then drop all
->> existing TB" approach, which requries removal of the assertion.  I 
->> assumed
->> that works, but maybe not really - I tried to read slightly more into TCG
->> just now and noticed maybe there's yet another layer of caching on TLB so
->> the stale mapping can still be visible.  Said that, IMO it would be great
->> if we can explain why two flushes are needed rather than one.  That 
->> means,
->> if we think the 2nd flush guards everything somehow (including the stale
->> TLB async work hasn't flushed), then it seems to me we can then drop the
->> 1st flush (ROMD->MMIO switch).
+On 11/25/26 13:00, Richard Henderson wrote:
+> Grepping around accel/tcg/, we're also caching romd in cputlb.  We need 
+> to flush those entries when exiting romd mode.
 > 
-> Wow you are right, having the flush on entering romd, after the contents
-> are written, is what closes the window, and is enough!
-> 
-> -- >8 --
-> diff --git a/system/memory.c b/system/memory.c
-> index 2e3ce773ce97..8e11d42bedce 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -2252,12 +2252,16 @@ void memory_region_set_nonvolatile(MemoryRegion 
-> *mr, bool nonvolatile)
->   void memory_region_rom_device_set_romd(MemoryRegion *mr, bool romd_mode)
->   {
->       if (mr->romd_mode == romd_mode) {
->           return;
->       }
->       memory_region_transaction_begin();
->       mr->romd_mode = romd_mode;
->       memory_region_update_pending |= mr->enabled;
->       memory_region_transaction_commit();
-> +    if (romd_mode) {
-> +        /* Drop TBs another vCPU built from the old contents, once 
-> written */
-> +        memory_region_flush_rom_device(mr, 0, memory_region_size(mr));
-> +    }
->   }
-> ---
-> 
-> Thanks a lot for the review!
+> I think that can wait until 12.0 though...
+Bah, nevermind.
 
-Grepping around accel/tcg/, we're also caching romd in cputlb.  We need 
-to flush those entries when exiting romd mode.
-
-I think that can wait until 12.0 though...
+memory_region_transaction_commit runs the listeners, which reaches 
+tcg_commit, which flushes the tlb.
 
 
 r~
