@@ -1,72 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C1A606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 04:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3253606A321
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 04:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cdac.in header.i=@cdac.in header.a=rsa-sha256 header.s=default header.b=ljgYbRMM
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hgHziJGd
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW4Fj-00062y-4N; Tue, 24 Nov 2026 23:05:04 -0500
+	id 1xW4fk-0000hy-KN; Tue, 24 Nov 2026 23:31:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <karthika.b@cdac.in>)
- id 1xW4Fd-00062S-QH; Tue, 24 Nov 2026 23:04:59 -0500
-Received: from mailsender.cdac.in ([196.1.113.117]
- helo=mailsender-core1.pune.cdac.in)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <karthika.b@cdac.in>)
- id 1xW4Fa-0003SD-65; Tue, 24 Nov 2026 23:04:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cdac.in; s=default;
- t=1795579474; bh=oXt/HoSsNugqS09PNe6rRf4ht/NTPZDGbm2HA9L64Ec=;
- h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
- b=ljgYbRMMm1/NoPwVqk6UID8NTlWlk2ca+3Yu6J7U1+B40Hnyw73j541nQry0iO6JO
- 7SLOyOh4XsqLkwA31QKOcDiIXpV0CAnctZv3CCCdjgEcyaslTHvVl9QZ3Nk+t47gRk
- UVEFxS/CEfaLMYbyq3wEyHheAj/TOK6MU8BPu4q0=
-Received: from mscr-int2.pune.cdac.in (mscr-int2.pune.cdac.in [10.208.193.12])
- by mailsender.cdac.in (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTP id
- 6AP44YBD390480; Wed, 25 Nov 2026 09:34:34 +0530
-Received: from mailgw-cip.pune.cdac.in (mscr-haproxy.pune.cdac.in
- [10.208.193.46])
- by mscr-int2.pune.cdac.in (Postfix) with ESMTP id A6603100073ED;
- Wed, 25 Nov 2026 09:34:23 +0530 (IST)
-Received: from webmail2 (unknown [10.208.193.8])
- by mailgw-cip.pune.cdac.in (Postfix) with ESMTPS id 9A27514E1247;
- Wed, 25 Nov 2026 09:34:23 +0530 (IST)
-Date: Wed, 25 Nov 2026 09:34:06 +0530 (IST)
-From: Karthika B <karthika.b@cdac.in>
-To: Alistair <alistair@alistair23.me>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org
-Message-ID: <1877215787.132651.1795579446420@webmail2.cdac.in>
-In-Reply-To: <efc72269be92a118b39a7190003aa167fbbae579.camel@alistair23.me>
-References: <385625713.441366.1761727810206@webmail2.cdac.in>
- <20261016080709.17331-1-karthika.b@cdac.in>
- <efc72269be92a118b39a7190003aa167fbbae579.camel@alistair23.me>
-Subject: Re: [PATCH 0/7] RISC-V: Add CDAC VEGA machine support
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xW4fi-0000h9-8Y
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:31:54 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xW4fg-0006iN-FC
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:31:53 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-3ace304021eso51126051fa.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 20:31:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795581109; cv=none;
+ d=google.com; s=arc-20260327;
+ b=U12rGKaFROifW88imbksjeTU5Rfj51BtEn3rY3I9fUEzMZSUlqJtLwWdC4j/4ayHeG
+ IECHUE2k7254ib51Xg5nb08LvEIMg5W8GSYRlxjjbwDTHTBR8Qu/bM9xNXPIoN1Z6k9W
+ seASASE6LJ11l7LOON32a9KIY70S9HdyRDUe5E+K+xkq5/10V4Ryes16Os2kCjBGFQFh
+ n84qer5NUDUPG919weKCbrgo3D2xTugekE0A0gl5VtKdtKGwjWuksTzPACG1zMcEfh81
+ b8kZ6tZocRxAsHyaBXezQS+y2FGsWA9M3gPa08MosvSlU0OILFcrpPYVzRk4cchC+qc1
+ 3Pdg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QZ52ETHoP26ebwlsjgI8/vKQEEnUcFsLW/3WDfTyk3s=;
+ fh=6VNOjFf10Te1WtUJiFh/vOeUAF6/X0V+VGsRxu0yjrI=;
+ b=fBU8G8NVpLXia6in+OVyNCi+lXHExDYh2VKiQy62ZO3d4BUTe1M8jV87K/K25Gj8yH
+ v1I0duthHvtaD2qSHBlAVyEw9MaAXfEPrgSE2Q8wjboqAszurqtM2YueVePK92Jr4NhM
+ TuSmmjrB6y+pBmIHKeuBqIAzbh/muTjPZgz+tlkTRggclsekX2k9t739wOUlQ2Xe9/RG
+ Y3EzMwKBit2N2Tl0IQOWOD305L6rLpnAgu2gkronSM6zMwCallvYQcd7VRuScNsDIZ6k
+ R0zI5jP3D6qkTOFDb/YbcMblI44SvuaR9vpUpqMM2ynrlPXY853XhCHLdxfW5qNHrZ/T
+ +kVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795581109; x=1796185909; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QZ52ETHoP26ebwlsjgI8/vKQEEnUcFsLW/3WDfTyk3s=;
+ b=hgHziJGddPJtN4qjnbXSLDpq0rX33fKsu6k3DcyVoCoXHcc9gn0MWQ8yIZU+7G+zvr
+ eG+lzizzCjIzk0KFoH6YAki4oRLEJNsDoy5/jQY+qHC3q43Qwwe7NYiTcWZKqPHyQDJb
+ 7pbEtTFoXhRKpUWys864eR5DW7EE/UU/rWjP70ereBpsCtmLr6s6lt6P0k94OT6F7/m1
+ 0Kl3xaPASIPYb4JYWFr1+FN3mz0QAZa5SQNjSQSe4RmL2KVxzP/PSvjj900mRd5IXvST
+ fr3SDWFyl5YuZ1S/jpkMvujeKIhuTmcdtmTy3s82PQMSkBYeHdCCLz392fRIDiU6i9cf
+ 5u3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795581109; x=1796185909;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QZ52ETHoP26ebwlsjgI8/vKQEEnUcFsLW/3WDfTyk3s=;
+ b=fuFyVC1Yx7J7opPJAU/m3WV6ZusBTT8mhIUgFWeJlg0bB0c2VHMigJUqfCZrB9eSNO
+ VymQVzKBiPpibBiRaa8VBD1Tetri5d0uDbzAbOjC4NpCAk74AV0cTzV3iNdbtincFAwl
+ 5/Jd7c6ic71x0E91ZT8cwWhoUNnF4dBrzcgNcN+qUxqO++KP8iKl59Du7c0WacRds1rR
+ eO0mW3xncs5HqX3hIH2GnFS0iHwCDaNFo4pTZqgpYH7bh/WVjXurgCAF0RGowjbz+zvS
+ MKepSEpWBkWaeL+VXSzd3Qp5ep53B09aUe4OWtS9i1YZYO+vXui4ebjDUwCfQ2xMdEKr
+ cUDA==
+X-Gm-Message-State: APuU4Z8DjVpBDuGwaJoLRmajBF9rqQKtDhs41y6BebXQWndrmIQBpHGb
+ XK+cou+bxw4KjCSbuOmw2w4RK5fe5c3rm22ySKKwcu+EXxK6ZjlPZH9DE+ArL43z4bHJiV8Pi97
+ iUgPmQyZMkYXm4iUszFnge92asZIz98XGPIAY
+X-Gm-Gg: AZFdTZfq6of+2uNVom/jyUQL20Ofavg5rE2MT9Cbsi/sFrXbw1+y8cxOy0FlyY1DwbT
+ +ol0KDby78pkt48ssd/3NDJNk+qUgdbdMHWXmBhQEGs1wuOoWroh7HSWr/i/9tFB/TuYgXQzYan
+ yoMI7x7pHz/iKbSkva7FrSVEN+ZbKgZ6NcWDjHy0zdEpQ/hNAMSo02Q1cihAQbxvEa1PS9e77NN
+ HIGsZ1GvQRLwJPFaQ4u+Te/4299TcPhA4uO79zQWouJoIFNXo808zDTO2+gqGhaKMswADKlHMtw
+ BCLp0hvGwYcJLtoNHfoqPUbdy8hQikpmpajO/x8/igWD4J+LvvTPwmCfTEErqUrFIuHAooNrPIO
+ CynITomiqDM6kcArsZCWPBf/4MO92tnDLRPGQiNxQC43VHFRQvHQ4k54vGakfI1otv3M=
+X-Received: by 2002:ac2:4bd5:0:b0:5bf:e241:cd5e with SMTP id
+ 2adb3069b0e04-5c1bc7dc4d8mr4245642e87.40.1795581109292; Tue, 24 Nov 2026
+ 20:31:49 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20261118-4836-cpu-host-error-v2-0-ba02bb640d9d@gmail.com>
+ <20261118-4836-cpu-host-error-v2-2-ba02bb640d9d@gmail.com>
+In-Reply-To: <20261118-4836-cpu-host-error-v2-2-ba02bb640d9d@gmail.com>
+From: xmphyr <xmphyr@gmail.com>
+Date: Tue, 24 Nov 2026 22:31:37 -0600
+X-Gm-Features: Aa3M54pzPJFb4wSd-rypP7rxA_fOFBe2WPQGs_xo09vtu_xY6rSlnP_-mOuYJQ0
+Message-ID: <CA+hLWEE_yqsXoF40zzMeh_JuZ9fXA+Um+p9w4p=5SdwM7KLtdA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] target/i386: check hardware acceleration with -cpu
+ host and scalable error
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.4-Rev30
-X-Originating-Client: open-xchange-appsuite
-X-CDAC-PUNE-MailScanner-Information: Please contact the ISP for more
- information
-X-CDAC-PUNE-MailScanner-ID: A6603100073ED.A065B
-X-CDAC-PUNE-MailScanner: Found to be clean
-X-CDAC-PUNE-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
- score=-1, required 6, ALL_TRUSTED -1.00)
-X-CDAC-PUNE-MailScanner-From: karthika.b@cdac.in
-Received-SPF: pass client-ip=196.1.113.117; envelope-from=karthika.b@cdac.in;
- helo=mailsender-core1.pune.cdac.in
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=xmphyr@gmail.com; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,432 +114,97 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+ping
+v1: https://lore.kernel.org/qemu-devel/20261115-4836-cpu-host-error-v1-1-fd=
+f0eb56ba8a@gmail.com/
+v2: https://lore.kernel.org/qemu-devel/20261118-4836-cpu-host-error-v2-0-ba=
+02bb640d9d@gmail.com/
 
-Hi Alistair,
+---
+To Philippe, I forgot to add this to my aside, but I decided to
+continue with listing the hardware accelerators by name in order to make
+the error message a little clearer. After all, the motivation for the
+issue was that the original error message was unhelpful.
 
-Checking in on this thread. Wanted to ask whether the patches are still und=
-er consideration, or if anything further is needed from our side. In partic=
-ular, I'd like to confirm whether the follow-up patches (the CPU fix and th=
-e OpenSBI test) looked correct, and whether our response on the AI-policy q=
-uestion was sufficient, or if there's anything there you'd like us to clari=
-fy or change.
+---
+Thanks,
+Andrew Nguyen <xmphyr@gmail.com>
 
-Happy to provide any further detail.
 
-> On 10/19/2026 7:11 AM Alistair <alistair@alistair23.me> wrote:
->=20
->=20=20
-> On Fri, 2026-10-16 at 13:37 +0530, Karthika B wrote:
-> > This series adds QEMU machine support for VEGA, a RISC-V SoC family
-> > developed by C-DAC (Centre for Development of Advanced Computing,
-> > India) as part of the DIR-V processor program.
-> > VEGA series of microprocessors are developed as part of the
-> > Microprocessor Development Programme, initiated and funded by MeitY
-> > (Ministry of Electronics and Information Technology, Government of
-> > India), with the mission objective to design and develop
-> > indigenously a family of microprocessors, related IPs, and the
-> > complete ecosystem to enable fully indigenous product development
-> > catering to various requirements in the strategic, industrial, and
-> > commercial sectors. VEGA is developed at C-DAC, Thiruvananthapuram.
-> >=20
-> > Background
-> > ----------
-> > VEGA is a series of 32-bit and 64-bit single/multi-core RISC-V
-> > processors (Thejas32 and Thejas64) developed under the DIR-V program,
-> > integrated with multi-level caches, an MMU, and a coherent
-> > interconnect on real silicon. This series adds a QEMU 'vega' machine
-> > model supporting both the Thejas32 (RV32) and Thejas64 (RV64)
-> > variants, modelled on real silicon behaviour rather than a
-> > synthetic/virtual platform.
->=20
-> Thanks for the series. It's cool to see some more RISC-V designs.
->=20
-> Thank you for submitting the patches.
->=20
-> For some context, we already have support for a Shakti machine, and
-> that is being deprecated and removed as it hasn't been maintained by
-> the original submitter.
->=20
-> I also noticed that you listed yourself as "Odd Fixes" in the
-> maintainers file, so this won't be accepted.
->=20
-> We don't have the resource to maintain your custom board and reviewers
-> are stretched very thin to look at your patches. If you don't want to
-> maintain it, we aren't going to be able to either.
->=20
-> >=20
-> > More details on the VEGA processor series:
-> > =C2=A0 https://vegaprocessors.in/
-> > VEGA documentation:
-> > =C2=A0 https://cdac-vega.gitlab.io/
-> >=20
-> > The model has been validated against Aries boards (Thejas32) and
-> > Thejas64 SoCs, booting:
-> > =C2=A0 - bare-metal ELF payloads via -bios (no DTB, fixed UART framing),
-> > =C2=A0=C2=A0=C2=A0 for both RV32 and RV64, using the VEGA SDK's example=
- UART
-> > =C2=A0=C2=A0=C2=A0 "hello world" application
-> > =C2=A0 - Linux via BBL with a user-supplied -dtb describing the SoC (RV=
-64)
->=20
-> No BBL, please use OpenSBI or an equivalent
->=20
-> >=20
-> > What's included
-> > ----------------
-> > =C2=A0- hw/riscv/vega.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 - machine model, device creation, boot
-> > flow.
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Note: VEGA does not genera=
-te its
-> > device
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tree internally; -dtb is r=
-equired
-> > for any
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -kernel boot (see note bel=
-ow)
-> > =C2=A0- hw/intc/vega_plic.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -=
- CDAC PLIC variant (register layout
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 differs from the generic
-> > riscv,plic0;
->=20
-> Why?
->=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 see patch N/N for details)
-> > =C2=A0- hw/intc/vega_aclint.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - ACLINT MS=
-WI/SSWI/MTIMER, with the
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 STIMECMP handling VEGA's b=
-oot ROM /
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 BBL relies on
-> > =C2=A0- target/riscv/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 - adds TYPE_RISCV_CPU_VEGA32 and
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TYPE_RISCV_CPU_VEGA64, CPU=
- subtypes
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 baking in VEGA's fixed bas=
-eline (IMA
-> > +
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 S/U + Zicsr/Zifencei + SV3=
-2/SV39),
-> > so
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -M vega boots on either ar=
-chitecture
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 without a manual -cpu stri=
-ng; see
-> > note
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 below on why both are pare=
-nted on
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sifive-u rather than the g=
-eneric
-> > base
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPU type
-> > =C2=A0- docs/system/riscv/vega.rst - user-facing documentation
-> > =C2=A0- tests/functional/riscv32/test_vega.py,
-> > =C2=A0=C2=A0 tests/functional/riscv64/test_vega.py
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - functional tests booting -M vega on
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 both architectures (bare-m=
-etal on
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 both; bare-metal + Linux/B=
-BL on
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv64), fetching small t=
-est
-> > binaries
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 from a stable, checksummed=
- external
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 asset repository
-> > =C2=A0- MAINTAINERS entry
-> >=20
-> > Notable hardware characteristics reviewers should know up front
->=20
-> Have you read QEMU's AI policy?
->=20
-> https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-gen=
-erated-content
->=20
-> > -----------------------------------------------------------------
-> > =C2=A0- The PLIC and CLINT/ACLINT are co-located at the same base addre=
-ss
-> > =C2=A0=C2=A0 on real VEGA silicon (0x20010000). This is not a QEMU mode=
-lling
-> > =C2=A0=C2=A0 error; it reflects the actual SoC memory map.
->=20
-> What? Why?
->=20
-> > =C2=A0- The PLIC aperture is 0x400 bytes, sized for the current maximum
-> > =C2=A0=C2=A0 hart count on this SoC family; it is not the generic upstr=
-eam PLIC
-> > =C2=A0=C2=A0 aperture size.
-> > =C2=A0- UART register framing differs between boot modes: bare-metal
-> > always
-> > =C2=A0=C2=A0 uses shift=3D2/io-width=3D4 (fixed 32-bit stride), while L=
-inux boot
-> > =C2=A0=C2=A0 reads reg-shift from the DTB serial node, since the two bo=
-ot paths
-> > =C2=A0=C2=A0 exercise the hardware through different firmware layers.
-> > =C2=A0- TYPE_RISCV_CPU_VEGA32/VEGA64 are parented on
-> > TYPE_RISCV_CPU_SIFIVE_U
-> > =C2=A0=C2=A0 rather than TYPE_RISCV_CPU_BASE or TYPE_RISCV_BARE_CPU.
-> > =C2=A0=C2=A0 TYPE_RISCV_CPU_BASE's default misa_ext includes RVH, and t=
-he
-> > =C2=A0=C2=A0 class-level misa_ext merge is OR-only (a subtype cannot cl=
-ear a
-> > bit
-> > =C2=A0=C2=A0 its parent already set), so RVH could not be disabled from=
- a
-> > =C2=A0=C2=A0 TYPE_RISCV_CPU_BASE-derived subtype. TYPE_RISCV_BARE_CPU a=
-voids
-> > =C2=A0=C2=A0 that, but unconditionally forces max_satp_mode to 'bare' f=
-or any
-> > =C2=A0=C2=A0 CPU in its lineage regardless of what the subtype configur=
-es,
-> > which
-> > =C2=A0=C2=A0 breaks paging. TYPE_RISCV_CPU_SIFIVE_U has neither issue, =
-but
-> > =C2=A0=C2=A0 silently sets priv_spec to PRIV_VERSION_1_10_0 (an older R=
-ISC-V
-> > =C2=A0=C2=A0 privileged spec version) rather than the current one. This
-> > surfaced
-> > =C2=A0=C2=A0 as a real boot hang against production BBL/DTB pairs (BBL's
-> > =C2=A0=C2=A0 delegate_traps() mideleg assertion failed) that was not vi=
-sible in
-> > =C2=A0=C2=A0 simpler test boots, since the hang depends on firmware bui=
-lt
-> > =C2=A0=C2=A0 against a newer priv spec than 1.10.0. Both VEGA CPU subty=
-pes
-> > =C2=A0=C2=A0 explicitly override priv_spec back to PRIV_VERSION_LATEST =
-to fix
-> > =C2=A0=C2=A0 this; anyone deriving a new CPU subtype from a SiFive-fami=
-ly
-> > parent
-> > =C2=A0=C2=A0 should be aware this default does not propagate the way ISA
-> > =C2=A0=C2=A0 extension bits might be assumed to.
-> > =C2=A0- VEGA does not generate a device tree internally. -dtb is requir=
-ed
-> > =C2=A0=C2=A0 for any -kernel (Linux/BBL) boot; the machine errors out c=
-learly
-> > if
-> > =C2=A0=C2=A0 a kernel is given without -dtb and without -bios firmware.=
- A bare
-> > =C2=A0=C2=A0 "-M vega" with no boot arguments at all (e.g. qtest's gene=
-ric
-> > =C2=A0=C2=A0 smoke tests) is a valid, inert state and does not error. T=
-his
-> > keeps
-> > =C2=A0=C2=A0 the initial series scoped to what has been directly tested;
-> > =C2=A0=C2=A0 internal FDT generation may follow as a later series.
-> > =C2=A0- PLIC and CLINT compatible strings are "cdac,plic-1.0.0" and
-> > =C2=A0=C2=A0 "riscv,clint0" respectively. CDAC's own Buildroot-based BB=
-L/Linux
-> > =C2=A0=C2=A0 builds use a CDAC-specific PLIC driver matched against the=
- former,
-> > =C2=A0=C2=A0 and use the generic CLINT compatible string directly (no
-> > =C2=A0=C2=A0 CDAC-specific CLINT driver exists in any current VEGA firm=
-ware
-> > =C2=A0=C2=A0 variant). A DTB intended to boot stock, unmodified riscv-p=
-k/BBL
-> > =C2=A0=C2=A0 (which only recognises "riscv,plic0" verbatim) will need to
-> > =C2=A0=C2=A0 additionally advertise that generic string for the PLIC no=
-de.
-> >=20
-> > What is NOT included / deliberately left out
-> > ---------------------------------------------
-> > =C2=A0- No AIA/APLIC/IMSIC support: current VEGA silicon does not
-> > implement
-> > =C2=A0=C2=A0 AIA, so that code path (present in earlier internal revisi=
-ons) has
-> > =C2=A0=C2=A0 been removed rather than left as dead code.
->=20
-> Again, please read the AI code policy
->=20
-> https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-gen=
-erated-content
->=20
-> Alistair
->=20
-> > =C2=A0- No internal device-tree generation: see note above; -dtb is
-> > =C2=A0=C2=A0 required for -kernel boots in this series.
-> > =C2=A0- No SDHCI, SPI, I2C functional models yet: exposed as
-> > =C2=A0=C2=A0 unimplemented-device stubs matching the real address range=
-s, so
-> > =C2=A0=C2=A0 guest software can probe them safely; functional models ma=
-y follow
-> > =C2=A0=C2=A0 in later series.
-> > =C2=A0- No RV32 Linux boot test yet: the functional test suite covers
-> > =C2=A0=C2=A0 bare-metal on both architectures and a full Linux/BBL boot=
- on
-> > =C2=A0=C2=A0 riscv64 only, since an RV32 (Thejas32) Linux/BBL boot has =
-not yet
-> > =C2=A0=C2=A0 been verified; this may follow in a later series once avai=
-lable.
-> >=20
-> > Testing
-> > -------
-> > =C2=A0- riscv32-softmmu and riscv64-softmmu builds, `make check` clean =
-on
-> > =C2=A0=C2=A0 both
-> > =C2=A0- checkpatch.pl clean across the series
-> > =C2=A0- Functional tests added under tests/functional/riscv32/test_vega=
-.py
-> > =C2=A0=C2=A0 and tests/functional/riscv64/test_vega.py, passing via bot=
-h direct
-> > =C2=A0=C2=A0 invocation and `meson test` on both architectures:
-> > =C2=A0=C2=A0=C2=A0=C2=A0 - bare-metal "hello world" boot (RV32 and RV64)
-> > =C2=A0=C2=A0=C2=A0=C2=A0 - full Linux boot via BBL to a login prompt (R=
-V64)
-> > =C2=A0- Manual testing additionally covered: virtio-net networking, and=
- an
-> > =C2=A0=C2=A0 extended stress-ng run (CPU, matrix, VM, filesystem, devic=
-e-access
-> > =C2=A0=C2=A0 stressors) under Linux on -M vega
-> >=20
-> > We previously posted an early version of VEGA machine support
-> > (Message-ID: <385625713.441366.1761727810206@webmail2.cdac.in>)
-> > without a proper cover letter, MAINTAINERS entry, documentation, or
-> > tests, and sent via a webmail client rather than git send-email,
-> > which likely affected formatting. This series is a corrected
-> > resubmission addressing all of that: it is sent via git send-email,
-> > and adds the documentation, MAINTAINERS entry, and functional tests
-> > that were missing before. We've since read and followed
-> > docs/devel/submitting-a-patch.rst in full. Feedback on process as
-> > well as code is very welcome.
-> >=20
-> > Karthika B (7):
-> > =C2=A0 hw/intc: Add CDAC VEGA PLIC device model
-> > =C2=A0 hw/intc: Add CDAC VEGA ACLINT device model
-> > =C2=A0 target/riscv: Add VEGA32 and VEGA64 CPU types
-> > =C2=A0 hw/riscv: Add CDAC VEGA machine model
-> > =C2=A0 docs/system/riscv: Add VEGA machine documentation
-> > =C2=A0 tests/functional: Add VEGA machine functional tests
-> > =C2=A0 MAINTAINERS: Add entry for VEGA machine
-> >=20
-> > =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 14 +
-> > =C2=A0configs/devices/riscv64-softmmu/default.mak |=C2=A0=C2=A0 1 +
-> > =C2=A0docs/system/riscv/vega.rst=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 219 +++++=
-++
-> > =C2=A0docs/system/target-riscv.rst=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0hw/intc/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 7 +
-> > =C2=A0hw/intc/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +
-> > =C2=A0hw/intc/vega_aclint.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 | 668
-> > ++++++++++++++++++++
-> > =C2=A0hw/intc/vega_plic.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 | 517 +++++++++++++++
-> > =C2=A0hw/riscv/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 11 +
-> > =C2=A0hw/riscv/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0hw/riscv/vega.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 502 +++++++++++++++
-> > =C2=A0include/hw/intc/vega_aclint.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 84 +++
-> > =C2=A0include/hw/intc/vega_plic.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 87 +++
-> > =C2=A0include/hw/riscv/vega.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 | 136 ++++
-> > =C2=A0target/riscv/cpu-qom.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 2 +
-> > =C2=A0target/riscv/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 25 +
-> > =C2=A0tests/functional/riscv32/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0tests/functional/riscv32/test_vega.py=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 32 +
-> > =C2=A0tests/functional/riscv64/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0tests/functional/riscv64/test_vega.py=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 63 ++
-> > =C2=A020 files changed, 2374 insertions(+)
-> > =C2=A0create mode 100644 docs/system/riscv/vega.rst
-> > =C2=A0create mode 100644 hw/intc/vega_aclint.c
-> > =C2=A0create mode 100644 hw/intc/vega_plic.c
-> > =C2=A0create mode 100644 hw/riscv/vega.c
-> > =C2=A0create mode 100644 include/hw/intc/vega_aclint.h
-> > =C2=A0create mode 100644 include/hw/intc/vega_plic.h
-> > =C2=A0create mode 100644 include/hw/riscv/vega.h
-> > =C2=A0create mode 100644 tests/functional/riscv32/test_vega.py
-> > =C2=A0create mode 100644 tests/functional/riscv64/test_vega.py
-
-With Regards,
-Karthika B
-Project Engineer
-HDG
-
----------------------------------------------------------------------------=
----------------------------------
-[ C-DAC is on Social-Media too. Kindly follow us at:
-Facebook: https://www.facebook.com/CDACINDIA & Twitter: @cdacindia ]
-
-This e-mail is for the sole use of the intended recipient(s) and may
-contain confidential and privileged information. If you are not the
-intended recipient, please contact the sender by reply e-mail and destroy
-all copies and the original message. Any unauthorized review, use,
-disclosure, dissemination, forwarding, printing or copying of this email
-is strictly prohibited and appropriate legal action will be taken.
----------------------------------------------------------------------------=
----------------------------------
-
+On Wed, Nov 18, 2026 at 12:03=E2=80=AFAM Andrew Nguyen <xmphyr@gmail.com> w=
+rote:
+>
+> Added an additional check with -cpu host: that a hardware accelerator is
+> enabled. The error message for when a hardware accelerator isn't used
+> gives a list of supported hardware accelerators. This list is made more
+> scalable in the form of a separate function that is substantially easier
+> to find and append later down the line.
+>
+> Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
+> ---
+>  include/system/hw_accel.h | 10 ++++++++++
+>  target/i386/cpu.c         |  8 +++++---
+>  2 files changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
+> index f0c10b6d80..04608073f7 100644
+> --- a/include/system/hw_accel.h
+> +++ b/include/system/hw_accel.h
+> @@ -54,4 +54,14 @@ static inline bool hwaccel_enabled(void)
+>          || whpx_enabled();
+>  }
+>
+> +/**
+> + * hwaccel_names:
+> + *
+> + * Returns: String of supported hardware accelerators.
+> + */
+> +static inline const char *hwaccel_names(void)
+> +{
+> +    return "kvm, hvf, whpx, or nvmm";
+> +}
+> +
+>  #endif /* QEMU_HW_ACCEL_H */
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 7dd5535f80..375a4453e4 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -25,6 +25,7 @@
+>  #include "cpu.h"
+>  #include "tcg/helper-tcg.h"
+>  #include "exec/translation-block.h"
+> +#include "system/hw_accel.h"
+>  #include "system/hvf.h"
+>  #include "system/mshv.h"
+>  #include "system/whpx.h"
+> @@ -10227,10 +10228,11 @@ static void x86_cpu_realizefn(DeviceState *dev,=
+ Error **errp)
+>          return;
+>      }
+>
+> -    if (xcc->host_cpuid_required && !accel_uses_host_cpuid()) {
+> +    if (xcc->host_cpuid_required && (!accel_uses_host_cpuid() ||
+> +        !hwaccel_enabled())) {
+>          g_autofree char *name =3D x86_cpu_class_get_model_name(xcc);
+> -        error_setg(&local_err, "The '%s' CPU type can only be used with =
+KVM,
+> -            HVF or WHPX", name);
+> +        error_setg(&local_err, "The '%s' CPU type can only be used with =
+"
+> +            "hardware accelerators %s.", name, hwaccel_names());
+>          goto out;
+>      }
+>
+>
+> --
+> 2.43.0
+>
 
