@@ -1,87 +1,120 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493E7606A327
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 15:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0AC606A327
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 15:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=K3mIaR7P
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Hb32G07f;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Sg9G/and
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWEdV-0006tK-C1; Wed, 25 Nov 2026 10:10:17 -0500
+	id 1xWErS-0006ax-RW; Wed, 25 Nov 2026 10:24:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWEdT-0006sA-Fj
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 10:10:15 -0500
-Received: from mr-2006k-snip6-11.eps.apple.com ([2a01:b747:3000:204::6f]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xWErK-0006aV-G3
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 10:24:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWEdK-0007UX-Se
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 10:10:15 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-3 (Postfix) with ESMTPS id
- 9B98D180303D; Wed, 25 Nov 2026 15:09:58 +0000 (UTC)
-X-ICL-RepId: 01a21341-a38e-7a4d-a0f0-4b664e8129ae
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1795619400; x=1827155400;
- bh=X6jg18f5GP38JGGPQJL6ffL4CoCWo7xBXlWCJyL+E1M=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=K3mIaR7P1IkkS6qZuFflxAU0hk86zxcviHbjE/uHuCy+AnVRzjS1HcxwQeAAQedOqSeAoGspIeVWpumEE5GCZTw5fa/BRaOBFzjchSojrBSK6qcdjf/aG2+6qgzNiAt/afJHPsk6wZ6bXbX88XgwfYnTW6vj15XmJmKOoI/FHin7RX1hnDWTqXhiuMp2hkLA417s95cHtY6zIm4rk/r83icPtqw3eD12nz2dG5inVKeVmsqrA9xtx8N8N0b6onfS4MhBkyWv6XhSjHO7iUI19sBEyMNnSlTxclPGQStzsbtVB8+LEZcLldz9NllIRyOxE/C4EX+gYjM0MMyT6YaFBw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.156.200.36])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-3 (Postfix) with ESMTPSA id
- 297FF180050E; Wed, 25 Nov 2026 15:09:57 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH 1/2] whpx: i386: only do partition reset when exposed
-Date: Wed, 25 Nov 2026 16:09:51 +0100
-Message-ID: <20261125150952.48332-2-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261125150952.48332-1-mohamed@unpredictable.fr>
-References: <20261125150952.48332-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xWErH-0006mq-BI
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 10:24:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795620269;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/VFhGHXs3HK61H3sSaR4Y0GrnbaGZzaMTg8a+/kDYAM=;
+ b=Hb32G07fKLUq0cmkQVuQ8yJRaNpcrAuxfCy+I6JoDMDdsi6UEzFEkYDLOzcrRnLq9qtXg+
+ DQUArWKq143M8aCauJlVXq4iXG1yeRQR2yBaFF1JIkUtpOXNTun1hE2bvAsh0saONgR82f
+ TPrnQP1JzAZ5SmTl3BReFYWzLVYgD3A=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-br-PsElSOSeVDWx7juwBsA-1; Wed, 25 Nov 2026 15:24:26 +0000
+X-MC-Unique: br-PsElSOSeVDWx7juwBsA-1
+X-Mimecast-MFC-AGG-ID: br-PsElSOSeVDWx7juwBsA_1795620266
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-490d2ac331bso5207807f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 07:24:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1795620265; x=1796225065; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/VFhGHXs3HK61H3sSaR4Y0GrnbaGZzaMTg8a+/kDYAM=;
+ b=Sg9G/and+Jf4oDNmeoYAgJQy61D2yOWHw4NPgZ47rFHBMxjhiB6TGeQINtzK6OwLNk
+ qDo5Nj4u1CMqAiz9aokIiHuF0+QsuPGSTpRgk6ZkwG9fLdzmRhJscnkXvo3TCyZxcQ2V
+ 7O0g6P+yql79zU0Bi0AnHlZFS6JzmlcA5QZZVKAn0nUbK/0KbHRng3b5xY4P0agS3tiO
+ OQWWL7imb8L0MU3XfJHYmFYD073A2KE8nfaZv09s2GlTSW1UnosXJbvLSugLDTYgduG2
+ V1oE4gvZh1cKx0umgxlw86EGX6JSSTOA93rhPmPn+7WJjwU5L4lMMDm2NBLglOWrNf2q
+ a8EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795620265; x=1796225065;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=/VFhGHXs3HK61H3sSaR4Y0GrnbaGZzaMTg8a+/kDYAM=;
+ b=dSZ4rWQUeKH+OzpPD9J+i73mRyyWkUK6QsSxbfneMFeVdqBwffPJTWsRZMwxXmjKUl
+ 6dMgCVfnlKxVeQmqhqGaMGZCmZQ5Qqc7ACGElinJ6nSjX8hONoJYop05qHYV1mO/9WtO
+ bCGyOgRvv7dNIJZftDGBuJAO3i/mJp286lMhRNqNYEF0ID9Vk8Ai//GN7MidQ13j5o0K
+ 1UmU/uPmYqmzAJGDpAd9g+BjH9N54rbT46jh+/6E47CeiCkH8632QJBiyysxONXLQQ97
+ zsgNwkug2RabZEFErnC7TY8CwjlIxmWYIP3u1sJLR0e++ayC4UFORmfzxEYvPJnVNwxS
+ lvJA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFS5fMN/+aFDupkcKwMWWDwfpW86Eun4KfPL69ZWflegbBnYD0iwmXewW/SY8nUqtyU6nXMV8oDcmio@nongnu.org
+X-Gm-Message-State: APuU4Z+Bm8URSuEimweBdpq6FzdPZtBJz9pf3wQ0NXl5mvqxulJBlbCl
+ q9nFtxKuO/whkCb+cO1rLiPtfU2iL1PrQg6/gS1dyRM3jkx3zntvXs1gazeneDhDvuGHHJly0Cj
+ KgxvCyJq+PaC0ITg2tj4w0+9s8QoDZLvPDV7EoB2TSI5ByX4yA2Yz5gSn
+X-Gm-Gg: AZFdTZd422LrkK5+Zphc5APYxS2UIJQSlOVVqCG+a+mDqYCijWWMcTlI6qc1gIQwYWs
+ 3VDw9f2qqGiJkZZTt9euJVoRuW0dhkqJ35WUlZknD18KFqwWSVUuUKvHyJBhmUy19QL5R+MiOWW
+ HMzk1rodcK0iOKwqBt3uFmYxQSietO0etuoRLmzDYmiFykX4htF4S7y0jSK1baLh+WuCHuEfN8k
+ SzPHy1EHuyNuOowb1zgUxaIU9v/xXZ37oXEYwjsjIkY78z4dcteLuagX3dVLek7bnJY4xzAKDei
+ BC9CaFBtuj+FFoL82niZXtWW20ZjL/x6W26i+5f6kDmZwvUFu40/owqRZzrbR/gU7pd/8/VWpVZ
+ 2CbnGuHT4+NgtQ0SA4+Q4ax/S5QFIjEkBB8cC3yrxYkDodlPa6NJ4Nw==
+X-Received: by 2002:a05:6000:2506:b0:48d:ba3b:af36 with SMTP id
+ ffacd0b85a97d-4abb47b0f64mr43710640f8f.37.1795620265612; 
+ Wed, 25 Nov 2026 07:24:25 -0800 (PST)
+X-Received: by 2002:a05:6000:2506:b0:48d:ba3b:af36 with SMTP id
+ ffacd0b85a97d-4abb47b0f64mr43710577f8f.37.1795620265031; 
+ Wed, 25 Nov 2026 07:24:25 -0800 (PST)
+Received: from sgarzare-redhat ([80.116.143.202])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab6b10b5f6sm32767245f8f.34.2026.11.25.07.24.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Nov 2026 07:24:23 -0800 (PST)
+Date: Wed, 25 Nov 2026 16:24:17 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Eugenio Perez Martin <eperezma@redhat.com>, 
+ Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org,
+ Hanna Czenczek <hreitz@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] hw/virtio/vhost-shadow-virtqueue: clear ndescs after use
+Message-ID: <awb8b6woM0vqRpow@sgarzare-redhat>
+References: <20261123231319.377104-1-connorkite@gmail.com>
+ <e271405f-b7fe-48fa-bca2-964945c38994@oss.qualcomm.com>
+ <awakcwEP6eYCeb-A@sgarzare-redhat>
+ <CAJaqyWcUpP2c-B70OLeWyBpkZjVPsN3Vm5iyAUVeZG=DaR6+Hw@mail.gmail.com>
+ <54c83094-e441-49ba-ba89-d4ef7bc40e78@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ECyMYWFs0WSgdZ42uhcz6KMBi9_oBVMc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA2MCBTYWx0ZWRfX0KerkmiFwoQf
- hI7Wmiklc+hrplV3pFQa/h3Gae/6kfqi9BgVy1b8+9UjDPmFkARsy5xlbJyeoKQ9yyLr9yKHAxA
- 3xJivwhLDJ/kDlqY7MvsZnZvaa/HA9p22w36xbK9oCaf0KS/zNAqlT3o51hBpSU2PTxjAudsEfZ
- RADiafSGfjzum3XvZdQm3vE8jirsW6Idlpbd6coUYqG10AW+HNmLvm/ZAZJ0ZjPq7M+kzbMtYL+
- e6huGYJ4tKxdYuE3mOVVzdSLKdnmQ3hWeGKA/QOEtGRjFSSOZNTvVaaVUe10K05J1SihIf0C8ol
- ch0WU4PD6SUOfA+i3iIcXX4l238zdGo4hkr2slsFwzgzC3cbeXJXvrmQGicy08=
-X-Authority-Info-Out: v=2.4 cv=V4boQuni c=1 sm=1 tr=0 ts=6b06fa46
- cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
- a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=HxOO8S7qDNDRVQTpMkN7:22 a=y_sQRuLYfanAyLy2Fkar:22
- a=p0WdMEafAAAA:8 a=kaUFCjADoj9KmkSp3kIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA2MCBTYWx0ZWRfX1F4ntnbkvpWq
- WjcV1UgAOxPEmgNXsGRxcyeSg/kI2hTnzbZQGj1tyTG3nS0E3v0Mh/f9xz5lHdTI1gkcN8O7Hd8
- ohZQuuLiRcbFN2RzVVd706AEI8u4X7U=
-X-Proofpoint-ORIG-GUID: ECyMYWFs0WSgdZ42uhcz6KMBi9_oBVMc
-X-JNJ: AAAAAAABNAcqpAokyZ6GvpyAXAyEoelvx/zLlkMsNVBU5EjAS1ISacjMAfatYTZIi+skKM
- HZOrCJ4356sxMdNev6s00YRpgNiIAGn2pBFsTjC22H383MXn5eNs7dRHp4D2/0jmSLSjcX
- 4rBWgi8K9mmw0I90mLS14yufgd1PI8kVWL8oaxnLikq41tzPWwhz+7LxHlBJ8cC8Cfnqc5
- N2Eo3chLtR9zsDvv4QquObtPQ71hkRPNC0bLiFglK4VUI9D2fCOljFrcBugwDiECKsnQCk
- OM0H7I7IvYbiwr/bAVPyIOPGsixVCWfZwTE63benAyKYShF3JQYS6oY3+ST+hTnALbDybm
- pYg3tcuZLHw3D5gugFI6nkP/gY2Km4gBIh5OuaiZTboqBnLpuKmbIF+yWcA+U05AE4SX6k
- rxAEznW0ByhuQEbpJqaTS6/O/viVXrbgIakCcMxI+lrhX+atCtn4SmuukdVxGeJckd+6DK
- h1r/WUn9fFPUakNzRcsLr88vfJwz1IbutRG6570f75Y44fpmflQL9GlBBbWYUxfTkfGY1a
- DxnEoVmV/UrY09KWYNNJaaa2xNTua4YX4eY1nCW0QMa6e7+0fO0iQtEurQjwg+/hZYB0Ir
- j93V7IW6oMi4WCYBFheuCPTd7lLg1Q16P1f2V4espVZzq2RtvPN07oOPWE2Yavrcliqh6f
- Ch+Rglj54JW172A2icOfptVxSJEKUjZR5xSSDKD7UTQiFwjYWWvPf3PCiMXxlWNf
-Received-SPF: pass client-ip=2a01:b747:3000:204::6f;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <54c83094-e441-49ba-ba89-d4ef7bc40e78@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,44 +126,45 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-WHvResetPartition is not exposed before Windows 11 and
-Windows Server 2025.
+On Wed, Nov 25, 2026 at 10:42:32AM +0100, Philippe Mathieu-Daudé wrote:
+> On 25/11/26 10:16, Eugenio Perez Martin wrote:
+> > On Wed, Nov 25, 2026 at 10:05 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+> > > 
+> > > On Tue, Nov 24, 2026 at 08:41:04AM +0100, Philippe Mathieu-Daudé wrote:
+> > > > Hi Connor,
+> > > > 
+> > > > On 24/11/26 00:13, Connor Kite wrote:
+> > > > > When a shadow virtqueue detaches the buffer associated with a used element,
+> > > > > it adds the descriptor chain to the head of the free-elements list. However,
+> > > > > this currently happens after svq->desc_state[last_used].ndescs is set to 0
+> > > > > in vhost_svq_get_buf, introducing a bug.  Only the first element in the used
+> > > > > descriptor chain is added back into the free-elements list, with subsequent
+> > > > > elements being potentially orphaned.
+> > > > 
+> > > > Not really added to the 'head of the free-elements list', but the former
+> > > > chain tail to free_head, then makes id the new head. Suggested reword:
+> > > > 
+> > > >    vhost_svq_detach_buf() uses the head descriptor's ndescs to find the
+> > > >    last descriptor of the chain and reinsert the whole chain into the
+> > > >    free list. vhost_svq_get_buf() currently clears ndescs before calling
+> > > >    it, so multi-descriptor buffers are recycled as single descriptors and
+> > > >    the remaining descriptors are orphaned.
+> 
+> What about that suggestion?
 
-It is also not exposed on Server 2022, which passes the
-legacy OS check otherwise.
+Yes, I agree that your suggestion is better.
 
-As such, gate it behind availabilty of WHvResetPartition.
+@Connor, please can you send a v2 updating the commit message, adding 
+the fixes tag and CCing stable?
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4908
-Fixes: 6275714a ("target/i386/whpx: handle processor reset”)
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index df1c772eb3..6c6af6c4d5 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -530,7 +530,8 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-     assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
- 
-     /* Assumes that cpu_synchronize_all_post_reset() runs cpu 0 first. */
--    if (level == WHPX_LEVEL_RESET_STATE && cpu->cpu_index == 0) {
-+    if (whp_dispatch.WHvResetPartition &&
-+        level == WHPX_LEVEL_RESET_STATE && cpu->cpu_index == 0) {
-         hr = whp_dispatch.WHvResetPartition(whpx->partition);
-         if (FAILED(hr)) {
-             error_report("WHPX: Failed to reset partition, hr=%08lx", hr);
--- 
-2.54.0 (Apple Git-157)
+Thanks,
+Stefano
 
 
