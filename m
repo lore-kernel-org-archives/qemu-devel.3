@@ -1,81 +1,81 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811F7606A329
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F176606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yTGSK+Vc
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hfAQYObQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWBD5-000203-MI; Wed, 25 Nov 2026 06:30:47 -0500
+	id 1xWBEX-0003Ir-K1; Wed, 25 Nov 2026 06:32:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
- id 1xWBD3-0001zZ-Kc
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:30:45 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1xWBEQ-0003IZ-T7
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:32:11 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
- id 1xWBD1-0001Ka-Um
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:30:45 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c4d21051042so56444166b.0
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:30:43 -0800 (PST)
+ id 1xWBEP-0007Qn-9l
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:32:10 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4a35ac4475dso41584875e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:32:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795606241; x=1796211041; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795606327; x=1796211127; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Afcqxjv+MkGGt0UAmpL0zC/ETeooQhBIhJHHPCywLOU=;
- b=yTGSK+VcHM5f0ikLgdbW9JGqXOjArtfTCwCD0PR2K0cSq3zMX8/b5qC/IBa+7/YWfZ
- TeZl1rFcCtw+TWEcIB4hgovbie3AiLrHUdboWaTr9Bm5mPCQK2GFOn8lANdktRoVeyh2
- yBB+vBjx97mG8bexDP/HtagEWgAT6U0o3m3C+DZwkVk4hyLaEFPXEhPb/Dn96blKWIUK
- dvwwX/3vCgm5AgglB/nLLWept/nvuaqInil4J7hXLlGJ7SApMHnhmjCufz7TyBbdiTuq
- JGfEI49r/AjYFduzpxvbUjOaYopSkBthqJuxpk11kcMf/jY05nbJFQUoaFrtP6Pc5nEv
- whuA==
+ bh=XNwgaAJrA/u9YSk7hAtdQI/k6k5HNaRRAtIFaDIjJqU=;
+ b=hfAQYObQnyGT3m0NU2/z7tMcDChVPYtRekYzBkzMFFffQgUCjiuK0CAhU8n20v+T3D
+ fqPpKdsqUUnNx7FXqDoBgjIqQlq+ZmtDLToVglAG8jwghzecKkWy7306cPnqpXBQMLnI
+ LAlIY3eLuFQHXrMaixTYkUkD82jGAyMbMGqH2SQJyh/wUC6Mio0gy+NUMZIPe7zTszve
+ vQWC2gyfIerCQt51pZv98k0qrsPSpoAd226CJxVBGCqyhlCgCFZzSi4rGRqSdx+0GoFl
+ svnyux81n7COqnVsOOAajJVn/qC5C4nx1Dyp/PSLdlJ4M9KdamxbeWhxGWrZpXfofP+R
+ 3ERw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795606241; x=1796211041;
+ d=1e100.net; s=20260707; t=1795606327; x=1796211127;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Afcqxjv+MkGGt0UAmpL0zC/ETeooQhBIhJHHPCywLOU=;
- b=WNYT7+lkEXG47K1Xa2GGYj1HlY9b/12/OPOd3RPSRT404eQqiQMbsg1acZvogeul4G
- CAgc93KQxIM6XpqMpxv4PRv36FzVC6ipv5dGrR5va4KB2C093h5efm+iPVDX9cqZoRD9
- vHJm0vsyQENJWkBuulWCL8RTTtVWZpkA5l7mRHIg4/p21ZeoBbiXALhl2cPIWkkHpXB6
- LMvqPss8IwuiWw/H9tqb3IrpQ1N7K6HNihFt2hNcQyfiTllwzQr7J1QAUjYY2n63DIFK
- bFD5w2WLcvZD1VxXC4EvU7gB67ndWvat6c6udbjZbOH0xmbazDeP1ysIzZntxG0mxRq8
- pfmQ==
+ bh=XNwgaAJrA/u9YSk7hAtdQI/k6k5HNaRRAtIFaDIjJqU=;
+ b=trMn2xw7HZkUdSt5y9UngIjoWcfr+CpZWYc6OCOA8GfXdXF9VNkWa0JMUVtbUP1BL5
+ m8pJSBrHEvvsi9FlahhB1KY28o+T/SSS1MBwUxSTbS/UGRHQCF8HumY8Q4++GShrmj2k
+ LegqJWL7yHsnCJJob/ej59J1XDp/Fq3j2b7tbbMNOyLodS4eCBYqlpPWQpKSrUPFy3lh
+ raT2rbDo+VyPYKrzPGlGQLzYUYVi/GtIRSaFvK9QkC+G3IsjviKX7x4d5lcSU/xpCxBA
+ ohp/DSpgq2MV6wWGsmNoGbG8H/Y/Ot3SDEjKz8Bg+TVkVM/TUaGpySYg35k5QRGP5ZmN
+ l67Q==
 X-Forwarded-Encrypted: i=1;
- AL+hErH/HwU9J2Q0KzVlGxMenJiKzFHP9c9tgXOht54NeFFSWPx7XydnG0VbWducjESLl2pLq3aWaHISsAAd@nongnu.org
-X-Gm-Message-State: APuU4Z/de+3ekS/GXHgdx8tY0gEO3He9pHurTYFUiZB9vxvGH7I5FnkC
- ps7nu3GLbK99PpuH1args5TRfkwTXBmnqmL/G+qs5EY421FHQRUCA7jl
-X-Gm-Gg: AZFdTZdEE5N+7ooYwC3BjJcU4IWUPGRGDReVyq0IwHVOUWLctPiKcKuMlR8qVJg/htn
- qb6/Y6S8VxBy1uI72+BK41HWhktCIGP59K+L4sQKmr8CVc6Lu8lB8+4nJzw2JK4OrB6qOkZ8HKE
- LlvAEojf68hkErROpQ2K4MOcZQ9F7ANk+N/zU0695Py3gtxGm5A5JTxnhXyh7qULGFDb+mq1n/g
- OLj8ECqOaPfjLTjef5m++ZxJMWGmZOhx17Oi099kcX661YTe7jwE2l+lGPCs79EMRsDC2fcyAuA
- tEC1MXfgg+6yJJrzK6MfhXsocag7ZZG48MLQkGK2zIlEJX0vUUjIBHocritD9wRTHIzN8kLO0rY
- /ynZ4JcGMdXy6jA+sit3qTdUNN0y+KYfg++o+SoLN25P0VuOOf+/7VEvAfWmnMgIwzRz7WIHdEH
- lfHPGMZ5cBoll4cNNEeKmhm0REdFFprn/9Us5OxXM59w9Vfd6m9LcKYhPJu+HYHNMJ4Vk/bPfyn
- YvPoaRMNRP0/D/qMnoSJoaMU8RNT+mCep9g5onWr8h3nAUAkN8W41jptLw3QngtpGDEtJI4xkjI
- eeKfcxXfZDfgdTv6JCTUjNTdCske9Ixr3kGRdTsLFcQId77Y6jzJWQ6i
-X-Received: by 2002:a17:906:1e04:b0:c3f:d912:ff8e with SMTP id
- a640c23a62f3a-c513a5ec26dmr1199239866b.16.1795606241345; 
- Wed, 25 Nov 2026 03:30:41 -0800 (PST)
+ AL+hErF0r7aHds45Mw8oLzEPdkRZyeq54tfwofKD6Q1bZSwZpwSRzFHhhHW//sFqBlMJjnXyN174ktKKebi2@nongnu.org
+X-Gm-Message-State: APuU4Z/tcByDTzEAYElI9uOzotOYm3GhlqaWhggxPEjM2C/086iXFH2P
+ cDYvNfl6ap6fYZKldAm2/UOiHnKGnzWeVLqkv+CJFByWhwPmIRwssHHz
+X-Gm-Gg: AZFdTZfwOqWFXPUQogE6wCS4h6BqJcCrCz2hzvvwkpB73sLptGYvmgtC/y2Nkg1rhcX
+ 3GShZwqPA4zv6AL7VSlBrqihQPEBtVL2jepnHBiFjChT80VawzNsh0fgpga6AWucBSeeXFj/7Wt
+ 3AO7nCfH4mgtiqae7P2ZUUXmLL860iOJ0ImGLuP/TOqYnNYi/Wh7L2jljP9eksDLCTu6+fs4vi8
+ uaYlL2P8Yn3DmjoWlYpFj05I25h52NzGKE1A7KGItm2FwP93/5XTLqYHsIm6JriWGqL7GrMM2A4
+ fnqmZt3ryLVtZFivWE6KWRoJ1WaOPF+DhmH+B5YbblmxSlgQBvv7+HppfSRj+3Ajsh8VsJueq55
+ H0dZwcC1kBaK9GNGmXP1+czN498OXYUvsNpcZVfYMEvxOGMqu8IGV9tNLQEEIysol9ZWgI7a3H+
+ Ec1eXjsCPj1LSEerE0vn2gBdNExeko681yektE6MD2RnSFbsOiKb1vRpdafV+E5V3VzvgHadHz5
+ iFMZK32/Trthdzfg1MValjUlVZp/NYWgOGgVsLC/bO2s15reGzZiKynvIvuUBUf6vgOZOkQzQHD
+ wicWkLfpvh5qXLH55JWxeXI7V3aPBGGDqSpZVu4ECU+1S0+wYPiXFaTJ
+X-Received: by 2002:a05:600c:848d:b0:4a4:3a2d:15da with SMTP id
+ 5b1f17b1804b1-4bb88812026mr333238515e9.15.1795606327221; 
+ Wed, 25 Nov 2026 03:32:07 -0800 (PST)
 Received: from [10.45.18.224] ([15.248.2.12]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c513afc2579sm599898266b.52.2026.11.25.03.30.39
+ 5b1f17b1804b1-4bb905f1489sm314735755e9.0.2026.11.25.03.32.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Nov 2026 03:30:40 -0800 (PST)
+ Wed, 25 Nov 2026 03:32:06 -0800 (PST)
 From: Paul Durrant <xadimgnik@gmail.com>
 X-Google-Original-From: Paul Durrant <paul@xen.org>
-Message-ID: <cfc1fd74-4843-4017-899f-7b30b6baa448@xen.org>
-Date: Wed, 25 Nov 2026 11:30:39 +0000
+Message-ID: <02403720-6eaa-49d2-aa2c-297e9a9aa6c2@xen.org>
+Date: Wed, 25 Nov 2026 11:32:05 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 17/21] hw/9pfs/xen-9p-backend: Close event channel
- handle on disconnect
+Subject: Re: [PATCH v1 18/21] hw/net/xen_nic: Bound the TX and RX rings'
+ producer index
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
 Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
@@ -90,13 +90,13 @@ Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
  David Woodhouse <dwmw@amazon.co.uk>
 References: <20261124232247.23169-1-dwmw2@infradead.org>
- <20261124232247.23169-18-dwmw2@infradead.org>
+ <20261124232247.23169-19-dwmw2@infradead.org>
 Content-Language: en-US
-In-Reply-To: <20261124232247.23169-18-dwmw2@infradead.org>
+In-Reply-To: <20261124232247.23169-19-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=xadimgnik@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=xadimgnik@gmail.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,24 +119,26 @@ X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 24/11/2026 16:22, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 > 
-> Disconnect only unbound the port, then dropped the pointer, leaking the
-> handle and its file descriptor on every disconnect/reconnect cycle.
-> Close the handle; closing also unbinds.
+> net_tx_packets() consumed requests until req_cons caught up with the
+> raw req_prod from the shared ring. A bogus req_prod made the loop
+> process up to 2^32 stale slots while holding the BQL. Check
+> RING_REQUEST_PROD_OVERFLOW on both rings, as xen-block already does.
 > 
-> Fixes: b37eeb020123 ("xen/9pfs: introduce Xen 9pfs backend")
+> Fixes: e613b064a88a ("xen: add net backend driver.")
 > Reported-by: Hui Peng <benquike@gmail.com>
-> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4523
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4515
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/9pfs/xen-9p-backend.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>   hw/net/xen_nic.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
 Reviewed-by: Paul Durrant <paul@xen.org>
 
