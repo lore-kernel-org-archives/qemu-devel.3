@@ -1,47 +1,46 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10762606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35891606A323
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eKZLP11x
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YsVvtHDx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW35X-0008Rz-DB; Tue, 24 Nov 2026 21:50:27 -0500
+	id 1xW35i-0000Fj-Rp; Tue, 24 Nov 2026 21:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35Q-0008ME-4D
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:20 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35Z-0008W4-8n
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:29 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35O-0007Nl-HA
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:19 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35X-0007V1-OO
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:29 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id B0D0360D25;
- Wed, 25 Nov 2026 02:50:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A101F000C0;
- Wed, 25 Nov 2026 02:50:15 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id D74C04598C;
+ Wed, 25 Nov 2026 02:50:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC561F000EE;
+ Wed, 25 Nov 2026 02:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795575017;
- bh=FNaR1y39HQbp+eWtsI4R5JLrocBQ2dNz0XRQfkBW6ck=;
+ s=k20260515; t=1795575026;
+ bh=HugnzUabm/jTZb/kfIrh9k9uEyxJ3v2ARMQCaI5MUXs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eKZLP11x5LGKLhf/wB8nOJcUq+JetRK3Weh46RlIuI7NiyT41YIH5qYWUW7+inXgq
- KR/DfDPFHYk8k0F+/GU7p9FDDFfc3ll2yqCDGISRAF6XSa8EBRMg92a6cqto5Aiv3S
- Y0ShuSqMW+oM40APiRBm11sk2Syxl1O91lte3qOuE1WklaRqSbe/n5ulfK3xiedwtN
- pgNWIIodBx1seuWZFUIneaOjjL/gWIIX4T5t8igt4qkalaokW51Q9SRNZxu2lftGPv
- 95mWskZtWX53cahStCYYiQBi0XTVgkpQkzeCPs2PG3L9+FF79v7xdFeUD4YpVMng6s
- Po/rJsFZCQ6Lw==
+ b=YsVvtHDxk9t3tZqgTnxK5ltscWRBiINzwAnkYGaJ1dRLHWYxTP50SyrWy+PFI+Twn
+ 9MiKob3QhOGY8I+LLAXB0GI1BfU5s5trAu+jDHnpuE7NXJpuFh7q2ot+eNps6SZ2zP
+ xoCWs2XVeDcLkFtblQaxj8JSCFyL6wXI1+sO57Wym1fH/ac33f6Gq+vQSKD7q5/WR1
+ NnF0TL+X+adYryKMJp5SYe+FoUd+YOF/HopDFqd8HA0qA8gL3GfZJdbcROKb2fwK3h
+ 66icaKuaqAq1wSGdekT09aujpQvL8ZFmaiW66qk+QvfW/wYTPJVWPi8yFhJCX32nRq
+ QlQaqoiX8fV5w==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Keith Monahan <keith@techtravels.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL for 11.2 10/14] hw/scsi/ncr53c710: Append SAVE DATA POINTERS
- after MESSAGE REJECT for HP-UX
-Date: Wed, 25 Nov 2026 03:49:47 +0100
-Message-ID: <20261125024951.10428-11-deller@kernel.org>
+Subject: [PULL for 11.2 14/14] hw/scsi/ncr53c710: Bump the migration version
+Date: Wed, 25 Nov 2026 03:49:51 +0100
+Message-ID: <20261125024951.10428-15-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261125024951.10428-1-deller@kernel.org>
 References: <20261125024951.10428-1-deller@kernel.org>
@@ -49,8 +48,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -78,51 +77,49 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Keith Monahan <keith@techtravels.org>
 
-The HP-UX 10.20 install kernel is nonconformant: its self modifying
-SCRIPTS reads a second message byte after the MESSAGE REJECT that
-declines SDTR/WDTR/PPR negotiation and hangs unless it is SAVE DATA
-POINTERS, while NetBSD's osiop resets the bus if it sees that byte.
-The two are told apart by ATN state as the reject is consumed (HP-UX
-has deasserted ATN, a conformant initiator has not), so the extra byte
-is appended only for HP-UX.
+The migration format is incompatible with the model this replaces, so
+the ncr710 and lasi_ncr710 vmstate descriptions raise minimum_version_id
+in lockstep: an old stream is rejected rather than silently misparsed.
 
 Signed-off-by: Keith Monahan <keith@techtravels.org>
 AI-used-for: Patch series decomposition (commit splitting and ordering)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ hw/scsi/lasi_ncr710.c | 4 ++--
+ hw/scsi/ncr53c710.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/hw/scsi/lasi_ncr710.c b/hw/scsi/lasi_ncr710.c
+index c8a28cd987..62608d039c 100644
+--- a/hw/scsi/lasi_ncr710.c
++++ b/hw/scsi/lasi_ncr710.c
+@@ -163,8 +163,8 @@ static const MemoryRegionOps lasi_ncr710_mmio_ops = {
+ 
+ static const VMStateDescription vmstate_lasi_ncr710 = {
+     .name = "lasi-ncr710",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_STRUCT(ncr710, LasiNCR710State, 1, vmstate_ncr710, NCR710State),
+         VMSTATE_END_OF_LIST()
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 25469c7d7d..39a20ba90e 100644
+index a161912727..face9039b7 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -700,6 +700,10 @@ static void lsi_do_msgin(NCR710State *s)
-     if (!s->msg_len) {
-         switch (s->msg_action) {
-         case LSI_MSG_ACTION_COMMAND:
-+            /* A MESSAGE REJECT declining negotiation was just consumed. */
-+            if (s->sfbr == 7 && !(s->socl & LSI_SOCL_ATN)) {
-+                lsi_add_msg_byte(s, 2);   /* SAVE DATA POINTERS (HP-UX) */
-+            }
-             /* Stay in MSG IN until the next block move requests COMMAND. */
-             break;
-         case LSI_MSG_ACTION_DISCONNECT:
-@@ -795,7 +799,12 @@ static void lsi_do_msgout(NCR710State *s)
-     }
-     return;
- reject:
--    /* Decline SDTR/WDTR/PPR negotiation with a single MESSAGE REJECT. */
-+    /*
-+     * Decline SDTR/WDTR/PPR negotiation with a single MESSAGE REJECT.  HP-UX
-+     * requires a trailing SAVE DATA POINTERS (0x02), which other initiators
-+     * reject.  HP-UX reads the reject with ATN deasserted, so lsi_do_msgin
-+     * appends the 0x02 only then.
-+     */
-     lsi_set_phase(s, PHASE_MI);
-     lsi_add_msg_byte(s, 7);           /* MESSAGE REJECT */
-     s->msg_action = LSI_MSG_ACTION_COMMAND;
+@@ -1683,8 +1683,8 @@ static int lsi_post_load(void *opaque, int version_id)
+ 
+ const VMStateDescription vmstate_ncr710 = {
+     .name = "ncr710",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .pre_save = lsi_pre_save,
+     .post_load = lsi_post_load,
+     .fields = (const VMStateField[]) {
 -- 
 2.54.0
 
