@@ -1,81 +1,81 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A8A606A323
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9214B606A323
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JR+0r6/B
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=n/JHw9Oo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWAzO-0002Zi-Jk; Wed, 25 Nov 2026 06:16:38 -0500
+	id 1xWAzz-0002pQ-Bc; Wed, 25 Nov 2026 06:17:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
- id 1xWAzC-0002ZE-AF
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:16:27 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1xWAzr-0002e6-Lx
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:17:08 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
- id 1xWAz9-0006L7-TT
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:16:25 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-6ba1e22ff4dso6641017a12.2
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:16:22 -0800 (PST)
+ id 1xWAzq-0008UV-2y
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:17:07 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4a207b02a2cso40189895e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:17:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795605381; x=1796210181; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795605424; x=1796210224; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4iv8A6gqUfnNbo5/jmNa9lhvSF2xOy75Oyi24duA5IU=;
- b=JR+0r6/BxGFCVZXFTRP+xWwtLNUM1ogmFLZFzGwPLcewHhaZQ0hTBf+IMPrNEoDDLV
- GgER3NoudLs/AzQ+drXXhdBoP6OO/eQFdNc6K7+iqEnzh80qr46ESdHn3vJRCwo8ldi2
- rBXZZidpAbUrKVKDtWFKIkz5CKmxsPH2by7D4nASB72Clc9kqW1KfWtfvrBS9r8DLMar
- hLsjUx075olYE7B5tDN69B3wLipniByM1zQL8hfdenB9gjAEdmsVrlykzsztd3Pqk+y/
- Etmr0BooM70SuIv5Hq/ijieX3C5q+V1hxrTuVAkF3LorohKUzhi0fA9iJa2b0AXtVPic
- JGVg==
+ bh=sDsbr5ve7lstRzCqqwaH7hey2ad4/GX/MTHn8iSlZz4=;
+ b=n/JHw9OoQHcgivkY2ZcgsQma+t+9tZeI3kOI7QaAZnGfjhZE3VO+RvXlUpkmZNVVr7
+ z1EqYJ5AFwzCyFS9i449YwQqc7zVzWi1sjc9kEDcfaqn3UtrSao/qLCZK/tOZ6pBxahZ
+ 4WvZRgGSaMW+wgEgHan6S7j0I5kkckrAU2I/hI+OJksbRMgNBsb0Vw+3HRELwjuYPzr4
+ sKa7/j2ehTDA3Zh5Zr76X07ejTdznjAbl4Oh6bU/L6Rziny/9wKyaKpeQ32cbL54zueK
+ HrcPIZyxLqrR3tK1rQ50DGNNUkinWuu3+fAc1xZw1NGwu8+Pb4zW2WWroYQAG/udQCpv
+ xotg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795605381; x=1796210181;
+ d=1e100.net; s=20260707; t=1795605424; x=1796210224;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=4iv8A6gqUfnNbo5/jmNa9lhvSF2xOy75Oyi24duA5IU=;
- b=PNTsqqtKJYGMUqUzxQb6U8R44X064QFjPohMv0GVGtlfde5m67359SZd/MxtY8gBcR
- taahVa5DDgOJ8yNwoN/xEtuS7lLm7f/sXAQu+c6MUxAn3CD8wmkDaNPsl/Rm1ykv18hU
- QcsU3iD4ZyE9vR/2VtPWA1OJ//EcPqQ1Kmgh08sL7ofIbPdAC0V+bNX7G3QXGudXRzot
- FxQIDTPCfdIlnXE81mG2sLlNr7CFkKPRoerjXwR6RXh0bo/rr8TqJEkhUPFDO86s19SV
- RuZ++0m3WPjJB6pa8DAlXKcgyd/IKK28JybQvNUJCZNY2cA/70O/exxvha18RsMjZXN8
- GG2Q==
+ bh=sDsbr5ve7lstRzCqqwaH7hey2ad4/GX/MTHn8iSlZz4=;
+ b=huLnFx659TelhDfdhzfYV8cQTNr6GPxr+ibuQgPvKV6hLDESVA4Pa7H/dbzVy72ZeB
+ 1W60NMC2BpD3/67WgCCA3j2byqp4GT9TwKMLBBAnYc8dSSSNJZj+hIaiOAGcsXSOm3IB
+ L1dvGhlsEK0F89377ZL8C3eoUxAJvYVDdsO7WtcRZZR78VeZSWwuG+u3q+74u0tRC7ZT
+ iQ/FXJv3wZpSWJyi2eIKbBvAlnH7trirGdglBJN1XbJEA/5uz//SqAe4s9+cEgRs9cOm
+ oGOtW6YfgWKbjCWTflVH80Q5bvK9fFeclCgbM15PXbi8uWEnVt4ZmzGLnenEoYDOGYCZ
+ 7UAQ==
 X-Forwarded-Encrypted: i=1;
- AL+hErG97qOMgx7ciFDkGp/jhpXhEwj8oKzN464DkrzhhH/PajIgtjGVe5dC37s4iTfIILsuKN2Nx6CmIWgk@nongnu.org
-X-Gm-Message-State: APuU4Z87bwO5lW87d4K/X3LLRiGopfDvVvHijW4bHn+IvHhwZPTHxEBF
- k4yfkhIAlvcQRctPykHcF2b47nNdLVITHpW8tyWpjX/yKHqm4b+SRiil
-X-Gm-Gg: AZFdTZeh108cBZV2oTkUT5qSV3q/c29YUaGsnVaWCIMo/734MLP+liGT0HbVdWxH7ZU
- 7xufCkZzJsGEMMDOuBJjiERGWVpUzzwXEHC9tnGTYV+C6QOijT6R2aCW+KamqnQT8PbwZL5nGzR
- Vk9/PdBxVhwSUmqkkSeA8fr3gsjcBfG92Bt5kBD8SxrMwHSFnrEk4mvZTxzW75/0YfGNCs6cetb
- K2SBZvUTWGEkCuhjcZVVcqjBo0zBZXRdlsJeQ2yqsGAzozKGZ9H3jj9pAUwsmMjYHC1MS4Snu9W
- FaQziQSVcQF2w+RpWsnE3TqEZfjVecgGQXEhR4SH0AggekmafcUK5hhawxkhGUcOHSYHdl3t/NE
- aN2pXZo4rgK319yG3+0mOio3u9dcEdEQ1w1K5GzDU8L0fTCah/ia+SyluhAgdeeMc/ile5r0xvY
- VE+XRp8raY8Z/arRXnetpO2LttYBsaAumtoUNsfSAtQ5UsS3/NP61GGeQX2uV5JVRz0vAHA+S7B
- FlqNNq24x8qPPZydW8r9PYeSYbsxloYxz/9xXqAYxn5IacHpBMEjFWqt6TbpIU0Zzz5WQVlTS5X
- 13d3Pdcv/YZT4lxVvQBehpTvDPv4w8thSQ==
-X-Received: by 2002:aa7:d351:0:b0:6b4:86e1:cc67 with SMTP id
- 4fb4d7f45d1cf-6ba37ea0b91mr9087571a12.27.1795605380976; 
- Wed, 25 Nov 2026 03:16:20 -0800 (PST)
+ AL+hErG/DluZZBgg0m0Ng3Aqer3qbWJX/MAu9EGhn2IhwgpHk+W3jWo1V7qF+3qW/Woe1Eu4rG/7aypW9572@nongnu.org
+X-Gm-Message-State: APuU4Z8Lyz0az4plFtyhEQg5JH/bK7gNk3FQpU4b62K+xDkjr+LdYj1a
+ qBhj2So3B7qf1Unhi81cjlN3dm2fNHpNatNUKc3rC/BS45WOQHuGwf1K
+X-Gm-Gg: AZFdTZdPK4yti/m+F2h+LJRbBn4xr5HDQHbl9MV5x2gCH82khivJaUG5GktLvr8ZI53
+ tiqes5A2DN9MkC1WsiNlMfXgQhIKgp651xLukeujXMMThLajeYML7sTC26zbjYEcypZhN24UkED
+ 4E50hORKmCYdkFW8pg7DFyD1yhB4ducvelNx2XWXEJQqq9x+wmN8KMVfCy4E1bJnfw22SMF+0CS
+ uq+j2OsB1KqLz/w/nbgsbpVzak7p/BKOYqC0A88T8Jv6o8vMSB+LNr5RD2jSkGCSgzIV7P7lBYZ
+ Lv7544R/njxWEqsCQNOExwRFCdbyDNXbcKgY6tDMg6fNygN2XZkPbHedfH7zQIMwPdnbNZesE6n
+ XMZpDAzPtyqSpJnx7BGH/haC7RKrCy0L6ybb6vgZnsdcea4oFPXVzinflL1KPEkT6LsIigQFvL0
+ Zs3wTsFFlVCvpEDhSp6D+GFtUgnVDKMMZLrebpQqN6NSj/vJXzV/bV+sYVRhFGRMdsPht1oB3k3
+ 1Oy7ovcDJthCE/w1NiXz4fijYF2gHcUDIDl5HNozsMabxVtFYlZfTd0xE+zg+2dZQXKruVIoAFw
+ 1KX1hTqFoaK/FE0PfvRL7L5LEMSndNFzk4uJ5R6L9wX/8TcZf9I/8FE=
+X-Received: by 2002:a05:600c:45d4:b0:4a2:84c:52f3 with SMTP id
+ 5b1f17b1804b1-4bb8880988cmr372815065e9.6.1795605424154; 
+ Wed, 25 Nov 2026 03:17:04 -0800 (PST)
 Received: from [10.45.18.224] ([15.248.2.8]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6ba9b131d3bsm5256928a12.34.2026.11.25.03.16.19
+ 5b1f17b1804b1-4bb90660cb4sm454867055e9.2.2026.11.25.03.17.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Nov 2026 03:16:20 -0800 (PST)
+ Wed, 25 Nov 2026 03:17:03 -0800 (PST)
 From: Paul Durrant <xadimgnik@gmail.com>
 X-Google-Original-From: Paul Durrant <paul@xen.org>
-Message-ID: <8e8fa5ae-f30a-4e38-8aa8-cd46e3b4ca31@xen.org>
-Date: Wed, 25 Nov 2026 11:16:19 +0000
+Message-ID: <719ac82d-4638-43c1-b563-af0a33b25d1e@xen.org>
+Date: Wed, 25 Nov 2026 11:17:02 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 08/21] hw/i386/kvm/xen_evtchn: Fix off-by-one in
- do_remove_pci_vector()
+Subject: Re: [PATCH v1 09/21] i386/xen: Don't inject event on invalid port in
+ qmp_xen_event_inject()
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
 Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
@@ -90,20 +90,20 @@ Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
  Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
  David Woodhouse <dwmw@amazon.co.uk>
 References: <20261124232247.23169-1-dwmw2@infradead.org>
- <20261124232247.23169-9-dwmw2@infradead.org>
+ <20261124232247.23169-10-dwmw2@infradead.org>
 Content-Language: en-US
-In-Reply-To: <20261124232247.23169-9-dwmw2@infradead.org>
+In-Reply-To: <20261124232247.23169-10-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=xadimgnik@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=xadimgnik@gmail.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,11 +115,11 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
@@ -127,35 +127,17 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 On 24/11/2026 16:22, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 > 
-> The empty-word optimisation advanced pirq by 64 on top of the loop
-> increment, so the first PIRQ of the following word was never examined
-> and could retain a stale device binding after the device was removed.
+> qmp_xen_event_inject() reported the invalid port with error_setg() but
+> then carried on regardless, passing it to set_port_pending(). Return
+> after setting the error.
 > 
-> Fixes: 6096cf7877bc ("hw/xen: Support MSI mapping to PIRQ")
+> Fixes: 507cb64d6e66 ("i386/xen: add monitor commands to test event injection")
 > Reported-by: Hui Peng <benquike@gmail.com>
 > Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4525
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/i386/kvm/xen_evtchn.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/i386/kvm/xen_evtchn.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
-> index 3aff01b5d6c..d0807f5fece 100644
-> --- a/hw/i386/kvm/xen_evtchn.c
-> +++ b/hw/i386/kvm/xen_evtchn.c
-> @@ -1701,7 +1701,7 @@ static void do_remove_pci_vector(XenEvtchnState *s, PCIDevice *dev, int vector,
->            * and cache lines).
->            */
->           if (!(pirq & 63) && !(pirq_inuse_word(s, pirq))) {
-> -            pirq += 64;
-> +            pirq += 63;
-
-I guess I'm missing a subtlety here, but the test only fires if pirq is 
-a multiple of 64... so why is advancing to the next word by adding 64 
-not correct?
-
->               continue;
->           }
->           if (except_pirq && pirq == except_pirq) {
-
+Reviewed-by: Paul Durrant <paul@xen.org>
 
