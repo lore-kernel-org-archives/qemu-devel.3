@@ -1,111 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465F7606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04931606A326
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hl1qN/Zv
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qG4AIyt9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWBLr-0006jH-SA; Wed, 25 Nov 2026 06:39:51 -0500
+	id 1xWBWz-0000IC-FL; Wed, 25 Nov 2026 06:51:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWBLo-0006iX-U0
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:39:49 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xWBWw-0000Hj-NK
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:51:18 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWBLn-0007mP-9a
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:39:48 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-677bc4704cbso6660703d50.0
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:39:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795606785; cv=none;
- d=google.com; s=arc-20260327;
- b=kwpTqYPUdSoV+LCNxTSeutPeWzm8WZJebJDlFa8xCBz8BBeH1U+904t/c8W+mfWPrp
- iFkAG5M9IWmsEgr4zW6NQCWZf5oVh0lJ1zbgXLqNh6pihBdxHdeSSMDBH9FL/56Vhl6u
- tC0vRmdOrO5nP2hZ8JqBFuHxgjuewnexMglgIlRxvpteg5kpHpXBedXXaRNj2MgCnWmg
- YgUgZGsbCLzjUzxsQG5v5RgMSZllKgKUVS3qiTEo6KWXhQmhPMCtiMImgzBfdp1QxTx0
- 1LkSRdCK3HfciVeuAenOs5QLwRUKpBBCWmveEPCBATDS8FzG2/oNv/wWCHUuOb9HBfcF
- fWDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=XaVCcn9Z5aEq7uhLaB/jWmPC3YsCFZjaL4km65O59lQ=;
- fh=Ud8iGdqw5T3Met7Z9Yzel8T0E9pDK4VqfUShOErD7D8=;
- b=gdbe6GXoCJYWBQK/FGvCn9R5P2R4kA1yuaDnbJAr5+8TeGD2JANypi7h9m/EfXv6n3
- 4nvNWzu/VcW/3jdlAb09kRJd7EE1KTIqBeGKzlr3Jz7cBYM+D493xlnJ3OeTDK1RVsEJ
- HODhxBmkwER8vW+HdeKciAY3JxoVG3BOgckMKA4lI92QdIAcvPgQgjX4caQisYb/iTWb
- PB4zMPM7XQ+OoSGyAPa4NJs1HB74ckfAnQFnjntTBvnTxWWu7RD2cM6Rg68unQPG7WnL
- wbdJm2dbzCKDiZ8LGVeJlzyN8I+iLk3NgE0fHYZxGMUUjGv5A0vK9CNf2o9f31lwW1yc
- U1Rg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xWBWt-00079b-RY
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:51:17 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-48e47347279so3409070f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:51:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795606785; x=1796211585; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=XaVCcn9Z5aEq7uhLaB/jWmPC3YsCFZjaL4km65O59lQ=;
- b=hl1qN/Zvpw2ovsbkKignjhVgxwxqCwiKO0SBLiHLPHIWBzKIANJqXsDoRaGT0K9cFH
- CjhQDPDP8H4DSSLSrZhoLFFlmPC1wWNayaGAeN6LT5glrw6T2Cx34h0AkMEQU1tk2JNA
- HFJ5+Pt/IFwAn3QSuJtHfLCGNWwXml7MfegW9329Mr+Poi8xbElUuUF+FyCk9BFsZVZq
- XQLP5lfXIFZYbdJpasnZLPPJDiGlcdissA2wmi8nmnKL51SDtxhiww+rvmEC/m61uVOC
- PthC+WbsNIreyqBcugdbMhaELgy6F4Fpc/O+YJsP/KX+Nk+lznNl1r8epcu5L8Q/e0gC
- aRRg==
+ d=linaro.org; s=google; t=1795607472; x=1796212272; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=GwAtmDCe//Z2bLe2BjvW49FxQ4gH31Rh0S8RN5kLGIc=;
+ b=qG4AIyt9H5X0mq+3O2Ss3LxtHOdSDbEWoW/R06SMRhb0guqE6Rvv/Jk/B55uId1Bxi
+ gH4fthzM4Mi5E6lOle5Rwk29DU1iobowNI3nWFsfv4h26HnXnR7W13CCVSbgpMs/8MXA
+ 9D46QtTNvQ+OgwiPDt5i0mRB2CYWdCxQi9CfXaVTow0Zys7A6qyyC7lbAX7cpC+adBWH
+ WhP9u6SM35C/RNnLE1ByhyA8aB6P0QSeNqbsE8EpxPXBFoYCERPmz6KL6Db/rrIfiH4s
+ Z/KFb+JdJBbz/uwqZx/Esfs6Fda7D3Xzo+OBJtDwDuGPNo/jIMu2PrXPvH+0vMdQuRGJ
+ FOzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795606785; x=1796211585;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=XaVCcn9Z5aEq7uhLaB/jWmPC3YsCFZjaL4km65O59lQ=;
- b=wlUE1jr1vOQCHR34IIJDLUdxH04OtWKd/UC3pnLIY9UdQIoG0IczgBOVbof0UHRwqS
- cm5DcODAWpU7wkLABAkYVWUVkNW1yi8DIwPKCO4MUvy8cRo5dxOhT6KfCiuw+bXBsHOf
- pXtXlQ+8MwHDGkdrd58o+ZfJ8nW77xm1MZc0iKHCUI0TrS/J75RSPHnTvnjJQgaV074+
- Fa2S3X9CN5SQCwuG8CGmDJJ8AsCYdVJR2vOYx1HhxrBorXzLFITHCKoLEPWHxtcFK1yi
- nAhtBGmBiNUwEJ5+5euHDGGME6XRI9Juc5rm3euNaHge9EglUCwMb3QyV1W2sX3pbNKA
- 6KCA==
-X-Forwarded-Encrypted: i=1;
- AL+hErHuTOTOnPCCbXpGq75TivUr3h0voO/3O/usqPQbT1m/k2sKMr+oiUJ0sH2hoQIz9uTPuAEDAQv6m5Hj@nongnu.org
-X-Gm-Message-State: APuU4Z8LT2+4fWM0/L8MuyTk1hiC1Fd85MzdKXeYist8oNx2Weru0zPj
- 3JUU9gFEd0P3AaF4eWv1Zs7N9n9o8JvUTnMDXMHnquUQL/unhJJLRkaHR8EDcoapyo7jwl9U+RL
- 7u3AixLOAtI0DX5KzVYIsXnEdwWyZu9ECHSdWYAb8JQ==
-X-Gm-Gg: AZFdTZcyQMNxKgzcuZYMT1P6cU7TuwDU58dinas2D6qncboO9hoQufThxix25BUVI2q
- V5Nl/nleUV5SVXR4DyE+h4NUg1mRZHxxVYf/y/vZ/kghsjlV2EXWltpnMNHrtr1VRLCexLK6yRZ
- 9NiwcdLZUNfSZDPTdRO/cn7MZxWZgNCYHCwjyPy1ivM7cQFSjcqRgQ5NmYxmNBTh7Pmb7o50Whm
- mJOi7FKzQ5EYDwUveIZO9/eTpI305tPZB2XyzrNVq3q6lzNnbhlsM9cp2qVUSFpuuIVSCfPq5hx
- ZOMgpX/5gJjiw3+0WfqlEoWN4JF7sUQdsUXEbGpaS2umizUgzDeXSfYJJ9g/hKhU75KtxEdoX+p
- /FNpKWeplXBJoY0YW8+1DGqti/a4GGu1godpDy+6JzZAY0j8lKTB9xbnR5EecfRE3Il8nNusuau
- TYSzzhsH8yG99qcK8pE9c8YsJ+u/EFxg7xupm8OTqkYg==
-X-Received: by 2002:a05:690e:1697:b0:67d:a31c:4f8 with SMTP id
- 956f58d0204a3-67df44162dcmr5578825d50.58.1795606785213; Wed, 25 Nov 2026
- 03:39:45 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795607472; x=1796212272;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=GwAtmDCe//Z2bLe2BjvW49FxQ4gH31Rh0S8RN5kLGIc=;
+ b=E25WMlpkhMLSND5aygD7v42jhq+YWAvli4KBUIUkQSss9kQ07wRYh48KwmF7j2VBhP
+ ZmSowzpgn079dLk5puKDyEnZLm2rLhO+e9Fyoc2jVEO3CKLhlUQQHkiizNKYrfBgxgI3
+ zlVsEqD45pWW82TjrJLfI9O3eUfYkW1A/MbS+l+HcOsn141cTpkl/qVx1yv+lL6Z3tLm
+ xqsItu40QJrpOdwUSYkRIyN+BX7U4+fsoVGBPmmfpuVewZaHNTibT2Mmme/NlbKOXnJn
+ z7RQKZiSbvP11VgzaLz0EfY7eOr6ZhGJq4JPE5aCEOLD1wLZs8aCtZq1MgjPwc2LsGjM
+ 2pNw==
+X-Gm-Message-State: APuU4Z88djPrXNc9BdI7GPg7sHIIEBfLCPZY3iNjdsV/TBwdvMKK0Vs2
+ 1aVQxKIoZARnh376iyHUvdiqQO+yXwE50B8MKoB+FYLc11+QDP0ixRlutlWfmnpoufg=
+X-Gm-Gg: AZFdTZfpGVghaSMbL2VHqH90Jt30iw2q/XN6RkY/5AhItSI/7AqRyocVKC4bcH+d+ZZ
+ +UQ5OaXONOl5WxeGQ2u/iRJEJ+R50df9IszYJ2aeyq+zS/XwCtAU6WpeNnLMOb0UfCdxxdp2GxI
+ b+Szt9fDWiV8uPjAPGAMOOSXv7IqpPTaGeYxw66b5io6c1Zy7tC3ybF1XE23L04GlX7nuY6PXzN
+ BaFnpnSf9XdhEMhS5HqFMFokW7yy7Zljh9G6Kxolyzn+yljzVUMlmgw0LCz33Rmmc8xdwblQbkY
+ 3w0RwcDERepqGNZjp5M/fj7V2xmB18a6zHtRGB9Emk2dPfYKpcMMIT3cOV0lmMm+PjOaJc1cFdp
+ LRvb6RvE1fOAmuqto4bJ3AGvrXfPGRt0sQr6d9W9INoLs18mUwkiCpI5xSlqgCyedEHK7uzPWvi
+ UP3FBoKbcanvH4YpITookUSRX+4Y2TMz3lOQrBPHej/rbdVixYn7mkp3tam20ojMJwNoK0406t+
+ X6Xf/+w8nPnGyhdN/Ue79bdV2GcAyEnQodFy8Th1ZUBd3gsgFFZqIXlVjdsBUOMmAVbGk1EjhJD
+ Stg1gOdof0AC8rTOK2vWCd2+nrdG
+X-Received: by 2002:a05:6000:4310:b0:4a7:b365:19df with SMTP id
+ ffacd0b85a97d-4abb5eabd28mr34240489f8f.35.1795607472120; 
+ Wed, 25 Nov 2026 03:51:12 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab6c61e53asm35587314f8f.59.2026.11.25.03.51.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Nov 2026 03:51:11 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 363C05F857;
+ Wed, 25 Nov 2026 11:51:10 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [RFC PATCH] docs/virtio: add note about virtio-gpu acceleration
+Date: Wed, 25 Nov 2026 11:51:04 +0000
+Message-ID: <20261125115104.2002188-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-4-pbonzini@redhat.com>
- <e083cd5c5658465323879c7a7e1f703fe1044c72.camel@infradead.org>
-In-Reply-To: <e083cd5c5658465323879c7a7e1f703fe1044c72.camel@infradead.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 25 Nov 2026 11:39:33 +0000
-X-Gm-Features: Aa3M54qoGktmV6ySFTFU5c_aXFFBHCKZLJFdakVMRSzP1Hqdvlf85JGGFipA8ZU
-Message-ID: <CAFEAcA8pnKtgaEym=Pq05cCSBfd0J2UfKgdpzzRn_8pOjJgxBQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] AGENTS.md: let agents know what the participation
- rules are
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,50 +101,46 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, 25 Nov 2026 at 10:28, David Woodhouse <dwmw2@infradead.org> wrote:
->
-> On Wed, 2026-09-30 at 10:54 +0200, Paolo Bonzini wrote:
-> >
-> > +### No AI-written text must reach maintainers
-> > +
-> > +These rules apply when publishing AI-assisted work to GitLab or the mailing list:
-> > +
-> > +- **AI-written cover letters and commit messages are banned**.  These are
-> > +  easy to recognize and waste reviewers' time.
->
-> For commit messages and to a lesser extent cover letters, I think this
-> is missing the point a little.
->
-> What do we *actually* want here? We want better, more coherent commit
-> messages.
->
-> Surely it doesn't actually *matter* where those commit messages come
-> from, as long as they're good commit messages?
+3d acceleration has a bunch of issues and is considered hard to secure
+in our current setup. As we have dropped it from the virtualisation
+use case lets call that out in the docs.
 
-I think the problem is that one side of this argument is very
-sceptical about getting good commit messages from AI. Specifically,
-I want commit messages that are expressions of intent, which means
-I want the human's intent, not the AI's summary of what code changed.
-I don't trust that an AI written commit message is actually going
-to be good, as opposed to maybe having surface level characteristics
-of being good. I think it's much easier to say "don't do this" about
-a practice I expect to produce bad results 95% of the time.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ docs/system/devices/virtio/virtio-gpu.rst | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Writing the commit messages and especially the cover letter yourself
-is also the signal that you put thought into what the patchset is
-changing and why, that you reviewed it and understood it, and you
-didn't just blindly go along with whatever the AI came up with.
+diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
+index d05f8cb8e3f..06e60ec6782 100644
+--- a/docs/system/devices/virtio/virtio-gpu.rst
++++ b/docs/system/devices/virtio/virtio-gpu.rst
+@@ -29,6 +29,18 @@ host's GPU and for the best performance be able to reliably share GPU
+ memory with the guest. Details of 3D acceleration requirements are
+ described in a further sections.
+ 
++.. warning::
++
++   As 3D acceleration by its very nature involves giving the guest
++   fairly complete access to a bus master processing unit in the host
++   GPU we consider this outside the virtualisation use case with
++   respect to security. You should only ever enable 3D acceleration
++   with trusted guests. There is still the option of off-loading 3D
++   acceleration to a separate process via :ref:`vhost_user_proto`
++   depending on what guarantees that process can make and how well
++   confined it can be if things go wrong.
++
++
+ QEMU virtio-gpu variants
+ ------------------------
+ 
+-- 
+2.47.3
 
-AI commit messages also tend to be really bad writing and horrible
-to read. That as you note can be dealt with to some extent, but
-I see it as a secondary problem, not the main issue.
-
--- PMM
 
