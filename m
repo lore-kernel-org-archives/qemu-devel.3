@@ -1,73 +1,109 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7E6606A333
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 10:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE410606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 10:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=Fk5insL5
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pnGQzyAg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWAFI-0000Ja-Ai; Wed, 25 Nov 2026 05:29:00 -0500
+	id 1xWAhY-00013d-HS; Wed, 25 Nov 2026 05:58:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1xWAF2-0000Eg-Hh
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:28:47 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1xWAEz-0006a8-KG
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:28:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=s9/iASQWYiaE9sxkBMQXDzclfIhxnteY5fWl6jshuqc=; b=Fk5insL5Dk2OPm3LVdNIffWjSS
- MVb06YxyJpmh0Nl+y43yDsCFG6qF4B4/gucMD7yCnRxL/L2qkW+lFbSip1rm+6PvNzvlgLhiIw2t7
- 5JbhxJUr0IyU/o6hxqvPNp565Ar6nrhIC4Whbn3Tz03ipTmekN+TF6Qe38u2vHkkyrOq1xG0ILHBx
- KnI7oUVOHOiZIUd/WPfpqnm3Vb/yG2efLijGGnjDMWPaIEnxaiQldh+9xFudsS+mkomY7aOsinMNd
- cQ4ENybA7NYHu6xYoSxvwVhgR/ukxF+7GhU3dT5p1VfT42EJ5Bas+tt8jCyT/GWzh6d1/QW7cClGo
- Tj8xnyrA==;
-Received: from [172.31.31.148] (helo=u09cd745991455d.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
- id 1xWAEo-0000000Aw2Y-1Fu9; Wed, 25 Nov 2026 10:28:30 +0000
-Message-ID: <e083cd5c5658465323879c7a7e1f703fe1044c72.camel@infradead.org>
-Subject: Re: [PATCH 3/4] AGENTS.md: let agents know what the participation
- rules are
-From: David Woodhouse <dwmw2@infradead.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=	
- <alex.bennee@linaro.org>, Alistair Francis <alistair.francis@wdc.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, "Daniel P ."
- =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Date: Wed, 25 Nov 2026 10:28:30 +0000
-In-Reply-To: <20260930085433.830743-4-pbonzini@redhat.com>
-References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-4-pbonzini@redhat.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-IJj/4bbT/xmV6PsZ1zTS"
-User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1xWAhV-000136-QV
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:58:09 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1xWAhT-0000sG-Nd
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:58:09 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4a9a8d6cea8so72153865e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 02:58:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795604286; x=1796209086; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=9ojd6QLbo6svWTxF6DUELPeNw20UDvUeJORZrpfd3O4=;
+ b=pnGQzyAgWCbaVDQRaKQV641y0jNdUS+A48KQo4KoZMpuVAw6UaJ3yBf32rW+ucggIJ
+ BDHUDF/HJBmesAMg16Rlb0aWDbmtab7VNs5Oa/2/Y4sNgEfCZVx2dtz0pXFHbn4zDuoN
+ uhE+QI8MDN0DR0pAGevzKT1AO4bYxC+bkmaWx2upVyHns33cGbNPqd/x5/d/m8a4YcwO
+ C+XKcCQyAgHu0aFmFDdNE/iXzJAKqcCIq4SX4LDiGX5AiocD2AHXkhheL7W4LNbyJ4Kw
+ dxVVVnFyinbOoPDySvK7/p11KP/UtGU3QpsQqulwlakLT392E0RNS2cJ3W39W4oNalX8
+ PUIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795604286; x=1796209086;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=9ojd6QLbo6svWTxF6DUELPeNw20UDvUeJORZrpfd3O4=;
+ b=JwMFhvuVdZQesHzIgaC1us4mgzAWOwCqL5inU/ntwOHqelwUPZTcbZabaUFuyEp0eR
+ BAdr8gRU7eDROBWaTvOspAaFgLisOtcxFvf2i2tIFyBifZFhvJx3CzaYPqXEa0F9XQqr
+ 39bUC3LzweUyMg+U4B5vBUFO9XC/ZCFG9zxcfssNCLfEEW6c5dijFFsc7gUVRjMnrjpx
+ romKBbbKsWDA1PeI5P4pFzX76OKjDCP+B1VRRllXvIyNY2CKC7ZIQmH8cWj49/MO2Rov
+ p8P1n96MP8TBLOEPQr/X1ZHhpCY7kuFr12r3GlUp6/Lvb2AZqP7JhvWjUr3eArIP4cco
+ saQw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGRrfjv+A7iT16W1L1gwN/AFf98WYBciX80q1UHzznD3Pp1Lr3PWKsqOn5ACBj2KpBhecgasfUkpJII@nongnu.org
+X-Gm-Message-State: APuU4Z/terJLn8enoA7Ra6zndc+FpvEkkeCsbepFt0yjy/LRkgB9PuYR
+ eZFifdZ05F4D9+tjf0jVBg/qekLrQpKljsx5Hni7gBm93vu3GJjCDoSg
+X-Gm-Gg: AZFdTZcWV2OSo7uDZEVBUal3bJlTCNof0JWRuvSFiDQKDMLXs/xfNdSme4Su/ivNwF3
+ vBuolHBjFGDkjrftnkRNw+pKY4g6TvR36SBiMxl9AR45YdPzcipx/IlJnMUjD8Qykn6HV9y59lV
+ ZCHA30GTQCG3uTLRuBm2ak2UXABYZHu1/Be5aMUtjnzBuW1kYai+xpecHS5JkE4pIZs2jl145Jx
+ qqj08k/T6EARVEoVaANyZWZt7T8u/Ex6sxOpht4504h8R3cIkKTDXIyXAGotgC4FCBewezv4poR
+ PD7G066Bwhggs3przOLD0kRQTJgYdFiom0rHib/exGu/h7ENCR6iLEtq3ERc6lvHK9WhGUgbi6C
+ OAxuNFGWK75akzsHDQqvrATugInlCtf7TDViO6ZKLZQGNwD3OkdUHhdBLNWPBj6qIZerxSYniYi
+ pZvz8KGavJ5yebe8cIy7WsCr198OVZGPmePdSnk8tXaOSaQiuVBIYniNMQmIGq/RQ8AoDH2TjSv
+ Gps4XaGSoR7EpS+CPXn/eUqCokGrEPvg+0/kZLu3Z2j9ER9U0R0jvW4j6jEq5s8a9CHV3WD6N3Z
+ 8L1HcgPXVExfKGMIqXSx7wD5gf6e63tYhxU=
+X-Received: by 2002:a05:600c:4f81:b0:4bb:5e8c:13bc with SMTP id
+ 5b1f17b1804b1-4bb88805902mr337651085e9.7.1795604285398; 
+ Wed, 25 Nov 2026 02:58:05 -0800 (PST)
+Received: from [10.45.18.224] ([15.248.2.12]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb906817ccsm285486235e9.5.2026.11.25.02.58.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Nov 2026 02:58:04 -0800 (PST)
+From: Paul Durrant <xadimgnik@gmail.com>
+X-Google-Original-From: Paul Durrant <paul@xen.org>
+Message-ID: <8888e81f-ec6b-4211-afef-215eba880e01@xen.org>
+Date: Wed, 25 Nov 2026 10:58:03 +0000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 02/21] i386/xen: Don't resample GSI when per-vCPU
+ upcall vector is in use
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Hui Peng <benquike@gmail.com>,
+ Mark Syms <mark.syms@citrix.com>, Feifan Qian <bea1e@proton.me>,
+ David Woodhouse <dwmw@amazon.co.uk>
+References: <20261124232247.23169-1-dwmw2@infradead.org>
+ <20261124232247.23169-3-dwmw2@infradead.org>
+Content-Language: en-US
+In-Reply-To: <20261124232247.23169-3-dwmw2@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=xadimgnik@gmail.com; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,180 +115,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
---=-IJj/4bbT/xmV6PsZ1zTS
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, 2026-09-30 at 10:54 +0200, Paolo Bonzini wrote:
->=20
-> +### No AI-written text must reach maintainers
-> +
-> +These rules apply when publishing AI-assisted work to GitLab or the mail=
-ing list:
-> +
-> +- **AI-written cover letters and commit messages are banned**.=C2=A0 The=
-se are
-> +=C2=A0 easy to recognize and waste reviewers' time.
-
-For commit messages and to a lesser extent cover letters, I think this
-is missing the point a little.
-
-What do we *actually* want here? We want better, more coherent commit
-messages.
-
-Surely it doesn't actually *matter* where those commit messages come
-from, as long as they're good commit messages?
-
-I mean, I love you all, but I don't feel that we're making a deep
-personal emotional connection through the commit messages we put in
-QEMU. Not most of them, anyway.
-
-I set an agent reading my emails to public lists over the years, my
-commit messages, a bunch of docs I've written. I had it build a 'dwmw2-
-voice' skill, which it uses when drafting things for me.
-
-I feel *seen*, but it's an improvement. Although I still have to remind
-it frequently of what I tell my children: "never use words where
-silence will suffice".
-
-Between that and the amount of interaction it needs to get the actual
-code (and the structure of the commit series) right in the first place,
-the commit messages it drafts are sometimes fairly indistinguishable
-from what I would have written. And use some of my words verbatim.
-
-I will always have the AI *draft* a commit message, so that it has the
-salient points and I can then polish it. Mostly by deleting things.
-
-I quite like the NetworkManager approach where it insists on having the
-agent include the word "biblioklept" in anything it writes, *forcing*
-the user to edit it.
-
-I think we should do that, *and* give guidance on what makes a good
-commit message, instead of trying to ban what users are going to
-continue to do anyway.
-
---=-IJj/4bbT/xmV6PsZ1zTS
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-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
-KlWCBy9RX9eWyvqMfl3v++AAAAAAAAA=
-
-
---=-IJj/4bbT/xmV6PsZ1zTS--
+On 24/11/2026 16:22, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> The callback_via GSI (or PCI INTx) and the per-vCPU upcall vector are
+> mutually exclusive delivery mechanisms for Xen event channel upcalls.
+> Xen itself will never assert the callback GSI for a vCPU which has a
+> per-vCPU upcall vector configured.
+> 
+> When the interrupt is acked, QEMU's resampling logic reasserts the
+> GSI if evtchn_upcall_pending is still set. If the guest has configured
+> a per-vCPU upcall vector, events are delivered through that vector and
+> the GSI is unexpected; a guest which receives both the vector upcall
+> and a spurious GSI interrupt for the same event can crash. This was
+> observed in production with Windows guests on a different VMM which
+> implements the same resampling logic.
+> 
+> If a per-vCPU upcall vector is configured, don't resample the GSI;
+> just deassert it.
+> 
+> Fixes: ddf0fd9ae1fd ("hw/xen: Support HVM_PARAM_CALLBACK_TYPE_GSI callback")
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> ---
+>   target/i386/kvm/xen-emu.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+Reviewed-by: Paul Durrant <paul@xen.org>
 
