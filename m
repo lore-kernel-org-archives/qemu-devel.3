@@ -1,105 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7EF606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 16:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67897606A323
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 17:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iTeaP/Wq
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=GRobHiKO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWGAq-0000mb-Tp; Wed, 25 Nov 2026 11:48:48 -0500
+	id 1xWGKz-0004jj-Fv; Wed, 25 Nov 2026 11:59:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lroby74@gmail.com>) id 1xWFKE-0006Pm-De
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 10:54:27 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lroby74@gmail.com>) id 1xWFKC-0001XG-8Y
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 10:54:26 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4bb6ba3b244so61335985e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 07:54:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795622060; cv=none;
- d=google.com; s=arc-20260327;
- b=P4iLOOVJAnTom4ruBX27CR5M4KQumUnNjzX+OlQVRFvYx+5xkOPFupkrQScf/VnuE8
- 0DxNYJlwMgMNE2kBT/JAPtkX7Gey0xc6rMAAASc0bc9QsdOyqmY/p7Xa7t3zsP8/tPM+
- Aqd35QZoRItok+uNfvRDwIZEUSTQYD6a1JLv4PTGxkENy5OOVD5g91hrVO2utOwn/fj6
- 6nT9yNaUj3C1XfZlZB4A71CX1q9e+FoZGgq5rLvMQ1S6ws5JIPkFLaG5/eCjovpxJ8/I
- ESgM97jEUjxhL6b/PaZrGAdpZkTa9CExp39/X0k8LWkjDic2WnR7MqkjZr1SeWPE01zD
- rgzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=30hCZdVhKR3Rb3CgU09Xc9wfjFwBj/fz9t/nbpHlmaM=;
- fh=jdGXpHZ3uAgdQ6SNJ2Wyvr/iU5vGnU0wAkBVIaqVtm4=;
- b=UwvUzwOy1WuCgBcuxIY5sirXbxBdu938ZHgc9DGMppPmUo7UhdOT4AgciCEQFAFXY7
- UHmiUWyu3cdeube56MB4s7EfXvT4mYDazRt+Z5NyeJzrSHY9rv5aepNKooI585s72m5V
- NlnkvdWqlah+YfHrgNcevjLyDBMCAHQex1BffpHK0IT818EuYi0MvQ3UklloftUsrzB2
- yT2eDbIZe99RY6sNDZG1K2KIciIoYaftekqLLQh47I5lPiZPvCf7FSXknNBQtvWR7cUV
- rJaWOrobKrrjNzSqhbYp4HTIw+5BlMpHBOxljACDw6bbsSich/etoykZdaXrhBNki8l0
- zl+Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795622060; x=1796226860; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=30hCZdVhKR3Rb3CgU09Xc9wfjFwBj/fz9t/nbpHlmaM=;
- b=iTeaP/WqwElIkcCsmC7MJQfN90AeuA/QnJsLo5l+mkBvWte7Q2EY6m6xLcb4ds6RvO
- ueUn0ab/h5fyuZgh+aYEYMBCiOwIbaMmPg4FZXO/MxDNbKu4ojrLCNYr79u6oUgQdCHs
- jVLkr1wrZKwhhEf9CmxjDrjUs0BNUbzBgB99uQzCh6lGqg4o8WOAlkQpI9et4LbGVTcU
- MtCC07VevPFI1js0wLWPIZSmN/oQj66CqryEA5wS3k8R2xH2AWbN3NK5YfaxhxgXRSyY
- nFF7wKimFChJQalNipyL7uSGtyyrbZDWnUPmgmxPyEAaQJjvpMlD7X5o47vjxIjz97N8
- LcLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795622060; x=1796226860;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=30hCZdVhKR3Rb3CgU09Xc9wfjFwBj/fz9t/nbpHlmaM=;
- b=Uj8HJHYeXiQa0XQ1Tp6w2XPgIZT0kILEMRlejA9hBQiJ61ep6TRZ6ieBLq2bqR8WEX
- yyv2niXkHNTe9kfvwlGID7grJA3Y9iERC+Be+vm6zTBgfUSOdx10Zw4WITT2W4DueM0g
- 9d6JfpXO3u/Svb4lHVL7FkiWyZz1RBgzE+JF3mFnv8Ilk3x2sg98HRgjM40ZdYekNJr7
- eg2N0uA89fliwCoXA5dfE4SiRKIe26y7ZcvE62OS5Q/WGwJf29WM/KTxNeXR3K/1vllr
- tOKxy7Faa6+hC3GnDGfNHnV7yjS/pEwBAeKKpDoJ2yiuewnq8U6pRmKU/J2QUdodTUkr
- p9Tg==
-X-Gm-Message-State: APuU4Z9OAdXWY8bDGwh62gaD0ts+CSS4XlLzhVn0ckZBtTezJxlwdypA
- bsF8G/2Et/8ONQ7W1YkDFHuqgMqttuatnKjoF5Mij3QqHUoW1+T04knUXAxSGmlFki2Iubj3EYQ
- G8A+5nzKvIzW0XT6c8JzGe0eOo7mrrwQY
-X-Gm-Gg: AZFdTZdlwpDBv61B8HBBTUEgi2IZ3k5W2zGDcGybEWChdWgYxpu/a9cdYionV/bGZXp
- FH2ubG0hSoIpm3kVrzpBRKyo1p9ltT4Av9xy/BMOOUyvxzKSgClbkpe+57Ga0faHBwQ0JmRGQlG
- xw7rFMUKPDvVOcdUzRdjGJVdUw7eYV1FbpgxzNFGn26wFewLu/K8UyN0XuO+rAe42vwNUtFj9is
- rZYhPuEXH6AEa0DA1DiSeoIECwStEqxyLdQF2TZ+WUrESBPv3+xCGQTKjXoWOiGFg/2FeYpS3Nf
- eBlqrjiirsUvld1IU7YIUBzifjbII9y0O4iVP+l/dbNqQLOPlq50XFKUEY+988I6jDUiglQgp4c
- HO6RKnhBr0hN7WKB6x+Plp5Z43p2nwT/Qhdf9ZPPUsranaBF8zbcNvDHlOqugK09I
-X-Received: by 2002:a05:600c:1547:b0:4a2:397:73f6 with SMTP id
- 5b1f17b1804b1-4bb8880974amr413936815e9.8.1795622059758; Wed, 25 Nov 2026
- 07:54:19 -0800 (PST)
-Received: from 101988054943 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 25 Nov 2026 09:54:19 -0600
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xWGKn-0004fp-Uz; Wed, 25 Nov 2026 11:59:07 -0500
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xWGKl-0002LK-2o; Wed, 25 Nov 2026 11:59:04 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qQlfZkJugAhEQcdCbxPs012bw4H8I+Uyhcjl6rdJIYj3Iq4ISuH6LukXiI8sZauh+gUzbqWMe43N2EEe0r4DYZaKxENrwEaRgdwZZ0SIG9Mq6OvnWBvlLXFvefNhhRNpNzwzkLQ3eSWVhEMbNl+KsW8KYLF6P+FVdGUJ6p3dpRxl0CPbnEw1JOrC2nwLkuome6qE8rolkJcgHz89dbeZSE8QC/KFTEUlh+bEN4ZLn0aCtH42ofNg5v9bA78Hs6IWT+q1n6hSkdDcq0JOGdXPptiq21+nMSzzZSgRjzaxu/g4GKY94IcYWWuWZHJBtA+Qd13DJSGuEU4G1b5lpfFUxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tSDrf2PHeoKslF2a2kWCEUD+CEdYmw3hz1nGN22y/vE=;
+ b=kOeiR2mLKxyScNGcDE2T2cz8q0OlQnGnmTHeCxT9OzS3y2j8aA/qEna69EQ0aQZ+eGq+FJhe9jj5R2wIx0SaA1EQy8d0xNQiqi9FA31ZLMkdyTD7sUqlfDTTa04cM54b0O/8wzZvySSsg+FO6TiyQ+B2dvTx6rCu4E6v/4UwRI/fmYqV6Bqy5/wzB9sfyAn13+75spj0SQfzE4MUh3SEtUofme07QZ5HFCWkMPlmiQD1Z0Z58MeIhfvxNGKDxGxc189hbZ3qQabZTNzaztfqkknkiHJLStppErl9YINmTH7qOzoc2PaLRr8HmAkilKLVp7Iq0pbJ61wlpt15KPB/gQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tSDrf2PHeoKslF2a2kWCEUD+CEdYmw3hz1nGN22y/vE=;
+ b=GRobHiKOHA46S4yFpoxYq8Cvp78P6j2KTFWTFFVSr1RHXJButiO7RI9n1BBGd7cWcLvSAFIDd2UDQs62y+y3AcJBuLZFgG0lNfG0mi+lQBMLw55vOnJ+5VDoUnzC+ZoOBME0lj4j5csjs9oZ/e2r/UU581Jezq/AClyXDW2dW7/fnNtSSxpdNPJK9oBeJUu9bA+E2egV5pWY8XwZokVvLsLqdiuC6KWsv5JB4aTEeQ2iCu+5GUzbDT9NM3XFh3pwBJ3yecZbfOtjtVc7ruq34sGUxo2uAlmRdEnMlf+W45JaBnQkbHahniP0IkdF4YYREobCXLb0hwHZJpLgBvoLwQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DB9PR08MB7493.eurprd08.prod.outlook.com (2603:10a6:10:36e::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.6; Wed, 25 Nov
+ 2026 16:58:56 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%5]) with mapi id 15.21.0662.004; Wed, 25 Nov 2026
+ 16:58:56 +0000
+Message-ID: <5b13cf6f-0222-4029-96de-0464299f6bab@virtuozzo.com>
+Date: Wed, 25 Nov 2026 17:58:54 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] monitor: fix abort when a rate-limited event races with
+ its timer
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Markus Armbruster <armbru@pond.sub.org>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-stable@nongnu.org
+References: <20261123212957.242482-1-den@openvz.org>
+ <dec9aea7-8fc9-419b-8178-8e61917f02e2@oss.qualcomm.com>
+ <87o6be4o8f.fsf@pond.sub.org>
+ <d9137705-39f0-4a72-bafc-ea483183cecf@oss.qualcomm.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <d9137705-39f0-4a72-bafc-ea483183cecf@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VIUP296CA0023.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:34e::6) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: Roberto Lari <lroby74@gmail.com>
-Date: Wed, 25 Nov 2026 09:54:19 -0600
-X-Gm-Features: Aa3M54rYcBIDfLzFHJVXc2WwIZjXPTI9Ipp5PoOHVrBiuypaaIUgrzdiQQK39OU
-Message-ID: <CAF01csnadSrqFHG=qvZXZ7JCkNv9vtiF_hsmas3SmiofgTSYrg@mail.gmail.com>
-Subject: [BUG] target/arm: WFE sleeps forever after a failed STXR (ARM ARM
- K10.3.1 spinlock)
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: peter.maydell@linaro.org, alex.bennee@linaro.org
-Content-Type: multipart/alternative; boundary="00000000000005d92006611bd7e1"
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=lroby74@gmail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB7493:EE_
+X-MS-Office365-Filtering-Correlation-Id: a1ad7e92-22ec-4fff-31dd-08df4b15643b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|1800799024|366016|23010399003|376014|22082099003|18002099003|4143699003|56012099006|5023799004|261022105027099003|261022113327099003|261022075727099003|261026140227099003|261028144727099003|261026121527099003|261021123027099003|261021121427099003|261009223027099003|261102123227099003|10067099003;
+X-Microsoft-Antispam-Message-Info: Ok7/CuG/zdj2+0HJ1uX4JKNB809dFImKIhEL/arf2zuCc6Aj/RKRVXOPnRIAXRjzlc8Hx9R6ZzNs/Z3a5XoSglg2v8zH8hEGT2D40IOVxzFgp9idQsyjdlfqfpEj6cL93iInrvrLyapUO6gDbOc6q/E7jFCWsq4tpkKGksm89ygL/SM5Wt6kX42wt05WlWQS2AAtIGjbHdwfp0ncE5JrTxfPKWSY4WUdAdManE4e4A1ajg74Yg3CY68IAVqoh99TXKWXPmDzkpfmqz5KVLyfoPVCTR/G6M3GOUuaBQjDOozTHnc+25cW5zAj1WKTJaUy1sLSTIq0gi3Vwy1HVthEb8wECJiHL6g34CuklCGw2A0T9F91FKFJN1NMBPKBKe4PAZGRwipj/IufLWOTzFLb9sKAaHNzY7c0jFzQv7H2umnrqqwAFulnhXW9AxmNQRbSPMQPeBXrRBEZtlCKyZz01jMimQTkPieQPjsmNBPS4YhnKVl5UDPn8qOffaw5g5vHjsdZyRWTf/9dmqwXIB9+9Rz5FGcPfWObChiSncFeC8X5YKNhOHH72n6meERfmp7J9ew836oBvYgBWWwpCShbQdpTGkS7FJvJ+QouWwnl/AGgRjrO023PSJ1uFmoulHMx488k9gjSDcxGJZhc7JBIeNrhgGJS3/oQTf3lY+Z9Zk8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(4143699003)(56012099006)(5023799004)(261022105027099003)(261022113327099003)(261022075727099003)(261026140227099003)(261028144727099003)(261026121527099003)(261021123027099003)(261021121427099003)(261009223027099003)(261102123227099003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZnNua2hEQVFXbm1Qb2NndXdaM0ViTU1yQStEbmJkU0VCRkZoVkl1QkIzMFNJ?=
+ =?utf-8?B?SDBCTWkySWJEdDBEZklpbW83K2tOUmJEMktXSXlqOXBkVktBdkltU0ZuZDY1?=
+ =?utf-8?B?bFBmTGszSnJscW9BclFTdFhYRDRlUDNrVmIyR2xIWUJkenlybDVZMjVMYVFY?=
+ =?utf-8?B?VlF0blJiQWpTSWpyTEFWOVNRRWZ4UHd6K1prNWhvNW5NaytQOW1RQlBIVXdL?=
+ =?utf-8?B?b29UbFJaN1I1Rzg2eEdxTndQekx1Tm12dUErMFFXZVdTVGRyOUc0R0d0Rk5F?=
+ =?utf-8?B?ZjJDTFVITXh0RitoVTBOdThVTklxeUZQT0N2UXVpYXMyeS8rNU9RT3NIWDJO?=
+ =?utf-8?B?MmN4MGUwdlFEQS9ka3AreU4xV3BUYWVNbnN5S0pXaHpUdmllWnFWcFhDcDlQ?=
+ =?utf-8?B?M2V1WlR0enlIVHppTDNvSk5VMzQyUXBlWHZabGdOalRVNjBhYnVzaDVGanZ5?=
+ =?utf-8?B?WnB1dk94V0JXSDJ6N2h5QmlwdWNvYXVMdUIrWFNpeUs1UjdkSEVvdlZ2QXRH?=
+ =?utf-8?B?TXBZTlVSQmZld2FSL1F4QURGam85UEZYVndDOWJWaHMyS3daYnQ0VXBObWlF?=
+ =?utf-8?B?SVJqRmJnNWxLeFBMN01uNThra0lmSVBLeFpURUVEVFBsOFhERTRRcnRKUEgw?=
+ =?utf-8?B?TzU0Q1ZKOWJ1M2V2ekNlaVFlL0s1ZXhSVkw4a3RoYWNpSUJldmN1eUFjUG9k?=
+ =?utf-8?B?eG1LaUNCL0pYdmUzTlR1ajg1UmREd2N6eldNYmpzSHF6djBaOVVQaUxIQVZ3?=
+ =?utf-8?B?T1FRblBaT2tZVWpaMzBuUFRYdlNDZmk0cEtoVmVmRm1ZdG15aDd1d3BQWDhK?=
+ =?utf-8?B?cjQrUS9pa2U4N2ZWbWo3WmtPcURBS0ppNHRXdzl0Q0lmdWlWRjNIUmhWelYx?=
+ =?utf-8?B?RGhxeVEwaDNUVXZVRmlCVUdWaGYyREgvOEMyYmUrU1B1ZURtQnB3eEJYNWs0?=
+ =?utf-8?B?VHBOT2lpWkhFTUNLaTZDOWdDL2poNllJcUdMM294MGo2RC9oL1k1ektwNWxN?=
+ =?utf-8?B?aDFaK2xEZVVySi9NblhmZjAzNmltY3VuRmtTWTduTlc0a3N0RDhjdXowRE9D?=
+ =?utf-8?B?S09QQldYb3ZrcFVEZkl1Uks0bm1Nd0N3enEycFlxVWltSUFleGVNNkhYeTd5?=
+ =?utf-8?B?NTNhT1d0dzN2Vmh2SE0vRStIUTNLWmNNWXBjTlVrSDdoV29VS2JTUkdTaWJk?=
+ =?utf-8?B?Uk5tTWR3SVFhMnRNMC9oMVF1RlErb012eXVBVTBtRTFZVklyU09FSnc4Mjhh?=
+ =?utf-8?B?TkFrZ0ZJeTR1V2hMYmpIMlh5RnMrM2FjcVBWc1BTbTZiSE55T1hoeUIvbUFH?=
+ =?utf-8?B?b01xTVVza0RtWkdMZld0ZTlyVjhXT295Y2o2VnhrU3l6VXpXcktMbWxnekFn?=
+ =?utf-8?B?Y3FDdlBMZm84cnB1b2QwMHBnM1RFUzVOb2VLY0tPK0dXTWhpOHZLK0R1UFNo?=
+ =?utf-8?B?cWtaZDJyc3ZKS0RVMEhobUJoVkNTTnMxMXE1NlBhRDBkOUlSOENraW1pckg1?=
+ =?utf-8?B?YzFvSWFGQUdON2hJR3VnQkNkcURYRXpxNUgrYzk1ajhKY3ptOXVvdzlaTGZN?=
+ =?utf-8?B?YnBCcFk4L2FoeVQwMDlNYzNXWDRnd0FJY0lxSEJZalFSdHVKa0M5WTROVG5W?=
+ =?utf-8?B?ZThLUE55MjhVck5VNnprNmNiNU5abEF5alNjdmM4MjMvc3hLREVGblZ5eG1s?=
+ =?utf-8?B?N1VpY3c3bjEvWU93TXFia29ZOVlrRHFpQktXM2E1VktjUjlJVzBBeml1SkRl?=
+ =?utf-8?B?U1hwNDZSNCtqS1JkVlBOTUlIU1N0MFNDYWJMNUk5U3VlKzlONnVtc1FOSDZT?=
+ =?utf-8?B?Uk9QYVpDZTJ2Yzl0R0Z4ZWExaFVxOGwxNmwyYThNRk9hWW56ZkhlTSs3VlUx?=
+ =?utf-8?B?c3kvbmJ0QVdtSVZ6M1lYY1drOVlmaFdSRUo3aThmRTd3dTlSakNYMTFlK3JH?=
+ =?utf-8?B?WUFGcjVGT3duOWNTSFlwdnQ1emJibnlYcFIzMGdqNzhQVktvMS9zZENpVGRo?=
+ =?utf-8?B?cGlZazVsYTdUdXpqSkNBWDlPSGFGditybkgzWE1LTVJZbEwwNTVOVXVWdXR4?=
+ =?utf-8?B?T3VvN0lvdmNlRFRMV1R5MEdlLzNwcHE4M0c4WXdRenBzR3ZHN1dpMGpqMEJt?=
+ =?utf-8?B?QWxyM1ZvWTl1OUdxK3pONCs4N09tRHM3TjZZQXBsUU16RG1ibXhhdWRCblM3?=
+ =?utf-8?B?UkIyVERnbTFZOEM2ZFROWUlHVjBtakt2UjFqa2V5WDY4ZUlwUVJuZGZmRDli?=
+ =?utf-8?B?V203ekttVi9zdklsaU9aTnJ1WWplOUp6c2dVQUhVbTZyaWRYZ1dvSTUwbG9w?=
+ =?utf-8?B?eWdVUHJqUWhZSnBTMlRWbVJjb05pVDM1VlhKZnNCdDNwcEhaMUVEOFRleDAz?=
+ =?utf-8?Q?5VOd5HFcLXlpZvgaxVBHr+N2Cc/E6PcU+HZc8XDmLMGtg?=
+X-MS-Exchange-AntiSpam-MessageData-1: Tl1obz4HZJBE/Q==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a1ad7e92-22ec-4fff-31dd-08df4b15643b
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2026 16:58:55.9623 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TxRHx8ZPuWPelg7xhk6aemlkUyAYzNAigmpN75yS+PNOx8OA5+Q8tTwPm/tK4T3BryTWVcFYniACHWztcaPJqw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB7493
+Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+ envelope-from=den@virtuozzo.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 25 Nov 2026 11:48:48 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,104 +153,91 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---00000000000005d92006611bd7e1
-Content-Type: text/plain; charset="UTF-8"
+On 11/24/26 10:57, Philippe Mathieu-Daudé wrote:
+> On 24/11/26 09:39, Markus Armbruster wrote:
+>> Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> writes:
+>>
+>>> On 23/11/26 22:29, Denis V. Lunev wrote:
+>>>> From: Denis V. Lunev <den@openvz.org>
+>>>> Rate-limited events can be raised from iothreads, outside the BQL.
+>>>> QUORUM_REPORT_BAD always could be. Since 2155d2dd7f73 BLOCK_IO_ERROR is
+>>>> rate limited too, and any disk on an iothread raises it.
+>>>> The rate-limit timer runs in the main loop. timerlist_run_timers()
+>>>> takes it off the active list before it calls the handler, and only then
+>>>> does the handler take monitor_lock. An iothread raising the same event
+>>>> for the same device in between finds the rate-limit entry with a timer
+>>>> that is no longer pending, and QEMU aborts with:
+>>>>     Assertion `!evstate || timer_pending(evstate->timer)' failed.
+>>>> This hits virtio-blk on an iothread with an error policy other than
+>>>> stop when the storage goes away and every guest request fails.
+>>>> The state is fine, the assert is wrong. Once the timer has fired, the
+>>>> handler is committed to run: it takes the lock as soon as the iothread
+>>>> drops it, sends the stored event and re-arms the timer, exactly as for
+>>>> an event stored while the timer was pending. The event goes out at the
+>>>> same moment it would have had the iothread come in after the handler.
+>>>> The entry is only created, re-armed and freed under monitor_lock, so it
+>>>> cannot go away under the iothread. Drop the assert.
+>>>> Fixes: a24712af5425 ("monitor: Turn monitor_qapi_event_state[] into a hash table")
+>>>> Fixes: 2155d2dd7f73 ("block-backend: per-device throttling of BLOCK_IO_ERROR reports")
+>>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>>> Cc: Markus Armbruster <armbru@redhat.com>
+>>>> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+>>>> Cc: qemu-stable@nongnu.org
+>>>> ---
+>>>>    monitor/monitor.c | 7 ++++---
+>>>>    1 file changed, 4 insertions(+), 3 deletions(-)
+>>>> diff --git a/monitor/monitor.c b/monitor/monitor.c
+>>>> index 2654b81890..22c00b6195 100644
+>>>> --- a/monitor/monitor.c
+>>>> +++ b/monitor/monitor.c
+>>>> @@ -360,13 +360,14 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent event, QDict *qdict)
+>>>>           MonitorQAPIEventState key = { .event = event, .data = data };
+>>>>
+>>>>           evstate = g_hash_table_lookup(monitor_qapi_event_state, &key);
+>>>> -        assert(!evstate || timer_pending(evstate->timer));
+>>>>
+>>>>           if (evstate) {
+>>>>               /*
+>>>>                * Timer is pending for (at least) evconf->rate ns after
+>>>> -             * last send.  Store event for sending when timer fires,
+>>>> -             * replacing a prior stored event if any.
+>>>> +             * last send, or it has expired and its handler has not
+>>>> +             * taken monitor_lock yet. Either way the handler will
+>>>> +             * send what is stored here. Store event for sending
+>>>> +             * then, replacing a prior stored event if any.
+>>> How about:
+>>>
+>>>   +             * last send, or its handler has not taken monitor_lock
+>>>   +             * yet (the timer may have fired, or not been armed yet).
+>>>   +             * Either way the handler will send what is stored here.
+>>>   +             * Store event for sending then, replacing a prior stored
+>>>   +             * event if any.
+>>>
+>>> ?
+>> I find this version harder to understand.  What scenario exactly is
+>> missing from Denis's version?  And is it important here?
+> The issue Denis fixed also exists in the gap before the first
+> timer_mod_ns() under monitor_lock and between timer_mod_ns() calls
+> after later sends, now described as "or has not been armed yet":
+>
+> "the timer has fired [, or has not been armed yet], and its handler has 
+> not taken monitor_lock."
+We hold monitor_lock from the hash insertion through the first
+timer_mod_ns(), so another thread can't see the entry before the timer is
+armed. The handler holds the same lock while it sends the event and rearms
+the timer.
 
-Hello,
+Another thread can see the entry with the timer no longer pending only after
+the timer fires and before the handler takes monitor_lock. I'd keep the
+posted wording.
 
-since commit 01b223f895 ("target/arm: enable WFE sleeping for
-A-profile"), a bare-metal AArch64 guest sometimes hangs at boot on
-raspi3b and raspi4b with current master (v11.2.0-rc1-67-g6bf90d4fc5,
-TCG). We have not seen it with 10.2, where WFE is a yield.
-
-The guest is built on Circle (
-https://www.google.com/url?q=https://github.com/rsta2/circle&source=gmail&ust=1795708458928000&sa=E).
-Its
-spinlock is the example of the ARMv8-A ARM (section K10.3.1, as cited
-in Circle's source):
-
-sevl
-1: wfe
-ldaxr w3, [x1]
-cbnz w3, 1b
-stxr w3, w2, [x1]
-cbnz w3, 1b
-
-and the unlock is a plain "stlr wzr, [x1]" without SEV, as in that
-example.
-
-About 1 boot in 4 hangs (raspi3b: 6 of 16, raspi4b: 2 of 16). In
-every hang, "info registers -a" shows the same secondary core with
-its PC on the instruction after that wfe (CSpinLock::Acquire + 0x38 in
-the three kernels we tried), and the boot never goes on. Nothing wakes
-that core up at that point: the lock holder releases with STLR, Circle
-routes all GIC interrupts to core 0, and it does not enable the
-generic timer event stream.
-
-As far as we can tell, WFE does not sleep while the PE is in the
-exclusive region (env->exclusive_addr != -1), but when the STXR fails
-because another PE took the lock between our LDAXR and STXR,
-gen_store_exclusive() has already set exclusive_addr to -1, so the
-branch back to the wfe really sleeps. On hardware the STXR fails
-precisely because another observer wrote the location, and the
-clearing of the global monitor for the PE is one of the WFE wake-up
-events, so that wfe does not sleep.
-
-In our tests, setting the Event Register when a store-exclusive fails
-makes the hang go away: 0 hangs in 64 boots of the same kernels
-(raspi3b 24, raspi4b 40). We are not sending a patch: the analysis was
-done with the help of an AI assistant, so, following
-docs/devel/code-provenance.rst, we leave the fix to you. We are happy
-to test one on these kernels.
-
-Best regards,
-Roberto Lari
-
---00000000000005d92006611bd7e1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<html><body><div dir=3D"auto">Hello,<br><br>since commit 01b223f895 (&quot;=
-target/arm: enable WFE sleeping for<br>A-profile&quot;), a bare-metal AArch=
-64 guest sometimes hangs at boot on<br>raspi3b and raspi4b with current mas=
-ter (v11.2.0-rc1-67-g6bf90d4fc5,<br>TCG). We have not seen it with 10.2, wh=
-ere WFE is a yield.<br><br>The guest is built on Circle (<a href=3D"https:/=
-/www.google.com/url?q=3Dhttps://github.com/rsta2/circle&amp;source=3Dgmail&=
-amp;ust=3D1795708458928000&amp;sa=3DE">https://www.google.com/url?q=3Dhttps=
-://github.com/rsta2/circle&amp;source=3Dgmail&amp;ust=3D1795708458928000&am=
-p;sa=3DE</a>). Its<br>spinlock is the example of the ARMv8-A ARM (section K=
-10.3.1, as cited<br>in Circle&#39;s source):<br><br>        sevl<br>    1: =
- wfe<br>        ldaxr   w3, [x1]<br>        cbnz    w3, 1b<br>        stxr =
-   w3, w2, [x1]<br>        cbnz    w3, 1b<br><br>and the unlock is a plain =
-&quot;stlr wzr, [x1]&quot; without SEV, as in that<br>example.<br><br>About=
- 1 boot in 4 hangs (raspi3b: 6 of 16, raspi4b: 2 of 16). In<br>every hang, =
-&quot;info registers -a&quot; shows the same secondary core with<br>its PC =
-on the instruction after that wfe (CSpinLock::Acquire + 0x38 in<br>the thre=
-e kernels we tried), and the boot never goes on. Nothing wakes<br>that core=
- up at that point: the lock holder releases with STLR, Circle<br>routes all=
- GIC interrupts to core 0, and it does not enable the<br>generic timer even=
-t stream.<br><br>As far as we can tell, WFE does not sleep while the PE is =
-in the<br>exclusive region (env-&gt;exclusive_addr !=3D -1), but when the S=
-TXR fails<br>because another PE took the lock between our LDAXR and STXR,<b=
-r>gen_store_exclusive() has already set exclusive_addr to -1, so the<br>bra=
-nch back to the wfe really sleeps. On hardware the STXR fails<br>precisely =
-because another observer wrote the location, and the<br>clearing of the glo=
-bal monitor for the PE is one of the WFE wake-up<br>events, so that wfe doe=
-s not sleep.<br><br>In our tests, setting the Event Register when a store-e=
-xclusive fails<br>makes the hang go away: 0 hangs in 64 boots of the same k=
-ernels<br>(raspi3b 24, raspi4b 40). We are not sending a patch: the analysi=
-s was<br>done with the help of an AI assistant, so, following<br>docs/devel=
-/code-provenance.rst, we leave the fix to you. We are happy<br>to test one =
-on these kernels.<br><br>Best regards,<br>Roberto Lari<br></div></body></ht=
-ml>
-
---00000000000005d92006611bd7e1--
+Den
 
