@@ -1,90 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89296607DDF2
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 09:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A78F606A32D
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 09:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=X1swu3cc;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CNJxDFJ2
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=KmseiR88;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ZUN3QzKs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW9OY-0000O1-7J; Wed, 25 Nov 2026 04:34:30 -0500
+	id 1xW9OZ-0000Oc-9g; Wed, 25 Nov 2026 04:34:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xW9OH-0000Me-Nm
+ id 1xW9OH-0000Mc-Pq
  for qemu-devel@nongnu.org; Wed, 25 Nov 2026 04:34:16 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xW9O8-0002OI-Fa
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 04:34:10 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xW9OD-0002Oz-SJ
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 04:34:11 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AP9DniA3682014
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 09:33:53 GMT
+ 6AP68TuC2629330
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 09:34:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=HsI4sPDDeo3JamQ8jIBGl+
- rh4T08isNylf8i9hVQY0g=; b=X1swu3ccNOhftw7L2UYK3q7AQKAKEqMp742pId
- qgmmYSYQPs9HO+WBWub1vNggS8pHJxIiueB94j1N2mzTOvt/U2N1nsrb/Rjbw9s+
- 47MCkjaa1WT6w92g9tOeCeszD0DiVA4UzPei7xnztX4Sf+FamCQLmgcpmrxRJvj4
- 9edZcwVzze2zA27k5kR7ZWlWvL00b1/qS2jiq8bV/9FFaQWUQjFbMFjNpKMK8CFA
- 2j0J1d1uoVRzREnzRIJHWPurL17TgIAVDp3fSj+ryBk7iItPHWDtqQoKCoa0xfYx
- 3Gq9R1M6Aa49wFiCnJ5/7dGf+NyhDFcKaadOn2XxV/5GHnpQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5vv2r3ug-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Tq7m8GgsrZaxy2p2SyW9nvqXr8lJDtZUV1HZqUs5VCU=; b=KmseiR88Z1MV5dC+
+ wHjSFxhXx5sglb74MbIQuFeKMOIGCfdecu+3WHOXu1bbkg31WMrr4deWzgMqEl1U
+ xdY6nFUFAs7dpP0ONQgoDxGmPai+RrOLQ6Ecc0yKzBeqU6EDYWa+HvXCzcskkz4q
+ yiM2JtahE5iEoyjPXq4LpeVeBLaqPNhFitdf66EBnRsykk5D1qoGXwuak+fZO1Kh
+ qRMbSdZRypjwuO1Q6eL/XTHn6PQfn5xLluFc38W/K838zG0Z+y6G0MShcNDd2rnv
+ GKgcXmwJyf04gyXHa1T4f8GVBvMdqTdmkRgOHBAoLf2uhPddZvEQAJcr8CDasEyk
+ phBgOw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5eydbf4t-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 09:33:53 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9495c71055bso157108385a.2
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 01:33:53 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 09:34:07 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-946038e22f5so149290685a.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 01:34:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795599232; x=1796204032; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=HsI4sPDDeo3JamQ8jIBGl+rh4T08isNylf8i9hVQY0g=;
- b=CNJxDFJ24U8YKUb0uFNQqfSJ4WSPVd91g+NkjdTyglR1xAz/VczQSdGQIWYE5LT5kZ
- R1mP/JDT3XdktbCRRTi6sOhQ12souUBO7YShhuRLBqfHfS6ZfWs28ibmTBHdepdOxQ83
- uLKZ1Lvd2LQgW8/+hVJy1g3ALYzZEWbOU39Q+NhDtdJBX8td0YU77Fdvq+b2VMv+S6Ca
- zByGX15c4gmSY4oAEWOQsWpOsuJ4m5rsVdHgg7Y8r7fby/p/SvDlcwGCJXlYQEqAs5yK
- osQ72XExqbZy0btj4vp2Yw2j95RTgxRwJkQxQpcOF2gZ4tB54dLQfd/0O2rwsppN33f8
- M/1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795599232; x=1796204032;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1795599247; x=1796204047; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=HsI4sPDDeo3JamQ8jIBGl+rh4T08isNylf8i9hVQY0g=;
- b=EYP99UAfKsN6JxIB5e25gMgzJflt5fJJIvXNxdcelBf3zetq0eqn7PdbYOaHSw29Dd
- +tVQaxFuj+PHrkjkHxHza//CvI5goRKAf6uxuFBMHrDpTU/7z2mwancaVm9fIqfUYlpg
- uagxf4bTv9kif4L/KHswTa2LilYcnLqqatT8rWox8s/tVAAXrwGgUXzjnFAlwRXJFqrs
- RXc3u22y4Een+TN7zSVxG5DKO9fdp5AnFpXfqRc5rRkQ0VEDF02qQeq8cYtnH2wkAoMw
- MeJVC3KoygWT+kPqCBiV+RUYfVfHjM7cCoQS21p+ejbGcuQ3mmy7FmA5JgnOacNwW0Xt
- QvTg==
-X-Gm-Message-State: APuU4Z+9TxswwDaAZM2Zxc0db/tSjtL3KPppmW3V7LGuCu3iZsUUiImN
- Y7wal4Z6R5YOLglNt+79BT9IkoYdMPTY8FORQGWWHJ0MHjm1plgLBcQz1TmE6UymjSfYLJmzh7q
- MdeUJYQpIn0TiqjHEARDDp+294wN/dyMmqrC8Wr9Q14D9fGoGyz3fGI6vAPTRweW6g6Qi
-X-Gm-Gg: AZFdTZcLfFJb2NEn2NKeseYSrgyWOyeSFuacJHba2WCiAL7H4/tPkAePyUsqR+f1Dpw
- mDsCVzB3IUunHHfdo4OOcLn/IbPUP+vOcynJoadzULYSMETfzNszFegzChxCxPxM37nvPPFi7S0
- 4rAQJcOhiBPs0NrxFCRZIs9AIJrThmP1BVZLlKIVWNAmJmeNd9jRQRWkRZWvmOyIfzofdsOGrva
- n3d+J0HTd0g+ot4G2wGCyyd6boInY0jicBCp9VYCnMA1KhaqPNJytQuNILBIOrLiur/q01N2pON
- SpER8P8+nUxNvPLu353UAPBKsyyWzmbHulrvrcu3rSiemo7FH9FZVnrQoL39uVnjl23yFDGrQTi
- SJcH/zYdaFdAv7zcvyJLWAept2x+ZYwtWvvwbXjPxaZBZO2xEQvxs1ygSv5Wv3ec1bknFBnU0Bj
- B+z5ehkSefAM/20A==
-X-Received: by 2002:a05:620a:2906:b0:93e:5eaf:dd87 with SMTP id
- af79cd13be357-949bab54b88mr3066742985a.62.1795599232472; 
- Wed, 25 Nov 2026 01:33:52 -0800 (PST)
-X-Received: by 2002:a05:620a:2906:b0:93e:5eaf:dd87 with SMTP id
- af79cd13be357-949bab54b88mr3066739785a.62.1795599231956; 
- Wed, 25 Nov 2026 01:33:51 -0800 (PST)
+ bh=Tq7m8GgsrZaxy2p2SyW9nvqXr8lJDtZUV1HZqUs5VCU=;
+ b=ZUN3QzKskQ6IEZhtOPNA63BsXl7lAvRE4gRKbTy/jNQ5TmnC6zsthR9pQwMAjBttxV
+ KyRPiaCiRUxgfaFpqyJBWGj0vJ3fxhxZPV37CCdSivw0kZSnxbc7xoug/KJGI8pUABtQ
+ f/212+LAqQvc5UWJfSx7HfdoRpzyjQiCQx0UH7Z9pw8X27YdLaZQPhlAOiac778z3gft
+ wRQ093HazUYbLwLSuUdMMckYMprr5Uaj/T0AG0qKVH02lv8lGWV7WMntyGOcCZlxTcKv
+ jfe010qh+xFsaNXPtrNgOSIQNuhwVHdFwiOU4ETH+A3PRZ+14GD6WLlNu2Pb2pxMI9bj
+ LaUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795599247; x=1796204047;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Tq7m8GgsrZaxy2p2SyW9nvqXr8lJDtZUV1HZqUs5VCU=;
+ b=2AlGVQuMMt61wxqiO8B1sd/GPMf0F2Deq4rjtV54lmcA4gTLRANtEn1BiXKEYQ3oY0
+ gYiQhLvrzFlslcE1Qeh4eV4GlYyH7XxR3dDHgk+FKMCkazlc0T9oHs5xs+RPJ18c4/Nb
+ OlA7r9PXXzgtjKBBKl76DIKZYyAsHQ84cZD6vlwsWfny5H20TorNk9Hdi9FNwBcn6nFv
+ bqUpWlC2SGrDwA/auyhlChjP+eQevi2qBk6dvd/FhCrfha4a4tSBqEkL3M3FlovFWwJR
+ K0AlqF2aAv9jDIs0AS7oaM3NgTr0dgBkFXDj36uM5cxqlQaJq7C3Rk1k/yex12gUXHtb
+ jQKA==
+X-Gm-Message-State: APuU4Z+PpRBl9BAIqNoiU3Cle1EceN4oOl/ylAEGei+oguhTDGuK3kL7
+ +F+wab8Md31ZhmirvdIsozQONV32aMV7vS9xd21+lzZk/J25Jcvh8QncvoWLk9JqwZBJqUNd0D6
+ hAZfJsnRZn4DoJCtOWCl2Wved+5r/EDtI5D6p0NxrwixHXUdp/khg5R3J5YpLetaeYxcm
+X-Gm-Gg: AZFdTZfaw2mCwzxcLkxV0YXa8rJg1dCsRTYTe/3dEFM5mdEmn84G0XzgmvfOQum3+AD
+ hsMp3TnTZzk1eLs0nOUBOZKn0Ov6oqOeEp4S4JzPnUx414X8L8xrRG5JdCnZtmelt8h3dGdhlSD
+ sI8Q+Whh/t4esmSe4UtDaO37OrkljgOHFqPATtaYelqLX/+KR/5/7qxteynxOGIYjh//O+y7eWf
+ mHWqa0Yg6BvvRwJg7UWy49w6KbkJCZBTTcyXcXxghld/xGD+mKR6603VEdO6TNNYJgcJ3Q/IL2Q
+ 4w+/MNG/zyJF3GiBHiL867I/xhjheB19gerKB6v5rb9GqIgBHT126wuCd/uwUGQ2zKVSVrO2dpc
+ fOFuFkaV+4Lt7FO5H60Y2qhuL7X26sXC0oBtR1HFfJrURoGqHTXfFkKJeBCPH9UuMaYPy3xi7tc
+ usKSD7GFUbNxz+FA==
+X-Received: by 2002:a05:620a:19a2:b0:93f:5f83:2ca3 with SMTP id
+ af79cd13be357-949bab4704emr2839759885a.54.1795599246706; 
+ Wed, 25 Nov 2026 01:34:06 -0800 (PST)
+X-Received: by 2002:a05:620a:19a2:b0:93f:5f83:2ca3 with SMTP id
+ af79cd13be357-949bab4704emr2839756785a.54.1795599246279; 
+ Wed, 25 Nov 2026 01:34:06 -0800 (PST)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6bb989eesm33254235f8f.50.2026.11.25.01.33.50
+ ffacd0b85a97d-4ab658e2e6dsm32607909f8f.6.2026.11.25.01.34.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Nov 2026 01:33:51 -0800 (PST)
+ Wed, 25 Nov 2026 01:34:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -92,45 +95,46 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH-for-11.2? v2 0/3] system/memory: Invalidate TBs on ROM device
- mode switch
-Date: Wed, 25 Nov 2026 10:33:46 +0100
-Message-ID: <20261125093349.97805-1-philmd@oss.qualcomm.com>
+Subject: [PATCH-for-11.2? v2 2/3] system/memory: Return early if ROM device
+ mode is unchanged
+Date: Wed, 25 Nov 2026 10:33:48 +0100
+Message-ID: <20261125093349.97805-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261125093349.97805-1-philmd@oss.qualcomm.com>
+References: <20261125093349.97805-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDAzNyBTYWx0ZWRfXwmigmlJzdOib
- 0cqLg46O3U5KX1UBywtiA7eXHt3VeOeVlyna6WPXlrzYQNhXKBpvckhfFk1+PfAApkMMQPfTgYG
- tnYfHwArIap/W51hJL+4Y4MJLPWT0ew=
-X-Proofpoint-GUID: TGW9ydH2AJdM-Ys7d7VlkBJQA1Nrh55d
-X-Proofpoint-ORIG-GUID: TGW9ydH2AJdM-Ys7d7VlkBJQA1Nrh55d
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDAzNyBTYWx0ZWRfX+6W4SaIA/YOn
- iBX2aUcm2f5/vWxIS1B0C0mU3CUxm6nH/7l5fu4sm9plAP01N7P9Mpv4usNhj7glQJpn1omFeaI
- R/Uk7UqeCaeL3RRBRt4VO19rDuE3jjv0ZTbvHkEtcBB0CMiW2TcnPKZY/DiGthOgj1248howqYE
- bmurJ72RVw69tErNAx6z49vwYeFJo10m8+xh+w48+VdwWFsdt4e7akcRRiSCoCfsV/U/vQ1vTqw
- MXhf35T2rJyKq1LjwZcZc/Vz8SPAVdfG0/2vo+cst8z8n9xrTLv/Uc4vX9eRSZAelEVmYPit3MV
- rxNOtwG4ii05w9RPmV0xghUA1sr2VLYfUdxl5kfTxs8o+IP039R/roRxTBeM85EvT+o/pFwWWfW
- j5J/r/bDP0lPLnlceNonp1sMN6pv00hWxhhIgp4pEMg2c1rXxApT0F/7tUT+ff0cWgncSA8dL6X
- af2CuQjrFkbxEYmN1hw==
-X-Authority-Analysis: v=2.4 cv=A/z5rKWG c=1 sm=1 tr=0 ts=6b06ab81 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDAzNyBTYWx0ZWRfXzsc0CyX+kZB6
+ y3RRCb9eQuWkpaqYHGUuGTNqR8+VzCtlW8gAkRXLkqXN4lfedowkNfSkBLeJfkRZc5HjjmHfYE3
+ IdIVFWFwY6MOp2XHlCR4SUpaOkgi2wc=
+X-Proofpoint-ORIG-GUID: j5bdZ_Tb6zB1RdvKcvHDH6jvBqAlvusQ
+X-Proofpoint-GUID: j5bdZ_Tb6zB1RdvKcvHDH6jvBqAlvusQ
+X-Authority-Analysis: v=2.4 cv=GIGdgeNK c=1 sm=1 tr=0 ts=6b06ab8f cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=p0WdMEafAAAA:8 a=YVC2wF5cfVuM5J9m9TwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=1CFXEIgG3j1LX4AiYtgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDAzNyBTYWx0ZWRfX5D89n0H4w1hI
+ 2JJpdWct10cxgTsaLh9QCjtwqBwUGlLnk2T6PgMnYJ60ARpvuZhJ4y+6tNWcAEKvTzGFLQSKlnD
+ GQV9nCPQbZZ4wUNg+7FQ6hlcalj07yPMANGdPiffam/9VAXhuh8ivImppRRUplgMglTc7RIpsd/
+ v8+tnMBF7pZcZ74IRuBa3cwilQO8vUR2DI06ilK8K4DH4nSpUmzD+/j9MvjiFfOX/w8zxcPnyic
+ VGpfnYS6ofEZ+sZXF76I7z4xxsKzJl7o+r0yTwUwFHnYxIlnejbsYpg9T9pA+XCFZPAdK+y72UE
+ VRr53e3TV1PQJyCg9rS6GsRzLAPF5S0t5g7fi0WEAoHKlz/OuMJVqgWzet3YZqv34fuCun7Sutp
+ jLKtsizHiyuLht1KRn49gYH1y3RLolMkGzvD3Q0UVobwIv51aXfw3RwlnU1GGEgftz8K6R21tyt
+ Py11CAUXuSjurkCBuUw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-25_02,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611250037
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ phishscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250037
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,43 +154,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Since v1:
-- Docstrings reworded (peterx)
-- Less convoluted logic (rth)
+Restructure memory_region_rom_device_set_romd() to return early,
+easing review of the next commit. No functional change.
 
-Fix for https://gitlab.com/qemu-project/qemu/-/work_items/4490:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ system/memory.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-A ROM device changes its contents with direct stores while in MMIO
-mode. TCG does not see these stores, so translated blocks built from
-the old contents survive the switch back to ROMD mode and the guest
-executes stale code.
-
-Make memory_region_rom_device_set_romd() drop the TBs of the whole
-region on both transitions: before leaving ROMD mode (if currently
-in it), and after entering ROMD mode, for TBs another vCPU built
-before its TLB was flushed.
-
-Measured with a guest that repeatedly leaves and re-enters read-array
-mode on a pflash, once with no code cached from the flash, and once
-with a function in the flash called after every read-array transition.
-The flush is almost free where code isn't cached in flash, and costs
-about one retranslation per cycle when it is.
-
-Philippe Mathieu-Daudé (3):
-  system/memory: Clarify TCG effect in memory_region_flush_rom_device()
-  system/memory: Return early if ROM device mode is unchanged
-  system/memory: Invalidate TBs on ROM device mode switch
-
- include/system/memory.h |  8 ++++++--
- system/memory.c         | 19 ++++++++++++++-----
- 2 files changed, 20 insertions(+), 7 deletions(-)
-
+diff --git a/system/memory.c b/system/memory.c
+index 56c5dd6c8abd..2e3ce773ce97 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2251,12 +2251,13 @@ void memory_region_set_nonvolatile(MemoryRegion *mr, bool nonvolatile)
+ 
+ void memory_region_rom_device_set_romd(MemoryRegion *mr, bool romd_mode)
+ {
+-    if (mr->romd_mode != romd_mode) {
+-        memory_region_transaction_begin();
+-        mr->romd_mode = romd_mode;
+-        memory_region_update_pending |= mr->enabled;
+-        memory_region_transaction_commit();
++    if (mr->romd_mode == romd_mode) {
++        return;
+     }
++    memory_region_transaction_begin();
++    mr->romd_mode = romd_mode;
++    memory_region_update_pending |= mr->enabled;
++    memory_region_transaction_commit();
+ }
+ 
+ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
 -- 
 2.55.0
 
