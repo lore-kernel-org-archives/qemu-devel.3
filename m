@@ -1,135 +1,134 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44184606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD62606A327
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 13:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=e3WeL0OG;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=d1CpLlSA
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=iwVUm9xR;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AxkvKQ7e
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWCwi-0003He-Te; Wed, 25 Nov 2026 08:22:01 -0500
+	id 1xWCvo-0002US-8v; Wed, 25 Nov 2026 08:21:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xWCw9-0002e4-9R
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:21:26 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xWCvg-0002Sy-UW
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:20:58 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xWCw6-0000hT-B7
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:21:25 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xWCvd-0000e7-KQ
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:20:56 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AP9nl9R1505274
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:21:11 GMT
+ 6AP9mTBC2356729
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=pM55NgWylpr
- Yyzqaga+eBZrqcAOm5EF3HQc27luHc2w=; b=e3WeL0OG3vE/ON+mKcbfGptMwsy
- ow3jSs7K7GC0pYMcvWlq3RO8G06g3gZ44Mu7iY1eGPRfrlV+DE5rGnIZ9jYRub6m
- DgSinlkiGFP9MLx35v0o48+YuIgLeT5lmKIcffTfXKwZmRSsgCt/Ypr8t0019YlM
- a4n2qjxYsQdI1IGoZBk5f5HAcaljLjHVaEPvErnxaBiMDsqOKUblvk3211ypjsaF
- WSvqQJNiD1aikqYkQzoQU3bkkZuu7U9ZVfCOUWHEUpGEAJ9rkw216u8+B5BaWniL
- DfzAczvWuvJe7uwhs8cIzBARu4h6uUAOHV8BZx3LNY6zU1Y5SzgchvpwL+A==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5qa2ac9d-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=6505ZE7yV1y
+ aZ7Tz7xueT/9+yrJHVlZ1qKiE85sneOE=; b=iwVUm9xRJ0L3X23G/Qr6W4mpw/Y
+ 5q/RxMC6Nt3j74tGUJ37SQVsaKYR4WbBRUqmII8q/lspESY0ZszinEUuS+ch2MQC
+ pR8xVAivDV28YTn+LPzyWZRCFTeB+3jub5gYK0mZvCzVbVelsmUuEo+5qiWLt0jl
+ R85aZbo2Clx2WgZzGRopAwCWLSCdoR1vo2on0pl0mJWX3fhmcKaZnz0diPe1Rkyi
+ LGA5by5NtGoi4CWBPqf4SpjfiMzABz1v+JTiP6Pvwbp4WNMkdNcEsUM9q/buoHBq
+ duosP65DGIsNRS7l5SDfILu5n8/zoxdyECteeYnbsIhKnWKZtxBexxXzIrQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5nu6aq05-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:21:11 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-998a2b06e4eso1006906241.3
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 05:21:11 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:52 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-94975041698so1442727585a.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 05:20:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795612870; x=1796217670; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795612851; x=1796217651; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pM55NgWylprYyzqaga+eBZrqcAOm5EF3HQc27luHc2w=;
- b=d1CpLlSAhNFmbHCzec8EYFrwq8mqVLYF9nBxaDCpZSROVKAq/MlWnfhbCTgMqXxnEq
- RmwJFfC1exozXFeLRZYVwycM5KfQ81Ca/Z3EeE5MDNTpXU6G0An+BC4vs3SJhDuABdXg
- tx3yZPaZD6fHmr+2KcjidzaAo2czZoMLil8wbWpyy7iXo2nzcuOMynGKRhHfU7bvgeo+
- rhNQquVm9X9hQWK+/ZLRNtPIR7KvC9ScC1Tep+6nYuvnm+RYNfVF8dsICm/jlwMDg++C
- wu/DnYFe+xol+8ci3+PpB5aWFNhFlsD2OB3ZRq5/+sheIfp/GueG42Uis7dyLW0DGX7H
- Y3Kg==
+ bh=6505ZE7yV1yaZ7Tz7xueT/9+yrJHVlZ1qKiE85sneOE=;
+ b=AxkvKQ7elcyaVli6OUKF13N3i3TCgo3y3rk5dLx30WcIMGRghCPdvd5vLl3jjAcOQW
+ 3AMIinUYW41pG429qZX47CiCgHwOnHEu11dT4s7SQOR6aAh55DfFBnvE7eZzF99VaSXj
+ XNcDhh/eeJFgyeGfrUJ52erzmUT/0N1rjMvLr4a8WdBSgo9cI9eHTSa3SHmMMtz3E//L
+ iwwGtmjLsKg9A6qzl7dj7kw2EAwFZUI71/yY/riAlOPYmsUUU9luGwjIfrY6Ei2gqALo
+ HZpQ2v10LD9RH1WiX2dLbNKsRZOlGWaxTaQ6dNF9xGNBSxAOTX6fa/vCZxfDopQ+mG1j
+ gb2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795612870; x=1796217670;
+ d=1e100.net; s=20260707; t=1795612851; x=1796217651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pM55NgWylprYyzqaga+eBZrqcAOm5EF3HQc27luHc2w=;
- b=mWqbLUuXq6/KKbD6OK6oj8m5WZKVwlVADjn4xPHbaqQxs5nbuBcRJ3QjzqdfXlNnb3
- nYTpOx+rGKr/Tjshkyj2Smqj+CjKDP/r30wNZRsj6cbIFTrXYSYMchuXdlNyYP0cA2ld
- UySd/C4jXhnI8d5HbBcdjpfOk31SpDLm9Gqk0apNwY40h3Qj2Iko0bSeR9/oAQ/orFAc
- JM9rIXmedr57Ls20D5TkxalAVdI/Ta6/f+pnHzjJEirNne4wp4+MxlC3tFiH21F9aPaa
- kvV/zxcUYpMZ2eDdrCaaftA61Voo2Qt7uVOz+3XJ0xTzm9p1vyR3oPgErTVjJavILSEy
- 0vKQ==
-X-Gm-Message-State: APuU4Z98xeE+IqxKcb51bXEdVQpW58JF0P6iOFrRnPWMSrY6InH6MMbg
- JyGm7plypUD9EDaP+v0J5qXRM39gB7Z6I2c3vrApRF3rUoqtpqOx0EakVbEKYYLE1AqLGyNBMPi
- JhnYvEH7UehzD3Guwe+HQ7OVxd1z1XlaPb6XanPmaTF9dsLIESbAKYkRNYXxXOv7d+Q==
-X-Gm-Gg: AZFdTZcu5vfcJcz3FPvlIvWRKqQ0OuJp33Fsl/7YtQyp56HJ6bNRKGWv/HRqSbAnCVe
- J257UBbuV64hdxt4hi/pk1ORd4lHU0JtOpgMlE1Lu0Sui5MwTv+oFfXnKu8MoWLhg4SBzmEnVqm
- 5MnzdCGjlmntSL1mNJ6U2j30ivW8xFmqVvh3i00gonMo4Pm3cEUUUj+qZv43sgc8UMcY8IXUnjz
- 5BOCDJ2twjfk951oF1aCj/RVq2wZDf9lJ8SS1Q2XaU70rc2VQwRxpU43/fndMyrWHDxsEjree5Y
- EQhmbAqNw2wyiNFl/0x/Pa0mQM0H13v0F6Aft+Jb8dF/2cWE8tZ3fbDAZ5iDE/8TYo0uK7PUI8C
- AIQnCgDb0vok0VceYcq97SuXcbxNhu/ikXabFIPiifYYOR3y08F+5Qa/nuLxTqR7Fl/cb3FOrH9
- XYfqKdAD7EXw==
-X-Received: by 2002:a05:6102:688c:b0:7cc:2cef:b341 with SMTP id
- ada2fe7eead31-7d72b35f75emr7797061137.4.1795612870317; 
- Wed, 25 Nov 2026 05:21:10 -0800 (PST)
-X-Received: by 2002:a05:6102:688c:b0:7cc:2cef:b341 with SMTP id
- ada2fe7eead31-7d72b35f75emr7796971137.4.1795612869628; 
- Wed, 25 Nov 2026 05:21:09 -0800 (PST)
+ bh=6505ZE7yV1yaZ7Tz7xueT/9+yrJHVlZ1qKiE85sneOE=;
+ b=TmssHnaY0YDk6PdzsMWkUgodQbqBM/1hwqatE0eyIoXi4RtCzKr2Sup90moG84Oxme
+ bQI+/GIgrCHnerM3zAAheajzmHOqBX/VslhoIxgRua7RHUfTcfuKFAsKHKdVdonnVsUX
+ ekAemAipKhjwYgIDp3ti55CNdbAdlGdHcuwi819KEcR15qJB8q9IoJzmUG3aYizOZA3F
+ SXy3Z4Dfz/cYntSy+hU9JtqdNYxhKq8g91GVKpKtEZiSABXXa0VaneFUeL7ufWhXvrTx
+ nBvmA6Qzi/rFGiX3ZQH3IdA+qMUwY4ozPSW72+iW3uTC+jg3V0AAsxv5Zgrez2xU1UdO
+ Odsw==
+X-Gm-Message-State: APuU4Z/BkG9IwLNtzYmJyx0ZoSK7Q+/N00n1mu5+qobZxTcen4nbBny8
+ i8KIJpPk39Tv9e2JEoD4U/TE6rE6iVxTR2D8xVebpGtcFc+KiufIERMYQfbdqn3SBzqUhPGktYg
+ ltRiY0aVJtnDxCsYENCRiuEGFNrL46BKUoR2RUKo/IEY/GzhtHLWOE2aBM+NiTLXhUQ==
+X-Gm-Gg: AZFdTZeqGjUcsYxiBzxzArAUQWg5J9glDEJ8BAYWF82TK6GhP/+Ifo5KYolp7TsSdmL
+ mGF3JwrUTxq26PFYu294h2jKvq6AELcjE8ZeP0tCTH+URyeAxMR4z8dMnwfTWwBEwPX648HzTPV
+ iFHns/NukTSskHQdx9qzWwqCwSJUAXUKxlm6ouwq2ZBGDVafsuxq8IwlV8LaIsO9IKw5lyIjE9w
+ xQSWErSQ6RKQxiRVlEiZfJ+f4oOFW28rDAf+yeg7+71VmsRDMM+phfAiGQH4Aq1uLFTIQIE6gSU
+ UQHGJ0A3hqBh8BXoZRqHz63J8gCCaEFMxQCNik75sm8m9vXmMDxd4OqEjtL1edKzHWO4w1EpxwR
+ PwSrHNpT+GdYmGwwbPXJN9DazYOEudC5JKqR5kwp+CJtVzaD7Pd/L7kUMvZDnyWWwdQKnfIK4Ud
+ jm+LEtCCvA6g==
+X-Received: by 2002:a05:622a:e3d9:20b0:55d:8484:6506 with SMTP id
+ d75a77b69052e-55d8484669emr189581361cf.27.1795612850970; 
+ Wed, 25 Nov 2026 05:20:50 -0800 (PST)
+X-Received: by 2002:a05:622a:e3d9:20b0:55d:8484:6506 with SMTP id
+ d75a77b69052e-55d8484669emr189580881cf.27.1795612850303; 
+ Wed, 25 Nov 2026 05:20:50 -0800 (PST)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.110.107.17])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-92134a08552sm160836946d6.34.2026.11.25.05.21.07
+ 6a1803df08f44-92134a08552sm160836946d6.34.2026.11.25.05.20.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2026 05:21:08 -0800 (PST)
+ Wed, 25 Nov 2026 05:20:49 -0800 (PST)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 10/15] target/riscv: do not write RVG in misa CSR
-Date: Wed, 25 Nov 2026 10:20:09 -0300
-Message-ID: <20261125132015.229955-11-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 03/15] target/riscv/tcg/csr: filter bits when r/w HVIP(H)
+Date: Wed, 25 Nov 2026 10:20:02 -0300
+Message-ID: <20261125132015.229955-4-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261125132015.229955-1-daniel.barboza@oss.qualcomm.com>
 References: <20261125132015.229955-1-daniel.barboza@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: IjJ4n1VLjK8eQW6sTe8ARg45MF50zbsG
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA1MyBTYWx0ZWRfXwXoSAwdnwp7D
- AX0DEjxgYM/eooNEAcJGZKscHsynph5a90YFliopzWqr2X+2b+v77zGLQfSW7VPUO+/bqS1bY6W
- C+i5xJBVXC9Nl9E7dBUBTlDRBp4N2uY=
-X-Proofpoint-GUID: IjJ4n1VLjK8eQW6sTe8ARg45MF50zbsG
-X-Authority-Analysis: v=2.4 cv=CKu/zhrD c=1 sm=1 tr=0 ts=6b06e0c7 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
+X-Proofpoint-ORIG-GUID: bYATfII2I8brbPDo2svufXvCGCXRARtX
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA1MiBTYWx0ZWRfX29Fw7ahx+rTx
+ /ON4hOyB8mo8dlvtIUyoOXctQkl+nLqI2aEVlJWEhl790dLmFXY8mfPwLC+yZM19zOonhEb8kJ/
+ /EKqc/kW1/3c+9WiqK1aCGv1Wc02EEk=
+X-Proofpoint-GUID: bYATfII2I8brbPDo2svufXvCGCXRARtX
+X-Authority-Analysis: v=2.4 cv=Vra2kO2n c=1 sm=1 tr=0 ts=6b06e0b4 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
  a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=D34z8tFnLgwhCRIc9k4A:9
- a=1WsBpfsz9X-RYQiigVTh:22 a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA1MyBTYWx0ZWRfX/Vz1obE0FGAr
- YpfDIeubTxaL6+p/GtCLzyEsTsmIWMmb7II9s9656xvdh7fhQYT7sA/HZRLWRtKHoHipxQayaCx
- 0khyTaaiibUV5EzzDIzFIs6GUQuET7VS5Ki5Z3K79GssOQL6XNmJfC/WFDRylGEEBGBAcEn3Heh
- NEUdLAeTHRW9twjo3i6f4zuZRockGFsbCBVjtn1Tjz2NV07u0eOPJ2QjhR8O1V9W059tV6qtto7
- n5pXsSgXwjn1OC/BCpFOF71HcbUq3HRdxuusGnjyAf30rtpKq8jM+s87GHGWHa2P/5VHgJYX56r
- +nB9XYd2T/nTDWunupmeKXgW7Y+1O9sjPvpusvIicG72lnMhG94/t/A/WsqNYMiXsETtUU6FNZm
- OZd/k400vm69FtjC76ZrnDFG8bCoprM35le2ALsjVS+cd9BRBhXCk0AhfjKqLjLFoXBDVwu5NY5
- 0rIy/EUzAuicC/mGP0w==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=FibE5N0eoUlo320SlN0A:9 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA1MiBTYWx0ZWRfX07V9lGgMKE2L
+ 85lZqjR3gE8sLpC17TbShPXxec0Rdrl3zWRWG54e3Eevhz9upwneYTTDBtO1quqOarCjfPE/syZ
+ VujmdT62GSYD1tuthkqrocSLoTlfO4HSimStDUlBvvlZza8JaRjslkHYX1gYn4ATW1RLiOdlPRv
+ 30nTtdyFJ7B6MUJn62nM2grNOkOaCcWDayifKS0AWGQzNLTNNV4DftjxxBf0X/roIzXpyKlmA25
+ XzfFBhTz3QljPogo+vnKHA79G5GkU0KjzORCjuPvlhvdNWP6gQbx8k9GXO5lNCUWC0SsGC6RwXl
+ 5SL8hL22xwx6s7jeN2/rtZr/Y3NS98Bdzp4SiZ+WOFwZBTDVDRGQxssiyfsy+Q8zpRVPiYNsF35
+ 54vcwjNqmq/eapmrChbKZSHU/R3DtXcfkwoxvVfdmlm3y1k2i8WAk5F8X9vzyRgw/wK+wNXA39Q
+ Voe9Cup1/dJI1Xa964g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-25_03,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- spamscore=0 phishscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ suspectscore=0 malwarescore=0 clxscore=1015 adultscore=0 phishscore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250053
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250052
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,140 +155,111 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-It seems like we can't write RVG into misa.  The bit has been marked as
-"Reserved" for priv specs 1.11+, i.e. it does not represent the
-extension pack "IMAFD_Zicsr_Zifencei".  The official explanation, at
-least from what I could find, is that setting RVG is redundant with
-reading riscv,isa and/or other extension discovery mechanisms.
+rmw_hvip64() is not filtering out the bits from mip/sip, hosted in the
+'alias_mask' variable, when dealing with HVIP.  The bug is rather
+straightforward.  Given:
 
-To make matters more interesting, 'g' is still supposed to be present in
-riscv,isa.  Toolchains will keep using 'g' in their 'march' normally
-too.  So aside from sparing one bit in the MISA every other use of RVG
-is still valid.
+uint64_t alias_mask = (env->hideleg | ~env->hvien) | VS_MODE_INTERRUPTS;
 
-We have a good chunk of code that uses RVG as a synonym for that
-extension pack and, for now, I don't see a reason to refactor it.  We
-will cross that bridge when/if RVG acquires another official use.
+when env->hvien is 0, alias_mask will be a full 1s mask.  This mask is
+then used to retrieve the mip bits (via rmw_mip64) and then later when
+filtering ret_mip.  The end result is that HVIP ends up providing read
+access to bits it can't write.  The spec says:
 
-For now, if we're running priv spec 1.11+, filter the bit out of misa.
+"Bits of hvip that are not writable are read-only zeros."
 
-Fixes: 4f13abcb2bcb ("target/riscv: add RVG and remove cpu->cfg.ext_g")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4811
+So we're in a direct and trivial spec violation.
+
+Fixes: 40336d5b1d4c ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3133
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/csr.c               | 17 ++++++++++
- tests/tcg/riscv64/system/meson.build |  5 +++
- tests/tcg/riscv64/test-misa-G.S      | 51 ++++++++++++++++++++++++++++
- 3 files changed, 73 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-misa-G.S
+ target/riscv/tcg/csr.c               |  8 ++++++
+ tests/tcg/riscv64/system/meson.build |  5 ++++
+ tests/tcg/riscv64/test-hvip-read.S   | 41 ++++++++++++++++++++++++++++
+ 3 files changed, 54 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-hvip-read.S
 
 diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index ab278a97bc..929ee0a279 100644
+index 0e2ef8530b..c94ce88594 100644
 --- a/target/riscv/tcg/csr.c
 +++ b/target/riscv/tcg/csr.c
-@@ -2239,6 +2239,15 @@ static RISCVException read_misa(CPURISCVState *env, int csrno,
-     }
+@@ -5139,6 +5139,14 @@ static RISCVException rmw_hvip64(CPURISCVState *env, int csrno,
+     uint64_t wr_mask_hvip;
+     uint64_t wr_mask_mip;
  
-     *val = misa | env->misa_ext;
-+
-+     /*
-+      * RVG is reserved for priv > 1.10 but we're setting the
-+      * bit internally as a shortcut for IMAFD_Zicsr_Zifencei.
-+      */
-+    if (env->priv_ver > PRIV_VERSION_1_10_0) {
-+        *val &= ~RVG;
++    /*
++     * alias_mask, aka the bits that comes from sip/mip, should be capped
++     * to just VS_MODE_INTERRUPTS when reading/writing HVIP.
++     */
++    if (csrno == CSR_HVIP || csrno == CSR_HVIPH) {
++        alias_mask = VS_MODE_INTERRUPTS;
 +    }
 +
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -2267,6 +2276,14 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
-         return RISCV_EXCP_NONE;
-     }
- 
-+     /*
-+      * RVG is reserved for priv > 1.10 but we're setting the
-+      * bit internally as a shortcut for IMAFD_Zicsr_Zifencei.
-+      */
-+    if (env->priv_ver > PRIV_VERSION_1_10_0) {
-+        val &= ~RVG;
-+    }
-+
-     /* Mask extensions that are not supported by this hart */
-     val &= env->misa_ext_mask;
- 
+     /*
+      * Both alias and non-alias mask remain same for vsip except:
+      *  1- For VS* bits if they are zero in hideleg.
 diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 9cd62c27e9..d91e28a4d2 100644
+index 6c3de32965..9754c2a55a 100644
 --- a/tests/tcg/riscv64/system/meson.build
 +++ b/tests/tcg/riscv64/system/meson.build
-@@ -161,6 +161,11 @@ tests += {
-     'cflags': cflags,
-     'qemu_args': ['-cpu', 'max,smpmpmt=false,smdbltrp=true,ssdbltrp=true,smrnmi=true', qemu_args],
+@@ -126,6 +126,11 @@ tests += {
+     'cflags': cflags + ['-march=rv64gc'],
+     'qemu_args': ['-cpu', 'max', qemu_args],
    },
 +
-+  'test-misa-G.S': {
-+    'cflags': cflags,
-+    'qemu_args': ['-cpu', 'max', qemu_args],
++  'test-hvip-read.S': {
++    'cflags': cflags + ['-march=rv64gcv'],
++    'qemu_args': ['-cpu', 'max,smpmpmt=false,pmu-mask=0xfffffff8,smdbltrp=true,ssdbltrp=true', qemu_args],
 +  },
  }
  
  if 'qemu-system-riscv64' in emulators
-diff --git a/tests/tcg/riscv64/test-misa-G.S b/tests/tcg/riscv64/test-misa-G.S
+diff --git a/tests/tcg/riscv64/test-hvip-read.S b/tests/tcg/riscv64/test-hvip-read.S
 new file mode 100644
-index 0000000000..45a9ca720b
+index 0000000000..20a1492924
 --- /dev/null
-+++ b/tests/tcg/riscv64/test-misa-G.S
-@@ -0,0 +1,51 @@
++++ b/tests/tcg/riscv64/test-hvip-read.S
+@@ -0,0 +1,41 @@
 +/*
-+ * Test if RVG is being set in misa.  See Gitlab 4811 for more info.
++ * Test if a HVIP read is returning 0 for all bits it can't
++ * write.  Based on Gitlab 3133 testcase.
 + *
 + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+
-+.option norvc
++	.option norvc
 +	.text
++
 +	.global _start
 +
 +_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
++	li    t0, 2
++	csrs  mip, t0
++	csrr  t1, hvip
++	bnez  t1, _fail
 +
-+	csrr	t0, misa
-+	li	t1, 1
-+	slli	t1, t1, 6
-+	and	t1, t1, t0
-+	bnez	t1, _fail
-+
-+	li	a0, 0
-+	j	_exit
++	li    a0, 0
++	j     _exit
 +
 +_fail:
-+	li	a0, 1
-+	j	_exit
++	li    a0, 1
 +
-+trap:
-+	# Any trap is a fail code 1
-+	li	a0, 1
-+
-+# Exit code in a0
++/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
 +_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	la	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
 +	sd	t0, 0(a1)
 +	sd	a0, 8(a1)
-+	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-+
-+	# Semihosting call sequence
-+.balign	16
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
 +	slli	zero, zero, 0x1f
 +	ebreak
 +	srai	zero, zero, 0x7
 +	j	.
 +
 +	.data
-+	.balign	16
++	.balign	8
 +semiargs:
 +	.space	16
 -- 
