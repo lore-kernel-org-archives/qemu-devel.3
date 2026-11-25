@@ -1,62 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C149B606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F88606A32C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW2vr-0003Je-Ag; Tue, 24 Nov 2026 21:40:29 -0500
+	id 1xW30a-0006tx-Pf; Tue, 24 Nov 2026 21:45:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xW2vT-0002kz-Jm
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:40:05 -0500
+ id 1xW30W-0006q6-S7
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:45:17 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xW2vP-0002XC-E7
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:40:03 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1xW30U-0003Zy-De
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:45:16 -0500
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxFbVzSgZr5cciAA--.5513S3;
- Wed, 25 Nov 2026 10:39:47 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxf9OtSwZrasgiAA--.33394S3;
+ Wed, 25 Nov 2026 10:45:01 +0800 (CST)
 Received: from [127.0.0.1] (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJAxFs1uSgZrTy43AA--.52413S2;
- Wed, 25 Nov 2026 10:39:44 +0800 (CST)
-Subject: Re: [PATCH v6 10/26] target/loongarch: handle LVZ exception and
- vm_exit
+ by front1 (Coremail) with SMTP id qMiowJAxFs2rSwZrmi43AA--.52414S2;
+ Wed, 25 Nov 2026 10:45:01 +0800 (CST)
+Subject: Re: [PATCH v6 11/26] target/loongarch: add host TLBRet and handle
 To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
 Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 References: <cover.1794558695.git.prcups@krgm.moe>
- <a8014816e260cfa6c241599205f87fc93c67436e.1794558695.git.prcups@krgm.moe>
+ <23c435596b199c9d3531aa29cfdc5b3bd5c5d726.1794558695.git.prcups@krgm.moe>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <90bac581-aa3e-a14a-e77a-eb11642a9ee9@loongson.cn>
-Date: Wed, 25 Nov 2026 10:40:55 +0800
+Message-ID: <2c54bbbb-2f38-f1ac-d3e4-9f699615aee2@loongson.cn>
+Date: Wed, 25 Nov 2026 10:46:11 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <a8014816e260cfa6c241599205f87fc93c67436e.1794558695.git.prcups@krgm.moe>
+In-Reply-To: <23c435596b199c9d3531aa29cfdc5b3bd5c5d726.1794558695.git.prcups@krgm.moe>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxFs1uSgZrTy43AA--.52413S2
+X-CM-TRANSID: qMiowJAxFs2rSwZrmi43AA--.52414S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxArWfGF18XryUGF1xArWkuFX_yoWrXw15pF
- WI9Fy7K34rKFWDA34xJay5Jr15Ww4xGw4Ik3srtw1SkrsYqFWFqF4vq398KF9rJ34rAF4U
- XFnayryUWFsrGacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxArWfWr1kWryxAr1rAryruFX_yoW5uw1xpr
+ ZxZr12kFy0gr9FywnFqa13GFy5uw43Gr4Ikw1Iga4Sg3yFqr4v9r4vg39FqF18A3W8Zw48
+ ZF9Yvr18Gay8ZFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAF
  wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
  CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
  67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
  IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
  14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j83kZU
  UUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
@@ -87,110 +86,108 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 On 2026/11/13 下午4:45, SignKirigami wrote:
-> Add EXCCODE_GSPR and EXCCODE_HVC macros. Execute real vm exit at end of
-> loongarch_cpu_do_interrupt().
+> Add host value in enum TLBRet, and use it in raise_mmu_exception().
 > 
 > Signed-off-by: SignKirigami <prcups@krgm.moe>
 > Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 > ---
->   target/loongarch/cpu.h         |  2 ++
->   target/loongarch/tcg/tcg_cpu.c | 26 ++++++++++++++++++--------
->   2 files changed, 20 insertions(+), 8 deletions(-)
+>   target/loongarch/cpu-mmu.h        |  8 ++++++++
+>   target/loongarch/tcg/tlb_helper.c | 18 ++++++++++++++++--
+>   2 files changed, 24 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index 3c21b7633e..42305e4b05 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -95,6 +95,8 @@ FIELD(FCSR0, CAUSE, 24, 5)
->   #define  EXCCODE_WPEM                EXCODE(19, 1)
->   #define  EXCCODE_BTD                 EXCODE(20, 0)
->   #define  EXCCODE_BTE                 EXCODE(21, 0)
-> +#define  EXCCODE_GSPR                EXCODE(22, 0)
-> +#define  EXCCODE_HVC                 EXCODE(23, 0)
->   #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
+> diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+> index 491eb514d9..17fb92a213 100644
+> --- a/target/loongarch/cpu-mmu.h
+> +++ b/target/loongarch/cpu-mmu.h
+> @@ -17,6 +17,14 @@ typedef enum TLBRet {
+>       TLBRET_RI,
+>       TLBRET_XI,
+>       TLBRET_PE,
+> +    TLBRET_HOST_MATCH,
+> +    TLBRET_HOST_BADADDR,
+> +    TLBRET_HOST_NOMATCH,
+> +    TLBRET_HOST_INVALID,
+> +    TLBRET_HOST_DIRTY,
+> +    TLBRET_HOST_RI,
+> +    TLBRET_HOST_XI,
+> +    TLBRET_HOST_PE,
+>   } TLBRet;
 >   
->   /* cpucfg[0] bits */
-> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-> index 8765bda0d1..1301a9c6ad 100644
-> --- a/target/loongarch/tcg/tcg_cpu.c
-> +++ b/target/loongarch/tcg/tcg_cpu.c
-> @@ -37,9 +37,11 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
->   static void loongarch_cpu_do_interrupt(CPUState *cs)
+>   typedef struct MMUContext {
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 5662b2c49a..33d5e04eb4 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -48,15 +48,24 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+>                                   MMUAccessType access_type, TLBRet tlb_error)
 >   {
->       CPULoongArchState *env = cpu_env(cs);
-> -    CPUSysState *sys = env_sys(env);
->       bool update_badinstr = 1;
->       int cause = -1;
-> +    bool real_guest = !env->vm_exit && env_vm_level(env);
-> +    CPUSysState *sys = get_sys(env, real_guest);
-> +    CPUSysState *host = get_sys(env, VM_LEVEL0);
-
-I just submit one patch located at:
- 
-https://lore.kernel.org/qemu-devel/20261124073321.3015041-5-maobibo@loongson.cn/
-
-Field target_vm_level can be added when raising exception.
-There will be VM exit if target_vm_level < current_vm_level.
-     struct {
-         uint64_t badv;
-         uint32_t flags;
-+       uint32_t target_vm_level;
-     } exception;
-
->       bool tlbfill = FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
->       uint32_t vec_size = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, VS);
->       uint64_t last_pc = env->pc;
-> @@ -55,17 +57,17 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
->   
->       switch (cs->exception_index) {
->       case EXCCODE_DBP:
-> -        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
-> -        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
-> +        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
-> +        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
->           goto set_DERA;
->       set_DERA:
-> -        sys->CSR_DERA = env->pc;
-> -        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
-> -        set_pc(env, sys->CSR_EENTRY + 0x480);
-> +        host->CSR_DERA = env->pc;
-> +        host->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
-> +        set_pc(env, host->CSR_EENTRY + 0x480);
->           break;
->       case EXCCODE_INT:
-> -        if (FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
-> -            sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DEI, 1);
-> +        if (FIELD_EX64(host->CSR_DBG, CSR_DBG, DST)) {
-> +            host->CSR_DBG = FIELD_DP64(host->CSR_DBG, CSR_DBG, DEI, 1);
->               goto set_DERA;
->           }
->           QEMU_FALLTHROUGH;
-> @@ -76,6 +78,8 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
->           update_badinstr = 0;
->           break;
->       case EXCCODE_BCE:
-> +    case EXCCODE_GSPR:
-> +    case EXCCODE_HVC:
-With EXCCODE_GSPR/EXCCODE_HVC exception type, CSR_BADV is not necessary.
+if one additional parameter target_vm_level is added in 
+raise_mmu_exception(), I think that it is not necessary to add 
+TLBRET_HOST_xxx.
 
 Regards
 Bibo Mao
->           sys->CSR_BADV = env->pc;
->           QEMU_FALLTHROUGH;
->       case EXCCODE_SYS:
-> @@ -178,6 +182,12 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
->           qemu_plugin_vcpu_exception_cb(cs, last_pc);
->       }
->       cs->exception_index = -1;
-> +    if (env->vm_exit) {
-> +        host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, VM, 0);
-> +        set_sys(env, VM_LEVEL0);
-> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_GUEST);
+>       CPUState *cs = env_cpu(env);
+> -    CPUSysState *sys = env_sys(env);
+> +    bool real_guest;
+> +
+> +    if (env_vm_level(env) == VM_LEVEL1 && tlb_error > TLBRET_HOST_MATCH) {
+> +        trigger_vm_exit(env);
 > +    }
-> +    env->vm_exit = false;
->   }
+> +
+> +    real_guest = !env->vm_exit && env_vm_level(env);
+> +    CPUSysState *sys = get_sys(env, real_guest);
 >   
->   static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+>       switch (tlb_error) {
+>       default:
+>       case TLBRET_BADADDR:
+> +    case TLBRET_HOST_BADADDR:
+>           cs->exception_index = access_type == MMU_INST_FETCH
+>                                 ? EXCCODE_ADEF : EXCCODE_ADEM;
+>           break;
+>       case TLBRET_NOMATCH:
+> +    case TLBRET_HOST_NOMATCH:
+>           /* No TLB match for a mapped address */
+>           if (access_type == MMU_DATA_LOAD) {
+>               cs->exception_index = EXCCODE_PIL;
+> @@ -68,6 +77,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+>           sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
+>           break;
+>       case TLBRET_INVALID:
+> +    case TLBRET_HOST_INVALID:
+>           /* TLB match with no valid bit */
+>           if (access_type == MMU_DATA_LOAD) {
+>               cs->exception_index = EXCCODE_PIL;
+> @@ -78,24 +88,28 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+>           }
+>           break;
+>       case TLBRET_DIRTY:
+> +    case TLBRET_HOST_DIRTY:
+>           /* TLB match but 'D' bit is cleared */
+>           cs->exception_index = EXCCODE_PME;
+>           break;
+>       case TLBRET_XI:
+> +    case TLBRET_HOST_XI:
+>           /* Execute-Inhibit Exception */
+>           cs->exception_index = EXCCODE_PNX;
+>           break;
+>       case TLBRET_RI:
+> +    case TLBRET_HOST_RI:
+>           /* Read-Inhibit Exception */
+>           cs->exception_index = EXCCODE_PNR;
+>           break;
+>       case TLBRET_PE:
+> +    case TLBRET_HOST_PE:
+>           /* Privileged Exception */
+>           cs->exception_index = EXCCODE_PPI;
+>           break;
+>       }
+>   
+> -    if (tlb_error == TLBRET_NOMATCH) {
+> +    if (tlb_error == TLBRET_NOMATCH || tlb_error == TLBRET_HOST_NOMATCH) {
+>           sys->CSR_TLBRBADV = address;
+>           if (is_la64(env)) {
+>               sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI_64,
 > 
 
 
