@@ -1,134 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1589E606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 01:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61523606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=qUcxnXLd
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wSILsaoK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW2Br-0004ND-PZ; Tue, 24 Nov 2026 20:52:56 -0500
+	id 1xW2b4-0003G6-2j; Tue, 24 Nov 2026 21:18:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xW2Bc-0004Kf-AF; Tue, 24 Nov 2026 20:52:40 -0500
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xW2BZ-00026B-8F; Tue, 24 Nov 2026 20:52:40 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zBc1aZ3OpScIfmG22MKr00Cx8xSiquvD+LdLRbV2eqlksYz4dE4k3GTutu0AQIoQtEi/P5NN1NUtVNDxdBs+OYUWvMw0UjxS5kHepoyJLbfvA1gorrgsnxxFqKGr4T2RWWbqupYDsClTeZjko4jDUWeTA2aiBvQmztu91CWMbNxXotwbk4blsHj/r8z3u5KZTM35Hp80/9dMlrlOEd4XIJKVzRQPUDN7Zq1siAsON4w5B/cw2UqLk7k/f/wIoKbIb6LZP51Vk8babs9IH3Qqvf7f3F56H7D+3zoaJ3FAEXj6j/RBLpNBCTeDM1YAvmKE0bfZ++vYQEwgLBKhZDMk3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kcbagO+tkHSN7F35+7J4ES09swwkCN4skbJWRNGJ7JY=;
- b=FwHMU8cGrQSnjFB1qe0vB7RwaduvZZN79zl+5rdHhXaZHZbei3r6eQLC4bjju4TCJS00ta/Yx/bjldAofC9c2j9HTI6te4fzjzyeFDtICZ1XRnUSG8QyRxqJfz6vwE6O9OFLEtvlDI01U6T317Fg2Gkr3NOVgmS6RJ8+mqn088LaORFBJrrqIepRtWB0l2tgEm8/HJ9uiDAsst8sZmDFDbaIXOgAn0oH7Soq3SSaELL4ih2/AGGojkXhOfDjgFEXW4ogRNedH6JWWG0DcoCaxdhZflJ08U5x5xDGF523YsOf/DTqr9gjy38ScMvzbv+7A5Oo1pYmD+LovEa+7yekSg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kcbagO+tkHSN7F35+7J4ES09swwkCN4skbJWRNGJ7JY=;
- b=qUcxnXLdDKz7EX6ireLOZVlqwFiBaUNX5M2YRnBtnKbSH8IA/a3N7GCXQlrhR7d8OO0zWz2mjA8TvomyyIh1wd2O0eh3ynLMC2HRabz6tUcKX/G5ecCJHc1pAMlyGWEegIJhJe2C83W0CIIXa6anYrCQQy+etYO+sO8PgV385AZpsJGfUTMXWB5nX/HOTNXpocnU8m2vt9P4toFtETlwTbc+yWsrvWAJeHPpbBONg8osrQSxSo2/ucIk2GRfMePCJDq2SEHushPIvKMoY0ZOy7ShpNBskUokpSUsaQsB57kIp5DptHIt79oXsyXl3HNpqSQRbOd8RyGAnl9HomOGIw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KUXPR02MB9336.apcprd02.prod.outlook.com (2603:1096:d10:a3::10)
- by KL1PR02MB6900.apcprd02.prod.outlook.com (2603:1096:820:107::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.14; Wed, 25 Nov
- 2026 01:52:25 +0000
-Received: from KUXPR02MB9336.apcprd02.prod.outlook.com
- ([fe80::1451:cb49:7950:b10d]) by KUXPR02MB9336.apcprd02.prod.outlook.com
- ([fe80::1451:cb49:7950:b10d%4]) with mapi id 15.21.0639.012; Wed, 25 Nov 2026
- 01:52:25 +0000
-From: Chao Liu <chao.liu@processmission.com>
-To: WX Chen <wxchen0913@gmail.com>
-Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Tao Tang <tangtao1634@phytium.com.cn>
-Subject: Re: [PATCH] Provide weaker memory ordering for RISC-V guest FENCE
- instructions.
-Date: Wed, 25 Nov 2026 09:52:05 +0800
-Message-ID: <20261125015206.92299-1-chao.liu@processmission.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261120-fix-riscv-fence-20261119-v1-1-aeb9ba142598@gmail.com>
-References: 
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH8P220CA0064.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:2d9::10) To KUXPR02MB9336.apcprd02.prod.outlook.com
- (2603:1096:d10:a3::10)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1xW2b2-0003Fr-E4
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:18:56 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1xW2az-0004eG-3U
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:18:54 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2f041f88577so28794595ad.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:18:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795573131; x=1796177931; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=PixW8xr/EW/zxgBbSl3pwhIY2Z9o+E7akjOIfyYY7gI=;
+ b=wSILsaoKTDzJSHeBcFYKalvMDpqB8oqdcXLXJ4+qJC1RsL3OG4kCqqJYTYu+blkTM9
+ ylymoShuZuBCpNkI6pHTg+UuwJl46y2ayU5DKMMEPTKrGl30I0YYrfAwtkgvhebA5Sbh
+ 0qIh0NAQJ9RAXM0/3Qug6/Ez9f9GeiMPr24AWE6SdbUIgpYNqVMHLZD9RidQHheukDkB
+ i3vXeAmQvq26UDcaBroWdXqS2f0OTQzSqmU5h4Fdqz8ECMUmdG17o1uwK1gpT3wuRyDu
+ 3fFT7S6PzuJzAnqOIopG9j4PWzZ5iJdbyjK4dZPu/WmPM0oD7okGQI1QYPdGOaNipl/M
+ jOww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795573131; x=1796177931;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PixW8xr/EW/zxgBbSl3pwhIY2Z9o+E7akjOIfyYY7gI=;
+ b=RTCoWt1YslUYYRXjVcSSu7+akGhc1dbzZslxd0mDEsya5Zn8Zrs8Uyie7PMdbPtiJT
+ u/dEEII2qiUsHCZdindyOi3E9GRZy0wTKwzFg9aow5kfkPyVvYShMU5YsQaN6SNjbssX
+ 0btJcZs/c+yv35o2YOmm7CwsUGwndDt3eL6tf/JdnX7C2H1HqQbT+zRlrANLPk0H9ieT
+ sPRJbZPG7uoJsE9wffgCEX9BDY3zVUjH62j/cXmh9GY78etJvnSgdxL/uMuYS8z5Kuyh
+ EP3HroBMp/w7zhf/jDzfn66/o8Rgyc01d+Q0U0GOzniKGrLS3cAq6tt5enbltr16On4k
+ yvpw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGBm03KSvvsOJE7K2bAarDY4rlI39WgbdeegHbblfJQvKHoIQ2y9AcT1xQ5F6qcPTndNSxglQwmdQK5@nongnu.org
+X-Gm-Message-State: APuU4Z/W6bzx1BoRH/49GkgGfP1aFAuuQGqUi/DlRofY8w8+lKhX5ZCd
+ QCTitOD09mMmiUjw2nMnsMrXiArFlf4Q3wHL7DF0jvcjvInGseBHAjH5
+X-Gm-Gg: AZFdTZfy6f/fuDKpkWfqKcsxlakNH2U0D/r7NzqLBlC20BlgjI2p58K/VTC8AqLDiC7
+ JmQOhwjrClw7DiVpgcTCezuDw0idYaCa+MEJh73Zrph3gKtEzZqMJFcSFMTwpBQVKtS6GrpE/XF
+ 3TVCCoIqdtanyEKfZvq2zZm9K21FPVgy2SbBpXxGHSGF/KO++SIA/7lYxkUsYYloaVILojNH6K7
+ SrVG8xsQd69BcE6routRX+kWIwo63wkOqsbjC6tPDJCOw/cLoLVEPQOCOfIhX1n7wl5a05KGHSE
+ iKSpv28W3ci0EwnArl49akHv6w0v9OhpCGvYs3IqcXPskDzZKTLAfTRMG84nx/NH4LRKMi6eMcZ
+ c2RnU2cDfvqSlLFRing6NLXJ33VudBjQcATDsMQdsAL+42LTuDN57jtwQayfcJwng01yknPgl1q
+ 0CqKSBlUhP35p5/0AqaggZvKxjRyNCuly7B1W3JJL9yq731xpHC1/gFXQudHnwyDF11ltPhgWvM
+ LcV0cLB5ewWGk4xChD6bSHSBX4io94E3v7t9WEcOSx5568Xmskh4SGn1M+Tv42PVd5LCAX0av1T
+ C4LMF3OY6bb/FDEmbNsrWkba/noCar50
+X-Received: by 2002:a17:903:32cf:b0:2f0:5e53:8db0 with SMTP id
+ d9443c01a7336-2f05e53a72fmr114721725ad.25.1795573131270; 
+ Tue, 24 Nov 2026 18:18:51 -0800 (PST)
+Received: from [192.168.200.201] ([14.19.9.16])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2f03f108205sm75532405ad.44.2026.11.24.18.18.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Nov 2026 18:18:50 -0800 (PST)
+Message-ID: <fc1987c8-33f4-4641-8473-955e63e491cc@gmail.com>
+Date: Wed, 25 Nov 2026 10:18:47 +0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KUXPR02MB9336:EE_|KL1PR02MB6900:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3485c358-e401-4391-3715-08df4a96c0f7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|18002099003|261009223027099003|22082099003|261102123227099003|56012099006|10067099003|261021123027099003|261028144727099003|261026140227099003|261026121527099003|261022105027099003|261021121427099003|261022075727099003;
-X-Microsoft-Antispam-Message-Info: 2DawRWfpKBESq9jvkTGi5VokCkqBwjoBm/yq6GpI7quoEgGyHysK6QMvpUnYXBTvMUIkZj8fyG8onKvIzXKbcYrjzcSoeRAkvqFb/+g9eBn5A11l9Qt1TiGyQFqPJROVWEzk+sDgLwRjQ+SkFN9I3TYcFNghVHdMIYGoi4T4LhMWCA8fZLILld7UQUoYdd/FZqDlV2mgehZQ5fpgqWiB1nBNrTnXw6vdT3Wa41G/WxaKEKUeWdsDbz8EPk/HbIxX1SjdIfzH6dLavoXPh/NhrM4ABMTv2a7nH/+cDCKNUr1XKngKtdsouBFNHNb3gHVXAvy2/pu0t8sLFxrw0Xu+B4zvhgznCNy7kxPdvNtHhFP+jbuCb0Sa/P5GUvymx8NaBwDaNot43AWvBo1R+qtkJ0ODhv/sGa3YozkTUC7hgkwTbc+dLFhNRlQ57sl+ycqkBrsGGJmjAPyLPioGq546DEcSjxJTj8XaFcZESJvamVLUpjTlO9W1wDcui+WLFTDMACucZa4MROlTpm2cDXFm/0gf+34NLQB+lRmLROqKDEmD6HB5xoQOsPe8SCiKWZH98urnxb0uHFi1zk3GVXQALHOPV/w26DRwLHqQNIdzrp4VaRae9Iy9wT0BujdDLhE0
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KUXPR02MB9336.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(261009223027099003)(22082099003)(261102123227099003)(56012099006)(10067099003)(261021123027099003)(261028144727099003)(261026140227099003)(261026121527099003)(261022105027099003)(261021121427099003)(261022075727099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?76DudV64MjLjLXyEhzrUvTUAlhSXOoEjyVYMaFHE0qxVzYVjfiOtYPMcMsJ1?=
- =?us-ascii?Q?fDzUxdTYOgHV23JmOLsPPD2NsPdj2G56qJJej99mjgP6vny+q7QhuE9N845l?=
- =?us-ascii?Q?WrGJh1bq5pPj5rEU49bSnKumFySKfn/ip78u0F7JBgv5SmGB5slkT3xw3OPk?=
- =?us-ascii?Q?sb9neeafxI/++UpNADfLoqOk/SeNzs08GuVeIUlMsnZj7sU+TwOHcpoOrmLR?=
- =?us-ascii?Q?1Sddd2TevGtahMeo+WRoVJyCq2WbdnZhzJLfyU2XSbWXE8WfB5IL0vRLLhHe?=
- =?us-ascii?Q?ZCTt9xMji7v76dcHOCk/3+cmDL6E5ybG68zVvw7hJ4iIXtLPVkHVMGhrZSdq?=
- =?us-ascii?Q?xn6+VbV6B+8ID4eSS9Fo7N3S8xqcvpgrw+g/BXblQdBSUQ/dfWQXgvaTse/x?=
- =?us-ascii?Q?Uy6DNhSgbTWnEOHXtsPfIRukeYaG8/9QR0hfeuF9J3XObC0n++Y7TaYNJHwY?=
- =?us-ascii?Q?ICs5eZQv1M4gcBIOnBWa20PTE5JN+/6xgaEG+Lh6Fdb4pVD0UyIuXvTAg7zs?=
- =?us-ascii?Q?R70RwuzJzhiWT07DLhUyUYT2rCT1hwqnwXf5SJN4N2Y8jjgKDxSp1TzUIh1M?=
- =?us-ascii?Q?px88B8vB4UVMPcL0Sra8rBgelHssPv8s0F/MFSBP+l/jfi2vtMvL1nN+Mi+9?=
- =?us-ascii?Q?dd5VGihvFGddi5Tzn3rDrp8BzrfYUiLqpVLEJ8f+6/GTb480dmdnE2HjvBH+?=
- =?us-ascii?Q?w9sFP8GwuxDr17bmEXc7VR0rcCEVmw18FTM2aM03DPXDcIsDgljkOewPXNKM?=
- =?us-ascii?Q?/paMQE2pHQiGPNd3KN8purJ55QVGWDntJy3zNQZUWAwx/UM+r1hGOkPM9BJz?=
- =?us-ascii?Q?LCtWLdHGEjITAFvjIiHbZV8PbMOB6MrvLWw67HlSRLAKaKMQn4/6SCnVJmur?=
- =?us-ascii?Q?5N7RUyr/iZC9lxdaSTFpN8W6VJxxDcySHLYaPIvO1US9FPD6sKLPFta64y5E?=
- =?us-ascii?Q?WbtPQ+hDX7xZovfj1b+QZVXgsIaUtH9z2MvYiWO3XWwzBvNe9rZDxT3BEqY7?=
- =?us-ascii?Q?xPGTGI4/F4KNE2U1hC5QPIrCZUehENmePIiiWFTy2XUmzt4n3nC240sv6/um?=
- =?us-ascii?Q?/hKPuQkf1VZcXt5DwbYFvLIH7ooTW/jqMEc9TQahX2GvYY0uc8aO/CearOl9?=
- =?us-ascii?Q?XrNtHBaFrcKS1xn0FkylfR/kbYn0yGhja+txrTEkZc6qJTmLxpEbWly2uyz3?=
- =?us-ascii?Q?WKaJR1LhuizjGEvnNRhFMGp0gr/9d7Bx1vxG66oe9lNhnR0cS9lv+twtPsqE?=
- =?us-ascii?Q?Yc1/+PBB5VTkpVdWDDxewodVISL4BzqGDA0x0LsLYHlg8nYiBaXz9o40XUqD?=
- =?us-ascii?Q?g0a+OKNQDfnEMZtrmpBOhROFuPwV8Ecq7dVYk72mcnJiN7OGMFIqfYcUfPbG?=
- =?us-ascii?Q?7tUcFpyNeYCFnlHSMZGhG5J2IWq7B2k+TnxVs53qgJRw5MV6u+gwLcwLWl3O?=
- =?us-ascii?Q?tTSzFIlr7sn2Sf2o4fRFM7x5QoYwqne0xItU02vGeR3YIpOzqxbeeGy3Uh5q?=
- =?us-ascii?Q?DFGlKlqNL1iqM+qh/7AePJ2cujsdX4doe8dJkdHuCO7Ko6CXkdXimcvVU6S1?=
- =?us-ascii?Q?xCHZuRrA5FzaZfg3SsT6C9eO/0gHc/1YQlaKRg8rvLHGlC9xfNL61W2P6Qce?=
- =?us-ascii?Q?c171h3f8pcZdZ4V2ixxzBuEOo2rL5hHulbhSQbn28o09NAAXf5AL4ph893aF?=
- =?us-ascii?Q?lwB7Nwd2VzjT8l9IhrmmHzMwMFYFtYa0ElONIk6F0e0C+kxy0Sdj5iBEIz8S?=
- =?us-ascii?Q?b3imJ9GSaPkHKA1XlZyQmZJ3a9g3clc=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3485c358-e401-4391-3715-08df4a96c0f7
-X-MS-Exchange-CrossTenant-AuthSource: KUXPR02MB9336.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2026 01:52:25.5363 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YLhFh8HNJhLqUECJqsqeN/387ziDvzGgD5QBSDe6hPhvA2/tMPHxYO+92Ahg2pE35aNzAAxKb+2EvRD7nQhsvkDY6Nxkfgq2xPwjax1BdaE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB6900
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=chao.liu@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: add memory ordering required by RVTSO in
+ ldst_stride_trans
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Tao Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
+References: <20261121-fix-rvtso-vector-stride-v1-1-1c451042b0b5@gmail.com>
+ <77ad37e6-f068-4230-9cf2-9b8364fa7c49@oss.qualcomm.com>
+Content-Language: en-US
+From: WX Chen <wxchen0913@gmail.com>
+In-Reply-To: <77ad37e6-f068-4230-9cf2-9b8364fa7c49@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=wxchen0913@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,88 +109,85 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 20 Nov 2026 17:34:54 +0800 WX Chen <wxchen0913@gmail.com> wrote:
+Hi Daniel,
+     Thanks for the comment!
 
-> Currently, they are implemented as full memory barriers, which may introduce stronger host barriers than the guest actually requires.
+On 11/25/26 02:52, Daniel Henrique Barboza wrote:
+> Any reason to not handle ldst_index_trans, ldff_trans and 
+> ldst_whole_trans? They all
+> fall into the same RVTSO work you're doing here. 
+No technical reason, just not sure if they should be organized as a 
+patch series :D
+I'll include those paths in the v2 series.
 
-Please wrap the commit body at 76 columns.
+> In ldst_us_trans() we have a Ztso comment explaining why we're 
+> positioning the barriers
+> around the loop.  We don't need to replicate it here but it would be 
+> helpful if we
+> could add a comment like:
+>
+> /*
+>  *  See ztso comment in ldst_us_trans for more info on why
+>  *  the barriers are put around the loop.
+>  */
+>
+> In the helpers we ended up adding these Ztso related barriers.
+>
+Indeed. I'll add them in v2.
 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+Thanks,
+Chen
 
-Thanks
-Chao
-> 
-> Signed-off-by: WX Chen <wxchen0913@gmail.com>
-> ---
->  target/riscv/tcg/insn_trans/trans_rvi.c.inc | 36 +++++++++++++++++++++++++++--
->  1 file changed, 34 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-> index 4784ea1607e74eb5b0076425a732b5d3817b3482..6e094e5886360c2f9f7c187e82e6f60da36b84e4 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-> @@ -968,8 +968,40 @@ static bool trans_pause(DisasContext *ctx, arg_pause *a)
->  
->  static bool trans_fence(DisasContext *ctx, arg_fence *a)
->  {
-> -    /* FENCE is a full memory barrier. */
-> -    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-> +    /*
-> +     * FENCE.TSO orders all R/W pairs except W -> R.
-> +     * For TSO, the pred and succ should all be RW,
-> +     * otherwise it should be treated as normal FENCE.
-> +     */
-> +    if ((ctx->opcode & 0xf0000000) == 0x80000000 &&
-> +        a->pred == 3 && a->succ == 3) {
-> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_SC);
-> +        return true;
-> +    }
-> +
-> +    /* Reserved case, choose the strongest ordering.  */
-> +    if (ctx->opcode & 0xf0000000) {
-> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-> +        return true;
-> +    }
-> +
-> +    /* Normal FENCE. I/R for BIT 3/BIT 1, O/W for BIT 2/BIT 0 */
-> +    TCGBar ordering = 0;
-> +    if ((a->pred & 0xa) && (a->succ & 0xa)) {
-> +        ordering |= TCG_MO_LD_LD;
-> +    }
-> +    if ((a->pred & 0xa) && (a->succ & 0x5)) {
-> +        ordering |= TCG_MO_LD_ST;
-> +    }
-> +    if ((a->pred & 0x5) && (a->succ & 0xa)) {
-> +        ordering |= TCG_MO_ST_LD;
-> +    }
-> +    if ((a->pred & 0x5) && (a->succ & 0x5)) {
-> +        ordering |= TCG_MO_ST_ST;
-> +    }
-> +    if (ordering) {
-> +        tcg_gen_mb(ordering | TCG_BAR_SC);
-> +    }
->      return true;
->  }
->  
-> 
-> ---
-> base-commit: 08ed97c33c3818ef51a7c852347a28e9f66807b5
-> change-id: 20261120-fix-riscv-fence-20261119-10a425b78673
-> 
-> Best regards,
-> -- 
-> WX Chen <wxchen0913@gmail.com>
-> 
-> 
-> 
-
-Sent using hkml (https://github.com/sjp38/hackermail)
+>
+> Thanks,
+> Daniel
+>
+>> +    if (is_store && s->ztso) {
+>> +        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
+>> +    }
+>> +
+>>       mark_vs_dirty(s);
+>>         fn(dest, mask, base, stride, tcg_env, desc);
+>>   +    if (!is_store && s->ztso) {
+>> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
+>> +    }
+>> +
+>>       finalize_rvv_inst(s);
+>>       return true;
+>>   }
+>> @@ -924,7 +932,7 @@ static bool ld_stride_op(DisasContext *s, 
+>> arg_rnfvm *a, uint8_t eew)
+>>       data = FIELD_DP32(data, VDATA, NF, a->nf);
+>>       data = FIELD_DP32(data, VDATA, VTA, s->vta);
+>>       data = FIELD_DP32(data, VDATA, VMA, s->vma);
+>> -    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
+>> +    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, 
+>> false);
+>>   }
+>>     static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, 
+>> uint8_t eew)
+>> @@ -958,7 +966,7 @@ static bool st_stride_op(DisasContext *s, 
+>> arg_rnfvm *a, uint8_t eew)
+>>           return false;
+>>       }
+>>   -    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
+>> +    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
+>>   }
+>>     static bool st_stride_check(DisasContext *s, arg_rnfvm* a, 
+>> uint8_t eew)
+>>
+>> ---
+>> base-commit: 08ed97c33c3818ef51a7c852347a28e9f66807b5
+>> change-id: 20261121-fix-rvtso-vector-stride-39fd6f035f17
+>>
+>> Best regards,
+>
 
