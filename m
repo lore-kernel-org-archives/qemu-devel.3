@@ -1,83 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DFA606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E9A606A321
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 08:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=e47k0ysd
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SK5MSv8x
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW8Rx-0006Ux-7f; Wed, 25 Nov 2026 03:33:57 -0500
+	id 1xW8S8-0006W2-G5; Wed, 25 Nov 2026 03:34:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <haseebashraf091@gmail.com>)
- id 1xW8Ru-0006Uc-NY
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 03:33:55 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1xW8S2-0006VH-Ci
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 03:34:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <haseebashraf091@gmail.com>)
- id 1xW8Rs-0005eG-6P
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 03:33:54 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-491971ac844so4927092f8f.2
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 00:33:51 -0800 (PST)
+ id 1xW8Rw-0005xB-PJ
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 03:33:59 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-49d05d51553so39024935e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 00:33:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795595630; x=1796200430; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795595635; x=1796200435; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Q9ONtqei/kmlp6pMlrNKfdiUp3kKpdEqp/1qDnBDp10=;
- b=e47k0ysdjH9vmZPznMGKXspRZ2vlbBIGaSLphXg+pMkrrwp7N2/p8f1LT8QQTJpdLQ
- Q8Nm0+m6pjIGhROjUTB9lRXTokVjmz0sYuCLUEilbA3ASvmpb7NECacd51L7AbCc9PvW
- WMAQl5ih7diPBW6/551s+GwY4h4NV22onYfkZAZm9Wc3yYOagFz16OdxvL9gA6c6xADK
- JMMDLMpYir2Xez13Xuhf+1WWX4LiYT7+xHik3YfrkiZU2d//G9ffhnXMKFeiZQfyjkXp
- YBXPR56h0Wu2qLSqaEVkNHZ5Lod2M04UgC29wW7dB3xYBNxElsSae4UQQMuaBb1LwwWU
- JW7A==
+ bh=Z6FrUQVWcZ8Tf+M/yB2yRcJMe+53iifRD7hiQeXpC/o=;
+ b=SK5MSv8xiK2jB+AfQECMpqBeOGuk9a7pMxrAaXpdx7FBWGfa8aIckpp/TD/F96OrXG
+ Cu5Ugl10y91KeSz3mxUrDyoEU8ID+xLRiO1A9pSN+Wq1weoCSTU7G9cxS9iANVGF1Yvh
+ 2JO5j/TJq0X7YaPjs338VUGHtCTz/J2ayQYmQO/iOy589zcQPPnxWFaGEUp52TMEoDrr
+ FLId4HHDXp0xPFj6mvJE0gtvG0vHJdlCCgU3D3GhRVb/RUrADRlKXCi1AxpH7sgF5lCi
+ z77leuY9Nv3t83VCiDQ3EL48IssTH1aoicEC0R6J3RzOhONIg5BbtwdQGu1L2oE16hD6
+ 3TqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795595630; x=1796200430;
+ d=1e100.net; s=20260707; t=1795595635; x=1796200435;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Q9ONtqei/kmlp6pMlrNKfdiUp3kKpdEqp/1qDnBDp10=;
- b=BHjS0voxWQfnzspDgjRXhYT+ycz5yk89AtHGJGxTXTRH/GmUoMLHdp+uQ07PbZCZHt
- yrQdunl9YBB3s104Z40/m2k06/9ixIXZY1GOJRQxMjSo+SFA/Uwb92tprhPZU2a2LoNr
- OtZf6EmEqhUeQmRVnwMVg/fkvZouPfz0UapyeyEsq4iRxMgZBiLgGxMPkblYMZPe4E+9
- aF+i9eE78G5yb72x9txTQiXn09uKJOBfnBYLo0AH2+xPiVZ+o5BYKkCQ9rL2ABsAtKnr
- frigB7/BP0XVTDhX3+P7CNmVotRjBT+XjHGhA/uOISpQnahGGwDdqa4X6X5b3M7Cq3Cc
- Lycg==
-X-Gm-Message-State: APuU4Z/LLVX9Zc6FwBQvY4z67DRshxjRazO0ikxc0PERSW9U/v9Pgx0X
- mBsrHMdLatDXrbXJKEi96F8V30CJpm3pFtAVHc5nQBr+oyvQzsBaRzPO1dWSng==
-X-Gm-Gg: AZFdTZfIDt1aGRhEq8S4jfaAdXGbCjD5CCj2Gv/feKC2wacc9azX3+yycPIJzsr1Jxx
- Ylnqkboo7yR0LMoP/KehsPK6UKYPDiCnBzFekYi9PP9kBOMZRNC32OsGFOy8ZEwm0woG+kQ92OV
- GK+KgmWqnVVfDNHaKaDqBO++fMMWhQa7yhHnEV/n4/fvoj3tyl3SnqBvI7n9Cj4DQLWGy8grsNw
- lIjdXhfTlSyYUZUfyNDpP0KHmQtf+1Nb9cyTL0ksFKybO2a8d8B0Kp71ygY+FAlWK3fDghDfhSR
- Zl0lsBGGDiJR5YncxxYNGW1oLNilkhtWNh8zUHGMWIheHNYQX0SOT/bNGo1y21ts95clvndfLbq
- A+m+VCT4XbT3clQapvMk8JYICefsWO/6S3J1fePGc5Tcp7iUl6M3tDsI3Jtpx3ceI0/605ie8z3
- nhHd13Qe8ko+Pv6eKtODbdZloMnqq6GvgAYoIElCPZb6PMDqHmPAU4PrD6vuBc/BNgyOkVxKWY3
- /9ZynIgQn9XsQt87+U66GlLUdMAK9HCBLrfl1GGuAa9LPSq3tbFet05eEt3qcM6nXuJaZxDEXRX
- ohZwKG8Cs7KjsxNVZ8L+o5n2BWIm75Shd6mG3RNY50f1z1Hnl23CsLayqQ5eF+9igWSn6A8pt0B
- 2TQhGAawibWadoWz0B7kRWX21GIKFWswozIifFVmAi+9GNw==
-X-Received: by 2002:a05:6000:604:b0:48e:47e6:fdfb with SMTP id
- ffacd0b85a97d-4abb0c5d588mr31844266f8f.13.1795595630042; 
- Wed, 25 Nov 2026 00:33:50 -0800 (PST)
+ bh=Z6FrUQVWcZ8Tf+M/yB2yRcJMe+53iifRD7hiQeXpC/o=;
+ b=X5dRwjRLU+ia0QTXh0aG2WSVmdjln6YStGzMbigX8S4bw68McTagPtExviog1N6wBl
+ Mw/gWS9ueUzGnfBo5gZgzwFT38gMtgC/4QGEZTI65VJJQUdVgzcJsNq3KlKL6vdlnNwy
+ OmYDyq8E/J1quuylqq8RplQiHQ8hiFQnilBprAlAmwK12FVy2qahsUN//qJAbYmkV2iC
+ uh410LM/5kQ+YiO4n0HMyLWcBfFMyH7GqW6bJjSSwHxcNRW79GU7PfmBJwZeOO4zoIKK
+ KDTNjFSw8kaDOXQQDqqUUwfzUOvSiU1DF01Aft5uPOCYaxOONmBZx5gX3KEa0X4jedoS
+ RaMA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHnW6/ZlDqhajq8/6Lx+K0l9wL8KOnJdHClWVwKhjoE5KbSgtrvWBBqn3pkFUipeJO/WSSXvRmqMUfz@nongnu.org
+X-Gm-Message-State: APuU4Z9D19Ptnhi/TNI2k0Rw9sf6Rkqef+3kwmz/PCc+ZHYjUwErbzGp
+ bu05XyfCtT06F1uAGpU/v5BZqxAUwG3fjrnxI77dBZxu2YnR1sAZ9D0i
+X-Gm-Gg: AZFdTZcwG5rSwIHYC2FxazccYRG5sxmn/ThJHXSwOXy3t4sQMX5Q0geDc9fmap/C1uw
+ pnydxCaOdrwqjad+qri1/o1NcmVUaz70M+BSqoUlpDP27xgzRElBf4nvXERvMT8EOU5Q0T12Wfl
+ 4A1YF+tv06O/lrnXCsHPfPHqmtMDnseUjyJp1HjYLBVBUDY4wRu53SUee76eF8cMxCncrfbPQJX
+ 1nBkrsXgQXs4TnhqxzzyWF1Omp791ZQJmcH205Ro+nEiqOBkd9gi3c1WEorfzkgwBgkPlp3lWMY
+ yy15FwA9IJjU5adX0Y47gwDujJy6kzFQaKVWJtOAyhLQh3K1jJX1zc3qNqhVKImX5viXZUsu2aq
+ 2Da5HnmQYcYIlE9fTP7rx/+HJfze9cOGbN1UOv+59CO2k0KDjpFwZDji+eijL7J037MhCquE24o
+ F7zz57AsY+G8rP2OafEf/HWym5goWEjipxTurTkVIZVxA+fPzr/Gl6j14L4qGArdJAmEAq91Pvq
+ 66EoERLzO9mKGgCLzg9BPMGHTYc1FfYu40NNUl4yIGI++xmzKk8yXjC/2FhBuGo6XyPC7LcLBfi
+ reAcRAnXilVaIvWDo0NIWJmcwoj0KkR9AVgkLvHwZZHfMkXbBK/QxACcSXLkHEo0IJq393DQQLL
+ 8iqQUWMUovUoYGCh43E4uOdAG
+X-Received: by 2002:a05:600c:820d:b0:4bb:6cef:d14b with SMTP id
+ 5b1f17b1804b1-4bb887c34f1mr352708385e9.2.1795595635209; 
+ Wed, 25 Nov 2026 00:33:55 -0800 (PST)
 Received: from PKL-HASEEBA-LT.. ([39.36.25.192])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab65cb4341sm33089656f8f.4.2026.11.25.00.33.48
+ 5b1f17b1804b1-4bb884b7515sm689837675e9.13.2026.11.25.00.33.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2026 00:33:49 -0800 (PST)
+ Wed, 25 Nov 2026 00:33:54 -0800 (PST)
 From: Haseeb Ashraf <haseebashraf091@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Haseeb Ashraf <haseeb.ashraf@siemens.com>
-Subject: [PATCH 1/1] usb: make the VMState path of USB devices unique per MMIO
- controller
-Date: Wed, 25 Nov 2026 13:33:45 +0500
-Message-ID: <20261125083345.331408-1-haseebashraf091@gmail.com>
+To: Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vgarhw@gmail.com>, qemu-devel@nongnu.org
+Cc: Haseeb Ashraf <haseeb.ashraf@siemens.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH 0/2] hw/net/can/sja1000: fix receive FIFO corruption
+Date: Wed, 25 Nov 2026 13:33:48 +0500
+Message-ID: <20261125083350.331457-1-haseebashraf091@gmail.com>
 X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=haseebashraf091@gmail.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=haseebashraf091@gmail.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,68 +101,53 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Haseeb Ashraf <haseeb.ashraf@siemens.com>
 
-usb_get_dev_path() builds the path of a USB device from the path of its
-host controller plus the port number. A PCI controller has a bus path
-("0000:00:1f.0/2"), but a controller on the system bus has none:
-qdev_get_dev_path() returns NULL for it, so the path degrades to the bare
-port number. device_set_realized() registers the device VMState under
-"<path>/<vmsd name>", so every usb-tablet on port 2 of any MMIO controller
-becomes "2/usb-ptr". With two MMIO controllers (e.g. generic-ehci and
-sysbus-xhci) carrying a tablet on the same port the second registration
-gets instance_id 1 and QEMU aborts:
+Hi,
 
-  ../migration/savevm.c:947: vmstate_register_with_alias_id:
-  Assertion `!se->compat || se->instance_id == 0' failed.
+This series fixes SJA1000 PeliCAN FIFO corruption for received RTR
+frames.  RTR frames carry a DLC but no payload; storing DLC bytes in the
+byte-oriented receive FIFO made the subsequent release operation consume
+the wrong amount of data and misalign the next frame.
 
-Qualify the path with the controller's own device id when the parent bus
-does not provide a path. Devices on PCI controllers are unaffected, and so
-are controllers created without an id (built-in boards), whose ids stay as
-they were. The guest-visible USB serial number is left unchanged on purpose.
+The production change is isolated in patch 1.  It also resets the
+receive write pointer during hardware and software reset so that the
+FIFO pointers are consistent with the reset byte and frame counters.
 
-Note: for MMIO controllers that do have an id, the VMState id of devices
-attached to them changes, which breaks migration of such a VM from a build
-without this change.
+Patch 2 contains only the Kvaser PCI qtest and its MAINTAINERS entry.
+It is kept separate so it can be considered or used for validation
+independently of the production fix.
 
-Signed-off-by: Haseeb Ashraf <haseeb.ashraf@siemens.com>
----
- hw/usb/bus.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+The qtest covers standard and extended RTR frames followed by data
+frames, as well as hardware and software reset recovery.  All three
+cases pass on an aarch64 host using qemu-system-x86_64:
 
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 5cc5ffec33..01b575f2cd 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -568,6 +568,20 @@ static char *usb_get_dev_path(DeviceState *qdev)
-     DeviceState *hcd = qdev->parent_bus->parent;
-     char *id = qdev_get_dev_path(hcd);
- 
-+    /*
-+     * A controller on the system bus (MMIO EHCI, xHCI, ...) gets no path from
-+     * its parent bus, so the port number alone would be the device's path and
-+     * therefore the VMState id of e.g. a usb-tablet ("2/usb-ptr"). A second
-+     * controller with a device on the same port then registers the same id,
-+     * and vmstate_register_with_alias_id() fails its
-+     * assert(!se->compat || se->instance_id == 0).
-+     * Qualify the path with the controller's own id when it has one.
-+     * Controllers without an id keep the old, unqualified path.
-+     */
-+    if (!id && hcd->id) {
-+        id = g_strdup(hcd->id);
-+    }
-+
-     if (id) {
-         char *ret = g_strdup_printf("%s/%s", id, dev->port->path);
-         g_free(id);
+  - /x86_64/kvaser-pci/rtr-fifo
+  - /x86_64/kvaser-pci/reset-fifo
+  - /x86_64/kvaser-pci/software-reset-fifo
+
+Thanks,
+Haseeb
+
+Haseeb Ashraf (2):
+  hw/net/can/sja1000: fix receive FIFO corruption
+  tests/qtest: add SJA1000 receive FIFO coverage
+
+ MAINTAINERS                   |   1 +
+ hw/net/can/can_sja1000.c      |   4 +
+ tests/qtest/kvaser-pci-test.c | 195 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build       |   1 +
+ 4 files changed, 201 insertions(+)
+ create mode 100644 tests/qtest/kvaser-pci-test.c
+
 -- 
 2.34.1
 
