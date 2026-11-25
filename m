@@ -1,131 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B241A606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 03:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=EBaT84wE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF65606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 03:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW3R6-0004r4-M0; Tue, 24 Nov 2026 22:12:44 -0500
+	id 1xW3lZ-0003OW-EI; Tue, 24 Nov 2026 22:33:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xW3R3-0004q2-Ay; Tue, 24 Nov 2026 22:12:41 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xW3Qz-0006wr-PF; Tue, 24 Nov 2026 22:12:40 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rPE8tf+2Vx9qQr/XMEKopbf6NrsyuoK9sU6E8iVRobmv4k62jSVIgn7NQ3lxihuDq83Lr9KFZMfhG8rjXetT8Wx2SezpkOS8z5OArhRyQKvO/rAQTdTl+aEEDpxKHLLRqC+mWMiN5wOSQVhFPgD4I/Klg4uDSziuCLM//e0FaLFgWl7FLKnzd4/jkvXOLJPVasim4hT8grl5JgaP+z7IJr+MYWR2bxf5HrSwYLRUiI1WvPo2bnTLFeN8gaCejgCMLnOrByeK3I6Yc8PrfiUBNASiJTmwopd7+kjuhPNmRz3XnY37RPbHa+Rnu0Kj9IXrTgRvVpMCFz0IQUkmoW+e5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FuiDCv9djaU+KkA2uarHqRj0DwlJ60d91AcBjbRQlTs=;
- b=Y2tnb4KFPFuc1BiE5UgeWj3Y7eKBQT7fFFIl/FgiW8ZFYAJVXcOmRPaPE4g5DY+0hdSclSTxkUVErpR1qm/1EmYZJaqHVmO1tuHJofkYW41+DN6AeMj3wvl1gI6w6QwrisV9leSCXkJuBZINU3U7V6ZrcENZkHISKkXhfyzIjRG+sduJ9iwDpNA2MFk3RQdlnTEN4uqudv5T6j4Ha8j38ADMEWLA8TXlTXMuJ/69nx+T7PeQ4SzgkpPwy5c1wYFdi2ZpGRxO1Xt3+ITGulhxlJ9SzTFE6/mr8UMLcg7IFiugCKbr5CmiObOO0nZO+GnzKnbIwFCsSA8Zt1Xn0Zylzg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FuiDCv9djaU+KkA2uarHqRj0DwlJ60d91AcBjbRQlTs=;
- b=EBaT84wErbL0l3e+kzbXAW/DrjZo6HdQB0gTX9LUAnoRDox35VCLZD39Cg3Y2sC90pqvmYtgFSarYPLeoYDyJplA9QjMgYJoJeLqKAaQ1EG+1TGo8pgjOqma8T4aswJPsfx36ZRKbHLi1Rjj/3fRjn/3Gv8uvlHwLFtCnUYcXpMVrqTqXHjx5ioE/FJnTt/3pTT97xFVybtdOumJRgvy6540z3oDXA9I3Hbr9Sn5olZgMxPU/pfm7XvWIewsth28Om3NJze5wYe52fDThqdj+9NWCO3EDpcH8P3FDICbfrPm4L098pG4I0Xi1VhQFPt6lwB1zHxe9VdbQvSt07T4+w==
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by KU4PR06MB8385.apcprd06.prod.outlook.com with HTTP via P2P;
- Wed, 25 Nov 2026 03:12:27 +0000
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0662.001; Wed, 25 Nov 2026
- 03:12:26 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Kane Chen <kane_chen@aspeedtech.com>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 0/3] Add the AST2700 PCIe EHCI
-Thread-Topic: [PATCH v1 0/3] Add the AST2700 PCIe EHCI
-Thread-Index: AQHdfIrMupXjfetwTki0UJHI18Cceg==
-Date: Wed, 25 Nov 2026 03:12:26 +0000
-Message-ID: <20261125031225.3810653-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|KU4PR06MB8385:EE_
-x-ms-publictraffictype: Email
-client-request-id: 01aa0cfc-801d-43a4-8524-f8635054ea31
-request-id: f8a11b96-f808-4b34-8b9b-08df4aa1eedc
-x-ms-office365-filtering-correlation-id: f8a11b96-f808-4b34-8b9b-08df4aa1eedc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|18002099003|261009223027099003|261021123027099003|56012099006|261021121427099003|261102123227099003|38070700021|10067099003;
-x-microsoft-antispam-message-info: pJH0i3Q7xKuB9M8LJmzMlpK8XUbQWGp+ypd9bZhBPZ2GC560QAbuTzoYY4JnRtH/yrHIBDMdJGwAQFggo9w04IrZ90PCpW/pxGuxWz2FIXeienjDJvqBnu8nbJYBCrAxDBWj16kM8BebWuyNLsfMlvgPO4ZGtK+kEOJG5wmpJ22u6QJQdxM4pp7bFbaHRQZ3IhQMvZKiQVTUGjiUqWNcQNq6KaSYgzrxYf92cLuxz5gZuwEmAI5dv99aDRAyx4zkOnSXVtc8aZqSBYsUbCXJDGPRfBPpXj6O+sKBzyoGyxuSeO4x2QyJnvOXxfovNBiy0pycPSsfSCTQXVtPG8xCGGpE8UBRRMj8/kTC0+tPpEmhRb72rM/9/DnOIb2lzbXyOVhYEAVrapAFYaNVTcNjF2UhimO1iWPnwsFCq44y+hQVElBojETq8OTIV8DI8aduIv8wtv94VcpSyQo9B0MHMacD4xP0iAjGcgGLb1oDTurYuRzieym0Dp2dJM0XgUTW3kTBJMMN8oRGvhA0WvCN7Iv/LCFiQ3G1isZGY1RxkuoI3tq3UVXRxtP+C1Y++8y6pYXyEE+ux4XBBMJ45PYj5ZMM0hhTOK756bzE5Kqir0DWGOyV7nHH+Vcy0DljhpZrm0cQ9ZzOkgv4+kFXxg90xt9lQFphmPQLBLQn9/IquWM9qEG6MzmS4sOWHJLUt/dD4oJKZfrM1Bjgamai/YvbNw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(18002099003)(261009223027099003)(261021123027099003)(56012099006)(261021121427099003)(261102123227099003)(38070700021)(10067099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?JSoag6p4nCJoxOmGVWMCy3yvTzCZKcB8oMR6HT58PQygEuuw2M0pMnenSm?=
- =?iso-8859-1?Q?btQh1yqcx2RgdrSqkaSsdJVKn4kCluztJ9O4hPIYnZCrbzUovVM8m9iWXP?=
- =?iso-8859-1?Q?poWgcQT0SxKpWi5x2E6qrPvo11Y/Ii57ae3DIMGKu7TEr3rJMTeDqaxFt5?=
- =?iso-8859-1?Q?8HjtRN0t8IuM5r/Bk2EzDxKNLSMxQQtVV43SIUu4KaN+6aRydPnAXjF6t9?=
- =?iso-8859-1?Q?rQbEYToUw/Vbe6xzZdrh8l+NN/YOJivSIrli8WCMQPJsVPr0wwWUmkPSqN?=
- =?iso-8859-1?Q?RsKltBXhzh1zkoYjmBs0PzSnU5H+F3ubZD7YATiarOdB0ugzHse6GJ9J/s?=
- =?iso-8859-1?Q?1MNM1VZWbLYmOhaQEysK6UPybOhEBBrIjI6Og/+o82TJXfzC9JbNHHvqgb?=
- =?iso-8859-1?Q?JEYUqeuW2E4eCypnHfBgFQ++ZkSzOTenY4agImm1/HD1h5pzSO/sDuovco?=
- =?iso-8859-1?Q?+F6lIxIAeyJBuh4yDbp9QqIWCDWEJoZ4G8ouMRSEEu2BPQk7QlNN3SDPSw?=
- =?iso-8859-1?Q?S1OGzn1xCR+TCPOs7bi0SlPvcjINZCXDVGKTFlQ0YyJz32Nfz3dL+vgQwd?=
- =?iso-8859-1?Q?NhfZWZG5fe1T1RpsgQZnrRfEyTbVD+4W3i7nIWptSTgXpweBmVzhtUg4YD?=
- =?iso-8859-1?Q?JzXOIkdoLFQDQsI9dclOJIH+E976BV5vOHb4xdJ+H/+QfN4d83wQVVROuo?=
- =?iso-8859-1?Q?KoabMoF8yg9Zs+JAJajcO7bXMZX9EDZ77XcI2W+spVEcW7qiWwz15+nJrI?=
- =?iso-8859-1?Q?uWWGnlOgcJD1YfwEHot2x/BKBlLL1l7hgiy2IXzWMiYInxn9D4xrN+TSLG?=
- =?iso-8859-1?Q?8ck3Y4GPcqaxsGdD5X6ompPAGSCX39HDY8YIwZ/nsDLvGMoQBHey4t7ljF?=
- =?iso-8859-1?Q?fmCOlxnAK8v0X4CJTDqFA68Idi+xdSF+vXrITqSt08iBjHMutlFr5wgsmC?=
- =?iso-8859-1?Q?Gr94lXFGQRxyj9uZHZ4WH68T6f4WOB/rxRDwALj95Hfz7cIdioZDeFMBro?=
- =?iso-8859-1?Q?h9L7GNooSAi7vEZRogz4HNLvYoyzrZWlAopFNEC/4VEaRvJg8xeCVTA70t?=
- =?iso-8859-1?Q?IA5XI/1bhGuhb6DvSeKbQh2skrAgSEARK24ckrv75a9hzeyBpeM+Lfs/8F?=
- =?iso-8859-1?Q?8OqWkDiZ/MX/cvHnWvQXN3LUsTCdshrzzXMQlhEC+PZr4wAcB8SQsQ9g2H?=
- =?iso-8859-1?Q?DS6faUJ2NySbW58nJeYQ+gfjq7DMgnLRvKuOXnyikZQtlG4DIoqcEUe6Sg?=
- =?iso-8859-1?Q?gpCYaWSNz5KMmC1CvChrDQ+7/sZR8pDhtoUOAHoxMOSBeZYFW3PsBqW86Y?=
- =?iso-8859-1?Q?WbRyB9lRE/9GCmaaG3iE+cTSHzmo6exxRtFijAMWD4yIiw/p5Aa/BRVdzw?=
- =?iso-8859-1?Q?3p7z0qIFdZyjEK92zMCXxpThZ4AU8n9a7MnogKE6BO1ySs1vQGYyd8BeHZ?=
- =?iso-8859-1?Q?HuAvKIos9YPI7UFLfWKEPyIDF4kgPXlk2D9SVqq66ZfgJZlb+qqne/vGRK?=
- =?iso-8859-1?Q?U3aag4pUEf6bfq0YduGtKR93A3HLjwjt+ujKxgEmklBKnA7QwQqQAiPLZw?=
- =?iso-8859-1?Q?0nj6YP8mwQCXug0tOKJpYcrO9sboQVuNPHxGR9qp2K0ZZSE1LwrWE8KlSu?=
- =?iso-8859-1?Q?Faf+1OBQC3rlCp/Xag4+SIVOhva5Zco3hOUexj9pOj0KsZ8mzIhJMJth83?=
- =?iso-8859-1?Q?/mFRYDvzlg2GX8NXa081xRGYLnPTJWOMqtwIeuMUnc9SLRsxTsI3xjWUJi?=
- =?iso-8859-1?Q?9Oc2PkMuxD3oZrvTASjRza1VAJmNND773E6iVBthXIs0GS4Juv78/7axws?=
- =?iso-8859-1?Q?Zp/pqESqNQ=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xW3lR-0003LN-SX
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 22:33:45 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xW3lP-0001dg-9z
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 22:33:45 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Cxf9MNVwZrJssiAA--.33416S3;
+ Wed, 25 Nov 2026 11:33:33 +0800 (CST)
+Received: from [127.0.0.1] (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJBx5cwIVwZrFjE3AA--.17493S2;
+ Wed, 25 Nov 2026 11:33:30 +0800 (CST)
+Subject: Re: [PATCH v6 19/26] target/loongarch: add LVZ migration state
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1794558695.git.prcups@krgm.moe>
+ <97749e38af511e28277e784125b2b159a8e50320.1794558695.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <8756c318-31d6-7123-bf54-1f4a1f8aa0a2@loongson.cn>
+Date: Wed, 25 Nov 2026 11:34:41 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f8a11b96-f808-4b34-8b9b-08df4aa1eedc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2026 03:12:26.7486 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: yidXcGYdDyePNcF65+juMDJfs4hhBBE+DMfyfyDD/Q4EV4Djh5Vilhuo1+uQD2Ml3W7mh+G42h/W5ubH2qrSqYJfemmKE7UnftTJh9cgbFc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU4PR06MB8385
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+In-Reply-To: <97749e38af511e28277e784125b2b159a8e50320.1794558695.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJBx5cwIVwZrFjE3AA--.17493S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Ww1xtF47tFW8Gw48tF45CFX_yoWxur4DpF
+ 90qF17KF9Fk3yfua1xGF45CFsxWF17W3W7uFWYkwnrKF1kGr409rsayr48Ja1kJwnIgw17
+ Ar4UGrZrG3y3AwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.724,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,31 +76,204 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-v1=0A=
- 1. fixes lost INTx interrupts in the ASPEED PCIe RC=0A=
- 2. converts hcd-ehci-pci.c to DEFINE_TYPES.=0A=
- 3. adds the AST2700 PCIe EHCI.=0A=
-=0A=
-Jamin Lin (3):=0A=
-  hw/pci-host/aspeed_pcie: Fix lost INTx interrupts=0A=
-  hw/usb/hcd-ehci-pci: Use DEFINE_TYPES=0A=
-  hw/usb/hcd-ehci-pci-aspeed: Add the AST2700 PCIe EHCI=0A=
-=0A=
- hw/pci-host/aspeed_pcie.c    |  41 +++++++++---=0A=
- hw/usb/hcd-ehci-pci-aspeed.c | 118 +++++++++++++++++++++++++++++++++++=0A=
- hw/usb/hcd-ehci-pci.c        |  99 ++++++++++++++---------------=0A=
- hw/pci-host/trace-events     |   6 +-=0A=
- hw/usb/meson.build           |   3 +-=0A=
- 5 files changed, 204 insertions(+), 63 deletions(-)=0A=
- create mode 100644 hw/usb/hcd-ehci-pci-aspeed.c=0A=
-=0A=
--- =0A=
-2.53.0=0A=
+
+
+On 2026/11/13 下午4:45, SignKirigami wrote:
+> Migrate the host LVZ controls, guest CSR and TLB banks, and restore the
+> active VM level, guest timer and interrupt request after loading state.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/machine.c | 139 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 139 insertions(+)
+> 
+> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+> index 4acab2a4a3..10dfdbd202 100644
+> --- a/target/loongarch/machine.c
+> +++ b/target/loongarch/machine.c
+> @@ -7,6 +7,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "cpu.h"
+> +#include "internals.h"
+>   #include "migration/vmstate.h"
+>   #include "system/tcg.h"
+>   #include "vec.h"
+> @@ -175,11 +176,145 @@ static const VMStateDescription vmstate_pmu = {
+>       },
+>   };
+>   
+> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> +static bool tlb_needed(void *opaque)
+> +{
+> +    return tcg_enabled();
+> +}
+> +
+> +/* TLB state */
+> +static const VMStateDescription vmstate_tlb_entry = {
+> +    .name = "cpu/tlb_entry",
+> +    .version_id = 0,
+> +    .minimum_version_id = 0,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(tlb_misc, LoongArchTLB),
+> +        VMSTATE_UINT64(tlb_entry0, LoongArchTLB),
+> +        VMSTATE_UINT64(tlb_entry1, LoongArchTLB),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +static const VMStateDescription vmstate_tlb = {
+> +    .name = "cpu/tlb",
+> +    .version_id = 0,
+> +    .minimum_version_id = 0,
+> +    .needed = tlb_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
+> +                             0, vmstate_tlb_entry, LoongArchTLB),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +static const VMStateDescription vmstate_lvz_sys = {
+> +    .name = "cpu/lvz-sys",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(CSR_CRMD, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PRMD, CPUSysState),
+> +        VMSTATE_UINT64(CSR_EUEN, CPUSysState),
+> +        VMSTATE_UINT64(CSR_MISC, CPUSysState),
+> +        VMSTATE_UINT64(CSR_ECFG, CPUSysState),
+> +        VMSTATE_UINT64(CSR_ESTAT, CPUSysState),
+> +        VMSTATE_UINT64(CSR_ERA, CPUSysState),
+> +        VMSTATE_UINT64(CSR_BADV, CPUSysState),
+> +        VMSTATE_UINT64(CSR_BADI, CPUSysState),
+> +        VMSTATE_UINT64(CSR_EENTRY, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBIDX, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBEHI, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBELO0, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBELO1, CPUSysState),
+> +        VMSTATE_UINT64(CSR_ASID, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PGDL, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PGDH, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PGD, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PWCL, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PWCH, CPUSysState),
+> +        VMSTATE_UINT64(CSR_STLBPS, CPUSysState),
+> +        VMSTATE_UINT64(CSR_RVACFG, CPUSysState),
+> +        VMSTATE_UINT64(CSR_CPUID, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PRCFG1, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PRCFG2, CPUSysState),
+> +        VMSTATE_UINT64(CSR_PRCFG3, CPUSysState),
+> +        VMSTATE_UINT64_ARRAY(CSR_SAVE, CPUSysState, 16),
+> +        VMSTATE_UINT64(CSR_TID, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TCFG, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TVAL, CPUSysState),
+> +        VMSTATE_UINT64(CSR_CNTC, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TICLR, CPUSysState),
+> +        VMSTATE_UINT64(CSR_LLBCTL, CPUSysState),
+> +        VMSTATE_UINT64(CSR_IMPCTL1, CPUSysState),
+> +        VMSTATE_UINT64(CSR_IMPCTL2, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRENTRY, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRBADV, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRERA, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRSAVE, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRELO0, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRELO1, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBREHI, CPUSysState),
+> +        VMSTATE_UINT64(CSR_TLBRPRMD, CPUSysState),
+...
+> +        VMSTATE_UINT64(CSR_MERRCTL, CPUSysState),
+> +        VMSTATE_UINT64(CSR_MERRINFO1, CPUSysState),
+> +        VMSTATE_UINT64(CSR_MERRINFO2, CPUSysState),
+> +        VMSTATE_UINT64(CSR_MERRENTRY, CPUSysState),
+> +        VMSTATE_UINT64(CSR_MERRERA, CPUSysState),
+> +        VMSTATE_UINT64(CSR_MERRSAVE, CPUSysState),
+> +        VMSTATE_UINT64(CSR_CTAG, CPUSysState),
+CSR registers for CTRAG and MERR are not supported in VMLEVEL1, I think 
+it can be removed. It is for compatibility in host mode.
+
+> +        VMSTATE_UINT64_ARRAY(CSR_DMW, CPUSysState, 4),
+> +        VMSTATE_UINT64(CSR_DBG, CPUSysState),
+> +        VMSTATE_UINT64(CSR_DERA, CPUSysState),
+> +        VMSTATE_UINT64(CSR_DSAVE, CPUSysState),
+...
+> +        VMSTATE_UINT64(CSR_GSTAT, CPUSysState),
+> +        VMSTATE_UINT64(CSR_GCFG, CPUSysState),
+> +        VMSTATE_UINT64(CSR_GINTC, CPUSysState),
+> +        VMSTATE_UINT64(CSR_GCNTC, CPUSysState),
+> +        VMSTATE_UINT64(CSR_GTLBC, CPUSysState),
+It is not necessary to save CSR_GSTAT-CSR_GTLBC for VMLEVEL1, only host 
+has these CSR registers.
+
+Regards
+Bibo Mao
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static bool lvz_needed(void *opaque)
+> +{
+> +    LoongArchCPU *cpu = opaque;
+> +    return FIELD_EX64(cpu->env.cpucfg[2], CPUCFG2, LVZ);
+> +}
+> +
+> +static const VMStateDescription vmstate_lvz = {
+> +    .name = "cpu/lvz",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = lvz_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_GSTAT, LoongArchCPU),
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_GCFG, LoongArchCPU),
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_GINTC, LoongArchCPU),
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_GCNTC, LoongArchCPU),
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_GTLBC, LoongArchCPU),
+> +        VMSTATE_STRUCT(env.sys_states[1], LoongArchCPU, 0,
+> +                       vmstate_lvz_sys, CPUSysState),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +#endif
+> +
+> +static int loongarch_cpu_post_load(void *opaque, int version_id)
+> +{
+> +    LoongArchCPU *cpu = opaque;
+> +    CPULoongArchState *env = &cpu->env;
+> +    CPUSysState *host = get_sys(env, VM_LEVEL0);
+> +    bool guest = FIELD_EX64(host->CSR_GSTAT, CSR_GSTAT, VM);
+> +    set_sys(env, guest);
+> +    return 0;
+> +}
+> +
+>   /* LoongArch CPU state */
+>   const VMStateDescription vmstate_loongarch_cpu = {
+>       .name = "cpu",
+>       .version_id = 4,
+>       .minimum_version_id = 4,
+> +    .post_load = loongarch_cpu_post_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
+>           VMSTATE_UINT64(env.pc, LoongArchCPU),
+> @@ -251,6 +386,10 @@ const VMStateDescription vmstate_loongarch_cpu = {
+>           &vmstate_fpu,
+>           &vmstate_lsx,
+>           &vmstate_lasx,
+> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> +        &vmstate_tlb,
+> +        &vmstate_lvz,
+> +#endif
+>           &vmstate_lbt,
+>           &vmstate_msgint,
+>           &vmstate_pmu,
+> 
+
 
