@@ -1,111 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5940D606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD23606A321
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 12:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pC2JVv/A
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=PtVYB8gH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWBbS-0002pd-8E; Wed, 25 Nov 2026 06:55:58 -0500
+	id 1xWBj1-0006nc-O7; Wed, 25 Nov 2026 07:03:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xWBbK-0002p0-PM
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:55:50 -0500
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xWBbJ-0007Fo-5M
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:55:50 -0500
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-3282db206d3so5587467eec.0
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:55:47 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795607744; cv=none;
- d=google.com; s=arc-20260327;
- b=m5Kn1JoI/zjNIcLcEztDb/qYCi1JpeB9qFiz+tqmNCJl3QI01t+7Snc0vDBRg+NnIf
- viriKkvTOUMOEuFBeNPmrRtNlcUw94qMuV6h7HYeT9rRGf91AASGofd/f85DC8xGbklc
- DMBPVGu+71qFikpu51DEprvxfXEIbwyNBXfDzWgfd0vKPY1qwwKtLf/7vTWmTmGvqLfB
- jg2S3rKuqMA8MmOXCBRO8EyxlIs33Twb1uHehejPq7q6yffvAtpocsDD1m8FVYgGcH8G
- lTMlK921THzbBHn12grBxZtTNbP0lB5w+rlC8m5Fwx18VTdx1GlVVq4a9vY2eA9JVUhj
- F3sQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=bn+dO0n3bk+migXhjDAF6gZlaXEfYXlOJ4PYBUJygJA=;
- fh=SQBxbTsCFw5PmNdG123aODHkmhBo7PKmFA7+bzIBQT4=;
- b=Dqd1+SMV2NEFyW2QOmiAeLVt6JaLP/vBPZuY49tIrZGlfoql+dSTDZAVl+ntPtQ1hl
- aEYBi8amJkz/+edrw/nBwCYLsRDEL8NeyBbUlKhX4y3QRrJM9azL2M1Cn5CNEi7zLqjP
- MdcxxWXo6kfb3680zHAmZGWOKYStIdmHVObKg1wj/qvtwOLSeZc+TTavp0/XMp+mQwN5
- t+26bKBSUPeH9+AZ5spCEWVLWCM0Dj65CEPthnFCD8FawyYk+yFbtfiCVNoEt1DKrVs3
- sNp5W6DKy5YGTHfPxZ5Cn8jXSoHP3Vrs75//oTCMaWxp+e75Ocqi0OzjLb7VFzsUW/W0
- rkZg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795607744; x=1796212544; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bn+dO0n3bk+migXhjDAF6gZlaXEfYXlOJ4PYBUJygJA=;
- b=pC2JVv/A/6TVlPDdYF0n/KCsSjl59ddFbhlKYWQUDRMEtJ3VKFaBT4u8SAQTHgRJzD
- J959u0uGgDDuvku8fhUHeNn2PCdXjRg4Hyjhe1D6ekip4GUvl48V0smCzl9qd186JjlP
- EEv42nXqGWwesHe+Fv3+Z7AALm9CNFEq9+jvjDEeQEBP0wGC/oKA6aXhOEgiBj69mRw8
- RL0jhZ20vz5R3Y2+ekrP+8m+fRcfn6s36Evt9inSMpu6Q49X3Qiw9w1zvcqFx+Czfm4V
- /xBfq9zyOAzYS/ds01eDc7FwW9F0AE7kUJuF7vSSqUOWi0DWQ+FOSvmJzROoR0gVjFlb
- 2wsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795607744; x=1796212544;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bn+dO0n3bk+migXhjDAF6gZlaXEfYXlOJ4PYBUJygJA=;
- b=L3vk2l20YXdrO+Ej+oQg1cJaC7+QvonrxWOfxV4D1bMHP7Ne2RnP6K271LqiWt5UM6
- Gz71sJh1ghYA91B10fHrCbpOozzh+tx62i6Mj3qgiKA4sXUQ565BC/o0Yd6BrtuMFVOQ
- TMc/I6wigpqKEvGIf3DNwXtiCUMkX58hh0N93wzuUvtDutuXple0cGwWMb/32KihaVMx
- VRhaCs5mJjfNVhXOX2XXDWSLNmzBipGO06OhXf6v8EkCzkwviwdnyJ80ITYbz1M21f8i
- Lps6U8W2n+TDb386wU6FpDugY7AF5krH8fLfvRn/KO9rDCPi95XPOivpS7IGzy+tW4Yj
- jAOg==
-X-Gm-Message-State: APuU4Z+OlnnH35N2QynN2ItA8I6F0E6zh6GdCuZvwe3yB5PKioc3DdlX
- vd7I8txaUUBNqQLGPZ7FcGzUE42BeVQY4KeW1JaRUdf65HF+O6ptW1DcA/vr+wpQJu3nk/b6koX
- 0QRV9znjDsA8JQDhAy0DOCCsVp+0BzmA=
-X-Gm-Gg: AZFdTZcFNnY+l62MWh/Xq4XdiqTxiNbqqmYc07MyS4Y6cKMvK+3L5aRD3XohKCi3H0u
- P0R3OpuXhAPcoFPtyKQUX6oUavk+H4HjQSQeZikBHf9F/gKmC8yeEIMM/qQxRNU3/nPOopDX2S7
- zuCcaOFJ1zOmYGoJpWLOJr/mcIF9VTjgAx1vvdu8ZPzRSr7V3i/PIKll1bv5cCQI3UIuDZ/81p5
- m5GDDabQENisChNHJ2MgLHHPZjo69i0lV0XuQPJgOF9yE9gG//1MmNxbqwa8GSBmMNyXjR7HN84
- 5yKvJjO+8pCY/Cu4TiZXvvoJ/m5Earnyl9frKdAh1V/DeRLu3Tv+c5ANMTCOH2h6x5Cpbs5dhMB
- QGrD1G02xblG4l3HREh74xrpNvTbrXNpdHCzm0BCbBGune6cbDOq0BhdamXTq+49FemZRtRP23D
- Fhhu/xf01lgMxs/A==
-X-Received: by 2002:a05:7300:d108:b0:386:c6dd:2616 with SMTP id
- 5a478bee46e88-386c6dd29ffmr3962730eec.41.1795607743913; Wed, 25 Nov 2026
- 03:55:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1xWBiz-0006nP-RQ
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 07:03:45 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1xWBiw-0006Z5-Fq
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 07:03:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=xE0rpSTBJThJ1kINbSbKT3Nszp1ZU69u7iwsccCVCLE=; b=PtVYB8gHod6Of2VTqnw7KNlKtU
+ Z8pZ+LIOaWxKfIPvXo6ZzMAm3ei4JM4ptf2r2cI8TnJ2Cl6H+F/QH6t4ouKbqeM1WEgv34Q5SZPc2
+ 87M37A4Pocn+dRBJWNe6kiCvaR+kodP6ShVcPMplTwDEszOtznC8OuTGaB2UPe8bQZuGdwxrH3vdr
+ 2uVM2wV960MKAiUDBPsCKwiJaWXofB8LF+kCeCXvzr1LVU19MmchCZsTnFL42018y+8umEog9yJj7
+ ILWCNMVkCHzEiHuNJyjHEWQe3VFiUFxg7lbGLs1wii+WVvbE1AhzCF3yd9Cx9f6vpnvLLHO4nx+am
+ uo/5upoQ==;
+Received: from 54-240-197-238.amazon.com ([54.240.197.238]
+ helo=freeip.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+ id 1xWBip-0000000D1V6-2Vh0; Wed, 25 Nov 2026 12:03:35 +0000
+Message-ID: <51d6301de00d83468af889fd4eda0e9cadf23ec4.camel@infradead.org>
+Subject: Re: [PATCH v1 08/21] hw/i386/kvm/xen_evtchn: Fix off-by-one in
+ do_remove_pci_vector()
+From: David Woodhouse <dwmw2@infradead.org>
+To: Paul Durrant <xadimgnik@gmail.com>, qemu-devel@nongnu.org
+Cc: xen-devel@lists.xenproject.org, kvm@vger.kernel.org, Paolo Bonzini	
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Stefano
+ Stabellini <sstabellini@kernel.org>, Anthony PERARD
+ <anthony@xenproject.org>, "Edgar E . Iglesias"	 <edgar.iglesias@gmail.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	 <marcandre.lureau@redhat.com>, Jason
+ Wang <jasowangio@gmail.com>, Hui Peng	 <benquike@gmail.com>, Mark Syms
+ <mark.syms@citrix.com>, Feifan Qian	 <bea1e@proton.me>
+Date: Wed, 25 Nov 2026 12:03:34 +0000
+In-Reply-To: <8e8fa5ae-f30a-4e38-8aa8-cd46e3b4ca31@xen.org>
+References: <20261124232247.23169-1-dwmw2@infradead.org>
+ <20261124232247.23169-9-dwmw2@infradead.org>
+ <8e8fa5ae-f30a-4e38-8aa8-cd46e3b4ca31@xen.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-YFYUNa4ByaeRNt5pRmID"
+User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261125115104.2002188-1-alex.bennee@linaro.org>
-In-Reply-To: <20261125115104.2002188-1-alex.bennee@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 25 Nov 2026 15:55:32 +0400
-X-Gm-Features: Aa3M54rk07xsLsdlidxDWWQ8gi28HlEhkgb1F9Kfd_RzWRsc-XMS6tNbt0p1LBM
-Message-ID: <CAJ+F1C+KJXJvVAYchd3eWxDVCMW0UNYiGs92nssyDwwdJiicRw@mail.gmail.com>
-Subject: Re: [RFC PATCH] docs/virtio: add note about virtio-gpu acceleration
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,60 +83,155 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Nov 25, 2026 at 3:52=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> 3d acceleration has a bunch of issues and is considered hard to secure
-> in our current setup. As we have dropped it from the virtualisation
-> use case lets call that out in the docs.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+--=-YFYUNa4ByaeRNt5pRmID
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> ---
->  docs/system/devices/virtio/virtio-gpu.rst | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devi=
-ces/virtio/virtio-gpu.rst
-> index d05f8cb8e3f..06e60ec6782 100644
-> --- a/docs/system/devices/virtio/virtio-gpu.rst
-> +++ b/docs/system/devices/virtio/virtio-gpu.rst
-> @@ -29,6 +29,18 @@ host's GPU and for the best performance be able to rel=
-iably share GPU
->  memory with the guest. Details of 3D acceleration requirements are
->  described in a further sections.
->
-> +.. warning::
-> +
-> +   As 3D acceleration by its very nature involves giving the guest
-> +   fairly complete access to a bus master processing unit in the host
-> +   GPU we consider this outside the virtualisation use case with
-> +   respect to security. You should only ever enable 3D acceleration
-> +   with trusted guests. There is still the option of off-loading 3D
-> +   acceleration to a separate process via :ref:`vhost_user_proto`
-> +   depending on what guarantees that process can make and how well
-> +   confined it can be if things go wrong.
-> +
-> +
->  QEMU virtio-gpu variants
->  ------------------------
->
-> --
-> 2.47.3
->
->
+On Wed, 2026-11-25 at 11:16 +0000, Paul Durrant wrote:
+>=20
+> I guess I'm missing a subtlety here, but the test only fires if pirq is=
+=20
+> a multiple of 64... so why is advancing to the next word by adding 64
+> not correct?
+
+You're missing the same subtlety that I missed when I wrote it in the
+first place: the loop *itself* does pirq++ every time, so when we do
+'pirq +=3D 64; continue;' we end up adding *65*.
+
+    for (pirq =3D 0; pirq < s->nr_pirqs; pirq++) {
+        /*
+         * We could be cleverer here, but it isn't really a fast path, and
+         * this trivial optimisation is enough to let us skip the big gap
+         * in the middle a bit quicker (in terms of both loop iterations,
+         * and cache lines).
+         */
+        if (!(pirq & 63) && !(pirq_inuse_word(s, pirq))) {
+            pirq +=3D 63;
+            continue;
+        }
+
+--=-YFYUNa4ByaeRNt5pRmID
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
+ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
+MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
+AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
+DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
+q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
+S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
+Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
+72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
+CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
+mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
+h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
+CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
+GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
+v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
+CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
+b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
+Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
+A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
+vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
+0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
+jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
+FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
+HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
+IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
+MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
+MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
+sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
+tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
+EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
+6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
+ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
+bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
+Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
+02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
+sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
+ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
+JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
+LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
+BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
+LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
+hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
+SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
+c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
+AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
+EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
+ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
++3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
++icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
+McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
+LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
+nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
+gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
+Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
+CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
+QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
+Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
+YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
+kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
+pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
+v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
+vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
+PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
+REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
+lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
+aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
+D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
+bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
+MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
+oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
+TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
+BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
+MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
+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
+BzWhoy0ZaW68o7A9f3B+qToAAAAAAAA=
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+--=-YFYUNa4ByaeRNt5pRmID--
 
