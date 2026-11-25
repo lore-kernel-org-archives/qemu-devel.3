@@ -1,101 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609F4606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEFC606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kJufOZQM
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=XU1Geb8d
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW2j2-0005BB-Pz; Tue, 24 Nov 2026 21:27:12 -0500
+	id 1xW2tG-0000F9-KW; Tue, 24 Nov 2026 21:37:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1xW2j0-0005Af-TX
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:27:10 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1xW2t1-0000CZ-Aj
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:37:31 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1xW2ix-0004sY-Sv
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:27:10 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-cde827b7b95so1402643a12.0
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:27:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1xW2sy-0006aN-GR
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:37:30 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-8b315dd057bso33208317b3.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 18:37:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795573621; x=1796178421; darn=nongnu.org;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=/6o2RNI6ZoPYdJI2KfVrgcbjwgrjSzvcbICAvHxdrIs=;
- b=kJufOZQMe4PfXgnTih+tcRBj5V/13lC5ZTAZGfD1Ab90dkQrP3T3SuAp83lZ+yPJ+k
- ohxCaMpxfOphMTsx4LiOKR2+mACYn4HLObAShWosOAGpWC018Juwcxccmy6tpO/jVWJ1
- UvTzb4E+GRyNkzEh4IUg8yP7pEY+B/icsVQVOwXuN6S4gjkB99IaGpEDEJ/kAwjIIzBk
- f8qQ9ESxifOCva0gJwNU5y1oLxgEF/ZWzrPDeE48gbfHHSZtpyX3qVhDC08H3cSI+Zac
- Xe4FwA/saVtiDYgplVlJuu31Fg2F7KwtupPKLCYkBaXKNA6N7rirBUICi3l1L/nxJ6kx
- rBfw==
+ d=tenstorrent.com; s=google; t=1795574247; x=1796179047; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ZUJnef1s+/hKLLsbhakYrcipAWwt5gZkfwyi8V+KTLw=;
+ b=XU1Geb8d9iOuo0Nr1FoMWnBO51Sm981tR6hGyQM7k1W0630wcOVzqg8AtAZljEUSSO
+ O7WtLzxbjzkr75jZbYflBWE0yWLXhslbcI2tkrGYzlsju7q9v97sn/NtyoC5HRgVBjjq
+ A8zKueNpv5Ofc1pAG/c02ilRXCwfx8wsBtUQOnR4uNX8Y0faECP3cK9Yuq6rgHuaDfOX
+ 3uRngZJLoN2O8S6uigjPoOLlVUGlqdm8gD9KHzpqNvASZUIvv5GNj38kk2ckMG0zo4iq
+ BAxTtfeJ5QSLS1iUpvQSz14MKRJOCGtTowNg0Qi/YtgxJ2aT4n6PuMkUU8jWaZ3Qfake
+ JWcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795573621; x=1796178421;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=/6o2RNI6ZoPYdJI2KfVrgcbjwgrjSzvcbICAvHxdrIs=;
- b=yJko/RnGhvpfnDczDQ7imbrLoqHJYQOzJLvyKcnkRUOU/92d4noaGJquqnnxuxgJ0r
- OiXtNVecmQZirQcVtCYP9C6u1C0c8IHeHa7YiwQdAitQDSiV5ZKIxbhsBnqVtDdZhgtt
- 9i9mDo22bz1z3oj9NX0xFxhLOSI9jX4c6tIL4ZLfMt1WnAmoCf0lxvqBQcgekDAe1uYw
- rCYdV05woR1eG67dx5n7JfXBfwP/wSqho4vxQWtkjlXovYPg+NQQGgb935rCdJvRtALV
- uIDJ/0Q4i0PIHm7iFJi8+JlBy/by+nRVzeyRRW/ZsNC79yKvCK34SlXzwbK74WargNy3
- C56Q==
-X-Gm-Message-State: APuU4Z+1qZatzdu736dmDoeT+DW637rHJ8YU/+L+AE3dImuceNUgYBFv
- 60Q2bxcr+DjfK6rJV4dTQJPC9aH4ir2e98+UzC/C7Lae7sRi/W421afL
-X-Gm-Gg: AZFdTZeReoQ6XUR74JcapAQd+tIUcGTLTuHbgmR5q8JII8eGUk0pSyhvzTa2rLa+roM
- k4NZytPkJL4aD/qOgrl3TThpuv1TYxqOpLyuKcpVSZrCDxLqnOun0qvslWkv15CJ0xtBZ4eCdW1
- VwjujGWSUZFYO+w//xvPDaVYYSY/J8Xuw9ZrORhaP8WTnYVK5cesLMWMMQx2PsNAhEvmhC8SBq5
- k6xwCa1lJ1y6Kuvomm2gqmD0HecMRp8FgK0qHKdsI17+ebd1/933iuaoKkfdb10jelQROLt0JQg
- LkbcOC0sf/5sedbqQov1+c2KSty8IHWVqZBW3htSnDgdzE0lUXmpuISTJa/rwHl28wum4+SYaL2
- jB8U6qWsOtuNPrn47TvCbtU9LvLsZnlp1l8wo0qOjK68JpzztU22ujeOAKrv1MSWBd0TB6I+cg5
- b0Ir+vQAJTnxp6Ov9GIqnxzMX69qiEvMFZ6jYf7ewYKFV73damQteP2tUxzpbpN4TtGa/w6uoPq
- f8Bsn7objBRXoY5GiKAAOrc4INRLH5NMMZUJOqoLney6SSvQ5BAU3A69vJ+ER8ytID6HSuSpR/d
- 0qAJYlMc7hCMa11Q5vRsuZ7r/7VhNBTuMJA=
-X-Received: by 2002:a05:6a20:a10d:b0:3fa:cfec:2286 with SMTP id
- adf61e73a8af0-4014db58d6fmr15120932637.64.1795573621403; 
- Tue, 24 Nov 2026 18:27:01 -0800 (PST)
-Received: from [192.168.200.201] ([14.19.29.210])
+ d=1e100.net; s=20260707; t=1795574247; x=1796179047;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ZUJnef1s+/hKLLsbhakYrcipAWwt5gZkfwyi8V+KTLw=;
+ b=BqeNkxTmTz7F3EXgyidiMZPwm4EWsEfAez16LJMGVPKRcE6v6/RiMKkxSYyfaQci2J
+ 3OZsM4T39TXgp1iAJC8bsMOa5YyQoxSks8nk7fRRgqh/Sg5F333O6quE74+TAUIWKMBh
+ ZEhk+RdYmQrRfoBmd/gwuaJjsck5SpcEDbDlm1erhpiVCeZZNUuhCWXCTPMy4fKP3p33
+ 2mkhXOnqs5mzCHphTHYWaru7QIxGTbglav2drtAAPuBuG9ZDzbWPeIgzJ3ubmZ1MVLnu
+ s1O2TCp8MkfgZVOnGAH/NraxiNOxYadzD2jbItTCbOsyb/xJLdWuA9CnELKlXwYx/tOo
+ qMzA==
+X-Gm-Message-State: APuU4Z+0j5WIC9Atw4XfjYpPm8Zr0dQxxncLA6YaxRLWAKzrukLD4mvg
+ Im3uYhzJH4THlyDKQvVL0m7r+lc/8W1h2f5JtARhaot+iril3SL3iB+ci6d3FEgp8Pk=
+X-Gm-Gg: AZFdTZfRUtmviqjbPD3dcdurXjE3YauWqshHZ7cClmNp59BPXBUapCBpdHhdRFrriCc
+ Qq50sfqVqz3gyO2OzEOci08X7nC2bAMFq5vfDtRZB/tpwq+M87Qhcn39xPHGQFcjElWsZXP6K19
+ zJsZJQC8mBKhEHOGnqsnUp21NnlN34/12a3qcIX+kOCpnYMEhzfanpoI4U1j8KKB7Qxbx+KoJ/+
+ cdiKmDoHi87P0StyO4oz5dBaDHSqqs7f6RRLWFPc/xPRksVhhck9dA6FkiHFzbDk9AAwf7kgktS
+ eFupBju70Py4UpD0oViwC++wQ6myzncliFvMbUtCs+nJc0UpWR/8NLyL39C00eQwiVdYGjn+jy0
+ KKvLdABWkJgB2zrnPYncaCsRxUjnCwvJXN0ghZpGaPha5jr1qojoH76r0jGE62xlO3Jx6/GEMH3
+ ov/SkMskp5b0Hsbgy0J9p1wfweyZVfb42n/l6koOjjaoWu87jt3zmKkJh1k9cwS9y+P51gTtNtj
+ i+vH52zthHj8jE25vZt4NZDdV5S2SEXQ02z4Z4L4+oLIEbWtWTvJrLYEUMgTJTNdYL9G6HHt6ww
+ JrSqdc9YSCcjZy8Pcj1FldR1ZZmoTmgaH/gduPqvoSUFg+1C7ehPFnSj29DKU4cv5iseTwZ0eKL
+ vs3vy9+pq
+X-Received: by 2002:a05:690c:370a:b0:8b3:2eb4:1429 with SMTP id
+ 00721157ae682-8b52052505emr61890127b3.65.1795574246935; 
+ Tue, 24 Nov 2026 18:37:26 -0800 (PST)
+Received: from [192.168.2.129] ([2600:1700:220:59e0:ea8f:7897:2f4d:9891])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cde797af60dsm6407200a12.29.2026.11.24.18.26.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Nov 2026 18:27:01 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------9aaOkj0L0FGI041Lqwv0S9Po"
-Message-ID: <03a8bf21-05a1-4408-99ea-c681e0a5acc3@gmail.com>
-Date: Wed, 25 Nov 2026 10:26:56 +0800
+ 00721157ae682-8b52028d628sm65626717b3.8.2026.11.24.18.37.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Nov 2026 18:37:26 -0800 (PST)
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Subject: [PATCH 0/8] Add Spacemit K3 Machine
+Date: Tue, 24 Nov 2026 20:37:19 -0600
+Message-Id: <20261124-spacemit_k3-v1-0-e911d6e88542@oss.tenstorrent.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Provide weaker memory ordering for RISC-V guest FENCE
- instructions.
-To: Chao Liu <chao.liu@processmission.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Tao Tang <tangtao1634@phytium.com.cn>
-References: <20261125015206.92299-1-chao.liu@processmission.com>
-Content-Language: en-US
-From: WX Chen <wxchen0913@gmail.com>
-In-Reply-To: <20261125015206.92299-1-chao.liu@processmission.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=wxchen0913@gmail.com; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN9JBmsC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzNDQyMj3eKCxOTU3MyS+GxjXbM0S+Ok1NQkQ0OTRCWgjoKi1LTMCrBp0bG
+ 1tQCyij3gXQAAAA==
+X-Change-ID: 20261122-spacemit_k3-6f93beeb114a
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Jeuk Kim <jeuk20.kim@samsung.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,216 +110,89 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
+X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is a multi-part message in MIME format.
---------------9aaOkj0L0FGI041Lqwv0S9Po
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+This series adds a spacemit-k3 machine to QEMU. The main intended usage
+of this machine is for firmware develeopment. This series models 8 X100
+harts, has SMP support, uart output, minimal implementation of syscons/
+clock controllers needed to boot, 4 types of boot media (SPI NOR, SD
+EMMC, UFS) and boot mode selection.
 
-Hi,
-     Thanks for the comment!
+The machine allows the user to boot with the bootrom dumped from real
+spacemit k3 hardware. If the user doesn't supply this, QEMU emulates the
+bootrom and loads the next stage from boot media in the same manner in
+which the bootrom would. 
 
-On 11/25/26 09:52, Chao Liu wrote:
-> On Fri, 20 Nov 2026 17:34:54 +0800 WX Chen<wxchen0913@gmail.com> wrote:
->
->> Currently, they are implemented as full memory barriers, which may introduce stronger host barriers than the guest actually requires.
-> Please wrap the commit body at 76 columns.
->
-> https://www.qemu.org/docs/master/devel/submitting-a-patch.html
->
-> Thanks
-> Chao
+SMP support was somewhat complicated to implement because the K3 doesn't
+have one clear way to do so. A single hart is released at reset, and the
+remaining can be woken up by M-mode IPIs or writes to a wakeup register.
+One of the syscons applies an overlay over the M-IMSIC to intercept IPIs
+while in reset and wake up the non-boot harts.
 
-|Thanks for pointing this out. I'll wrap the commit body at 76 columns 
-in v2. Thanks, Chen |
+If there are better ways to implement the bootrom emultion/boot media
+loading and the SMP support patch, please let me know. 
 
->> Signed-off-by: WX Chen<wxchen0913@gmail.com>
->> ---
->>   target/riscv/tcg/insn_trans/trans_rvi.c.inc | 36 +++++++++++++++++++++++++++--
->>   1 file changed, 34 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
->> index 4784ea1607e74eb5b0076425a732b5d3817b3482..6e094e5886360c2f9f7c187e82e6f60da36b84e4 100644
->> --- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
->> +++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
->> @@ -968,8 +968,40 @@ static bool trans_pause(DisasContext *ctx, arg_pause *a)
->>   
->>   static bool trans_fence(DisasContext *ctx, arg_fence *a)
->>   {
->> -    /* FENCE is a full memory barrier. */
->> -    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
->> +    /*
->> +     * FENCE.TSO orders all R/W pairs except W -> R.
->> +     * For TSO, the pred and succ should all be RW,
->> +     * otherwise it should be treated as normal FENCE.
->> +     */
->> +    if ((ctx->opcode & 0xf0000000) == 0x80000000 &&
->> +        a->pred == 3 && a->succ == 3) {
->> +        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_SC);
->> +        return true;
->> +    }
->> +
->> +    /* Reserved case, choose the strongest ordering.  */
->> +    if (ctx->opcode & 0xf0000000) {
->> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
->> +        return true;
->> +    }
->> +
->> +    /* Normal FENCE. I/R for BIT 3/BIT 1, O/W for BIT 2/BIT 0 */
->> +    TCGBar ordering = 0;
->> +    if ((a->pred & 0xa) && (a->succ & 0xa)) {
->> +        ordering |= TCG_MO_LD_LD;
->> +    }
->> +    if ((a->pred & 0xa) && (a->succ & 0x5)) {
->> +        ordering |= TCG_MO_LD_ST;
->> +    }
->> +    if ((a->pred & 0x5) && (a->succ & 0xa)) {
->> +        ordering |= TCG_MO_ST_LD;
->> +    }
->> +    if ((a->pred & 0x5) && (a->succ & 0x5)) {
->> +        ordering |= TCG_MO_ST_ST;
->> +    }
->> +    if (ordering) {
->> +        tcg_gen_mb(ordering | TCG_BAR_SC);
->> +    }
->>       return true;
->>   }
->>   
->>
->> ---
->> base-commit: 08ed97c33c3818ef51a7c852347a28e9f66807b5
->> change-id: 20261120-fix-riscv-fence-20261119-10a425b78673
->>
->> Best regards,
->> -- 
->> WX Chen<wxchen0913@gmail.com>
->>
->>
->>
-> Sent using hkml (https://github.com/sjp38/hackermail)
---------------9aaOkj0L0FGI041Lqwv0S9Po
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+The model does not implement the 8 A100 harts, the Realtime CPU,
+I2C, PCIe, networking.
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi,<br>
-          Thanks for the comment!</p>
-    <div class="moz-cite-prefix">On 11/25/26 09:52, Chao Liu wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:20261125015206.92299-1-chao.liu@processmission.com">
-      <pre wrap="" class="moz-quote-pre">On Fri, 20 Nov 2026 17:34:54 +0800 WX Chen <a class="moz-txt-link-rfc2396E" href="mailto:wxchen0913@gmail.com">&lt;wxchen0913@gmail.com&gt;</a> wrote:
+This series[1] is needed for the SPI controller to work in EDK2
+properly.
 
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Currently, they are implemented as full memory barriers, which may introduce stronger host barriers than the guest actually requires.
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Please wrap the commit body at 76 columns.
+A sample boot log is here[2].
 
-<a class="moz-txt-link-freetext" href="https://www.qemu.org/docs/master/devel/submitting-a-patch.html">https://www.qemu.org/docs/master/devel/submitting-a-patch.html</a>
+[1] https://lore.kernel.org/qemu-devel/20261123-m25p80_write_enable_fix-v2-0-0ac94f99e91f@oss.tenstorrent.com/
+[2] https://gist.github.com/asrinivasanTT/77e692e00d305051533c828fbb2d1ecc
 
-Thanks
-Chao</pre>
-    </blockquote>
-    <pre dir="ltr"><code>Thanks for pointing this out. I'll wrap the commit body at 76 columns
-in v2.
-
-Thanks,
-Chen
-
-</code></pre>
-    <blockquote type="cite"
-      cite="mid:20261125015206.92299-1-chao.liu@processmission.com">
-      <pre wrap="" class="moz-quote-pre">
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">
-Signed-off-by: WX Chen <a class="moz-txt-link-rfc2396E" href="mailto:wxchen0913@gmail.com">&lt;wxchen0913@gmail.com&gt;</a>
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 ---
- target/riscv/tcg/insn_trans/trans_rvi.c.inc | 36 +++++++++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+Anirudh Srinivasan (8):
+      target/riscv: Add Spacemit X100 CPU type
+      hw/ufs: Add Spacemit K3 UFS controller
+      hw/ssi: Add Spacemit K3 SPI controller
+      hw/misc: Add a model for Spacemit K3 syscons
+      riscv: Add Spacemit K3 machine
+      hw/riscv/spacemit-k3: Load next stage from boot media if bootrom is not supplied
+      hw/riscv/spacemit-k3: SMP support for Spacemit K3 machine
+      docs: Document spacemit-k3 machine
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-index 4784ea1607e74eb5b0076425a732b5d3817b3482..6e094e5886360c2f9f7c187e82e6f60da36b84e4 100644
---- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-@@ -968,8 +968,40 @@ static bool trans_pause(DisasContext *ctx, arg_pause *a)
- 
- static bool trans_fence(DisasContext *ctx, arg_fence *a)
- {
--    /* FENCE is a full memory barrier. */
--    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-+    /*
-+     * FENCE.TSO orders all R/W pairs except W -&gt; R.
-+     * For TSO, the pred and succ should all be RW,
-+     * otherwise it should be treated as normal FENCE.
-+     */
-+    if ((ctx-&gt;opcode &amp; 0xf0000000) == 0x80000000 &amp;&amp;
-+        a-&gt;pred == 3 &amp;&amp; a-&gt;succ == 3) {
-+        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_SC);
-+        return true;
-+    }
-+
-+    /* Reserved case, choose the strongest ordering.  */
-+    if (ctx-&gt;opcode &amp; 0xf0000000) {
-+        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-+        return true;
-+    }
-+
-+    /* Normal FENCE. I/R for BIT 3/BIT 1, O/W for BIT 2/BIT 0 */
-+    TCGBar ordering = 0;
-+    if ((a-&gt;pred &amp; 0xa) &amp;&amp; (a-&gt;succ &amp; 0xa)) {
-+        ordering |= TCG_MO_LD_LD;
-+    }
-+    if ((a-&gt;pred &amp; 0xa) &amp;&amp; (a-&gt;succ &amp; 0x5)) {
-+        ordering |= TCG_MO_LD_ST;
-+    }
-+    if ((a-&gt;pred &amp; 0x5) &amp;&amp; (a-&gt;succ &amp; 0xa)) {
-+        ordering |= TCG_MO_ST_LD;
-+    }
-+    if ((a-&gt;pred &amp; 0x5) &amp;&amp; (a-&gt;succ &amp; 0x5)) {
-+        ordering |= TCG_MO_ST_ST;
-+    }
-+    if (ordering) {
-+        tcg_gen_mb(ordering | TCG_BAR_SC);
-+    }
-     return true;
- }
- 
-
+ MAINTAINERS                          |  14 +
+ docs/system/riscv/spacemit_k3.rst    | 259 ++++++++++++
+ docs/system/target-riscv.rst         |   1 +
+ hw/misc/meson.build                  |   1 +
+ hw/misc/spacemit_k3_syscon.c         | 524 ++++++++++++++++++++++++
+ hw/misc/trace-events                 |  10 +
+ hw/riscv/Kconfig                     |  16 +
+ hw/riscv/meson.build                 |   1 +
+ hw/riscv/spacemit_k3.c               | 745 +++++++++++++++++++++++++++++++++++
+ hw/ssi/meson.build                   |   1 +
+ hw/ssi/spacemit_k3_spi.c             | 273 +++++++++++++
+ hw/ssi/trace-events                  |   5 +
+ hw/ufs/meson.build                   |   1 +
+ hw/ufs/spacemit_k3_ufs.c             | 109 +++++
+ hw/ufs/spacemit_k3_ufs.h             |  27 ++
+ hw/ufs/trace-events                  |   4 +
+ include/hw/misc/spacemit_k3_syscon.h | 103 +++++
+ include/hw/riscv/spacemit_k3.h       | 104 +++++
+ include/hw/ssi/spacemit_k3_spi.h     |  49 +++
+ target/riscv/cpu-qom.h               |   1 +
+ target/riscv/cpu.c                   |  87 ++++
+ target/riscv/cpu_vendorid.h          |   4 +
+ target/riscv/tcg/csr.h               |   3 +
+ target/riscv/tcg/meson.build         |   1 +
+ target/riscv/tcg/spacemit_csr.c      |  82 ++++
+ 25 files changed, 2425 insertions(+)
 ---
-base-commit: 08ed97c33c3818ef51a7c852347a28e9f66807b5
-change-id: 20261120-fix-riscv-fence-20261119-10a425b78673
+base-commit: 8f66cb79044c370e3813c56ceb7a75a5ca2d0a0e
+change-id: 20261122-spacemit_k3-6f93beeb114a
 
 Best regards,
--- 
-WX Chen <a class="moz-txt-link-rfc2396E" href="mailto:wxchen0913@gmail.com">&lt;wxchen0913@gmail.com&gt;</a>
+--  
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
-
-
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Sent using hkml (<a class="moz-txt-link-freetext" href="https://github.com/sjp38/hackermail">https://github.com/sjp38/hackermail</a>)
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------9aaOkj0L0FGI041Lqwv0S9Po--
 
