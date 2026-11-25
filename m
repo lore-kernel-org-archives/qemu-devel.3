@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5B8606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CBA606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mKoAilGf
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VjmVQJIa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW35G-0008CI-1n; Tue, 24 Nov 2026 21:50:11 -0500
+	id 1xW35C-000852-4E; Tue, 24 Nov 2026 21:50:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35C-00085g-Tf
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:06 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW357-00082Z-Cm
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:01 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35B-0006yW-Ha
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:06 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW355-0006mA-TX
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:01 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id A4A9D41327;
- Wed, 25 Nov 2026 02:50:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64CF1F000C0;
- Wed, 25 Nov 2026 02:50:02 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id C5A3643AD9;
+ Wed, 25 Nov 2026 02:49:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0F91F000C0;
+ Wed, 25 Nov 2026 02:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795575004;
- bh=5WUw9ZKTcRTmn77VYcxkNv4wMwY5Py6cY/+/QIFs+1A=;
+ s=k20260515; t=1795574997;
+ bh=UB4oZdQd5la14G958Y2pmIyj5D5jzHVPhjm2HWLVvRo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mKoAilGfM0/HS0Lwqx53jlgNBoDxa7dxYoGwSg2oFsqNqcb2+iaN/2OHKnWSi7vmo
- oDHafEBq15O9Iz9f7K0gnP6jgDmo3Ea/jxjxbps6sJy58zfdHZHWkF/+eh9/oqWO2a
- PmsmWAdtnpvFDuSkWKN0UDVIpmL88LYOv0B/g7fiXCLZi7aR/o152IxHMnKDNag+89
- A6Ur4CduGLQFYGvUI/r98WJ37fs8JZZ51DUjSjt+KAXqK9s9yMMdHpQWnqImPRDV9n
- BUvZmIpCS38n20YYNMTrpdWDi00YJGaBcfpdZpxu0oZzpa5MeNu5J56u4HPxrLWeeS
- iPlITlP2EFF8Q==
+ b=VjmVQJIa4W+UulQqtKg83MXz2oByHveOzYeYqPnqglKCu9ZYXOkjjHVJI+R2/KaUc
+ JEaOJaZPe4MzSKKBDRi3pUo1VeeHoZKVPVFccz3mB123fE+MuOWQ64EN3XiDILVNAE
+ Jf8/cIbQEwpaQNBQqWjiU9647mnCpx0CHaxWRTAI7HgsAeTEuoqGqMakVbewDWSzj+
+ QC8e7lbUvkmSXYFz52Ih+PjC/Fy48tUYRNs/kdyLdfLI+lDen3urzQU+4NAixH3BlS
+ +18A5CBtjQvFEQRrNMfjjg4ijcqSURZma5Pg9zFc1U7Xfk8pSsP/H/twAYCvkv2qDV
+ 2/4lSv4t+EYrQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Keith Monahan <keith@techtravels.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL for 11.2 04/14] hw/scsi/lasi_ncr710: Limit max_target and
- max_lun to 7
-Date: Wed, 25 Nov 2026 03:49:41 +0100
-Message-ID: <20261125024951.10428-5-deller@kernel.org>
+Subject: [PULL for 11.2 01/14] hw/scsi/ncr53c710: Cancel the in-flight request
+ on soft reset
+Date: Wed, 25 Nov 2026 03:49:38 +0100
+Message-ID: <20261125024951.10428-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261125024951.10428-1-deller@kernel.org>
 References: <20261125024951.10428-1-deller@kernel.org>
@@ -49,8 +49,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -78,33 +78,40 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-SCSI target IDs and LUNs on this bus are 3-bit values, so the highest
-valid one is 7. scsi-bus.c treats max_target and max_lun as inclusive
-limits (id > max_target is rejected), so 8 wrongly allowed an ID and a
-LUN that the chip cannot address. This matches esp.c and esp-pci.c.
+ncr710_soft_reset() drops s->current and clears the request's
+hba_private without telling the SCSI layer. The request stays queued on
+the device and, once it completes or asks for data, the HBA callbacks
+find a NULL hba_private (ncr710_transfer_data() asserts on it).
+
+Cancel the request first. scsi_req_cancel() invokes
+ncr710_request_cancelled(), which releases the NCR710Request and the
+HBA's reference on the request; ncr710_clear_pending_irq() then finds
+s->current already NULL and has nothing left to do. If the request is
+not enqueued, scsi_req_cancel() does nothing and the previous behaviour
+is kept.
 
 AI-used-for: Patch series decomposition (commit splitting and ordering)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/lasi_ncr710.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/scsi/ncr53c710.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/scsi/lasi_ncr710.c b/hw/scsi/lasi_ncr710.c
-index 4fde2265b5..27234aadd3 100644
---- a/hw/scsi/lasi_ncr710.c
-+++ b/hw/scsi/lasi_ncr710.c
-@@ -137,8 +137,8 @@ static void lasi_ncr710_command_complete(SCSIRequest *req, size_t resid)
- 
- static const struct SCSIBusInfo lasi_ncr710_scsi_info = {
-     .tcq = true,
--    .max_target = 8,
--    .max_lun = 8,  /* full LUN support */
-+    .max_target = 7,
-+    .max_lun = 7,
- 
-     .transfer_data = lasi_ncr710_transfer_data,
-     .complete = lasi_ncr710_command_complete,
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index 57967e7a84..10daa66e84 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -364,6 +364,10 @@ void ncr710_soft_reset(NCR710State *s)
+     s->sidl = 0;
+     s->sfbr = 0;
+     qemu_set_irq(s->irq, 0);
++    if (s->current && s->current->req) {
++        /* Drops hba_private via ncr710_request_cancelled() */
++        scsi_req_cancel(s->current->req);
++    }
+     ncr710_clear_pending_irq(s);
+     ncr710_scsi_fifo_init(&s->scsi_fifo);
+ }
 -- 
 2.54.0
 
