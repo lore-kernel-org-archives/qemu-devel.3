@@ -1,117 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE20606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465F7606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 11:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=invisiblethingslab.com header.i=@invisiblethingslab.com header.a=rsa-sha256 header.s=fm3 header.b=hpuowITj;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JDa842Q8
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hl1qN/Zv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWBJj-0005uu-Ve; Wed, 25 Nov 2026 06:37:40 -0500
+	id 1xWBLr-0006jH-SA; Wed, 25 Nov 2026 06:39:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1xWBJc-0005sL-5n
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:37:33 -0500
-Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1xWBJZ-0004PQ-Pn
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:37:31 -0500
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
- by mailfout.stl.internal (Postfix) with ESMTP id 7AD781D004CA
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 06:37:26 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-10.internal (MEProxy); Wed, 25 Nov 2026 06:37:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm3; t=1795606646; x=1795693046; bh=9k
- yUCfChn8pCXHK8yebfiOWuNT9W9TxIjA9i0vqjqas=; b=hpuowITjOHN4aIO0PR
- rEyWrrQOAtDGJ3ir6bIcDK4ulKbAWaZ1h5QDmwlb3yoi9ewPJGuVsLJUupleqUwP
- c3CmNOwk851MCHhgo6YbP57+UmJqtxgDLllf1i6mJ2z9Xu56oj5fVI1BxH/oFJIg
- +6bKSBXHkReD7SoRFy77VpR3zbKpeHtBQPfZmz8D2bgLZwr1Xl47Az+R2XQa/hiJ
- xqfDUyEkhoRDZHcysfRyP+WFuJvuy+1OPeDhKwgCowDCIioSAjR6nuvRVmXLpuo0
- KZv0sv5uwMNk+hvqOL/5IgyC5I6iidYdvdKYgqmsc94TOcA7mNZpyOj/VRJdiG7V
- DGlg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:message-id
- :mime-version:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795606646; x=
- 1795693046; bh=9kyUCfChn8pCXHK8yebfiOWuNT9W9TxIjA9i0vqjqas=; b=J
- Da842Q81UmaDDdZlcNbZKdTuSQiN3tJ8wksuAym6joeeHkmHiVHxxV/g2G0bb83b
- i0YA3STPwGjHs8M3eYIgCYJ/ci+NRhhSfQnaBblOoLFFAzMm79euBk5r+jf/2Md5
- NsK1qMkavN2Vy/swz6rXH2nmi7OHSf8HuidiWykRtPT/mfdfGqVqj5XobaqjrFSA
- d0MWHeA89vJpPnZ0waCLkAZrMke9L16iFe+Cbvdanv09fpGVbbv84jLRWU/PQPvt
- ekllUF7lYBTBbOaZoxe555T1BDuDVYHfwgNeX8HHpRN8KiyaeUFxnyS4eZ1Yd8kY
- ULXIGCZxzjFiKld0jlqaA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=sign d=invisiblethingslab.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795606646; d=invisiblethingslab.com;
- mf=PG1hcm1hcmVrQGludmlzaWJsZXRoaW5nc2xhYi5jb20+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm3:rsa-sha256:JIelzLxsVT8tyAjZZWauZY6FTotlz6ifXsPDB6TrTCit7EJ
- mBhLeUkmnA7/sbpoJD4oMJJ4OLUqect6M6z5fTxdQfgBt5jOY569LVd9KbVu/21D
- tw3T35Cy6qF6WMGjAxuFpqcNuqnqS2jrLSeINVKxF+PpSyiETkI/XjbSoD/ur1A4
- Gp+z7Hg0bP59RYbbBXea4jIzbAhrEoN5VlTVShRDq9IqmnmtTyzoGcaDN2J+clLL
- GQhmE/972zHD22TtP9mtTQJuiBVyFtlrg7veShXk0TkAGiQrjfS0GAVr5A1RWEea
- Ov9vkcwpQOMdOb5B6iZVaJafWHTL3lzbPeN2qcA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
- repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
- action=mi-m=1; hc=10;
- hn=cc,content-disposition,content-type,date,feedback-id,from,
- message-id,mime-version,subject,to;
-Message-Instance: m=1;
- h=sha256:yHwUnP5w/Bq1V8pwlIGqodEbIbaTKOOc199MPDgXSIw=:ye2bjK0mgrHRU/fjaH47XDXFf57kiI31H4SKA/v08r0=;
-X-ME-Sender: <xms:dsgGa4TKW2UVO4voeWx1IG31HNtt0scTduSt7FtIXSebUwarLteXWQ>
- <xme:dsgGa8q45OR4tPX3t3MVEzvRyV4aAp4zSgjQP8N1YSbwHL5upf81Ddj9zRmzbdM--
- QI0gcyZykFK3APxb9OH4fr6HnBBjtUud-ett85x2oOTz0bL2w>
-X-ME-Received: <xmr:dsgGa-K8shwZiKI7XnBp1yUdkdWPj7ZZsGFRAAk_IVwghN_JmUDmv3UCAQtLJ0A_pErdY1XRLfQuklZIEM97gnndz12lKGIrcHbY6TiN1z8>
-X-ME-Proxy-Cause: dmFkZTEN7JTuSK3BXL9J06e6DyHkHlK4zk89f9wWQjaGK5q69GmZf0bpLrr1DxccWaK5Y0
- SyfHLuPTM2nWzNZRKHoMsLaQsE19+rKMap3R/EJsB1mL5JPBxZtzQHWcx2tqmeABKpHqjx
- L79zz7FEYCkwn8VD5hZalLBsWmpk48GNR6/UsSxVyAoxzieXkbuQjJszERSDa5PkQqqcqE
- wolPBNtb66kqC7D5lOAVaQuKLvjPqW2Etdb4R6ac4DjXysvl9FK/Lgf0O6OS1EuFrRsMhe
- 7AdHeHmWp4PrhUDUjCTc5nQXN9gdgM6sYQ+y48iDBCFmA9cfnbLp8q9sCG48xH4bcr8Zp2
- 5aIt8+fstCGEyuR+uW9lwYwWEqHJlobu6nGSsydYDnQY/6j09U+/fSOLMoCOoceOBqm0zk
- C8+YPfW1uRbIR5E5y1oTh/rkr00/eFi0YUZLH9TVsQv8Oua0JpSm2TvptpAEVXaWKgkNzH
- ICqZLc7m9daV+Jx7XmOLWnAeY9RCnRtFIscjk3KTGFDLQrVIyNqopmmd4PQIdJMAIAv2qD
- QxDAqUz7AV8yxJ2BzfKT5kBliBO0Ro8P4G5ld/feLIJWh7upvqvsWdmzN2ItyxRWWd1olZ
- RzdhfnBdAkBLCgzHB9ZjjsRfwCy4br8mJkP1iD/heRamtAdBittJm27mVKpg
-X-ME-Proxy: <xmx:dsgGa3qixm-2Woc0hNufI3k_57rpg4CbKGTocUoAPBn0yACz18y97w>
- <xmx:dsgGa-yGGtefqyWJA1kpRXIajnh3GadyQse7cyOeWb09MjuW5xSmqg>
- <xmx:dsgGazPUD3lOaqX71ZeFcTeZc-uPXSZkgIRwUrOljnuTVDJK9pwamg>
- <xmx:dsgGa75zoPPeSTi18TDwxoIa8ElFcUSDaPFnkDMO8kuxFepZSC823w>
- <xmx:dsgGa3k83LzwZlbh5xrsV6bsrhZriX4tCG8A025C_-irFy94_7W7q39O>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 06:37:25 -0500 (EST)
-Date: Wed, 25 Nov 2026 12:37:22 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Cc: xen-devel <xen-devel@lists.xenproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@vates.tech>
-Subject: I/O performance regression between 9.0.2 and 11.1.3 on Xen
-Message-ID: <awbIcujrsqYLGS1B@mail-itl>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xWBLo-0006iX-U0
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:39:49 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xWBLn-0007mP-9a
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 06:39:48 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-677bc4704cbso6660703d50.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 03:39:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795606785; cv=none;
+ d=google.com; s=arc-20260327;
+ b=kwpTqYPUdSoV+LCNxTSeutPeWzm8WZJebJDlFa8xCBz8BBeH1U+904t/c8W+mfWPrp
+ iFkAG5M9IWmsEgr4zW6NQCWZf5oVh0lJ1zbgXLqNh6pihBdxHdeSSMDBH9FL/56Vhl6u
+ tC0vRmdOrO5nP2hZ8JqBFuHxgjuewnexMglgIlRxvpteg5kpHpXBedXXaRNj2MgCnWmg
+ YgUgZGsbCLzjUzxsQG5v5RgMSZllKgKUVS3qiTEo6KWXhQmhPMCtiMImgzBfdp1QxTx0
+ 1LkSRdCK3HfciVeuAenOs5QLwRUKpBBCWmveEPCBATDS8FzG2/oNv/wWCHUuOb9HBfcF
+ fWDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=XaVCcn9Z5aEq7uhLaB/jWmPC3YsCFZjaL4km65O59lQ=;
+ fh=Ud8iGdqw5T3Met7Z9Yzel8T0E9pDK4VqfUShOErD7D8=;
+ b=gdbe6GXoCJYWBQK/FGvCn9R5P2R4kA1yuaDnbJAr5+8TeGD2JANypi7h9m/EfXv6n3
+ 4nvNWzu/VcW/3jdlAb09kRJd7EE1KTIqBeGKzlr3Jz7cBYM+D493xlnJ3OeTDK1RVsEJ
+ HODhxBmkwER8vW+HdeKciAY3JxoVG3BOgckMKA4lI92QdIAcvPgQgjX4caQisYb/iTWb
+ PB4zMPM7XQ+OoSGyAPa4NJs1HB74ckfAnQFnjntTBvnTxWWu7RD2cM6Rg68unQPG7WnL
+ wbdJm2dbzCKDiZ8LGVeJlzyN8I+iLk3NgE0fHYZxGMUUjGv5A0vK9CNf2o9f31lwW1yc
+ U1Rg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795606785; x=1796211585; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=XaVCcn9Z5aEq7uhLaB/jWmPC3YsCFZjaL4km65O59lQ=;
+ b=hl1qN/Zvpw2ovsbkKignjhVgxwxqCwiKO0SBLiHLPHIWBzKIANJqXsDoRaGT0K9cFH
+ CjhQDPDP8H4DSSLSrZhoLFFlmPC1wWNayaGAeN6LT5glrw6T2Cx34h0AkMEQU1tk2JNA
+ HFJ5+Pt/IFwAn3QSuJtHfLCGNWwXml7MfegW9329Mr+Poi8xbElUuUF+FyCk9BFsZVZq
+ XQLP5lfXIFZYbdJpasnZLPPJDiGlcdissA2wmi8nmnKL51SDtxhiww+rvmEC/m61uVOC
+ PthC+WbsNIreyqBcugdbMhaELgy6F4Fpc/O+YJsP/KX+Nk+lznNl1r8epcu5L8Q/e0gC
+ aRRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795606785; x=1796211585;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=XaVCcn9Z5aEq7uhLaB/jWmPC3YsCFZjaL4km65O59lQ=;
+ b=wlUE1jr1vOQCHR34IIJDLUdxH04OtWKd/UC3pnLIY9UdQIoG0IczgBOVbof0UHRwqS
+ cm5DcODAWpU7wkLABAkYVWUVkNW1yi8DIwPKCO4MUvy8cRo5dxOhT6KfCiuw+bXBsHOf
+ pXtXlQ+8MwHDGkdrd58o+ZfJ8nW77xm1MZc0iKHCUI0TrS/J75RSPHnTvnjJQgaV074+
+ Fa2S3X9CN5SQCwuG8CGmDJJ8AsCYdVJR2vOYx1HhxrBorXzLFITHCKoLEPWHxtcFK1yi
+ nAhtBGmBiNUwEJ5+5euHDGGME6XRI9Juc5rm3euNaHge9EglUCwMb3QyV1W2sX3pbNKA
+ 6KCA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHuTOTOnPCCbXpGq75TivUr3h0voO/3O/usqPQbT1m/k2sKMr+oiUJ0sH2hoQIz9uTPuAEDAQv6m5Hj@nongnu.org
+X-Gm-Message-State: APuU4Z8LT2+4fWM0/L8MuyTk1hiC1Fd85MzdKXeYist8oNx2Weru0zPj
+ 3JUU9gFEd0P3AaF4eWv1Zs7N9n9o8JvUTnMDXMHnquUQL/unhJJLRkaHR8EDcoapyo7jwl9U+RL
+ 7u3AixLOAtI0DX5KzVYIsXnEdwWyZu9ECHSdWYAb8JQ==
+X-Gm-Gg: AZFdTZcyQMNxKgzcuZYMT1P6cU7TuwDU58dinas2D6qncboO9hoQufThxix25BUVI2q
+ V5Nl/nleUV5SVXR4DyE+h4NUg1mRZHxxVYf/y/vZ/kghsjlV2EXWltpnMNHrtr1VRLCexLK6yRZ
+ 9NiwcdLZUNfSZDPTdRO/cn7MZxWZgNCYHCwjyPy1ivM7cQFSjcqRgQ5NmYxmNBTh7Pmb7o50Whm
+ mJOi7FKzQ5EYDwUveIZO9/eTpI305tPZB2XyzrNVq3q6lzNnbhlsM9cp2qVUSFpuuIVSCfPq5hx
+ ZOMgpX/5gJjiw3+0WfqlEoWN4JF7sUQdsUXEbGpaS2umizUgzDeXSfYJJ9g/hKhU75KtxEdoX+p
+ /FNpKWeplXBJoY0YW8+1DGqti/a4GGu1godpDy+6JzZAY0j8lKTB9xbnR5EecfRE3Il8nNusuau
+ TYSzzhsH8yG99qcK8pE9c8YsJ+u/EFxg7xupm8OTqkYg==
+X-Received: by 2002:a05:690e:1697:b0:67d:a31c:4f8 with SMTP id
+ 956f58d0204a3-67df44162dcmr5578825d50.58.1795606785213; Wed, 25 Nov 2026
+ 03:39:45 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="HkaqPo3myGkwPubi"
-Content-Disposition: inline
-Received-SPF: pass client-ip=202.12.124.145;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=fout-b2-smtp.messagingengine.com
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-4-pbonzini@redhat.com>
+ <e083cd5c5658465323879c7a7e1f703fe1044c72.camel@infradead.org>
+In-Reply-To: <e083cd5c5658465323879c7a7e1f703fe1044c72.camel@infradead.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 25 Nov 2026 11:39:33 +0000
+X-Gm-Features: Aa3M54qoGktmV6ySFTFU5c_aXFFBHCKZLJFdakVMRSzP1Hqdvlf85JGGFipA8ZU
+Message-ID: <CAFEAcA8pnKtgaEym=Pq05cCSBfd0J2UfKgdpzzRn_8pOjJgxBQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] AGENTS.md: let agents know what the participation
+ rules are
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,80 +124,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---HkaqPo3myGkwPubi
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 25 Nov 2026 12:37:22 +0100
-From: Marek =?utf-8?B?PT91dGYtOD9RP01hcmN6eWtvd3NraS1HPUMzPUIzcmVja2k/PQ==?= <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Cc: xen-devel <xen-devel@lists.xenproject.org>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Anthony PERARD <anthony.perard@vates.tech>
-Subject: I/O performance regression between 9.0.2 and 11.1.3 on Xen
+On Wed, 25 Nov 2026 at 10:28, David Woodhouse <dwmw2@infradead.org> wrote:
+>
+> On Wed, 2026-09-30 at 10:54 +0200, Paolo Bonzini wrote:
+> >
+> > +### No AI-written text must reach maintainers
+> > +
+> > +These rules apply when publishing AI-assisted work to GitLab or the mailing list:
+> > +
+> > +- **AI-written cover letters and commit messages are banned**.  These are
+> > +  easy to recognize and waste reviewers' time.
+>
+> For commit messages and to a lesser extent cover letters, I think this
+> is missing the point a little.
+>
+> What do we *actually* want here? We want better, more coherent commit
+> messages.
+>
+> Surely it doesn't actually *matter* where those commit messages come
+> from, as long as they're good commit messages?
 
-Hi,
+I think the problem is that one side of this argument is very
+sceptical about getting good commit messages from AI. Specifically,
+I want commit messages that are expressions of intent, which means
+I want the human's intent, not the AI's summary of what code changed.
+I don't trust that an AI written commit message is actually going
+to be good, as opposed to maybe having surface level characteristics
+of being good. I think it's much easier to say "don't do this" about
+a practice I expect to produce bad results 95% of the time.
 
-After updating QEMU in a stubdomain on Qubes OS (Xen)[1], I got severe
-performance regression. The benchmark I noticed it on is Windows
-installation time - the first phase (until first reboot) went from
-~7 min up to ~30 min. The version range isn't exactly trivial, but on
-the other hand the issue is 100% reliable, so I easily bisected it. The
-result:
+Writing the commit messages and especially the cover letter yourself
+is also the signal that you put thought into what the patchset is
+changing and why, that you reviewed it and understood it, and you
+didn't just blindly go along with whatever the AI came up with.
 
-123acd816dccbd358570ec7ab79c5cb2c863780b is the first bad commit
-commit 123acd816dccbd358570ec7ab79c5cb2c863780b
-Author: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Date:   Mon Apr 29 19:12:42 2024 +0200
+AI commit messages also tend to be really bad writing and horrible
+to read. That as you note can be dealt with to some extent, but
+I see it as a secondary problem, not the main issue.
 
-    xen: mapcache: Unmap first entries in buckets
-   =20
-    When invalidating memory ranges, if we happen to hit the first
-    entry in a bucket we were never unmapping it. This was harmless
-    for foreign mappings but now that we're looking to reuse the
-    mapcache for transient grant mappings, we must unmap entries
-    when invalidated.
-   =20
-    Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-    Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
- hw/xen/xen-mapcache.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-And indeed, reverting it on top of 11.1.3 fixes the issue. I assume that
-page gets mapped and unmapped a lot (for disk I/O?).=20
-Let me know if some more information is needed, some logs to collect
-maybe? Or a simplified test case?
-
-[1] https://github.com/QubesOS/qubes-vmm-xen-stubdom-linux/pull/77
-
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
-
---HkaqPo3myGkwPubi
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmsGyHIACgkQ24/THMrX
-1yzdOwf7B5Kq+AczMv0z9ygk2CD9DzRyle/A5QEG/cmVOphk7jyB2TahAkIb+xT5
-R4Y3Az9ycSE0+jS1HM1V5NI41nLwi3eVyFJwER6bNkbZbHcmT4dbYwe36NveNbPr
-ElfZ6qAaZpqfQNrI4JY71E0RbpFm/nobwF7+WZreG4pbI4shUfJ40/1nt7gLjgsa
-XvzjxNH0j2KftVi1+OpKhMDgbZfv/CDlwuz33+nLzhh9suiZHAdHIirO+GnSyhY3
-ZLSHB1ceyny0vMwweyzXHCAjsDDJF2gFfHmukuhgPrFeke6LXDXkW+MVkfi+EoCG
-/kyy1PyEiqfeTBquI3Yt2LiFkXRAHQ==
-=Plij
------END PGP SIGNATURE-----
-
---HkaqPo3myGkwPubi--
+-- PMM
 
