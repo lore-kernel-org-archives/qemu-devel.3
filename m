@@ -1,107 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A6D60A3835
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 16:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A31606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 16:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ldLt+/Qf
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ie8d6iGI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWFv8-00038g-29; Wed, 25 Nov 2026 11:32:34 -0500
+	id 1xWG4m-00061S-8g; Wed, 25 Nov 2026 11:42:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xWFuz-00037f-N6; Wed, 25 Nov 2026 11:32:25 -0500
+ id 1xWG4e-00060P-Pt; Wed, 25 Nov 2026 11:42:24 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xWFux-0005MW-Pu; Wed, 25 Nov 2026 11:32:25 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1xWG4U-00077i-Ud; Wed, 25 Nov 2026 11:42:22 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6APEZ2NV1608786; Wed, 25 Nov 2026 16:32:13 GMT
+ 6APGYaBg1799222; Wed, 25 Nov 2026 16:41:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=plibVL
- lnj7XeVd4NnFUBPHWMiC1SU6hCWKNtueszpYE=; b=ldLt+/Qf0uD7NWsIcFT0uY
- C9iFcqKQbgETF/YyoG2EWZahDGXibEbcyzSwU0iGUdnwvaMQ8hb6GMQeyIT/ri6e
- HCDj5akhsJr9NkbxhtCIqaB+Z+SDqL0zc1n1UVmkCSxsRFiTQJ1WKRFfoeoI9gni
- LNIQ2dCIZJXPqHSGmliQMTwDEBTDpBX6b4hmToRI6xLHBeh6oAW8QaU8owHAms8x
- Wb20PrAkizKvJujfj4aAMp4IVCYb6KC0/Ck3n1x9ADeFzztR1RvcxbqnWousgz2h
- bNoKZtuLGUjegEJnZ4dTYGrIIIF28a1qeaDnhCnsFxy5vmHaf7YMM3ZLNn5knmhw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=8J2arm
+ fnbA2xcBzCfCPE08Be2J5Qg78h80MFw8lLC90=; b=ie8d6iGIWAWw0YPrqEmChA
+ +oMP2NmPZNbSdH1z3p8YynCIaNLHnMXQ6ZGL5IrKdXiZpphYZqkx5AXFO6fexg11
+ iY7enffQcwGRWLqAQvb6KWe5Le1xLrQP9uSR5Hafvpk4f4dTD0mFUoclT1JOcm/r
+ aOGs0UYH9oYCheuFLO9n3dAQH98Cj6oJSVEIdclt3odTQm+bDy/DrKg0m/eXCCs4
+ trQk49yOxVDNYD7YNAgHDtUDLV4NNbfOVpzUbo11bBCOJ9WvRSQsX955xTlea4XI
+ bi3PdgAVj8GGkVXpe4UENyeB3SS6sy9HrmP+Hps9DA0s9sC8m8t68YR/5sXbuo0A
  ==
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34g1cwd6-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34gvd07q-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 25 Nov 2026 16:32:13 +0000 (GMT)
+ Wed, 25 Nov 2026 16:41:59 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
  by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6APEKHJc918320; Wed, 25 Nov 2026 16:32:12 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j5dcuv1xy-1
+ 6APGYLqb1063132; Wed, 25 Nov 2026 16:41:58 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j5dcuv334-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Nov 2026 16:32:12 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6APGW8TJ47448444
+ Wed, 25 Nov 2026 16:41:58 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6APGfra244564798
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 Nov 2026 16:32:08 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A5682004D;
- Wed, 25 Nov 2026 16:32:08 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4692820043;
- Wed, 25 Nov 2026 16:32:08 +0000 (GMT)
+ Wed, 25 Nov 2026 16:41:54 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D0F8E2004E;
+ Wed, 25 Nov 2026 16:41:53 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8230620049;
+ Wed, 25 Nov 2026 16:41:53 +0000 (GMT)
 Received: from [0.0.0.0] (unknown [9.111.11.72])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 25 Nov 2026 16:32:08 +0000 (GMT)
-Message-ID: <23756053-86fb-4732-bef1-397be6233c38@linux.ibm.com>
-Date: Wed, 25 Nov 2026 17:32:08 +0100
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Nov 2026 16:41:53 +0000 (GMT)
+Message-ID: <829af07e-9d11-4ad5-9818-94a12a4a1407@linux.ibm.com>
+Date: Wed, 25 Nov 2026 17:41:53 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] target/s390x/tcg: update regs and IV/tweak per
- block in CPACF AES/PAES
+Subject: Re: [PATCH v2 3/3] tests/s390x/tcg: Add cpacf clear key register
+ update tests
 To: Andrew Holden <andy0x48@linux.ibm.com>, qemu-devel@nongnu.org,
  freude@linux.ibm.com
 Cc: qemu-s390x@nongnu.org, richard.henderson@linaro.org, david@kernel.org,
  cohuck@redhat.com, farman@linux.ibm.com, mjrosato@linux.ibm.com
 References: <20261120131443.61606-1-andy0x48@linux.ibm.com>
- <20261120131443.61606-3-andy0x48@linux.ibm.com>
+ <20261120131443.61606-4-andy0x48@linux.ibm.com>
 Content-Language: en-US
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20261120131443.61606-3-andy0x48@linux.ibm.com>
+In-Reply-To: <20261120131443.61606-4-andy0x48@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: J4FsFlQlOIYgR_gRFIAKUGyD8S6HwDwJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA2NCBTYWx0ZWRfX/Xk0ZOqlkdLI
- CZbw4gmqj6fLYG2nLV2hxEaUN1/Kvr74wroQKh9C9GeurYxwpgNtKtgWluPt1mg0fPWfVYm+l9m
- 5FLGmwWRkNw3jdAmpoqEmpZUMIl1jg0=
-X-Proofpoint-GUID: J4FsFlQlOIYgR_gRFIAKUGyD8S6HwDwJ
-X-Authority-Analysis: v=2.4 cv=c8M+0h9l c=1 sm=1 tr=0 ts=6b070d8d cx=c_pps
+X-Authority-Analysis: v=2.4 cv=CYCdd7rl c=1 sm=1 tr=0 ts=6b070fd7 cx=c_pps
  a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=GC56UDdQnz8hRXXMcJcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA2NCBTYWx0ZWRfXxlfYatRS5fJh
- nvXrQV7fvOPTnB2+9e/g1sJmFkon3XzlB66TQpPWKT/h5kCNed8BvUjguGpmXmW0gxEiNA+B4VX
- oW1nS+DFyN5Nf6faCW4RH1KKDgFKTj5T/VZon0uH17hniOQ8Jm/F1vuYE/2WzCsFqTYSNh+DfTm
- fMr2iQNEha2H+yQRgabSP5719d07nr/dK2t8rGYJHjASyFQBmJW2O+U/bGrL+BKTVOieRXioDXI
- e7oRnM5qdqU0mMF6/Rcp/6E4WGDZaKSl03XAwpYk1S9BO/ADUvQWEWvXzg6MOmEenQSklSuqUgx
- whC+yrRbsDj6p/BIIh7YqygQ97Pp++oUst9jfgJ8QS61KK9mcw8LoQ4I3TVNIoaQpIYWh9aln7c
- taNPJ1iPUHv6VOlhYBt365gRafi7tGw4t49ubQZAdEHgcHwtxgwU2jTFAB1QHumUPlM1djt75NG
- 8Ysq0zPnQ1XpY1cIJZg==
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=6sI_RnkXhvEJrAPJccEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA2NiBTYWx0ZWRfX5QBOf9ZljpOU
+ GGUfILwY3X/SaPJ5bgjR/fPSXy6aUP7EN5/lFlUSolG+5JU9lfyIJeajKhMJNdBdLWE1YWWkW6+
+ 9XkEvNz9r9coK9Uwbzyn03+y52+niCw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA2NiBTYWx0ZWRfX1BUC3a1lXxiH
+ ZoFRZ9hQ0dUGwOiyRL/W56bwqtDbgI8jRqA3WLwAK3gbL4m2DSLemgH/0/07wV2KlhrInoSl8oB
+ Nz7LjCRIC3bjgm6Y84Ig5fdglLBL4yFMzzANsQO0o/Jd1mwscaFRZ6bFqkAYuCS8S95hQXCpqeb
+ 7pdtIlpC3oWddgQq9GaeE899Lx/j61z2e1y8svyJ3TKeHm2xFb7iKCFp2wT0zqVxOBCT+3EYSCs
+ IE9EiulRaVFlfjeUezcmVN6emSCKmQNvg1rtUlj6fswA41gbuqI5s2ItXh1He6b3u427oqJQgq9
+ zz9djLFyqqucg/r/Bn1VBubvst8HKbqLWZM9Xtt5U58FAfRA+D5naR8SChxe2S3i2D8ANfce3eH
+ ioC4k7pp18lZofsxhDOC0Uj/hsLqn0mDobgsYMM21snorHGmKMu3MqNM9PYt3V+aMAWiD1UQJa7
+ sj4w1dgXm7dKi1IB4uw==
+X-Proofpoint-ORIG-GUID: 5_ViljGsPuBcCmVt02NSh2McQcDGj0V5
+X-Proofpoint-GUID: 5_ViljGsPuBcCmVt02NSh2McQcDGj0V5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-25_04,2026-11-23_01,2025-10-01_01
+ definitions=2026-11-25_04,2026-11-25_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 malwarescore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250064
+ phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 spamscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611250066
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -132,97 +133,288 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 On 11/20/26 14:14, Andrew Holden wrote:
-> The CPACF AES and PAES helpers (ECB, CBC, CTR, and XTS) updated the guest
-> registers, and the CBC IV and XTS tweak, only after the whole block
-> loop. A guest fault unwinds out of the helper, so the registers kept
-> their start-of-instruction values, with the instruction having
-> restarted at the first block instead of resuming after the last
-> completed block, as expected regarding PoP. A block crossing a page
-> boundary could also be partly written before the fault.
+> From: Harald Freudenberger <freude@linux.ibm.com>
 > 
-> Probe the source, destination, and IV/tweak of each block with
-> access_prepare() before any data is written, then update the registers
-> last, a fault leaves the block untouched and a re-invocation would
-> redo this. aes_read_block() and aes_write_block() do all the copying
-> for each mode. Addresses are wrapped per block.
+> Add simple test cases for the 4 clear key cpacf implementation
+> functions cpacf_aes_ecb(), cpacf_aes_cbc(), cpacf_aes_ctr() and
+> cpacf_aes_xts() which shall test if the register update and memory
+> update during processing of data within the cpacf instruction (km,
+> kmc, kmctr) emulation is correct. See details about how the test cases
+> are designed and actually work testcase code. Note that as there is a
+> signal handler evaluating the registers on the enforced address
+> violation the cpacf.h inline function needs to use pinned registers.
 > 
-> The IV/tweak write is probed first but it is not atomic with the data
-> write. It's unlikely a fault happens between the data store and
-> IV/tweak, but it could happen due to a specific thread unmapping, page
-> change, etc., and only matters when source and destination overlap.
-> 
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 > Signed-off-by: Andrew Holden <andy0x48@linux.ibm.com>
 > ---
->   target/s390x/tcg/cpacf_aes.c | 380 ++++++++++++++++++++++++-----------
->   1 file changed, 259 insertions(+), 121 deletions(-)
-
-[...]
-
->   /*
-> - * write exactly one AES block from local buffer to guest memory
-> + * read exactly one AES block from a prepared access into a local buffer.
->    */
-> -static void aes_write_block(CPUS390XState *env, const int mmu_idx,
-> -                            const uintptr_t ra, uint64_t guest_addr,
-> -                            uint8_t *buf)
-> +static inline void aes_read_block(CPUS390XState *env, const uintptr_t ra,
-> +                                  S390Access *acc, uint8_t *buf)
->   {
-> -    write_guest_wrap_u8(env, mmu_idx, ra, guest_addr, buf, AES_BLOCK_SIZE);
-> +    /* gather block */
-> +    for (int i = 0; i < AES_BLOCK_SIZE; i++) {
-> +        buf[i] = access_get_byte(env, acc, i, ra);
-> +    }
-> +}
-
-Can we introduce something like access_memmove(), but for guest-to-host
-and host-to-guest transfers in order to avoid byte-by-byte accesses?
-
+>   tests/tcg/s390x/cpacf-km-ecb-fault.c    | 368 +++++++++++++++++
+>   tests/tcg/s390x/cpacf-km-xts-fault.c    | 511 ++++++++++++++++++++++++
+>   tests/tcg/s390x/cpacf-kmc-cbc-fault.c   | 472 ++++++++++++++++++++++
+>   tests/tcg/s390x/cpacf-kmctr-ctr-fault.c | 414 +++++++++++++++++++
+>   tests/tcg/s390x/cpacf.h                 | 103 +++--
+>   tests/tcg/s390x/meson.build             |   4 +
+>   6 files changed, 1846 insertions(+), 26 deletions(-)
+>   create mode 100644 tests/tcg/s390x/cpacf-km-ecb-fault.c
+>   create mode 100644 tests/tcg/s390x/cpacf-km-xts-fault.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmc-cbc-fault.c
+>   create mode 100644 tests/tcg/s390x/cpacf-kmctr-ctr-fault.c
+> 
+> diff --git a/tests/tcg/s390x/cpacf-km-ecb-fault.c b/tests/tcg/s390x/cpacf-km-ecb-fault.c
+> new file mode 100644
+> index 0000000000..3fe7df1f04
+> --- /dev/null
+> +++ b/tests/tcg/s390x/cpacf-km-ecb-fault.c
+> @@ -0,0 +1,368 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Test for register update correctness in cpacf_aes_ecb (KM AES-128 ECB).
+> + *
+> + * All the CPACF instructions are designed in a way that on exit
+> + * the registers are updated so that on incomplete processing (partial
+> + * completion) the instruction can just be re-invoked. The QEMU emulation
+> + * of the CPACF instructions needs to obey that rule as well.
+> + * This testcase checks the correct update of the register values by
+> + * triggering a page protection fault in the middle of the data. The
+> + * signal handler then checks for the expected register values. After
+> + * that the page is enabled for reading, causing the OS to restart the
+> + * instruction which continues to process the remaining data. Finally
+> + * the encryption result is checked to match the expectations.
+> + *
+> + * Test sequence:
+> + *  1. Allocate two contiguous, page-aligned source pages filled with
+> + *     pseudo-random data and two matching destination pages.
+> + *  2. Reference run: encrypt both source pages with cpacf_km AES-128 ECB
+> + *     into the reference destination buffer (no faults).
+> + *  3. Fault run:
+> + *     a. Protect the second source page (PROT_NONE).
+> + *     b. Install a SIGSEGV handler.
+> + *     c. Call cpacf_km over both pages (2 * PAGE_SIZE bytes).
+> + *     d. On the SIGSEGV verify:
+> + *          - si_addr lies within the second source page.
+> + *          - R4 (src address) equals exactly the start of the second source
+> + *            page (all blocks of page 1 were already consumed).
+> + *          - R5 (remaining src length) equals exactly PAGE_SIZE.
+> + *          - R2 (dst address) equals exactly dst_fault + PAGE_SIZE.
+> + *     e. Restore PROT_READ on the second source page and return from the
+> + *        handler so KM re-executes from the updated registers and finishes.
+> + *  4. Compare the fault-run output to the reference output; they must match.
+> + *
+> + * cpacf_km() in cpacf.h uses pinned registers R2/R4/R5 for its operands,
+> + * so the signal handler can read them reliably via ucontext_t.
+> + *
+> + * Usage: cpacf-km-ecb-fault [-v]
+> + *   -v  verbose: print details about each step and every register check.
+> + */
+> +
+> +#include <signal.h>
+> +#include <stdio.h>
+> +#include <stdint.h>
+> +#include <stdlib.h>
+> +#include <string.h>
+> +#include <sys/mman.h>
+> +#include <ucontext.h>
+> +#include <unistd.h>
+> +#include "cpacf.h"
+> +
+> +/* AES-128 key used for all encryptions in this test */
+> +static const uint8_t aes128key[16] = {
+> +    0xed, 0xfd, 0xb2, 0x57, 0xcb, 0x37, 0xcd, 0xf1,
+> +    0x82, 0xc5, 0x45, 0x5b, 0x0c, 0x0e, 0xfe, 0xbb
+> +};
+> +
+> +/* Page size, determined at runtime */
+> +static long page_size;
+> +
+> +/* Verbose flag: set by -v on the command line */
+> +static int verbose;
 > +
 > +/*
-> + * write exactly one AES block from a local buffer to a prepared access.
+> + * State shared between main() and the SIGSEGV handler.
+> + * volatile prevents the compiler from optimising away accesses.
 > + */
-> +static inline void aes_write_block(CPUS390XState *env, const uintptr_t ra,
-> +                                   S390Access *acc, uint8_t *buf)
-> +{
-> +    /* scatter block */
-> +    for (int i = 0; i < AES_BLOCK_SIZE; i++) {
-> +        access_set_byte(env, acc, i, buf[i], ra);
-> +    }
->   }
->   
->   /*
-> @@ -62,8 +80,9 @@ int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->   {
->       enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
->       uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
-> -    uint64_t len = *src_len_reg, done = 0;
->       int i, keysize, addr_reg_size;
-> +    uint64_t len = *src_len_reg;
-> +    S390Access srca, dsta;
->       uint8_t key[32];
->       AES_KEY exkey;
->   
-> @@ -116,23 +135,37 @@ int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->   
->       /* process up to MAX_BLOCKS_PER_RUN aes blocks */
->       for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
-> -        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
-> +        /* probe source and destination access */
-> +        aes_prepare_block(env, mmu_idx, ra, &srca, *src_ptr_reg,
-> +                          MMU_DATA_LOAD);
-> +        aes_prepare_block(env, mmu_idx, ra, &dsta, *dst_ptr_reg,
-> +                          MMU_DATA_STORE);
+> +static volatile int           sigsegv_count; /* how many times handler fired */
+> +static volatile int           sigsegv_pass;  /* 1 = all register checks fine */
+> +static volatile unsigned long expected_src;  /* exact expected R4 value */
+> +static volatile unsigned long expected_dst;  /* exact expected R2 value */
 > +
-> +        /*
-> +         * linux-user: the accessors below use host pointers. Record ra so a
-> +         * fault from a racing unmap of the probed page is unwound correctly.
-> +         */
+> +/*
+> + * SIGSEGV handler.
+> + *
+> + * At fault time the KM instruction has already advanced its operand registers
+> + * past all fully processed blocks. For the second-page fault:
+> + *   R2 = dst_fault + PAGE_SIZE  (destination pointer into second output page)
+> + *   R4 = src_pages + PAGE_SIZE  (source pointer at start of second source page)
+> + *   R5 = PAGE_SIZE              (exactly one page of source data remaining)
+> + * Note that this requires using the inline function cpacf_km() from cpacf.h
+> + * which uses pinned registers for the parameters and this has to be in
+> + * alignment with the code here.
+> + *
+> + * After verifying these values the handler restores read permission on the
+> + * second source page and returns. The signal return mechanism re-executes
+> + * the KM instruction from the updated register state, completing the run.
+> + */
+> +static void sigsegv_handler(int sig, siginfo_t *si, void *uctx_arg)
+> +{
+> +    /*
+> +     * No printf within signal handler, but write() can be used. So this
+> +     * little sig_printf() macro is a replacement to fprintf(stderr, ...)
+> +     */
+> +#define sig_printf(...) do { \
+> +        char printfbuf[256]; \
+> +        int len = snprintf(printfbuf, sizeof(printfbuf), __VA_ARGS__); \
 
-I'm not sure we need this comment everywhere; the existing usages in
-target/s390x/tcg/mem_helper.c don't have it, and it also repeats what
-the function's documentation already says.
+I think this also allocates memory and thus is also not in the
+"man signal-safety" list.
+
+> +        write(STDERR_FILENO, printfbuf, len); \
+> +    } while (0)
+> +
+> +    ucontext_t *uc = (ucontext_t *)uctx_arg;
+> +    unsigned long r2, r4, r5;
+> +    int pass = 1;
+> +
+> +    sigsegv_count++;
+> +
+> +    /*
+> +     * On s390x, glibc's mcontext_t exposes the GPRs as gregs[].
+> +     */
+> +    r2 = uc->uc_mcontext.gregs[2];  /* KM destination address register */
+> +    r4 = uc->uc_mcontext.gregs[4];  /* KM source address register      */
+> +    r5 = uc->uc_mcontext.gregs[5];  /* KM source length register       */
+> +
+> +    if (verbose) {
+> +        sig_printf("  SIGSEGV #%d: si_addr=0x%lx\n",
+> +                   sigsegv_count, (unsigned long)si->si_addr);
+> +        sig_printf("    R2 (dst addr):  0x%lx  (expected 0x%lx)\n",
+> +                   r2, expected_dst);
+> +        sig_printf("    R4 (src addr):  0x%lx  (expected 0x%lx)\n",
+> +                   r4, expected_src);
+> +        sig_printf("    R5 (src len):   0x%lx  (expected 0x%lx = PAGE_SIZE)\n",
+> +                   r5, (unsigned long)page_size);
+> +    }
+> +
+> +    /* R4 must point exactly to the start of the second source page */
+> +    if (r4 != expected_src) {
+> +        sig_printf("FAIL: R4 (src addr) = 0x%lx, expected 0x%lx\n",
+> +                   r4, expected_src);
+> +        pass = 0;
+> +    } else if (verbose) {
+> +        sig_printf("    R4 check: PASS\n");
+> +    }
+> +
+> +    /* R5 must equal exactly PAGE_SIZE (one full page remaining) */
+> +    if (r5 != (unsigned long)page_size) {
+> +        sig_printf("FAIL: R5 (src len) = 0x%lx, expected PAGE_SIZE = 0x%lx\n",
+> +                   r5, (unsigned long)page_size);
+> +        pass = 0;
+> +    } else if (verbose) {
+> +        sig_printf("    R5 check: PASS\n");
+> +    }
+> +
+> +    /* R2 must point exactly to dst_fault + PAGE_SIZE */
+> +    if (r2 != expected_dst) {
+> +        sig_printf("FAIL: R2 (dst addr) = 0x%lx, expected 0x%lx\n",
+> +                   r2, expected_dst);
+> +        pass = 0;
+> +    } else if (verbose) {
+> +        sig_printf("    R2 check: PASS\n");
+> +    }
+> +
+> +    sigsegv_pass = pass;
+> +
+> +    if (verbose) {
+> +        sig_printf("  restoring PROT_READ on page at 0x%lx, resuming KM\n",
+> +                   expected_src);
+> +    }
+> +
+> +    /* Restore read access so the restarted KM can read the second page */
+> +    mprotect((void *)expected_src, page_size, PROT_READ);
+> +
+> +#undef sig_printf
+> +}
+> +
+> +int main(int argc, char *argv[])
+> +{
+> +    struct sigaction sa, old_sa;
+> +    uint8_t *src_pages, *dst_ref, *dst_fault;
+> +    uint8_t param[16];       /* AES-128 parameter block (key only for ECB) */
+> +    unsigned long cc;
+> +    int rc = 0;
+> +
+> +    if (argc == 2 && strcmp(argv[1], "-v") == 0) {
+> +        verbose = 1;
+> +    } else if (argc > 1) {
+> +        fprintf(stderr, "usage: %s [-v]\n", argv[0]);
+> +        return EXIT_FAILURE;
+> +    }
+
+I would make it always verbose and drop parameterization.
+Suppose it fails it GitLab CI; we want to have as much data as possible.
+
+> +
+> +    page_size = getpagesize();
+> +
+> +    if (verbose) {
+> +        printf("page_size = %ld (0x%lx)\n", page_size, page_size);
+> +    }
+> +
+> +    /*
+> +     * Allocate two contiguous page-aligned source pages and fill them with
+> +     * a deterministic pseudo-random pattern so the test is reproducible.
+> +     */
+> +    src_pages = mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE,
+> +                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    if (src_pages == MAP_FAILED) {
+> +        perror("mmap src_pages");
+> +        return EXIT_FAILURE;
+> +    }
+> +    for (long i = 0; i < 2 * page_size; i++) {
+> +        src_pages[i] = (uint8_t)(i * 37 + 13);
+> +    }
+> +
+> +    /* Reference destination: two contiguous pages, initially zeroed */
+> +    dst_ref = mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE,
+> +                   MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    if (dst_ref == MAP_FAILED) {
+> +        perror("mmap dst_ref");
+> +        munmap(src_pages, 2 * page_size);
+> +        return EXIT_FAILURE;
+> +    }
+> +
+> +    /* Fault-run destination: two contiguous pages, initially zeroed */
+> +    dst_fault = mmap(NULL, 2 * page_size, PROT_READ | PROT_WRITE,
+> +                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    if (dst_fault == MAP_FAILED) {
+> +        perror("mmap dst_fault");
+> +        munmap(src_pages, 2 * page_size);
+> +        munmap(dst_ref,   2 * page_size);
+> +        return EXIT_FAILURE;
+> +    }
+> +
+> +    if (verbose) {
+> +        printf("src_pages: [0x%lx, 0x%lx)  page1=[0x%lx, 0x%lx)  page2=[0x%lx, 0x%lx)\n",
+> +               (unsigned long)src_pages,
+> +               (unsigned long)(src_pages + 2 * page_size),
+> +               (unsigned long)src_pages,
+> +               (unsigned long)(src_pages + page_size),
+> +               (unsigned long)(src_pages + page_size),
+> +               (unsigned long)(src_pages + 2 * page_size));
+> +        printf("dst_ref:   [0x%lx, 0x%lx)\n",
+> +               (unsigned long)dst_ref,
+> +               (unsigned long)(dst_ref + 2 * page_size));
+> +        printf("dst_fault: [0x%lx, 0x%lx)\n",
+> +               (unsigned long)dst_fault,
+> +               (unsigned long)(dst_fault + 2 * page_size));
+> +    }
+
+The tests have quite a lot of duplication; I understand that sometimes
+things are subtly different, e.g., tweak vs no-tweak versions, but maybe
+there is still some chance to share at least some code between them?
 
 
-The rest looks reasonable, thanks!
+The cover letter mentions this already, so - can we have similar tests
+for cpacf_paes_xts() and friends?
+
+[...]
 
