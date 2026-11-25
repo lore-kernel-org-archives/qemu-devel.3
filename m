@@ -1,103 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1FF606A335
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 10:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7E6606A333
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 10:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zdS8uJzI
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=Fk5insL5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWAFB-0000GF-6Q; Wed, 25 Nov 2026 05:28:53 -0500
+	id 1xWAFI-0000Ja-Ai; Wed, 25 Nov 2026 05:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xWAEu-0000Cz-2R
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:28:38 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xWAEr-0006Ze-VP
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:28:35 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4bba5e17728so4656085e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 02:28:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795602511; x=1796207311; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=omOClHHY+dYH7llh3BJ/W2C937+rEw5ySaFTFmPP8Cw=;
- b=zdS8uJzIy1oj28TD7t+vsSuOJbGux1ihUz7FzaKu4vEcDbcC9JbRuqZvWw335Eesao
- HkEE6X8IvVqD7uVagXl8i4HiUaL7Kat9a/ZTcAFRhj8l7NCvd+3E/EX/8LlLQ8GM8iqr
- PdR1krfwxT6DMXFmds6wU6TYW87+1A1raD/nIsrneSmdEUzVQyvVvXkOot+fs+ayksCU
- PWLaJ0qVzOrGf/cItugwc8Jo7J4+pLLdDwdqMhkRJpKijjjmlD5I/3r07XkPUsk4wQsP
- 0Hz7IZmTPxRYkkdDeSK5NQXmCdj4Fyqr5K41l/mSn7uXG8Xyeqlta2lb2mhDw42ll/t2
- uUoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795602511; x=1796207311;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=omOClHHY+dYH7llh3BJ/W2C937+rEw5ySaFTFmPP8Cw=;
- b=UlKcf/7f0S0nbiCU09coNXWhorKFLFJ8RF2m8gCVDidztatYu1s2was0LhfjcnWUM3
- UXyN4kFFXz+oRQxyEGiwxmDB97Yv3og0cHtbS6b4Kx2SNTHALL9SKoZVjNF4jfN0eYYv
- 5zHFfmMgJTgTh4ed0aor6gBYhIhbp45xPtR3jXiNWG8kAzagIbooGJFVpLMJSjfaR1//
- 4Br2XiknMp48ZpfGBD0V3c7LswjAfDFLojpCkmmTzPcInruDsJMciB+NL+ce7MXZAg/c
- JCE5/CKSNsDO30joBhMMtupJmk3wxSKYNqNfJ8aqJNSok9KMLVEwMNhuqTgUE6A4TOYk
- AJ+g==
-X-Forwarded-Encrypted: i=1;
- AL+hErHSrts63OK7cUMGrcjw0M3A75+t0EK03EMFZ9JW2Fk7y1s9AhAO7f8XuyVy+YR1sVoIqGf9DVG20S8y@nongnu.org
-X-Gm-Message-State: APuU4Z8wHZev01W1dNEGR+GgRagsMyI98gDhcKa0Iujq9hgCUb57/2ZC
- FtlNh2LcD02yYrr8Zxi/uPohMFgBAQxxqqjlTLrwfTIpS6Dxg+NHQ7rSqzod4VcK0O0=
-X-Gm-Gg: AZFdTZfsEcj3w8RJpcvbiEklO+t6HZ+GvEot51BykBQDcaWBSOu4hWOw3ErpmemtYtH
- SRFMYrZKJLCbzilwhLxTXdIMnulIdu1jG3NPt2+hjF+C1y1W8mSkHkAqo4T0bRq9uffgiZoqv99
- S+Ww8z/TA8AdBLazeKAtThmasQaaVNsWKXtMM3ou5IeHa8KEkd9rmJWeMw0kxR5KeD2jCmAGdcL
- t+VKDvvIRBN9cHFxOlX8CUAkqEOMzVom2T0EJy23lkODLJNz25r0YCvfK0TtEjugQEM+cX4ZNoD
- jHaEw4ObbIWFlMnAs78kBCFp4fjeKtRJKy4qXUZU0D2yhxvdUC0FXQ6Q6SFL6Nj9OtVZoHzCnAr
- 6yg21JJY8hXd2h4DIZQKfkdI+j4TnGnc2+mnnTEUzB5By+Zlf+LL2pPhdJWjZTrsUSBz8ypekgM
- tVpXI30P823hAVaIXFwhDnE8F+lLqumvyp5UTEaUyBOOTsMmwFLxdVerWYBgp8ecVhTWQYDHf9c
- YimlbyiEsdfToovtXPjozb64OJ95GGKBJuaeXcEmAlwNRreBmY09y8wwvfq+WkdoIi60MSz+PQa
- 0ntwpd6DvSqOsE+iC0QBQvvyuDEXpMk=
-X-Received: by 2002:a05:600c:8b11:b0:4a2:a9:ed5a with SMTP id
- 5b1f17b1804b1-4bb88826835mr347159575e9.8.1795602511032; 
- Wed, 25 Nov 2026 02:28:31 -0800 (PST)
-Received: from linaro.org ([2a10:d582:31e:0:82ba:bf15:3b4:e45b])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bb853b2437sm724982925e9.13.2026.11.25.02.28.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2026 02:28:30 -0800 (PST)
-Date: Wed, 25 Nov 2026 10:28:29 +0000
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Gustavo Romero <gromero@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] hw/arm/sbsa-ref.c: Increase SMMU space for Root
- registers
-Message-ID: <awa4TeIZmS4c_udY@linaro.org>
-References: <20261016-jmac-smmu-root-registers-v1-0-e78e8879d347@linaro.org>
- <20261016-jmac-smmu-root-registers-v1-2-e78e8879d347@linaro.org>
- <dxrwkmt76n62imxwycc6j2mcjihdhqmhukzc3ypojuepkprzsp@dm4yqcp75wrt>
- <avSYUeEmFFBdVePq@linaro.org>
- <47529a98-e02d-4cfe-a8b5-8b3f44bda15c@oss.qualcomm.com>
- <xl3axqq44u62xqw2gahgo4cehbapbirkywpbkyx547mdya7ycs@qekmzwnxmco7>
+ (Exim 4.90_1) (envelope-from
+ <BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1xWAF2-0000Eg-Hh
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:28:47 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1xWAEz-0006a8-KG
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 05:28:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=s9/iASQWYiaE9sxkBMQXDzclfIhxnteY5fWl6jshuqc=; b=Fk5insL5Dk2OPm3LVdNIffWjSS
+ MVb06YxyJpmh0Nl+y43yDsCFG6qF4B4/gucMD7yCnRxL/L2qkW+lFbSip1rm+6PvNzvlgLhiIw2t7
+ 5JbhxJUr0IyU/o6hxqvPNp565Ar6nrhIC4Whbn3Tz03ipTmekN+TF6Qe38u2vHkkyrOq1xG0ILHBx
+ KnI7oUVOHOiZIUd/WPfpqnm3Vb/yG2efLijGGnjDMWPaIEnxaiQldh+9xFudsS+mkomY7aOsinMNd
+ cQ4ENybA7NYHu6xYoSxvwVhgR/ukxF+7GhU3dT5p1VfT42EJ5Bas+tt8jCyT/GWzh6d1/QW7cClGo
+ Tj8xnyrA==;
+Received: from [172.31.31.148] (helo=u09cd745991455d.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+ id 1xWAEo-0000000Aw2Y-1Fu9; Wed, 25 Nov 2026 10:28:30 +0000
+Message-ID: <e083cd5c5658465323879c7a7e1f703fe1044c72.camel@infradead.org>
+Subject: Re: [PATCH 3/4] AGENTS.md: let agents know what the participation
+ rules are
+From: David Woodhouse <dwmw2@infradead.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=	
+ <alex.bennee@linaro.org>, Alistair Francis <alistair.francis@wdc.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, "Daniel P ."
+ =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Date: Wed, 25 Nov 2026 10:28:30 +0000
+In-Reply-To: <20260930085433.830743-4-pbonzini@redhat.com>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-4-pbonzini@redhat.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-IJj/4bbT/xmV6PsZ1zTS"
+User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xl3axqq44u62xqw2gahgo4cehbapbirkywpbkyx547mdya7ycs@qekmzwnxmco7>
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+302b0ab082d37c9f612b+8494+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,29 +79,180 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 12, 2026 at 07:59:00PM +0100, Gustavo Romero wrote:
-> Hi Jim and Pierrick,
-> 
-> > > Thank you for doing this. The only complication is that we'll probably want
-> > > an x-realms flag as well later, and if we do the rearrangement of the map
-> > > as above then SMMUV3_ROOT_REG_OFFSET will have to be variable. I'll handle
-> > > that when we get to the Realm part.
-> 
-> @Jim Why would you need to rearrange the SMMUV3_ROOT_REG_OFFSET? I was expecting
-> the Root registers would stay still at +0x20000, i.e., at the start of the
-> "OPTIONAL pages", just after the "SMMU Register Page 1".
 
-I was thinking of a configuration of Realms SMMU registers without the Root
-SMMU registers, but as you said later this is probably invalid and in any
-case not something we need to support, so that's fine - we can keep
-SMMUV3_ROOT_REG_OFFSET as a fixed 0x20000.
+--=-IJj/4bbT/xmV6PsZ1zTS
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jim
+On Wed, 2026-09-30 at 10:54 +0200, Paolo Bonzini wrote:
+>=20
+> +### No AI-written text must reach maintainers
+> +
+> +These rules apply when publishing AI-assisted work to GitLab or the mail=
+ing list:
+> +
+> +- **AI-written cover letters and commit messages are banned**.=C2=A0 The=
+se are
+> +=C2=A0 easy to recognize and waste reviewers' time.
+
+For commit messages and to a lesser extent cover letters, I think this
+is missing the point a little.
+
+What do we *actually* want here? We want better, more coherent commit
+messages.
+
+Surely it doesn't actually *matter* where those commit messages come
+from, as long as they're good commit messages?
+
+I mean, I love you all, but I don't feel that we're making a deep
+personal emotional connection through the commit messages we put in
+QEMU. Not most of them, anyway.
+
+I set an agent reading my emails to public lists over the years, my
+commit messages, a bunch of docs I've written. I had it build a 'dwmw2-
+voice' skill, which it uses when drafting things for me.
+
+I feel *seen*, but it's an improvement. Although I still have to remind
+it frequently of what I tell my children: "never use words where
+silence will suffice".
+
+Between that and the amount of interaction it needs to get the actual
+code (and the structure of the commit series) right in the first place,
+the commit messages it drafts are sometimes fairly indistinguishable
+from what I would have written. And use some of my words verbatim.
+
+I will always have the AI *draft* a commit message, so that it has the
+salient points and I can then polish it. Mostly by deleting things.
+
+I quite like the NetworkManager approach where it insists on having the
+agent include the word "biblioklept" in anything it writes, *forcing*
+the user to edit it.
+
+I think we should do that, *and* give guidance on what makes a good
+commit message, instead of trying to ban what users are going to
+continue to do anyway.
+
+--=-IJj/4bbT/xmV6PsZ1zTS
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
+ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
+MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
+AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
+DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
+q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
+S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
+Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
+72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
+CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
+mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
+h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
+CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
+GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
+v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
+CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
+b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
+Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
+A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
+vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
+0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
+jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
+FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
+HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
+IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
+MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
+MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
+sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
+tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
+EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
+6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
+ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
+bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
+Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
+02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
+sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
+ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
+JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
+LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
+BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
+LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
+hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
+SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
+c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
+AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
+EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
+ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
++3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
++icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
+McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
+LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
+nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
+gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
+Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
+CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
+QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
+Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
+YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
+kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
+pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
+v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
+vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
+PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
+REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
+lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
+aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
+D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
+bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
+MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
+oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
+TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
+BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
+MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
+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
+KlWCBy9RX9eWyvqMfl3v++AAAAAAAAA=
+
+
+--=-IJj/4bbT/xmV6PsZ1zTS--
 
