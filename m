@@ -1,72 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B15606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 12:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54348606A32C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 12:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E/cYKnaT
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FWEwl8uT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWCEr-0002G9-Av; Wed, 25 Nov 2026 07:36:41 -0500
+	id 1xWCEv-0002L6-17; Wed, 25 Nov 2026 07:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <puranikyashaswinsharma@gmail.com>)
- id 1xW4zU-0007tH-90
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:52:20 -0500
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ id 1xW9gl-0006kc-PN
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 04:53:20 -0500
+Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <puranikyashaswinsharma@gmail.com>)
- id 1xW4zR-0000u8-QE
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:52:19 -0500
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-386cf1041cdso720059eec.0
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 20:52:15 -0800 (PST)
+ id 1xW9gk-0004gu-00
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 04:53:19 -0500
+Received: by mail-dy1-x132d.google.com with SMTP id
+ 5a478bee46e88-3282db206d3so5329791eec.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 01:53:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795582334; x=1796187134; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=wBibNuURDZzKnCHhzcHs4gii93tNDIQd+c/psrK1+XM=;
- b=E/cYKnaTearnQ6DVp8gUZaq5i2kd+kOyr2lHONulsqpzT6PFmcoqBFbRGZKxw0kQOl
- u+0Y4Hwh6mMoI6cAidYW1aR+2NBOOVTIJZijdeW2Gyxi1FXwDcjv2skxaN2vW/DKqnVv
- U1wOKBd2A0lg7kA9DYj5Dx3p8vl+L24sPqEL9mbFGgv2wyfnuTZ4EvLjlRudNH+NV7EO
- j/mnKI7kDJJ89JdhW1sf14IVyOcbEi3+PWa0UH2FsIR2yPyOFLWsxrhOttbl02Hsr2vi
- 0u6YYVTh3cel13Eie1zXk8Lgzs50RqdosPQdMBxiSYQ74cwL1LesMiUVNIKLvwaDhoVk
- 2ECw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795582334; x=1796187134;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1795600395; x=1796205195; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wBibNuURDZzKnCHhzcHs4gii93tNDIQd+c/psrK1+XM=;
- b=tEFhTOedrM+DXPkR3v7BTjhosWDITHSusIl2OOXsxcWgTsReizhAQ/DZZkIZgSlxiM
- c94HtH/uCi6EUL5cRC5y+hlQ0ZjIXIJUwzsnE/0DolEpboQ3/9pe25VHhmaxjwFnyOXP
- wdHZL8EeWO4PUcHrPiDkxCZpkzEnEwftcGKP2WxyxAZoA61ENj0k2QhOE2fsMKFpUIC0
- nUVXRTKVJPAYU9klPnvFJ03KjFoyELvhCACFcDR9NSXyUP6lioKbaa/IlhAXEIXkCunJ
- mDM0hEB9Sh7T+mx7o2nlY2OPVn6H7P/xwSfWRIA7VHiNtgG3q/QWkwPEbKFYjnmHyVbP
- 1xlw==
-X-Gm-Message-State: APuU4Z/0jrdfQRDV2UqrU6xPBQqeE5fOJ//O0J3fTIv13C4EYXIgGMPX
- 2dvAArIibJ7fKiOH+FALygxD2J12ZwAjeQQNInBpRwlVnx/Tuelo+wv1vW7nA4fhrnI=
-X-Gm-Gg: AZFdTZd4/fkH2Uyetz3W4GGn2nsiHEEQNfWSFqpo5EyWSKo2cZuxm5NGQdbt7Z7o+CI
- dsdeGaBwKqnTDtc+J/nXpfpOOw+UeHd3ledpoj7k5D8ESCnuFELdot8PawtcxADPEHnw9jzar1w
- cMVGVWPB666oRDNEd0fCWpUFpkB1t1kHtUCGztxoMEdoPMbC5NuXWOxm1mKs7NATe2R3wvtGXep
- 3oNq0r1O96enIYgDjV7iJTPtfS6L5nSbi/es5h1fZ/BS/A0NqKH22jDZf5qcQMdIlZZw1bE6vKg
- qatt6jCajr2hRJbmg+GTXzLr6bPWruW8/gFYlhakQnTLJZO9LiqOGM5S0cRto3TmImQ0CD8gtxD
- aCQpwLtrtiuyAMNV2mnocaA56kVjWsQGMgF9lsWAZqBSF4FLrf/fSXKrnnjZKlOe/b8V56r1NkY
- fRq2jLWw0iieLB8FaqcWMGWvzh3g+/xsEvDA+FxDETU4WgF6srck74WHhDkb/MrC3l96TPvy+ut
- bsDVvnbGx1l+2mRduLERV17BaZGRBsi+dRCZkcVs8XXoCuIuWCSGC1ype8NTqQwz/6KTgwl38lf
- hTnmUac1vapDqNFJ4dAvOiOVxsioe+bucu8eweRmj0bkiY0CjSO+SVEs9SbcXFV1nvaVYeomO0s
- cPwyVDC8Xwcx5FxSGfamt2fruNnbHPwaua5uyUCHMsUQ/zG0TJ/2R6H63ICJAd3baxJqPqj5hCG
- guYmE3QU1HTmrGB9lQL6sAFg==
-X-Received: by 2002:a05:693c:4001:b0:370:d6e4:e8aa with SMTP id
- 5a478bee46e88-38570b34fecmr18417096eec.41.1795582333662; 
- Tue, 24 Nov 2026 20:52:13 -0800 (PST)
+ bh=FInCen5Dp394VnHLVq3Ql0hl3kgwbGHaxdTnVFlLFlA=;
+ b=FWEwl8uTmEfdRO/74wMGQlPjBDLeUfnVCGp4gYCuIEaHxIAWp+6ZMjK7HC/UHswCJP
+ 0XjXz7oEATvNH0fIxdAXIgDRiqTuIOSWgnavYD7SJl0g/ktKaTuIKEowdiBaOlTTSfR6
+ sAV+lLbh3gyjj+di8Qti9oJb8Haeh9qHpnxXP7tlyxES+G5ERR+f0lJ+K1t6aDQ/bPjh
+ 9hQPLo93/4tqtnEJ8rYa9lLk4b7omAYskAbu3Gkg0zM+FD3Q96bM0Biia3iAuPZLPzbX
+ pMQCFbnTP2e34UjqCJ5+3/NHGs5dbrpQb7FzgsGX4lukoNpr9B8KbJRBz76Uyfs9dtvi
+ XgCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795600395; x=1796205195;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=FInCen5Dp394VnHLVq3Ql0hl3kgwbGHaxdTnVFlLFlA=;
+ b=AUpbUa18EWeXhq33/+VhHigf2LYg9rwc8i/kUUtydJb9xqEc8SiTm/m+HkPm52SbC0
+ rB3Nbd7BOpRD9awA/g1jk4KJF0aZFNH0wmBhcYdAdBUuOmUUAiLuMtDJ6+Sa/T7KwyB6
+ Dlq6kpiichnK4X6aHUXh93gv7470NvKebv3XvIpV1CjNEFl1KE5Az4Bh5g7IkfB0Gsfg
+ jgpF3jh5KQL/A3XB/8QZUdXMSNRThIBk7HVejcap7cg0/A4lwl8PiPwCUqS1UttgM9E6
+ 0o1J+T6Ph7gB5Tc8UuYJ+CbDedDtvKq2eUDSd+SAg5kL0j6Gltf8XF8FQJ56Yu6PRrWh
+ QL2Q==
+X-Gm-Message-State: APuU4Z/FDyFMSRJAQKInKpOwNlzL5oDCx/l6hpjxyUCUxosXvSkEk13Z
+ lU463+7XGdzlp4ntJLgyeIY+cTjVb+Nkwd3FdCbDpDY3sPurUapVmrNDob+lbk1pP3c=
+X-Gm-Gg: AZFdTZdKxexID4CDFb6GS6mZpUfs1x+Qw0caAb/5EZdDgd9VGeU07nKfR/CRco/lLYU
+ vqEEc4zDQEx5ZmCopA9jf8JBy/k2+zhTmgtkROUNX2gfipI+V8xngfnMDoBFvNco9lL846IEHwQ
+ 4B9SL+2V/a5fzrk/0LoMk5syO8MsfX02ST2n7J1NXzOqcEF+8djn1HxAMrX2Bd0Lq0SeGBaxvL3
+ kmq/4y/hWjUnjz6u8st1ZJnoIgDnP/bS3d0Nb2qAJWW7P0Bg411z+fYIj8tn5lF4k7nsa3qedu0
+ ZFPJsO2WGt7W9dKDc7rIrnt5WEhqLwBcPZ+dpEKz+/xNT0j25aiBGC8njF7XpDR+oHBzBty9XrZ
+ WtWhLcqoIXzh8JhjaOt89+olFlBv2nf+5BHQr4dTwzAYNXuRFQHoO03qSSCiIlV/BQWNV8/Inr7
+ Vm+ij3AHq5zS7Ln2kewZwqlyqtD9LfMgk0MuTcWu0I0V7fdc7tqpvi0sNiTFHBhcbb7CXH2gNGb
+ 3NXYqWxz6BG7w2dC9TZO4v6kOKpCevI322noadC1vz6A011y5v+BqbLmt33DuoIpiaKaXv+jC8F
+ fEaIj0ASjxEZwOqvvy7c5znsUKPRyi8ikFOnNWdcdO1L29iv28EAPJ2B9GS/R/aMoUQyGI7Fykf
+ w5PG2/OqCkh+LIvWAbJj9+snNcobvURx6vvYhCTYbUVD9DARUszweYLm61pV3FQPOVXvgcyLhOB
+ IZpNaDLMRCQYUKXKLhIHdC8UhIJNfXPh09TOLVMTcP0EN2+Jdw0a8aUMBIosoOe16B0sG/wgpFr
+ 0ZvJPc=
+X-Received: by 2002:a05:693c:80cd:b0:385:b8f4:756a with SMTP id
+ 5a478bee46e88-385b8f47b36mr18236049eec.12.1795600394546; 
+ Wed, 25 Nov 2026 01:53:14 -0800 (PST)
 Received: from localhost.localdomain
- ([2409:40f0:1008:9b8a:1165:b071:8149:d5ec])
+ ([2409:40f0:114f:dac0:c822:471d:8ab0:7163])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-385646633d0sm88023194eec.3.2026.11.24.20.52.09
+ 5a478bee46e88-386992b404bsm40052060eec.1.2026.11.25.01.53.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Nov 2026 20:52:13 -0800 (PST)
+ Wed, 25 Nov 2026 01:53:14 -0800 (PST)
 From: Yashaswin Sharma Puranik <puranikyashaswinsharma@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>,
@@ -75,15 +77,18 @@ Cc: Pavel Pisa <pisa@cmp.felk.cvut.cz>,
  Jiri Novak <jnovak@fel.cvut.cz>,
  Jan Charvat <jancharvat.charvat@gmail.com>,
  Michal Lenc <michallenc7@gmail.com>, Ondrej Ille <ondrej.ille@gmail.com>
-Subject: [PATCH] hw/net/can/ctucan: send a Ready TXT buffer that has priority 0
-Date: Wed, 25 Nov 2026 10:22:05 +0530
-Message-ID: <20261125045205.37999-1-puranikyashaswinsharma@gmail.com>
+Subject: [PATCH v2] hw/net/can/ctucan: send a Ready TXT buffer that has
+ priority 0
+Date: Wed, 25 Nov 2026 15:23:04 +0530
+Message-ID: <20261125095304.21652-1-puranikyashaswinsharma@gmail.com>
 X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261125045205.37999-1-puranikyashaswinsharma@gmail.com>
+References: <20261125045205.37999-1-puranikyashaswinsharma@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=puranikyashaswinsharma@gmail.com; helo=mail-dy1-x1333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
+ envelope-from=puranikyashaswinsharma@gmail.com; helo=mail-dy1-x132d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,7 +97,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 25 Nov 2026 07:36:30 -0500
+X-Mailman-Approved-At: Wed, 25 Nov 2026 07:36:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,63 +127,49 @@ equal priority the one with the lower index goes first. TX_PRIORITY
 resets to 0 for every buffer but the first. Linux does not hit this
 with four buffers, because it rotates the priorities 7 down to 4.
 
-Start each round below every valid priority. tx_prio_max becomes an int
-that starts at -1. prio becomes an int as well: with a uint32_t prio the
-comparison converts -1 to unsigned, the test is never true and no
-buffer is sent at any priority.
+Select the first Ready buffer regardless of its priority. Replace it
+only for a strictly higher priority, so that the lower index still goes
+first when priorities are equal.
 
 Fixes: aa406e8b7ecd ("hw/net/can: CTU CAN FD IP open hardware core emulation.")
 Suggested-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
 Signed-off-by: Yashaswin Sharma Puranik <puranikyashaswinsharma@gmail.com>
 ---
-Tested with the same three lines on v6.2.0, where this function is the
-same as on master. Guest: QNX 8.0 on ctucan_pci, connected to a host
-vcan. A small program writes the registers directly, with no driver
-loaded.
+v2: Use the unset buffer index to recognize the first candidate and
+    leave the priority types unchanged (Pavel Pisa).
+
+Tested with this change on v6.2.0, where this function is the same as
+on master. Guest: QNX 8.0 on ctucan_pci, connected to a host vcan. A
+small program writes the registers directly, with no driver loaded.
 
   one buffer Ready, priority 0:    before: stays Ready, no frame
                                    after:  TX OK, frame on the bus
   four buffers Ready, priority 0:  before: none sent
                                    after:  all sent, lowest index first
+  priorities 0, 0 and 5:           before: only the priority 5 buffer
+                                   after:  priority 5 first, then the
+                                           other two, lowest index first
   one buffer Ready, priority 3:    sent before and after
 
-With only tx_prio_max changed to int and prio left as uint32_t, no
-buffer is sent in any of these cases. The test suite of our QNX driver
-(43 tests) passes before and after.
+The test suite of our QNX driver (43 tests) passes with the change.
 
-The change also builds on master (2bfbe39d0fff). The guest test above
-ran on v6.2.0.
-
- hw/net/can/ctucan_core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/net/can/ctucan_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/net/can/ctucan_core.c b/hw/net/can/ctucan_core.c
-index f6ff4ad..8c62b3e 100644
+index f6ff4ad..380a3ee 100644
 --- a/hw/net/can/ctucan_core.c
 +++ b/hw/net/can/ctucan_core.c
-@@ -240,7 +240,7 @@ static void ctucan_send_ready_buffers(CtuCanCoreState *s)
-     qemu_can_frame frame;
-     uint8_t *pf;
-     int buff2tx_idx;
--    uint32_t tx_prio_max;
-+    int tx_prio_max;
- 
-     if (!s->mode_settings.s.ena) {
-         return;
-@@ -250,10 +250,10 @@ static void ctucan_send_ready_buffers(CtuCanCoreState *s)
-         union ctu_can_fd_int_stat int_stat;
-         int i;
-         buff2tx_idx = -1;
--        tx_prio_max = 0;
-+        tx_prio_max = -1;
- 
-         for (i = 0; i < CTUCAN_CORE_TXBUF_NUM; i++) {
--            uint32_t prio;
-+            int prio;
- 
-             if (extract32(s->tx_status.u32, i * 4, 4) != TXT_RDY) {
+@@ -259,7 +259,7 @@ static void ctucan_send_ready_buffers(CtuCanCoreState *s)
                  continue;
+             }
+             prio = (s->tx_priority.u32 >> (i * 4)) & 0x7;
+-            if (tx_prio_max < prio) {
++            if (tx_prio_max < prio || buff2tx_idx == -1) {
+                 tx_prio_max = prio;
+                 buff2tx_idx = i;
+             }
 -- 
-2.54.0 (Apple Git-157)
+2.56.1
 
 
