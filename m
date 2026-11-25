@@ -1,89 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35F7606A326
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 20:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77892606A321
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 21:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=rkPHwzrV
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IjKzjX3X
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWK2N-0007vw-0z; Wed, 25 Nov 2026 15:56:19 -0500
+	id 1xWK6w-0002IK-AY; Wed, 25 Nov 2026 16:01:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xWK2K-0007uC-IO
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 15:56:16 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1xWK6X-0002EI-TI
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 16:00:48 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xWK2H-0004aO-HL
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 15:56:16 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2efddf749e5so29424005ad.1
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 12:56:11 -0800 (PST)
+ id 1xWK6W-0006y1-68
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 16:00:37 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-8a594d313a3so4168640b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:00:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795640170; x=1796244970; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795640432; x=1796245232; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jo6IH4LAyxDDFcfHgqOWUUN353YKtP4HBEU/3BWXMgE=;
- b=rkPHwzrV266cT0i/DMRQ+ZFg4hxcVpGPTUcUC85pRzx6y6DDYk0JpFFNerY/uj29hk
- ZG49l2UXYiYeibL/uSNU5MqRRQmoxNtPSk1/a0DMHjlxAZPKvG/rG26AOzLkgA4isSJR
- 3aIx18zUL4xWFFu+oDQsKI9q8fO/2z9nqX+yco8+9e635w+nf3riRKtm+Mnc0lHdY4iV
- oKctWCKJ4pp3NNKBJSQ1XntVJThGGi1kkkMWe1vqQKEuZZPNg9/I2iLxgG12avZoaBoP
- dPJRr+ezX/OegfYFiHTbavaafJZ+UWp4688q8g+j5tfbJ3YQ4FOihqLfmCt2ZlCLhX2f
- 2sCg==
+ bh=gEio/QiKIukLuSNl7u4faB7v8jeOwZE8spenjdeHZAk=;
+ b=IjKzjX3XNbw4aMvjI0KV2XFWyOejq5dbYafZbOp9PYHoANx1e2JWR6sATRwqql3Q4L
+ /NOSDhffs53g0Dl7fzUGiYvklp9SN0YacVMzg12z8O6op45saaHlhK2vfjE9EC1PWNyJ
+ mW4/uFlNe8L9O+XQEdufbAqntIhl2CNiADVQMj5HV7tVscs/ZiwyX9o8xTDnaI40yHw0
+ rxot+cJpOpWgNQxpKvRNazE63Yfjyl4A8r7gonZcOahVSnkWtykfwpE3VemaCB6/3t/v
+ 3zBPQmjLDXrM36GJiVLOOcubcNCdlOGVObMdHbSoUbyL6yeQm538PXDBKo/UT8wJqYkC
+ ln+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795640170; x=1796244970;
+ d=1e100.net; s=20260707; t=1795640432; x=1796245232;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jo6IH4LAyxDDFcfHgqOWUUN353YKtP4HBEU/3BWXMgE=;
- b=UCOvz3zLO5Yjj7FHI7bYEBcoh2txum1SG4WaQriKI5TKAHKNEo0hzVlVudmGlr5g0j
- rBfFHFpul19L3pVJhqdstfXtQKf132aCyi+U38YF6sfqPQBuIYxMY0RFoLdQdaIBh1S0
- GDrFnCQbFM2hTo8f5p1kcORxqa8C9TItuc1A+ESwiFRxrTjednU1t9piCWVbpqYXj7uP
- 1/4B8MNn6qLHKPv0r9S1WMTGoxMwTufw0e6Bbvj3rAtADpijw8Dt+4PxNQi0fmcwwEzx
- MyrFYWN4JNFDAlaG6omKbd5p1h5JEWCelE5746L9dsQVIkHfbYhiP0AhF1o7a81gBpci
- 0gLw==
-X-Forwarded-Encrypted: i=1;
- AL+hErHGOD9qWKgvigtjraOzZzFbhcrQttPbMaZBNtEJ8av9yGMjyXupYEmDm20sn61eNeXilwrYhFCi4uBR@nongnu.org
-X-Gm-Message-State: APuU4Z+ZUPCPNaxeb5lGtMfXdUktZzyeGQq5w1pEPvXNW0o1ArA+iVu2
- trlflg8WX5HF10xuGqbg05J3m7EfT9yJdIeBjM/L8lEMtmhs9zntcKD6Do4bpny7Zy8=
-X-Gm-Gg: AZFdTZf3Z6rqGng6VWaCUBmKGad1H+LDRj9+A0Y0YtXANwH41tt15MiX8V2hu9atZ9g
- mQjOQjwtqnxNoE+MUcxB5gk4jTzNqsByk9o8tODanFdOYYHiHuM30uvnrPufFFJULyhXpT9FItP
- 5L2U+Zj1FNggfE28gC5gKJqbev76IXDDGMiJKaa6u5khjS/jw3GBHHrnL8ffF5uiy3MFKzqSZIY
- eXFPbcs7am2CVd2utx8Ad5VSOv+2AjcXfrZLW+gJR3FwZBGwsIj18AiFsYPfZfVG4M7EA8fXcz2
- m6xfy4SNQwWvn0R2M/1Iv5Dga0Tcg+/3DoYpXy+eAnvYyjrfROJLPj9i4matBLhNEE2ULr2DCe5
- r0FgCA7E2A28gf9OYVRMakJQq+5ocfbFSV5PcjGN9+cVPvPoUw5Tf58WZ6KtZFMglcEHRhmJN7Z
- bM9ufHQ8bKamsZL6+OZ6Sa5MTYp2OmrlYQoYewqoGcU9sEoJtPiToepmlnkoifuK/FWSVJ9T5+b
- FelmMmPL5M4PE0kSuGmg4AJCz0b5VVbto+R7mvFZuZtgrbOUwEuXmupbDfTnmDWD0D5blc49Lgc
- jox1I0fNYCTQWoPXE4wvpZDBj5ulDcOjevtTInA4KH7a
-X-Received: by 2002:a17:90a:c10e:b0:3b4:1356:5c66 with SMTP id
- 98e67ed59e1d1-3b41c8df703mr13138679a91.13.1795640170257; 
- Wed, 25 Nov 2026 12:56:10 -0800 (PST)
+ bh=gEio/QiKIukLuSNl7u4faB7v8jeOwZE8spenjdeHZAk=;
+ b=d9jRYVrA7os1/6PbBGPF70hhrEJ+jIC6aIcTC78IoM06C3tBVWvr7v/JRKZi+fMJev
+ d9TL4VJnJcMQCvbISIHBlNSs4ofwctEKLj7h/LnrAHa2y9MYBgiIhSqgjV68WBTJ74XW
+ 8TsEnXG6B4Fis9+1zUrLtFVzLwAw3jY3wAZmwlsm3y322wF/BtypjFEzPBO2Kl4YvYSf
+ s4hUUuQ55VLc25De2fs22dzkLaEO2zCgwtIJRDUngwDg6Z7OaUjve6ZevSfrrnl4yJJi
+ T8BcuA1nshp2fpyHJ3kqRDPruPdeyi7F/Q+s0c0FzMXXpbCYVCkkfhHUho6QQkzmuYDx
+ ZKaQ==
+X-Gm-Message-State: APuU4Z/dXOj0+o72ojOfOWkG1tCMbxmEoAzZsBV6jB+DK+RemDSuhIdK
+ s1+LICP/gvw6Ofh7KUoiRbNQhXVPJMK/WwElqz8AJM4D26dYL9I68WOoyfqPq4b7U2w=
+X-Gm-Gg: AZFdTZfs6csf/ho9Ao4pafxSBxWnwxg7S6TTv0gPcH2d9h0NpsF5wqKMbj8PolQWX1i
+ IyakP9H3FWFr766zI0V9sUhdBUym+X7qTZiZya35aGDslG3MnSxI2ApXIJkusq4MbYqvXIbywcf
+ 5jUXuo7OiUCTwG6C+PP7TWuI0KvyfsN9AdUY8glE/h53nfceSjOAC4RfAyAsUL5nphBzhHCgOkI
+ 64if51A/RUn999pXuAqz0vc9TPuGo/K5ZE59vHYyIGpqczASxpD8g65EfKiq/h3joX8fzxiWkFe
+ C1iyz2s0KgENc5qpyDtmKu0NN751MFjb2V96BliBbavE3/YsV2OESYc94QLW7wajSQNg6wwe6Xa
+ otKUZ0QZ3zpJgHDadRZK0QIQTcche83MrfnFdDrc09u4ciNG0wo4Z3LMej4378BDPjSPZ2Aaw+X
+ oZ8CVgpjym2wTAY3caM/r4VcUJ1upqxvg9tgalkRZWci1dhdhFNEpCw4OVzipISO22lJAtJxUvu
+ WL4GBXi9j4AS35dr5WjrhHVOJUZsyFUfWiXGf3e3Mof6kBJDecBAOvtSpYdOsY+ijgjLRt1BsWp
+ +X+Bx6MRxh5bE2nwrwez92wEx/6peX+7HC8V0nlc8Ts=
+X-Received: by 2002:a05:6a00:4605:b0:880:fe7b:bc56 with SMTP id
+ d2e1a72fcca58-8c87d32ad6fmr19223322b3a.50.1795640431873; 
+ Wed, 25 Nov 2026 13:00:31 -0800 (PST)
 Received: from [172.20.3.121] ([156.19.246.27])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b50234fb25sm1317802a91.2.2026.11.25.12.56.09
+ d2e1a72fcca58-8c873b2434asm9466895b3a.45.2026.11.25.13.00.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Nov 2026 12:56:09 -0800 (PST)
-Message-ID: <d1c8970d-8ae6-496d-b08b-308ce3601090@linaro.org>
-Date: Wed, 25 Nov 2026 12:55:09 -0800
+ Wed, 25 Nov 2026 13:00:31 -0800 (PST)
+Message-ID: <6da6b191-6ec2-49bf-b25d-aeedac071b40@linaro.org>
+Date: Wed, 25 Nov 2026 13:00:27 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL for 11.2 0/3] hppa target fixes
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, "Kirill A . Korinsky" <kirill@korins.ky>
-References: <20261125025822.10813-1-deller@kernel.org>
+Subject: Re: [PATCH-for-11.2?] system/memory: Invalidate TBs on ROM device
+ mode switch
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-stable@nongnu.org, Elliot Berman <eberman@anduril.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20261124182722.78535-1-philmd@oss.qualcomm.com>
+ <awXxps0Z4PjS85DT@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <eecb8487-0fca-4028-823d-f70215628f20@oss.qualcomm.com>
+ <awbpz7SZ5grn9gyi@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <5cb298ce-7f9b-40fd-b553-879a567e78a5@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261125025822.10813-1-deller@kernel.org>
+In-Reply-To: <5cb298ce-7f9b-40fd-b553-879a567e78a5@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +109,107 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/24/26 18:58, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
+On 11/25/26 11:11, Philippe Mathieu-Daudé wrote:
+> On 25/11/26 14:59, Peter Xu wrote:
+>> On Tue, Nov 24, 2026 at 11:29:15PM +0100, Philippe Mathieu-Daudé wrote:
+>>> On 24/11/26 21:20, Peter Xu wrote:
+>>>> On Tue, Nov 24, 2026 at 07:27:22PM +0100, Philippe Mathieu-Daudé wrote:
+>>>>> A ROM device changes its contents with direct stores while in MMIO
+>>>>> mode. TCG does not see these stores, so translated blocks built from
+>>>>> the old contents survive the switch back to ROMD mode and the guest
+>>>>> executes stale code.
+>>>>>
+>>>>> Make memory_region_rom_device_set_romd() drop the TBs of the whole
+>>>>> region on both transitions: before leaving ROMD mode (if currently
+>>>>> in it), and after entering ROMD mode, for TBs another vCPU built
+>>>>> before its TLB was flushed.
+>>>>
+>>>> Pure question: should we flush once, but only when ROMD->MMIO?  Said 
+>>>> that,
+>>>> IIUC we need to flush after switching to MMIO to avoid the race you
+>>>> mentioned, that is something like:
+>>>>
+>>>>     if (mr_is_romd(mr) && romd_mode) {
+>>>>         set_romd(false);
+>>>>         flush();
+>>>>     }
+>>>>
+>>>> It's based on my limited understanding / assumption that during MMIO 
+>>>> state
+>>>> TCG won't be able to cache invalid TB on these regions.
+>>>>
+>>>> So when switching ROMD->MMIO, invalidated TBs can exist, hence flush 
+>>>> only
+>>>> once, after updating romd=false.  When switching back from MMIO- 
+>>>> >ROMD, no
+>>>> chance caching anything wrong.
+>>>
+>>> This doesn't run. Its flush comes after romd is cleared, and
+>>> memory_region_flush_rom_device() asserts that the region is still in
+>>> romd mode. The reproducer aborts with:
+>>>
+>>> Assertion failed: (memory_region_is_romd(mr)), function
+>>> memory_region_flush_rom_device
+>>
+>> IIUC that assertion was not required and can be removed, based on its
+>> comment?
+>>
+>> So my pure question was really about why we need two TB flushes rather 
+>> than
+>> one: the pflash changed causing stale TB which I can understand.  What I
+>> suggested was "making sure nobody caches this pflash, then drop all
+>> existing TB" approach, which requries removal of the assertion.  I 
+>> assumed
+>> that works, but maybe not really - I tried to read slightly more into TCG
+>> just now and noticed maybe there's yet another layer of caching on TLB so
+>> the stale mapping can still be visible.  Said that, IMO it would be great
+>> if we can explain why two flushes are needed rather than one.  That 
+>> means,
+>> if we think the 2nd flush guards everything somehow (including the stale
+>> TLB async work hasn't flushed), then it seems to me we can then drop the
+>> 1st flush (ROMD->MMIO switch).
 > 
-> The following changes since commit 2bfbe39d0fff8af881cffe2bab9b615e77807c35:
+> Wow you are right, having the flush on entering romd, after the contents
+> are written, is what closes the window, and is enough!
 > 
->    gitlab-ci: Switch the msys2 job to use ucrt (2026-11-23 09:13:18 -0800)
+> -- >8 --
+> diff --git a/system/memory.c b/system/memory.c
+> index 2e3ce773ce97..8e11d42bedce 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2252,12 +2252,16 @@ void memory_region_set_nonvolatile(MemoryRegion 
+> *mr, bool nonvolatile)
+>   void memory_region_rom_device_set_romd(MemoryRegion *mr, bool romd_mode)
+>   {
+>       if (mr->romd_mode == romd_mode) {
+>           return;
+>       }
+>       memory_region_transaction_begin();
+>       mr->romd_mode = romd_mode;
+>       memory_region_update_pending |= mr->enabled;
+>       memory_region_transaction_commit();
+> +    if (romd_mode) {
+> +        /* Drop TBs another vCPU built from the old contents, once 
+> written */
+> +        memory_region_flush_rom_device(mr, 0, memory_region_size(mr));
+> +    }
+>   }
+> ---
 > 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/hppa-fixes-pull-request
-> 
-> for you to fetch changes up to b6a03b864508c24226d83b06d5a6f0439fcf3fd4:
-> 
->    hw/hppa: adjust CPU HPA on 715 to avoid broadcast address (2026-11-24 22:15:23 +0100)
-> 
-> ----------------------------------------------------------------
-> target/hppa patches
-> 
-> Two small patches to adjust the CPU HPA on the 715 and B160L machines
-> to avoid boot hangs, e.g. with OpenBSD.
-> Add one new test to check if OpenBSD starts.
+> Thanks a lot for the review!
 
-Applied, thanks.
+Grepping around accel/tcg/, we're also caching romd in cputlb.  We need 
+to flush those entries when exiting romd mode.
+
+I think that can wait until 12.0 though...
+
 
 r~
 
