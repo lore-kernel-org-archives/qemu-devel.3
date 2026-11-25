@@ -1,132 +1,132 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282BF606A334
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 13:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECBE606A681
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 13:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=H0KTve63;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=X3SWfejr
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gooM8Zg/;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dZj5p1hC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWCvi-0002So-LA; Wed, 25 Nov 2026 08:20:58 -0500
+	id 1xWCvq-0002V9-Bc; Wed, 25 Nov 2026 08:21:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xWCvd-0002ST-4e
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:20:53 -0500
+ id 1xWCvh-0002T1-GJ
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:20:58 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xWCvb-0000dk-1N
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:20:52 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xWCve-0000eY-UG
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 08:20:56 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AP9nkKE1505215
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:49 GMT
+ 6AP9mHHJ4131158
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=McJ+RwP+YXr
- Jy/o0po6/9rYhcpWJnTJa3d/NTCdoacE=; b=H0KTve63yluRlQNtFh3olvRmIin
- IC1+EKmQhLoRdh0HjArbk3MrY61dQXj1umocrWraMUt19DJ/sG5qjJnpcUjRR1J6
- JfPFxn5eqCkt+NNUjPhz1uGUe8S0nLglED6Cv10diBdvSpqrSrbTmo9HiD92m3Ni
- uzMqia56qqTh7q8HnDEt3FRRBL5/yPjd0GYQv5+aX5AJ4PuBm5pohlQUyhJfHxC8
- ZhEO8xmV8ivrZLQfQtIkZsihipGWC+STvgQWXg9g+Lc3bauq89geLK9bqYGmJwZ9
- eF889b996/YPiJcIPUeyHFUZne8L/NPaqA+whMaFE87UCJPH0he0L+ckDew==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5qa2ac7u-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=6oxiWNkSf6B
+ JG8LmX1T6UuxZLH4idLko4HUpZrmuC6g=; b=gooM8Zg/iSB4jhsAAe5AI+5WJ6s
+ /H0H+tE6MZmjwqxpJpVQkNCWvrVuHL2QHiZWq7OMR5iOs9KV2zVKRBe8czc5TLJl
+ hclDiUno9a0qHqrUnokOLS69eAUKwMh6nD82Yycl+HJjZi0b2ynnWlK7GwSSzneB
+ hj5yzvKgyBwX3rvF5sGFVrgT+y5PPdqXN1+cx6RPMopQMDehvtBOCSLipNQUwOwq
+ QMLi546W7+9LKHTUR8XuPV0hDQSY23W+pn6i0BeTbGWOAXbsgFMRoCQ3BzcWOWTw
+ 5QcVK7SHBHF1+nbcc+2YXbHVZzjR6Tb/6gDv4VHDumJOIKkqMkNMiZhoqmw==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5vuhs0wu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:49 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-9210a12765eso68206976d6.0
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 05:20:49 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 13:20:53 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7d64f59c80aso1945225137.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 05:20:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795612849; x=1796217649; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1795612853; x=1796217653; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=McJ+RwP+YXrJy/o0po6/9rYhcpWJnTJa3d/NTCdoacE=;
- b=X3SWfejrPUiuIYOxQo+FO4Am0FiZZXAOFHBtpFyqQQyuG2FsCi19i16jO8vzuSvLxW
- hAGb+pcryDX20uNqsNeU2lv8kPx28IU6RQN2kxXp2eC8z0zbkavgVx7B9APhFjDTwykv
- PXvV6cuojjSwSa6bo7ZHcjQ1Px/WMk9rnF3KJbQ3K/ogWoVZe68fPCLq0RaIsNA+fHAq
- daNXUrpm6Ixt+qZU4AbHQuSdWYRQhLN97TpGPC6AqCz8DYrSZEn4hOQuMlhnSh1w9i8F
- ODJ85Hk5nzDOM/iC92rWdIoMrF2H+2ZrUVSLooupqBMEoxZKD/3IpNkylK2mxVk60ZaV
- XJeQ==
+ bh=6oxiWNkSf6BJG8LmX1T6UuxZLH4idLko4HUpZrmuC6g=;
+ b=dZj5p1hCXCgjddyUmWUCdxOnKCC7fkp5r4zYRZPMBLFxm7s5BfeizFktSrkGViG++W
+ dSm56yamk0tFTdvMp3V+NaQGX7M6I0j4gpv1St+pQK2DS/EF8rvlfMNFHsr/u8Pj7CDs
+ MBtk1z+Sdn2USAwRXqabhTITxEfEJjALx46ilZswNb7fkTwKCw7hk4qVTvYfXgVGKINf
+ tL1mr/XPgl2i8zD7bfGY705hfAekKiN17iBJRcccclZHfh/5YCACHwyCHFLSZ9yp1Hmk
+ WYBQ4MIm9viSJGWBH4yq1LAeVujLISPf7k2CP6T0IkIwuz8OQS3I59srmz6k/KTRWd1u
+ jW2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795612849; x=1796217649;
+ d=1e100.net; s=20260707; t=1795612853; x=1796217653;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=McJ+RwP+YXrJy/o0po6/9rYhcpWJnTJa3d/NTCdoacE=;
- b=NXwFBytYHdIKiN4Pbp+xomn1TYbRCnNeBddctLGsMybq41XVtrXIo7xw+PcW4m1F2u
- d6A8tb1/Hl2digSgy6Rer32FeBt0GHvsh31mo9Guk+xu7+1PMl2xWUuq5a+OWgFuOP6F
- 0G3EstqVPLoT/lYXpDr/vyyo/fNCY77EWyZjy1dU/zIF+A6LfjME8CiIrLWFE8ZIWtOe
- 1iZ8vO6VGVsj45Pm51Ec80QMTv74XE76ZCf7KOJIevHuAcXOZKHlrNEoQDIOgNZHFQoJ
- JiTR0tgDUjA2Nr0kgiriBzflw2lUqjxM9+GwXt/NlVBz2TudQPXhfGX/ZQ1XUXtSpy3c
- YdZQ==
-X-Gm-Message-State: APuU4Z/x++ug9c07LxKTBgZ7mHXG52AxuT6OCNPpi8U9vNGq5L3j5CKn
- 7hBjtlBXHvxhlfeJEuorobVEnh25CXyUsrbSNwjCbXCak5hpUVqe3IohjDyuEI8ldCqFsV1Q2oe
- R599TSAPzL7borppBbGfY/kZLBMWae+VOCGX18SDyotYSDEKqRhVfdTiXdeQPACuTIQ==
-X-Gm-Gg: AZFdTZcEoCD3euONhaR04GUuwmc2K+Lq9gBmK+aLRZ6lEZjEix8YZF0OP5L7ZmqMv+h
- qOaGza372yqmb59JFOhB6AdkrYSzouPCucFZaYRZS+6D1cZ+601IFJqsIwkGGmVDC+w8rLtP5y9
- J4Sk0BcctlLF8LkilWrVJziIy410l6i4hRqyNw+VS6av1ebDy3U7ZzFxRoi+J+VQISB4WwLsQxK
- uNcTMItSw2n/czBzZvBBzPDpSsGtrSD28TSet4zRd8dPirsMk6lnEt3OSmDZZoDOO3Xc6eRJIKo
- UvZYbRsLV9Fvzbb+kgC1QNc2ihZJidrQ6IqTj5QpWyZ+gQLjeycWq62f9TktHheptA4ojMc11ez
- A25FAw30y3c35f2EYHkRLdb0F123HmZVTDBKTLXG+Ih8UdUmNQfDcSUwyNr8Aj55MyUWXw3wPpK
- vR80nfITwubg==
-X-Received: by 2002:a05:6214:29cc:b0:921:3de2:4f7d with SMTP id
- 6a1803df08f44-9213de25197mr298134206d6.51.1795612848545; 
- Wed, 25 Nov 2026 05:20:48 -0800 (PST)
-X-Received: by 2002:a05:6214:29cc:b0:921:3de2:4f7d with SMTP id
- 6a1803df08f44-9213de25197mr298133626d6.51.1795612847918; 
- Wed, 25 Nov 2026 05:20:47 -0800 (PST)
+ bh=6oxiWNkSf6BJG8LmX1T6UuxZLH4idLko4HUpZrmuC6g=;
+ b=Z9obKtOhTf/lJFoTVMfVl4ol+53LBPIwaOoRMjLr9CRA2/cP7u6pBNn7vME/0uI57f
+ U2C5WZ43vSzKSf021lQS9UdXLGko1+AVyxnfT0QsXWb9ZmyP9ff+VtA33qqJGD8tP73y
+ 1dFPtt+GnNEedxEDZCRsjXOQ3KRb5hDyFPDscHOlqFZT/R6tFEvhHrUm+2RRrxKdr5kZ
+ +fJu9lomgFFQ6jSSiifqzFKCLgYlCcf/qqw1ESnDP3wt9flXt+5chK6LpiwLh/XXNVKK
+ SO2IoKSAL0SJmlncaa18SJ8YzYFEHZmpwYbX3ClAwPs2F2eBBP2w0c/lfr/1gcQkp3yJ
+ KwcQ==
+X-Gm-Message-State: APuU4Z/ZrUkPOJ3Xw+3jxwsP0umSoEJ3noM+VflU0rJcM6Lys79dhQhc
+ MerfjwCPu9A34QaxehmPsSpdY9tL6cymHc+R4Lq8w2ECblhBs6yRiWg4ZeBnT9XWlHxzAMp2GeF
+ E06xAYhCWai46MV72Ex1IX/lnmSqz568U7lySYxp0i6Pgpg3oXK93pk+YoLoPF5R8iA==
+X-Gm-Gg: AZFdTZeSH5z8Bww296c/4XTXzqmrkyvogxeAYbFrHFgxGwdI7HJNWE27GQZvryWAuSN
+ jQMMvUJc8Hx2xY2oV5yXwqijysrY/GR/Srr+loSjwvtwCH7TBX9q5X1YNFPGsjQqGLX0gtSn+8o
+ EZGbaji8i2ZAPtqJVBcpMxo8yyBdRmObpxATLpOzr6/oHlYPI4HmcE0nZ0YET+h7WZrQPXoYdVP
+ kOtY4MTjSWFetQVb2HvFPdgBeKgE5du+6RX+3ffKHMPlCTqhZ502vlIjnLWEbd1r/Rod897NAux
+ p5is7clNmfMugyRbCEg8FZnbaL9mZt3bjVKDMNgvjbq4sSB50ygq9VB4jYuZUHp9CqZONNyWCGT
+ eYgAgGfC9UvkSAC16/Gh/MVbRnnbguie/ZuelFgswqYJVGKYV7M8bbYxwv4VBstGbJX0KkZwpAb
+ cXxRe5/N9ntg==
+X-Received: by 2002:a05:6102:26d3:b0:7d6:a8d7:fd91 with SMTP id
+ ada2fe7eead31-7d6db989524mr7303459137.13.1795612853161; 
+ Wed, 25 Nov 2026 05:20:53 -0800 (PST)
+X-Received: by 2002:a05:6102:26d3:b0:7d6:a8d7:fd91 with SMTP id
+ ada2fe7eead31-7d6db989524mr7303442137.13.1795612852644; 
+ Wed, 25 Nov 2026 05:20:52 -0800 (PST)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.110.107.17])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-92134a08552sm160836946d6.34.2026.11.25.05.20.45
+ 6a1803df08f44-92134a08552sm160836946d6.34.2026.11.25.05.20.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2026 05:20:47 -0800 (PST)
+ Wed, 25 Nov 2026 05:20:52 -0800 (PST)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 02/15] target/riscv: avoid amocas.* x0 clobbering
-Date: Wed, 25 Nov 2026 10:20:01 -0300
-Message-ID: <20261125132015.229955-3-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 04/15] target/riscv: fix hedeleg writable mask
+Date: Wed, 25 Nov 2026 10:20:03 -0300
+Message-ID: <20261125132015.229955-5-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261125132015.229955-1-daniel.barboza@oss.qualcomm.com>
 References: <20261125132015.229955-1-daniel.barboza@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 9H0HlcSaU3ts8DN5BbJOOp7Ng8Js_xO6
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA1MiBTYWx0ZWRfX6vw4kgq3WbDr
- T45GunDp0Ti7VPaszh/v/vWDexmT43aHxna16GNuKx6TMt7dNJ0ybyuwhTHMcoeT3M3KuVn8YDn
- 6njRm0YKzhdTIDLsF7EMrImDlODoYW8=
-X-Proofpoint-GUID: 9H0HlcSaU3ts8DN5BbJOOp7Ng8Js_xO6
-X-Authority-Analysis: v=2.4 cv=CKu/zhrD c=1 sm=1 tr=0 ts=6b06e0b1 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
+X-Authority-Analysis: v=2.4 cv=FPmOVOos c=1 sm=1 tr=0 ts=6b06e0b5 cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=2Chh/y2wedAoPG2p3qwUfw==:17
  a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=sK0Jn417EFhoLsV17G0A:9 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA1MiBTYWx0ZWRfX+W4h+3LWJi0P
- qsUyoTztNU/Zp1sktJGS/zGGSXg9SDf2gkaQUxIwsBgWB3ZbcJ4RyhS5UYCuZx74WjdziWuyeff
- kAzzD9GSusbFQyyu4qa2V9LRDIVMIWmH37Y4JG8dNR/FCgA7sMfUZ6sja+PkSPGVK9j2EvFFqoe
- JVoJXaefRIwLo++GZVh5q3pwrpgx8qeAYDVs7n0gxyIA1tc4zjzckciU8RlGNRtq3E+xeTj/2XO
- ckU6Ru9E9f5svs/bBlvbOxSaCVQyA/ULQkNjmTV9t9rq1qCkEmbh3Lc6lu2A1MC3G9KLAJjn28A
- DfV+6IlRe+J2xa77RlTD6n3i0D/MiD/MxQWTZhCeqWB5Mk6SigWCzPvk+iSnLYUg67pJVkGDP5t
- 4ahZa6gu4d0IlE97VjqmR6M5XgvH/cnMYCiWilwKeE5Eh3wAErsRK/NG1oV5ib24/VJfXIBZem9
- kNPjeAeNeK3Bx6CDecw==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=IH4YEds1svsedXLTdUwA:9 a=gYDTvv6II1OnSo0itH1n:22
+X-Proofpoint-GUID: qlbbNNqnqzqnq5imJMTuvQKhRWQm0tVJ
+X-Proofpoint-ORIG-GUID: qlbbNNqnqzqnq5imJMTuvQKhRWQm0tVJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA1MyBTYWx0ZWRfX1suc3XxxixTS
+ VtiIPwrDspUu5usQaB9W49PquYUOpfrwnHnrD4sTXp2i1sk2BwlKPsHrje+x4ZACxq85O65ynZf
+ HYTdtghtcYK764YQAkgZ92XYRoqmqF4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA1MyBTYWx0ZWRfX8tGy2YlojeL6
+ 4VhvW3TtCkEm7X9sRROwXQhnHccjBPLMftW3zbUzxNrwFjLHz9xHeF4iKsE39iUXpXGW1YLGytJ
+ eS45NMzS0pZWIagEMX1WJ6S4VsGMpUd+3PdgQW2XuxobBJPWy5ngs8k8/YlzSk/a2kDnxqlN3wW
+ Mnl7AhMKlSpirK2omg8aj36i3QUIGa59q180hXekpnBrfEI0WTqLiv2Rj48tILFenQSYdw3ZS+F
+ ymITKAKJcHOVYhH76xPklV8M45jA/LbAan5j1WGIBJBJleOUrshpD7O12o27fdZ4tlUQbtuUJtN
+ Lt9DIrWwk76atBs3kz7NTSg9bstzDyr2TgXI+Xb0lCrTCFCbO6sVM+6AQsC5c/g9oUDfUvSBG34
+ sQdxBmOUOX/mMUxPv9s38xwYkoRQ+GSi7sc+IJHhGTQlLK6dHAu6eKcgOWhznB8++d2XjXHsoED
+ bd9TdKtLR0FvKOrsfDg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-25_03,2026-11-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- spamscore=0 phishscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250052
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250053
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -155,164 +155,121 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-gen_cmpxchg* and trans_amocas_q() load amocas registers using get_gpr().
-When the register is x0/zero get_gpr() returns ctx->zero, the shared TCG
-constant that every x0 read uses.  As it is today, the amocas helpers
-uses tcg_gen_atomic_cmpxchg_* helpers using the dest register retrieved
-by get_gpr().
+Bit 19 (hardware error) must be writable in hedeleg, i.e. it must be
+delegable.  Add it DELEGABLE_EXCPS.
 
-So, if we have something like:
+While we're at it, hedeleg bit 0 is only writable if IALIGN = 16, i.e.
+RVC is enabled.  Remove bit 0 from the delegation/writable mask if RVC
+is enabled.
 
-amocas.d                zero,s0,(a0)
-
-gen_cmpxchg() uses ctx->zero as 'dest' for tcg_gen_atomic_cmpxchg_tl(),
-which will end up clobbering it with whatever is in 'rs1'.  ctx->zero
-will be reset back to normal in init_disas_context(), but if there's
-something else that ends up reading it in the same TB, e.g.:
-
-beqz                    a2,24
-
-This will read a clobbered ctx->zero and then all bets are off.
-
-The fix is to use a temp variable as 'dest' for gen_atomic_cmpxchg_*
-calls instead of the result of get_gpr().  We are already executing
-gen_set_grp() in all cases using 'dest', making this change a bit
-simpler.
-
-Fixes: b52d49e97fc4 ("target/riscv: Add support for Zacas extension")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3526
+Fixes: bc083a51caff ("target/riscv: hardwire bits in hideleg and hedeleg")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4592
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- .../riscv/tcg/insn_trans/trans_rvzacas.c.inc  | 15 ++++--
- target/riscv/tcg/translate.c                  |  5 +-
- tests/tcg/riscv64/system/meson.build          |  5 ++
- tests/tcg/riscv64/test-amocas-x0.S            | 49 +++++++++++++++++++
- 4 files changed, 67 insertions(+), 7 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-amocas-x0.S
+ target/riscv/tcg/csr.c                 | 11 +++++
+ tests/tcg/riscv64/system/meson.build   |  5 +++
+ tests/tcg/riscv64/test-hedeleg-write.S | 57 ++++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-hedeleg-write.S
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzacas.c.inc b/target/riscv/tcg/insn_trans/trans_rvzacas.c.inc
-index 79bca1e957..e908ed2377 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzacas.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzacas.c.inc
-@@ -72,13 +72,14 @@ static bool gen_cmpxchg64(DisasContext *ctx, arg_atomic *a, MemOp mop)
-         return false;
-     }
- 
--    TCGv_i64 dest = get_gpr_pair(ctx, a->rd);
-+    TCGv_i64 cmp = get_gpr_pair(ctx, a->rd);
-     TCGv src1 = get_address(ctx, a->rs1, 0);
-     TCGv_i64 src2 = get_gpr_pair(ctx, a->rs2);
-+    TCGv_i64 dest = tcg_temp_new_i64();
- 
-     mop |= ctx->mo_endianness;
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_atomic_cmpxchg_i64(dest, src1, dest, src2, ctx->mem_idx, mop);
-+    tcg_gen_atomic_cmpxchg_i64(dest, src1, cmp, src2, ctx->mem_idx, mop);
- 
-     gen_set_gpr_pair(ctx, a->rd, dest);
-     return true;
-@@ -117,15 +118,19 @@ static bool trans_amocas_q(DisasContext *ctx, arg_amocas_q *a)
-     TCGv_i128 src2 = tcg_temp_new_i128();
-     TCGv_i64 src2l = get_gpr(ctx, a->rs2, EXT_NONE);
-     TCGv_i64 src2h = get_gpr(ctx, a->rs2 == 0 ? 0 : a->rs2 + 1, EXT_NONE);
--    TCGv_i64 destl = get_gpr(ctx, a->rd, EXT_NONE);
--    TCGv_i64 desth = get_gpr(ctx, a->rd == 0 ? 0 : a->rd + 1, EXT_NONE);
-+    TCGv_i64 cmpl = get_gpr(ctx, a->rd, EXT_NONE);
-+    TCGv_i64 cmph = get_gpr(ctx, a->rd == 0 ? 0 : a->rd + 1, EXT_NONE);
-+    TCGv_i64 destl = tcg_temp_new_i64();
-+    TCGv_i64 desth = tcg_temp_new_i64();
-+    TCGv_i128 cmp = tcg_temp_new_i128();
-     MemOp memop = MO_ALIGN | MO_UO;
- 
-     memop |= ctx->mo_endianness;
-+    tcg_gen_concat_i64_i128(cmp, cmpl, cmph);
-     tcg_gen_concat_i64_i128(src2, src2l, src2h);
-     tcg_gen_concat_i64_i128(dest, destl, desth);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_atomic_cmpxchg_i128(dest, src1, dest, src2, ctx->mem_idx, memop);
-+    tcg_gen_atomic_cmpxchg_i128(dest, src1, cmp, src2, ctx->mem_idx, memop);
- 
-     tcg_gen_extr_i128_i64(destl, desth, dest);
- 
-diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
-index 72d36764d8..fdf9c39bef 100644
---- a/target/riscv/tcg/translate.c
-+++ b/target/riscv/tcg/translate.c
-@@ -1176,13 +1176,14 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
- 
- static bool gen_cmpxchg(DisasContext *ctx, arg_atomic *a, MemOp mop)
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index c94ce88594..e132690389 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -1837,6 +1837,7 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_SW_CHECK)) | \
++                         (1ULL << (RISCV_EXCP_HW_ERR)) | \
+                          (1ULL << (RISCV_EXCP_INST_GUEST_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_VIRT_INSTRUCTION_FAULT)) | \
+@@ -4947,6 +4948,16 @@ static RISCVException write_hedeleg(CPURISCVState *env, int csrno,
+                                     target_ulong val, uintptr_t ra)
  {
--    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
-+    TCGv cmp = get_gpr(ctx, a->rd, EXT_NONE);
-     TCGv src1 = get_address(ctx, a->rs1, 0);
-     TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv dest = tcg_temp_new();
+     env->hedeleg = val & vs_delegable_excps;
++
++    /*
++     * delegable_excps includes bit 0, which is writable only if
++     * IALIGN = 32 (no RVC present).  Ergo clear bit 0 if we have
++     * RVC.
++     */
++    if (riscv_has_ext(env, RVC)) {
++        env->hedeleg &= ~1ULL;
++    }
++
+     return RISCV_EXCP_NONE;
+ }
  
-     mop |= ctx->mo_endianness;
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
-+    tcg_gen_atomic_cmpxchg_tl(dest, src1, cmp, src2, ctx->mem_idx, mop);
- 
-     gen_set_gpr(ctx, a->rd, dest);
-     return true;
 diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index c9435bf2b3..6c3de32965 100644
+index 9754c2a55a..e176587d1d 100644
 --- a/tests/tcg/riscv64/system/meson.build
 +++ b/tests/tcg/riscv64/system/meson.build
-@@ -121,6 +121,11 @@ tests += {
-     'cflags': cflags,
-     'qemu_args': ['-cpu', 'max', qemu_args],
+@@ -131,6 +131,11 @@ tests += {
+     'cflags': cflags + ['-march=rv64gcv'],
+     'qemu_args': ['-cpu', 'max,smpmpmt=false,pmu-mask=0xfffffff8,smdbltrp=true,ssdbltrp=true', qemu_args],
    },
 +
-+  'test-amocas-x0.S': {
-+    'cflags': cflags + ['-march=rv64gc'],
++  'test-hedeleg-write.S': {
++    'cflags': cflags,
 +    'qemu_args': ['-cpu', 'max', qemu_args],
 +  },
  }
  
  if 'qemu-system-riscv64' in emulators
-diff --git a/tests/tcg/riscv64/test-amocas-x0.S b/tests/tcg/riscv64/test-amocas-x0.S
+diff --git a/tests/tcg/riscv64/test-hedeleg-write.S b/tests/tcg/riscv64/test-hedeleg-write.S
 new file mode 100644
-index 0000000000..a7bbd059f0
+index 0000000000..919de1fb3f
 --- /dev/null
-+++ b/tests/tcg/riscv64/test-amocas-x0.S
-@@ -0,0 +1,49 @@
++++ b/tests/tcg/riscv64/test-hedeleg-write.S
+@@ -0,0 +1,57 @@
 +/*
-+ * Test if amocas.d will clobber x0.  Based on Gitlab 3526.
++ * Test for writable hedeleg bits.  Based on Gitlab 4592 testcase,
++ * which is derived from riscv-arch-test.
 + *
 + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+	.option norvc
-+	.text
++#define HEDELEG_W_MASK 0xcb1fe
 +
++.option norvc
++	.text
 +	.global _start
 +
 +_start:
-+	li     t0, 5
-+	lla    t1, amo_target
-+	li     t2, 0
++	lla	t0, trap
++	csrw	mtvec, t0
 +
-+	/* amocas.d zero, t0, (t1) */
-+	.word  0x2853302f
-+
-+	/* If x0 is clobbered this bnez will fail.  */
-+	bnez   t2, _fail
-+
-+	li     a0, 0
-+	j      _exit
++	/*
++	 * Write a full 1 mask on hedeleg, read it back, see if
++	 * all the expected bits were set.
++	 */
++	addi	t0, zero, -1
++	csrw	hedeleg, t0
++	csrr	t0, hedeleg
++	li	t1, HEDELEG_W_MASK
++	bne	t0, t1, _fail
++	li	a0, 0
++	j	_exit
 +
 +_fail:
-+	li    a0, 1
++	li	a0, 1
++	j	_exit
 +
-+/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
++trap:
++	# Any trap is a fail code 1
++	li	a0, 1
++
++# Exit code in a0
 +_exit:
 +	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
 +	sd	t0, 0(a1)
 +	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
 +	.balign	16
 +	slli	zero, zero, 0x1f
 +	ebreak
@@ -320,12 +277,9 @@ index 0000000000..a7bbd059f0
 +	j	.
 +
 +	.data
-+	.balign	8
++	.balign	16
 +semiargs:
 +	.space	16
-+/* An amo target must be a valid, 8-byte aligned address.  */
-+amo_target:
-+	.dword	0x1234
 -- 
 2.43.0
 
