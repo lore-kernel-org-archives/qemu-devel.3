@@ -1,88 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1AE606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 19:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2090E606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 19:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=CKN6W6jW
+	dkim=pass (2048-bit key) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=je+D523I
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWIiI-0004mG-2W; Wed, 25 Nov 2026 14:31:31 -0500
+	id 1xWIiA-0004hX-GT; Wed, 25 Nov 2026 14:31:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xWIi3-0004eA-5D
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 14:31:17 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xWIi1-0004dn-QJ
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 14:31:15 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xWIhz-0001Bd-WF
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 14:31:14 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-492690dd5daso4711012f8f.1
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xWIhy-0001C2-Uu
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 14:31:13 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4bb6ba3b244so63754035e9.3
  for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 11:31:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1795635066; x=1796239866; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CWTF2fvC/MnpsPQZp3jq+QdltlhQdqrWCGLfbImsjx0=;
- b=CKN6W6jWQ9sMpuDsjWaLOlvqVxxHHuCCOleLZviWW5+iovv5RPifGFT9ji6eQdm8vu
- agz+4jUakznGtTxOBhAcPZAoHXhf41TaOzN/7RldrhiSjpZvuaR33d57zgVK5KMRIDax
- oN6EsdYwdRIzvt12R57VOLVL8x84wq74DctzpCG32jTbwG89AEnGNUJdlA6QwlKFiLKL
- A9mPsp94PMOLx48ThjYWVOEv3mc0QnTUgTfjAEwGCycmfDKBEwBvSPIMoSGaT2EFTFcj
- A8yUb5KFrR+79ppF1+E1qZT/HSlUzG9jlBpXxsMHO465RL/8MSzrJGTVt3nJYZE+R9BK
- DL8g==
+ d=openvz.org; s=google; t=1795635067; x=1796239867; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cHREIcmN/tPZ4idfLagQ5H1Kd5j/BcuZdiQ/EI04YlA=;
+ b=je+D523Ie2vlaKqh5FosHc3UuGI62jnHnrILNVusOQt4I6wx4Rb1dfSXwbhfXs5gA6
+ 7wQmnHLYvh3cOcCw1CiPHIEy+Nkbf09yzY2/PpOaxnB8V3uxSlPqiDf6QDT15hF8rXCz
+ 53QwGZiwbIMqUfNiOY3lu0MksPWV3eYx7jh3q2y6/bY1oAA7P82D+dXYEbb51bxxTflh
+ eOFN+riW/AE/WoAwe9MAZqqdcnKq6HfoZffpcj+0xBWMcDijlVKU1oC1MetsR0vAq6gG
+ U9y56mRdhcpVIfW2kG+RttDHv522YM1djYqEjVjk7Bmgur2olg3xEjU32EoIzsVg/hQV
+ qJJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795635066; x=1796239866;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=CWTF2fvC/MnpsPQZp3jq+QdltlhQdqrWCGLfbImsjx0=;
- b=WDKWI7e+zFsx81vVcC7oK2vZJq41GduSLOWWzXfSMLMSgpo6MN2NF/D+DigJt6XIj6
- if+dbfAfuqoyGNWSU8graBJF/Wc7ArMOt4h+I16Il3S4gI+tpgSP6nwhxX2DEjqq+kCJ
- 2m+vVrt3inKAO5TJlklslEky4p98nKDcaeNTn6SYndY7UpwqlXqgK/JIMrHsJjVBv3wB
- lK89smuG2Bx9nQoSFVIEBxdp0y6/+fwtwIBuK34wIChqK1IxbVmU/st7f84FC0qkwaSm
- QMA5W1TJ4U6EwmReAOVE/KUAD5AU0ElV8BxmD+42IC1C4LTBX82fW3cS9FMhOA9CW08i
- p37g==
-X-Gm-Message-State: APuU4Z+weJVY/5dUfV2uPCgGuyH9zsYS9HPiHXF6pLPEpdaTLCvoZFbO
- Falk+PFxuAQXJHnQhB89TJaofXkuO8v2BPoczS62osKdfTuYV1lVZW8wxflhioxqpxf35VnjaVi
- w6nI0
-X-Gm-Gg: AZFdTZcMWMBUX6MI60+kcIzkMqml7eEdR+baoNqp7WsRQNusNZ/UJMG4beS2n8rhBHd
- TWIUawK6quSSWnzhRYgCbhKsh1kXyUt31/Ec4JdOCxBB4ELb4xxaJCwrEH5ZkmAstXvyxUlImbU
- mHWvt40uFOoORIMVOTKFTrPlay36Zbs2N35yX6/azHtlxV93hRD8MUS/Pu73xagLMYUhF2GnsFq
- 2JGLsqGvgiu/wQnt4DTbQxnl3To4/NQJwpuwEZq5S29mfFMRgypPFl7ySixqsy/10YbpzD8JWOA
- 1BlCSY/VUVWHvNhlZDGTN4SuWaZXiQkOuglsNGaPjpSIWZ981TcWl2Sbn+fBZTtoIMT52qDdmmM
- Ml4dpgqA9Iw9QcUTDRKWwaU/R+TQ3S7kq9C38DWjnNVFYoscHGS96M+iDpLb7ffvodjvM2Ab6pr
- 5saa+19O/Z1Jt12yATD3ivt0F2oBee77cyqW1B3wa2U3tWu9WKNGJjoYcddJe2tmPGe8Q4azWjS
- 6zwrdQgMd1kDhHS1oqjl0De2+JLYzXZcKVwW8JbJiH7HsgVQAP/hvBudhGPjeUa8WlPvfZoyYNs
- qSLqXuiHfb2gHHW+wPYBbJZxLm62FGvJN6uAZGtShab5WOzZ
-X-Received: by 2002:a05:600c:a087:b0:4a2:5267:3cd4 with SMTP id
- 5b1f17b1804b1-4bb887c9fbamr400466305e9.3.1795635065827; 
- Wed, 25 Nov 2026 11:31:05 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795635067; x=1796239867;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cHREIcmN/tPZ4idfLagQ5H1Kd5j/BcuZdiQ/EI04YlA=;
+ b=THm5eBxmaLsSxfDD31yJN8NAHXPd9yjoaJWi1yHHpGjIAb+APh/ek3s6aMrFucRKy1
+ QsvXIpnIyQe36ShUTomgX9l/c0G6srOvvJ7F85ZX3StBfFR11cuBRwuV7tu3geaV/yHx
+ f2of6zY7euKl5vbo0sdT+WHiDcBV86vy6w2xZ103AahVrGpZ92IM+3011Q8J3e29lphm
+ 1X0N5r/FUtpUQzay6xBu5WraNsDZ21xzwHozbLfbSR+Kupnq09T2tz2Pg+XxFpbhZ0CC
+ Zd0mlk/j9DY5/b260/StwU76tuRMN9lWVsQSqS3v+jJ9fRDD89XEdisacUmlwLWXE6uP
+ vBYQ==
+X-Gm-Message-State: APuU4Z/1Mm2uf9ijOn1FfYSGDGgJ2WYcbLNoMCx3js0IaCdgYJZNuzie
+ zcr7v+jXtPbvdqjThTNEt5PwGnEYppvJ+DH9kWroYZwQCIac/sf6vMZG1YSL1hEHuAMX+dYcu5m
+ PCtkI
+X-Gm-Gg: AZFdTZfQVicYzLjr3MtWaiFuvgVvLPtpoGjH6NIaA4KVqkgLNrYZWg0lnTKT6aQMAWC
+ mUgq4nXlb1mcJNM/CAsoh/5vtDF4KW+f6n+2BAeE95VOBEcRuIDhlTiqs5fODhdp0zl1Gny5PhU
+ WjJHf5zS3KDQobrtLMW6Rbo7nNkzY4l1A5RJTX8OhPL8YM6RHqS6NpLJJwPVak8bixjBIj5NtZr
+ t5bD9QllyTPXNzGcpzIjztThIhZA2chiz16uQ5UjZgP7inBkX3nDX8Wc1MTjNSEOzPnS9tDYWd0
+ 8vn40BDJMIUxNs2MLqmrv9J/680CDjvBFajdIOl2Wy8v+0jO8wyLwe37E0IBAnDgUbtTps+oZl9
+ 9ZXO8O4gtFo13iJpbAtXcKuoVXEa6BBmDTfrNGTzU8bc/v3T4iWTar9g8YwLMQtH47o/feMw4Bk
+ 7kXyD8YdIfseKSBDmgaW5E679e/Q7qAJd04Q2Nkj+AjRRG8//UoEMWR4GNhsGpTLj2lIzLZKjSk
+ QEMU4JFLaBeSgxM8Ih4CW2+y/eLUyozCJ6K2jbLk4CQiNrnZ+xof63P0qff0ulSxJGqyMT/3ydK
+ NDKbfdHqACmuA/YYHRA+jDTmfkc=
+X-Received: by 2002:a05:600c:154e:b0:4a3:59ee:86b with SMTP id
+ 5b1f17b1804b1-4bb887c3b63mr410668075e9.4.1795635067286; 
+ Wed, 25 Nov 2026 11:31:07 -0800 (PST)
 Received: from artemis.sw.ru ([2a06:5b06:b600:300:73c7:7c5f:a985:743e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4b1ed8b6a05sm18133069f8f.43.2026.11.25.11.31.05
+ ffacd0b85a97d-4b1ed8b6a05sm18133069f8f.43.2026.11.25.11.31.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2026 11:31:05 -0800 (PST)
+ Wed, 25 Nov 2026 11:31:06 -0800 (PST)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 1/2] migration: fix source hang on cancel before the channel
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH 2/2] tests/qtest/migration: test cancel before the channel
  connects
-Date: Wed, 25 Nov 2026 20:31:01 +0100
-Message-ID: <20261125193102.1423555-2-den@openvz.org>
+Date: Wed, 25 Nov 2026 20:31:02 +0100
+Message-ID: <20261125193102.1423555-3-den@openvz.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261125193102.1423555-1-den@openvz.org>
 References: <20261125193102.1423555-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=den@openvz.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,83 +107,108 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-Cancelling a migration while the source is still connecting to the
-destination hangs the source QEMU forever if the connection then
-succeeds. It hangs with the BQL held, so the monitor stops answering
-too.
+Cancel a migration while the source is still connecting, then let the
+connection succeed. The source must end up in "cancelled", and a
+second migration afterwards must complete.
 
-When the cancel arrives there is no connection yet and nothing to shut
-down. Since 4f08b870f8fd, migration_cancel() only marks the migration as
-cancelling and leaves the rest to the code that runs when the connect
-completes, and that code finishes the cancel only when the connect
-fails.
+To keep the source waiting in connect(), the test points it at a unix
+socket of its own whose listen queue is already full. On Linux,
+connect() then blocks until the test accepts a connection, so the test
+is Linux-only.
 
-When the connect succeeds, the migration starts anyway. The return path
-thread starts and waits for the destination. The migration thread sees
-the cancel and quits. The cleanup then waits for the return path thread
-to exit, and that never happens: the destination has nothing to send
-and keeps the connection open, and a cancel, unlike a failure, does not
-make the cleanup shut the return path down.
+The return-path capability is on because the hang this test guards
+against is the cleanup waiting for the return path thread.
 
-Check for the cancel as soon as the connection is up, in
-migration_channel_connect_outgoing(), and clean up there before
-anything is started. A cancel during the TLS handshake gets there too,
-once the handshake is done. migration_cleanup() is no longer static so
-that channel.c can call it.
-
-Fixes: 4f08b870f8fd ("migration: Fix crash on second migration when cancel early")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>
 ---
- migration/channel.c   | 6 ++++++
- migration/migration.c | 2 +-
- migration/migration.h | 1 +
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ tests/qtest/migration/precopy-tests.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/migration/channel.c b/migration/channel.c
-index 1aeb881485..6e2bf9ad39 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -563,6 +563,12 @@ void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
- {
-     trace_migration_outgoing_channel_set(ioc, object_get_typename(OBJECT(ioc)));
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index d57ffcac23..114dd8caf9 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -666,6 +666,68 @@ static void test_cancel_src_after_status(char *test_path, MigrateCommon *args)
+     migrate_end(from, to, false);
+ }
  
-+    /* migration_cancel() leaves a cancel during connect for us to finish */
-+    if (s->state == MIGRATION_STATUS_CANCELLING) {
-+        migration_cleanup(s);
++#ifdef CONFIG_LINUX
++/* On Linux connect() to a unix socket with a full backlog blocks */
++static int unix_listen_full(const char *path, int *filler)
++{
++    struct sockaddr_un addr = { .sun_family = AF_UNIX };
++    int lfd = socket(AF_UNIX, SOCK_STREAM, 0);
++
++    *filler = socket(AF_UNIX, SOCK_STREAM, 0);
++    g_assert_cmpint(lfd, >=, 0);
++    g_assert_cmpint(*filler, >=, 0);
++
++    g_assert_cmpuint(strlen(path), <, sizeof(addr.sun_path));
++    strcpy(addr.sun_path, path);
++    g_assert_cmpint(bind(lfd, (struct sockaddr *)&addr, sizeof(addr)), ==, 0);
++    g_assert_cmpint(listen(lfd, 0), ==, 0);
++    g_assert_cmpint(connect(*filler, (struct sockaddr *)&addr, sizeof(addr)),
++                    ==, 0);
++    return lfd;
++}
++
++static void test_cancel_src_before_connect(char *name, MigrateCommon *args)
++{
++    g_autofree char *full_path = g_strdup_printf("%s/migsocket-full", tmpfs);
++    g_autofree char *full_uri = g_strdup_printf("unix:%s", full_path);
++    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
++    QTestState *from, *to;
++    int lfd, filler, accepted;
++
++    if (migrate_start(&from, &to, &args->start)) {
 +        return;
 +    }
 +
-     if (migrate_channel_requires_tls_upgrade(ioc)) {
-         Error *local_err = NULL;
- 
-diff --git a/migration/migration.c b/migration/migration.c
-index 5686209ab1..4fc1ca9fd2 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1378,7 +1378,7 @@ void migration_cleanup_json_writer(MigrationState *s)
-     g_clear_pointer(&s->vmdesc, json_writer_free);
- }
- 
--static void migration_cleanup(MigrationState *s)
-+void migration_cleanup(MigrationState *s)
++    migrate_set_capability(from, "return-path", true);
++    migrate_set_capability(to, "return-path", true);
++
++    lfd = unix_listen_full(full_path, &filler);
++    migrate_qmp(from, to, full_uri, NULL, "{}");
++    migrate_cancel(from);
++
++    /* Taking the filler off the backlog lets the source's connect() finish */
++    accepted = accept(lfd, NULL, NULL);
++    g_assert_cmpint(accepted, >=, 0);
++
++    wait_for_migration_status(from, "cancelled",
++                              (const char * []) { "completed", NULL });
++
++    close(accepted);
++    close(filler);
++    close(lfd);
++    unlink(full_path);
++
++    migrate_incoming_qmp(to, uri, NULL, "{}");
++    wait_for_serial("src_serial");
++    migrate_ensure_converge(from);
++    migrate_qmp(from, to, uri, NULL, "{}");
++    wait_for_migration_complete(from);
++    wait_for_migration_complete(to);
++
++    migrate_end(from, to, true);
++}
++#endif
++
+ static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
  {
-     QEMUFile *tmp = NULL;
- 
-diff --git a/migration/migration.h b/migration/migration.h
-index 057c85d611..b3067536cb 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -594,6 +594,7 @@ bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp);
- void migration_outgoing_setup(QIOChannel *ioc);
- 
- void migration_connect_error_propagate(MigrationState *s, Error *error);
-+void migration_cleanup(MigrationState *s);
- void migrate_error_propagate(MigrationState *s, Error *error);
- bool migrate_has_error(MigrationState *s);
- 
+     qtest_qmp_assert_success(who,
+@@ -1174,4 +1236,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
+                                       test_cancel_src_after_status);
+         }
+     }
++#ifdef CONFIG_LINUX
++    migration_test_add("/migration/cancel/src/before/connect",
++                       test_cancel_src_before_connect);
++#endif
+ }
 -- 
 2.55.0
 
