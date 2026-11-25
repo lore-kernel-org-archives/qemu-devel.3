@@ -1,95 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E86606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 04:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D37606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 04:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=R0mPSd7h
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J5W9nhwx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW4jT-0001yV-6j; Tue, 24 Nov 2026 23:35:47 -0500
+	id 1xW4je-000208-PX; Tue, 24 Nov 2026 23:35:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xW4jO-0001xp-Ja
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:35:43 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xW4jT-0001yX-1t
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:35:47 -0500
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xW4jN-0008Pi-0W
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:35:42 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-70059e4dab6so2816485eaf.3
- for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 20:35:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xW4jR-0008QI-EM
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 23:35:46 -0500
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-71b30ed75a1so3067737eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Nov 2026 20:35:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795581339; x=1796186139; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=yQ1jBwEwnjaqRwdvfbwNRfThs78Rv0h6e32QJOsI94s=;
- b=R0mPSd7hKw24cZR9GcmyrMu4vexYa7ihtB/hMPh0nG0hKvZW5y6zQg4JSBRjDjqsIi
- ZQzJckx5Goo2UNqTlYKm7TWmYCtDnKUvlrLiZkZh8tBaikMpz7jniAsXpYXGbT8xrLTc
- txqkzxDpzcttFkJCR5p5dpYXIqKPXTx75Q3fdE5nNCN+41LZQdnxjPMm54+inclUFe6K
- Bg0XFKl22Q5Xw8fOOoqw9Ayo63shmPYzFhRoCt04KHE++brWQhNe0LCfW0un/HFXi3ZU
- JANlz+kK+ZE++yQW7diQZQaLtpdQpkEFqRhO+KTGqJrfZ0nbxj9KiitN2BhcC1TocMid
- QuhQ==
+ d=gmail.com; s=20260707; t=1795581344; x=1796186144; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=eFzEePy+h+lPXoQ4fYj6KWi5um0bF8/Scwg8izBKzUc=;
+ b=J5W9nhwxVx3CpAlJp/cRh9F0inowTLkcZ850l6qeDbhCG/9oRdIAl7umn6X7/Rreqj
+ xYIqcTZkzb+K4ELVsWzrw5c9yFkPqOtux/EoKKI3X9DxJcgZFU4+xOdmipDcRrdcd5Lw
+ B3xfYt6bSKyhAs9QAFbRPzVUpyRUR47IQYlN78li16eVUhP3W9nXIHhEFECvb+NLGpWg
+ afnkRyplxrEPbRb/jWy/fIjxRJY6qFuKL5mkCn/cXxqXyfJNuUq2WnkZzHyRDfy/lvu0
+ zKyadw9Iob2EJxNQExMCzn/tBPmWRrJKpgQBtjPRYEn3KrhX/pNoDJ1xLyzgnQ7MYLpQ
+ dBbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795581339; x=1796186139;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=yQ1jBwEwnjaqRwdvfbwNRfThs78Rv0h6e32QJOsI94s=;
- b=YVRCx5s+JokNtmjYZlUG4NlGIgOEFrzJbNIGwC0Wy92iLHFJLhqbZzGd4HW60pK38A
- dXnGW4dDvqBe1PNSr0psWFWv5aKCDY0nUA8DZwKbvpnGXS5jy7o5a7OiSIy+HHR9YZ/7
- 6NxENzqo5E7kwqbw+SrMSTwBrLtZBd45wp3m+4yWAgYOMHeyOIAfCtXY9j36yntUIA6n
- hefjNtUk2ZKCPWXNEmqpEP/VX+aKbK/wPeJADGCkQckBnFupygrPqCBLkVXbhTxMDyEZ
- LQoaEyG6zvZU9hHZPkU7sYG9GZY5PJ1mCuguLvLjmcdyFFqP0dYkl7C+QQLDKyyhcHGJ
- I3QA==
-X-Gm-Message-State: APuU4Z+iWI17pTyjzRug0JIqtDaP5t2MbdNZBiWtNSjTqOhi2C/EJo36
- dojkdoKGG3so6DhTHL0/42HNBAHPI3NxRrxvBLMmziMr9WR/TEZsM681
-X-Gm-Gg: AZFdTZe1agGkEf1tZqQKL6vUIj5cWd+hJVhVrA4U5qqnbH92Cx84mcNBdAl7JJpSaAg
- BerwyfRNMFFXyOdsfdeX/U6GONH3Ds3SzjWfeprwKlYmvyPVF46w8Rgvw9BHKkzfhhwLDLjih48
- eW6k7vt6+5PvSWT1Xys7jEtIedpd3PX8/UuZWmeRH829JxDM/j2pIuhCX30FQxSMbbCf/3YrDh4
- YsJ9ayqM8colWcmmBORZEPsBxkniwmfSd6ZHB3WBM2iYPKGKkiw5O11rLvi0FimE1NjqeXMuFuW
- u17Vqwy1z18510djdhYdMm4j1+zzSiLRZcZjk7MJT2tjzJsQ++SxaY2/jImJe306yflOEbgQXRN
- KB6g9pe35YE0Ccg2tTJvhLmwJZrVLxfmXagH6JvSfrd0GbT3JhBowwbSyqsfkTZMz0fUrVJpzxS
- CRPq641F2LOdnYaUSrf15b942DrTotiT2ewpKd+hp+bLgdz/VnLRn2y6kvK33Y8zqVFn5Ly5tCm
- Rz3L60rcfMm4YdeLHhqlt9i2AoI7Zv/gRFX5m5ktuuYAnlgMIPu24LZNsHvagljKkoAL6FrwpMH
- bU6zo1ZowNy0X7K/Uxa0N9ay
-X-Received: by 2002:a05:6820:858b:20b0:70b:a287:72b5 with SMTP id
- 006d021491bc7-71b394d84f2mr10280127eaf.20.1795581338801; 
- Tue, 24 Nov 2026 20:35:38 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795581344; x=1796186144;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=eFzEePy+h+lPXoQ4fYj6KWi5um0bF8/Scwg8izBKzUc=;
+ b=nFJvTWKxkqYL1juq2DkfQww8zXm4Fy5WrQpJBcYpDen82xcKWh7fqUto2xtOo5XDM3
+ j1YXjT3dHmV6boWTSkE/BjhDARdJ6QGtfT/IQiZ08RD9298ZVd92U/TV6gdMA+ZvbyNK
+ bDyRN9f7pn7gmjMHAuc3JRj3PCQIgfSYsvyAXE2ibhgp5w1ZvnL2L6P7NL6v2tZgxvho
+ 8kGOhk/iVFuxtsDue+8n9Vy6SZHvvNdzTFe9zPXIApO4GtagHegy1EV+EvF7M9yPDnya
+ ld/JzYEIJIahgz/LaGWkTqLedVU9N4ZUbJaafFOld3Ej3MKn5D2RF2A+uLtubzXvmJ8q
+ shNw==
+X-Gm-Message-State: APuU4Z+4Ms12QTbGwmHkrzR8RtwnjFz022wB8f3w/r1QeBCgiLXy1mio
+ ohnA0vpx4Zl6Si+y7j+QI2dfe8XV7p4NLaUKfmNJgFAgxKU+dgTCMmHoNdPoJOwa
+X-Gm-Gg: AZFdTZfFYEV0gY1Jn5E36WVQloXWgLfZ6O0p0wytq5s7tGY8ZkbMRkqPdUfZnhyWvgx
+ AsKbzg7N7m+y2IvL0r7HSDHfnleLwCj74FtHvUBEhjf7kF23Ih1roN7vQzp96BOlccaLIqvtj5M
+ J9WRdJGTU0RMOWMyAOo0+oZqHS7xf/Rb7nx6Lsfhi1KZ8xavOmRwy21bqRzYShZ32KqN5O6F6E4
+ n/A+7XUXIT/m3lj9x26mfazEQQ1AdJAoqjqPwfk9eTrXZdXyUj4mSh7LYPf/bMrWFlebqdt37SE
+ nDxYFvluSwcoU6cVtZ+hHyBJ2B/pT2g/+yV7luDP8skQFhMABWW7/cYAZOj/NZJbjgdPGzVrkgA
+ +3Yel3nqYdHHwLJ5hPgagoYlFAARAbKsBPTJGL5LstGzsA2Dpo+S9k7Ii+GmndDhiO86S0QqUyO
+ RSv+scpT5cY1jqfqCiME5GurIMOaP8CfopCk0Np1q3+6jfu+Kp8eeRFZXrsr4nsaACIEdS/1nCA
+ 8HdlXXHSWxci1J7dQoHjv2suiNqcRf5fQHK+1VUGU/ugvbUfFiuDNPvkOWtNB1cJvL+9Kq9EkFi
+ fD4UXOKbzTkZeiRLexdo6SGd2InTTjWcGThsQwEjt+Ydwg==
+X-Received: by 2002:a05:6820:240b:b0:71b:1715:7ce4 with SMTP id
+ 006d021491bc7-71b391e78a4mr11885477eaf.12.1795581344289; 
+ Tue, 24 Nov 2026 20:35:44 -0800 (PST)
 Received: from [127.0.1.1] ([2603:8080:a00:9759:77b:471:20d8:44bf])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-71b380bdff9sm11183745eaf.11.2026.11.24.20.35.35
+ 006d021491bc7-71b380bdff9sm11183745eaf.11.2026.11.24.20.35.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Nov 2026 20:35:37 -0800 (PST)
+ Tue, 24 Nov 2026 20:35:42 -0800 (PST)
 From: Andrew Nguyen <xmphyr@gmail.com>
-Subject: [PATCH v2 0/2] hw/net: handling 0 RX queues
-Date: Tue, 24 Nov 2026 22:35:31 -0600
-Message-Id: <20261124-4729-out-of-bounds-rx-interrupt-idx-v2-0-cd18eec4f369@gmail.com>
+Date: Tue, 24 Nov 2026 22:35:33 -0600
+Subject: [PATCH v2 2/2] hw/net: at least one TX queue and RX queue
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJNlBmsC/5WNQQqDMBBFryKz7pQmaKJd9R7FhU2iDtREJlEs4
- t2beoPyV+/zeX+H6JhchHuxA7uVIgWfQV4KMGPnB4dkM4O8SSWEqLDUssGwJAw9vsLibUTekHx
- yzMuc8nxDXVvVdNrWpbaQTTO7nrbz5dlmHimmwJ/zdBW/9j//KjBHlXUjtKp6ZR7D1NH7asIE7
- XEcX6t7mwnWAAAA
+Message-Id: <20261124-4729-out-of-bounds-rx-interrupt-idx-v2-2-cd18eec4f369@gmail.com>
+References: <20261124-4729-out-of-bounds-rx-interrupt-idx-v2-0-cd18eec4f369@gmail.com>
+In-Reply-To: <20261124-4729-out-of-bounds-rx-interrupt-idx-v2-0-cd18eec4f369@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
  Jason Wang <jasowangio@gmail.com>, 
  Karl Mehltretter <kmehltretter@gmail.com>, 
  Peter Maydell <peter.maydell@linaro.org>, Andrew Nguyen <xmphyr@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795581335; l=1596;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795581335; l=1915;
  i=xmphyr@gmail.com; s=20261115; h=from:subject:message-id;
- bh=zIkelXqe/LLU7dn4X8y8S3qgBro99q7yUcAxYlUY30U=;
- b=naDkTmvQ3gg7ljak3Ol23I6YEAQu2imC86RBJ/C0Ai3XMngIw6pG0WXNWRB+Y8cyDDUjTp/eT
- j8jH1NIXxDiCtumplt7CvpfnlnIpa81sTfFaLOZROhgdANMDoY/3M2f
+ bh=sCpAoVb0oZoeogxGxoIQzreZBQXBN/cueJBi0bjzf8g=;
+ b=aidZXIFtSuu2rYerApxyrFWcfHRvpEHNFnOeV7hwS69ICUFwIMOUvDXA99iGPxaGjYwwQ3/rW
+ myoFxhqzvX+A0wx+NbL/h/Re3Uw+iSWc2LLu60Pwqfy4BMOow03KYOx
 X-Developer-Key: i=xmphyr@gmail.com; a=ed25519;
  pk=NNmtCKBlfBcUb+tQiMXr0u4Z3W1r0gSDovSDVTzPWXE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=xmphyr@gmail.com; helo=mail-oo1-xc36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=xmphyr@gmail.com; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,44 +115,64 @@ X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is a resolution for issue #4729: 
-https://gitlab.com/qemu-project/qemu/-/work_items/4729. The issue is that
-a VMXNET3 configuration with 0 RX queues is loaded. When one of these RX
-queues is accessed anyway, say, rxq_descr[0], it could have an invalid 
-interrupt index that was never validated in the first place.
+Require a VMXNET3 configuration to have at least one TX queue and one RX
+queue.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4729
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
 
 Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
 ---
-From reading some support articles, I think that there has to be at least
-one of each queue. Unless receive side scaling (RSS) is enabled, then the
-minimum is the number of vCPUs. Not quite sure how to interpret this, so
-I went with always no RSS. Another note is that if RSS is enabled, 0 seems 
-to be an acceptable number that gets interpretted as the number of vCPUs.
+ hw/net/vmxnet3.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-https://knowledge.broadcom.com/external/article/322369/rss-and-multiqueue-support-in-linux-driv.html
-https://knowledge.broadcom.com/external/article?legacyId=2061598
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index 58bb7fb869..875c998d63 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1367,15 +1367,13 @@ static bool vmxnet3_validate_interrupts(VMXNET3State *s)
+         }
+     }
+ 
+-    i = 0;
+-    do {
++    for (i = 0; i < s->rxq_num; i++) {
+         int idx = s->rxq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
+         if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
+             return false;
+         }
+-        i++;
+-    } while (i < s->rxq_num);
++    }
+ 
+     return true;
+ }
+@@ -1384,17 +1382,18 @@ static bool vmxnet3_validate_queues(VMXNET3State *s)
+ {
+     /*
+     * txq_num and rxq_num are total number of queues
+-    * configured by guest. These numbers must not
+-    * exceed corresponding maximal values.
++    * configured by guest. These numbers must be at
++    * least one and not exceed corresponding maximal
++    * values.
+     */
+ 
+-    if (s->txq_num > VMXNET3_DEVICE_MAX_TX_QUEUES) {
++    if (s->txq_num <= 0 || s->txq_num > VMXNET3_DEVICE_MAX_TX_QUEUES) {
+         qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Bad TX queues number: %d\n",
+                       s->txq_num);
+         return false;
+     }
+ 
+-    if (s->rxq_num > VMXNET3_DEVICE_MAX_RX_QUEUES) {
++    if (s->rxq_num <= 0 || s->rxq_num > VMXNET3_DEVICE_MAX_RX_QUEUES) {
+         qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Bad RX queues number: %d\n",
+                       s->rxq_num);
+         return false;
 
----
-Changes in v1:
-- vmxnet3.c: changed the RX queue interrupt index validation for loop to a do-while loop
-
-Cahnges in v2:
-- vmxnet3.c: undid v1
-- vmxnet3.c: when validating the queues, not interrupt indexes, check for minimum of one
-
----
-Andrew Nguyen (2):
-      hw/net: always validate the interrupt index of the first RX descriptor
-      hw/net: at least one TX queue and RX queue
-
- hw/net/vmxnet3.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
----
-base-commit: 6bf90d4fc5027567cb704d7888f5ec792b4ed75a
-change-id: 20261115-4729-out-of-bounds-rx-interrupt-idx-78d69a7d847d
-
-Best regards,
 -- 
-Andrew Nguyen <xmphyr@gmail.com>
+2.43.0
 
 
