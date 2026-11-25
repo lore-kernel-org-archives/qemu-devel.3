@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC7B606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26C2606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Nov 2026 02:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Pj2n6WTf
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YtbnwvfM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xW35C-00085d-UP; Tue, 24 Nov 2026 21:50:06 -0500
+	id 1xW35O-0008LD-EG; Tue, 24 Nov 2026 21:50:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35A-00084L-Rb
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:05 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35J-0008Gh-VI
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:14 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW359-0006nk-3G
- for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:04 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xW35H-0006za-0C
+ for qemu-devel@nongnu.org; Tue, 24 Nov 2026 21:50:13 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 16D0544F24;
- Wed, 25 Nov 2026 02:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD211F000C0;
- Wed, 25 Nov 2026 02:50:00 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id C0863440D0;
+ Wed, 25 Nov 2026 02:50:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B6E1F000D1;
+ Wed, 25 Nov 2026 02:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795575001;
- bh=7IU8YoBie5x5o1YgHstYGphVVsfWjlAuy/s7lk8EbPE=;
+ s=k20260515; t=1795575008;
+ bh=ELkkaD50Y0CIfwZrzVxvX6bokC7pjpTlzdCkATvQa5I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Pj2n6WTfykLgqjQ3XNHkvQ63QNKUH2uM9roaCf79i4nElASzbcgE1t60/icQVhvyW
- eFVFuw9SBsmhk5h9HgPJEct9p79tMxLJXgK4UG8/bp67PKnkfKOlndMEnjSO/hgiNP
- /Eer/rExE2lRav6qTxGmag+/PBlvYlVAK5qudOM4cJ7ZXWBodrXU0StlIc06doRU5X
- kXEfSbyB1Tso20q5nppw8cDweIT5OL23OMXpQ9CmxGWoWLV5yFav+Z5ugWjgVIIUO8
- Hd3HlgEfOpygw7mlakI0QdYQRl2ecx6KHiOng0b2++PyVQ3MT0eQezgHi/z7bVcFJo
- KJj97FWIWE1iA==
+ b=YtbnwvfME57BJqfKstHGHjAuisq8gOtCN1bpyAFU4kM+OPGLkAPjP39cS9eHHk2R7
+ FRr2OmDWc8AF6b/HlYqvFi72EJFC1J9X/AJ6l+EPH62jILQlN9mUTSm99mgah0Czvd
+ yRAvVrhPVrqAIVCm8Do9a+Vxuaw1lDSCInrubaTpOwLLnp84y2GVN8uvz6h2HF18XK
+ PF2H3cRaAtlshAa/zuOP1aLqjfOx85hcaiL76FPLoHvz7VC5WeEFUucmWVUatnrUBr
+ sBq69j4fjtitaJVqodPQ1trJYdPKGa/FgFiqUM6iuYSGXfRwqwjBJvpK4IsYJRr9sV
+ zPnfl6kuZvX7A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Keith Monahan <keith@techtravels.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL for 11.2 03/14] hw/scsi/scsi-disk: Add
- quirk_mode_page_no_flexible_disk, use it on the 715
-Date: Wed, 25 Nov 2026 03:49:40 +0100
-Message-ID: <20261125024951.10428-4-deller@kernel.org>
+Subject: [PULL for 11.2 06/14] hw/scsi: Move shared LSI/NCR definitions to
+ lsi_scsi.h
+Date: Wed, 25 Nov 2026 03:49:43 +0100
+Message-ID: <20261125024951.10428-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261125024951.10428-1-deller@kernel.org>
 References: <20261125024951.10428-1-deller@kernel.org>
@@ -49,8 +49,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -78,113 +78,304 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Keith Monahan <keith@techtravels.org>
 
-scsi-disk answers MODE SENSE for page 05h (flexible disk geometry)
-for every disk. Per the commit author, real SCSI hard disks of that era
-reject this page with CHECK CONDITION, ILLEGAL REQUEST, INVALID FIELD IN
-CDB, as only floppy drives implement it. This has not been verified
-against real hardware or a datasheet here.
+Move common defines and structures of the lsi53c895a driver to
+lsi_scsi.h so that the 53c710 driver can share them.
 
-Per the commit author, HP-UX 9 on the HP 715 probes page 05h on the open
-root disk and, when the page is returned, treats the disk as a floppy
-and leaves it out of the ioscan listing, so SAM shows no hard disk.
-This guest behaviour has not been reproduced here.
+Pure code movement, no functional change: nothing is renamed and the
+lsi53c895a device is unchanged.
 
-Add the quirk_mode_page_no_flexible_disk property, which makes page 05h
-an invalid field in the CDB, and enable it for scsi-hd on the HP 715
-machine through its compat properties. The property is also defined for
-scsi-cd, like the other mode page quirks, as both device types share
-mode_sense_page() and the same quirks bitmap; the 715 does not enable
-it there.
+Licence: the moved code comes from lsi53c895a.c, which is licensed under
+the LGPL (Copyright (c) 2006 CodeSourcery, written by Paul Brook), so
+the new header keeps that licence (SPDX LGPL-2.1-or-later) rather than
+the preferred GPL-2.0-or-later; it is not relicensed.
 
-The array name hw_compat_715 suggested a versioned machine compat
-table, which it is not; call it hp_715_scsi_quirks.
-
+Suggested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Keith Monahan <keith@techtravels.org>
 AI-used-for: Patch series decomposition (commit splitting and ordering)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c      | 10 ++++++++++
- hw/scsi/scsi-disk.c    | 13 +++++++++++++
- include/hw/scsi/scsi.h |  1 +
- 3 files changed, 24 insertions(+)
+ MAINTAINERS          |   1 +
+ hw/scsi/lsi53c895a.c |  79 +-------------------------------
+ hw/scsi/lsi_scsi.h   | 104 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 106 insertions(+), 78 deletions(-)
+ create mode 100644 hw/scsi/lsi_scsi.h
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 3b83968f33..04c4b2a8d8 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -1020,6 +1020,14 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
-     mc->default_ram_size = 1024 * MiB;
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 40bf63651c..9e001a85ee 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2432,6 +2432,7 @@ R: Fam Zheng <fam@euphon.net>
+ S: Supported
+ F: include/hw/scsi/*
+ F: hw/scsi/*
++F: hw/scsi/lsi_scsi.h
+ F: tests/qtest/virtio-scsi-test.c
+ F: tests/qtest/fuzz-virtio-scsi-test.c
+ F: tests/qtest/am53c974-test.c
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 1b7f02fc7c..2a7c6e9c8d 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -18,6 +18,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/scsi/scsi.h"
++#include "lsi_scsi.h"
+ #include "migration/vmstate.h"
+ #include "system/dma.h"
+ #include "qemu/log.h"
+@@ -42,20 +43,9 @@ static const char *names[] = {
  
+ #define LSI_MAX_DEVS 7
+ 
+-#define LSI_SCNTL0_TRG    0x01
+-#define LSI_SCNTL0_AAP    0x02
+-#define LSI_SCNTL0_EPC    0x08
+-#define LSI_SCNTL0_WATN   0x10
+-#define LSI_SCNTL0_START  0x20
+-
+ #define LSI_SCNTL1_SST    0x01
+ #define LSI_SCNTL1_IARB   0x02
+-#define LSI_SCNTL1_AESP   0x04
+-#define LSI_SCNTL1_RST    0x08
+-#define LSI_SCNTL1_CON    0x10
+ #define LSI_SCNTL1_DHP    0x20
+-#define LSI_SCNTL1_ADB    0x40
+-#define LSI_SCNTL1_EXC    0x80
+ 
+ #define LSI_SCNTL2_WSR    0x01
+ #define LSI_SCNTL2_VUE0   0x02
+@@ -66,14 +56,8 @@ static const char *names[] = {
+ #define LSI_SCNTL2_CHM    0x40
+ #define LSI_SCNTL2_SDU    0x80
+ 
+-#define LSI_ISTAT0_DIP    0x01
+-#define LSI_ISTAT0_SIP    0x02
+ #define LSI_ISTAT0_INTF   0x04
+-#define LSI_ISTAT0_CON    0x08
+ #define LSI_ISTAT0_SEM    0x10
+-#define LSI_ISTAT0_SIGP   0x20
+-#define LSI_ISTAT0_SRST   0x40
+-#define LSI_ISTAT0_ABRT   0x80
+ 
+ #define LSI_ISTAT1_SI     0x01
+ #define LSI_ISTAT1_SRUN   0x02
+@@ -105,43 +89,30 @@ static const char *names[] = {
+ #define LSI_SOCL_IO       0x01
+ #define LSI_SOCL_CD       0x02
+ #define LSI_SOCL_MSG      0x04
+-#define LSI_SOCL_ATN      0x08
+ #define LSI_SOCL_SEL      0x10
+ #define LSI_SOCL_BSY      0x20
+ #define LSI_SOCL_ACK      0x40
+ #define LSI_SOCL_REQ      0x80
+ 
+-#define LSI_DSTAT_IID     0x01
+-#define LSI_DSTAT_SIR     0x04
+-#define LSI_DSTAT_SSI     0x08
+-#define LSI_DSTAT_ABRT    0x10
+-#define LSI_DSTAT_BF      0x20
+ #define LSI_DSTAT_MDPE    0x40
+-#define LSI_DSTAT_DFE     0x80
+ 
+-#define LSI_DCNTL_COM     0x01
+ #define LSI_DCNTL_IRQD    0x02
+-#define LSI_DCNTL_STD     0x04
+ #define LSI_DCNTL_IRQM    0x08
+-#define LSI_DCNTL_SSM     0x10
+ #define LSI_DCNTL_PFEN    0x20
+ #define LSI_DCNTL_PFF     0x40
+ #define LSI_DCNTL_CLSE    0x80
+ 
+-#define LSI_DMODE_MAN     0x01
+ #define LSI_DMODE_BOF     0x02
+ #define LSI_DMODE_ERMP    0x04
+ #define LSI_DMODE_ERL     0x08
+ #define LSI_DMODE_DIOM    0x10
+ #define LSI_DMODE_SIOM    0x20
+ 
+-#define LSI_CTEST2_DACK   0x01
+ #define LSI_CTEST2_DREQ   0x02
+ #define LSI_CTEST2_TEOP   0x04
+ #define LSI_CTEST2_PCICIE 0x08
+ #define LSI_CTEST2_CM     0x10
+ #define LSI_CTEST2_CIO    0x20
+-#define LSI_CTEST2_SIGP   0x40
+ #define LSI_CTEST2_DDIR   0x80
+ 
+ #define LSI_CTEST5_BL2    0x04
+@@ -163,59 +134,11 @@ static const char *names[] = {
+ #define LSI_CCNTL1_DDAC      0x08
+ #define LSI_CCNTL1_ZMOD      0x80
+ 
+-#define LSI_SBCL_ATN         0x08
+-#define LSI_SBCL_BSY         0x20
+-#define LSI_SBCL_ACK         0x40
+-#define LSI_SBCL_REQ         0x80
+-
+ /* Enable Response to Reselection */
+ #define LSI_SCID_RRE      0x60
+ 
+ #define LSI_CCNTL1_40BIT (LSI_CCNTL1_EN64TIBMV|LSI_CCNTL1_64TIMOD)
+ 
+-#define PHASE_DO          0
+-#define PHASE_DI          1
+-#define PHASE_CMD         2
+-#define PHASE_ST          3
+-#define PHASE_MO          6
+-#define PHASE_MI          7
+-#define PHASE_MASK        7
+-
+-/* Maximum length of MSG IN data.  */
+-#define LSI_MAX_MSGIN_LEN 8
+-
+-/* Flag set if this is a tagged command.  */
+-#define LSI_TAG_VALID     (1 << 16)
+-
+-/* Maximum instructions to process. */
+-#define LSI_MAX_INSN    500
+-
+-typedef struct lsi_request {
+-    SCSIRequest *req;
+-    uint32_t tag;
+-    uint32_t dma_len;
+-    uint8_t *dma_buf;
+-    uint32_t pending;
+-    int out;
+-    bool orphan;
+-    QTAILQ_ENTRY(lsi_request) next;
+-} lsi_request;
+-
+-enum {
+-    LSI_NOWAIT, /* SCRIPTS are running or stopped */
+-    LSI_WAIT_RESELECT, /* Wait Reselect instruction has been issued */
+-    LSI_DMA_SCRIPTS, /* processing DMA from lsi_execute_script */
+-    LSI_DMA_IN_PROGRESS, /* DMA operation is in progress */
+-    LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
+-};
+-
+-enum {
+-    LSI_MSG_ACTION_COMMAND = 0,
+-    LSI_MSG_ACTION_DISCONNECT = 1,
+-    LSI_MSG_ACTION_DOUT = 2,
+-    LSI_MSG_ACTION_DIN = 3,
+-};
+-
+ struct LSIState {
+     /*< private >*/
+     PCIDevice parent_obj;
+diff --git a/hw/scsi/lsi_scsi.h b/hw/scsi/lsi_scsi.h
+new file mode 100644
+index 0000000000..de0941dd23
+--- /dev/null
++++ b/hw/scsi/lsi_scsi.h
+@@ -0,0 +1,104 @@
 +/*
-+ * HP-UX 9 ioscan sends MODE SENSE page 5 to the open root disk and leaves
-+ * the disk out of its listing if the page is returned.
++ * QEMU LSI53C895A SCSI Host Bus Adapter emulation
++ * Definitions shared with other NCR/LSI SCRIPTS based controllers
++ *
++ * Copyright (c) 2006 CodeSourcery.
++ * Written by Paul Brook
++ *
++ * This code is licensed under the LGPL.
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
 + */
-+static GlobalProperty hp_715_scsi_quirks[] = {
-+    { "scsi-hd", "quirk_mode_page_no_flexible_disk", "on" },
++
++#ifndef HW_SCSI_LSI_SCSI_H
++#define HW_SCSI_LSI_SCSI_H
++
++#include "qemu/queue.h"
++#include "hw/scsi/scsi.h"
++
++#define LSI_SCNTL0_TRG    0x01
++#define LSI_SCNTL0_AAP    0x02
++#define LSI_SCNTL0_EPC    0x08
++#define LSI_SCNTL0_WATN   0x10
++#define LSI_SCNTL0_START  0x20
++
++#define LSI_SCNTL1_AESP   0x04
++#define LSI_SCNTL1_RST    0x08
++#define LSI_SCNTL1_CON    0x10
++#define LSI_SCNTL1_ADB    0x40
++#define LSI_SCNTL1_EXC    0x80
++
++#define LSI_ISTAT0_DIP    0x01
++#define LSI_ISTAT0_SIP    0x02
++#define LSI_ISTAT0_CON    0x08
++#define LSI_ISTAT0_SIGP   0x20
++#define LSI_ISTAT0_SRST   0x40
++#define LSI_ISTAT0_ABRT   0x80
++
++#define LSI_SOCL_ATN      0x08
++
++#define LSI_DSTAT_IID     0x01
++#define LSI_DSTAT_SIR     0x04
++#define LSI_DSTAT_SSI     0x08
++#define LSI_DSTAT_ABRT    0x10
++#define LSI_DSTAT_BF      0x20
++#define LSI_DSTAT_DFE     0x80
++
++#define LSI_DCNTL_COM     0x01
++#define LSI_DCNTL_STD     0x04
++#define LSI_DCNTL_SSM     0x10
++
++#define LSI_DMODE_MAN     0x01
++
++#define LSI_CTEST2_DACK   0x01
++#define LSI_CTEST2_SIGP   0x40
++
++#define LSI_SBCL_ATN         0x08
++#define LSI_SBCL_BSY         0x20
++#define LSI_SBCL_ACK         0x40
++#define LSI_SBCL_REQ         0x80
++
++#define PHASE_DO          0
++#define PHASE_DI          1
++#define PHASE_CMD         2
++#define PHASE_ST          3
++#define PHASE_MO          6
++#define PHASE_MI          7
++#define PHASE_MASK        7
++
++/* Maximum length of MSG IN data.  */
++#define LSI_MAX_MSGIN_LEN 8
++
++/* Flag set if this is a tagged command.  */
++#define LSI_TAG_VALID     (1 << 16)
++
++/* Maximum instructions to process. */
++#define LSI_MAX_INSN    500
++
++typedef struct lsi_request {
++    SCSIRequest *req;
++    uint32_t tag;
++    uint32_t dma_len;
++    uint8_t *dma_buf;
++    uint32_t pending;
++    int out;
++    bool orphan;
++    QTAILQ_ENTRY(lsi_request) next;
++} lsi_request;
++
++enum {
++    LSI_NOWAIT, /* SCRIPTS are running or stopped */
++    LSI_WAIT_RESELECT, /* Wait Reselect instruction has been issued */
++    LSI_DMA_SCRIPTS, /* processing DMA from lsi_execute_script */
++    LSI_DMA_IN_PROGRESS, /* DMA operation is in progress */
++    LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
 +};
 +
- static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
- {
-     static const char * const valid_cpu_types[] = {
-@@ -1041,6 +1049,8 @@ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
-     mc->max_cpus = MIN_CONST(HPPA_MAX_CPUS, 8);
-     mc->default_ram_size = 256 * MiB;
-     mc->default_nic = TYPE_LASI_82596;
-+    compat_props_add(mc->compat_props, hp_715_scsi_quirks,
-+                     G_N_ELEMENTS(hp_715_scsi_quirks));
- }
- 
- 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index a2df3a4ec4..ce43ddf6c0 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1156,6 +1156,15 @@ static int mode_sense_page(SCSIDiskState *s, int page, uint8_t **p_outbuf,
-         return -1;
-     }
- 
-+    /*
-+     * The flexible disk page is only implemented by floppy drives.  Some
-+     * guests (HP-UX 9 ioscan) take a disk that returns it for a floppy.
-+     */
-+    if (page == MODE_PAGE_FLEXIBLE_DISK_GEOMETRY &&
-+        (s->quirks & (1 << SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK))) {
-+        return -1;
-+    }
++enum {
++    LSI_MSG_ACTION_COMMAND = 0,
++    LSI_MSG_ACTION_DISCONNECT = 1,
++    LSI_MSG_ACTION_DOUT = 2,
++    LSI_MSG_ACTION_DIN = 3,
++};
 +
-     /*
-      * If Changeable Values are requested, a mask denoting those mode parameters
-      * that are changeable shall be returned. As we currently don't support
-@@ -3293,6 +3302,8 @@ static const Property scsi_hd_properties[] = {
-                     0),
-     DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-                     quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
-+    DEFINE_PROP_BIT("quirk_mode_page_no_flexible_disk", SCSIDiskState,
-+                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK, 0),
-     DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
- };
- 
-@@ -3401,6 +3412,8 @@ static const Property scsi_cd_properties[] = {
-                     SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED, 0),
-     DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-                     quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
-+    DEFINE_PROP_BIT("quirk_mode_page_no_flexible_disk", SCSIDiskState,
-+                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK, 0),
- };
- 
- static void scsi_cd_class_initfn(ObjectClass *klass, const void *data)
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index a2f6f0be7f..0efa62554d 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -264,5 +264,6 @@ bool scsi_generic_pr_state_cleanup(SCSIDevice *s, Error **errp);
- #define SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE    2
- #define SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED                3
- #define SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE           4
-+#define SCSI_DISK_QUIRK_MODE_PAGE_NO_FLEXIBLE_DISK         5
- 
- #endif
++#endif
 -- 
 2.54.0
 
