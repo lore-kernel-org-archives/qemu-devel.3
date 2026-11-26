@@ -1,118 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B14D606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9513606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=D5hVApVh
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TpmeNvOZ;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=isgOmILc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWew5-0007qP-QF; Thu, 26 Nov 2026 14:15:13 -0500
+	id 1xWfD2-0007pk-F9; Thu, 26 Nov 2026 14:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1xWew2-0007po-5J; Thu, 26 Nov 2026 14:15:10 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfD0-0007nw-0C
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:32:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1xWew0-0007RU-D9; Thu, 26 Nov 2026 14:15:09 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AQG4aEO775616; Thu, 26 Nov 2026 19:15:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=fwc4ODGBg0w9/7qUVvbaUJZmlpw+Pu
- NQQD5lEsVytwc=; b=D5hVApVhnK/B6xFS/bwcs+oA2SSeXTwLaWxkhdkpQjo9Vi
- MkIzJBBQmci2WoqDEGArwTAU7zNbCi5wUVs6y5UpQlkX10otwm/R/Cjfyc6jDS8m
- IsHWlyKecwXWg5IAHFtRCPDloqRJ2GX15IMT4ikyCfL/UaLbr6yDU4F3eNf86fnt
- ClIpCIfJfyhBbMm+RiJ6FvbSqhPnwbpF26onF7j1s6rxzgYo4SVcjHfEW++JwMen
- T7OxPG4uC1fQaxudAbbMlU5OkzWaLo/OIuoGgp6dI4yKFoleRQOQ20PdLjx8QKER
- thncAEp+1QNpy/6AIbaOP68BPn1scGUq6Mx3maWA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34faju8a-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 26 Nov 2026 19:15:03 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AQG4FKi1406265; Thu, 26 Nov 2026 19:15:03 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j5kfa7g2h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Nov 2026 19:15:03 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6AQJEwGK47841648
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Nov 2026 19:14:58 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B90F20043;
- Thu, 26 Nov 2026 19:14:55 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0A27720040;
- Thu, 26 Nov 2026 19:14:54 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 26 Nov 2026 19:14:53 +0000 (GMT)
-Date: Fri, 27 Nov 2026 00:53:26 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Showta Ishizaki <zakinko@snowrabbit.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: Re: [PATCH] hw/ppc/spapr: Match the CAS PVR list terminator as PAPR
- requires
-Message-ID: <20261127004815.9e9da3b9-e3-amachhiw@linux.ibm.com>
-Mail-Followup-To: Showta Ishizaki <zakinko@snowrabbit.org>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20261028194120.C7B72C9296@bambi.snowrabbit.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfCx-000537-Jw
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:32:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795721557;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uCW8WYsMUqJs16Z9OcnpZbUfWxwREKZee+ztzectGnE=;
+ b=TpmeNvOZqYu8Z4/8wdLTxk0s57bbvhj+dl2ZefdQR/2dBdFkIR+Mi8KkU/Kryl8OnXpIGC
+ Kfa47M4fuw08Ohti+aHyXuxHFARxv/ofozR5RaGER+jwOQCSO8SMrM1o/SU3ahsBU8Kef+
+ CprsucTPO2mTFpK3J42+bfu2vGlmBq8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-641-reJlOiFNMCanJyLvfGsFaw-1; Thu, 26 Nov 2026 19:32:35 +0000
+X-MC-Unique: reJlOiFNMCanJyLvfGsFaw-1
+X-Mimecast-MFC-AGG-ID: reJlOiFNMCanJyLvfGsFaw_1795721555
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-949b0d322fbso1018197885a.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 11:32:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1795721555; x=1796326355; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=uCW8WYsMUqJs16Z9OcnpZbUfWxwREKZee+ztzectGnE=;
+ b=isgOmILc099HyYconpjHe9ihFmlrg57UxuovjxISnhg0TnuTiSYGqf+9K+APcU5BED
+ cl/rnCZpp8nfIW3wGMO5rP8gUufaZbLKQfKV8+e+Iv2hM0Qw/DruirtwGJc8R/fVIQ69
+ JqBkGqk+Vy3tA4VXm7vYObBRBrEm9A1VmeBJxbsae7C0dpSgQQ2TqcJT9bVycoRorzrm
+ 9V6S/UJe8HxTbk6CIN0hKtMHzcQm43dPQNHWm04HVQapk3/PIa00kcA1jU7p8r21GzGf
+ SzAK8yfBcXgcGeBlJfVb25hWonxN9EdwxLsc88rgh4AZld4fI6jACCcyzli2H7rUjbmM
+ 4LFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795721555; x=1796326355;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=uCW8WYsMUqJs16Z9OcnpZbUfWxwREKZee+ztzectGnE=;
+ b=KpsU8Y46op0WE00GcffpC7OsQid9I6ZLu/Wpk/hXW0JXKGOJyW1PDiBHad+WMF0Q1o
+ 3qMJCeGqy33QCJkp8Zr49p6Fho4BqS6UOsyCiWbFA5asmg/DUcFQpvopFPTeRprJdgB3
+ DINYyrl8U6N9Pp2a6A5lr2ecSe6uFwu8w0Wq0IFPn+Iv5C4UeMRaGVGoq1sRwuRrBqFH
+ QNuVFrbG2/Pmg9vqHGX3ODRaChZlmhNGYjHoRELcWxUWCbqSvq6cU2mSXxz6KYiSpau1
+ 2mYem0FRPgl72Dbz08Kc+Tstz/a4aEr17i8InXN1qpgqM72lyBIDwkfUFaSl1qyX5W61
+ 1QnQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErF4k+GCyrAExBfyppv2sfwPWBOJoqAXARj51VoTOx46PYKrSgrM57OnlxL+CtoEw7Vy9quWA3uvFLBB@nongnu.org
+X-Gm-Message-State: APuU4Z9IWNZoAxuZgK+hFfQGyzDKO9ENAI9jppdXTDkJ4ITWUC2kDH4t
+ 15YGOpIvOlQ2wSsiEu7ROCCCUkiF6ZdD9IXVnYXaS686aa00Fd/Ptzq/ItJlab9ALbCnIB8zWev
+ yJUym6lOK0EiDp6zkYK3sKtZECFOfGjUJAGhYFWWTJK3YJEX7GQYFgRag
+X-Gm-Gg: AZFdTZePf2KERdfxutE4t7GPfuq7wyaCFmigR15rSqzG+Bm6QqMMaVwJDiZ+H1f7YLD
+ tdg2r/aa+W7rDgjLTbY/pADB99ipXpwlxH4E9B5Oga65WeqYja7+lYYKBmyNCOCUSJy0n0vHBbs
+ Up270Hwui2bVHBopxUunGH2MT1K22WfbtxfXyBdiZ7BYQSNt7dxA6oc6gZVIqMskoR8THNb3fsm
+ G7fKynFl5hZsX0QCFFeJg6xeO+CXafbEJKZcIU9W013zK1qYjITcu7O6z3aN7Tce+L9eKYN8UrM
+ ImEs6GIJNrjCVP1DQXseQI3M6wQhAWUB7yPn6/j1qbbxhGu3sJAuuNrBSD12Ko5urNtiSVuK5qT
+ ZiAauaSCJP8wikqC1cWAYzP8Nqg72fLACF3yqbPijZ1Xe
+X-Received: by 2002:a05:620a:171f:b0:949:7f5c:6d9d with SMTP id
+ af79cd13be357-949bab24d39mr3775160285a.75.1795721554484; 
+ Thu, 26 Nov 2026 11:32:34 -0800 (PST)
+X-Received: by 2002:a05:620a:171f:b0:949:7f5c:6d9d with SMTP id
+ af79cd13be357-949bab24d39mr3775154985a.75.1795721553898; 
+ Thu, 26 Nov 2026 11:32:33 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-949bb3a646fsm1657152185a.22.2026.11.26.11.32.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Nov 2026 11:32:33 -0800 (PST)
+Date: Thu, 26 Nov 2026 14:32:32 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH 0/2] migration: fix a source hang on cancel before the
+ channel connects
+Message-ID: <awiJUEoMb3WxUjPo@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261125193102.1423555-1-den@openvz.org> <878q2gsdak.fsf@suse.de>
+ <6314eded-6904-4722-92f8-8db90cc4688b@virtuozzo.com>
+ <8733snslnt.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261028194120.C7B72C9296@bambi.snowrabbit.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA3NSBTYWx0ZWRfXy77ojx8e0mpZ
- O3PiABNNofCn/Pr2T61JyYZX0LywMXgdtv+7hbZ8IQFzL6hGTcpNPWxQDNJAgd3bUNI/sY30aWK
- Gy5dX9OFLM1+iQTTpNOeNwNGuHrkROQskLbOEq/dNn5VxT6DnOwoj3Rz0RrUIQYNe4YNRuCj32G
- ZyOzHb70QGEa+SpYmSbYu/ONiaZQo2M0eOj40xGBZDb0SHEFjz/w2yK5ZfVJ5CEI07inHHUpktu
- +eKY7GFK6wUW7/WkMuvRIK2Thmy7recFcZ9FXINgge+6W4p7qPrxbS/GSpdjLnD9zTWdSBE27fS
- ZVDGS3C3xe0IgeyVF0djJirnraQ/J3bjGz1QgNHzB7J8Lz/aDvv2b06YOguv6GUHPqNEJFb1pfK
- kP/ksisnWA5lWVljyOmUpXQQlz+OuANoJI36zu1KqGnO9ZdEz6yLYGein+E29RTU7GOTtli9ovb
- 7VlnkYkVJOsBQvssUZQ==
-X-Proofpoint-ORIG-GUID: uDRhElul35k9oN4f99tW50nUQARcZ2q1
-X-Authority-Analysis: v=2.4 cv=U6QHnuru c=1 sm=1 tr=0 ts=6b088538 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=1vYAx1WhSG8MWoolV_wA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: GXU5NSAp3qqBptejUqBJqqILvNFgBKG7
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA3NSBTYWx0ZWRfX7MMdkSTVJo7z
- 6VRCCQ8ts5mrln6Y0/Mx05hQxAGIKZywuyutW0zW2UWPLZ8GpOcFIPCL/6GGGOOmxBsRFik+IzJ
- VZvVqGoAZYNx8QIeIyI/z+gKQLK1hQE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-26_04,2026-11-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 spamscore=0 impostorscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 adultscore=0 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611260075
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8733snslnt.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,62 +122,239 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026/10/29 03:45 AM, Showta Ishizaki wrote:
-> cas_check_pvr() stops at the first entry whose value has bits outside
-> its mask, before comparing that entry with the processor's PVR.  PAPR
-> has the PVR list processed "until either a List-entry allows the
-> process to continue, or the Terminator-list-entry has been processed",
-> and both of its "List-entry values of special interest", 0x00000000
-> 0xFFFFFFFF ("matches any PVR value") and 0xFF000000 0x0FFFFFFF, are
-> terminators (B.6.2.3 in PAPR v10.60; the same text is in B.5.2.3 of
-> LoPAR 2.9 and B.6.2.3 of LoPAPR 1.1).  The terminator takes part in
-> the match like any other entry.
+On Thu, Nov 26, 2026 at 11:38:14AM -0300, Fabiano Rosas wrote:
+> "Denis V. Lunev" <den@virtuozzo.com> writes:
 > 
-> The check came after the comparison until commit 152ef803ceb1
-> ("pseries: Rewrite CAS PVR compatibility logic") moved it in front.
-> That commit describes a change in how the compatibility mode is
-> chosen, not this one.
+> > On 11/26/26 00:26, Fabiano Rosas wrote:
+> >> "Denis V. Lunev" <den@openvz.org> writes:
+> >>
+> >> What a coincidence, I just spent the afternoon fixing this. 
+> >>
+> >>> Cancelling a migration right after starting it can hang the source
+> >>> QEMU forever. This happens when the cancel arrives while the source is
+> >>> still connecting to the destination and the connection then succeeds.
+> >>> The source goes on as if nothing was cancelled, then waits for a reply
+> >>> from the destination that never comes. It waits with the BQL held, so
+> >>> the monitor stops answering too, and the only way out is to kill the
+> >>> source. We hit this in an automated test that aborts a live migration
+> >>> right after starting it.
+> >> How does this test look like? I'm thinking that instead of writing a new
+> >> test for this bug (haven't read your patch 2 yet), what we need it to
+> >> remove the usage of migrate_wait_for_dirty_mem from the multifd cancel
+> >> test. I think that's an artificial delay that's there for no good reason
+> >> in this case. If your CI manages to hit the issue on a real-ish
+> >> scenario, that's even more reason to remove that code.
+> > This is old fashioned product testing over OpenStack cluster
+> > which specifically performing cancels in a row. Tests are run
+> > inside VMs inside the product and thus L0 host delays comes
+> > as a bit of fuzzing.
+> >
 > 
-> A client whose only entry for the processor is the terminator gets
-> "Couldn't negotiate a suitable PVR during CAS" today.  NetBSD's
-> ofwboot ends its list with 0xffff0000 0x0080ffff to cover Power10, and
-> fails on -cpu power10 this way.
+> That is good to know because I was not sure whether this issue could
+> happen outside of migration-test.
+> 
+> > Tests are running non-stop inside development cycle :-)
+> >
+> > That is why I am coming with this or that problems on paths
+> > like that. But this is not very good in terms of QEMU level
+> > specific tests and that is why patch 2 comes with a pointing
+> > tests.
+> >
+> > NOTE: both your are my patches are fixed the problem as stated
+> > and the test passes without both your and my variants.
+> >
+> >>> Patch 2 adds a qtest for this window, which Peter left for later when
+> >>> fixing the early-cancel crash in 4f08b870f8 [1].
+> >>>
+> >>> [1] https://lore.kernel.org/r/20260421175820.302795-1-peterx@redhat.com
+> >>>
+> >>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> >>> Cc: Peter Xu <peterx@redhat.com>
+> >>> Cc: Fabiano Rosas <farosas@suse.de>
+> >>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> >>> Cc: Laurent Vivier <lvivier@redhat.com>
+> >>>
+> >>> Denis V. Lunev (2):
+> >>>   migration: fix source hang on cancel before the channel connects
+> >> Here's my version. It's very opinionated due to my long-standing grudge
+> >> with this code.
+> >> https://wiki.qemu.org/ToDo/LiveMigration#Migration_cancel_concurrency
+> >>
+> >> -- >8 --
+> >> From a27909503af9749f2cf6d8b901d675ee24c66d2c Mon Sep 17 00:00:00 2001
+> >> From: Fabiano Rosas <farosas@suse.de>
+> >> Date: Wed, 25 Nov 2026 18:43:57 -0300
+> >> Subject: [PATCH 1/2] migration: Avoid early cancel causing a hang
+> >>
+> >> If migration is cancelled at just the right moment when the main
+> >> channel transport has finished connecting, it's possible that the
+> >> shutdown()s issued by migrate_cancel() miss the (unset) QEMUFiles
+> >> entirely. A moment later, migration_channel_connect_outgoing() carries
+> >> along with the migration and initializes the QEMUFiles for the first
+> >> time.
+> >>
+> >> Migration then hangs because the source goes into migration_cleanup()
+> >> due to its state being CANCELLING and hangs waiting for the return
+> >> path thread to join, which never happens because the destination is
+> >> unaware and never sends any SHUT message. The cleanup itself also
+> >> doesn't kick the RP thread because commit 64763e8ca61 ("migration:
+> >> Keep s->rp_state.from_dst_file open until migration ends") has changed
+> >> the code to keep the QEMUFile until after the RP thread exits. The
+> >> only other way to kick it would be from
+> >> stop_return_path_thread_on_source() if an error had occurred, but no
+> >> error has occurred.
+> >>
+> >> This situation is not surprising because the migration cancelling has
+> >> never had any synchronization mechanism aside from the BQL, which in
+> >> this case is not enough to protect from the race. It has also never
+> >> had a way to inform the rest of the code in a thread safe manner about
+> >> the cancellation.
+> >>
+> >> To start moving in the correct direction, make the qmp_migrate_cancel
+> >> command (under BQL) set the migration error, which is protected by the
+> >> error_mutex and suitable to be used as a way to inform the other
+> >> threads of the cancellation. This avoids the need to check the
+> >> MigrationStatus which is already fragile in terms of concurrency.
+> >>
+> >> Note that the QMP handler for migrate_cancel is used instead of the
+> >> internal function because the latter is used from other parts of the
+> >> code that might have set s->error already.
+> >>
+> >> In the case where qmp_migrate_cancel() sets s->error and some other
+> >> code hits an error due to the shutdown()s, the
+> >> migrate_error_propagate() call chain will simply ignore the error set
+> >> for last. This is the correct behavior because errors after cancelling
+> >> are very likely to be caused by the cancellation itself. This has the
+> >> extra benefit that the migration cancellation now shows up in the
+> >> logs, which solves a confusing situation when the user sees "Broken
+> >> pipe" and thinks it's due to an error.
+> >>
+> >> For this specific bug, check that the asynchronous entry to
+> >> migration_channel_connect_outgoing() doesn't bring an already set
+> >> s->error and call migration_connect_error_propagate() under the BQL if
+> >> that's the case. We need the whole migration_connect_error_propagate()
+> >> here to handle the postcopy resume case as well as making sure
+> >> migration_cleanup() is reached.
+> >>
+> >> Reproduced with /x86_64/migration/multifd+postcopy/tcp/plain/cancel
+> >> and my stress branch, which basically skips
+> >> migrate_wait_for_dirty_mem().
+> >>
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >>  migration/channel.c   | 5 +++++
+> >>  migration/migration.c | 8 ++++++++
+> >>  2 files changed, 13 insertions(+)
+> >>
+> >> diff --git a/migration/channel.c b/migration/channel.c
+> >> index 1aeb8814858..12ff68fc38c 100644
+> >> --- a/migration/channel.c
+> >> +++ b/migration/channel.c
+> >> @@ -563,6 +563,11 @@ void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
+> >>  {
+> >>      trace_migration_outgoing_channel_set(ioc, object_get_typename(OBJECT(ioc)));
+> >>  
+> >> +    if (migrate_has_error(s)) {
+> >> +        migration_connect_error_propagate(s, error_copy(s->error));
 
-Hi Showta,
+[1]
 
-Before I send a full review: I would like to reproduce the NetBSD failure
-described above and have not managed to.
+> >> +        return;
+> >> +    }
+> >> +
+> >>      if (migrate_channel_requires_tls_upgrade(ioc)) {
+> >>          Error *local_err = NULL;
+> >>  
+> >> diff --git a/migration/migration.c b/migration/migration.c
+> >> index 5686209ab11..40c3f21d520 100644
+> >> --- a/migration/migration.c
+> >> +++ b/migration/migration.c
+> >> @@ -1890,6 +1890,8 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+> >>          return;
+> >>      }
+> >>  
+> >> +    migrate_error_free(migrate_get_current());
 
-What I tried: NetBSD 11.1 ofppc (NetBSD-11.1-ofppc.iso and the netboot ofwboot /
-netbsd-GENERIC / netbsd-INSTALL kernels), booted under TCG with:
+Is this line somewhat separate from the issue?  When s->error will be
+non-NULL?
 
-  qemu-system-ppc64 -M pseries -cpu power10 -m 2G -nographic \
-        -cdrom NetBSD-11.1-ofppc.iso -boot d
+> >> +
+> >>      if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
+> >>          return;
+> >>      }
+> >> @@ -2218,6 +2220,9 @@ out:
+> >>  
+> >>  void qmp_migrate_cancel(Error **errp)
+> >>  {
+> >> +    MigrationState *s = migrate_get_current();
+> >> +    Error *local_err = NULL;
+> >> +
+> >>      /*
+> >>       * After postcopy migration has started, the source machine is not
+> >>       * recoverable in case of a migration error. This also means the
+> >> @@ -2229,6 +2234,9 @@ void qmp_migrate_cancel(Error **errp)
+> >>          return;
+> >>      }
+> >>  
+> >> +    error_setg(&local_err, "Migration was cancelled by the user.");
+> >> +    migrate_error_propagate(s, local_err);
+> >> +
+> >>      migration_cancel();
+> >>  }
+> >>  
+> > I have spend a bit of time trying to weight against the approaches
+> > and the only item I found is that "cancel" is actually not a error
+> > while we are reusing field as a error state.
+> >
+> 
+> That cat is out of the bag already since commit dc487044d5c ("migration:
+> Make migration_has_failed() work even for CANCELLING"). If
+> migration_has_failed() includes cancel states, then I think it's
+> actually a bug that migrate_cancel() doesn't set an error. Otherwise
+> code that calls migration_has_failed() will have to check
+> migrate_has_error() to find out if the "failure was an error". That's a
+> worse pattern in my opinion.
 
+Indeed, at least for qemufile it's the same, where qemu_file_shutdown()
+sets error for the qemufile error (PS: every time I see these bunch of
+error flags I headache..).
 
- - SLOF does not boot the ISO ("failed to load CHRP boot loader").
- - In ofwboot and both kernels I find no "client-architecture-support" string.
-   This was only a search of the binaries, not a trace, so I may be looking at
-   the wrong thing.
+> 
+> That's how I came up with this patch actually because I was trying to
+> avoid checking SETUP specifically, in case something else races and sets
+> another state in the mean time. As I mentioned briefly in the commit
+> message, the MigrationStatus is not thread-safe, that cmpxchg only
+> protects the migration event against a duplicated state change.
+> 
+> > Both are working. If you will take your one - pls consider
+> >
+> > Tested-by: Denis V. Lunev <den@openvz.org>
+> > Reviewed-by: Denis V. Lunev <den@openvz.org>
+> >
+> > I would say - up to you :-)
+> >
+> 
+> Thank you. Let's see what Peter thinks about it.
 
-Could you tell me:
+I agree with you that if we already have code treating cancellation as part
+of error, then setting error may make things more aligned.
 
- 1. Which NetBSD port / branch / release (or commit) and which image or binary
-    issues that CAS call?
- 2. The QEMU command line you used.
- 3. If you still have it, the console output with
-    "Couldn't negotiate a suitable PVR during CAS" before and after
-    your change.
+My only complaint might be that above [1], it has "if there is an error,
+duplicate that error and try to inject the same error, even if we're
+pretty sure is already there, so the dup one will be freed".  It was almost
+a malloc/free unit test..
 
-The code change itself looks right to me; I only want to be able to test it with
-the same guest.
+So.. maybe Fabiano's patch, but use the migrate_cleanup() from Denis
+instead only at line [1]?
 
-Thanks,
-Amit
+-- 
+Peter Xu
+
 
