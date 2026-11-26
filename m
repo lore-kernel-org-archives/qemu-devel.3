@@ -1,81 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD08606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615C0606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qhLfg73i
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=psSOAge+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWejm-0008VN-1k; Thu, 26 Nov 2026 14:02:30 -0500
+	id 1xWejk-0008Rt-MF; Thu, 26 Nov 2026 14:02:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xWejB-00083A-HM
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:01:55 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1xWejF-00084M-Ar
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:01:58 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xWej5-0005E7-IR
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:01:52 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c51d158acc6so52259866b.0
+ id 1xWej9-0005EK-8C
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:01:53 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-c4d427836e9so971236966b.1
  for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 11:01:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20260707; t=1795719706; x=1796324506; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=K7vP6aq5S1QHw3j0QGlVlTkM+O+AFJvge5FV5v2pL/8=;
- b=qhLfg73ip7mv22QNH8bjcxCPK4Qn5eVWWKEe5kXBxAZErznfJCqEDPwa++d4vREFdi
- oC8hPV3Hdl7GuqRQSFPKxaxTLQXZDbyJy57c8EYZxzrl3EfxNzyRV/Jw9bh1TNxiDcHm
- 4fqUVy5A11Uq34XDl9iUZl7jFNeqM0CdF50LFHf3lm2TpacH2iJWRE8l/D8Mw/MhSxap
- vstLe+JTAWmaPv0RcZeVuLSsbGlOLUNgHu/HaGa0Deg80Kzyju9Ppf7a38u6KdDu82Gr
- d80qogLHCWaVRabzY8afcwqWtxtoFEfMMcGr8JawnVTNdITjcFHRpDukRWlaGBUXTd8T
- 6GwQ==
+ bh=38dWrsSr7dq7CGW7X5t+PZK65OCbdGdS+3mjFfeGmUY=;
+ b=psSOAge+TIlXoMu+/HAUCux7p4TNb2tgMW0DxEJ916kc0f+VvytR55f9HTUjFC3/2d
+ fq31G0vzy3cD56TU3RaetzSYWV88TLhaVBsutDwK5fjDHQwjFSciWMcyFGdryDobplC6
+ YFeyNSbvmbqqlojlboguehzI/bPRalF1jC+UljJWP9FYsU+rO8yCeqVUJw8lo5g68oNU
+ Eu+MotC9/JyhDE40dXBeMyK3soMmscCVGHaaRcYwK+oVzfvY27/cUROuc3mBCxxlZS1B
+ hwESHzIallAWwO24frXup4i0w+LPCHP81giZ5VjJmxyReEHnzOm1JI9ShlYMCgdo2TRZ
+ dQcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1795719706; x=1796324506;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=K7vP6aq5S1QHw3j0QGlVlTkM+O+AFJvge5FV5v2pL/8=;
- b=LnNINf6eVqr9iBxvEmeolHxVXengodt0SDciZ3pJRreHh3wrC6OYCzG78Eg8NmdA6Z
- TtDoMRzYT+KdzfCoZxax+6FHBeIOWBCSifwbyyfJ9FUz9cVI3u5xdcx3dwor+cazsWJr
- bljg2Thw/5vrhojPoIPQKQtW6TnocZiT17LZCeB1H6yssQCMLwtlhtkanaubVwPfJZqY
- kc8vcfG7aAQG+i1inXQNQaj026DXq9UEMt3YCkxJrEZv3oh1TZDG1qv4s85my+OCWN4p
- 7bBbO0FIFTdPx91rSuuulep8WpzG0qu/VUS0vn5WP5Mj3HceEk1gnMRF4Cygb6pDm3+1
- cfsQ==
-X-Gm-Message-State: APuU4Z9Ku28fvS+jbeN5W50ZpcaVJTU+J+s6vWvzMCP7W1biyI+DLMW4
- Mc+0PIRByPTE0oXWe2i10mEaq8DigfIbzjGpQRuoAvBliy3p1NlTm9ngfCU9kZRR5ec=
-X-Gm-Gg: AZFdTZcMsYNJPGxQCgENpGirfhuekH8678QHy9gruYb+f9XowPxZIThfv7/Esdrsqzo
- 6xkHeV8/Pz66Qd6M8ELARLy6Ogk399mKkTaVj/M5nz0bI2uJdCCbr+KHKWt32klPgR6UdqRwIKf
- laTDsZO+KFGjg2GD447po5nnPQ8z3v45LA82C9oFaT28qcx/KwiaMVibLqAxzW+oVNT6Rn5U5r+
- Kp9pHe4iGl/gMD47xk4a6qtIcGuwEvGvnBSfaavovVyidELotjIvB/2LMh1FZc+eatDqV3uFiSs
- fcnjruydbTmgUR6YQSSjI5oN641wFao3bwtLM920aeb2/UcpvQvLWMd/xfF3AmGgFvxIZI4YEsC
- Fjximjltjm0MhyhjIgefaJ+L+oBXl+FYXUJnwBF5KJymQyC0YTUB/mJNNYzUx8LxWjJPSdSgr72
- pf/krE0P5vUDuiW2NRiRgaqwP7Ed9X91F6c7qbp0K896flaK4Tx5g/b9Mbjm8Cr18LbGW6bHNd2
- AlJpyXPGMBpY2dh4Wbq3ZO9G4ngXLiL/NNEyFlwEoPU2wjXAeZ/T7AYaL282Ori8ZY4wORQi4Ee
- J/NkgkM942BLT5L4WFEwnV0Lj4FEdckcaq+2
-X-Received: by 2002:a17:906:115a:b0:c3e:ee86:d2c with SMTP id
- a640c23a62f3a-c513a866684mr1583673066b.27.1795719705802; 
- Thu, 26 Nov 2026 11:01:45 -0800 (PST)
+ bh=38dWrsSr7dq7CGW7X5t+PZK65OCbdGdS+3mjFfeGmUY=;
+ b=D0DjpYYiicp/HP7cxeB6Ai73klp3qhp07jDbmNkzt6mueq1zJoN7/LMM/y4+qaVOEl
+ rBX1DdMPq1+nNTU8cDI1Wao+OQe/ZeeucNkFhXJbIhbXNsjgVBVjJnHERfb0QJ8ADvpM
+ eAdaKEARe7EsyXTVMabrp8D3e7KeCDMOljZBh7u+WgcQTlO0KR01gGWNJrZAFYeo8K4f
+ Rx6BRz5kl2WTnKklxY/ag27LaQyeqeo7JNCg74VgtNU0HrbYIlfjBmh8+J2d6a0U36Kk
+ iT/Eu4tZJlNqHV1ZMId/2M0YjTawILIsGm/vKp/hrr0TTkI1H7Voy++YaGNLHLTYsx1P
+ B9mg==
+X-Gm-Message-State: APuU4Z/W6EQTBRY7AVKTTTyJthVhSq1QilKwhXuv9R50LMNQfgEa6S52
+ jRd0li38w93S54AsEU43qdkdKRhE0TZoK2KMkUljO5lbkK2DKs3UcZHerS4C8BbjY+g=
+X-Gm-Gg: AZFdTZenrbCqTgfEp0ra+zDyJojDDywMt5+7nHPxEib/+r9Ce5Zg1C6ERd1+eF7mYKY
+ shWx1WRKuxMnF9Jwy4mWnaszbzGbLaaAx5uBGaWszYVtmMOnZcRl3gtd9Tq08qprwrPs9jSipDA
+ +TH5xH2eh+qXzJEAkSktc54gsdBlGf76ee5iuMLAMf5rfUhz6OYIex2AhcnDiv5xeSjFeJmhEX9
+ /02KNlDx5uJXDYeUptmR+E7We8vY0ERl7j4VkF4mZp8Ou7+cuVj32eDBmxJZfCgObWvWqIajirY
+ 1Fye+WWvAJRTjlthsL/88rUFx/coEmI8A5whN0OvxjZAlVFUkt55RS2bJzkp+N5euHv20GEZ1Y6
+ vGp+xEhvcnFB/217/gayi4+pYPifYtBa2Sk8vMHNkZvPsiR77WAsu9sIGJBIxtViPheroKsLD6D
+ Ot3PRr+vQ/yMgHjXU4Al3QW0AtloNPhUdddSbEiK5RJNHHeqZkS4iDtaKGKjB+M4Z1g+ghG8svO
+ G2lt9+sUDckO2gFcZZU9QiOr2aD0/68DdHkCozIisOeAocCAnnL83WQDQv4j3JRsrFmoh3HQTkR
+ XCq+V1xFwAhCZiYKR319oflA/DMoE5vPhTnF
+X-Received: by 2002:a17:907:6d15:b0:c51:5589:2ff2 with SMTP id
+ a640c23a62f3a-c5155898309mr1525215766b.9.1795719706502; 
+ Thu, 26 Nov 2026 11:01:46 -0800 (PST)
 Received: from tulp.my.domain ([2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
  by smtp.gmail.com with ESMTPSA id
  a640c23a62f3a-c513ae6663esm786278766b.21.2026.11.26.11.01.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 11:01:45 -0800 (PST)
+ Thu, 26 Nov 2026 11:01:46 -0800 (PST)
 From: Roman Bogorodskiy <bogorodskiy@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Roman Bogorodskiy <bogorodskiy@gmail.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH v3 09/10] iotests: properly skip tests that require OFD
- locking support
-Date: Thu, 26 Nov 2026 20:00:52 +0100
-Message-ID: <20261126190054.40844-10-bogorodskiy@gmail.com>
+Subject: [PATCH v3 10/10] iotests: fix test 211
+Date: Thu, 26 Nov 2026 20:00:53 +0100
+Message-ID: <20261126190054.40844-11-bogorodskiy@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261126190054.40844-1-bogorodskiy@gmail.com>
 References: <20261126190054.40844-1-bogorodskiy@gmail.com>
@@ -83,8 +82,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,89 +110,61 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Tests 296, qemu-iotests/tests/migration-permissions, and
-tests/mirror-top-perms require OFD locking support and fail when
-it's not available.
+Test 211 compares "qemu-img map" output against a fixed expected layout.
+As this layout depends on the host filesystem, the test might fail.
 
-Add the supports_ofd_lock() and verify_ofd_lock() helpers and
-use them to skip these tests when necessary.
+Move away from direct output comparison and ensure correctness by
+asserting the essential fields.
 
 Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/296                         |  1 +
- tests/qemu-iotests/iotests.py                  | 16 ++++++++++++++++
- tests/qemu-iotests/tests/migration-permissions |  3 +++
- tests/qemu-iotests/tests/mirror-top-perms      |  3 +++
- 4 files changed, 23 insertions(+)
+ tests/qemu-iotests/211     | 19 ++++++++++++++++++-
+ tests/qemu-iotests/211.out |  1 -
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qemu-iotests/296 b/tests/qemu-iotests/296
-index 2b63cefff0..84fb8d0d9b 100755
---- a/tests/qemu-iotests/296
-+++ b/tests/qemu-iotests/296
-@@ -273,6 +273,7 @@ class EncryptionSetupTestCase(iotests.QMPTestCase):
+diff --git a/tests/qemu-iotests/211 b/tests/qemu-iotests/211
+index 1a3b4596c8..0b1fa7b33d 100755
+--- a/tests/qemu-iotests/211
++++ b/tests/qemu-iotests/211
+@@ -107,7 +107,24 @@ with iotests.FilePath('t.vdi') as disk_path, \
+     vm.shutdown()
  
- 
- if __name__ == '__main__':
-+    iotests.verify_ofd_lock()
-     # support only raw luks since luks encrypted qcow2 is a proper
-     # format driver which doesn't allow any sharing
-     iotests.activate_logging()
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index 7017d2016c..90f25272d4 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -1588,6 +1588,22 @@ def verify_qcow2_zstd_compression():
-     if not supports_qcow2_zstd_compression():
-         notrun('zstd compression not supported')
- 
-+def supports_ofd_lock() -> bool:
-+    with FilePath('ofdlock.raw') as img_file:
-+        qemu_img_create('-f', 'raw', img_file, '1M')
-+        res = qemu_img('info', '--image-opts',
-+                       f'driver=file,locking=on,filename={img_file}',
-+                       check=False)
-+        res.check_returncode()
-+        if "falling back to POSIX file" in res.stdout:
-+            return False
-+        else:
-+            return True
+     iotests.img_info_log(disk_path)
+-    iotests.log(iotests.qemu_img_map(disk_path))
++    img_map = iotests.qemu_img_map(disk_path)
 +
-+def verify_ofd_lock():
-+    if not supports_ofd_lock():
-+        notrun('OFD locking is unavailable')
++    assert len(img_map) > 0
++    assert img_map[0]['start'] == 0
++    mapping_offset = img_map[0]['offset'] - img_map[0]['start']
++    for i, ext in enumerate(img_map):
++        assert ext['length'] > 0
++        assert ext['compressed'] is False
++        assert ext['present'] is True
++        assert ext['data'] is True
++        assert ext['depth'] == 0
++        assert 'offset' in ext
++        if i != 0:
++            assert ext['offset'] - ext['start'] == mapping_offset
++            assert img_map[i - 1]['start'] + img_map[i - 1]['length'] == \
++                    ext['start']
 +
- def qemu_pipe(*args: str) -> str:
-     """
-     Run qemu with an option to print something and exit (e.g. a help option).
-diff --git a/tests/qemu-iotests/tests/migration-permissions b/tests/qemu-iotests/tests/migration-permissions
-index 0deaad2d3a..7f943113e9 100755
---- a/tests/qemu-iotests/tests/migration-permissions
-+++ b/tests/qemu-iotests/tests/migration-permissions
-@@ -30,6 +30,9 @@ mig_sock = os.path.join(iotests.sock_dir, 'mig.sock')
++    assert img_map[-1]['start'] + img_map[-1]['length'] == size
  
- class TestMigrationPermissions(iotests.QMPTestCase):
-     def setUp(self):
-+        if not iotests.supports_ofd_lock():
-+            self.case_skip("OFD locking is unavailable")
-+
-         qemu_img_create('-f', imgfmt, test_img, '1M')
+     #
+     # Invalid BlockdevRef
+diff --git a/tests/qemu-iotests/211.out b/tests/qemu-iotests/211.out
+index ff9f9a6913..caf5caae5e 100644
+--- a/tests/qemu-iotests/211.out
++++ b/tests/qemu-iotests/211.out
+@@ -53,7 +53,6 @@ file format: IMGFMT
+ virtual size: 32 MiB (33554432 bytes)
+ cluster_size: 1048576
  
-         # Set up two VMs (source and destination) accessing the same raw
-diff --git a/tests/qemu-iotests/tests/mirror-top-perms b/tests/qemu-iotests/tests/mirror-top-perms
-index fab9907e92..653f2e4a6d 100755
---- a/tests/qemu-iotests/tests/mirror-top-perms
-+++ b/tests/qemu-iotests/tests/mirror-top-perms
-@@ -33,6 +33,9 @@ source = os.path.join(iotests.test_dir, 'source.img')
+-[{"compressed": false, "data": true, "depth": 0, "length": 3072, "offset": 1024, "present": true, "start": 0, "zero": false}, {"compressed": false, "data": true, "depth": 0, "length": 33551360, "offset": 4096, "present": true, "start": 3072, "zero": true}]
+ === Invalid BlockdevRef ===
  
- class TestMirrorTopPerms(iotests.QMPTestCase):
-     def setUp(self):
-+        if not iotests.supports_ofd_lock():
-+            self.case_skip("OFD locking is unavailable")
-+
-         qemu_img('create', '-f', iotests.imgfmt, source, str(image_size))
-         self.vm = iotests.VM()
-         self.vm.add_drive(source)
+ {"execute": "blockdev-create", "arguments": {"job-id": "job0", "options": {"driver": "vdi", "file": "this doesn't exist", "size": 33554432}}}
 -- 
 2.56.0
 
