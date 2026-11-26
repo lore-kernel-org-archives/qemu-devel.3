@@ -1,74 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AE2606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 10:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD3F606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 10:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NWFWD7YY
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XXedvyib
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWWIg-0008C2-Ft; Thu, 26 Nov 2026 05:01:58 -0500
+	id 1xWWIr-0008Jy-8x; Thu, 26 Nov 2026 05:02:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIX-000880-Vs
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIc-00089B-IX
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIV-0006gX-OE
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:49 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIa-0006hw-4E
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795687305;
+ s=mimecast20190719; t=1795687311;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RzXps0Qjiq+RYHERQ+HmU/uz4fv27Tb+Tqf6uDAG4N4=;
- b=NWFWD7YY+OsXzk9MhlPZf0dhuYJnnxmNZYgrcPNd2ft4iD9+nnEp25+ouvSMajs07J2FiX
- FNftAxLq8shM8lvy4jxjczQo/ZZZjVdU2SPE0iosRG8p0OFbqVz39v4DIqaMbMlusVt61A
- SvZwiu6Z3yD+nkbOin3IuY4DufdG6vo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=H8ZfPsTzlEywQxBFFKzUXoUyMAcXG+LYbi1mqOz0UqU=;
+ b=XXedvyibFocEiOpXAKTM6rGalPw8ca73m6fl0rTo7ZLjfd0QLs8xRC90rS2Kco1esZtom1
+ ToTZ/TOpMYYKFhhNe8452umPRwvUoS68ME8CIS/AjsJkrGsqxj77VxVVHFMetcLIPj20JA
+ trFJwSSeHY/0nKC1feJV8fXPdDMq4nQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-OWnFJ-GYN2SMtukLsUV-og-1; Thu,
- 26 Nov 2026 10:01:43 +0000
-X-MC-Unique: OWnFJ-GYN2SMtukLsUV-og-1
-X-Mimecast-MFC-AGG-ID: OWnFJ-GYN2SMtukLsUV-og_1795687302
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-EykYhh2ePDqnOxsS9YR2yg-1; Thu,
+ 26 Nov 2026 10:01:46 +0000
+X-MC-Unique: EykYhh2ePDqnOxsS9YR2yg-1
+X-Mimecast-MFC-AGG-ID: EykYhh2ePDqnOxsS9YR2yg_1795687305
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A23431800358; Thu, 26 Nov 2026 10:01:42 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7582F1955EBF; Thu, 26 Nov 2026 10:01:45 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 492B31800286; Thu, 26 Nov 2026 10:01:42 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C2A018011D9; Thu, 26 Nov 2026 10:01:45 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C84F921E6883; Thu, 26 Nov 2026 11:01:39 +0100 (CET)
+ id D090C21E6885; Thu, 26 Nov 2026 11:01:39 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  jsnow@redhat.com, crosa@redhat.com, eblake@redhat.com,
  devel@lists.libvirt.org
-Subject: [PATCH 04/16] qom: New ObjectProperty member @qom_type
-Date: Thu, 26 Nov 2026 11:01:27 +0100
-Message-ID: <20261126100139.3557890-5-armbru@redhat.com>
+Subject: [PATCH 06/16] qom: Simplify object_resolve_link()
+Date: Thu, 26 Nov 2026 11:01:29 +0100
+Message-ID: <20261126100139.3557890-7-armbru@redhat.com>
 In-Reply-To: <20261126100139.3557890-1-armbru@redhat.com>
 References: <20261126100139.3557890-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,102 +88,40 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-ObjectProperty member @type is "child<T>" for a child property of QOM
-type T, and "link<T>" for a link property of QOM type T.  We parse
-@type in various places to extract "is child?", "is link?", and "T".
-Undesirable.
+object_resolve_link() finds the property, then extracts the QOM type
+from its member @type.  @type must be like "link<T>", or else the
+extraction produces crap, and may read beyond the buffer.  This is
+actually ensured by the users of object_set_link_property().
 
-Add member @qom_type.  It is is "T" when @type is "child<T>" or
-"link<T>", else null.  The next commits will use it to get rid of the
-parsing.
+Simpler: use new member @qom_type instead.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/qom/object.h | 1 +
- qom/object.c         | 9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ qom/object.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 70d8ea3e299..c8cedfe0f89 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -93,6 +93,7 @@ struct ObjectProperty
-     char *type;
-     char *description;
-     const QAPITypeInfo *qapi_type;
-+    char *qom_type;
-     ObjectPropertyAccessor *get;
-     ObjectPropertyAccessor *set;
-     ObjectPropertyResolve *resolve;
 diff --git a/qom/object.c b/qom/object.c
-index 9276b7a4351..3c5a8f49154 100644
+index 47e5979aa06..14fd2f3d17e 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -331,6 +331,7 @@ static void object_property_free(gpointer data)
-     }
-     g_free(prop->name);
-     g_free(prop->type);
-+    g_free(prop->qom_type);
-     g_free(prop->description);
-     g_free(prop);
- }
-@@ -1905,6 +1906,7 @@ ObjectProperty *
- object_property_try_add_child(Object *obj, const char *name,
-                               Object *child, Error **errp)
+@@ -2010,14 +2010,10 @@ Object *object_resolve_and_typecheck(const char *path, const char *name,
+ static Object *object_resolve_link(Object *obj, const char *name,
+                                    const char *path, Error **errp)
  {
-+    const char *qom_type = object_get_typename(child);
-     g_autofree char *type = NULL;
-     ObjectProperty *op;
+-    const char *type;
+-    g_autofree char *target_type = NULL;
++    ObjectProperty *prop = object_property_find(obj, name);
  
-@@ -1912,7 +1914,7 @@ object_property_try_add_child(Object *obj, const char *name,
-                                     child, child->class->type->name);
-     assert(!child->parent);
- 
--    type = g_strdup_printf("child<%s>", object_get_typename(child));
-+    type = g_strdup_printf("child<%s>", qom_type);
- 
-     op = object_property_try_add(obj, name, type, &str_type_info,
-                                  object_get_child_property,
-@@ -1921,6 +1923,7 @@ object_property_try_add_child(Object *obj, const char *name,
-     if (!op) {
-         return NULL;
-     }
-+    op->qom_type = g_strdup(qom_type);
-     op->resolve = object_resolve_child_property;
-     object_ref(child);
-     child->parent = obj;
-@@ -2114,6 +2117,7 @@ object_add_link_prop(Object *obj, const char *name,
-                              check ? object_set_link_property : NULL,
-                              object_release_link_property,
-                              prop);
-+    op->qom_type = g_strdup(type);
-     op->resolve = object_resolve_link_property;
-     return op;
+-    /* Go from link<FOO> to FOO.  */
+-    ObjectProperty *prop = object_property_find_err(obj, name, NULL);
+-    type = prop ? prop->type : NULL;
+-    target_type = g_strndup(&type[5], strlen(type) - 6);
+-    return object_resolve_and_typecheck(path, name, target_type, errp);
++    assert(prop->qom_type);
++    return object_resolve_and_typecheck(path, name, prop->qom_type, errp);
  }
-@@ -2152,6 +2156,7 @@ object_class_property_add_link(ObjectClass *oc,
-                                    object_release_link_property,
-                                    prop);
  
-+    op->qom_type = g_strdup(type);
-     op->resolve = object_resolve_link_property;
- 
-     g_free(full_type);
-@@ -3105,6 +3110,7 @@ object_property_add_alias(Object *obj, const char *name,
-                              property_set_alias,
-                              property_release_alias,
-                              prop);
-+    op->qom_type = g_strdup(target_prop->qom_type);
-     op->resolve = property_resolve_alias;
-     if (target_prop->defval) {
-         op->defval = qobject_ref(target_prop->defval);
-@@ -3150,6 +3156,7 @@ object_class_property_add_alias(ObjectClass *klass, const char *name,
-                                    property_set_alias,
-                                    property_release_alias,
-                                    prop);
-+    op->qom_type = g_strdup(target_prop->qom_type);
-     op->resolve = property_resolve_alias;
-     if (target_prop->defval) {
-         op->defval = qobject_ref(target_prop->defval);
+ static void object_set_link_property(Object *obj, Visitor *v,
 -- 
 2.55.0
 
