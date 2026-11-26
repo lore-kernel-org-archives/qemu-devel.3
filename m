@@ -1,109 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3610606A329
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 20:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67CC606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 20:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DD7LCN11;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Tc0XqmY3
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=J8/t4VKT;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=dZxH26Mw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWfnY-0006LP-85; Thu, 26 Nov 2026 15:10:28 -0500
+	id 1xWfs1-0007Yy-KT; Thu, 26 Nov 2026 15:15:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfnP-0006Eq-Gg
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:10:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfro-0007Yc-Q7
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:14:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfnM-0006vW-D3
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:10:19 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfrm-0000Ja-Vo
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:14:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795723814;
+ s=mimecast20190719; t=1795724090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6sEGYohIWQDttXCksKGw29yCaQ4OEAfm6GeFIPAVwRU=;
- b=DD7LCN11wxmi2zhhSZDFNKFJ9wiJYqHbUTq2zl98gUdkkogv2FvV1Y37TkkPk3AbvJrvfo
- iTH8i3FWmrcwSfMcJgssVRUtmwNtPhkqVwsvfCwpqJSKFih+1U88xFAvVt2rl4c1AM08Kp
- /SuJy6rY8qGN7pEbnY3sqetEeKwNPqM=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qU8UnYephEeunY0mdr0CgbXtGk/NsxR8QTX+xWd5mUg=;
+ b=J8/t4VKTAeIUE2XbwNd1qD9oJH9YX5xHC93spHZwIx0sLKkAz9378qDFJC/DWCfu8xudOb
+ 58dYwxCRoAWvLhCTvSKMijIOJ6NDmsB8SOxuE5uX/MQz4oEJ3Iz8Txk+mVK5tUawaq8B6C
+ m3TeHgFJ4kKrrJC2mbeTpPytMaRpLeM=
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
  [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-8TzZoI4HPN2ozREwph9_qA-1; Thu, 26 Nov 2026 20:10:12 +0000
-X-MC-Unique: 8TzZoI4HPN2ozREwph9_qA-1
-X-Mimecast-MFC-AGG-ID: 8TzZoI4HPN2ozREwph9_qA_1795723811
+ us-mta-140-_ClVvlCIOTGXcVbQNOjVdA-1; Thu, 26 Nov 2026 20:14:48 +0000
+X-MC-Unique: _ClVvlCIOTGXcVbQNOjVdA-1
+X-Mimecast-MFC-AGG-ID: _ClVvlCIOTGXcVbQNOjVdA_1795724087
 Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-949b0d3232fso1012050785a.1
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 12:10:11 -0800 (PST)
+ af79cd13be357-93f2005ce21so1141270085a.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 12:14:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795723811; x=1796328611; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6sEGYohIWQDttXCksKGw29yCaQ4OEAfm6GeFIPAVwRU=;
- b=Tc0XqmY3ONCtQKCftaTsFdox5e4g644HO3ZTZdetsDFFnxs5j24A3s5M1akJwpwjiU
- XHIQicwvGR38XkG51WshM66oOridS01QeNzJuCfg/PDNUsIsVYOOc09M2RMpywu5JAHH
- +Ku25v3W7RHcdhAvoNeOR5r9rtp1vD91XxU5lZeHbDpZoUMdTw0YGxPKAYEB7rTAgcro
- /RRmP/jCGJHtY62/0v506HlyvjB2F6CNekYDVccwBT7YALD7o3CX/wpmyL//AOLX63OQ
- Hh5WjvJen3ZUpxlfBcpFaDx8T/HJx7Paisu09nr6QVIc1Y5tKyWRVXv3Q5pKbtrAAXEJ
- Zf4w==
+ d=redhat.com; s=google; t=1795724087; x=1796328887; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qU8UnYephEeunY0mdr0CgbXtGk/NsxR8QTX+xWd5mUg=;
+ b=dZxH26MwmTz+uKRhswXPUTUD0pBZoeNKJwy32rjb7CykZZ/tiKGEt822qYNA/FSKYy
+ vuoe8vGMSbzt6MnCr6R71stbcOSbbqLnuO3ACjEakacpeeyIEgd2ParuhbhSCRjbk9cO
+ SKO2HsOlD46BuTLwk6BYAwov9oFCBqG1aphdYVMoseYo0KkqV6/IW5LbHbDGlONrY3dv
+ UESKoIfSP8nF4hxHfc8ZKxT09biP/UQpeNaZYtEo/oreZwaNePTth5RPoqihUpZ/0F73
+ 6AloFdDpuTaOAzqXNOYmbJK6vPNrdNdumlr1L4ZY36lbRnG2ReY/CVdh/VggVB8TCLXg
+ GydA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795723811; x=1796328611;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6sEGYohIWQDttXCksKGw29yCaQ4OEAfm6GeFIPAVwRU=;
- b=p8UllhFDhSOEkk1/YjV3GmCoHtaKNssHLKfALGU++ol8T+F4HqFfccDyUWF5bhglP2
- Xjx/2o6erzWrmEfWxRLnZI2sOwqNgOUzNu/M0Zhx6Vtv68rlRRmPxTAdzWxBvevVgi34
- pj5RsW+Xfwo8kxX6yMWyyiVm4mbcDxYIkc6Ul8UlOD4FdRwaHoIj+GHgB6dr6ayoJPPS
- 7xiW6ir44pMt8+rDKITh/FcCRK/r40Wfmv0uf2tSuX7ykoaK5D8TKiks2PU3hWQBL4Pp
- oKbQMeqGoe/Lqh4S2KA4LfU0oto/AUx1Wr5ZoN1wuJzvKteLchAPgxacbxt7Z8hZ3YH6
- PLTQ==
-X-Gm-Message-State: APuU4Z8qPEzLoQCrTX9dWcePMFOOz5ISMhjNmHqT5ylPAPe0QNrnNGK1
- b7x2bLb1BoZFwAe1HKbl+gUHmx1WvYb8bTNkUqrWwrU4lzuwhWE4yETrEUsD/wWEhCha0PxflLe
- uAiGeiH/8JGnExQnb0i0r1GJAmM9+DdGVIQGFDfauLyx8aeXFVHU8HplM
-X-Gm-Gg: AZFdTZcfiWx2/AU730CWwIobvZm9PVaE/ZRtTgrgJpLQ9peH+NTN49EOAOiVqQjo4FR
- DZ1BPrXIQK2XACsaFt7sboBqOWnE5oif3Y8rl8oaHUnA5R1iamxvB40hKePzCp3DWCwLttXvb5J
- otsYtARq/5w8RwLR/JMuqjDAf5ny5dpJVgo5JhoR/OmEqP/EERdJ1++jBgTfpAYs8cFpLrInink
- T7jQu7EfSzUx5NzoBRdlK+fSGX0zny4vwCsvSLGzHbVdjUDEf0BiTt5MvtkqJYT2FQ++vI1y47J
- RYJyJbgKvR2PoMCW9AuFZjH2sHg9/Xjbd7HzbjXWny6WnTRdO0sqbQFjCbucg5/foBpX9/orjRU
- m8hlOAAq+LTOc4TUxgERUKAUtSQgJEfUqVuCLjeFO3UAq
-X-Received: by 2002:a05:620a:1329:b0:949:8119:6702 with SMTP id
- af79cd13be357-949ba8236e3mr3678457785a.10.1795723811183; 
- Thu, 26 Nov 2026 12:10:11 -0800 (PST)
-X-Received: by 2002:a05:620a:1329:b0:949:8119:6702 with SMTP id
- af79cd13be357-949ba8236e3mr3678451385a.10.1795723810637; 
- Thu, 26 Nov 2026 12:10:10 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795724087; x=1796328887;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=qU8UnYephEeunY0mdr0CgbXtGk/NsxR8QTX+xWd5mUg=;
+ b=w/feiYVvyM5U3t53UmActdTnYW3SDbkByWgduQKiOnFR3nqYzxuJ4aBnhQmXXY7a2l
+ FikaeAZo1+XiCVrwHwpFTO39HC00JqJ02tCAWntoW9/IPMcFVcdqaThkjpeJ6BiKtHdB
+ AMPMtMU0BavbRsJFSlRA3bJwgzCENMA+E18JrORhfp9VHTSwzpM+ga8W7Ye2SKWHfvSk
+ kKF7Isxnzd277lnShQBPTBRIT5V+b6tos1KF6fGSd3VfHsOnLrKpP8y6b+agpqryqIy9
+ 1vRE1W3kFZLErZjK9bsI6nDqAGalfFVsEblgph/A/TF6g3IJ0YVbSjXcvcOqykqIt0Q3
+ fFrQ==
+X-Gm-Message-State: APuU4Z/JypatUKI2ss+dIICmQChyBH2Nd/eICoycSLlHLNiCDyyb05C1
+ uuKPxunWftkPmeA0rJ/85k1OiZ3hKQUn1FSdt0hdMlKp5JIHeb9dAQsB2a3cFir2ztih4M2Az+Z
+ skxvYv6tMYVq50NVORrtYMjSoRzEkQyz9zE/Gol0E2w99jPlyvLmNRq6Q3aAuybclmhhm9gXYEn
+ lhGILJckdq5JRjC8RDrZUY0aLZAHn4EM0fUhNQpg==
+X-Gm-Gg: AZFdTZdDrnKt0lHo7INyQS4cI6xL755YcWIogqJwF++8AD074ww3OagKOIgXiXN0apD
+ bIU0aFSyAquscwOWviYoGU5206si9Pj9CrNbKUnSuz0r/R1k1a14ORFb34c5FbEgM8BBLsHvtoI
+ DGZOaDntbfCTTxk2mKjf8sfWtCBQAo+W5Mkq7J1nLdLR8psLZyfCJ+JNEmZ6yfb4me2V3RVCQeU
+ cDSoGyfAUIK76mgNlG8IVOfLR1LDcmB/vFgYNujY0UDgupd1nd1yBhNzwTZEATtb626Wr/TrSnW
+ 0V9fODF8gjKlKnUsvU3DyeQGQsujkK1NBeXz//VlwQFFKbJZi2hrUtPQwVHED+1j0VFUDQFfSgf
+ dfGeDSxjt38d4sV7/LOOaGTZM0dz0PJ31Svb8eEkxMFra
+X-Received: by 2002:a05:620a:4551:b0:93e:94f2:ada5 with SMTP id
+ af79cd13be357-949ba965b93mr3862880385a.25.1795724087343; 
+ Thu, 26 Nov 2026 12:14:47 -0800 (PST)
+X-Received: by 2002:a05:620a:4551:b0:93e:94f2:ada5 with SMTP id
+ af79cd13be357-949ba965b93mr3862873785a.25.1795724086789; 
+ Thu, 26 Nov 2026 12:14:46 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949bb3a646fsm1664257685a.22.2026.11.26.12.10.10
+ af79cd13be357-949bb427388sm1638267685a.42.2026.11.26.12.14.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 12:10:10 -0800 (PST)
-Date: Thu, 26 Nov 2026 15:10:09 -0500
+ Thu, 26 Nov 2026 12:14:46 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>,
- Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Hongyan Xu <getshell@seu.edu.cn>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Subject: Re: [PATCH for-12.0 v2] coroutine: Make yield_until_fd_readable()
- detach fd handler always
-Message-ID: <awiSIWr8sqVm3_2N@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261123133747.2571462-1-peterx@redhat.com>
- <20261124155932.GA1640366@shajnocz.csb>
+Subject: [PATCH for-12.0 v3] coroutine: Make yield_until_fd_readable() detach
+ fd handler always
+Date: Thu, 26 Nov 2026 15:14:45 -0500
+Message-ID: <20261126201445.3326530-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261124155932.GA1640366@shajnocz.csb>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,134 +113,105 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 24, 2026 at 10:59:32AM -0500, Stefan Hajnoczi wrote:
-> On Mon, Nov 23, 2026 at 08:37:47AM -0500, Peter Xu wrote:
-> > Hongyan reported a possible use-after-free of RDMA migration code:
-> > 
-> > https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
-> > 
-> > The issue seems real, while this patch is a proposal to fix it in a simpler
-> > way, meanwhile it should be a problem to the yield_until_fd_readable()
-> > helper in general, so it should make more sense to be fixed there too.
-> > 
-> > The problem is about the use of the stack allocated FDYieldUntilData where
-> > we must make sure after yield_until_fd_readable() returns it's not used
-> > anywhere.  If the coroutine yielded can be entered from outside of this
-> > helper (fd_coroutine_enter()), then the aio handler might be installed even
-> > after yield_until_fd_readable() returns, and that makes the stack variable
-> > accessible by aio codd, even if stack gone.
-> > 
-> > Fix it by moving the aio handler removal outside the handler.
-> > 
-> 
-> Fixes: 923709896b1b ("migration: poll the cm event for destination qemu")
+Hongyan reported a possible use-after-free of RDMA migration code:
 
-I'll add.
+https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
 
-> 
-> But it looks like additional fixes are necessary for commit 923709896b1b:
-> 
-> 1. ram_load_precopy() -> aio_co_schedule() + qemu_coroutine_yield()
-> 
->    rdma_cm_poll_handler() -> qemu_coroutine_enter() hits the "Co-routine
->    was already scheduled" abort in qemu_aio_coroutine_enter() if called
->    before the scheduled coroutine runs.
-> 
-> 2. qio_channel_yield() asserts when qio_channel_rdma_readv() returns QIO_CHANNEL_ERR_BLOCK
-> 
->    There is a code path in qio_channel_rdma_readv() that returns
->    QIO_CHANNEL_ERR_BLOCK, causing qio_channel_yield() to be called. The
->    problem here is that qemu_coroutine_enter() is not allowed at this
->    yield point. You have to use qio_channel_wake_read() to interrupt the
->    read.
+The issue seems real, while this patch is a proposal to fix it in a simpler
+way, meanwhile it should be a problem to the yield_until_fd_readable()
+helper in general, so it should make more sense to be fixed there too.
 
-Thanks for going beyond this patch.  My plan is to leave rdma + coroutine
-issues alone until we remove support of that in the bigger series.  We're
-aware serious users of rdma migration and likely they didn't hit them for
-years.  Then I assumed it's fine keeping them there for another short while.
+The problem is about the use of the stack allocated FDYieldUntilData where
+we must make sure after yield_until_fd_readable() returns it's not used
+anywhere.  If the coroutine yielded can be entered from outside of this
+helper (fd_coroutine_enter()), then the aio handler might be installed even
+after yield_until_fd_readable() returns, and that makes the stack variable
+accessible by aio codd, even if stack gone.
 
-After the other series land, all these issues should be gone.
+Fix it by moving the aio handler removal outside the handler.
 
-> 
-> > Reported-by: Hongyan Xu <getshell@seu.edu.cn>
-> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> > Cc: Kevin Wolf <kwolf@redhat.com>
-> > Cc: Fabiano Rosas <farosas@suse.de>
-> > Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-> > Cc: Hongyan Xu <getshell@seu.edu.cn>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> > v2:
-> > - Drop FDYieldUntilData altogether [Kevin]
-> > - Drop the comment, doesn't feel as helpful now [myself]
-> > ---
-> >  util/qemu-coroutine-io.c | 20 +++++---------------
-> >  1 file changed, 5 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
-> > index 364f4d5abf..720d27d737 100644
-> > --- a/util/qemu-coroutine-io.c
-> > +++ b/util/qemu-coroutine-io.c
-> > @@ -65,28 +65,18 @@ qemu_co_send_recv(int sockfd, void *buf, size_t bytes, bool do_send)
-> >      return qemu_co_sendv_recvv(sockfd, &iov, 1, 0, bytes, do_send);
-> >  }
-> >  
-> > -typedef struct {
-> > -    AioContext *ctx;
-> > -    Coroutine *co;
-> > -    int fd;
-> > -} FDYieldUntilData;
-> > -
-> >  static void fd_coroutine_enter(void *opaque)
-> >  {
-> > -    FDYieldUntilData *data = opaque;
-> > -    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
-> > -    qemu_coroutine_enter(data->co);
-> > +    qemu_coroutine_enter((Coroutine *)opaque);
-> >  }
-> >  
-> >  void coroutine_fn yield_until_fd_readable(int fd)
-> 
-> Please update the doc comment in include/qemu/coroutine.h to say that
-> yield_until_fd_readable() may be interrupted by re-entering the
-> coroutine early and the function will return immediately. This behavior
-> is part of the API.
+Fixes: 923709896b1b ("migration: poll the cm event for destination qemu")
+Reported-by: Hongyan Xu <getshell@seu.edu.cn>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+Cc: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+v2:
+- Drop FDYieldUntilData altogether [Kevin]
+- Drop the comment, doesn't feel as helpful now [myself]
+v3:
+- Add doc for the helper [Stefan]
+- Add Fixes [Stefan]
+---
+ include/qemu/coroutine.h |  5 ++++-
+ util/qemu-coroutine-io.c | 20 +++++---------------
+ 2 files changed, 9 insertions(+), 16 deletions(-)
 
-I'll add a comment.
-
-But just to mention after the bigger series, I'll likely remove this API
-too.
-
-Thanks,
-
-> 
-> >  {
-> > -    FDYieldUntilData data;
-> > +    AioContext *ctx = qemu_get_current_aio_context();
-> >  
-> >      assert(qemu_in_coroutine());
-> > -    data.ctx = qemu_get_current_aio_context();
-> > -    data.co = qemu_coroutine_self();
-> > -    data.fd = fd;
-> > -    aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
-> > -                       &data);
-> > +    aio_set_fd_handler(ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
-> > +                       (void *)qemu_coroutine_self());
-> >      qemu_coroutine_yield();
-> > +    aio_set_fd_handler(ctx, fd, NULL, NULL, NULL, NULL, NULL);
-> >  }
-> > -- 
-> > 2.56.0
-> > 
-> 
-
+diff --git a/include/qemu/coroutine.h b/include/qemu/coroutine.h
+index 1c31de60f9..6b34dc750c 100644
+--- a/include/qemu/coroutine.h
++++ b/include/qemu/coroutine.h
+@@ -279,7 +279,10 @@ void qemu_co_sleep_wake(QemuCoSleep *w);
+ /**
+  * Yield until a file descriptor becomes readable
+  *
+- * Note that this function clobbers the handlers for the file descriptor.
++ * Notes:
++ * (1) this function clobbers the handlers for the file descriptor.
++ * (2) this function may be interrupted by another re-enter of coroutine,
++ *     the caller needs to be prepared on fd not readable after returned.
+  */
+ void coroutine_fn yield_until_fd_readable(int fd);
+ 
+diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
+index 364f4d5abf..720d27d737 100644
+--- a/util/qemu-coroutine-io.c
++++ b/util/qemu-coroutine-io.c
+@@ -65,28 +65,18 @@ qemu_co_send_recv(int sockfd, void *buf, size_t bytes, bool do_send)
+     return qemu_co_sendv_recvv(sockfd, &iov, 1, 0, bytes, do_send);
+ }
+ 
+-typedef struct {
+-    AioContext *ctx;
+-    Coroutine *co;
+-    int fd;
+-} FDYieldUntilData;
+-
+ static void fd_coroutine_enter(void *opaque)
+ {
+-    FDYieldUntilData *data = opaque;
+-    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
+-    qemu_coroutine_enter(data->co);
++    qemu_coroutine_enter((Coroutine *)opaque);
+ }
+ 
+ void coroutine_fn yield_until_fd_readable(int fd)
+ {
+-    FDYieldUntilData data;
++    AioContext *ctx = qemu_get_current_aio_context();
+ 
+     assert(qemu_in_coroutine());
+-    data.ctx = qemu_get_current_aio_context();
+-    data.co = qemu_coroutine_self();
+-    data.fd = fd;
+-    aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
+-                       &data);
++    aio_set_fd_handler(ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
++                       (void *)qemu_coroutine_self());
+     qemu_coroutine_yield();
++    aio_set_fd_handler(ctx, fd, NULL, NULL, NULL, NULL, NULL);
+ }
 -- 
-Peter Xu
+2.56.0
+
 
