@@ -1,73 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273D3606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 12:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C301606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 12:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QHTNmy6m
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ClrrKN2k
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWZ0r-0006dd-PO; Thu, 26 Nov 2026 07:55:45 -0500
+	id 1xWZ0r-0006d4-H0; Thu, 26 Nov 2026 07:55:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xWZ0i-0006Yl-3K
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:55:40 -0500
+ id 1xWZ0o-0006br-Si
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:55:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xWZ0g-0007wZ-C2
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:55:35 -0500
+ id 1xWZ0m-0007yV-6t
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:55:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795697733;
+ s=mimecast20190719; t=1795697739;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qC7LhwYFT0RIC5t7Qq18dOJrfylyMvlslE87OLT/g8Y=;
- b=QHTNmy6mRSIiw6JUQxMYJhXpDIYo2NyTw3VCyd6i9sKbCcSqZFheg2N0/dBZ2EOpVBrtOB
- gyajgrozTnk7KF91o0dCh42d1aWykDG4yf2d0JkxzpXIf/DbB1uOxwopObvnah/Wsty/Gy
- vHybSOoC9M/+nQl2oYYL1MeivbG32Oo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=J17fJmb57O8Sn3L6cRz6p/tIJ/btqGS30QdrH20f7O0=;
+ b=ClrrKN2kQCxeGbmqCl+IhKSNOhB2o5cEmraKKQv8nhK/kUd1yDktVPR88bBupJu6T6hQi+
+ 5bd4Y30Xa+iyO2XfNrf3mQsqpYQA8I8u66wphXWOFakt/41JB+cAwxWXjw9Clt0qB3rd+C
+ OmKDWuJeQaH/4oD5u6xgTNY3D+8EVdA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-fTlyg9KBPP6mMIHcJkCErA-1; Thu,
- 26 Nov 2026 12:55:31 +0000
-X-MC-Unique: fTlyg9KBPP6mMIHcJkCErA-1
-X-Mimecast-MFC-AGG-ID: fTlyg9KBPP6mMIHcJkCErA_1795697730
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-TYHoFqbVNLaQrrNKbLxreQ-1; Thu,
+ 26 Nov 2026 12:55:36 +0000
+X-MC-Unique: TYHoFqbVNLaQrrNKbLxreQ-1
+X-Mimecast-MFC-AGG-ID: TYHoFqbVNLaQrrNKbLxreQ_1795697735
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F0BD18001EC; Thu, 26 Nov 2026 12:55:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 934B11944B36; Thu, 26 Nov 2026 12:55:34 +0000 (UTC)
 Received: from pbonzini-thinkpadx1carbon6th.rmtit.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 560951956087; Thu, 26 Nov 2026 12:55:28 +0000 (UTC)
+ id BA7031956086; Thu, 26 Nov 2026 12:55:32 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 2/4] hostmem: allow building without KVM support
-Date: Thu, 26 Nov 2026 13:55:22 +0100
-Message-ID: <20261126125524.2223648-3-pbonzini@redhat.com>
+Cc: Tai Yunfang <yunfangtai@tencent.com>,
+ Xiao Guangrong <xiaoguangrong@tencent.com>, Jason Thorpe <thorpej@me.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 4/4] mc146818rtc: set PF even when PIE is clear
+Date: Thu, 26 Nov 2026 13:55:24 +0100
+Message-ID: <20261126125524.2223648-5-pbonzini@redhat.com>
 In-Reply-To: <20261126125524.2223648-1-pbonzini@redhat.com>
 References: <20261126125524.2223648-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,101 +90,177 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Michael Tokarev <mjt@tls.msk.ru>
+The MC146818A datasheet says PF is latched independently of PIE; PIE
+only makes PF raise IRQF and the IRQ line. QEMU skipped the periodic
+timer when PIE was clear, so PF never latched.
 
-On architectures where KVM is not available and so including <linux/kvm.h>
-does not work, buildnig backends/hostmem-memfd.c fails since 7ca43d7ad02f:
+Compute the period from register A regardless of PIE, and latch PF
+without raising an interrupt when PIE is clear. Stop the timer while
+PF is set so idle guests are not woken every period, then re-arm
+it when register C is read.
 
- In file included from backends/hostmem-memfd.c:23:
- linux-headers/linux/kvm.h:16:10: fatal error: asm/kvm.h: No such file or directory
-   16 | #include <asm/kvm.h>
+Lost tick compensation is limited to PIE=1 so that the RTC does
+not count ticks with the periodic interrupt disabled as lost.
 
-Do not include <linux/kvm.h> because "system/kvm.h" already includes it for us
-when KVM is enabled, and guard the actual code using memfd definitions with
-
-Fixes: 7ca43d7ad02f ("hostmem: Support fully shared guest memfd to back a VM")
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Link: https://lore.kernel.org/r/20261119111050.1203459-1-mjt@tls.msk.ru
+Cc: Tai Yunfang <yunfangtai@tencent.com>
+Cc: Xiao Guangrong <xiaoguangrong@tencent.com>
+Cc: Jason Thorpe <thorpej@me.com>
+Fixes: 369b41359af ("mc146818rtc: precisely count the clock for periodic timer")
+Co-authored-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build              |  3 +--
- backends/hostmem-memfd.c | 10 +++++++++-
- tests/qtest/libqtest.c   |  2 ++
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ hw/rtc/mc146818rtc.c   | 32 +++++++++++++++++++++---------
+ tests/qtest/rtc-test.c | 45 ++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 66 insertions(+), 11 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 4d267e10b5f..303f57a7cb6 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2422,11 +2422,10 @@ endif
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index 887a8b07582..ae12e3f875e 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -132,13 +132,7 @@ static void rtc_coalesced_timer(void *opaque)
  
- config_host_data.set('HOST_' + host_arch.to_upper(), 1)
+ static uint32_t rtc_periodic_clock_ticks(MC146818RtcState *s)
+ {
+-    int period_code;
+-
+-    if (!(s->cmos_data[RTC_REG_B] & REG_B_PIE)) {
+-        return 0;
+-     }
+-
+-    period_code = s->cmos_data[RTC_REG_A] & 0x0f;
++    int period_code = s->cmos_data[RTC_REG_A] & 0x0f;
  
--kvm_targets_c = '""'
- if get_option('kvm').allowed() and host_os == 'linux'
-   kvm_targets_c = '"' + '" ,"'.join(kvm_targets) + '"'
-+  config_host_data.set('CONFIG_KVM_TARGETS', kvm_targets_c)
- endif
--config_host_data.set('CONFIG_KVM_TARGETS', kvm_targets_c)
+     return periodic_period_to_clock(period_code);
+ }
+@@ -153,6 +147,18 @@ static void periodic_timer_update(MC146818RtcState *s, int64_t current_time,
+     uint32_t period;
+     int64_t cur_clock, next_irq_clock, lost_clock = 0;
  
- if get_option('module_upgrades') and not enable_modules
-   error('Cannot enable module-upgrades as modules are not enabled')
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 46489212a23..80ea5b9674d 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -20,9 +20,12 @@
- #include "qom/object.h"
- #include "migration/cpr.h"
- #include "system/kvm.h"
--#include <linux/kvm.h>
- #include "qapi/qapi-type-infos-common.h"
- 
-+#ifdef CONFIG_KVM_TARGETS
-+#include "linux-headers/linux/kvm.h"
-+#endif
++    /*
++     * When the periodic interrupt is disabled the periodic timer only
++     * serves to set the PF flag in register C. Once it has been set
++     * there is nothing to do until the flag is cleared by reading
++     * register C, so keep the timer stopped to avoid useless wakeups.
++     */
++    if (!(s->cmos_data[RTC_REG_B] & REG_B_PIE) &&
++        (s->cmos_data[RTC_REG_C] & REG_C_PF)) {
++        timer_del(s->periodic_timer);
++        return;
++    }
 +
- OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+     period = rtc_periodic_clock_ticks(s);
+     s->period = period;
  
+@@ -194,7 +200,8 @@ static void periodic_timer_update(MC146818RtcState *s, int64_t current_time,
+      *    to a shorter period, scale up the missing ticks since the
+      *    OS handler will treat past delayed ticks as shorter.
+      */
+-    if (s->lost_tick_policy == LOST_TICK_POLICY_SLEW) {
++    if (s->lost_tick_policy == LOST_TICK_POLICY_SLEW &&
++        (s->cmos_data[RTC_REG_B] & REG_B_PIE)) {
+         uint32_t old_irq_coalesced = s->irq_coalesced;
  
-@@ -71,10 +74,15 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-             return false;
-         }
+         lost_clock += old_irq_coalesced * old_period;
+@@ -226,8 +233,8 @@ static void rtc_periodic_timer(void *opaque)
+ {
+     MC146818RtcState *s = opaque;
  
-+#ifdef CONFIG_KVM_TARGETS
-         fd = kvm_create_guest_memfd(backend->size,
-                                     GUEST_MEMFD_FLAG_MMAP |
-                                     GUEST_MEMFD_FLAG_INIT_SHARED,
-                                     errp);
-+#else
-+        error_setg(errp, "guest-memfd=on requires KVM which is not enabled");
-+        fd = -ENOSYS;
-+#endif
-     } else {
-         fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-                                m->hugetlb, m->hugetlbsize, m->seal ?
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 7f66c1bbb3b..b859ff728bf 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -1165,6 +1165,7 @@ bool qtest_has_accel(const char *accel_name)
-     g_autofree char *accel_type = NULL;
- 
-     if (g_str_equal(accel_name, "kvm")) {
-+#ifdef CONFIG_KVM_TARGETS
-         int i;
-         const char *arch = qtest_get_arch();
-         const char *targets[] = { CONFIG_KVM_TARGETS };
-@@ -1176,6 +1177,7 @@ bool qtest_has_accel(const char *accel_name)
-                 }
+-    periodic_timer_update(s, s->next_periodic_time, s->period, false);
+     s->cmos_data[RTC_REG_C] |= REG_C_PF;
++    periodic_timer_update(s, s->next_periodic_time, s->period, false);
+     if (s->cmos_data[RTC_REG_B] & REG_B_PIE) {
+         s->cmos_data[RTC_REG_C] |= REG_C_IRQF;
+         if (s->lost_tick_policy == LOST_TICK_POLICY_SLEW) {
+@@ -699,10 +706,17 @@ static uint64_t cmos_ioport_read(void *opaque, hwaddr addr,
+             ret = s->cmos_data[s->cmos_index];
+             qemu_irq_lower(s->irq);
+             s->cmos_data[RTC_REG_C] = 0x00;
++
++            /* Rearm the timers for bits that have been cleared.  */
+             if (ret & (REG_C_UF | REG_C_AF)) {
+                 check_update_timer(s);
              }
-         }
-+#endif
-         return false;
-     }
+ 
++            if ((ret & REG_C_PF) && !(s->cmos_data[RTC_REG_B] & REG_B_PIE)) {
++                periodic_timer_update(s, qemu_clock_get_ns(rtc_clock),
++                                      s->period, false);
++            }
++
+             if(s->irq_coalesced &&
+                     (s->cmos_data[RTC_REG_B] & REG_B_PIE) &&
+                     s->irq_reinject_on_ack_count < RTC_REINJECT_ON_ACK_COUNT) {
+diff --git a/tests/qtest/rtc-test.c b/tests/qtest/rtc-test.c
+index 02ed4e12385..b320a91d950 100644
+--- a/tests/qtest/rtc-test.c
++++ b/tests/qtest/rtc-test.c
+@@ -643,6 +643,46 @@ static void uip_stuck(void)
+ 
+ #define RTC_PERIOD_TEST_NR  50
+ 
++static uint64_t wait_periodic_timer(uint64_t real_time, int period_code)
++{
++    uint64_t periodic_time = real_time;
++    periodic_time += NANOSECONDS_PER_SECOND >> (16 - period_code);
++
++    cmos_write(RTC_REG_A, period_code);
++    while (!(cmos_read(RTC_REG_C) & REG_C_PF)) {
++        real_time = clock_step_next();
++        g_assert_cmpint(real_time, <, periodic_time + 100);
++    }
++
++    g_assert_cmpint(real_time, <, periodic_time + 100);
++    g_assert_cmpint(real_time, >, periodic_time - 100);
++    return real_time;
++}
++
++static void periodic_timer(void)
++{
++    int i;
++    uint64_t real_time;
++
++    /* disable all interrupts. */
++    cmos_write(RTC_REG_A, 0);
++    cmos_write(RTC_REG_B, cmos_read(RTC_REG_B) &
++                                   ~(REG_B_PIE | REG_B_AIE | REG_B_UIE));
++
++    /* wait for the first timer without assertions, to synchronize and clear PF */
++    cmos_read(RTC_REG_C);
++    cmos_write(RTC_REG_A, 10);
++    real_time = clock_step_next();
++    while (!(cmos_read(RTC_REG_C) & REG_C_PF)) {
++        real_time = clock_step_next();
++    }
++
++    for (i = 0; i < RTC_PERIOD_TEST_NR; i++) {
++        real_time = wait_periodic_timer(real_time, RTC_PERIOD_CODE1);
++        real_time = wait_periodic_timer(real_time, RTC_PERIOD_CODE2);
++    }
++}
++
+ static uint64_t wait_periodic_interrupt(uint64_t real_time)
+ {
+     while (!get_irq(RTC_ISA_IRQ)) {
+@@ -653,7 +693,7 @@ static uint64_t wait_periodic_interrupt(uint64_t real_time)
+     return real_time;
+ }
+ 
+-static void periodic_timer(void)
++static void periodic_interrupt(void)
+ {
+     int i;
+     uint64_t period_clocks, period_time, start_time, real_time;
+@@ -708,7 +748,8 @@ int main(int argc, char **argv)
+     qtest_add_func("/rtc/update/divider-reset", divider_reset);
+     qtest_add_func("/rtc/update/uip-stuck", uip_stuck);
+     qtest_add_func("/rtc/misc/fuzz-registers", fuzz_registers);
+-    qtest_add_func("/rtc/periodic/interrupt", periodic_timer);
++    qtest_add_func("/rtc/periodic/timer", periodic_timer);
++    qtest_add_func("/rtc/periodic/interrupt", periodic_interrupt);
+ 
+     ret = g_test_run();
  
 -- 
 2.56.1
-
 
 
