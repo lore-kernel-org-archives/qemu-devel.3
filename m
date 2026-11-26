@@ -1,147 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F50606A323
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9DF606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Ex9ZA5sO;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LM7VfUQc
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=MkEk7YtP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWiDO-00018M-HS; Thu, 26 Nov 2026 17:45:18 -0500
+	id 1xWiFD-0001YY-Au; Thu, 26 Nov 2026 17:47:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xWiDN-00016c-BM
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:45:17 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xWiF4-0001Xu-Vw
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:47:04 -0500
+Received: from st-2006f-snip6-11.eps.apple.com ([2a01:b747:3001:203::3d]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xWiDL-0006Vk-JE
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:45:17 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AQJx2M31713354
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 22:45:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xynKYx+nxr48g9DIUKwfNykU/ghDOrGL/9YgoD2wNk8=; b=Ex9ZA5sOxy/g1Mvy
- wl0Qq6PxAd7MWq8oEYzmk/oLZIRs+TJ/N3/TcESgQcpc/q/mTIO9tp56Nh9J/to6
- zjSeFPZzDBEg/at6HMu5jGM9od+8zDlRL3gjSsCMZTgF6vvfiemZFcqiQ/Ujea/O
- fBKuWntV5Pb4KBZtHeC04l4c5UdNUaqvTcs1/jubbPyS+6N8kJhNPqXH2+oBKeMD
- VjaMb0by1SPESvKqdP9n5UUaCG+b1ftvosdvvGWWxRnKHgsZujQ533LykDkxBfL7
- iiQD7DlPGjnsjwPOztxTigI5ee/HdtUTmTu48gKE+MGUc2uwZK+O1QCgj5xi5OC2
- 0kC3TQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6gne2rrr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 22:45:14 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-949b0d322fcso1238166985a.2
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 14:45:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795733113; x=1796337913; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xynKYx+nxr48g9DIUKwfNykU/ghDOrGL/9YgoD2wNk8=;
- b=LM7VfUQc5FUpoHqIxadXvIrQm/jn4EPue0W+CttxFEY80BiKbZvty9cNiqJikHEISc
- WlYrWdRFqW88vqcwANMGKqa9KcYp/e7VUFmolXzgeK0t1nt+O91yS7VderzPo9ciXj6V
- miTDGdB2l4JX6fbwON1tD5jMuNhcRQ6DNZ3Fyk9hNK5uOReLd0BmypSsUsYLE7CxHH73
- K5z1zNMcKSsqhAJaTZutB0A6ujOurMa3924pYmP9WU2NmwIkUkuu+Su3l93T4UOCktkg
- T7nRARtWMwYqVTOmygmndtYCTk0k+R25h+V1Q0tTW6cmXKX0TwIS1WgJfXQ1pWRMRkBP
- vTaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795733113; x=1796337913;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xynKYx+nxr48g9DIUKwfNykU/ghDOrGL/9YgoD2wNk8=;
- b=Mg8zrfMD4jiDZzks74fHwQw+JWWEvp+5A8zVbdl9NIfShySzP3pQgVIJPc2nRRxdAX
- C26qEsa9NONtYPfisDm5qm4zB0ihevTxnA8X68DDMRpz6AO8OqQqyDTIGE30y2j62xfH
- 1vsfxiBUegmbACZblujNk2++uCUQJy0X7X8BZJ24/CBDkEubbE4rmljgKddE9Ik1Jf+j
- 3+tZSye/ixGf8IU2sNntpUVksPIfz/WkCKQR/bWKXuVRLeyfdvkrhO0liWXNLeRjrJF4
- VbgBo+XCbaSma1oNBV3fyer8YIeVRSi9+I2/2iCq4ex1dhKbdm5/jKXx9y+sMCHGMgjb
- BFfA==
-X-Gm-Message-State: APuU4Z/dQJGRzImcZfsQCKEt0ECQBXkStCf63iPunIedtYOoV2DQFUte
- Nihz+0cvyQQwGcNZMSswboGOrBboxIUeeiqdaMfetm1mZqX7TtH2sZtxmGb4g9n9KSEftGmcYhh
- nLbxg8UfilN66BYmVkXl+hw1Q9aMZVp+ziY4nh9w5ihw3/oDy25xbEpjEjg==
-X-Gm-Gg: AZFdTZdjk4OJdiyLr8OuAQZhaklgz9gHzYZJw9A47q/4DeL7jlNvmi39DiUn25KCJ4X
- Gyct0ezZTEb1/mtxeMSyLnvN8wTDFZ+EnFY2OnQb/aRFFbqbL2EpDzymRAWIG6tAiaGQHrDKCos
- l/nllkC+5pOcLQurMWhh6ixuNgyoNdI20WtQV34rXYRPjcc4wPAOuMON+D3OzkEZ1SaiT8sdVzI
- C8UPLEK53kjiHXQ2NEX0AVSuC1j4/qHH1Ko+6NTElegfXmU2us+Mencagi9kgkRQQkIkcASpYUX
- gl1qVAjpA2exiE44XEi/+3pee5xA6dAFnUpJBpUSUtBMPzPwRcYfVJyFKoWWyugDWoYLhrOStO/
- nPOrwjckuESJlOGTtmMs1YEb+9WfsX3q79pn0aSIyKiKGDrNNK2e5rJCbPTbkPshoHQONVnVZf5
- R32R/UWAw=
-X-Received: by 2002:a05:620a:45a8:b0:947:b201:fad7 with SMTP id
- af79cd13be357-949bab0eeb3mr4040408185a.67.1795733113226; 
- Thu, 26 Nov 2026 14:45:13 -0800 (PST)
-X-Received: by 2002:a05:620a:45a8:b0:947:b201:fad7 with SMTP id
- af79cd13be357-949bab0eeb3mr4040402385a.67.1795733112726; 
- Thu, 26 Nov 2026 14:45:12 -0800 (PST)
-Received: from [192.168.69.202] (pmd666.hd.free.fr. [82.67.153.177])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6a680483sm43762069f8f.28.2026.11.26.14.45.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Nov 2026 14:45:11 -0800 (PST)
-Message-ID: <61c71bb9-c9b1-462b-893b-c09d0322785f@oss.qualcomm.com>
-Date: Thu, 26 Nov 2026 23:45:10 +0100
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xWiF2-0001ek-HQ
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:47:02 -0500
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPS id
+ C78BE1800198; Thu, 26 Nov 2026 22:46:46 +0000 (UTC)
+X-ICL-RepId: 01a21a0a-36c2-7b61-a7e7-b1e9de21cb9d
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1795733209; x=1827269209;
+ bh=r6NoNXR5+3O5cjqWQmKXRnjfLW3IHXMe3iEOodEYPGM=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=MkEk7YtPCHq+Q7i55xkxjR3vS3glVTay7R3KpzzXsDbhBK8T1jJ24zaZ+BKO35RBYH412jFzpkhWseYmLWD0ANryMDLzqmIp0SpSB/n6LfFPgSr7AEX2rh7XAml0ob04MRMl6gky59LMIaZ0oL41a6HO/htgfQ60eIpcXt+X2lyYwOsVq2qP14i0ozlp0rDoo9vz1dRuuZ5jeYcmyVrC4/k2+o8EuZjzUjIGN9FApX/AkTBLGuBcxJsAUU9qH/BmaDChCgnMJvft8HYiYfqoDzN90x/WsVhnQfnMlEhpFMCJJ5OW6Z+kszpZQgtMvq5wecV1aZi73AwKEO6ckhs1CQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.216.30])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-5 (Postfix) with ESMTPSA id
+ 1D5B01800439; Thu, 26 Nov 2026 22:46:45 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] system/memory: Display address spaces starting at
- 0x0000.0000
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260226220226.20164-1-philmd@linaro.org>
- <20260226220226.20164-6-philmd@linaro.org> <aah40xnBszzsWyT0@x1.local>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <aah40xnBszzsWyT0@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=XpVvqlF9 c=1 sm=1 tr=0 ts=6b08b67a cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=wrFheHMyYtGgnyQavWgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXydjP7oU9Np/O
- f7J7aXH88JHc7S1+UWRtlY09ygekFURZp679AAIUErTB6sqk77tuPCBUNtB7aP6YecH6FR7QLXJ
- osWG1/tf+cV9IBCD+bGSoX7N3PRemVzHdyertKoKuvI+JpX4M9Ws70FEVntWXUBMUNKLf8o4Jq2
- 7dNR0Z2Cr6QDVdP+ZUyOi3wjjwQpI4xYPt7+szW7Nd5Go4nxoUyq+s6q8+sRJghWfO8GXDG9yrV
- xlBAnkEDkk1zmDmewniWJytWP2cKijdzWjCplKjj77Jp1W4UPdP4PgSfMkq+t2qHihVO4Ie/b19
- jJfoXylnr0bagr3doNuAq5JIG1ZSLHb6ognIktMuZq68C1446r2rwLXMYU4quqPMptIW/8mxLlX
- iK4ffZrVNFq5FeXtjaOExz8BspgVJmTLz0W0P2eLfnOAf/M4dTRoWXd2IAqyM5dQ0XCtycp/Bte
- Ydq4bncQRQEWs38PN0A==
-X-Proofpoint-GUID: Gml2ZzCKNmEEBjFcjdDffx7Cw_ddrZTc
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXyJIDMOzN9JC9
- sG106SEhszY2xZmvIf40NbZn8P4NzCbcRdlaWU7ECb/Ks6GIYYQhHe0oHNMRMKuh9OEoFp8eKaQ
- /rykHJA+frO/Eqa49AdLE/tktRjHsoM=
-X-Proofpoint-ORIG-GUID: Gml2ZzCKNmEEBjFcjdDffx7Cw_ddrZTc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-26_05,2026-11-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
- spamscore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611260089
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH 1/2] target/arm: Split ARM_CP_IO as ARM_CP_IO_ENDTB +
+ ARM_CP_IO_BQL
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20261126223959.62899-2-philmd@oss.qualcomm.com>
+Date: Thu, 26 Nov 2026 23:46:32 +0100
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <33E9DD67-CFB7-4CC5-8B51-78B61F838020@unpredictable.fr>
+References: <20261126223959.62899-1-philmd@oss.qualcomm.com>
+ <20261126223959.62899-2-philmd@oss.qualcomm.com>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX0i3ycfLDBoxi
+ 2RYun1GvRj8hkPy5u899AET2jgL/grHM8cU7oo52dxyeQ0fij1lRSns0lIQ1K9gLJ+jpqyNUCgt
+ CxpBXCD7ANa9OIOjAbv1hLMoMe6hQWo=
+X-Proofpoint-ORIG-GUID: INOnggC7VNMriuO-pNzRlMrkewp5c_ic
+X-Authority-Info-Out: v=2.4 cv=Dq/Da2/+ c=1 sm=1 tr=0 ts=6b08b6d7
+ cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
+ a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=wbbCu9YnSpm8ZdSLOl1R:22 a=871Mr51So83XRmefo0B0:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=g0UTid85SeQCHO8TUEQA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: INOnggC7VNMriuO-pNzRlMrkewp5c_ic
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX8YukFmcgR/9T
+ tyaMl25Vmn9c3+AKG8jFFjj2GJHSdlUyBj4EDC4wWPCtRKEv/ck524+WDfX7ps3bYqCJY7hSHBR
+ 2OYr9qLNh4H6AW0Q9ZocOwmPi9gtaehTFO9X3i0pyIFgO6GVCxoZoAh280MgXZxZB/SSNKKAETe
+ 1I+F6SSArtf/EuQJRKU/CqE2P2VTMcLdnZpVlqMQnIf5wT40cQbpxmvfjj2OGZ7Llso42co8RVb
+ NVN9r+LsuQjtujR7oH+bB5l/BXTRMuaqY908OMl6FnjVGtqAstQuQ6/qj424mycmAbk0kLFMfce
+ xs/mqg6c2W0Tbnd5E0C1qr2/F6HS9UIYNVc5fnK4O7p6xRQ4TaxhlayaFb8dPQ=
+X-JNJ: AAAAAAABu+fcV1ieVS9GXyXVPBi+BjvR2yomdFkt3fyTSGCfDK6TpWJxpArEXf05nWVvtx
+ TWrTUFSazi/0b+Ffmsn5vqvWS4Fe4HltPVJuVYYw74aiiOh6zyxwLaq65DDn+PEe7hs5j+
+ KupBNvZ8jVgltgAp88OjPms33knNdAPHT7nVqz2vWeWDLwfxrusa/lZK4ZLlbk2FAVHwMN
+ 7jg080yfKcMwkfsFOfFCFzgEaga2ws6mPOspEnBVS+H2S8Mr5bRzmuqQSEF6eB69C2WNxs
+ qvmou4XXouy2OKm7r37TYylBHzhITXmXBKEydA4ykQ3tKpYvYnPQFySmkX2EaLjtK013Nl
+ dA9qevl0qGZjp5AVXbZV8+V+qgE/XWWUTbHnDxszIKZw2NAfhYrc/TqMtus6/OggXRUcqS
+ vsF8N6leZJeagFX7EqTO9oFMAC//aXW9sHrfEdVk9TQxG9VZuF8JJ6vkiWhzdKSDQcx2O5
+ XVexULeD0K2Rz+ZBtzZQ5MFH2ZiFLzk//uPt9FMWPlTjmhZgQ5giJerfoLTMiDXwM7dVzx
+ v67UIAjSEfGpFAPtmt3zG/LbGQ3jayBNOLzpSgmhy2/MkV4tyEMsIHuZL5xGLJR/nyIz/g
+ 945qezAYdOWnJB7dD9iNP989ioM8D5fmc3Ip6I5JLlH1GA0/wFAGpNSKvk9K95ZVxr9s5f
+ 4HOb5cZSKjr8ujOKpzi5Wkj3ifmKlDovPBbOu3LkG8XKKO9q4jVrDGsRmGhAcquvozFSlh
+ v0jdMp5I/HoFFe/jMOlXufM7vzim/CNRWLQDVwbYcQFFZa5CK1ZiFV5MtA5W7dCvwXpLdy
+ 4rdO3v88Sg88gHXVyiTdnQ4sj1Va/W0qoIT5ttEQcV6e2dg8wItQuhK/i2I1ptp7y6mAu2
+ +mECngUIU1d6S79aHDTJrlXWL1rAroyy8EysC24MpfhOqUgFNy0Sp6iAwAzlSHpG49W3e7
+ DSjZkWgGHM30o8+kZuPX2CPTHL6bLuOXvQ4Ju2emyWoSou1YjbLLGCRvUQ97h+o2XZCMew
+ dKCd65d9uF+fi+XdX0ld4NyoaLUxKB5Qy+BBEVBDSBTV40afErpn7wF7NFNcQUlk+iB45u
+ kGXjIZ2RVLVzdisOBeFNQaORLwrUHQOMkdVKswv+ZfJCMHXji62xySaY17Vv7VYXrSOpYP
+ +vm10r8JbdLPFwSsR/5L8vWr5+0GJM409WRsDfScna5GoeU0hws1ALkX3+thoBKDNqi+Vp
+ luqUe7cigoyMIm0KqEpyTS+aXePY/iyWVUbl9u3UyOrEytXmP/sIYeDiBPD3mia7GjC49V
+ ApvcIeIvFzRxQKmGpqkUdNwUxG8AKi33U849pBGHvWp27YrOiUrTN9D0e6M/TZ28GpEiCf
+ BVtSk/ls7QlLEXB4Cp0KQdAfKRRmzVXRoB806Qnyl2125RRhC71lYiNprbAgj27sPzp7XT
+ X7g02n710mdc00tg==
+Received-SPF: pass client-ip=2a01:b747:3001:203::3d;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,123 +109,210 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Peter :)
-
-On 4/3/26 19:24, Peter Xu wrote:
-> Hi, Phil!
-> 
-> On Thu, Feb 26, 2026 at 11:02:23PM +0100, Philippe Mathieu-Daudé wrote:
->> Since AddressSpace root MemoryRegion can be remapped, it is
->> bogus to use the MemoryRegion address as the AddressSpace
->> absolute address. Besides, the AddressSpace APIs take an
->> @addr argument expecting AddressSpaces start at 0x0000.0000.
-> 
-> Could you share an example where a root MR can have addr!=0, and be
-> remapped while being the root MR of an AS?
-
-virtio-pci.
-
-In virtio_pci_realize():
-
-     memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
-                        pow2ceil(proxy->notify.offset + 
-proxy->notify.size));
-     address_space_init(&proxy->modern_cfg_mem_as, &proxy->modern_bar,
-                        "virtio-pci-cfg-mem-as");
-
-then virtio_pci_device_plugged() registers the very same MR as BAR4:
-
-     pci_register_bar(&proxy->pci_dev, proxy->modern_mem_bar_idx,
-                      PCI_BASE_ADDRESS_SPACE_MEMORY |
-                      PCI_BASE_ADDRESS_MEM_PREFETCH |
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &proxy->modern_bar);
-
-When the guest programs BAR4, pci_update_mappings() removes and
-re-adds the MR at the new address, so modern_bar.addr follows the
-guest, while modern_bar stays the root of modern_cfg_mem_as.
-
-   $ qemu-system-x86_64 -M q35 -nodefaults \
-       -device virtio-net-pci,disable-legacy=on,netdev=n0 \
-       -netdev user,id=n0 -S
-   (qemu) info mtree
-   address-space: virtio-pci-cfg-mem-as
-     0000000000000000-0000000000003fff (prio 0, container): virtio-pci
-       0000000000000000-0000000000000fff (prio 0, i/o): 
-virtio-pci-common-virtio-net
-       0000000000001000-0000000000001fff (prio 0, i/o): 
-virtio-pci-isr-virtio-net
-       0000000000002000-0000000000002fff (prio 0, i/o): 
-virtio-pci-device-virtio-net
-       0000000000003000-0000000000003fff (prio 0, i/o): 
-virtio-pci-notify-virtio-net
-
-Once SeaBIOS assigned BAR4:
-
-   (qemu) info pci
-       BAR4: 64 bit prefetchable memory at 0xfebfc000 [0xfebfffff]
-   (qemu) info mtree
-   address-space: virtio-pci-cfg-mem-as
-     00000000febfc000-00000000febfffff (prio 1, i/o): virtio-pci
-       00000000febfc000-00000000febfcfff (prio 0, i/o): 
-virtio-pci-common-virtio-net
-       00000000febfd000-00000000febfdfff (prio 0, i/o): 
-virtio-pci-isr-virtio-net
-       00000000febfe000-00000000febfefff (prio 0, i/o): 
-virtio-pci-device-virtio-net
-       00000000febff000-00000000febfffff (prio 0, i/o): 
-virtio-pci-notify-virtio-net
-
-So the AS "moves" with the BAR. render_memory_region() adds the root
-mr->addr, so this isn't only a display matter: the flatview itself
-starts at root->addr.
 
 
-A static (non-remapped) example where that matters is the PReP
-Raven host bridge, whose PCI I/O MR is both mapped in the CPU view
-at 0x80000000 and the root of the "raven-io" AS:
+> On 26. Nov 2026, at 23:39, Philippe Mathieu-Daud=C3=A9 =
+<philmd@oss.qualcomm.com> wrote:
+>=20
+> ARM_CP_IO both ends the TB at translation and takes the BQL
+> around the read/write hooks. Split it into two flags so a
+> register can end the TB without taking the BQL. ARM_CP_IO is
+> now their union, so existing users are unchanged. Update
+> multi-thread-tcg.rst document. No functional change.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+> docs/devel/multi-thread-tcg.rst |  8 +++++---
+> target/arm/cpregs.h             | 11 ++++++++++-
+> target/arm/helper.c             |  4 ++--
+> target/arm/tcg/op_helper.c      |  8 ++++----
+> target/arm/tcg/translate-a64.c  |  2 +-
+> target/arm/tcg/translate.c      |  2 +-
+> 6 files changed, 23 insertions(+), 12 deletions(-)
+>=20
+> diff --git a/docs/devel/multi-thread-tcg.rst =
+b/docs/devel/multi-thread-tcg.rst
+> index da9a1530c9fa..22d760ce3729 100644
+> --- a/docs/devel/multi-thread-tcg.rst
+> +++ b/docs/devel/multi-thread-tcg.rst
+> @@ -240,9 +240,11 @@ minimise contention.
+> (Current solution)
+>=20
+> MMIO access automatically serialises hardware emulation by way of the
+> -BQL. Currently Arm targets serialise all ARM_CP_IO register accesses
+> -and also defer the reset/startup of vCPUs to the vCPU context by way
+> -of async_run_on_cpu().
+> +BQL. Currently Arm targets serialise all ARM_CP_IO_BQL register
+> +accesses (included in ARM_CP_IO) and also defer the reset/startup of
+> +vCPUs to the vCPU context by way of async_run_on_cpu(). Registers =
+only
+> +marked ARM_CP_IO_ENDTB, such as the generic timer counters, end the =
+TB
+> +but run their accessors without the BQL, so these must be =
+thread-safe.
+>=20
+> Updates to interrupt state are also protected by the BQL as they can
+> often be cross vCPU.
+> diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+> index ce651a4faa60..d9efb9fd6b75 100644
+> --- a/target/arm/cpregs.h
+> +++ b/target/arm/cpregs.h
+> @@ -82,8 +82,10 @@ enum {
+>      * Flag: Register does I/O and therefore its accesses need to be =
+marked
+>      * with translator_io_start() and also end the TB. In particular,
+>      * registers which implement clocks or timers require this.
+> +     * Without ARM_CP_IO_BQL, the read and write hooks run without =
+the BQL
+> +     * and must be thread-safe.
+>      */
+> -    ARM_CP_IO                    =3D 1 << 9,
+> +    ARM_CP_IO_ENDTB              =3D 1 << 9,
+>     /*
+>      * Flag: Register has no underlying state and does not support raw =
+access
+>      * for state saving/loading; it will not be used for either =
+migration or
+> @@ -154,6 +156,13 @@ enum {
+>      * ARM pseudocode function CheckFPMREnabled().
+>      */
+>     ARM_CP_FPMR                  =3D 1 << 23,
+> +    /*
+> +     * Flag: The read and write hooks are called with the BQL held, =
+e.g.
+> +     * because they touch timers, interrupt lines or other cross-vCPU =
+state.
 
-     memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
-     address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
-     memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
-                                 &s->pci_io);
+Not including reading the timers if the next patch is any indication=E2=80=
+=A6
 
-It is also the bus I/O space, so lsi53c810 on the 40p machine gets
-the same root via pci_address_space_io():
+> +     */
+> +    ARM_CP_IO_BQL                =3D 1 << 24,
+> +    /* Flags: Register does I/O and its hooks need the BQL */
+> +    ARM_CP_IO                    =3D ARM_CP_IO_ENDTB | ARM_CP_IO_BQL,
+> };
 
-   $ qemu-system-ppc -M 40p -S
-   (qemu) info mtree
-   address-space: lsi-pci-io
-   address-space: raven-io
-     0000000080000000-00000000bf7fffff (prio 0, i/o): pci-io
-       0000000080000000-0000000080000007 (prio 0, i/o): dma-chan
-       0000000080000020-0000000080000021 (prio 0, i/o): pic
-       ...
-       0000000080000cf8-0000000080000cfb (prio 0, i/o): pci-conf-idx
-       0000000080000cfc-0000000080000cff (prio 0, i/o): pci-conf-data
+Hi,
 
-The two users of this AS disagree on the origin:
+Is it worthwhile to add an assert somewhere in case somebody does =
+ARM_CP_IO_BQL
+_without_ ARM_CP_IO_ENDTB by mistake?
 
-- raven_io_read/write() rely on the current behavior and access
-   pci_io_as at 'addr + PCI_IO_BASE_ADDR';
+Apart from that:
 
-- lsi_mem_read/write() in I/O mode (DMODE.SIOM) pass a plain PCI I/O
-   address, i.e. expect the AS to start at 0, so with the current
-   flatview such accesses miss (e.g. port 0x20 is at 0x80000020 in
-   lsi-pci-io).
+Reviewed-by: Mohamed Mediouni <mohamed.mediouni@linaro.org>
 
-This is what I meant by "AddressSpace APIs take an @addr expecting
-AddressSpaces start at 0x0000.0000"; I'll clarify in v2.
-
-Regards,
-
-Phil.
+>=20
+> /*
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index f413b15eb747..198ffc69aeac 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -3976,7 +3976,7 @@ static void do_hcr_write(CPUARMState *env, =
+uint64_t value, uint64_t valid_mask)
+>      * virtual interrupts, which are the logical OR of these bits
+>      * and the state of the input lines from the GIC. (This requires
+>      * that we have the BQL, which is done by marking the
+> -     * reginfo structs as ARM_CP_IO.)
+> +     * reginfo structs as ARM_CP_IO_BQL.)
+>      * Note that if a write to HCR pends a VIRQ or VFIQ or VINMI or
+>      * VFNMI, it is never possible for it to be taken immediately
+>      * because VIRQ, VFIQ, VINMI and VFNMI are masked unless running
+> @@ -4179,7 +4179,7 @@ static void hcrx_write(CPUARMState *env, const =
+ARMCPRegInfo *ri,
+>      * virtual NMI, which are the logical OR of these bits
+>      * and the state of the input lines from the GIC. (This requires
+>      * that we have the BQL, which is done by marking the
+> -     * reginfo structs as ARM_CP_IO.)
+> +     * reginfo structs as ARM_CP_IO_BQL.)
+>      * Note that if a write to HCRX pends a VINMI or VFNMI it is never
+>      * possible for it to be taken immediately, because VINMI and
+>      * VFNMI are masked unless running at EL0 or EL1, and HCRX
+> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+> index c2fdad7411db..c070aeee0f32 100644
+> --- a/target/arm/tcg/op_helper.c
+> +++ b/target/arm/tcg/op_helper.c
+> @@ -1244,7 +1244,7 @@ void HELPER(set_cp_reg)(CPUARMState *env, const =
+void *rip, uint32_t value)
+> {
+>     const ARMCPRegInfo *ri =3D rip;
+>=20
+> -    if (ri->type & ARM_CP_IO) {
+> +    if (ri->type & ARM_CP_IO_BQL) {
+>         bql_lock();
+>         ri->writefn(env, ri, value);
+>         bql_unlock();
+> @@ -1258,7 +1258,7 @@ uint32_t HELPER(get_cp_reg)(CPUARMState *env, =
+const void *rip)
+>     const ARMCPRegInfo *ri =3D rip;
+>     uint32_t res;
+>=20
+> -    if (ri->type & ARM_CP_IO) {
+> +    if (ri->type & ARM_CP_IO_BQL) {
+>         bql_lock();
+>         res =3D ri->readfn(env, ri);
+>         bql_unlock();
+> @@ -1273,7 +1273,7 @@ void HELPER(set_cp_reg64)(CPUARMState *env, =
+const void *rip, uint64_t value)
+> {
+>     const ARMCPRegInfo *ri =3D rip;
+>=20
+> -    if (ri->type & ARM_CP_IO) {
+> +    if (ri->type & ARM_CP_IO_BQL) {
+>         bql_lock();
+>         ri->writefn(env, ri, value);
+>         bql_unlock();
+> @@ -1287,7 +1287,7 @@ uint64_t HELPER(get_cp_reg64)(CPUARMState *env, =
+const void *rip)
+>     const ARMCPRegInfo *ri =3D rip;
+>     uint64_t res;
+>=20
+> -    if (ri->type & ARM_CP_IO) {
+> +    if (ri->type & ARM_CP_IO_BQL) {
+>         bql_lock();
+>         res =3D ri->readfn(env, ri);
+>         bql_unlock();
+> diff --git a/target/arm/tcg/translate-a64.c =
+b/target/arm/tcg/translate-a64.c
+> index 14888202bada..7006f2c8ae8c 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -3236,7 +3236,7 @@ static void handle_sys(DisasContext *s, bool =
+isread,
+>         g_assert_not_reached();
+>     }
+>=20
+> -    if (ri->type & ARM_CP_IO) {
+> +    if (ri->type & ARM_CP_IO_ENDTB) {
+>         /* I/O operations must end the TB here (whether read or write) =
+*/
+>         need_exit_tb =3D translator_io_start(&s->base);
+>     }
+> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+> index 9d80294c9bb2..92762a813b5f 100644
+> --- a/target/arm/tcg/translate.c
+> +++ b/target/arm/tcg/translate.c
+> @@ -1893,7 +1893,7 @@ static void do_coproc_insn(DisasContext *s, int =
+cpnum, int is64,
+>         g_assert_not_reached();
+>     }
+>=20
+> -    if (ri->type & ARM_CP_IO) {
+> +    if (ri->type & ARM_CP_IO_ENDTB) {
+>         /* I/O operations must end the TB here (whether read or write) =
+*/
+>         need_exit_tb =3D translator_io_start(&s->base);
+>     }
+> --=20
+> 2.55.0
+>=20
+>=20
 
 
