@@ -1,109 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D382606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 12:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32E4606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 12:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=hc8lmDEx
+	dkim=pass (1024-bit key) header.d=pond.sub.org header.i=@pond.sub.org header.a=rsa-sha256 header.s=mail header.b=Z8XpHE4t
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWYAU-0001lb-Vc; Thu, 26 Nov 2026 07:01:39 -0500
+	id 1xWYMp-0007IB-Ec; Thu, 26 Nov 2026 07:14:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xWYAT-0001lJ-2x
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:01:37 -0500
-Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1xWYAR-0006dQ-49
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:01:36 -0500
-Received: by mail-dy1-x1334.google.com with SMTP id
- 5a478bee46e88-3863db981d4so9766363eec.0
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 04:01:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795694493; cv=none;
- d=google.com; s=arc-20260327;
- b=gSK0CGjyBmrCxSnb0R11q4miYSUMZL8JoHOle6o5ydVe7kZIo4UgWTw8S1fIeuKrQ5
- b7Bdg7TC5Mba+g+8tUnacwGeg9hkKvQYRritwwgVKxKCw4TfaqGusXvRHIZaHNCwPdzr
- qY7Oxhag0f49I4sCVuRRVfPPaQbrapBS0nOZvn6q/TjgdVGlS6N0/pjySJT+gl0t6cy6
- aPTBQJaaafZTMRcL1+oNXuXtBS+Fuq+oKMSlCCCfRUvmZ5iaEiGeHJraK0qx9VWRhuvv
- m2z3CRATsgkaINjkVNqcYZWd2LIBUjKPCJFZvYbu0/JHiy+FcJR0ksI1XW9ymosfKUGe
- h61g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=7yAMbxP47vhJXF87LxxODSSTpzJeboYGDH3qABNNcBk=;
- fh=6UTXXnx0J9GIoGhqrf61BU5KiBvsBNHmdk37ASzx+9s=;
- b=PTbPvXNytfnGdhnU2PKhG+B05Fw051caX4/2TQbAWl3xCBnADVGR4VXJUAPW5WoDxt
- ug2Iq3yArBd4sZNwg+XXL2AwIaK7ByYO9ltMXcRseA5gK9IfcxiRHAwHPq1QOSgFzwrG
- jqCr/c1PR2acRq1SmhMOdCfJi7HnZR80GEmYKTzENTC5tbzNnx1ucSPdhFmg813dgjnT
- gdfQJ+qhQIQHMygOt4stxlNLqWmyv8KWIG7meegjcAucpM+ssLJ+VwUltC6iR1N5fiKv
- cz26wcCqo2un3iDS73yeKlOd66dgI0XL0P/MOeiMOf1oAuT4TU3lbxrvbsbj0B1Zokca
- lAjA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795694493; x=1796299293; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7yAMbxP47vhJXF87LxxODSSTpzJeboYGDH3qABNNcBk=;
- b=hc8lmDExY359RXnLiCTFwQQKlQw5gc61pIlWDSf4l+7rEMIaeAJzHFsWfMvhZd2plU
- Uz1tOK94UjPZERZA4tBMf0j52A3oJ/sxRcr1ebpificxjdz5dHPxyoVeN29YlgI7lMEe
- MarL5Xef5N0gvqrOHF/TCXp0LxZKpU4r0IFibEjkT2LdQNLf3tckBm8ZB9PxPoH4DcDI
- t1CtmZ2duk2kG8jJHuRva8rDV8yvYY81UAVlnjTI6fAHPQ6ivvLPGLnBnXAOAQUpMVb0
- KfB8bAZfADdGxhOR2m6x8VCjoEvkmlHICBX4O6cFTDjmu4RPSdojang2sCOnqrkb3M89
- SdsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795694493; x=1796299293;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7yAMbxP47vhJXF87LxxODSSTpzJeboYGDH3qABNNcBk=;
- b=t0SVhFxcD7OTZNLJRhf9I9/T6anxVsNnmZdlR0lV7zTE4AGo5IYqaGrg5G/gdb3MfY
- ONd1Jz/jKuHxmZcyaSbrUVGM2DgtZlb0FMQQI6kLixZxvWw4GPUZxzU7HAKPyTMJbKI8
- MnVrSCjpbgkpLXN2IrC5HIxSYKsAMECvDdhcRZaE0QTLJ7M4uAJjZgcNoVEXovfNzXE4
- ZQeYgc+35fCRMQhxUK8vEN1U2zTLd4/rlgd9HRbEph+DRXLGjvlWiM/HYzWZ/tPLE1Rd
- ItS7G9ZYUY0H+nUNP18ewy/D9DYz7rxEiK4K1IqeEdlovCD65apbw5qpSrTdPBvwIjmD
- P1cA==
-X-Gm-Message-State: APuU4Z8T4GPNAq3PJM9EY+hDrpOfdf5hpSljUNb8N2QqzUCSknDWNWXI
- 4xXzpW0CoxgkDjYaL3JP0fW7uG4z2Hm5Gm4qZK0GcrYficEQDryYECSG28b9nexXELTYNBgNSc/
- qVg2Dgpb/2OKyvhe4zcqG1QwYoo71uAg=
-X-Gm-Gg: AZFdTZdwEkTvW3QCiUMIhUbv7TFjuYb/4DKSfyIw0lJ9WpWEofWJTWO1hukeigKL1Ys
- KxCyXEPOT61hyVMna0ajOUOOojEk19XhJCg1226mlk2jTDm17r9NYxpn/r1H0HjlnlgfqMIPmGx
- gmcl/y67/+QHZIA7bNm30QI4BXEC1Z+rqisw+AuGgBXmZJyVRnH/jYrYbnhzLL9VkWPa+DU7hzt
- p24/197AX0etr/+vicxD8DpzzDtlxlwPMOFz7kLy4SPqg3nkI4yWMUVn12uIinY2vwv4h8PeZaG
- WP3dTNkT20h402NbpfSl02f+mgU5VOyGzzNKVNfGWgmHnFEvuZnFWDe9NI2AfTXyaOJtqBfjbqU
- Bs/1G7ZqaDwaHbMI7Y7HmmZJNJs+S+MaxwVpDcIvXBZNA9NupuyZoUDXuhlzGsjrPlJ4h
-X-Received: by 2002:a05:7301:6486:b0:378:1191:43ca with SMTP id
- 5a478bee46e88-3863f1355b2mr17192356eec.18.1795694492854; Thu, 26 Nov 2026
- 04:01:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xWYMl-0007Hs-Fz
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:14:19 -0500
+Received: from oxygen.pond.sub.org ([2a01:4f8:13b:3ad0:1::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1xWYMi-00065a-5J
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 07:14:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=pond.sub.org; s=mail;
+ t=1795695243; bh=11a15RfnhwvnybTsvT7WuwtWFFwjbP+b7gO3Gi6aTzg=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=Z8XpHE4tFoagIKv1TnmJl6qJY1i9C2+e4EQrMaNNHFBS0il4Z8l3HktYihBDOYp9s
+ KPTCvrjYKm7iAsW8VLwCGY7mBn+wtTtEgETu4bFSChuNFF1UWkjE47qa8BpAaugQuF
+ iZavmPJsYudEvIJAZe8rGnsdJPFZOtn+Dkw7Ysb0=
+Received: from blackfin.pond.sub.org
+ (p200300d36f05b900e5f885c0cd39d8e9.dip0.t-ipconnect.de
+ [IPv6:2003:d3:6f05:b900:e5f8:85c0:cd39:d8e9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id F285E2070E;
+ Thu, 26 Nov 2026 13:14:02 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0CAD921E6A04; Thu, 26 Nov 2026 13:14:12 +0100 (CET)
+From: Markus Armbruster <armbru@pond.sub.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,
+ philmd@oss.qualcomm.com,  peter.maydell@linaro.org,  berrange@redhat.com,
+ eblake@redhat.com,  armbru@redhat.com,  alex.bennee@linaro.org
+Subject: Re: [PATCH 1/3] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <awX8HEfLfE2x4hu7@zhexu-thinkpadt14gen5.rmtcaon.csb> (Peter Xu's
+ message of "Tue, 24 Nov 2026 16:05:32 -0500")
+References: <20261124164217.1768040-1-pbonzini@redhat.com>
+ <20261124164217.1768040-2-pbonzini@redhat.com>
+ <awX8HEfLfE2x4hu7@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Date: Thu, 26 Nov 2026 13:14:12 +0100
+Message-ID: <87tsl3yeln.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261124-issue-4848-v4-0-24993c4766fc@redhat.com>
- <179569369656.3375745.17238189610521746462@taktcycles.com>
-In-Reply-To: <179569369656.3375745.17238189610521746462@taktcycles.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 26 Nov 2026 16:01:21 +0400
-X-Gm-Features: Aa3M54plmmK4fwFQ1jff4aryZJ-MaSuhVzuRjk_aYsdY22bmRap38gmorCWbsQc
-Message-ID: <CAJ+F1CKKiU4AJhHEudDaj=upv-N82tMyLgGRn9R55yvXctgT6Q@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6] vhost-user-gpu fixes
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Dmitry R <rdmitry@taktcycles.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1334.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a01:4f8:13b:3ad0:1::3;
+ envelope-from=armbru@pond.sub.org; helo=oxygen.pond.sub.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,51 +72,48 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Akihiko
+Peter Xu <peterx@redhat.com> writes:
 
-Can you ack/rb this series for 11.2?
+> On Tue, Nov 24, 2026 at 05:42:15PM +0100, Paolo Bonzini wrote:
+>> +The QEMU community is a collaboration between humans, not AI agent
+>> +fa=C3=A7ades. The following items MUST be written by humans:
+>> +
+>> +- cover letters and commit messages
+>> +
+>> +- responses to reviewer comments
+>> +
+>> +- issue descriptions or comments
+>
+> [Just a pure comment, so not a request to change anything at v6 to block =
+the
+>  pull at all]
+>
+> I think this is the part I raised the pure question in the upstream call
+> today, on that we won't really be able to identify what is written by AI,
+> and what is written by human.
+>
+> If we can't identify that in a realiable way, IMHO the policy here will be
+> hard to carry out.
 
-thanks
+Yes, but that doesn't necessarily make it not useful.
 
-On Thu, Nov 26, 2026 at 3:49=E2=80=AFPM Dmitry R <rdmitry@taktcycles.com> w=
-rote:
->
-> Hi Marc-Andr=C3=A9,
->
-> I retested v4 on top of 2bfbe39d0fff on x86_64/KVM, with the same setup
-> as for v3: vhost-user-vga with the contrib backend (--virgl), the D-Bus
-> display with a listener attached, and a Debian 13 guest.
->
-> - #4848: a fence reported while GET_EDID waits for its reply no longer
->   kills the backend.
-> - #4847: the main loop no longer spins on the closed socket: no "failed
->   to read msg header" lines in 90 s, and QEMU used 7 s of CPU time.
-> - #4849: stop/cont, then a guest reset, then another stop/cont keep the
->   backend alive with no sock_fd or wait_in assertions, and the guest
->   driver comes back after the reset.
-> - For the queue-stop change in 2/6 I added a stress case: 60 cycles of
->   SetUIInfo on the console (the guest then sends GET_DISPLAY_INFO and
->   GET_EDID), each followed 0-4 ms later by QMP stop and cont. QEMU and
->   the backend stayed up, with no assertions and no hung tasks in the
->   guest, and the display kept updating afterwards. Four RESOURCE_FLUSH
->   commands and one SET_SCANOUT command hit a stop, and the new error
->   handling completed them with ERR_UNSPEC. None of the 60 stops caught a
->   GET_DISPLAY_INFO or GET_EDID while it waited for its reply, so that
->   exact window is still untested.
-> - With the reset patches dropped, #4846 still reproduces as it does on
->   master: QEMU segfaults on the first system_reset with a D-Bus listener
->   attached. That matches the changelog.
->
-> So the Tested-by on 1/6-3/6 still holds for v4.
->
-> Dmitry
->
->
+We have many laws on the books that can be broken, with and without
+intent, in ways that are notoriously hard to detect.  Tax fraud, for
+instance.  We keep these laws anyway.  They serve as a clear statement
+of what conduct we expect and demand.  We make some effort to catch
+violations[*], but accept that we cannot catch them all.
+
+Could this policy be useful in similar ways?  Not the punishment part
+(there is none).  But a clear statement of what conduct we expect and
+demand.  Something we can point to when we reject slop.
+
+
+[*] At least in non-failing states.
 
