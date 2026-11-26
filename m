@@ -1,111 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14DE606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 23:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3974606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 23:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OX7shb2v;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=VFQaqjPz
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=E8faNWfF;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DH99CQ8s
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWii0-0008DN-Mq; Thu, 26 Nov 2026 18:16:56 -0500
+	id 1xWiht-00086P-60; Thu, 26 Nov 2026 18:16:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWihs-00086g-Qk
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xWihm-00083Z-Tw
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:43 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWihr-00062f-5G
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795735006;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TPBdbWhRH+ndA7WfjTIrEZ1e2jC4NB4OMmjiegGEePI=;
- b=OX7shb2vno5Vk1ZRXiG4v1r2UfX/uInf16vE1lSAWVErOpwvVWbCWgnGtLMZfvp16zjsmD
- rSvbYjLYDpdvhi2LfBrwGIjbH13ejhObeXgv+Pmnx99v4pcBrJOCO8qtXwwklOfBIZBf6A
- GR9R1uqSpzKul9VBPLI5e78RPD5Ezpg=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-tufI0Z05ObyfgbcOcYxfng-1; Thu, 26 Nov 2026 23:16:42 +0000
-X-MC-Unique: tufI0Z05ObyfgbcOcYxfng-1
-X-Mimecast-MFC-AGG-ID: tufI0Z05ObyfgbcOcYxfng_1795735002
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-544019b1831so146436461cf.0
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 15:16:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xWihl-000616-7l
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:42 -0500
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6AQJvuO5360802
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 23:16:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ BxSdQOuKti1TAPx9ykIQCZjHbbNaedzTWB7YNIIIW3I=; b=E8faNWfFM45bD0In
+ ATW9qeJOSO4EZX4v71QkKYJcjkT2uX7ASKRQsXQnvTVChM8/4aByD1xmPpgH06uI
+ Y4bq/47OsmlKTDWltIerPhKzImbk9BKLPBCWx8udwOi2sYlnfDHeTEJlqxqQOHUk
+ 1LRd2ZCq8T7JlSXg9FQDeG81AXaStEVTpwW3uvUPTSWRxAjppXr3kEXZs81hoLpH
+ PoEejOSWinK5YLYSCPEM14weQzgHqcYlKt3RtkQRUby45xlSUhlxKIWeG196La9Q
+ Z59qlEii38UqW3pyaN4YXI3PcDNBqpFHTdMfcewYRgQSGzvbF5Hq0EVj7lsL3qdL
+ VMkLig==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6f8rk4yb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 23:16:37 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-3854627c1c8so10022926eec.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 15:16:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795735002; x=1796339802; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=TPBdbWhRH+ndA7WfjTIrEZ1e2jC4NB4OMmjiegGEePI=;
- b=VFQaqjPz/i58IrimKy4RHh9FIoxCy7ZB9tGByvZ69asEY2cj8GZJzdBKxRfGnvFg+l
- 0bG79cOjUE5tyzJHd32Mw6iNSiSaYDRbzCrnXSuNnEoYJP0AUpFzQH6RlZ88QbO0rx1d
- vmA7/vng7MGR7CaX1KNszKFv+iE09Mlvq0lxvLvSajcbtUAawQueE4XWfEm4iZGjcZ/5
- rw7szVpDfQQ66g06n3BJnKaTWye0xzobeFfDnAD7wQv3QozFhcHEpIVfkxsFEIfoyO74
- vv3h7yzvZ5tpOw3cbsTYnZ7nZ5kA7N1zMUzmgxZ2Wx9Z3e9be/VI4RyH07udHHWs10Ey
- D6Kg==
+ d=oss.qualcomm.com; s=google; t=1795734997; x=1796339797; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BxSdQOuKti1TAPx9ykIQCZjHbbNaedzTWB7YNIIIW3I=;
+ b=DH99CQ8svyhY8j2D+iAyrPdfWVi9pK5tUkOrSUSCKmrbcJ9kHUf1ejq6QfVZ+uGcaq
+ cW4p8JUMn3LQ8J/7d4ztTyjRCmylGvz+OXqJrtmnc+ntU4dcQb46CAFmFgFgiWCwEB7L
+ 9GEuD4E3GJThuehjwLu2sdwdRc7buqodlLwCjMvvmZ3qm2LvjhKQSi/G9nsef6FPwFM/
+ EQVRA+KPzzXpIVXfajeiPLBgB3u3zm4xzVWFo/8t3+FvT1FdGzXqYi2l5TQHhMHlbM+8
+ HT7lJxlWDi2WzNzLoyVrrfxUfoqVJoxD0xeFkex99BRCmEFfWxhGYioG6BXHeiYd/YIV
+ cqEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795735002; x=1796339802;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TPBdbWhRH+ndA7WfjTIrEZ1e2jC4NB4OMmjiegGEePI=;
- b=KPtVGsL8Dm7gu/NT5pnvhrGYgahHdHfHYiKVfE87/3fOC7eXTD7RcKUlw/YA0Xf70w
- 3t+O1vuArziIv4kB0VWkweTO7y5COyNd5jQWoGWCTiriU7HWimQ3KtfkpqO2CZ33duk7
- 3Fa/7Sfcia5Wu5r8hmZh+GXW5s7u0DO6zTZIhMs18HcVkz5c58lQyQPnQ9yeNG1ocSEo
- 2pqt4TLO5PDFlhV1GluZrrcirxMVxohGZh85gq5y2N0PoHbWeucROJX1ZXGaWUj45E/z
- RwgcAPPwlQXkpHnjJXwoFsyPoZdiXjELDv0/2b0bnqB11vFrbLr6LL04PYbGrzKkZaYz
- RpAg==
-X-Gm-Message-State: APuU4Z9OrdyAYr4hApl/+5SFrfYN4QwW7nCmmrmsYSNpc1dBDTwG5jgz
- q0lwhwTG1LVgEBMK5BbJlueVLjqSMDuJHlMMszQlJgMjpW5yaQB9j9++DehWkhKflCxJyu8bkv5
- XSiCxYVXigq1tW4Dxk9oG+FdpTIcJQd3AUrYc9rAiWGajplJMfIVklAAYPtK1t514xYbW6WA41l
- +WXM2wFJoQiFILEXzIcsvZqn7zYTXS8oKMg56/mQ==
-X-Gm-Gg: AZFdTZeTb4FHBoD9TUMnmZHHzXdGfM/I05SPWiv6DScTpKay4iAbnMk1tVbqNKMcV7B
- TMxJ+D3maQsOu5uCECi+DPuLh1eKlqU3Uy+kRxlgfrH7q01qqdbCvky/C2tKAeADI0dGymQOeeo
- OuL5KAiCsXomawpGaXyI0VivZvXQzFcCI8hxjBSCjpGfqzDoK2UHMXBXH7fzQsvvuTn5iQvDPWy
- E16RARh0Sfio3yb5MTOu480UbwUxDIjgkEhHXpUB40IzO0GnpUPr4JbJabTWm83AxyjqzaltY7r
- JbnPsMmkNsj4WOJAAVzxYf5lXTihkE+D0Dj6G2OmWaxCOg9WBVquV4ACk1EknUEaZ28mf2UQ9pk
- QpMu2sNlvWLE90zvtCabX8cF5srJIAUG3JoSgaiomxLmg
-X-Received: by 2002:a05:620a:45a4:b0:944:110b:d824 with SMTP id
- af79cd13be357-949ba8237f7mr4170134885a.5.1795735001928; 
- Thu, 26 Nov 2026 15:16:41 -0800 (PST)
-X-Received: by 2002:a05:620a:45a4:b0:944:110b:d824 with SMTP id
- af79cd13be357-949ba8237f7mr4170127785a.5.1795735001111; 
- Thu, 26 Nov 2026 15:16:41 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-94a0c18267esm431130785a.4.2026.11.26.15.16.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 15:16:40 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, peterx@redhat.com,
- Fabiano Rosas <farosas@suse.de>, Gavin Shan <gshan@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH for-12.0 v2 4/9] pcie/aer: Remove the usage of
- VMSTATE_VALIDATE()
-Date: Thu, 26 Nov 2026 18:16:26 -0500
-Message-ID: <20261126231631.3392756-5-peterx@redhat.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261126231631.3392756-1-peterx@redhat.com>
-References: <20261126231631.3392756-1-peterx@redhat.com>
+ d=1e100.net; s=20260707; t=1795734997; x=1796339797;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BxSdQOuKti1TAPx9ykIQCZjHbbNaedzTWB7YNIIIW3I=;
+ b=iR7a18kcw0K678bYgNJkb1dQI3zFdPADoIqsTmJwD+Wg93BOIWN+cqk/3LQhF+qFZg
+ GzytpJfnUuTuVfn7ksQ8S9HhxWVmdsfu45IcmZj2UB45zRWNosnIbBIqrs5kSacxfJ5W
+ JCmgwPI6yhlTPs7l5eTgaetClufJjnrG4YNskmiTg3w3ct5/fajcth3bM+50wiuKpswJ
+ c20Alw1oC62mx1pJId/D25ZIVQC5/1JPq+mjxkxT70gio4t9qPpPZoSgsNrsHw+v39Ck
+ t/qDSGFqDBSVa+ezduVs9md66dmdNrBhYvsgp6o3DospvvmUHMgdASWZ9sPJv9vQgWdt
+ CWCw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErHhegk5jVcthzR0nv5686fRFdQnNSPXBl5lbAlF6Set0k7dAHJ34rkJY2TT2AuPMYDceUocgkv6bccY@nongnu.org
+X-Gm-Message-State: APuU4Z/Kf52LJfsI4svI+GmFqIBgDHkF/9y7Mo+wPEXjle1h6XCmd3II
+ 8Tvn5b6AZii+WL7c9wRNVaOBaMUdgDUAMPzDgWP7sYRct2MiAtu1ggqMtDSgm/zIFKwPLLHcZEx
+ S+dzsxRkBkjLcjpox5cP4FCfAWEGHOfiNW4EiPE+eRdV384CaP5/2kkpQnw==
+X-Gm-Gg: AZFdTZcOmflITlMZeNpcd2op6ZpFRp/9dZTvoG2Si9EiIgzdVwrxb9W5uhYPXQVlcZP
+ X91Bmoy4KXWubHRCsx1WlpsbIr02qusALQi+SLa1cSB4fORNG3oDOWYZw2o0qmQb+W7jTOZ9wNV
+ xDNjmOaukjNURjE2v7BaeYvHmBtIAjm4orP8zOq+jAJkgOn8MUPVk7RR6i1viNQAohBO7AMJY3J
+ ecYn0wBjFGerYe9hVZdyMrlJELMsuPq0vk13Py/Irzwh1+R5jMkP7MYfKEpvy0EZoRPFkw846Hv
+ LLyuG6dxt571wROcU2q6njqGSJaD1WQY4k/QJy1O7zbvt/PJ5KF8cpXqcJyd3GaY01g93VkQpRQ
+ 8r6K5CqDzE12xbtgqJA5Rv2LSc6j5jx8Nkh9vbhyQ/UIcCxNptWV992gyXt5HvcfGnhQgt3z5Va
+ CSsa49etekm5fbaR3fI4DfvDWKtr/IfPZAHkpJbunpXoQ=
+X-Received: by 2002:a05:7301:db86:b0:36e:2b8b:a098 with SMTP id
+ 5a478bee46e88-3857025c736mr21261624eec.31.1795734997317; 
+ Thu, 26 Nov 2026 15:16:37 -0800 (PST)
+X-Received: by 2002:a05:7301:db86:b0:36e:2b8b:a098 with SMTP id
+ 5a478bee46e88-3857025c736mr21261610eec.31.1795734996802; 
+ Thu, 26 Nov 2026 15:16:36 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-385666e96bdsm62203314eec.7.2026.11.26.15.16.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Nov 2026 15:16:36 -0800 (PST)
+Message-ID: <e515101a-dc57-4f9a-b585-60dfbd69d67c@oss.qualcomm.com>
+Date: Thu, 26 Nov 2026 15:16:35 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/devel/tcg-icount: Describe translator_io_start()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20261126211851.49019-1-philmd@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261126211851.49019-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA5MSBTYWx0ZWRfX+BJHvR7j/qLm
+ 0wnNQu1awXhTHZAHaLioIMPJCDIROGIX44mH26j0KnW4yjZRZSuRZZ2jX4YDFTaCzD1VnSz6z+B
+ U6MWNKVlWE0NTFFxtax9ZsvnDB3yzlUpXM3z8i6sgdiAVAZlaiXhE0Em11umtRdVyN8bHrBjQZE
+ rny3ELWx+vs4K+GZ/Ob7zpLsjGDA+GHS6q//0QwUYcR01De6ThIq5YDGzpw0e/OuHeBCFA4gpzH
+ XhvBQMqWRdL/JL61BqzzOsGngrV5fd0KZKBvSwx78nLCb72+mnI6OLfJOOYplmpO3osV9/0efhJ
+ HuqSV+RCc5xdMX1YZX7S9KgUzu/rtm+in1jxeFq6OhOCn7M90Ao+2b61gPJpgS07EIOViEcVtIl
+ cRVs6YCJ5YNOTnMWExCm7QC3jRl1QgM0Z5EzaRHC99cR1/ErGK5TqOJ7C5p7xafdOL+oijikn8/
+ 0Jyggrh+jCoebIDg+ig==
+X-Proofpoint-GUID: pewByOWimj4NKW0R5E5CiPtvKw85BQbZ
+X-Proofpoint-ORIG-GUID: pewByOWimj4NKW0R5E5CiPtvKw85BQbZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA5MSBTYWx0ZWRfX5J3smX3QKNGQ
+ i5LUsAfggfeS8wyBt6eHqHAsnRv9qv4nE4qNMNKEl2O06FPNbddE2G3XyZY4b+nVl0iAcrxOTQN
+ EsBZN6XkT8IddwDHGvb2HrynV86gWIk=
+X-Authority-Analysis: v=2.4 cv=FuOQbGrq c=1 sm=1 tr=0 ts=6b08bdd6 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=TEJpyHqa72AOjo67O1YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-26_05,2026-11-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
+ suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611260091
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,85 +154,24 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Paving way removing it.  We can replace it with a post_load_errp() instead.
-Tested with migration with "-device ioh3420,id=rp0" against pre-patch,
-which means migration compatibility is unaffected.
+On 11/26/2026 1:18 PM, Philippe Mathieu-Daudé wrote:
+> gen_io_start() no longer exists, and since commit 18a536f1f8d6
+> ("accel/tcg: Always require can_do_io") I/O instructions end the
+> TB regardless of icount. Document translator_io_start() instead.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>  docs/devel/tcg-icount.rst | 16 +++++++---------
+>  1 file changed, 7 insertions(+), 9 deletions(-)
+> 
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- hw/pci/pcie_aer.c | 40 +++++++++++++++++++++++++++++++++++-----
- 1 file changed, 35 insertions(+), 5 deletions(-)
-
-diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
-index 43b14c1f22..87248556d4 100644
---- a/hw/pci/pcie_aer.c
-+++ b/hw/pci/pcie_aer.c
-@@ -807,21 +807,51 @@ static const VMStateDescription vmstate_pcie_aer_err = {
-     }
- };
- 
--static bool pcie_aer_state_log_num_valid(void *opaque, int version_id)
--{
--    PCIEAERLog *s = opaque;
-+typedef struct {
-+    uint16_t v;
-+} tmp_u16;
- 
-+static bool pcie_aer_state_log_num_valid(PCIEAERLog *s)
-+{
-     return s->log_num <= s->log_max;
- }
- 
-+static bool pcie_aer_state_log_num_post_load(void *opaque, int version,
-+                                             Error **errp)
-+{
-+    PCIEAERLog *s = container_of(opaque, PCIEAERLog, log_num);
-+
-+    if (!pcie_aer_state_log_num_valid(s)) {
-+        error_setg(errp, "PCIe AER log num too big: log_num > log_max");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
-+static const VMStateDescription vmstate_pcie_aer_log_num = {
-+    .name = "PCIE_AER_ERROR_LOG/NUM",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load_errp = pcie_aer_state_log_num_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(v, tmp_u16),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VMStateDescription vmstate_pcie_aer_log = {
-     .name = "PCIE_AER_ERROR_LOG",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINT16(log_num, PCIEAERLog),
-+        /*
-+         * Only to use STRUCT for a post_load_errp().  New code should try
-+         * to use something look better, e.g. subsections in order.
-+         */
-+        VMSTATE_STRUCT(log_num, PCIEAERLog, 1,
-+                       vmstate_pcie_aer_log_num, uint16_t),
-         VMSTATE_UINT16_EQUAL(log_max, PCIEAERLog),
--        VMSTATE_VALIDATE("log_num <= log_max", pcie_aer_state_log_num_valid),
-         VMSTATE_STRUCT_VARRAY_POINTER_UINT16(log, PCIEAERLog, log_num,
-                               vmstate_pcie_aer_err, PCIEAERErr),
-         VMSTATE_END_OF_LIST()
--- 
-2.56.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
