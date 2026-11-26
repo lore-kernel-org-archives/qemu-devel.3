@@ -1,94 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA0606A335
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C78606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=lt/wa2y6
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=rd7XQwbb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWi4w-0005hf-A5; Thu, 26 Nov 2026 17:36:35 -0500
+	id 1xWi5Z-000684-Pi; Thu, 26 Nov 2026 17:37:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWi4t-0005gQ-GD
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:36:31 -0500
-Received: from ms-2001i-snip6-11.eps.apple.com ([2a01:b747:3002:203::5b]
+ id 1xWi5Y-00067W-75
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:37:12 -0500
+Received: from ms-2006k-snip6-3.eps.apple.com ([2a01:b747:3002:206::71]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWi4s-0007Rh-04
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:36:31 -0500
+ id 1xWi5W-0007XL-OT
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:37:11 -0500
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPS id
- AC10D180010E; Thu, 26 Nov 2026 22:36:26 +0000 (UTC)
-X-ICL-RepId: 01a21a00-c068-7b79-aaff-3dc6d50f5517
+ E12F618000BA; Thu, 26 Nov 2026 22:37:08 +0000 (UTC)
+X-ICL-RepId: 01a21a01-6579-7cb7-92f4-3a653a675f2c
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1795732589; x=1827268589;
- bh=si46+t3MXB0pUbqgfCu4lRNHiWNgsKCqOPQiOY3W/hc=;
+ s=sig1; t=1795732629; x=1827268629;
+ bh=FHJ+rtytXqoiRnL30FCLs2w8/6byDvmyldZXNLlDzXE=;
  h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=lt/wa2y6Sf0H8hli+DBKgAhYqMx1vOrVcjAcohPEQMNCy+kksd3Kea81YvuyPlJGQWb3Os9rRxnuKEoOlpFWErhawblhY71ryHDhgfh5TMfACzm1idT2NN5dCMa7/UFTTtWnm8qPzBxKwYOKjHkn3a0K7vR54DklnAOrVRmIU1kid/Quo4Um+67gfTNQHKdpO9VImItjOFugOgNsOTrSbQFna9hYZhJQKgp7hrnu1asneLVxOKo2y1CXsVNvdjN+LuBqW036YPhhGVx3nLpWQA+cbfIAToqLcsjPsbOmvk0zsjIu2W6wpXupuqe4TqLK1NPDoB086+shVFUQ6vVhnA==
+ b=rd7XQwbb7UabJ4ld4sIOmdymN1igPVoL/2Pl9RL34QQ62dcDwAqRNRDaN1fFBTbTrKVJaSWW18N32Gv7B207CP0SiGOa8CAVxuwNnrw2Zffj/8yDjULAoDABo4S/sbfToyApZWVM52MDg9OlVUYcaILcWY7IQaSuDZ5VhG0BRgKxtlIGD6hRzHv4WlhFGGV310E1UnyUJclJdYhRdXdyt/qncrMLXi1HbRbohTBV0LBCvLN9QsX347j89xiW+BA/ex161jbfT0GORB5KupiZBGheg2ql/yX3kmrZ+T/8JjRKXQpkohEH+iVrJqGJSu90PoTt52zJT03hQFvPxini7w==
 mail-alias-created-date: 1752046281608
 Received: from smtpclient.apple (unknown [17.156.208.39])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPSA id
- B893218000A4; Thu, 26 Nov 2026 22:36:24 +0000 (UTC)
+ 6147418000BB; Thu, 26 Nov 2026 22:37:07 +0000 (UTC)
 Content-Type: text/plain;
 	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH 1/3] accel/tcg: Factor icount_running_cpu() out
+Subject: Re: [PATCH] docs/devel/tcg-icount: Describe translator_io_start()
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20261126222530.62175-2-philmd@oss.qualcomm.com>
-Date: Thu, 26 Nov 2026 23:36:14 +0100
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+In-Reply-To: <20261126211851.49019-1-philmd@oss.qualcomm.com>
+Date: Thu, 26 Nov 2026 23:36:56 +0100
+Cc: qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <9491AA01-4CF7-41F2-A97C-2D494568EF36@unpredictable.fr>
-References: <20261126222530.62175-1-philmd@oss.qualcomm.com>
- <20261126222530.62175-2-philmd@oss.qualcomm.com>
+Message-Id: <8BAD7261-084A-43E0-B50C-38767294A35D@unpredictable.fr>
+References: <20261126211851.49019-1-philmd@oss.qualcomm.com>
 To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: Apple Mail (2.3901.200.71.1.16)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX7/NxSIcL98vJ
- cKwVEWRopADSvC3/eM5/H+VlJFUntanu4panuw3WU/FO9g1YoqdZNvNdeGw0QZ0A8fB/95gTyhR
- 2GF1FYB/uCAwReKnCNAbjzyhjha+rPP4eScXGOPwWj3z58kgL9p4JYTMQpXE4QQoCd8R8DJmPYz
- XV4CfU46g4q0mMIikof9f9MPNLpgHzSo80LFHpfXs4ConeTTdJP3aG+5IaNB9IFrCSccJla8Bk4
- OwCrrQHWmjIjvvmMH0YbC8oQXYPdohzJa0oPyhWVxlYWBRzPoJ2mdYI2SoGT0YYlkSb9LIKxf7W
- eKJzFiciVsKsXblEQ67htZ6EFvRpgk6H7cmCyb6441pUtuzJYgw7M659rOileg=
-X-Proofpoint-GUID: Ha7puIfJb9B36Qh8ICgFtwLgiZKTB4Ck
-X-Proofpoint-ORIG-GUID: Ha7puIfJb9B36Qh8ICgFtwLgiZKTB4Ck
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX0aVHYJGCwf9Z
- ATYdbKYC87hlUgdxvV6xulyaIqzXTB4J0puVJngmn+W9dyVaA448HDmu+Kn29iR2xHXPtaFnzw/
- cLFpi2dg7GS9HkNkclYp7+BR9hrN8pU=
-X-Authority-Info-Out: v=2.4 cv=XZAcX455 c=1 sm=1 tr=0 ts=6b08b46b
+X-Proofpoint-GUID: hiEj-cD2X-p7jhD_CjPtf5a66lT4MMrS
+X-Proofpoint-ORIG-GUID: hiEj-cD2X-p7jhD_CjPtf5a66lT4MMrS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXwpIuRgpNWf8g
+ DXIGKmVcBdDEto1mlBtx2oa9FV1JnztrBoxKOeTgfLRHzZCuARAHwhYYw0465ZTkhOS3Pu7xMjH
+ gWOWZQL7uduJqZrBL1aepOpCdibGBWFneRFCA694jsh5mUfp8DEZi4nc9YGXEf59DoZTzza2mYm
+ gK9mNXtHfsTu1brNDflpAII15GoHzdPGBeAT2o3pvFVRiTuShDwMYUOTcZ2M8+/ApVU3FzqRaSu
+ 3tpgdYy5ISjS48F1CdftpMPA4DKsnYlsJK/P7ovj0TcVmPiml6NZT2/yxOZg8d1WWlDSTxZFeKI
+ nDIouFr9HcFqI4oZ6K6QzSLJMue+etYiori24YoxTEA48AgDpV7UBC1yof1LLE=
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXykl7harLcrcM
+ Y+w3NNmMCf1CiYSiTfvpHl9ZVYLZ6UyXn7cGagwCSAT0eOcfyKUw13vWBg6pc6GfpiOmywk4+s6
+ 4s2otLogeyNEsL5jldMYswb4ry+BPW8=
+X-Authority-Info-Out: v=2.4 cv=aOhlOr9m c=1 sm=1 tr=0 ts=6b08b495
  cx=c_apl:c_pps:t_out a=kRaGL2Q7qLiahLf3O6OaIA==:117
  a=kRaGL2Q7qLiahLf3O6OaIA==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=wbbCu9YnSpm8ZdSLOl1R:22 a=_mclknXjrhVi08tC7Eh6:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=1dvAypkPtfvtFV3HS8MA:9 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=FseGFa0Ubrda8wqeEFuV:22 a=CULd9vD9bkH6r2h6Ogp5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=ltexYN57AkuIHw6_x6AA:9 a=QEXdDO2ut3YA:10
  a=cvBusfyB2V15izCimMoJ:22
-X-JNJ: AAAAAAABy5uRbtx0BBkoYvuFH27LmmeJ4tVlX4RW/FbfmuiN9wUmIv99o+KAVta+yLj7fM
- ma7/BdFk+dX7ng7kqnMmZ9ngln/hxYAdpAWuEdq+jvjZHAisl5OSbN7yD8xufi5jDeRt7Z
- 4NYJEb2IH0LOkdC5CN5sFoHTDhrmoPqJTZGxCoAyYJGvfLs/5fxoXPlPcVM8MpWGx2/pEP
- R0syy1DvrfHO7eTpIGzPxHhDY+hmC3GDxMIPc4XUAAgrb13HxnS1KuAcEkQXo3WUSzepi4
- 8wC2hxk/nNFG/4mLMluu8eUu+UA/2Dc7Z8R5J/MZcH905QmNjCvvMiiL95dWe37fLi2AoZ
- DBNdcEjz4UsMPJU5/Vo9FLqzD8c92DAqrGzDKZ5x8LRFBEFmxw5rhKhIZOhJW8Cn+dufL8
- G18MCLq/T6Odr0piO/KKxYnflVBBogrpXSjyeyT/OZRL+kB8sQqSkJunVsQNR+um7eFCcp
- LhIFO/t673chk6T+CmjrVdKqeOOwDFjZovF/4AEpngzU7YZ0i5VkpFhSY/oJBlboSt1nAn
- J7kVPfCJsBdWTykBFGcWuAGP42undfUE/5MUJx/qkjNBemgm0WlK2p+BFhl6kNpuoeQ62W
- Rbc1LWm4TPeUF6mfptMPXK3lg+U+KUBzjhOhyq2UhejlM9CfLcFeh8ih+/VimlSvn9axde
- UnFKToIhLZxp7GLNC1A7YUBVn8lpjFAyA8vyyox7aB+NcK0SiA6FbUfF4i+FFdN35fbgO+
- yglkTmmQvooHDbUYXietuHSum52vkaQCnfFBRGaSDr/vE2CYdR6x8YYTERrMDy+nQ20CP6
- 1zJSm10=
-Received-SPF: pass client-ip=2a01:b747:3002:203::5b;
+X-JNJ: AAAAAAABOzMvYhhWkUdnIoeu2SEBu0WAT3pjUin7kdNDZ8L+KHIPJ2Ztw+++CJNaStbilZ
+ nr1TvQ23iGqZps1YFUSo8g2MdGuAaYyynQUSPS7B/f1ZBTNNu5h2XXJni/eC0Bv6V7Tuka
+ lC0/euPCDD4ah5/2UMrNl/GoWoUQpb7pkEzp0cIcwUJn7N8HXR+d/EN01DY0OaV7HPlDfB
+ mofl6ax6wPKToo6+tX+hnj9qoIYdJjfMr1tCvVC4J7mb+Eq7rKOhf05L7+6e2/kGFI5jO0
+ gfdGHdaCcumKDOYLlSXz9eU7kLM8EkHeaMhX61noBge0QofS111joiAIJbo1ZI3wuVCRi9
+ rBSmPmu5XcNh145yrjiPyedxY7KsAororVDgo+zHNW/SZeaLjXVAAndIl+S4ziO7ZhmQb5
+ qSAiCNbZs6qJZXIlkbB5VjujwoylWbB6jQ332F4LRmPOYiAxjjHurKk1Wt29OWnmcPe16h
+ AmFs6B5dqetxoGUiUGyr7/tY3llPC0HDRNpsQ5ZgFqXTV1YAZg/T3BMEVCZQzW7ZEvdZV8
+ iVPlKAcdOlCAEGTH+NlIHbNPl4I1j69419grLPC/kXC6/DvZO7XeFcYleM7/d2OQF/hWc0
+ bYGmTsRvGVJn5ZDsKKkhWLYBl4UyLXVpgcR2dmdCQr93q9VacaLHDsOqGiOUgA2ZryOJLX
+ AOMezOB4JtlXCVRsx8XY2z7T3eUR4+uXQaBzHV26IcnXCGTOE9IuCAOafIttr9MZ7y0A6M
+ rBkjysG6q6AyIDHcyZb0u6XwT9/nUeZQiFlWP+3AH7SQgt4hEmKVvPBsNPiuYOMYwD/cuj
+ 5ReGdL4=
+Received-SPF: pass client-ip=2a01:b747:3002:206::71;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,59 +108,49 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 
 
-> On 26. Nov 2026, at 23:25, Philippe Mathieu-Daud=C3=A9 =
+> On 26. Nov 2026, at 22:18, Philippe Mathieu-Daud=C3=A9 =
 <philmd@oss.qualcomm.com> wrote:
 >=20
-> Extract the running vCPU check from icount_get_raw_locked(),
-> to reuse it in a following commit.
->=20
-> No functional change.
+> gen_io_start() no longer exists, and since commit 18a536f1f8d6
+> ("accel/tcg: Always require can_do_io") I/O instructions end the
+> TB regardless of icount. Document translator_io_start() instead.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-Reviewed-by: Mohamed Mediouni <mohamed.mediouni@linaro.org>
 
+Reviewed-by: Mohamed Mediouni <mohamed.mediouni@linaro.org>
 > ---
-> accel/tcg/icount-common.c | 23 +++++++++++++++++------
-> 1 file changed, 17 insertions(+), 6 deletions(-)
+> docs/devel/tcg-icount.rst | 16 +++++++---------
+> 1 file changed, 7 insertions(+), 9 deletions(-)
 >=20
-> diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-> index b1b6c005fe71..a11f2397489b 100644
-> --- a/accel/tcg/icount-common.c
-> +++ b/accel/tcg/icount-common.c
-> @@ -104,15 +104,26 @@ void icount_update(CPUState *cpu)
->                          &timers_state.vm_clock_lock);
-> }
+> diff --git a/docs/devel/tcg-icount.rst b/docs/devel/tcg-icount.rst
+> index a1dcd79e0fdd..6541d98e170d 100644
+> --- a/docs/devel/tcg-icount.rst
+> +++ b/docs/devel/tcg-icount.rst
+> @@ -73,16 +73,14 @@ system registers are the common examples here. =
+These instructions have
+> to be handled by the individual translators which have the knowledge
+> of which operations are I/O operations.
 >=20
-> -static int64_t icount_get_raw_locked(void)
-> +/* Return the running vCPU of this thread, if any, checking it may do =
-I/O */
-> +static CPUState *icount_running_cpu(void)
-> {
->     CPUState *cpu =3D current_cpu;
+> -When the translator is handling an instruction of this kind:
+> -
+> -* it must call gen_io_start() if icount is enabled, at some
+> -   point before the generation of the code which actually does
+> -   the I/O, using a code fragment similar to:
+> +When the translator is handling an instruction of this kind, it must
+> +call translator_io_start() before generating the code which actually
+> +does the I/O:
 >=20
-> -    if (cpu && cpu->running) {
-> -        if (!cpu->neg.can_do_io) {
-> -            error_report("Bad icount read");
-> -            exit(1);
-> -        }
-> +    if (!cpu || !cpu->running) {
-> +        return NULL;
-> +    }
-> +    if (!cpu->neg.can_do_io) {
-> +        error_report("Bad icount read");
-> +        exit(1);
-> +    }
-> +    return cpu;
-> +}
-> +
-> +static int64_t icount_get_raw_locked(void)
-> +{
-> +    CPUState *cpu =3D icount_running_cpu();
-> +
-> +    if (cpu) {
->         /* Take into account what has run */
->         icount_update_locked(cpu);
->     }
+> .. code:: c
+>=20
+> -    if (tb_cflags(s->base.tb) & CF_USE_ICOUNT) {
+> -        gen_io_start();
+> -    }
+> +    translator_io_start(&s->base);
+>=20
+> -* it must end the TB immediately after this instruction
+> +This makes the instruction the last one of the TB, whether or not
+> +icount is enabled, so that it executes with ``can_do_io`` set and,
+> +with icount, reads an exact clock.
 > --=20
 > 2.55.0
 >=20
