@@ -1,112 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D436606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 17:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834B6606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 18:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=Q73iIjc5
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IQvvGXV8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWdhk-0007Hy-AM; Thu, 26 Nov 2026 12:56:20 -0500
+	id 1xWe2E-0006ZD-4Q; Thu, 26 Nov 2026 13:17:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWdhf-0007Hi-1t
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 12:56:15 -0500
-Received: from mr-2002f-snip6-3.eps.apple.com ([2a01:b747:3000:201::4b]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWdhc-0008A1-VU
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 12:56:14 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPS id
- 3299818001E6; Thu, 26 Nov 2026 17:56:04 +0000 (UTC)
-X-ICL-RepId: 01a21900-12a2-730b-91ea-54ed01ff9dc2
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1795715767; x=1827251767;
- bh=8fhhChzAZkPvLNecmDufydiFYxuMhL8zNn1PPLXOhbY=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Q73iIjc599PelmS50qJUJzS2UtE8KGvibHV3jFcXc3el2aMMRODweAarLEmleMJu8x+/RgFk0D0Zj4FmbU/7v7lv+Qm1XR1auR16ZsvV+B8IgBXuxePiLQlhLmLRSqEMT3chF1bYLgj6PlYW+2oE+kiTthrgw0QXsM0KiaHIi9ooDTX7XFQAOf1+svNIGCyZt9AVEm3dJv9YYWmzHKxd4a7+fby9gUguihhJSIQRdUF6J7EVhh6lHFM4wsZrzHKucaCk9g2JaSMvlbSORerSDf4tyCmaJLyOnz5DLU07MhGj3MtiRz8vLB/cdp7K5pXqbjZKo/MRCHM1I+yJNXrJyA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.200.36])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPSA id
- 47E341800328; Thu, 26 Nov 2026 17:56:02 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xWe28-0006Xn-69
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 13:17:24 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1xWe26-0000lM-C1
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 13:17:23 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-c506a231b88so979646766b.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 10:17:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1795717041; x=1796321841; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:content-type:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/CqbHUpdbaxJLI4Ndxuhs7Ym9HkvW+lXC3QtuXztVFw=;
+ b=IQvvGXV8McRAxseL6vgbQMNABawerYyN5AlkVD0HlAMo7GcIlLsyHW3uTlCSAa0Zke
+ Mv8OIO7gHKpElOZHxrE1WztVVttkUcLj2SX+wnuo26mAPAsMCVNeN8FwE7Zy4W6AUhxO
+ xgz/B1e4gZToYPadpBXc4Sr6lmmuGVvjnN/TAFTIohjOVL9gcSeu/ROSJz9F3yk8Tg+0
+ J3YPzi2YVi8RhdGwNhtFR/dfPAWE/bs31TRw4ET9YSe9rUBj+ILETW/4jC/XIbXN9dhS
+ VaYPmOD6rWajGw+Qpi3adDq3MP4TiNTm1H4pUPWYOWZjwFucNJZVQo8/fudUImEPW4tX
+ oQSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795717041; x=1796321841;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:content-type:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=/CqbHUpdbaxJLI4Ndxuhs7Ym9HkvW+lXC3QtuXztVFw=;
+ b=jLyiro8NZ8ltY5KCz1WQsdwNtEQ63zr0t70S8PCCjvpgQL3p9SFXddFOjoIFSHQP1e
+ COEkAIrBDZmE9Q4AkKxUqWYpYSUTwwws4TwZi5gtktHlfH1G9t1EW6kUzLTqhY2AqPlk
+ y+Qema0SqBZz5fd2c0dK24uWW1VdjFqpgZq0Lk4BuebHvHkIobQKrk/xFGppnpco18Xb
+ gRwkehRbcwph5Nfjfqf0VnoMyxTOE9fvTzJD2xT4G6q+s3lfFmY6P87vsTjDMgSDST/G
+ YREp1C9iQoJH39+1dNfgtiCsNQ/TyltPs6+6PH6iGsnmODlDRUKZwyRR4L7nXo1AADgv
+ MV6g==
+X-Gm-Message-State: APuU4Z9LkLupmZU1b3pvOPTu1JJ6w9myCJIRf4Jd9EuUAtgnxCIpXwEk
+ sSI4r++dCrkp3alPWpd11Px2oe3kSok3Li/Tsk6+msyk5o5D2MDpaR3z
+X-Gm-Gg: AZFdTZdIcbobnRR7ACpedxcYdj7nrWL8pktIuzzgpbS4rTMwAg8/Ouj6gEPcRvFQwym
+ ZYEDN8BHski9RUtt6/T7S7ZlukkfsfoKbxIVAQ5xjFZaiumPSvn+KCN3mtZRBQ2wjHWzpBPEhpb
+ vwZZj8JEUkNWcUZcm+ij+Z7vgcxtvhsPrVfEiXmrWkuGKmegZU0IrPcXpITRuhsJ8cGYhduUY00
+ HbBNfEMOwRVCQDsikW4ZLmEz5EzUo03/3PEpGf4nXYNN3DoP4FGI5abKjwgji3ONeUrl590D3n2
+ sEWMjjFTV4wo1KD0FldJCmFWt5sCutGA2ZObQ3mj7RlD2UZXWn50+PCXXEmKw+02K3lL8KFhYEq
+ 2c4W5wkDg1/Y9ODE61yz8Ro2UWuHX9cac6W22VY1gKt4SR13aw1Vfwi/fmLakK3pAj+NLitRaA3
+ 0Xdah09l99kslg4j/0ikBg5sOXhe8ZBhb0KMkYyTW6pQRzWeV4+JSYoVlC+lRHTuxk+CxY7C91d
+ buCnj5ERuEuJ7yBh+V3xMkD4NKFsrKtbbBji34zZSuLfZsQWQNAf4sRAm5Jg09uAX7wL8pnDCn6
+ 6O1y89ejy12NctlscuYWP4A=
+X-Received: by 2002:a17:907:3c8d:b0:c4d:8e7:29b9 with SMTP id
+ a640c23a62f3a-c513a43532cmr1693187266b.5.1795717040325; 
+ Thu, 26 Nov 2026 10:17:20 -0800 (PST)
+Received: from tulp ([2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c513ae8ce16sm769498966b.37.2026.11.26.10.17.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Nov 2026 10:17:19 -0800 (PST)
+Date: Thu, 26 Nov 2026 19:16:36 +0100
+From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v2 05/10] iotests: skip preallocation tests if not
+ supported
+Message-ID: <awh3gvqh561nkTQ1@tulp>
+References: <20261125191701.93931-1-bogorodskiy@gmail.com>
+ <20261125191701.93931-6-bogorodskiy@gmail.com>
+ <awgBfVWItT68xQEW@redhat.com>
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [RFC PATCH v3 0/3] arm/kvm: select an nVHE-only EL2 with
- SYSREG_ID_AA64MMFR1_EL1_VH
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <fa7522a1-1d0e-4bdf-aad9-767c08878cd1@redhat.com>
-Date: Thu, 26 Nov 2026 18:55:50 +0100
-Cc: Haseeb Ashraf <haseebashraf091@gmail.com>,
- Khushit Shah <khushit.shah@nutanix.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Haseeb Ashraf <haseeb.ashraf@siemens.com>,
- Eric Auger <eric.auger@redhat.com>, Marc Zyngier <maz@kernel.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <9746F4BB-6688-4B39-AC6E-DC0295599927@unpredictable.fr>
-References: <8A57A0C8-9E85-4BAC-803A-DAFC6DBD6612@nutanix.com>
- <20261126062002.136401-1-haseebashraf091@gmail.com>
- <fa7522a1-1d0e-4bdf-aad9-767c08878cd1@redhat.com>
-To: Eric Auger <eauger@redhat.com>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA3MCBTYWx0ZWRfXzZ9U33Bqmp+N
- VP4we7rMqG8j480doLR0COMOd/dTzgwtduQJiFvy3qU2iwxEEqaIHSqV1aWMmXJJeJvibx4lImk
- /pD9B016Ws1dv2a18npL8SRBna9i7GjNFRi6W34dR1vnpDDvrMhJeKdj8tXJ6/pDd/pC3TJO8rv
- m+YYcI4ZDCQqD5hrGD0Hk0/A8NLqnfiVPOftehuX+wH4hbH8nYGZsRaV/3/CoYgwPJsUNPPNM4W
- y/V8asB0qR7LaggpuLUiDeaakn7v3psSUUgfXkq+gKNxI5xPy+j9qGMab46mOngzTNw2bL4tS+/
- uQCQhqFAnCgSQS3bSGmGEZhbONaIUwPDMUbYggPzholscr3ZeBLhcX1TT4uWPA=
-X-Proofpoint-GUID: R24cERRUtmaM3jZFPe9MfxytT2fD3nwH
-X-Proofpoint-ORIG-GUID: R24cERRUtmaM3jZFPe9MfxytT2fD3nwH
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA3MCBTYWx0ZWRfX3stmnvbP/ky3
- fCgEMqRBs2NZtqb3lstKjTlDlHodONGsMi1+dLMzicpcL9PmV7lv8OwqUEzynvfo/RXHUvwN4yQ
- Y92ce4eu3YgIyYG1SRERQTrqKp0oUNg=
-X-Authority-Info-Out: v=2.4 cv=XZAcX455 c=1 sm=1 tr=0 ts=6b0872b6
- cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
- a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=wbbCu9YnSpm8ZdSLOl1R:22 a=_mclknXjrhVi08tC7Eh6:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=20KFwNOVAAAA:8 a=aMxLMesAV-4Bx-ERIwIA:9
- a=QEXdDO2ut3YA:10
-X-JNJ: AAAAAAABJo+6C+pgujg2X+Of6/SxSPUScWOJG1a2iAjDB60Eni78lwFoODYGAFSc4BUc4f
- Q7AZfnBj1V8gwv5dLB0ph1uO46wKzKMUNLoRYgcMqSDMTW6+2+t1C7SWmc3iC4F9z4LQR4
- jey0tk3eFlj6zuqUC9u2LLTKCXK5e6DXAIeCiqogIOLZ7ZfN6/lQisl89I++GqYf7VBR0p
- mUWClCr4Kjfl0upVHzO2pbvvjASAOHyIUc4eHL/UBzSZkSt6TebXJ7jtJEDVmeW+IQQaSD
- Ct7aT+I8SJ0RYY3Cei/EjaThDfOb566uxObISJeV43VL5huHY2Iyt+UeKqhDcaajF84jJA
- IK1xCwLAAgUJDsHGHmojigds9s9610tZJPoXXTBO/byr314LPk5/pI9N+X3Xo6EvtsT7nR
- Em9S6hghIpzJxddwnFkc2fiM6s93lKoaFtpa8ctSItrK0ZDTtoP+XWqyoRyd4M8CLcg+cb
- T7/Cwlw8vDr+Ndv7FgZFIoN7VZiCc98QXsRxJGP2KCQ7WYH0zfAWssltHHc9JjfKrv2sCX
- d1BFPuwErgebHyxfRiVUi9+JoYIHpPopzc7x7QP/bwYw+alD8aOb8/0QSYOpTLZXDVjYxU
- 3ToOmuvYNxMe8LhJd3lKC6WkdHYM1f7M59WL6F1AhXga9meI4aZskhKoQ7QnVOVOBU0XyE
- 6cT7zA/bMlLz+mDJ0DhkMRVkCvVwp0ynA0uno8DAk1xdpZn+D7bW8N46mftLuHz56MDFRj
- JgD6eX1E2N0OFVwuvHdNBoeCcKB5Hd8cA5QNDdCyAlPN/ZTSDc5G4OS5nx5tf7Z/bxOGjT
- G2apf51+UZzbzcfIlU9FM10Y7o7+vRRfvdvXpZN1jLm9sj4gQkvw+ACw0PySocc71onbIq
- SoN1sfHt38AZG6oeLwZh0ip+I+M7msmzKSoGqaX6TxqGi9wt1RyGG7rnIl6QS3ZGDvAGpr
- Vs8cKT9HrbFiNwE0wkyP+HuO45lE08JnzDPl3tBkwKlq5k/VZC/lBuwMZY4oBWS2RHJS7e
- nWbtanNJVPfDugCo40a1xfFsaiOAf9a/ln6U0q/e+JJcgi5/5e+1WBs329tect8gQ0MUp/
- eJCQs0XcRHPjHRGrAyj/Lrt3I5N8v3UofcsRelgzI819CHu3QVX98inxEsE9VwnEYzFrSD
- uDlIQvzcACarZz57YRRHBL98KU3aL930YwRjWc05sFX0hUJtW8YOclh70tqn8fQPNu+CS3
- uhImCbruf48dt8xlcInaK0rEDztd5XYemhkyi3BDOb6S21GMt67EmTlQN1de+WaiIpWzS8
- uXFO2mBc9xt97VAIHwKMoQMhtYFgwrZNUPG4AMNLmje0VNwn2GRn+ibS+HfN2XDQ4ktBtF
- CGHBFGJHyVsAyvLIBX/KjrCbJJH6tdtVRZ0dtKaVgrYGRe41ex3cM1gD+7CSPhPknlt+XP
- NiBj5WwVeKgUaG9Apndzuj+I+JWmB66614P2M96c1pZlhggJCeE9y2Wjle3DQ/gJ0d9pYb
- mMylHdedyYUps6fX1wNSvGF7+y5Wd6XoJGNChtT2cTmqiySUp0nbbjAwVj/SyEIa0e4Owy
- UlrVlFTbylOcwDImtmj0f2fg+AV6Fb8Td/hnlwP4ubOzutB0Cjj/b281QYmreTdt+asmTL
- vC4=
-Received-SPF: pass client-ip=2a01:b747:3000:201::4b;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+In-Reply-To: <awgBfVWItT68xQEW@redhat.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,73 +105,82 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+  Daniel P. Berrang=E9 wrote:
 
+> On Wed, Nov 25, 2026 at 08:16:55PM +0100, Roman Bogorodskiy wrote:
+> > Skip preallocation tests requiring efficient zero writes if
+> > not supported. Support is detected by probing
+> > "qemu-io write -z -n".
+> >=20
+> > Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> > ---
+> >  tests/qemu-iotests/298 | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> >=20
+> > diff --git a/tests/qemu-iotests/298 b/tests/qemu-iotests/298
+> > index f2b94077f4..869bdb3242 100755
+> > --- a/tests/qemu-iotests/298
+> > +++ b/tests/qemu-iotests/298
+> > @@ -18,6 +18,7 @@
+> >  # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+> >  #
+> > =20
+> > +import errno
+> >  import os
+> >  import iotests
+> > =20
+> > @@ -32,6 +33,15 @@ drive_opts =3D f'node-name=3Ddisk,driver=3D{iotests.=
+imgfmt},' \
+> > =20
+> >  class TestPreallocateBase(iotests.QMPTestCase):
+> >      def setUp(self):
+> > +        with iotests.FilePath('zero-probe.raw') as probe_path:
+> > +            iotests.qemu_img_create('-f', 'raw', probe_path, '1M')
+> > +            ret =3D iotests.qemu_io('-f', 'raw', '-c', 'write -z -n -q=
+ 0 1M',
+> > +                                  probe_path, check=3DFalse)
+> > +            if ret.returncode !=3D 0:
+> > +                if os.strerror(errno.ENOTSUP) in ret.stdout:
+> > +                    self.case_skip("File backend does not support "
+> > +                                   "efficient zero writes")
+> > +            self.assertEqual(ret.returncode, 0, ret.stdout)
+>=20
+> I guess this works, but any idea what the actul underlying missing
+> feature is ?  Is it something we can check directly instead of
+> matching on stderr strings ?=20
 
-> On 26. Nov 2026, at 18:13, Eric Auger <eauger@redhat.com> wrote:
->=20
-> Hi Haseeb, Khushit,
->=20
-> On 11/26/26 7:20 AM, Haseeb Ashraf wrote:
->> Hi Khushit,
->>=20
->> On 26/11/26 11:38, Khushit Shah wrote:
->>=20
->>> There are many such fields like PAuth (APA, GPA, =E2=80=A6) and SVE. =
-They are
->>> not part of the SYSREG_ framework as there already exists boolean
->>> properties for them.
->>> (Another way to do this is having -cpu =E2=80=A6,vhe=3Don/off =
-property)
->>=20
->> The v1 series was closer to what you are suggesting: it added a
->> standalone `vhe=3Don/off` property and used it to select the
->> requested KVM vCPU initialization mode.
->>=20
->> Could you please also review the v1 implementation?
->>=20
->> =
-https://lore.kernel.org/qemu-devel/20261121095636.289814-1-haseebashraf091=
-@gmail.com/
->=20
-> It is a valid point to question the addition of new vcpu properties =
-(especially low level ones like this one) while we plan to introduce =
-those SYSREG low level properties. For composite properties which stand =
-at higher level (tweaking several knobs at KVM VCPU init or IDREG field =
-level) it still makes sense though.
->=20
-> Until now we have proposed for the host vcpu to expose SYSREG props =
-only for KVM writable ID reg fields. On the other hand, named vcpu =
-models require to have ALL ID reg fields exposed. If we were to extend =
-this infra to other archs or TCG, we may also need to expose ALL fields =
-and just have different implementation for setters/getters depending on =
-the writability mode (REG WRITE or VCPU init or anything else).
+The actual missing feature is a working handle_aiocb_write_zeroes().
+Thus, one of:
 
-Hi,
+  CONFIG_FALLOCATE
+  CONFIG_FALLOCATE_ZERO_RANGE
+  CONFIG_FALLOCATE_PUNCH_HOLE
 
-Given that for HVF we need to say whether it=E2=80=99s VHE or nVHE =
-before vCPU creation time, I think
-that maybe bolting it on as a vCPU property isn=E2=80=99t the best =
-idea=E2=80=A6
+and filesystem support.
 
-Thank you,
--Mohamed
+> >          iotests.qemu_img_create('-f', iotests.imgfmt, disk, str(10 * M=
+iB))
+> > =20
+> >      def tearDown(self):
+> > --=20
+> > 2.56.0
+> >=20
+> >=20
+> >=20
 >=20
-> Thanks
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 >=20
-> Eric>
->> I changed direction for v2 following Marc's feedback against adding a
->> separate property.
->>=20
->> Thanks,
->> Haseeb
->=20
->=20
-
 
