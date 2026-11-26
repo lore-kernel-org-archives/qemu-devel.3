@@ -1,110 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DF8606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 13:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A8E606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 13:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=avT8zMiq;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ehI/XkRQ
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GuNLjkZ+;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=HKSsgKNy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWZHz-0003KN-Dq; Thu, 26 Nov 2026 08:13:27 -0500
+	id 1xWZMP-00052Z-Mw; Thu, 26 Nov 2026 08:18:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xWZHt-0003Ji-K2
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 08:13:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWZMJ-0004yG-TD
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 08:17:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
- id 1xWZHr-0003mX-Ox
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 08:13:21 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWZMH-0007ET-AD
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 08:17:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795698797;
+ s=mimecast20190719; t=1795699072;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=1f4sF24UlZKx4r0Z5PHsqveLwYVfAewKIjdGRZDzDJ0=;
- b=avT8zMiqgbPSgXma3YSETRzdoMxsLwvFE3vFV+3LPd2SuynYYFKgDSJyIX6vNgxoGl0cXy
- ZwJ8VOZ7duxrj9CaYSgDlqXdiUPzyfLmos+OcKi3azzSsxwhcJJQdMNm8gfY/GetCKsFAm
- w0I4GY2Wo+hqcICQ8YkNnVZ1vpDHZQI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BzbiHvWi83sHXMdl5YBiX258AVKMaQj+Qqhk9Bn434A=;
+ b=GuNLjkZ+YNJpLD/+3f1ZBhO0/KK/XKO0xhNLKeuLuktv98iNyU24dTRDDR3D16KBhEnrGC
+ ZN1GrXEQkzMspk65m48M+uHWInpn0AhuTk6pz1gpIQyVV8oT7hIbMmrM2dYjMkUZItY8VF
+ WVxQIHUXtfZ4+c3kiyTFRyqrtKPiI3M=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-PHlCG3DaMA6TjUvxGwlhrw-1; Thu, 26 Nov 2026 13:13:16 +0000
-X-MC-Unique: PHlCG3DaMA6TjUvxGwlhrw-1
-X-Mimecast-MFC-AGG-ID: PHlCG3DaMA6TjUvxGwlhrw_1795698795
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4901562b819so5107400f8f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 05:13:15 -0800 (PST)
+ us-mta-691-Vcr9c4Q4ONud9hRzv37xIA-1; Thu, 26 Nov 2026 13:17:49 +0000
+X-MC-Unique: Vcr9c4Q4ONud9hRzv37xIA-1
+X-Mimecast-MFC-AGG-ID: Vcr9c4Q4ONud9hRzv37xIA_1795699069
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-55d3e7ba879so133241801cf.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 05:17:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795698795; x=1796303595; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1f4sF24UlZKx4r0Z5PHsqveLwYVfAewKIjdGRZDzDJ0=;
- b=ehI/XkRQM8UBnUl9JfXs7vvu7pjsboYlXV508jRsnC4TFM1aRVb/Z3JVSi4rxYzq0x
- Tw5e/O47UVmnRECcgGC2cnOPFf+9PkZrQ0/gyWxeha8CXv+/Cl5s3SvFkrpfX0rt6mal
- Y2As/nmO/OsNnYCxqkK4Gf00nXzwI9rvembYxUF07iF4z9ThilTOLitf+fWuUqF3BIqx
- D2IQejhm5WR3Lwrlv1AQGnPxMcz1b7yTWbhCMVg2aWhFBVflHjZD2Z3wvFrnZ8I6MQ0n
- Vb7QLmMS1Km+DDKl/WcYRA6MS2ifm21rXZK9FwHwdauvbYmKswji9gzpdhtaid29jwEg
- RCcg==
+ d=redhat.com; s=google; t=1795699069; x=1796303869; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BzbiHvWi83sHXMdl5YBiX258AVKMaQj+Qqhk9Bn434A=;
+ b=HKSsgKNyBtL4Fsgh5iHJHvgHYc3HRuW0EXg3rTVZFBVUqkutlr7+D5Kl0WhTMgmArW
+ koLtXxFORgIX8rK6Rsz1LDasRiPNEUOUcSiyvoyKGJbCb6XZ1lgGufVddud+6FxKbSdL
+ Pwu5gGqfH1bsJnzixdczQJt2/jXBl71vF2qQQaj0+pmWZ61FUMb5N2OUnYDG9q6Qets3
+ 7fLBMj4pX0kL9xVatqzKpRbHNR/jyst/Q2HcAGFxv5652reFFl2Vaz/G97LTiJ52Hsty
+ D3JsivkNnrqHwpskmyhWLs6mpE8cRUbNHoSlZ2MB1plIYR5AZHzdj9uwqXCpExMAeyZS
+ DV7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795698795; x=1796303595;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1f4sF24UlZKx4r0Z5PHsqveLwYVfAewKIjdGRZDzDJ0=;
- b=DKyLh4K+S6TioLJnUbdg+42AayXQTTzdIc2SAQ1e8DBCPtlsCjUfX5K06EIO+/FUYX
- Rot0FjrF4/+0TDp/XiZ9k7gAGHGFUvsyzUsX4ZxEvUF1TVXNhe6lHyKPDQYOy24SnAos
- eFbhXGcAkAeZnTicjrK7cH1OVajvDpWpwm/T7ulFrBIboep9/3gnsHTUeG/V1/Ty49GZ
- AmMLdcXwmfQcxdPsJChLME+1RKYmkvawK95deJNLY9p8gvVN/IC8/rU3YYXwcshOZoK+
- k/nID/CAbAuIQnpcIfKrxtdRTvRngjxPDHsaJwQCgwp3qsnS/144Odcv9Oe4uFawvFqf
- DdIQ==
-X-Gm-Message-State: APuU4Z8pwmIT08c7fLf8C1Yu40E154PxauK8aeuXZ9KLVF1U4cMAlyf9
- 3+c/iwlbcYsj32Rx0Qvor5S50XNPy40LeSqr2Htg5mQj9ZJ7XyUJP/f20UD01BER07J3pPNpjKz
- ux6sL4w/hWL0SCfchaH2bKT0IezPwmYlsFwjey9+uI9hmeWsSq28yTKwVVdqJL0wyUOCKiaz+TA
- Cr6tPC/6H7JPvnHoOIP4vssO5g5r5pvkhGqhFWTm8sYaOu
-X-Gm-Gg: AZFdTZclA8qI0/F94dx4hZXGhtgLnrOnAcVWrLxCEYu6xhyCrTVC22Rbdr5ad0c5umd
- /eQyq8GZEQCNHqV7YifZyllB3dboEd69iUhPQ5/XN+DUFUVPWx997qEgLaofGWl9n3trKI6Ta2d
- trhbGWv7OjGyxHXn3MH/+sV5Peq/n1Au+9Z1PKsNM8e4MxF/2Y1A2SozxxYaSRve1om9W0Iiywa
- yR4hxTkF0cFAJNQ+PavQFdtawtjtYCeA23i9NIyKCJgzl+mRgLCEpI46ZZZSB1l9z7GA2eDOzW9
- KVMU20n7zhEW1geyn5SLmoSOddNmCNKYW+mee+Pmi9CUZfzdTXTMRi2qQjUUlUljqXiKWE7hM3b
- e7nkEIRF+xXUZZD864QKWhl9jUiuz83qMpZJl1+zlx/h0J2NRyzsTDZ6WeDeYczuUwWc=
-X-Received: by 2002:a05:6000:290b:b0:4bc:5a78:9d9 with SMTP id
- ffacd0b85a97d-4bc5a7809f8mr4214177f8f.55.1795698794854; 
- Thu, 26 Nov 2026 05:13:14 -0800 (PST)
-X-Received: by 2002:a05:6000:290b:b0:4bc:5a78:9d9 with SMTP id
- ffacd0b85a97d-4bc5a7809f8mr4214106f8f.55.1795698794384; 
- Thu, 26 Nov 2026 05:13:14 -0800 (PST)
-Received: from tcalifan-p1g8.redhat.corp ([213.175.37.14])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4b8e564e39asm9864892f8f.57.2026.11.26.05.13.13
+ d=1e100.net; s=20260707; t=1795699069; x=1796303869;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=BzbiHvWi83sHXMdl5YBiX258AVKMaQj+Qqhk9Bn434A=;
+ b=EBCdyVkG2qWgMd50n8/5Wo3873F0kSxZO6s6WWRk5NMU60lnLAb8V//iOYVibF8UMR
+ wY1Uih42qkR/nYqq6OF7nUymaDMRcyK2TB1AsMC8IGUs/4ySzxr/yZ3uQtLUSkMwWPV0
+ QpG9umRRW8YQg94MBNJ6W9QROq3OHSKkubtrjz2SMbhyx0nFsuJRd0lxLJuOGZLV+6iu
+ s3E45LMSVGZET9E0Lx3jeZ5HgClnOYsdVItpDSri4IboK5LQ8afAdRRqZctYCw+3sXVv
+ SdkqSfF8t2m84PAh5/Ct2Nm7guPECml1fae9GA4hfIa0twN+8z+Y72U7O5Y7JSExwn16
+ DV6Q==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEXn6JGYZG1boyYWqgKlpddaV/Plq+BLcU0X/OcWXs3+BKfwQtkziXiGdFYsvYiEvFtiWnsjXB8mYhx@nongnu.org
+X-Gm-Message-State: APuU4Z8qnFKJ/CeV7Q35PdpTdApiS3HgOARaKfv8kCLzfIZO63zOwTfA
+ yTa6u8lR1T1kgukXVPiCSMawm4x1ihtfnlPxiH5X1Fuet6cFo+pbuLhbs4FftpRRj9q2FlHhWYB
+ 4pv8nbarFKkFDlOYjP/hQL57oKQHsStr778H7JP34P3HCMPoUslMbTF/D
+X-Gm-Gg: AZFdTZeXe8Z4rEGSFHxfdrAieZKQhl0+8Vc7V1F1JDYQ+O390t291IfOzfgpjnc9SBH
+ Q7hrJeCQyhTqV6b9NzG1yFkPP3Yu6GEOF+aM5HJSM0e9NfJmo3Gz2QiivQe6htCmsLB7ORvKnNo
+ 18G4wzIukqfrdTfr/+j1UxBQSB+1eXzsVamY2kOohe2BwBB02S/loCftfTmjm6akGkfHU9CEDYW
+ 5e2xmDWqSAUr/QvOSCLDWOrSpOR3gKUYdchiPfa0beUbMwdL0yi+4N3Wm2/No7/6dfhpjysvD8W
+ rb5ihUeCCWyKid0GU0+eiQhY+T1BCkGOU9ONzydowLRizZv4z+430hE5pNOKVk3LitA+GMXtLWD
+ G7KphqKKa4au7uMXBR722h8IOVb6Bzv2cOqImAzpodeya
+X-Received: by 2002:ac8:5d04:0:b0:536:d47:257 with SMTP id
+ d75a77b69052e-55d76a51101mr381503971cf.51.1795699069226; 
+ Thu, 26 Nov 2026 05:17:49 -0800 (PST)
+X-Received: by 2002:ac8:5d04:0:b0:536:d47:257 with SMTP id
+ d75a77b69052e-55d76a51101mr381503391cf.51.1795699068670; 
+ Thu, 26 Nov 2026 05:17:48 -0800 (PST)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-921349d14d1sm190481376d6.18.2026.11.26.05.17.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 05:13:13 -0800 (PST)
-From: Tommaso Califano <tcalifano@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Guo <guobin@linux.alibaba.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Tommaso Califano <tcalifano@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH] hw/usb/dev-storage: Fix heap overflow on BOT reset
- (CVE-2026-121860)
-Date: Thu, 26 Nov 2026 14:13:12 +0100
-Message-ID: <20261126131312.47658-1-tcalifano@redhat.com>
-X-Mailer: git-send-email 2.56.1
+ Thu, 26 Nov 2026 05:17:48 -0800 (PST)
+Date: Thu, 26 Nov 2026 08:17:46 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ philmd@oss.qualcomm.com, peter.maydell@linaro.org,
+ berrange@redhat.com, eblake@redhat.com, alex.bennee@linaro.org
+Subject: Re: [PATCH 1/3] docs/devel: relax policy on AI-generated contributions
+Message-ID: <awgxegpODDyRxN2r@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261124164217.1768040-1-pbonzini@redhat.com>
+ <20261124164217.1768040-2-pbonzini@redhat.com>
+ <awX8HEfLfE2x4hu7@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <87tsl3yeln.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=tcalifano@redhat.com;
+In-Reply-To: <87tsl3yeln.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,53 +121,67 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Handling a Bulk-Only Mass Storage Reset only reset the state machine to
-USB_MSDM_CBW, leaving active SCSI requests in flight. Subsequent CBWs
-would overwrite s->req without unreferencing the old request, causing
-late callbacks to pair stale transfer lengths (s->scsi_len) with new,
-smaller request buffers leading to a guest-controlled heap buffer
-overflow of up to ~124 KiB on DATAOUT transfers.
+On Thu, Nov 26, 2026 at 01:14:12PM +0100, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Tue, Nov 24, 2026 at 05:42:15PM +0100, Paolo Bonzini wrote:
+> >> +The QEMU community is a collaboration between humans, not AI agent
+> >> +façades. The following items MUST be written by humans:
+> >> +
+> >> +- cover letters and commit messages
+> >> +
+> >> +- responses to reviewer comments
+> >> +
+> >> +- issue descriptions or comments
+> >
+> > [Just a pure comment, so not a request to change anything at v6 to block the
+> >  pull at all]
+> >
+> > I think this is the part I raised the pure question in the upstream call
+> > today, on that we won't really be able to identify what is written by AI,
+> > and what is written by human.
+> >
+> > If we can't identify that in a realiable way, IMHO the policy here will be
+> > hard to carry out.
+> 
+> Yes, but that doesn't necessarily make it not useful.
+> 
+> We have many laws on the books that can be broken, with and without
+> intent, in ways that are notoriously hard to detect.  Tax fraud, for
+> instance.  We keep these laws anyway.  They serve as a clear statement
+> of what conduct we expect and demand.  We make some effort to catch
+> violations[*], but accept that we cannot catch them all.
+> 
+> Could this policy be useful in similar ways?  Not the punishment part
+> (there is none).  But a clear statement of what conduct we expect and
+> demand.  Something we can point to when we reject slop.
 
-Route the class reset through usb_msd_handle_reset() instead of
-open-coding the state transition. This also ensures s->needs_reset is
-cleared, allowing a guest that triggered usb_msd_fatal_error() to
-recover without requiring a full port reset.
+Yes, could be. I personally trust QEMU maintainers to at least not abuse
+it, then let's assume it's less of a concern on courtesy or wrong
+judgements.
 
-This aligns with the "Universal Serial Bus Mass Storage Class Bulk-Only
-Transport" specification (section 5.3.3.1).
+The other side I didn't mention is, it'll just still block some very good
+patch proposers, who work with AI, update based on AI's commit log, do N
+rounds of review and tests before sending, then when sending it proactively
+state the AI usage.  In that case to follow this rule we must reject it, or
+forcing them to rewrite commit log, which is awkward.
 
-Cc: qemu-stable@nongnu.org
-Fixes: CVE-2026-121860
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4578
-Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
----
- hw/usb/dev-storage.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Just to say, I never thought we shouldn't reject AI slop..  It's just that
+I thought we can reject it even without this rule making good people's
+lives harder: maintainers can always make the decision reject something,
+right or wrong.. without any reference needed.
 
-diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 040cf15051..4f1e33506d 100644
---- a/hw/usb/dev-storage.c
-+++ b/hw/usb/dev-storage.c
-@@ -358,8 +358,8 @@ static void usb_msd_handle_control(USBDevice *dev, USBPacket *p,
-         break;
-         /* Class specific requests.  */
-     case ClassInterfaceOutRequest | MassStorageReset:
--        /* Reset state ready for the next CBW.  */
--        s->mode = USB_MSDM_CBW;
-+        /* Reset the device for the next CBW.  */
-+        usb_msd_handle_reset(dev);
-         break;
-     case ClassInterfaceRequest | GetMaxLun:
-         maxlun = 0;
+> 
+> [*] At least in non-failing states.
+
 -- 
-2.56.1
+Peter Xu
 
 
