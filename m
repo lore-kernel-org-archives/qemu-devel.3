@@ -1,94 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B54606A337
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA0606A335
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=C5U6NtxU
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=lt/wa2y6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWi4M-0005H3-94; Thu, 26 Nov 2026 17:35:58 -0500
+	id 1xWi4w-0005hf-A5; Thu, 26 Nov 2026 17:36:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWi4K-0005G6-Fc
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:35:56 -0500
-Received: from ms-2002b-snip6-11.eps.apple.com ([2a01:b747:3002:204::15]
+ id 1xWi4t-0005gQ-GD
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:36:31 -0500
+Received: from ms-2001i-snip6-11.eps.apple.com ([2a01:b747:3002:203::5b]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xWi4H-0007PW-1G
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:35:55 -0500
+ id 1xWi4s-0007Rh-04
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:36:31 -0500
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPS id
- 25C09180010E; Thu, 26 Nov 2026 22:35:50 +0000 (UTC)
-X-ICL-RepId: 01a21a00-31bf-7cc6-84fc-0809406eb7c7
+ AC10D180010E; Thu, 26 Nov 2026 22:36:26 +0000 (UTC)
+X-ICL-RepId: 01a21a00-c068-7b79-aaff-3dc6d50f5517
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1795732551; x=1827268551;
- bh=xhgty6eqGmcEpNmsO7RwVgtegKJTs3yyndFkiNi/VHc=;
+ s=sig1; t=1795732589; x=1827268589;
+ bh=si46+t3MXB0pUbqgfCu4lRNHiWNgsKCqOPQiOY3W/hc=;
  h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=C5U6NtxUdCQXRcI9geZy8vzjsn1qoyGca/6gtngwljqH9h43hAW0DjamA5eSrkniuMiSuP4aizfbVAn+ZuPFT0vo5y8ZQOpbtJBr148KnuuxOryTniym8gIKLxVuyqE+ADFwoHzOJ478WRNK+ll9nPxM9n9hKbnfZDH3lvUS6exV+paXmp6jh5BGcreOXk7s3HX9Sbl8gU9Kf3p2z3DdjBajnJBRiIxv2mjEy5EffZhFOtWrFErE1HJV0NMGdGA1jRJ2bMCN6KifvgTWY0OqC9brZvxNGxt4SemZPSkK+jX/lX7RvBwy3VN7KNQM5/Ojla/B5YZ7A2zPO4vkp3P9Uw==
+ b=lt/wa2y6Sf0H8hli+DBKgAhYqMx1vOrVcjAcohPEQMNCy+kksd3Kea81YvuyPlJGQWb3Os9rRxnuKEoOlpFWErhawblhY71ryHDhgfh5TMfACzm1idT2NN5dCMa7/UFTTtWnm8qPzBxKwYOKjHkn3a0K7vR54DklnAOrVRmIU1kid/Quo4Um+67gfTNQHKdpO9VImItjOFugOgNsOTrSbQFna9hYZhJQKgp7hrnu1asneLVxOKo2y1CXsVNvdjN+LuBqW036YPhhGVx3nLpWQA+cbfIAToqLcsjPsbOmvk0zsjIu2W6wpXupuqe4TqLK1NPDoB086+shVFUQ6vVhnA==
 mail-alias-created-date: 1752046281608
 Received: from smtpclient.apple (unknown [17.156.208.39])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPSA id
- 516CE1800129; Thu, 26 Nov 2026 22:35:48 +0000 (UTC)
+ B893218000A4; Thu, 26 Nov 2026 22:36:24 +0000 (UTC)
 Content-Type: text/plain;
 	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH 2/3] accel/tcg: Factor icount_to_virtual_ns() out
+Subject: Re: [PATCH 1/3] accel/tcg: Factor icount_running_cpu() out
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20261126222530.62175-3-philmd@oss.qualcomm.com>
-Date: Thu, 26 Nov 2026 23:35:37 +0100
+In-Reply-To: <20261126222530.62175-2-philmd@oss.qualcomm.com>
+Date: Thu, 26 Nov 2026 23:36:14 +0100
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  qemu-riscv@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <570C5409-93FE-4642-B343-5230A9C72CD2@unpredictable.fr>
+Message-Id: <9491AA01-4CF7-41F2-A97C-2D494568EF36@unpredictable.fr>
 References: <20261126222530.62175-1-philmd@oss.qualcomm.com>
- <20261126222530.62175-3-philmd@oss.qualcomm.com>
+ <20261126222530.62175-2-philmd@oss.qualcomm.com>
 To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: Apple Mail (2.3901.200.71.1.16)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX+syDcMk+hAnU
- 54qooB5S0TNjbgS9dz23i7m4xNQnbPNB2J8c3l+UhHc5ZWwSOWJUIamfNp454kqOyyZqNrypd66
- YGlvFsSCeAb8Iwb+mvIQ9uXDPZo7hXTBx75ALUREE1Rg+dNqaHorfsLNymJELWWsGp8YZDrQMTd
- vx1s5WD6EuwuWFt/aHiUAlpKgmpJ8Uy8te4nxGjCG9gQhphQfHdSgHiE6sohkrH21RyVhVryeFo
- E27FpBSo4yDDotF2tyAwo2zOs6f8SEVLcJDNPADyjBK786CcS4hY5V3Q5tI5DyVOSUur8x2nkeF
- t+3pNAg3XWLR7vCCpluBaVWFqfKP2KZjtUeWxLo0J3RrfDpml2AQ4eIVWkhGDw=
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX0MqXtZXpEaiv
- PeQDws4cju+RhzTnCPwQxubclz/kcNyo5B1IzKIghyQrAxbNAf2LJEAkgqgk4jr7aLpoirdGUuV
- 7xytJ4LhWpXsLeLKtGmtQSg2Aols8UA=
-X-Proofpoint-ORIG-GUID: h37LwJHfo1taFWDjpuNiSq_VYvQb_0FX
-X-Proofpoint-GUID: h37LwJHfo1taFWDjpuNiSq_VYvQb_0FX
-X-Authority-Info-Out: v=2.4 cv=QsvLTlyd c=1 sm=1 tr=0 ts=6b08b446
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX7/NxSIcL98vJ
+ cKwVEWRopADSvC3/eM5/H+VlJFUntanu4panuw3WU/FO9g1YoqdZNvNdeGw0QZ0A8fB/95gTyhR
+ 2GF1FYB/uCAwReKnCNAbjzyhjha+rPP4eScXGOPwWj3z58kgL9p4JYTMQpXE4QQoCd8R8DJmPYz
+ XV4CfU46g4q0mMIikof9f9MPNLpgHzSo80LFHpfXs4ConeTTdJP3aG+5IaNB9IFrCSccJla8Bk4
+ OwCrrQHWmjIjvvmMH0YbC8oQXYPdohzJa0oPyhWVxlYWBRzPoJ2mdYI2SoGT0YYlkSb9LIKxf7W
+ eKJzFiciVsKsXblEQ67htZ6EFvRpgk6H7cmCyb6441pUtuzJYgw7M659rOileg=
+X-Proofpoint-GUID: Ha7puIfJb9B36Qh8ICgFtwLgiZKTB4Ck
+X-Proofpoint-ORIG-GUID: Ha7puIfJb9B36Qh8ICgFtwLgiZKTB4Ck
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX0aVHYJGCwf9Z
+ ATYdbKYC87hlUgdxvV6xulyaIqzXTB4J0puVJngmn+W9dyVaA448HDmu+Kn29iR2xHXPtaFnzw/
+ cLFpi2dg7GS9HkNkclYp7+BR9hrN8pU=
+X-Authority-Info-Out: v=2.4 cv=XZAcX455 c=1 sm=1 tr=0 ts=6b08b46b
  cx=c_apl:c_pps:t_out a=kRaGL2Q7qLiahLf3O6OaIA==:117
  a=kRaGL2Q7qLiahLf3O6OaIA==:17 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=51JdnUhQRHFq8RItG6ly:22 a=H7SFQoNpLJNAuO5utOd4:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=wbbCu9YnSpm8ZdSLOl1R:22 a=_mclknXjrhVi08tC7Eh6:22
  a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=1dvAypkPtfvtFV3HS8MA:9 a=QEXdDO2ut3YA:10
  a=cvBusfyB2V15izCimMoJ:22
-X-JNJ: AAAAAAABQz4ED4uoDVKyveeD98ZyjBUnI8/wRxOuwrntiOspQxZEcXoOI08ZtKv9OA5eb5
- bK4zmjEcPDPVh81VKZs7w/RMbWAkl9kaQgcghG68Ukf4idYJJEn6+SZf0wk7LiLYZ+wXwf
- 6L6Wa0k33kuWJhNO9A522B8sEhddLw+dTWM6VeHVdlvYitwhtBIT502WARqzQfnbiZgl6W
- sGJ7xsaWSIkcUrISGvTbvqk5uUcNJGu98xUekBDAtNwYFnNFq6W2Y2NT4jU5hNPBnnVrkz
- AMI8wtLPH4BGAoAJuShv4CkFylhD4Tajmab/OzR5RnSqv82dFLAnMxseRFlGpfpTSFWCNz
- l6M1TeLQG7pJ6k6pVjw+OIKTtIOwVQ3L9Sln06XhsMyUE2ulpEjN4vnUZjZyEE4c/rqJ45
- 4AJxZox+6eAwf2inUiCJF4gLhl9yWAg6z2wU71SQzsT1Fum1VE49hRVA8sEmTxdIAOdnI9
- jMN7qZ/s+zgA67OTuElVZNWf2a8fRemJOtxiOiVCa6n/mh3M2bFS/L2EMe2lULHdtb1JGj
- Uj8e/FTfOoXErElY+H0/2VXn40tflOcpr+YGFI97gDbYPW2Scu/1F85sKOt0NGoTRTlRuO
- SwVIxt7mhhRKTIeACgLzLETYBJ5KMQf2Q6gOdPJfauE/BH1svRTXouty34padGyVdI17Ea
- GZPA7D9k8Inv5THYqc5a5dFZpNNjZpXVKCHfXFIdLMy+fQq3pP162ccXjN/TARNrO+Ckvm
- K07mhuspNtc++YkeVaOHsI82raDe0A+d5X8nw0mY++k2hBefzXuOxdRcMKECjz6YFJaURd
- yObw5XAKKg==
-Received-SPF: pass client-ip=2a01:b747:3002:204::15;
+X-JNJ: AAAAAAABy5uRbtx0BBkoYvuFH27LmmeJ4tVlX4RW/FbfmuiN9wUmIv99o+KAVta+yLj7fM
+ ma7/BdFk+dX7ng7kqnMmZ9ngln/hxYAdpAWuEdq+jvjZHAisl5OSbN7yD8xufi5jDeRt7Z
+ 4NYJEb2IH0LOkdC5CN5sFoHTDhrmoPqJTZGxCoAyYJGvfLs/5fxoXPlPcVM8MpWGx2/pEP
+ R0syy1DvrfHO7eTpIGzPxHhDY+hmC3GDxMIPc4XUAAgrb13HxnS1KuAcEkQXo3WUSzepi4
+ 8wC2hxk/nNFG/4mLMluu8eUu+UA/2Dc7Z8R5J/MZcH905QmNjCvvMiiL95dWe37fLi2AoZ
+ DBNdcEjz4UsMPJU5/Vo9FLqzD8c92DAqrGzDKZ5x8LRFBEFmxw5rhKhIZOhJW8Cn+dufL8
+ G18MCLq/T6Odr0piO/KKxYnflVBBogrpXSjyeyT/OZRL+kB8sQqSkJunVsQNR+um7eFCcp
+ LhIFO/t673chk6T+CmjrVdKqeOOwDFjZovF/4AEpngzU7YZ0i5VkpFhSY/oJBlboSt1nAn
+ J7kVPfCJsBdWTykBFGcWuAGP42undfUE/5MUJx/qkjNBemgm0WlK2p+BFhl6kNpuoeQ62W
+ Rbc1LWm4TPeUF6mfptMPXK3lg+U+KUBzjhOhyq2UhejlM9CfLcFeh8ih+/VimlSvn9axde
+ UnFKToIhLZxp7GLNC1A7YUBVn8lpjFAyA8vyyox7aB+NcK0SiA6FbUfF4i+FFdN35fbgO+
+ yglkTmmQvooHDbUYXietuHSum52vkaQCnfFBRGaSDr/vE2CYdR6x8YYTERrMDy+nQ20CP6
+ 1zJSm10=
+Received-SPF: pass client-ip=2a01:b747:3002:203::5b;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,46 +112,56 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 > On 26. Nov 2026, at 23:25, Philippe Mathieu-Daud=C3=A9 =
 <philmd@oss.qualcomm.com> wrote:
 >=20
-> Extract the QEMU_CLOCK_VIRTUAL computation from icount_get_locked(),
+> Extract the running vCPU check from icount_get_raw_locked(),
 > to reuse it in a following commit.
 >=20
 > No functional change.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 Reviewed-by: Mohamed Mediouni <mohamed.mediouni@linaro.org>
+
 > ---
-> accel/tcg/icount-common.c | 9 +++++++--
-> 1 file changed, 7 insertions(+), 2 deletions(-)
+> accel/tcg/icount-common.c | 23 +++++++++++++++++------
+> 1 file changed, 17 insertions(+), 6 deletions(-)
 >=20
 > diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-> index a11f2397489b..b52d22f3a1cf 100644
+> index b1b6c005fe71..a11f2397489b 100644
 > --- a/accel/tcg/icount-common.c
 > +++ b/accel/tcg/icount-common.c
-> @@ -119,6 +119,12 @@ static CPUState *icount_running_cpu(void)
->     return cpu;
+> @@ -104,15 +104,26 @@ void icount_update(CPUState *cpu)
+>                          &timers_state.vm_clock_lock);
 > }
 >=20
-> +/* Convert @icount executed instructions to QEMU_CLOCK_VIRTUAL ns */
-> +static int64_t icount_to_virtual_ns(int64_t icount)
-> +{
-> +    return qatomic_read(&timers_state.qemu_icount_bias) + =
-icount_to_ns(icount);
+> -static int64_t icount_get_raw_locked(void)
+> +/* Return the running vCPU of this thread, if any, checking it may do =
+I/O */
+> +static CPUState *icount_running_cpu(void)
+> {
+>     CPUState *cpu =3D current_cpu;
+>=20
+> -    if (cpu && cpu->running) {
+> -        if (!cpu->neg.can_do_io) {
+> -            error_report("Bad icount read");
+> -            exit(1);
+> -        }
+> +    if (!cpu || !cpu->running) {
+> +        return NULL;
+> +    }
+> +    if (!cpu->neg.can_do_io) {
+> +        error_report("Bad icount read");
+> +        exit(1);
+> +    }
+> +    return cpu;
 > +}
 > +
-> static int64_t icount_get_raw_locked(void)
-> {
->     CPUState *cpu =3D icount_running_cpu();
-> @@ -133,8 +139,7 @@ static int64_t icount_get_raw_locked(void)
->=20
-> static int64_t icount_get_locked(void)
-> {
-> -    int64_t icount =3D icount_get_raw_locked();
-> -    return qatomic_read(&timers_state.qemu_icount_bias) + =
-icount_to_ns(icount);
-> +    return icount_to_virtual_ns(icount_get_raw_locked());
-> }
->=20
-> int64_t icount_get_raw(void)
+> +static int64_t icount_get_raw_locked(void)
+> +{
+> +    CPUState *cpu =3D icount_running_cpu();
+> +
+> +    if (cpu) {
+>         /* Take into account what has run */
+>         icount_update_locked(cpu);
+>     }
 > --=20
 > 2.55.0
 >=20
