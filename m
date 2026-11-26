@@ -1,88 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2757C606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 14:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D2E606A327
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 14:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sFeICVzz
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AmyWHSzs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWaVV-0002R1-Aw; Thu, 26 Nov 2026 09:31:29 -0500
+	id 1xWaXX-0003Qa-M3; Thu, 26 Nov 2026 09:33:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.mehnert@gmail.com>)
- id 1xWaVM-0002MJ-Pa
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 09:31:21 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1xWaXP-0003Cl-0Y
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 09:33:31 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.mehnert@gmail.com>)
- id 1xWaVK-0004KS-IJ
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 09:31:20 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-49a92144733so3538537f8f.0
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 06:31:11 -0800 (PST)
+ id 1xWaXI-0001AM-QV
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 09:33:26 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4bb77a462c6so58692925e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 06:33:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795703469; x=1796308269; darn=nongnu.org;
- h=content-type:content-transfer-encoding:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=x7mAYOpYaNnHIqFtG2PaPdxGyXANXPd8ixtPFRZmIII=;
- b=sFeICVzzOlQa7ua3MvqlrwxoxBVUgnIuVr76FLEFvyx//CMPmxAfsiDEg+5gfReaOp
- StBF9bAaKqHQ58EkLhM3HNPfkt/aWwzsPnoEg5XC6jSSwB5sbk7PaF4hbb8Gfvepxoru
- 97OOcgiPx1U1U+lZSDRm2jryHq5VZQxzmUdKC9T6pXYpCsHUiSQRv3M94u3Fm8/3o7A1
- jQvC9f3Oe6GgYoYdKCsI1GRmK/WatOyEkS36VZtb2LdRjcPttsWq+WNYQ9pdWsEKRPi0
- mrmrz4a9CgPs5LIkhxK46yrVW94j2Pl1tFTdrW4zZ/F0JfzYQegTT+DR4bNqyzQBf+8Z
- tV7A==
+ d=gmail.com; s=20260707; t=1795703583; x=1796308383; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ZGDOqzl05R9gVFs1yGPWuA5HyYBfjyTwYZvYQyYVT6g=;
+ b=AmyWHSzsPepTwuwFVkRJblmx+EqdHVj1e9NQLX1rzKST/ZapO+jxp8P6jMyAHaMudC
+ Wlg8rwLZlP+LM7nH/lRHTEWB1gMLKgn4sjgEYz6fT5ZJy5dPwHo0MqxfOWeAcwNLY3go
+ bV9iP/NWRNr5HSXyIhVPMYWHFd9n33m+a1t4psWumGWtuPT4w2AaOef4SMcs/gOoDC1L
+ AEPxfkr0qpusQCNYeFF/DGbbsOeWdvdl1a6n9g5nsaggth6rL39cFGlMViHPGQkZHTvD
+ DWoJyyHefUVACDj0PpIVUfgEV2nNoJLRR4/8yiGPzw3OCBFhZ3OvoAHG2oVkbf+9FliS
+ W1zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795703469; x=1796308269;
- h=content-type:content-transfer-encoding:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=x7mAYOpYaNnHIqFtG2PaPdxGyXANXPd8ixtPFRZmIII=;
- b=nCM+Co2UbWo7RdXX2STr2BsRD6QoxlOIcaWia403SqKQyDV7vqU6jsGEVHtdZ8Ao5j
- ggwZTtmb51nF3/fR3vqj9+CPCjACJ8R5Xr2/R41wqhacgN+dsq8AhzJJTZKCLZHXhcj6
- Pswe0v+UA9jDmteYzX8SzYl7TdSDECJjBBdTuVoVuYfV39j99tnLWS6TXX1yjL5R+6MQ
- Iix9cohSkUssjGWljAAXVaofI0mGfsqTSP3okkShguSWY6sdXeB9NQNX/8eZhbxnpjGv
- r5dKc+5+XK9flaLoGGuS74W3JCpJ2XpmvC0VxeikgEoazgUs2XSPK3s19lcP0K2l0IHt
- qM8A==
-X-Gm-Message-State: APuU4Z++tXWXgN8PmPBEQkOjNOo4xfG2hjB2FbjOW8grHmIc4DXJOuED
- 71SB0EsDzQUM6gRsveG7XXXZ2pIwoZWl0DZsNIu7FYNtjSRv4G0gR99z
-X-Gm-Gg: AZFdTZfP9l6SwE8XgCIsSG3yMrWmNbQ10uxfAr4TJNZ+iRbZ5COdMA1ab2JW8xbv2kA
- QkQr+7wW74iFpthdGGtGWKLgOztGOR9Qkh/4kBY0ia4AqlXrO+bYKiXB/VYoIhAdpaAsyDlvDa5
- 3iCsHJ6yLwtD7gx+36otxKeMEQn4DmYhHC0ej7EiGzQb6G/T4YGfxKZUytzimtOKDcbXfrsjrav
- YgBAg2rvRXEx7W5csNjfMGmBYVRrB7nUUsuHSSXA1BxzStb6O968aKctqGCe6vguyDGW51HKzbo
- GAObk+aFNvBmzcL+oXdlxAItQo31RQbpboOsBZ+2MY2hh6eQpZwAP+2+WpAPI08ucAejT6Ib3mE
- m0IzEO5efaHyn58AGxJRJNakd/o+o95jxrKckRjXcpPKvF8tU0Vsjy8BShA4dtodPYzPc5n1djN
- 4WogCMtMa8GHQ0YiWw8eoH/TMVbi/+3lCzF6uCg9WxGZsVYaf81Xo9UGrGNT0gkS4SdzhmPqRab
- rmZ74D0y52DRzYaxyC9KxvweDsdVCJd5+sxWPui7s216tYQyZIWHioSpHXRPkSPGx7xd1v53PjD
- F9H7FVVpLP2BfmteL0V/A/sQQR0wMdnbAEQptlogz8pc/2v30Qp+JXkAuz+uogAcmHaPwRiYpCN
- W3WNTbNgwA0IGutm1GTyl+cBTtkHvPUtLjQ==
-X-Received: by 2002:a05:6000:178f:b0:4bb:ac0e:51df with SMTP id
- ffacd0b85a97d-4bbac0e523cmr6068789f8f.43.1795703469133; 
- Thu, 26 Nov 2026 06:31:09 -0800 (PST)
-Received: from noys4.localnet (ip-178-026-066-148.vkd85.pools.vodafone-ip.de.
- [178.26.66.148]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-4ab6a67f281sm38608547f8f.22.2026.11.26.06.31.07
+ d=1e100.net; s=20260707; t=1795703583; x=1796308383;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZGDOqzl05R9gVFs1yGPWuA5HyYBfjyTwYZvYQyYVT6g=;
+ b=uWs4/azBoCHpka2c1OJKsAxGljAWFycl8ZpxOtk856ZRTlnrwe6yfP80PYv3DCwU0t
+ srbI89txCGD01Cb7gMUjzroQz+V/5ploiiuXFGgY/9qTfjchRlou8f4VGuYuacV2fBoU
+ T1HZ4dGQB471sRRNCZzclVhk3fvzDe/ZgF+GK41/a1P0Kx+Fqr6U3QtS7+lIqpHYBzOP
+ gb9weRGzDTnYeu1JtgSFArBFEqN0P+AOpDqkl5BU4scU7jH2f+xmfo34a4QAweyl9kdb
+ bV/iUiufrPEfLTvr9Cc0K9Hx0ACWrwLQYmHFmWPwQ3MQygQ0PXngn3RkT1i+a3Fn2wz8
+ gRdg==
+X-Gm-Message-State: APuU4Z959MQEmgWvd0q9yX1klX+aYEg5da+MDbcyn97ijVxLcVpnXfzF
+ vTUCu3qEwv5V9sna2IRAiRpc1/45LLFFs361oFs/9KHEuhZjaIKCxpx6AKC09PqB
+X-Gm-Gg: AZFdTZd5hfeP88D5yTGRixd+rqGWJNKAdWTppuKnehrfAMdcuEf1omT0elfBmljGkOE
+ xMji541Id2MSkPItfqwMn8Pkm4XjDbQ8tXi9Fn5Cpwa0ql+GoU+PPIOXcY05eNEnOEkzE3FARr1
+ RMoiqxGQ2eJr0y11XFgpltDsHaBAC40nx70JrokxN8w6C5qMmiZZJZZdU2xAWU6Yt8vtZIjSXUf
+ OP2RzRrSumSEc48O84ZTjW8q/VRwZRvWTqsHfWKRmnAhjD5chLyMs7oCHBdoiwQAN/0mfJeEqmf
+ URFn/9Dnr63zJG5Xm847UJiVwQ8J2c2PqNEi8IZDcOeiIQDTaDtkfLotQ0yjttDM/0Ng8F1WJMU
+ IMu062SdrgaIoSzw3sSInlUhrULclFT57QzVwoLoLZxpXPX/ywlxJ4tsj6TBLYwc79GyMcWhLOm
+ ZxOVshd4efSvF0vZJaPVZk+E2STJiLsmi72tsUmtde67vVhwmjjIgtQVV0QYJFaXzwBJw/uGx26
+ Jt7ZSinBVJ8O5t9k9rIHnf/JgEcnsv1garB9bKFfYqfpQGQFiYIVOQy4Wr647vSZfLG7LDUgSRz
+ hArDHuug79okYaXrPmtUt3fbpYwVPHWCOnF4rKdnSbRJd5LMrM6rtDASPkwaFO4uHU0tNTEyASk
+ w/RSRULi/davBtHM/YOwd0uoxIQIs5z4tvHmdN47w
+X-Received: by 2002:a05:600c:5303:b0:4ba:4928:8aec with SMTP id
+ 5b1f17b1804b1-4bb88807d7cmr402995035e9.9.1795703582957; 
+ Thu, 26 Nov 2026 06:33:02 -0800 (PST)
+Received: from noys4.dd1.int.kernkonzept.com
+ (ip-178-026-066-148.vkd85.pools.vodafone-ip.de. [178.26.66.148])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb853b2437sm849925415e9.13.2026.11.26.06.33.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 06:31:08 -0800 (PST)
+ Thu, 26 Nov 2026 06:33:02 -0800 (PST)
 From: Frank Mehnert <frank.mehnert@gmail.com>
-To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org
-Subject: Re: [PATCH for-11.2] target/arm: set the event register on a failed
+X-Google-Original-From: Frank Mehnert <frank.mehnert@kernkonzept.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
+ Frank Mehnert <frank.mehnert@kernkonzept.com>
+Subject: [PATCH for-11.2 v2 0/2] target/arm: WFE wakeup after a failed
  store-exclusive
-Date: Thu, 26 Nov 2026 15:31:07 +0100
-Message-ID: <zvhsHwoFTq6p6L5AdIM1Eg@gmail.com>
-In-Reply-To: <87wlpzu8cc.fsf@draig.linaro.org>
-References: <20261125082126.49911-1-frank.mehnert@kernkonzept.com>
- <87wlpzu8cc.fsf@draig.linaro.org>
+Date: Thu, 26 Nov 2026 15:32:56 +0100
+Message-ID: <20261126143258.1056688-1-frank.mehnert@kernkonzept.com>
+X-Mailer: git-send-email 2.55.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=frank.mehnert@gmail.com; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=frank.mehnert@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,56 +100,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Alex,
+A failing store-exclusive means that the global monitor of the PE was
+cleared, which generates a WFE wakeup event. QEMU does not set the
+event register in this case, so a vCPU spinning in the lock pattern
+"WFE, load-exclusive, store-exclusive, on failure back to WFE" can sleep
+in WFE forever although the lock is free.
 
-On Donnerstag, 26. November 2026 12:42 Alex Benn=C3=A9e wrote:
-> Frank Mehnert <frank.mehnert@gmail.com> writes:
-> > [...]
-> >
-> > Fixes: 01b223f895a7 ("target/arm: enable WFE sleeping for A-profile")
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4938
-> > Signed-off-by: Frank Mehnert <frank.mehnert@kernkonzept.com>
->=20
-> Looks good to me - is it possible to extend the wxft test case with a
-> test case to exercise this common lock pattern?
+Patch 1 sets the event register on a failed store-exclusive. Patch 2
+adds a test case for this lock pattern to the WFxT test.
 
-Yes. I added a test case to tests/tcg/aarch64/system/wfxt.c and will
-send it together with the fix as v2.
+Changes since v1:
+- Add the test case (patch 2).
+- Add the Reviewed-by of Alex Bennée to patch 1.
 
-The test does not depend on a race between the CPUs. CPU 0 executes
-LDAXR on the free lock, then CPU 1, started through PSCI CPU_ON, takes
-the lock with a plain store. The following STXR of CPU 0 must fail,
-and the WFE after it must complete at once, with interrupts masked and
-without any SEV. Like the WFIT/WFET cases, the test uses the virtual
-timer interrupt, 1s out, as a watchdog, so a WFE that misses the event
-makes the test fail instead of hanging.
+Frank Mehnert (2):
+  target/arm: set the event register on a failed store-exclusive
+  tests/tcg/aarch64: test WFE after a failed store-exclusive
 
-The test needs a second CPU, so wfxt.c now runs with -smp 2.
+ target/arm/tcg/translate-a64.c       |   7 +-
+ target/arm/tcg/translate.c           |   7 +-
+ tests/tcg/aarch64/system/meson.build |   2 +-
+ tests/tcg/aarch64/system/wfxt.c      | 103 ++++++++++++++++++++++++++-
+ 4 files changed, 115 insertions(+), 4 deletions(-)
 
-With the fix, the test passed in 80 of 80 runs, with both
-multi-threaded and single-threaded TCG, built with -O0 and -O2. With
-the fix reverted, it failed in 20 of 20 runs: WFE woke only on the
-timer interrupt after 1s.
-
-> For the fix though:
->=20
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->=20
-> > [...]
-
-I've added your Reviewed-by to the fix.
-
-Thanks!
-
-=46rank
-
+-- 
+2.55.0
 
 
