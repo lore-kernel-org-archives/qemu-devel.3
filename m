@@ -1,59 +1,59 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550BC606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 07:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D279606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 07:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWTg2-00041W-KN; Thu, 26 Nov 2026 02:13:54 -0500
+	id 1xWTgJ-0004Ma-GU; Thu, 26 Nov 2026 02:14:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xWTft-0003yY-Cp
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 02:13:45 -0500
+ id 1xWTg9-000496-1u
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 02:14:03 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xWTfr-0003DD-DW
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 02:13:45 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1xWTg3-0003Dr-Ea
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 02:13:59 -0500
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8CxBbUa3Adr7CojAA--.6260S3;
- Thu, 26 Nov 2026 15:13:30 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxztIm3Adr_iojAA--.33694S3;
+ Thu, 26 Nov 2026 15:13:42 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJCxPs8V3AdruH03AA--.43941S5;
- Thu, 26 Nov 2026 15:13:29 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxtMwk3AdrwX03AA--.17808S3;
+ Thu, 26 Nov 2026 15:13:41 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <17746591750@163.com>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 11/18] target/loongarch: Return sign-extended value when
- reading 32-bit CSR registers
-Date: Thu, 26 Nov 2026 15:14:33 +0800
-Message-ID: <20261126071440.3293877-12-maobibo@loongson.cn>
+Subject: [PATCH v3 17/18] target/loongarch: Call generic csrwr helper for part
+ read-only bits
+Date: Thu, 26 Nov 2026 15:14:39 +0800
+Message-ID: <20261126071440.3293877-18-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261126071440.3293877-1-maobibo@loongson.cn>
 References: <20261126071440.3293877-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxPs8V3AdruH03AA--.43941S5
+X-CM-TRANSID: qMiowJCxtMwk3AdrwX03AA--.17808S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uw4xWr1UXrWrurWfGFWDZFc_yoW5Jryxpr
- nrCr1jvr1UtrWUZ393Cws0gF98W3W8Ga12gFySk345CrW8XryDXa1ktrWa9F1UA3y8Zr4F
- 9FWFyw1v9ayUZ3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7Zr18JrWrAr1DAFyftw17CFX_yoW8XF17pr
+ 42kr15KrWUta97Cwn3uayFvF15Aws5Gw4IqanrJwnxZay5Jrs8Wa10qry2gFyUXF1FqF4F
+ va1vv34vg3yFqagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r126r13M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
  xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26rWY6Fy7McIj6I8E87Iv
  67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
  Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
  6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
  vE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE
  42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
- kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUco7KUUUUU
+ kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUsZqXUUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -79,75 +79,51 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-For a 32-bit CSR register, when it is read by a CSR read instruction,
-the result is sign-extended and written to the 64-bit destination
-general-purpose register.
-
-Add this behavior according to the manual.
+If part and not all bit are writable, it shoud call generic csrwr
+helper function. And there is wrmask in structure CSRInfo, the generic
+csrwr helper can ignore read-only bits from the value of wrmask.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/csr.h                         |  5 +++++
- .../tcg/insn_trans/trans_privileged.c.inc      | 18 +++++++++++++++---
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ .../tcg/insn_trans/trans_privileged.c.inc      | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-index 87790aa84c..2108cd596d 100644
---- a/target/loongarch/csr.h
-+++ b/target/loongarch/csr.h
-@@ -37,4 +37,9 @@ static inline unsigned int get_csr_offset(const CSRInfo *csr, int vm_level)
- {
-     return csr->offset + offsetof(CPULoongArchState, sys_states[vm_level]);
- }
-+
-+static inline int csr_get_width(const CSRInfo *csr)
-+{
-+    return (csr->flags & CSRFL_WIDTH64) ? 64 : 32;
-+}
- #endif /* TARGET_LOONGARCH_CSR_H */
 diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 7a4f215283..f90792347a 100644
+index d9fc8f2695..fc0d9d1b5b 100644
 --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
 +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -122,7 +122,11 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-             readfn(dest, tcg_env);
-         } else {
-             offset = get_csr_offset(csr, 0);
--            tcg_gen_ld_tl(dest, tcg_env, offset);
-+            if (csr_get_width(csr) == 32) {
-+                tcg_gen_ld32s_tl(dest, tcg_env, offset);
-+            } else {
-+                tcg_gen_ld_tl(dest, tcg_env, offset);
-+            }
-         }
+@@ -72,6 +72,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+ static void init_csr_wrmask(void)
+ {
+     int i;
++    CSRInfo *csr;
+     uint64_t romask;
+ 
+     romask = R_CSR_MISC_RSV_MASK | R_CSR_MISC_RSV1_MASK;
+@@ -104,6 +105,23 @@ static void init_csr_wrmask(void)
+     for (i = 0; i < MAX_PERF_EVENTS; i++) {
+         clear_csr_wrmask(LOONGARCH_CSR_PERFCTRL(i), romask);
      }
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-@@ -160,7 +164,11 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-     } else {
-         dest = tcg_temp_new();
-         offset = get_csr_offset(csr, 0);
--        tcg_gen_ld_tl(dest, tcg_env, offset);
-+        if (csr_get_width(csr) == 32) {
-+            tcg_gen_ld32s_tl(dest, tcg_env, offset);
-+        } else {
-+            tcg_gen_ld_tl(dest, tcg_env, offset);
++
++    for (i = 0; i < LOONGARCH_CSR_MAX; i++) {
++        csr = get_csr(i);
++        if (!csr || (csr->flags & CSRFL_READONLY) || csr->writefn) {
++            continue;
 +        }
- 
-         if (!rdonly) {
-             tcg_gen_st_tl(src1, tcg_env, offset);
-@@ -196,7 +204,11 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     temp = tcg_temp_new();
- 
-     offset = get_csr_offset(csr, 0);
--    tcg_gen_ld_tl(oldv, tcg_env, offset);
-+    if (csr_get_width(csr) == 32) {
-+        tcg_gen_ld_tl(oldv, tcg_env, offset);
-+    } else {
-+        tcg_gen_ld32s_tl(oldv, tcg_env, offset);
++
++        if (csr->wrmask == MAKE_64BIT_MASK(0, 64)) {
++            continue;
++        }
++
++        if (csr_get_width(csr) == 32 && csr->wrmask == MAKE_64BIT_MASK(0, 32)) {
++            continue;
++        }
++
++        csr->writefn = (GenCSRFunc)gen_helper_csrwr;
 +    }
-     if (rdonly) {
-         /* So far only readonly csrs have readfn. */
-         assert(csr->readfn == NULL);
+ }
+ 
+ #define SET_CSR_FUNC(NAME, read, write)                 \
 -- 
 2.54.0
 
