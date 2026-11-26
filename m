@@ -1,85 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591C8606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 20:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D20606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 21:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=sUClM0eM;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=QYz5T9xf
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cTNOIbf5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWgNd-0000vY-On; Thu, 26 Nov 2026 15:47:45 -0500
+	id 1xWggO-0002Ng-Gh; Thu, 26 Nov 2026 16:07:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xWgNc-0000sd-6n
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:47:44 -0500
-Received: from mx1.catap.net ([162.55.82.72])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xWggM-0002Ju-9B
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 16:07:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xWgNa-00066Y-JB
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:47:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=EXMKj2v
- NniVnHzrLFw8c+EtR1C908roZ0NnukWXAj10mu3L3Fv6KpFPriWo8BfxCE41evBbABpRjQ
- 4yWxwiKi1gaoxtkm0eUF9/++eAAcRPs9mY5Qn4z7NcnGvRMNBV5YAaMSeqKr8ayaxuFhQO
- 0Spot3bnFydHZPgCvBl5Pt4mMp5bma+VERsSQkBiZlvfnETYtDucUklRkz88vNP/fbYegq
- FGE2SH2c0Rep+PV0the3ByNsNG0MKFDPfBqF0ZaW4BgeNa4TrTjdYOr6uR9HK3RplbK7dH
- /HzByUGoICCPkQumVH5CeW8/pRlX8vDv4HFTehRd5c9ZiCFHVJciZMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=i
- ClbuOdsfkLUcU3S8rZ1Nons2x2PDY9A3Ll7flvZl9A=;
- h=date:subject:cc:to:
- from:dkim-signature:dkim-signature; d=mx.catap.net; b=WaObfhlFLUwYhzzM
- AJidO452UI7BqEtGxsdLnzz5TfUpA1AH+eSi64glonj0wYqMMFzHhroL4cevmnnGSmc2PY
- F4aAEww77JH3POxsQZacu8LZ5hWzLeGadROoyB+cF2Os4h3wiMOMrGbh7v7StWo228nJNP
- d8v8O7Xi1TDeouBJYornYujLFltPVOzMGiI/4VIw5q77p4TLq2XasFFQNII1OQ+porsgg/
- nwKtkrIzesvVbzl1+ST13oMwzWeScYXOjBMooVP+CtlG8Q6iZF76XGu9DYt3chQSScTnZK
- 8lgfQfB7wQVii1BkjqGdf59wWIhKNHfLo0e6CQyFUdKCug==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=sUClM0eM; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=QYz5T9xf;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=iClbuOds
- fkLUcU3S8rZ1Nons2x2PDY9A3Ll7flvZl9A=; h=date:subject:cc:to:from;
- d=korins.ky; b=sUClM0eMeqfnue7s2cc1URYim5txK5fiP/OncbxiGOa4hKE/eFBuIu1
- BlAr/pYaMA1jkmkmXBQQ2wV/9Xj954b7JRCbJf7G5kqXsAzEClZImY6kxN/JHGVceiFaew
- 89C4VZFCN95aV537xKwG5JbH2+Nnbb7mvF5Z7nyen5v9KKoxPnHV2VQvcpharTxMy0XULT
- obqa+4uDDLeJ52pRk7Dg2YzVPhrZvDGekCM8w87hwKpsDZ04PtdzhX1OoB6S2k7UFMh8jK
- X2klbooeDxFXi8IJgjKu5t31XIfRm56tpYz4iehoo3rMPTTFVqoOIsDeB2E3U8ZzgIrLI/
- 4SLms7w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=iClbuOdsfkLUcU3S8rZ1Nons2x2PDY9A3Ll7flvZl9A=; h=date:subject:cc:to:
- from; d=korins.ky; b=QYz5T9xfNGiS7O4cSxsW9xAiJ9okNGhNtu6JNf9PJvyb50OA9
- 4g0kZS+V6XTK4SkoZ3P4bSsIko7wW9a01wzDA==
-Received: by mx1.catap.net (OpenSMTPD) id 798061db;
- Thu, 26 Nov 2026 21:47:38 +0100 (CET)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 1f03d52a;
- Thu, 26 Nov 2026 21:47:36 +0100 (CET)
-From: Kirill A. Korinsky <kirill@korins.ky>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PATCH 0/3] target/hppa: a few fixed to pass OpenBSD's libm regress
-Date: Thu, 26 Nov 2026 21:39:19 +0100
-Message-ID: <20261126204733.9423-1-kirill@korins.ky>
-X-Mailer: git-send-email 2.56.1
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xWggK-0005vW-G6
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 16:07:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1795727222;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3mW8Ry6atjIMFXOM2qn0FP6n1CB8ocDzNrsn0aK1dVc=;
+ b=cTNOIbf5Py7giWD6R70Qu1+JeGF55ZOuxRkb+jmxWdmZ6sdZG/28E+NjuHgsqF3GT0xLxi
+ xuo9/anIYxECIq6Yvhrax0QDDvZQy0IBcIUmWri91JNP+b634WvLHzYJk3dHFktLGwzs6F
+ KkeQAXum3vAKX6TD+mu/iuVUaDtWEgc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-wRwt_AEHNECwDuhKTrjcmA-1; Thu,
+ 26 Nov 2026 21:06:58 +0000
+X-MC-Unique: wRwt_AEHNECwDuhKTrjcmA-1
+X-Mimecast-MFC-AGG-ID: wRwt_AEHNECwDuhKTrjcmA_1795727217
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D51A5195608B; Thu, 26 Nov 2026 21:06:56 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 63C2A410; Thu, 26 Nov 2026 21:06:56 +0000 (UTC)
+Date: Thu, 26 Nov 2026 16:06:55 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>,
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH for-12.0 v3] coroutine: Make yield_until_fd_readable()
+ detach fd handler always
+Message-ID: <20261126210655.GA251101@shajnocz.csb>
+References: <20261126201445.3326530-1-peterx@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
- helo=mx1.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261126201445.3326530-1-peterx@redhat.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,18 +83,62 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Greetings,
+On Thu, Nov 26, 2026 at 03:14:45PM -0500, Peter Xu wrote:
+> Hongyan reported a possible use-after-free of RDMA migration code:
+> 
+> https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
+> 
+> The issue seems real, while this patch is a proposal to fix it in a simpler
+> way, meanwhile it should be a problem to the yield_until_fd_readable()
+> helper in general, so it should make more sense to be fixed there too.
+> 
+> The problem is about the use of the stack allocated FDYieldUntilData where
+> we must make sure after yield_until_fd_readable() returns it's not used
+> anywhere.  If the coroutine yielded can be entered from outside of this
+> helper (fd_coroutine_enter()), then the aio handler might be installed even
+> after yield_until_fd_readable() returns, and that makes the stack variable
+> accessible by aio codd, even if stack gone.
+> 
+> Fix it by moving the aio handler removal outside the handler.
+> 
+> Fixes: 923709896b1b ("migration: poll the cm event for destination qemu")
+> Reported-by: Hongyan Xu <getshell@seu.edu.cn>
+> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+> Cc: Hongyan Xu <getshell@seu.edu.cn>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+> v2:
+> - Drop FDYieldUntilData altogether [Kevin]
+> - Drop the comment, doesn't feel as helpful now [myself]
+> v3:
+> - Add doc for the helper [Stefan]
+> - Add Fixes [Stefan]
+> ---
+>  include/qemu/coroutine.h |  5 ++++-
+>  util/qemu-coroutine-io.c | 20 +++++---------------
+>  2 files changed, 9 insertions(+), 16 deletions(-)
 
-Here a seires of 3 releativly small fixes which allows to pass
-regression tests from OpenBSD's libm the same way, which inclues the
-same failng tests, at real hardware which was tested recently at PCXW2
-by other OpenBSD developer to confirm for me that behaviour.
+Thanks, applied to my block-next tree:
+https://gitlab.com/stefanha/qemu/commits/block-next
+
+The latest qemu.git tag is v11.2.0-rc2 and this bug is not a regression
+in the current release (commit 923709896b1b is from 2018), so I'm
+queuing this on the block-next branch for QEMU v12.0.0. If there is a
+reason to still put this into v11.2.0-rc3, please let me know.
+
+CCing -stable too
+
+Stefan
 
 
