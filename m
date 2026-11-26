@@ -1,71 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED29606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 09:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7011E606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 09:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=e1KFyuvk
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FRmD50B1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWVUc-0005B5-GM; Thu, 26 Nov 2026 04:10:14 -0500
+	id 1xWVWq-00069L-TK; Thu, 26 Nov 2026 04:12:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xWVUb-00058m-3J
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 04:10:13 -0500
+ id 1xWVWn-00068p-Qr
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 04:12:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xWVUZ-0002jb-C3
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 04:10:12 -0500
+ id 1xWVWm-00015w-0z
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 04:12:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795684210;
+ s=mimecast20190719; t=1795684347;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JVEmElCa6sbNe7lB7GFZwrIgwPdutQQMwTTCb8v2fzk=;
- b=e1KFyuvkItRPK0kqqmC2R1jmPy7ykMpGvviMtqeD4iQTBbnbjl7nwVOVYjbbzn1+XwCFXe
- 2ROsbDrGb0RlJAnJasTrAPiiv1lO7NBNn88ghjcQJLV3GFGheqZ9ugW7rwWeZ1eE44xLaC
- UDTGvQkySFcFX3MNEDdBs0XY0WLGL74=
+ bh=0DuffG+iCWyMyUVCldU6d+e3Mxfg7KhEOU/4cf/CSXw=;
+ b=FRmD50B1Cgs5TO0HpOGVSjDr0GRMY66atBPxC4DQq/QDYP9MuPNcAcFY31HaveyyoAJxt6
+ EDEirUpACO+1zXW3hYKF7hJKGvcl0xqjlTQEZ3PDbeXe0wyQU125usGZx/IF+WM1FBTRhx
+ z09VoAZ49TOMV6Im/SitCom2Ghu3rLg=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-BmKaY2gkMKmrqQHJ0xGQZg-1; Thu,
- 26 Nov 2026 09:10:06 +0000
-X-MC-Unique: BmKaY2gkMKmrqQHJ0xGQZg-1
-X-Mimecast-MFC-AGG-ID: BmKaY2gkMKmrqQHJ0xGQZg_1795684205
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-u6bXdVm7NvWN6hCzQMnaWg-1; Thu,
+ 26 Nov 2026 09:12:23 +0000
+X-MC-Unique: u6bXdVm7NvWN6hCzQMnaWg-1
+X-Mimecast-MFC-AGG-ID: u6bXdVm7NvWN6hCzQMnaWg_1795684342
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 581011955E97; Thu, 26 Nov 2026 09:10:05 +0000 (UTC)
+ id 0713F1955F1F; Thu, 26 Nov 2026 09:12:22 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D733A195605A; Thu, 26 Nov 2026 09:10:03 +0000 (UTC)
-Date: Thu, 26 Nov 2026 09:10:01 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42B2A18011D3; Thu, 26 Nov 2026 09:12:20 +0000 (UTC)
+Date: Thu, 26 Nov 2026 09:12:17 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Roman Bogorodskiy <bogorodskiy@gmail.com>
 Cc: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-Subject: Re: [PATCH v2 03/10] iotests: fix the dd() wrapper
-Message-ID: <awf3aeEbGJJ8Z_eR@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 04/10] tests/qtest: unset socket timeout
+Message-ID: <awf38Vw77OYaUvDX@redhat.com>
 References: <20261125191701.93931-1-bogorodskiy@gmail.com>
- <20261125191701.93931-4-bogorodskiy@gmail.com>
+ <20261125191701.93931-5-bogorodskiy@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261125191701.93931-4-bogorodskiy@gmail.com>
+In-Reply-To: <20261125191701.93931-5-bogorodskiy@gmail.com>
 User-Agent: Mutt/2.4.3 (2026-10-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -96,21 +96,53 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Nov 25, 2026 at 08:16:53PM +0100, Roman Bogorodskiy wrote:
-> The dd() wrapper uses status=noxfer on Linux. It's also required on
-> other systems such as FreeBSD.
+On Wed, Nov 25, 2026 at 08:16:54PM +0100, Roman Bogorodskiy wrote:
+> The qtest_socket_accept() sets a timeout on a listening
+> socket. FreeBSD also inherits this timeout for the accepted socket,
+> which breaks some tests. Explicitly set timeout on the accepted socket
+> to 0.
 > 
-> Rather than adding OS specific conditions, check whether dd supports
-> status=noxfer and append it to the command if it does.
-> 
-> Suggested-by: Brad Smith <brad@comstyle.com>
 > Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> Reviewed-by: Brad Smith <brad@comstyle.com>
 > ---
->  tests/qemu-iotests/common.rc | 21 ++++++++-------------
->  1 file changed, 8 insertions(+), 13 deletions(-)
+>  tests/qtest/libqtest.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
+> 
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 7f66c1bbb3..8a7989811d 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -151,6 +151,19 @@ static int qtest_socket_accept(QTestState *s, int sock)
+>      }
+>      if (ret == -1) {
+>          fprintf(stderr, "%s failed: %s\n", __func__, strerror(errno));
+> +    } else {
+> +        /*
+> +         * Accepted sockets might inherit listener's timeout on
+> +         * BSD systems, so set it to 0 explicitly
+> +         */
+> +        memset(&timeout, 0, sizeof(timeout));
+> +        if (setsockopt(ret, SOL_SOCKET, SO_RCVTIMEO,
+> +                       (void *)&timeout, sizeof(timeout))) {
+
+If I'm nitpicking, I'd check  "setsockopt() < 0", but either
+way R-b stands.
+
+> +            fprintf(stderr, "%s failed to set SO_RCVTIMEO: %s\n",
+> +                    __func__, strerror(errno));
+> +            close(ret);
+> +            return -1;
+> +        }
+>      }
+>  
+>      return ret;
+> -- 
+> 2.56.0
+> 
+> 
 
 With regards,
 Daniel
