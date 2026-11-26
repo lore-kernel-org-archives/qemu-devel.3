@@ -1,96 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324A5606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 23:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DB9606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 23:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AAWiKwde;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=XxMUi5YK
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ampg6iFI;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=IrJ7joHk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWiht-00087Q-Ns; Thu, 26 Nov 2026 18:16:49 -0500
+	id 1xWihy-0008CV-Is; Thu, 26 Nov 2026 18:16:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWihp-00085h-PF
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:46 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWihu-00088R-Ie
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWihn-00061x-Oq
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWihs-00063T-AR
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 18:16:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795735003;
+ s=mimecast20190719; t=1795735007;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sJvie1o+hdDvsHvqpC1jKetF2TiTISIEGLTx8zoN3dU=;
- b=AAWiKwdeDN+etxZ500bU8MLmjenV4OJVP4BwKNkrRXlijqGE9ivTH74GgjTR+0aBGJrRao
- VoI5IHYONGKDiwoG47nmM8i9aJyDJNM49MV0cfuGRSlwcV64gsOuPCdqwpuf/aLrPCCknf
- 0qsl6zvfnUFMLpMCmHJ/A+L7Z9X1XCM=
+ bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
+ b=Ampg6iFIGNBMKPVqiRMl5nyrUO5n8Lnj/QJBoyLK27BTLFdjhcbUtbP2SbB2TI2k7y7VvJ
+ PPzmZl7zMTcFC2uO4790GUACyVczNOwO+PMXw50d41cptL3Mc5K1/IV72WXfYJ6xbiOuQT
+ iPBTcWMckgoa9XSExnpQfH2CK44Z/A8=
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-437-m9GeVHMpMIipTrg95OFdhQ-1; Thu, 26 Nov 2026 23:16:40 +0000
-X-MC-Unique: m9GeVHMpMIipTrg95OFdhQ-1
-X-Mimecast-MFC-AGG-ID: m9GeVHMpMIipTrg95OFdhQ_1795735000
+ us-mta-245-44b_zG4jOwSscQWwHckwsw-1; Thu, 26 Nov 2026 23:16:45 +0000
+X-MC-Unique: 44b_zG4jOwSscQWwHckwsw-1
+X-Mimecast-MFC-AGG-ID: 44b_zG4jOwSscQWwHckwsw_1795735005
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-55d2c49c3d9so98441371cf.3
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 15:16:40 -0800 (PST)
+ d75a77b69052e-55d846fd50aso52227771cf.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 15:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795735000; x=1796339800; darn=nongnu.org;
+ d=redhat.com; s=google; t=1795735005; x=1796339805; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=sJvie1o+hdDvsHvqpC1jKetF2TiTISIEGLTx8zoN3dU=;
- b=XxMUi5YKvPEyFUfNGaCOrvELheN8rxWmG+PwQHMhrqF5XLC1BRPokBg2QCQWhYHVhR
- J4Dmc/whvmd517deay/RNzDgfM7w47sO1aTxfksnuvqRgQXbYf1sVvxJ2u9L6bZqTBlA
- U1s28JyNRwHDpcFaoM9EuJYFPqF/7R38v97/pFqiDFMshbBQKbacJ37UP+vwlYAelS6f
- OIdqrEjxAzqljgQlWaTIYYGXkiHx1qNOtUgAToK8WHgptGSPj1VR84K5BrZXYyquYfdf
- P+WIiijmOryv2wBeMPncoyqOWG4HAWMCz3JQ580ORK0yfdqbMC7NuYssRTKufEhB5bsO
- Sm7A==
+ bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
+ b=IrJ7joHkINXHjLAU/tRCXoztIOGeF2wFCBCGwHY18xvPpHxf4jzDIZengBaUcB2I7t
+ NeMeQAlipDOlrgybfQbAGrEee2rBfGkmR3EIRoWzBoopg+9zchkG9NuZy/qaDqZsHhop
+ zudq00zfhLC94vEUu8jXeusRrhOAdGXM3aI9NH8kNz/oQLNt7fkmBNTRD/r2c/IrObG9
+ TpfUlq8equHS/fT8gKb/NQGEvdxMCL+zLIWUaax+1WsrEsPVjiJi6WOtlhRR7/b6AAT0
+ xq7e3Uy9wCVquc6FdfOU+SmuiztII723KCBTCYSJFTNM813eaTMlZxvNazkeUah1JsDI
+ 36SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795735000; x=1796339800;
+ d=1e100.net; s=20260707; t=1795735005; x=1796339805;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sJvie1o+hdDvsHvqpC1jKetF2TiTISIEGLTx8zoN3dU=;
- b=viC+KqnZjdHb/rPcnixtHSAcCTvsoKj+oGxHgkzVIXRb0jsGUJhKAVmYieOw/9Nqib
- 5FLWhOOxeHqd02OJBGaUGruElzurPoDqi3zYw74o5lRw1gk0JwsFTrwTEyqynr8V7uFv
- w6CXtgBdCS8jI800K82BxRjTD6dzEERl+wVzibFl0KCJqCl128FmLf/DpFNRX3BBBK5n
- dgIipcEYsEjIv5s5R9N54JFBywNeuE+cRqtyw7HxMMOhEb5kJW/L4tpTwDfwlEUswt9I
- 07/Oo4Jlmxv9y8oRY5FN8b8q3YAaf7iY5KkCUV1/yRyOtpnrn9RVE7vsX6YZCwoBA8bl
- vuTQ==
-X-Gm-Message-State: APuU4Z/iNbA2LD4IyReJj23GDH6LZLQfGRqRu8YvMOZwM1C7MUwWimc7
- NPgHt6hB/1JjUgUG4XEBbPIYdQKgs67odSs+voI0wVuw/TU4kyyjsXvV4pM5vyPe8QaXRqwHlWd
- NC90wpylV1DNr5hBYfXPhvR6qd4Aqr5haw02ElEIshCI/MUjoHvF3T/wzl2trGIrYp8I4BAYLz3
- nmbXeljT9db0niE+hRuUDXFh08lWAj/CU5irzAUw==
-X-Gm-Gg: AZFdTZfZIv0DTvc4Xj5FsblRgWJMQDR8+rzPkY7FhXuMN1RAI64+1QOzp1XpoLyatLJ
- fmGJpI3zNwy+0o7BS5S/jigNXhnaUtdIQY9aBtn0b8ObHihMIByfhEZIyXKAsyOgOqOUJ88Uqdy
- fmbxg4nuD06UueJZkaHU5ju78OBFj1T2ObtBDcY3p5a44KuiRfY0g5XlJQaghdcYA4C6J/jKyw4
- fjURxzcNHI6Wdc+x+vpau290CB7BvNrTYl/C4x/nG8pLJ2NTnYbXq/+tppZDVIIa1dLC0wjyls1
- sz/A4ABxheufUOmQQpViNtsJmJQNIQnAQwTiekNzuzmyNByLnQ6zFwhT9RVKMF8FWqrPm2oCoAM
- bVeNYk08kph0aiKb4jEBG4ti97VnH9U4O4UVgGU1OlM8A
-X-Received: by 2002:a05:622a:248c:b0:55d:3350:d270 with SMTP id
- d75a77b69052e-55d769f5705mr453489231cf.35.1795735000110; 
- Thu, 26 Nov 2026 15:16:40 -0800 (PST)
-X-Received: by 2002:a05:622a:248c:b0:55d:3350:d270 with SMTP id
- d75a77b69052e-55d769f5705mr453488431cf.35.1795734999400; 
- Thu, 26 Nov 2026 15:16:39 -0800 (PST)
+ bh=SWXrbqJoIWI67nNPfPVrmoK5FoKi8MMDx293CLAjU/U=;
+ b=yFaPmgVEC52fLF8UXkFSp/fvGS2zemDdzcZCOSw2zSBus8vG07VDV74LT5PCb8SiN8
+ fV3IT5FcIr2t/uAWlD94WuhlLRGVH7yaAIgJxy9RZRPFKh1Lx7qwCrasrGO22JPPjE6G
+ FJA4MrMZgPZepDbE+00cVskclIQJ35eStv9RfyzFdDdoFi2UVs1XRd7E51aSfSskZ+u6
+ 7TTV8eoWO7ReC+gR8NZNlEXjedKXEAaVdYJee9145lZGGbbDKxvrFdZ+FoZ1E+QDaX7K
+ 7GOHGtxW4i5gyJvjfGW/1oVCcAO3E5xB9t7v55oF7YcGCskA3ASkHzP/E1jinGamCAG2
+ RmJA==
+X-Gm-Message-State: APuU4Z/7CgkRPeScEgk9T1gNFI3NaBYz81d/YppWxN0fUs+GVKsp/Neo
+ zyo4efZAr0fs30fbuTAzG00uQiBZI1pfgJKxOtrB+kq+SfmDmcBSgAeA6ZUMyQ6twXapR5HTvzq
+ TVy3Fptjw+upaxIHc2SBOYoa2jDCj5Vq6GHGYQ6roBCF/vOC4wqNHX4sG1qcSWpJz0D0nvi0UWD
+ M082pj35qOROpi9f1brnioeqxpYo/j8yNwIoVIbg==
+X-Gm-Gg: AZFdTZdVFE2O3QLB3DVv0b1hc3RfMOlBo0fPj5Ni6BFq8TmYXZb3m8r6Xb4yVyFxS5C
+ 7XywinNg65qcP5Tu/mEsi0IEmMkUm+FofikkiY379zsonCGxy2yUsiRHYJS8lNWeF10U9WT6gjc
+ vEaXDrBBaID/uCx0MH1rPEUPeS7BcV/g0qTmEQSeTRQRBPJnmO22sos1ApuCpptzghC3V5ozGiS
+ 3T6o+QyxfRTkNM55DD4WR5qyWK7O5FtIXwgYHGZmJ6zS6eicVt3Ep8r3tlSz/FsJLB7H3YxOosW
+ waIoSeoBr8ufPNGxZKRnPwLlGHzc71GHJyNZbFOyIvuur1vslBh4NsuEGpkDRk7ezHtlOFOaMSr
+ FKBlSVsCAZkbUVqk5ptOYppQKCspkF6cULPo7/9piwITO
+X-Received: by 2002:ac8:6545:0:b0:537:b9f5:cd69 with SMTP id
+ d75a77b69052e-55d76aa8ef9mr406133241cf.75.1795735005101; 
+ Thu, 26 Nov 2026 15:16:45 -0800 (PST)
+X-Received: by 2002:ac8:6545:0:b0:537:b9f5:cd69 with SMTP id
+ d75a77b69052e-55d76aa8ef9mr406132781cf.75.1795735004640; 
+ Thu, 26 Nov 2026 15:16:44 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55dcdd1a2c6sm4502181cf.20.2026.11.26.15.16.37
+ 6a1803df08f44-921347a0b6bsm197783836d6.1.2026.11.26.15.16.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 15:16:38 -0800 (PST)
+ Thu, 26 Nov 2026 15:16:43 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, Gavin Shan <gshan@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH for-12.0 v2 3/9] rust/migration: Remove vmstate_validate!()
- macro and test
-Date: Thu, 26 Nov 2026 18:16:25 -0500
-Message-ID: <20261126231631.3392756-4-peterx@redhat.com>
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH for-12.0 v2 6/9] hpet: Move VMSTATE_VALIDATE() check into
+ post_load
+Date: Thu, 26 Nov 2026 18:16:28 -0500
+Message-ID: <20261126231631.3392756-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261126231631.3392756-1-peterx@redhat.com>
 References: <20261126231631.3392756-1-peterx@redhat.com>
@@ -124,195 +124,72 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Zhao Liu <zhao1.liu@intel.com>
+To pave way for removing VMSTATE_VALIDATE(), move the usage of hpet into
+post_load.  To make it safer, loading the timers with the num_timers, then
+only check against the wire number at last.
 
-We have moved all users (in Rust side) to other API, now they're never
-used.
-
-After the related test (originally FOOD) was removed, rename FOOE to
-new FOOD test.
-
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20261124095814.437738-4-zhao1.liu@intel.com
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- rust/migration/src/prelude.rs     |  1 -
- rust/migration/src/vmstate.rs     | 17 ------
- rust/tests/tests/vmstate_tests.rs | 93 +++----------------------------
- 3 files changed, 8 insertions(+), 103 deletions(-)
+ hw/timer/hpet.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/rust/migration/src/prelude.rs b/rust/migration/src/prelude.rs
-index 797e7ec59d..e2cbbda43e 100644
---- a/rust/migration/src/prelude.rs
-+++ b/rust/migration/src/prelude.rs
-@@ -16,4 +16,3 @@
- pub use crate::vmstate_of;
- pub use crate::vmstate_subsections;
- pub use crate::vmstate_unused;
--pub use crate::vmstate_validate;
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 0b05db4e70..ec8b712cbf 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -384,23 +384,6 @@ macro_rules! vmstate_fields {
-     }}
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 42285cff76..85cd26a454 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -254,25 +254,28 @@ static int hpet_pre_save(void *opaque)
+     return 0;
  }
  
--#[doc(alias = "VMSTATE_VALIDATE")]
--#[macro_export]
--macro_rules! vmstate_validate {
--    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
--        $crate::bindings::VMStateField {
--            name: ::std::ffi::CStr::as_ptr($test_name),
--            field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),
--            flags: $crate::bindings::VMStateFlags(
--                $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
--                    | $crate::bindings::VMStateFlags::VMS_NO_STATE.0,
--            ),
--            num: 0, // 0 elements: no data, only run test_fn callback
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--}
+-static bool hpet_validate_num_timers(void *opaque, int version_id)
++static bool hpet_validate_num_timers(HPETState *s)
+ {
+-    HPETState *s = opaque;
 -
- /// Helper macro to allow using a struct in [`vmstate_of!`]
- ///
- /// # Safety
-diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-index b680cfd3c7..9dbbb848b8 100644
---- a/rust/tests/tests/vmstate_tests.rs
-+++ b/rust/tests/tests/vmstate_tests.rs
-@@ -411,106 +411,29 @@ fn test_vmstate_macro_array_of_pointer_wrapped() {
- // Test the use cases of the vmstate macro, corresponding to the following C
- // macro variants:
- //   * VMSTATE_FOOD:
--//     - VMSTATE_VALIDATE
--
--// Add more member fields when vmstate_of support "test" parameter.
--struct FooD;
--
--impl FooD {
--    fn validate_food_0(&self, _version_id: u8) -> bool {
--        true
--    }
--
--    fn validate_food_1(_state: &FooD, _version_id: u8) -> bool {
--        false
--    }
--}
--
--fn validate_food_2(_state: &FooD, _version_id: u8) -> bool {
--    true
--}
--
--static VMSTATE_FOOD: VMStateDescription<FooD> = VMStateDescriptionBuilder::<FooD>::new()
--    .name(c"foo_d")
--    .version_id(3)
--    .minimum_version_id(1)
--    .fields(vmstate_fields! {
--        vmstate_validate!(FooD, c"foo_d_0", FooD::validate_food_0),
--        vmstate_validate!(FooD, c"foo_d_1", FooD::validate_food_1),
--        vmstate_validate!(FooD, c"foo_d_2", validate_food_2),
--    })
--    .build();
--
--#[test]
--fn test_vmstate_validate() {
--    let foo_fields: &[VMStateField] =
--        unsafe { slice::from_raw_parts(VMSTATE_FOOD.as_ref().fields, 4) };
--    let mut foo_d = FooD;
--    let foo_d_p = std::ptr::addr_of_mut!(foo_d).cast::<c_void>();
--
--    // 1st VMStateField in VMSTATE_FOOD
--    assert_eq!(
--        unsafe { CStr::from_ptr(foo_fields[0].name) }.to_bytes_with_nul(),
--        b"foo_d_0\0"
--    );
--    assert_eq!(foo_fields[0].offset, 0);
--    assert_eq!(foo_fields[0].num_indirect.size, 0);
--    assert!(foo_fields[0].info.is_null());
--    assert_eq!(foo_fields[0].version_id, 0);
--    assert_eq!(foo_fields[0].size, 0);
--    assert_eq!(foo_fields[0].num, 0);
--    assert_eq!(
--        foo_fields[0].flags.0,
--        VMStateFlags::VMS_NO_STATE.0 | VMStateFlags::VMS_MUST_EXIST.0
--    );
--    assert!(foo_fields[0].vmsd.is_null());
--    assert!(unsafe { foo_fields[0].field_exists.unwrap()(foo_d_p, 0) });
--
--    // 2nd VMStateField in VMSTATE_FOOD
--    assert_eq!(
--        unsafe { CStr::from_ptr(foo_fields[1].name) }.to_bytes_with_nul(),
--        b"foo_d_1\0"
--    );
--    assert!(!unsafe { foo_fields[1].field_exists.unwrap()(foo_d_p, 1) });
--
--    // 3rd VMStateField in VMSTATE_FOOD
--    assert_eq!(
--        unsafe { CStr::from_ptr(foo_fields[2].name) }.to_bytes_with_nul(),
--        b"foo_d_2\0"
--    );
--    assert!(unsafe { foo_fields[2].field_exists.unwrap()(foo_d_p, 2) });
--
--    // The last VMStateField in VMSTATE_FOOD.
--    assert_eq!(foo_fields[3].flags, VMStateFlags::VMS_END);
--}
--
--// =========================== Test VMSTATE_FOOE ===========================
--// Test the use cases of the vmstate macro, corresponding to the following C
--// macro variants:
--//   * VMSTATE_FOOE:
- //     - VMSTATE_VARRAY with a `usize` length
- #[repr(C)]
- #[derive(Default)]
--struct FooE {
-+struct FooD {
-     arr: [u8; FOO_ARRAY_MAX],
-     num: usize,
+     return s->num_timers == s->num_timers_save;
  }
  
--static VMSTATE_FOOE: VMStateDescription<FooE> = VMStateDescriptionBuilder::<FooE>::new()
--    .name(c"foo_e")
-+static VMSTATE_FOOD: VMStateDescription<FooD> = VMStateDescriptionBuilder::<FooD>::new()
-+    .name(c"foo_d")
-     .version_id(1)
-     .minimum_version_id(1)
-     .fields(vmstate_fields! {
--        vmstate_of!(FooE, arr[0 .. num]),
-+        vmstate_of!(FooD, arr[0 .. num]),
-     })
-     .build();
+-static int hpet_post_load(void *opaque, int version_id)
++static bool hpet_post_load(void *opaque, int version_id, Error **errp)
+ {
+     HPETState *s = opaque;
+     int i;
  
- #[test]
- fn test_vmstate_varray_usize() {
-     let foo_fields: &[VMStateField] =
--        unsafe { slice::from_raw_parts(VMSTATE_FOOE.as_ref().fields, 2) };
-+        unsafe { slice::from_raw_parts(VMSTATE_FOOD.as_ref().fields, 2) };
++    if (!hpet_validate_num_timers(s)) {
++        error_setg(errp, "num_timers must match");
++        return false;
++    }
++
+     for (i = 0; i < s->num_timers; i++) {
+         HPETTimer *t = &s->timer[i];
+         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
+         t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
+     }
  
--    // 1st VMStateField ("arr") in VMSTATE_FOOE
-+    // 1st VMStateField ("arr") in VMSTATE_FOOD
-     assert_eq!(
-         unsafe { CStr::from_ptr(foo_fields[0].name) }.to_bytes_with_nul(),
-         b"arr\0"
-@@ -518,7 +441,7 @@ fn test_vmstate_varray_usize() {
-     assert_eq!(foo_fields[0].offset, 0);
-     assert_eq!(
-         foo_fields[0].num_indirect.offset,
--        std::mem::offset_of!(FooE, num) as u32
-+        std::mem::offset_of!(FooD, num) as u32
-     );
-     assert_eq!(foo_fields[0].num_indirect.size, size_of::<usize>() as u8);
-     assert_eq!(foo_fields[0].info, unsafe { &vmstate_info_uint8 });
-@@ -529,6 +452,6 @@ fn test_vmstate_varray_usize() {
-     assert!(foo_fields[0].vmsd.is_null());
-     assert!(foo_fields[0].field_exists.is_none());
- 
--    // The last VMStateField in VMSTATE_FOOE.
-+    // The last VMStateField in VMSTATE_FOOD.
-     assert_eq!(foo_fields[1].flags, VMStateFlags::VMS_END);
+-    return 0;
++    return true;
  }
+ 
+ static bool hpet_offset_needed(void *opaque)
+@@ -332,14 +335,13 @@ static const VMStateDescription vmstate_hpet = {
+     .version_id = 2,
+     .minimum_version_id = 2,
+     .pre_save = hpet_pre_save,
+-    .post_load = hpet_post_load,
++    .post_load_errp = hpet_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(config, HPETState),
+         VMSTATE_UINT64(isr, HPETState),
+         VMSTATE_UINT64(hpet_counter, HPETState),
+         VMSTATE_UINT8(num_timers_save, HPETState),
+-        VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
+-        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
++        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
+                                     vmstate_hpet_timer, HPETTimer),
+         VMSTATE_END_OF_LIST()
+     },
 -- 
 2.56.0
 
