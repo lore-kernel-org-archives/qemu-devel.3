@@ -1,75 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6E1606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE23606A31E
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 04:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JsDC0ltJ
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D5k2TFVU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWQka-0004XQ-89; Wed, 25 Nov 2026 23:06:26 -0500
+	id 1xWQka-0004XR-7J; Wed, 25 Nov 2026 23:06:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+daejun7.park.samsung.com@kernel.org>)
- id 1xWOoY-0008OM-Ob; Wed, 25 Nov 2026 21:02:24 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1xWOoi-0008Pn-4o; Wed, 25 Nov 2026 21:02:32 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <devnull+daejun7.park.samsung.com@kernel.org>)
- id 1xWOoX-0006dd-0l; Wed, 25 Nov 2026 21:02:22 -0500
+ id 1xWOod-0007Aj-1s; Wed, 25 Nov 2026 21:02:29 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id B7F7060234;
- Thu, 26 Nov 2026 02:02:16 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9C4B84338F;
+ Thu, 26 Nov 2026 02:02:24 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
- t=1795658536;
- b=i8tL3LezcKNxFbEXayu6nK+asQ0TCczsWSaYmpY8GfKEy23DAnB9D78Ktju5yNYUMKaW
- uahtWlyvtcRZjPWSi2wqFOYW6gKr5xNDBzFjMR0kGubjWlVxGTepRLHrU94Vy3enI48sJ
- 0aR3UCHB2He79C4WZJq6ymkagwP7Gsq7yXD+OUpg6x0QvHKNJSZ6NIaw4ydjgJ+IN8yKD
- eaSd3YeKKynpCtieyO6gDRtVSEzADp8gfojjCK0shkBWNyOKrnJbSg5X85Q7ZYH4gyWfX
- MAK8uxuQbutgOWIU1ey/cVZMrPykx8XKmDu1kJ3CsR2OfK0xlgcWY4OANonSXlo/FhA==
+ t=1795658544;
+ b=hI4gddac9QwrOhPdgiWMk9D/zjh8heP9dctsnzFe1eAR21Lv9SwGQtrgCdG7nLcoWdtx
+ 7Rh/RmipDEAFIvIvfsJ/Mo9FPFmrZ2xkNuqEqpjZduM3npGUTLolUQT1mjEQ4nUKxZXI4
+ 2xJxGqRTSEz/kqFJlIbL71fovC4QPBiQz7mOqEVA5AwysdtVguIoKduYA+WkjzR+IRl3O
+ xrGmcOKKVTWggpzpx8kEzCm6X9V1Wkxnsj7k62/OfsL8r69ocDLZfUQQulyHj9oVbGo+F
+ sK0wa7Re4lTY3LYG2obCgCnLQ8yTitE1ifYmmBK4Tea1hkOth+v72sF3vQzuQ4Xu/5g==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
- c=relaxed/relaxed; t=1795658536;
+ c=relaxed/relaxed; t=1795658544;
  h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
  Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
  X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
  X-Original-From:Reply-To:Content-Transfer-Encoding;
- bh=lz5B1/pYN52nUQdXvSehhsMOR+cpHCwwoplpPzcIHqs=;
- b=jJVkSwiRfASIeyjdS3AXeMlPLqZ+fhlTrcq92MpS69+9hbjLwdujUEp44oRrSld8kOnY
- 62N0acQa4PYIDOIGpKlQFR4pq3lu39JclpLJJIKJlO/wJAs5IgXIV2kk1Mdm+IF1bafRT
- uaRa9KuxBeH6k4aKLUg1kbusiYbHcagBbXEKvCij3vttCwvYINRCr6YE2K0LTwYWk/jRv
- B/7lHYW9urRKuK1UbSiqZhxT1K7MNZcEp8VzuCPYWkKjNvvDZ4qQ+gPDXmiPBWvhTvFWO
- sKTgphnJjwo5oTg7P5QoZF1Ls81ew9EQx8t30+wo4Jt0hENh9rY9AUSL8g89oHKetiQ==
+ bh=5kbaupddmJczJQzgf1uHEen+1A9SENHH/y8A2dfER2w=;
+ b=oGPdAZD6kzUqcFHCI7EydgqlQIK0/neoFYE1NnS2hNnFIcOrPqqz5U59PLKrnb8rbbA4
+ ghlft6J+ejKdfNfbEccaYVqDDO2XKItQkWmHFi8z70rSCVRRM73ckbJDDlsQ19vir0dz6
+ yAryKkl5jQ9c3leyeHXJPXCUM0slxksal/XhR2lxpOV1cTAX0L+Vxz2QM68I+Mvx/YemT
+ jO5Vg6w5YE8zyNHFRTGcUV9Ga2GmJOVllYMhFnU8INCqanTptEdAu/RQe8zePJd4Q5Q6a
+ Tv2kT7E84ve2+YVnGJzu5viEsWRq/kKwb9TEb8RqrPAEpOlpYgog4kI2i4Q2kyu0k5g==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
  arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
  (No client certificate requested)
- by smtp.kernel.org (Postfix) with ESMTPS id 76F141F000CF;
+ by smtp.kernel.org (Postfix) with ESMTPS id 9260E1F000C0;
  Thu, 26 Nov 2026 02:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795658536;
- bh=lz5B1/pYN52nUQdXvSehhsMOR+cpHCwwoplpPzcIHqs=;
+ s=k20260515; t=1795658544;
+ bh=5kbaupddmJczJQzgf1uHEen+1A9SENHH/y8A2dfER2w=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
- b=JsDC0ltJC1BlxKxaZPUi2iLZrLlO+IEZ/+IP66ipxBBjW4AlY4xXXd0YKaA7x3r30
- jgcmm8Rr0pmVtdbShDSsNNRPfSQPfWmHf1OIIcf4Fpn5ONHjR4qnL0NVtCttDOo2iB
- iifLbjuFQNB0ttdq6sGuAbyiV2kts1kdTvDXUxeRNyYao6hMAdyK5cfmhli/0N1iaF
- unxw39OOvGExw7hgMlUS1RxD6dUCxUVtznl2VPw4jc+lk552JpMoUeFrn3glDTzX3d
- mFbyz3Q51+V66NZqTmZv8lmazHrSha2d2yPpeu0oEjz+cb4UltKp83AgkvEI92fvjA
- futYX50qOb5qw==
+ b=D5k2TFVUNa5Q0iVc9HYiM89uiVZKtcek/Ptra0RMO6+q57KhE9kMIO+vDyw0AgPFQ
+ lP3DCnXJlh8ScukzxpImyU39cgqu6TpxE18rSOe3vv2k8V1Q/2G9sc1elWLmmtQ+Pr
+ L+yc7/FsQLF/joIBD8QXZXqxy71J1qequrA+sngk/EjOjzRGHZffRxwtW0qN+pO7Wd
+ /CS4j81EIejhFlHZWI/wCbdF86STxMaO9JUrb0Bx/DwHr7EtDDbx6FFeFb1CVMpR8Z
+ 6CP5Q0yRmpSZpxDHOoTt5u/79jVWeAE1arwEh7McVFZyg3dnLYNgorLsrOABd0WBBU
+ DLHG6dJHYPa8A==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
- by lkml.kernel.org (Postfix) with ESMTP id F37C94D180;
- Thu, 26 Nov 2026 02:02:10 +0000 (UTC)
+ by lkml.kernel.org (Postfix) with ESMTP id 1E7D64D184;
+ Thu, 26 Nov 2026 02:02:11 +0000 (UTC)
 From: Daejun Park via B4 Relay <devnull+daejun7.park.samsung.com@kernel.org>
-Date: Thu, 26 Nov 2026 11:02:09 +0900
-Subject: [PATCH v4 1/5] block: add an accessor for the active zone limit
+Date: Thu, 26 Nov 2026 11:02:10 +0900
+Subject: [PATCH v4 2/5] scsi-disk: Report zone errors with their ZBC sense
+ codes
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261126-zoned-ufs-v4b-v4-1-f90239d12a55@samsung.com>
+Message-Id: <20261126-zoned-ufs-v4b-v4-2-f90239d12a55@samsung.com>
 References: <20261126-zoned-ufs-v4b-v4-0-f90239d12a55@samsung.com>
 In-Reply-To: <20261126-zoned-ufs-v4b-v4-0-f90239d12a55@samsung.com>
 To: qemu-devel@nongnu.org
@@ -84,20 +85,20 @@ Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Keoseong Park <keosung.park@samsung.com>, 
  Daejun Park <daejun7.park@samsung.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795658528; l=1796;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795658528; l=3383;
  i=daejun7.park@samsung.com; s=20261006; h=from:subject:message-id;
- bh=TBiFpQFT/9RXsABdcgs7OOsn9LXZG6k+QhQ33mxHGPc=;
- b=xyA/YlLPKFFMXWspm2MVtP0IZK8h1oSznI7SAdADwQe+GKbGf8ueQo9EBaoN8BbnfRJzlppVF
- Xq1UziodUyaD7mrlRiyoQ7GB1FVdUiphNQlzT3Uz6AxgY7jWt4R7YON
+ bh=RtJEtOqUcVPZOmbAoYOQxqGUl03XOQZDoLQB2Vd6q/M=;
+ b=ZWuz6BUBbZ5PGfvwLesYCxv/bHWY0FNE8nFH8bX8iCpVarrFIgzroG8I/ca7StcWLq6W1YyD6
+ ZVBnA+lOCHYBPCSyJatkbvOVLKLWhZHJoAZr0FNaYGmPVmqaLdbp133
 X-Developer-Key: i=daejun7.park@samsung.com; a=ed25519;
  pk=4yUfDqGRZTIj0Ik43z1GoMZRWCNm/rgX6uJuM9dtNIg=
 X-Endpoint-Received: by B4 Relay for daejun7.park@samsung.com/20261006 with
  auth_id=1122
 X-Original-From: Daejun Park <daejun7.park@samsung.com>
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254;
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
  envelope-from=devnull+daejun7.park.samsung.com@kernel.org;
- helo=tor.source.kernel.org
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -106,7 +107,7 @@ X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 25 Nov 2026 23:06:16 -0500
+X-Mailman-Approved-At: Wed, 25 Nov 2026 23:06:17 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,50 +128,103 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Daejun Park <daejun7.park@samsung.com>
 
-Add blk_get_max_active_zones() next to blk_get_max_open_zones(). A
-device model whose protocol cannot report an active zone limit, such as
-ZBC, needs it to reject a backend whose limit a guest could reach.
+A zoned block driver fails a write that breaks the zone rules with a
+BLK_ZE_* errno. scsi-disk reports these as ABORTED COMMAND under the
+werror policy. So the guest retries, and with werror=stop the VM stops
+again on resume.
+
+On a host-managed backend, report the ZBC sense code instead, whatever
+the error policy, as for a reservation conflict. A write to a full zone
+gets INVALID FIELD IN CDB. The mapping goes to scsi/utils.c for zoned
+UFS to share.
 
 Signed-off-by: Daejun Park <daejun7.park@samsung.com>
 ---
- block/block-backend.c             | 11 +++++++++++
- include/system/block-backend-io.h |  1 +
- 2 files changed, 12 insertions(+)
+ hw/scsi/scsi-disk.c  | 11 ++++++++++-
+ include/scsi/utils.h |  1 +
+ scsi/utils.c         | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 397ec9ed5a..1e591a81b9 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -2371,6 +2371,17 @@ uint64_t blk_get_zone_capacity(BlockBackend *blk)
-     return bs ? bs->bl.zone_capacity : 0;
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index a2df3a4ec4..643247da0c 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -246,7 +246,16 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
+         r->req.host_status = -1;
+     }
+ 
+-    if (ret < 0) {
++    if (ret < 0 && blk_get_zone_model(s->qdev.conf.blk) == BLK_Z_HM &&
++        scsi_sense_from_zone_errno(-ret, &sense)) {
++        /*
++         * The guest broke the zone rules. As for a reservation conflict,
++         * a retry fails the same way, so report the error whatever the
++         * error policy, and do not post it to QMP.
++         */
++        status = CHECK_CONDITION;
++        error = 0;
++    } else if (ret < 0) {
+         status = scsi_sense_from_errno(-ret, &sense);
+         error = -ret;
+     } else {
+diff --git a/include/scsi/utils.h b/include/scsi/utils.h
+index d16c264b22..93178e7528 100644
+--- a/include/scsi/utils.h
++++ b/include/scsi/utils.h
+@@ -148,6 +148,7 @@ int scsi_cdb_length(uint8_t *buf);
+ #endif
+ 
+ int scsi_sense_from_errno(int errno_value, SCSISense *sense);
++bool scsi_sense_from_zone_errno(int errno_value, SCSISense *sense);
+ int scsi_sense_from_host_status(uint8_t host_status, SCSISense *sense);
+ 
+ #endif
+diff --git a/scsi/utils.c b/scsi/utils.c
+index 9eb41aefdf..cdf3ef11d4 100644
+--- a/scsi/utils.c
++++ b/scsi/utils.c
+@@ -17,6 +17,7 @@
+ #include "scsi/constants.h"
+ #include "scsi/utils.h"
+ #include "qemu/bswap.h"
++#include "block/block-common.h"
+ 
+ uint32_t scsi_data_cdb_xfer(uint8_t *buf)
+ {
+@@ -597,6 +598,33 @@ const char *scsi_command_name(uint8_t cmd)
+     return names[cmd];
  }
  
 +/*
-+ * Returns the maximum number of active zones of a zoned backend, or 0 if
-+ * there is no limit or @blk is not zoned.
++ * The sense code of a zone error, one of the BLK_ZE_* errnos with which a
++ * zoned block driver fails a request that breaks the zone rules. Other
++ * drivers use these errnos for other errors, so only ask for the errors of
++ * a zoned backend.
 + */
-+uint32_t blk_get_max_active_zones(BlockBackend *blk)
++bool scsi_sense_from_zone_errno(int errno_value, SCSISense *sense)
 +{
-+    BlockDriverState *bs = blk_bs(blk);
-+    IO_CODE();
-+    return bs ? bs->bl.max_active_zones : 0;
++    switch (errno_value) {
++    case BLK_ZE_UNALIGNED_WRITE:
++        *sense = SENSE_CODE(UNALIGNED_WRITE);
++        return true;
++    case BLK_ZE_BOUNDARY:
++        *sense = SENSE_CODE(WRITE_BOUNDARY_VIOLATION);
++        return true;
++    case BLK_ZE_FULL:
++        *sense = SENSE_CODE(INVALID_FIELD);
++        return true;
++    case BLK_ZE_OPEN_RESOURCE:
++    case BLK_ZE_ACTIVE_RESOURCE:
++        *sense = SENSE_CODE(INSUFFICIENT_ZONE_RESOURCES);
++        return true;
++    default:
++        return false;
++    }
 +}
 +
- /* Returns the optimal write zeroes alignment, in bytes; guaranteed nonzero */
- uint32_t blk_get_pwrite_zeroes_alignment(BlockBackend *blk)
+ int scsi_sense_from_errno(int errno_value, SCSISense *sense)
  {
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 7c958843b4..aa6303c8a1 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -125,6 +125,7 @@ uint64_t blk_get_zone_size(BlockBackend *blk);
- BlockZoneModel blk_get_zone_model(BlockBackend *blk);
- uint32_t blk_get_max_open_zones(BlockBackend *blk);
- uint64_t blk_get_zone_capacity(BlockBackend *blk);
-+uint32_t blk_get_max_active_zones(BlockBackend *blk);
- 
- int coroutine_fn blk_co_copy_range(BlockBackend *blk_in, int64_t off_in,
-                                    BlockBackend *blk_out, int64_t off_out,
+     switch (errno_value) {
 
 -- 
 2.43.0
