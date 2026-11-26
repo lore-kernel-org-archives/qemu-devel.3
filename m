@@ -1,117 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73840606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 03:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BED606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 04:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=Jn74EBfo
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=f0ekHzYV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWPmc-0002tp-6v; Wed, 25 Nov 2026 22:04:26 -0500
+	id 1xWQi9-0002zQ-9B; Wed, 25 Nov 2026 23:03:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xWPmZ-0002sM-VW
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 22:04:24 -0500
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xWQi8-0002zH-Nt
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 23:03:52 -0500
+Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xWPmU-0008H4-Rf
- for qemu-devel@nongnu.org; Wed, 25 Nov 2026 22:04:23 -0500
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-67db0791748so7570083d50.1
- for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 19:04:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795662257; cv=none;
- d=google.com; s=arc-20260327;
- b=EvvfxU0ZnDWdWlwZF7lWhS4A6o7r8d7mXH3R3qUU2YE1Iz7h2avJ6j5weRM3nVdVBC
- g0m3l55c/AKgo8rAS67SGDWT0+HJ+L66SLS1Q/qlhwA6urz3Vqq9RtfAlWxCk7YzZ8Ud
- KgDgcfk0rbmx/mav0bqt4JGjXg4Wv1lU1+pFi9EBgenlZLfM2ual7TulBor1b+lawZC6
- vLLwHnPauDrY4L8b2JTL1r5go/exg807lVy9/tc8LwPsds9UrzPXOp4IqcYOskXPUrf5
- xhX5tFpzj99NRG/YvnoEhh01/8X3q7LTO3VNq3GwCKzvkK6TWIpa7gOLoa2VbU/UGO1E
- TPxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xlWHPFuqk5N+v92mFgbucowqaX2ho2OkoZHRJ2Idrh0=;
- fh=EhIY1LAwFSLhLIQoGHI9JMEAVCJtb3Q+OgsqX96X7u0=;
- b=F2JIicGPPJ9jpGQwCWrhORHY6yrjhm+uTSOODS1k4IJlM8FRyUDJ7VXkiazOquTwfk
- 0hqL7yztKzl74GoA8VFWmz5Atc0jAx/YJrxjzFKmuC/KKFtpRyTYrvhGYWu4FLIVb0zj
- 08cwL4UtIBFT9+6IUdk7EB5ALZoUz8jE7daki/RZTgIdgp9a9SZtORxxz2aoUCgzi7/q
- fFOwWMZnPbszaSif5MW3ngFGJYw/6jDNvGCw52mLq/gzU3f/mZtt90itusUITJeU56Xt
- s4ZL1lioLTUrU6tOta86NgTyfVRfV25ksF/VJOeSZvExIDtwe2SwRpFGQCztPuOM6PFU
- ULOA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <xmphyr@gmail.com>) id 1xWQi6-0006D3-O3
+ for qemu-devel@nongnu.org; Wed, 25 Nov 2026 23:03:52 -0500
+Received: by mail-oi1-x231.google.com with SMTP id
+ 5614622812f47-571888655f1so2232504b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Nov 2026 20:03:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1795662257; x=1796267057; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xlWHPFuqk5N+v92mFgbucowqaX2ho2OkoZHRJ2Idrh0=;
- b=Jn74EBfo+XM/sTC16kn8R0ztb9GryD4kMnGDZPHDA95ST0dHzcEzdLRl5Ijnniw0J+
- L4KXj3IhAx8h+PGjkCweLAAW6TzOr1VBBQlbZOJaoCTyZ1vCzjbi04uu1HE7KDIDTeES
- ItFb0uoeMG7nXkIIhYHC5FIqOb4CjQtl0Tx3QoVCy81im/2k0mGx/0G3NBCTwaDwU/Dk
- 3zHTFCg0YP+mL5hdJovAhEOsh9xjnLGEA7gN59bjDMbNCWlTHLw/eGWJJjihLvpGFWtB
- 3GuPXpfsQk6hB3xIqqwjAuOc+NNvFWupRZlXHMQRvUSpNvq4sf69CtcIFtg0AUIjdkta
- gT1Q==
+ d=gmail.com; s=20260707; t=1795665828; x=1796270628; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=bIuDluCbnsnMu2I9m0NjlyF0A42hhgwAKwv3lUYWo90=;
+ b=f0ekHzYVwKyeqLH0JIHRIIR32hB1ql4loYIVXqQr3cRCmYq2ed+6Kc1RPesanPXJGV
+ D0nPqJw5AMooDkij1KjTYNTSfrWwnAPMVf5ApOmQ2FG/Hoy2LwvlDM/5hf38zb1q+NXr
+ IeS5y84EBh7IXOA43LpgNSft0BUcwruX6x/X6BdvBkL4D9KruCh4JfUq8xEcPXFPlUV0
+ 5K8fXgbeC4QWN/meIbIwSjF0wOBeOITPU9RCmN4lBiyd+cMIuY82YGLEWAKLm+7aepnO
+ K6m1yYfF/hHj8z/h44yuulXmW0+bnP75IVZS6e1EVCQrusGTKNdFmZczht/tSb+momIh
+ IlHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795662257; x=1796267057;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xlWHPFuqk5N+v92mFgbucowqaX2ho2OkoZHRJ2Idrh0=;
- b=BlqdEC6xYvdkK7J+PHcCfeIv9XjN+W+04gHMLHASQsysrstZuA0tiGp1zAV0Dd1wdu
- fFkfLUvZzYdPWwvpEVRTjhFnLN4SIMMLDEx2KiCfrySD/ZE43RBKLyKVdmoc8dt4oP6l
- ptcA/Vu4HtWQFYq5n9Nf9im1CpxTu2YGuxLi+nZIY36yR16F7okN1Ayii5Q5rmMLVhTh
- IjsXAvxoCvzTyhX6g70Nxb0OeKoZncdZFVhiNGWJbexrdONFsvgNJ6f+3IXlxNZ8qy1P
- UbRIPs9VTu2EbXdrUtTKesIuyTslPMvVX7aYpdMTfuN4VZUn4J0YVLTl6h7NI45Fu3a1
- LNFA==
-X-Gm-Message-State: APuU4Z9tdEP89lkJambj+teJeX4c44MABEKdQNCJVQ81EOFxWvvHDCC/
- 8LD++gpblxNRJTaQFpiBmHkz7qaAt7jMnYqUIL+KbD9MnVqW3IcjR02onbla0VmjBCQoYflp3xL
- gqLSa/sOcZIbGou4lkk0lA8GtauAgeN2JGj2rFT3CGQ==
-X-Gm-Gg: AZFdTZc1joHHrB6B34+wDP2E8ApFe38vcWnPiCPsGinksEBalPchyiItt2JwinbJDBd
- whZGzV8LcHhJy8yChDSfr+1f4D9fEEz9SURnCppphmGa+HWkc3w+Fw1OXxz5D1cweOzQWWk90V1
- vMa9mwEOA+u0tR6c2t2OhXEjXq5hGsmVDlvatLoexgkNVunAM9zpiyoBhgVA8Qw7Jl/PqcAS5BP
- 5ceu2+xn92ghEGQLLZzdkQRhPh3ltENi7ftruQzKw2s15cXDONMjdcggtvs8yYC1TTCmjAsXUKU
- oOD7gn7olOTYB/qV4jVi+I1PBMoVwAXiw5uL/XmAQd6JEYLCTYL6e9fSQUDQjXO1zwEbs/DbOlE
- 6+yPmGkRs8dI5IIYPkpfChTRInWquUVrG5fnp140zvorQ4+x7k0vLi/7vipJM0iz28JrAOrFiZ4
- oZxA48JRgxsTfSPVBy5gXDdm9BTlkbTUolU+FkljxZSLvFCGM=
-X-Received: by 2002:a05:690e:144e:b0:67c:271e:c28f with SMTP id
- 956f58d0204a3-67df43ce2bamr9482552d50.31.1795662257152; Wed, 25 Nov 2026
- 19:04:17 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795665828; x=1796270628;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=bIuDluCbnsnMu2I9m0NjlyF0A42hhgwAKwv3lUYWo90=;
+ b=DksSVljnwvcdvkV7nX8F2/2fMUIj7ARJtqME1jXuhiMI7uEUmmzeGBhitWuhG8Njtc
+ FydE8NiLMatsRWCYXRTi0ooNUXp6xRDq2TC2LvoqN/XJx3lI5w+LL00IRg0Lwiuzqc7T
+ XeKW5175DkP6AgA6iEK5SPKxrRaW1pmriyl6m5wSvTyAH0x4iJTkz0UKsKklcAnGbqZd
+ r947+Okm9Oe5RiHYIkrYiwCrKNHlFMZK8z3FO2VctiwdNsMJ17XBs47w8ky013Ob0FEs
+ +5vYXmP2FaX/Uwru9m7sdrMEctQl2Zj+VvXTYtOTcw5nkLKF2mPxD/kbCxGBSON7lcVv
+ AmNw==
+X-Gm-Message-State: APuU4Z/K0V9oRBpJ161ZdYP/3Wu9+/7ctHPKU8TZTWSw+9kHg0s3+7xA
+ +iGtCSlOgMgFSZ/Ke0mTaxtOOpSWe+xVfQ8IlAUod62WcoYMb02hZy1a
+X-Gm-Gg: AZFdTZd5zd1xrlGyLLOBDxG2Url0MGB+XtZzglrlLW1fDvk7qqK3iPzjFJGCkk4S3X/
+ zjr7YANh2W/e37gTnDGPnBFp3wYWjE1XenzO3m/3w+PjLS7+glTanPLwW+kjhN8lqkdqQIpmew9
+ gdmSaRly4rZeXJwnglaogRq+kWW59PbLJoqq5Sy2Wy7ais0zbU+vhg7OMvosmyAa4Xlcs5SX1Kc
+ /i87vs8OLoSZBq+bU18exaaJRlIQWAY5j3AdBo9nF/f4BdoeTpJUYzony2zpsNCvUEEk4ABqtHm
+ 3xcRScFZ6E/LNkeH8tpE6SHrj5fDbHjBor9IJ/423+VLMtuw+O9dyuPpGfVGqgd9nStozCZaUQD
+ trYRaB9DWVkqyhdl728CYI2fsWdO1BMm60w2VU2FnF+lTkuPZThKppJvWR2TLgiVeqqzxHnv6ra
+ iLWvD4w/WTiRdqB1orcomqkl4CwKz9FLc5gYuIAnZYjQiINJP9cC7z33PGbDGfXzcfWsqf7zYEu
+ 47Iau0E+W6vbK7OwSTCntbJoWR4UfoYOkuFJLmYVv1XFmnOlPxeNdI1IdQBTFc+QPXDMN2zWG//
+ o1n+Bjsr7X7nwyojRgXgePifuFA=
+X-Received: by 2002:a05:6808:4f5f:b0:564:4dce:607f with SMTP id
+ 5614622812f47-57a0ad2a86fmr23021252b6e.39.1795665828271; 
+ Wed, 25 Nov 2026 20:03:48 -0800 (PST)
+Received: from [127.0.1.1] ([2603:8080:a00:9759:116d:2577:161a:11a3])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-57a34252251sm16019268b6e.6.2026.11.25.20.03.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Nov 2026 20:03:46 -0800 (PST)
+From: Andrew Nguyen <xmphyr@gmail.com>
+Date: Wed, 25 Nov 2026 22:03:28 -0600
+Subject: [PATCH v3] hw/net: at least one TX queue and RX queue
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261124-spacemit_k3-v1-0-e911d6e88542@oss.tenstorrent.com>
- <CAEev2e9YBm-rA1+-mmw-qF-5dLw7uO0o=knHh30KAyDVepBsfQ@mail.gmail.com>
- <20261126023501.460848-1-w1355457260@gmail.com>
-In-Reply-To: <20261126023501.460848-1-w1355457260@gmail.com>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Wed, 25 Nov 2026 21:04:04 -0600
-X-Gm-Features: Aa3M54qK8gsW2xmOFDckolhTpc2vnwjYp7Mvcoj9l9EJM2ALGF2hQOtl0pRWJBc
-Message-ID: <CAEev2e88RWAx_FhZZZHY1vQs3KTNFS+S1R6G4qdEdzzaivZCSA@mail.gmail.com>
-Subject: Re: [EXT] Re: [PATCH 0/8] Add Spacemit K3 Machine
-To: Zixin Wang <w1355457260@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, Jeuk Kim <jeuk20.kim@samsung.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261125-4729-out-of-bounds-rx-interrupt-idx-v3-1-18d377f43be0@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAI+vB2sC/5XNQQ6DIBAF0KsY1p1GEEG66j2aLiygTlLBgBob4
+ 92Lrly2mdWf/Ly/kmgD2khu2UqCnTGidykUl4zornatBTQpE5YzQSktgUumwE8j+AZefnImQlg
+ A3WhDmIYx1ReQlRGqlqbi0pAkDcE2uBwrj2fKHcbRh88xOtP9+58/U0gneKWoFGUj9L3ta3xft
+ e/J7s/sZDL+m8kgB21oZa3mTSHU2dy27Qu5Q88+KgEAAA==
+To: qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Jason Wang <jasowangio@gmail.com>, 
+ Karl Mehltretter <kmehltretter@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Andrew Nguyen <xmphyr@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795665825; l=2215;
+ i=xmphyr@gmail.com; s=20261115; h=from:subject:message-id;
+ bh=4MrTC0mo2EPcy7unO/BoWOhefY9+cQf8MIr0CK/21qI=;
+ b=vH0y6Q33RMg2kMGLJfP9QFaCwUvbfzbz+3CdHaVPFX3s0PZm9lR8M7BqeYmV67Qe/iXsfHCiE
+ 7ac24TV56n9BufXSyNBOKPfZKtASrdXFTsaTP+Lqf78A406oGIS2j9r
+X-Developer-Key: i=xmphyr@gmail.com; a=ed25519;
+ pk=NNmtCKBlfBcUb+tQiMXr0u4Z3W1r0gSDovSDVTzPWXE=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
+ envelope-from=xmphyr@gmail.com; helo=mail-oi1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,60 +108,75 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Zixin,
+Require a VMXNET3 configuration to have at least one TX queue and one RX
+queue.
 
-On Wed, Nov 25, 2026 at 8:35=E2=80=AFPM Zixin Wang <w1355457260@gmail.com> =
-wrote:
->
-> Hi Anirudh,
->
-> Thanks, that makes sense. I will hold my own model and focus on reviewing
-> this series first; missing features and tests can be added after it is
-> upstream.
->
-> For the tests: I do not use tuxboot. The K3 SDK and image download entry
-> point is SpacemiT's resource download center:
->
->   https://www.spacemit.com/community/resources-download
->
-> K3 resources are available under the SDK and image sections there. My
-> local test uses the K3 SDK Linux image and OpenSBI firmware from that
-> SDK, together with a small initramfs and a QEMU-specific DTB. I pin the
-> exact files with SHA-256 and boot them with:
->
->   -bios fw_dynamic.bin -kernel Image -initrd ... -dtb ...
->
-> This avoids the tuxboot kernel/OpenSBI limitation entirely. The qtests do
-> not need firmware; they run with:
->
->   -M k3-pico-itx -bios none
->
-> The DTB I use is prepared for the Linux-first QEMU machine. If your memor=
-y
-> map differs, we can adapt the DTB and boot command to your machine model.
->
-> For your NOR-flash test, the same K3 Image and DTB should be usable; you
-> mainly need to prepare the NOR image/layout. I can share the
-> qtest/functional test harness and help adapt it. I can also boot-test you=
-r
-> series with the K3 SDK images and provide a Tested-by tag if it passes.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4729
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
 
-I have written a functional test that test boots upstream linux v7.3.
-I will include that when I send v2 (and some docs on how to boot linux
-from u-boot). It loads in the kernel, dtb and initrd via -device
-loader and uses booti in u-boot to boot into linux. You could also
-build a UFS image containing linux and boot that (but I've kept the
-test simple).
+Signed-off-by: Andrew Nguyen <xmphyr@gmail.com>
+---
+This is a resolution for issue #4729: 
+https://gitlab.com/qemu-project/qemu/-/work_items/4729. The issue is that
+a VMXNET3 configuration with 0 RX queues is loaded. When one of these RX
+queues is accessed anyway, say, rxq_descr[0], it could have an invalid 
+interrupt index that was never validated in the first place.
+---
+Changes in v3:
+- Deleted the v1 commit
 
-If you have any comments on v1 of this series, let me know.
+Cahnges in v2:
+- vmxnet3.c: undid v1
+- vmxnet3.c: when validating the queues, not interrupt indexes, check for minimum of one
 
->
-> Thanks,
-> Zixin
+Changes in v1:
+- vmxnet3.c: changed the RX queue interrupt index validation for loop to a do-while loop
+---
+ hw/net/vmxnet3.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index 24c551a054..875c998d63 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1382,17 +1382,18 @@ static bool vmxnet3_validate_queues(VMXNET3State *s)
+ {
+     /*
+     * txq_num and rxq_num are total number of queues
+-    * configured by guest. These numbers must not
+-    * exceed corresponding maximal values.
++    * configured by guest. These numbers must be at
++    * least one and not exceed corresponding maximal
++    * values.
+     */
+ 
+-    if (s->txq_num > VMXNET3_DEVICE_MAX_TX_QUEUES) {
++    if (s->txq_num <= 0 || s->txq_num > VMXNET3_DEVICE_MAX_TX_QUEUES) {
+         qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Bad TX queues number: %d\n",
+                       s->txq_num);
+         return false;
+     }
+ 
+-    if (s->rxq_num > VMXNET3_DEVICE_MAX_RX_QUEUES) {
++    if (s->rxq_num <= 0 || s->rxq_num > VMXNET3_DEVICE_MAX_RX_QUEUES) {
+         qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Bad RX queues number: %d\n",
+                       s->rxq_num);
+         return false;
+
+---
+base-commit: 6bf90d4fc5027567cb704d7888f5ec792b4ed75a
+change-id: 20261115-4729-out-of-bounds-rx-interrupt-idx-78d69a7d847d
+
+Best regards,
+-- 
+Andrew Nguyen <xmphyr@gmail.com>
+
 
