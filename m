@@ -1,108 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67CC606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 20:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5356606A69D
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 20:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=J8/t4VKT;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=dZxH26Mw
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rSd25Xvu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWfs1-0007Yy-KT; Thu, 26 Nov 2026 15:15:07 -0500
+	id 1xWgJ5-000769-MZ; Thu, 26 Nov 2026 15:43:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfro-0007Yc-Q7
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:14:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfrm-0000Ja-Vo
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:14:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795724090;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=qU8UnYephEeunY0mdr0CgbXtGk/NsxR8QTX+xWd5mUg=;
- b=J8/t4VKTAeIUE2XbwNd1qD9oJH9YX5xHC93spHZwIx0sLKkAz9378qDFJC/DWCfu8xudOb
- 58dYwxCRoAWvLhCTvSKMijIOJ6NDmsB8SOxuE5uX/MQz4oEJ3Iz8Txk+mVK5tUawaq8B6C
- m3TeHgFJ4kKrrJC2mbeTpPytMaRpLeM=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-_ClVvlCIOTGXcVbQNOjVdA-1; Thu, 26 Nov 2026 20:14:48 +0000
-X-MC-Unique: _ClVvlCIOTGXcVbQNOjVdA-1
-X-Mimecast-MFC-AGG-ID: _ClVvlCIOTGXcVbQNOjVdA_1795724087
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93f2005ce21so1141270085a.3
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 12:14:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kaynak.oguzhan0@gmail.com>)
+ id 1xWdwh-0005Us-6P
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 13:11:49 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kaynak.oguzhan0@gmail.com>)
+ id 1xWdwf-0008Um-FH
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 13:11:46 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4bba5e17728so19920115e9.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 10:11:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795724087; x=1796328887; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qU8UnYephEeunY0mdr0CgbXtGk/NsxR8QTX+xWd5mUg=;
- b=dZxH26MwmTz+uKRhswXPUTUD0pBZoeNKJwy32rjb7CykZZ/tiKGEt822qYNA/FSKYy
- vuoe8vGMSbzt6MnCr6R71stbcOSbbqLnuO3ACjEakacpeeyIEgd2ParuhbhSCRjbk9cO
- SKO2HsOlD46BuTLwk6BYAwov9oFCBqG1aphdYVMoseYo0KkqV6/IW5LbHbDGlONrY3dv
- UESKoIfSP8nF4hxHfc8ZKxT09biP/UQpeNaZYtEo/oreZwaNePTth5RPoqihUpZ/0F73
- 6AloFdDpuTaOAzqXNOYmbJK6vPNrdNdumlr1L4ZY36lbRnG2ReY/CVdh/VggVB8TCLXg
- GydA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795724087; x=1796328887;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1795716703; x=1796321503; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qU8UnYephEeunY0mdr0CgbXtGk/NsxR8QTX+xWd5mUg=;
- b=w/feiYVvyM5U3t53UmActdTnYW3SDbkByWgduQKiOnFR3nqYzxuJ4aBnhQmXXY7a2l
- FikaeAZo1+XiCVrwHwpFTO39HC00JqJ02tCAWntoW9/IPMcFVcdqaThkjpeJ6BiKtHdB
- AMPMtMU0BavbRsJFSlRA3bJwgzCENMA+E18JrORhfp9VHTSwzpM+ga8W7Ye2SKWHfvSk
- kKF7Isxnzd277lnShQBPTBRIT5V+b6tos1KF6fGSd3VfHsOnLrKpP8y6b+agpqryqIy9
- 1vRE1W3kFZLErZjK9bsI6nDqAGalfFVsEblgph/A/TF6g3IJ0YVbSjXcvcOqykqIt0Q3
- fFrQ==
-X-Gm-Message-State: APuU4Z/JypatUKI2ss+dIICmQChyBH2Nd/eICoycSLlHLNiCDyyb05C1
- uuKPxunWftkPmeA0rJ/85k1OiZ3hKQUn1FSdt0hdMlKp5JIHeb9dAQsB2a3cFir2ztih4M2Az+Z
- skxvYv6tMYVq50NVORrtYMjSoRzEkQyz9zE/Gol0E2w99jPlyvLmNRq6Q3aAuybclmhhm9gXYEn
- lhGILJckdq5JRjC8RDrZUY0aLZAHn4EM0fUhNQpg==
-X-Gm-Gg: AZFdTZdDrnKt0lHo7INyQS4cI6xL755YcWIogqJwF++8AD074ww3OagKOIgXiXN0apD
- bIU0aFSyAquscwOWviYoGU5206si9Pj9CrNbKUnSuz0r/R1k1a14ORFb34c5FbEgM8BBLsHvtoI
- DGZOaDntbfCTTxk2mKjf8sfWtCBQAo+W5Mkq7J1nLdLR8psLZyfCJ+JNEmZ6yfb4me2V3RVCQeU
- cDSoGyfAUIK76mgNlG8IVOfLR1LDcmB/vFgYNujY0UDgupd1nd1yBhNzwTZEATtb626Wr/TrSnW
- 0V9fODF8gjKlKnUsvU3DyeQGQsujkK1NBeXz//VlwQFFKbJZi2hrUtPQwVHED+1j0VFUDQFfSgf
- dfGeDSxjt38d4sV7/LOOaGTZM0dz0PJ31Svb8eEkxMFra
-X-Received: by 2002:a05:620a:4551:b0:93e:94f2:ada5 with SMTP id
- af79cd13be357-949ba965b93mr3862880385a.25.1795724087343; 
- Thu, 26 Nov 2026 12:14:47 -0800 (PST)
-X-Received: by 2002:a05:620a:4551:b0:93e:94f2:ada5 with SMTP id
- af79cd13be357-949ba965b93mr3862873785a.25.1795724086789; 
- Thu, 26 Nov 2026 12:14:46 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949bb427388sm1638267685a.42.2026.11.26.12.14.46
+ bh=aoNA/gvNQhojoQEu1P/+ej8PzYc3GgZR9QfqDec/jqk=;
+ b=rSd25XvumJMH0HHENMs1H/X2RXLrTJuzWXeysV16+Yb9MqIUXxnyBpev8DRKyLG8OY
+ los8saTnUx1gjapxW5NInd85tyJDb/OB3TgxTLvtnTR+H/cQ9uVPQD5vlHobmdpu53Tg
+ JEU0vvOYaVBy3+DFR8oN7CbaZ+KlRKs6qhL3mPzra7O3/uEs1xU/yRlAo70ZrKHexe32
+ 9O+5zTRaDNekP2avdOvsEGFz4XMfKt7jiljCtpz7I6rKsv4rr6z3rJvPRoZX6E9Bht17
+ E1aAYb6V/T/rwvbI+xSFVty4kaYPhk3Lxsud9gQ6d9GTrxLxN+DDXMr2x3Q6lZjGRhSn
+ hO+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795716703; x=1796321503;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=aoNA/gvNQhojoQEu1P/+ej8PzYc3GgZR9QfqDec/jqk=;
+ b=Na51BifNbli9jI9W2rlF+w19G0U5Ho9ayKDednqt1krRO8DkpBGNh7boiywBV5qWTG
+ dARaQq0sqBdjGmGlEXEWaNHCmOHzoisF0K5JflFudB91G/NfiY+UqhzN6HHF2My+zJpE
+ YEgYBhOGW3uzr4/gr+osX87nb6Td9fjdxttSYv8WuunFqQLZoZhYvvqOjqpkLQSIvQj8
+ 4RqBBfBMLxTbbND592v8jNLW3r1g0cXWmFZrqQB0jYZhC1T8PfveY3VdAmflo4xr0QAS
+ FLA1qGsb3rbYhUuyv2ruDaUvSZgy1SXlSaBhqItMvDejm6dssvXF5Z6FyLSO0GNNEkOQ
+ n+jA==
+X-Gm-Message-State: APuU4Z+8/bzeA8XeF0MR64PyHGJMjsxfbDv9JsooRNB6ftILp9W+MedC
+ MvcGLUS4zQhwFPsm92Q4G7ExQg9reEto7Fr1GU7yFGbj4KETyMIEWDsO
+X-Gm-Gg: AZFdTZfBgnfOc9tnFzb5As8gxV+6e9TyiRD0R9QrsWYMeE+ataxE72lPNy4QfrPhRbu
+ 1TA2MT28ogHBkNE+qZST0D2LB9uCXwd0mqUeE2qlbId/ArNjeeUIPBFR4fzYeBVulVrQrL3EZvm
+ hhbM1zUXjt5HR9n61lNfhj4lERSCIvNnlSEpt8YigbwGj6vmNxpSZrCM7bXxMaAYMEycUC00y/R
+ cNa1eDTtPJov4CwjJRz/ngfExXEga3M08fntW0eHggO+y4S8cnKPJmE4EeVSzHIlPQzTOc87To0
+ 3Hub4RE/1FX/gYhdg7U5HhjtEXe8wzDDAEQzj35lcK7c3y6CWKgLa/X91X/Su5dYty8sLS27DXL
+ mcIBqK2BYgMsS80oLNcCzdOa8rTJEyP5M7u+Vw354asvdwXg1uT8vtJ2PvF/6S/8kgfikXOJo3I
+ CaqTbV5Q35C2YSs3M2kHJzfCnbKxN2GwtlyTvMsVhk9WDDOqh+l9KiodsQd0wf/VhH8a8YUw0MP
+ v6cRnrrAr+QAWCmo8tTX/mlhUgkElt1ApjrBxHHTL/KLtDD3anMDJWO2li1xY8QrTOSxJQnqZ94
+ K+qh5wfQIrosmhTliPLCC6hZgZ+D+nnLVNG+Ynvr2byIZbPKt6i3OGiMBsWFgb4/2wHgOaDvqvj
+ KTJpbnA1r7C63DovWqYxcfVJd7pbzqzPsIuQwYUALBDAKA4lC+Hot1N/d45L7Y1wu2NLQ2fKDr+
+ U/5g7BFWv3owC4
+X-Received: by 2002:a05:600c:154f:b0:4bb:6842:66ef with SMTP id
+ 5b1f17b1804b1-4bb8893a963mr424356425e9.30.1795716702843; 
+ Thu, 26 Nov 2026 10:11:42 -0800 (PST)
+Received: from localhost.localdomain ([31.223.101.75])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb884b39b6sm574373145e9.12.2026.11.26.10.11.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 12:14:46 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Hongyan Xu <getshell@seu.edu.cn>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Subject: [PATCH for-12.0 v3] coroutine: Make yield_until_fd_readable() detach
- fd handler always
-Date: Thu, 26 Nov 2026 15:14:45 -0500
-Message-ID: <20261126201445.3326530-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.56.0
+ Thu, 26 Nov 2026 10:11:42 -0800 (PST)
+From: Oguzhan KAYNAK <kaynak.oguzhan0@gmail.com>
+To: Hugo Komatsu <hugo.komatsu@nutanix.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+Subject: Re: [PATCH v2 0/8] vfio-user: live migration support
+Date: Thu, 26 Nov 2026 21:10:21 +0300
+Message-Id: <20261126181021.116571-1-kaynak.oguzhan0@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
+References: <20260911140710.2348139-1-hugo.komatsu@nutanix.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=kaynak.oguzhan0@gmail.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 26 Nov 2026 15:43:01 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,105 +104,43 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hongyan reported a possible use-after-free of RDMA migration code:
+Hi Hugo, all,
 
-https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
+Related to this series: without it, vfio-user-pci currently has no
+migration blocker at all. On QEMU 11.1.3 a VM with a vfio-user-pci
+device (libvfio-user's gpio-pci-idio-16 sample, no migration callbacks)
+migrates without error, -only-migratable does not reject the device,
+and on the destination the device's BARs are no longer programmed.
+vfio_user_pci_realize() never calls vfio_migration_realize() or adds a
+blocker otherwise, and the class has no vmsd.
 
-The issue seems real, while this patch is a proposal to fix it in a simpler
-way, meanwhile it should be a problem to the yield_until_fd_readable()
-helper in general, so it should make more sense to be fixed there too.
+I filed it with a QMP reproducer here:
 
-The problem is about the use of the stack allocated FDYieldUntilData where
-we must make sure after yield_until_fd_readable() returns it's not used
-anywhere.  If the coroutine yielded can be entered from outside of this
-helper (fd_coroutine_enter()), then the aio handler might be installed even
-after yield_until_fd_readable() returns, and that makes the stack variable
-accessible by aio codd, even if stack gone.
+  https://gitlab.com/qemu-project/qemu/-/work_items/5002
 
-Fix it by moving the aio handler removal outside the handler.
+As noted there, just calling vfio_migration_realize() in today's code
+would hit the raw ioctl() on fd -1 (EBADF), which your patch 5/8
+addresses. If 8/8 calls vfio_migration_realize() for vfio-user-pci,
+servers that do not support migration would get the usual blocker
+from it; could you confirm that is the intent?
 
-Fixes: 923709896b1b ("migration: poll the cm event for destination qemu")
-Reported-by: Hongyan Xu <getshell@seu.edu.cn>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-Cc: Hongyan Xu <getshell@seu.edu.cn>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-v2:
-- Drop FDYieldUntilData altogether [Kevin]
-- Drop the comment, doesn't feel as helpful now [myself]
-v3:
-- Add doc for the helper [Stefan]
-- Add Fixes [Stefan]
----
- include/qemu/coroutine.h |  5 ++++-
- util/qemu-coroutine-io.c | 20 +++++---------------
- 2 files changed, 9 insertions(+), 16 deletions(-)
+Since the series is not merged yet: would an explicit blocker in
+vfio_user_pci_realize() (vbasedev->migration_blocker plus
+migrate_add_blocker()) be acceptable in the meantime, possibly for
+stable, so that current releases don't silently lose device state?
 
-diff --git a/include/qemu/coroutine.h b/include/qemu/coroutine.h
-index 1c31de60f9..6b34dc750c 100644
---- a/include/qemu/coroutine.h
-+++ b/include/qemu/coroutine.h
-@@ -279,7 +279,10 @@ void qemu_co_sleep_wake(QemuCoSleep *w);
- /**
-  * Yield until a file descriptor becomes readable
-  *
-- * Note that this function clobbers the handlers for the file descriptor.
-+ * Notes:
-+ * (1) this function clobbers the handlers for the file descriptor.
-+ * (2) this function may be interrupted by another re-enter of coroutine,
-+ *     the caller needs to be prepared on fd not readable after returned.
-  */
- void coroutine_fn yield_until_fd_readable(int fd);
- 
-diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
-index 364f4d5abf..720d27d737 100644
---- a/util/qemu-coroutine-io.c
-+++ b/util/qemu-coroutine-io.c
-@@ -65,28 +65,18 @@ qemu_co_send_recv(int sockfd, void *buf, size_t bytes, bool do_send)
-     return qemu_co_sendv_recvv(sockfd, &iov, 1, 0, bytes, do_send);
- }
- 
--typedef struct {
--    AioContext *ctx;
--    Coroutine *co;
--    int fd;
--} FDYieldUntilData;
--
- static void fd_coroutine_enter(void *opaque)
- {
--    FDYieldUntilData *data = opaque;
--    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
--    qemu_coroutine_enter(data->co);
-+    qemu_coroutine_enter((Coroutine *)opaque);
- }
- 
- void coroutine_fn yield_until_fd_readable(int fd)
- {
--    FDYieldUntilData data;
-+    AioContext *ctx = qemu_get_current_aio_context();
- 
-     assert(qemu_in_coroutine());
--    data.ctx = qemu_get_current_aio_context();
--    data.co = qemu_coroutine_self();
--    data.fd = fd;
--    aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
--                       &data);
-+    aio_set_fd_handler(ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
-+                       (void *)qemu_coroutine_self());
-     qemu_coroutine_yield();
-+    aio_set_fd_handler(ctx, fd, NULL, NULL, NULL, NULL, NULL);
- }
--- 
-2.56.0
+I found this with the help of an AI coding assistant while working on a
+vfio-user device server; the reproduction and the analysis in the issue
+were checked by hand on 11.1.3. I'm not proposing any code.
 
+Thanks,
+Oguzhan
 
