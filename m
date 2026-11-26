@@ -1,100 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E35606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3EF606A327
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UVsn3U/r;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=BM/GrTiG
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VKWOB3Cj;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=sX1vwvDe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWfEG-000093-0X; Thu, 26 Nov 2026 14:34:00 -0500
+	id 1xWfKH-0003RO-L2; Thu, 26 Nov 2026 14:40:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfEE-00005z-Ol
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:33:58 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfKC-0003Kx-GE
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:40:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfED-0001oM-5D
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:33:58 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfK9-0002en-DP
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:40:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795721635;
+ s=mimecast20190719; t=1795722004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YEQPpdpxeB7f1dpVhS2Hd08mHaIfP4m2o5VVublAW/w=;
- b=UVsn3U/rwZCZbLnfdtIVahy1yF4am3bucBoXP5ExgO56br+vQHfYFhFUI318oKdTA7yACi
- kYik0e4eCbRR1yIr7Me26TiwMHVqb9pcQULmGVn+g5upynOQP7nUGAt1omD+Zfcxs9e/iA
- LJkEd0FGt6m6td8unAtPy6nMTlQ1sfc=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=j58WPcpqiwZjP411s57VI/GqqZaeW2uZZM61RQFRzcI=;
+ b=VKWOB3CjZbQkae7xm7yntrvvffNZXkW2U0RQYRQtDMVspMwVOzWJQPRcQcWgiKlgCO96/R
+ aL3o74WwHbxDyRyYYXktOdzFN8OzBbvuwJndPOcEAzce2x+y5tc+JckBfgujplaFIOt09+
+ vCTsbDMi8DwyawzME0JoYFJTSFaD1XE=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-AXlozz_rMYqEPU5FKoKMOA-1; Thu, 26 Nov 2026 19:33:53 +0000
-X-MC-Unique: AXlozz_rMYqEPU5FKoKMOA-1
-X-Mimecast-MFC-AGG-ID: AXlozz_rMYqEPU5FKoKMOA_1795721633
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-55d2c5f10ddso149869781cf.0
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 11:33:53 -0800 (PST)
+ us-mta-571-i16KuolOOeGcBwUmlidL8w-1; Thu, 26 Nov 2026 19:40:02 +0000
+X-MC-Unique: i16KuolOOeGcBwUmlidL8w-1
+X-Mimecast-MFC-AGG-ID: i16KuolOOeGcBwUmlidL8w_1795722001
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93f2373e9b4so828500785a.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 11:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795721633; x=1796326433; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=YEQPpdpxeB7f1dpVhS2Hd08mHaIfP4m2o5VVublAW/w=;
- b=BM/GrTiGa3MSou9B2vmJTffWgT7NKGNt09d9y04L2WM0tvW7xK2eFhXQIWvoF2UmeB
- DXXHcuZpaD0y6STWJ4A5UXzN3xomGnASsFZagdGJKCXz8xOdMD4QHEap302/EehSna6f
- xRh98dVqYpboMpkMXoGkL3vgzlbK9muNd/nrO7LmYeEF0s1rVtLJ/LKFqVhgQdacqiCo
- emo0pqeV8VtZYiLWcmbzMCnXeh37jGGqhQU9g5FTze7sYg4ALZwO+ygOO3QQaZEWToqb
- TQsDStU+7R1Jj1q2476aSKUUglf9tZYuFuRgBDThiFko0pDZEdrwmUG1Aa6xWfHfKETD
- mnuw==
+ d=redhat.com; s=google; t=1795722001; x=1796326801; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=j58WPcpqiwZjP411s57VI/GqqZaeW2uZZM61RQFRzcI=;
+ b=sX1vwvDePBDBKglJEOxRutLVHz3wxfDuct9uASgomk3HydgrwHrSCBhqFcgNza3ubT
+ VPOq/qEDLwY04ifiXRi9RfMF9rF4YP3fRR4mIayFrgIEf1ej6K3QSOLLFCQv8LmvuQkv
+ VSbbD6H0lBgbimlqN0RYI21IGDmC3SPaiF+H2g8l9HrD1x3MTRqHkLSyQ1XMFTGosv5R
+ BCcUs+D9roINDiOnJErgELRprLup9EKd2mOqUhRQ9GG/GTmbiIOCcy+DHB6++uOnoXjH
+ XhJD/1bjqfiguasdMU7y5LXAgDcVmefu1Sx5YP+ZBEEUPOwOEZIilMLmsOWqNREaamab
+ y78A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795721633; x=1796326433;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=YEQPpdpxeB7f1dpVhS2Hd08mHaIfP4m2o5VVublAW/w=;
- b=gji7LW5YPGuOIVYaes0K3G8irEyJIYwGuD2p0EGiy3EXNffDXc6710jM+Lot9nOt8X
- Brk2tLkM34uhZPlPJ+0Y7tAj7/gK0ddO1AJxnn7vzE9FDfQaN0iYjN5WcnTbio+AYbs9
- kym62FIqL7CEkPMeGYa26uZVUhb6F6+a/3mzIzCT0crlZf82cmkOXeoJeJC3h7/wCmKu
- LiuPjN/ifaembQpcuEp+ja1NPr+KedS9W2lwpO5jbDySPKxUBoRAy3VGpJqhrApqsqal
- nny51Wue0fmHTuTkWKTDWEZ0Ij6QIUFv+qXcmD+rki7G7VBgW8A2fldJcEduO3T9zjug
- lrJw==
-X-Gm-Message-State: APuU4Z/pcGdHUqPzXU9WXa1/LPT+vsUVD5Gmbu/nlQpX29cRLS2JN13J
- HBUUtTFAFMey9bSCT6A/HnYIa3BsysJjl+9iTSndncd18i9/WNzFuPdOBKGpqfFYqLuCuAKgNOS
- jUdEFyyhr9D8HjDgifxPqkc3tyuufyIetl9Q0I5axLTHrqYthmrhw5SgW
-X-Gm-Gg: AZFdTZfy9BoFLi/9eqRCDRmVVNigkuO+EvdkeEKafu7MZF3ezsnSsTeCXQK0568NolF
- COTS8axDDp0glPyiNpDDzE6OErlxJUBc7fU6gALUcj3FL9BFy4pt6PKFdbZnRlt6c/JU7n+txjh
- hfkhZ1QLCSXb8gyaDu1ImO77RSJQIzMiuA9niPWc9EdAn4kftfMu1Y9nmbDvc2ot15y/nhYs8zD
- VE7pIiQTJ0rzKh42NrULstZK/Kmsp5wqoOIBLShtCoaIFnXz17tYkO0fg5F7MX4AkiMDDK9bO6p
- dktrauNLAlTtqB36VantjBdTKoSc06Ew7YJG/dCUYDPBIslmpGp0G7+Y7zPfLmp3AhihJhUzg8B
- O4POufufTpBaM7HmVPegF+fnc8zStcX23KOTcdaY5E8Fi
-X-Received: by 2002:a05:622a:507:b0:55c:5ebd:8823 with SMTP id
- d75a77b69052e-55d76ad31b1mr418159931cf.66.1795721633262; 
- Thu, 26 Nov 2026 11:33:53 -0800 (PST)
-X-Received: by 2002:a05:622a:507:b0:55c:5ebd:8823 with SMTP id
- d75a77b69052e-55d76ad31b1mr418159571cf.66.1795721632784; 
- Thu, 26 Nov 2026 11:33:52 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795722001; x=1796326801;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=j58WPcpqiwZjP411s57VI/GqqZaeW2uZZM61RQFRzcI=;
+ b=RndsJvObzvfrUW9rwDgMGyI9P4+kgvWb1AUDisH4VGe9qJq60g+PaX4HhBLYoSmy8f
+ AyVs+CmAQYQeaq52cRCUQ6XLiO+xTi7MIKkoHrm9Lq3XLOSEhF5qZUNsjTcXcA68hHtp
+ DjIRnUE8Z1Z4aoTLl6d4VkmRMMk7gV5BTy6u6ga7G+iHLocuurcYFv+6yUB388ChOJm3
+ p4ahDNKhqgtN2P+WUiZT0M+yRbEr9MoN0HShFeWf1dBhkz2bOEgwJVKtbW2QQ+Ej5Nia
+ yUvBKm6mnqm+7jimlqg1T7hKERLSYg/cV53a/ahE3W9QSXX5T4WBnENMuFUe5tX7mliY
+ tSxw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErE4ABW0JWkMiGY0RKVDF31Pvo9hfqIUVVNWuAXerSSrkdx7hEQ2L35lIHzSlNorp9Pwbx8DClxO9qJO@nongnu.org
+X-Gm-Message-State: APuU4Z/pJNz8wgvxJCCBO3vaoZmBAduCTvOLpcpK6u+ius9nHeIgFbcL
+ 3r6y1MFv2yiKsPbzFZiRFrYPsBBlS8Sk7UqM4QAdtFdLrdX/A9RndOdi68Pa3lAzY412KBF/b6E
+ bXo19rYaLXeYc6KDTQiWrppZDfV09bXYztauawxhiPjK6cKQK3A/sfc2z
+X-Gm-Gg: AZFdTZefpucmJK3IillXxMlmfrWjtZeipq+4g0zL436MJSv2c9hSuppQ1ZK0BgpGdOG
+ UrsXBYpOYer3H8DFZskdtCI7vOZjfpNFz5VF6sVFGIZt4n3MhPLof0td4gubd8iEfoOxq3M8J+w
+ 2JqSBkYASN5X9hfTHzQy2A9XysY5x5J8Hq1qehsZFibnbgEEfU2/Fqjl+qWoNTUkUPnBihdU6Vz
+ zjikyWbWswIW/+sKVcg+7aqmbEKB/6CmMpOJItIEdotCPxf2vM7rjuHImLKhSoF/YYeJOwFI7zi
+ dBZtQIZvGZBdqxaSXDP6uJ8Jvt/NTN+3YEUvvqqnK0XLDIOZPva9lZJtzDMyqnwv2LzuqTClj5c
+ h2kesvCRNk5xc7GQtv57F11V0nVVJmrQXY1+dT7BLUld/
+X-Received: by 2002:a05:6214:33c5:b0:921:65e5:5da8 with SMTP id
+ 6a1803df08f44-92165e568e4mr202014676d6.56.1795722001226; 
+ Thu, 26 Nov 2026 11:40:01 -0800 (PST)
+X-Received: by 2002:a05:6214:33c5:b0:921:65e5:5da8 with SMTP id
+ 6a1803df08f44-92165e568e4mr202014356d6.56.1795722000658; 
+ Thu, 26 Nov 2026 11:40:00 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-55d78e4fc12sm187216311cf.0.2026.11.26.11.33.51
+ 6a1803df08f44-92134a16754sm195900836d6.39.2026.11.26.11.40.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 11:33:52 -0800 (PST)
-Date: Thu, 26 Nov 2026 14:33:51 -0500
+ Thu, 26 Nov 2026 11:40:00 -0800 (PST)
+Date: Thu, 26 Nov 2026 14:39:59 -0500
 From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+To: Fabiano Rosas <farosas@suse.de>
+Cc: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 2/2] tests/qtest/migration: test cancel before the
+Subject: Re: [PATCH 0/2] migration: fix a source hang on cancel before the
  channel connects
-Message-ID: <awiJn88rCzL8fSvr@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261125193102.1423555-1-den@openvz.org>
- <20261125193102.1423555-3-den@openvz.org>
+Message-ID: <awiLD8IokxI-w69f@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261125193102.1423555-1-den@openvz.org> <878q2gsdak.fsf@suse.de>
+ <6314eded-6904-4722-92f8-8db90cc4688b@virtuozzo.com>
+ <8733snslnt.fsf@suse.de>
+ <awiJUEoMb3WxUjPo@zhexu-thinkpadt14gen5.rmtcaon.csb>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261125193102.1423555-3-den@openvz.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <awiJUEoMb3WxUjPo@zhexu-thinkpadt14gen5.rmtcaon.csb>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -115,35 +123,248 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Nov 25, 2026 at 08:31:02PM +0100, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
+On Thu, Nov 26, 2026 at 02:32:32PM -0500, Peter Xu wrote:
+> On Thu, Nov 26, 2026 at 11:38:14AM -0300, Fabiano Rosas wrote:
+> > "Denis V. Lunev" <den@virtuozzo.com> writes:
+> > 
+> > > On 11/26/26 00:26, Fabiano Rosas wrote:
+> > >> "Denis V. Lunev" <den@openvz.org> writes:
+> > >>
+> > >> What a coincidence, I just spent the afternoon fixing this. 
+> > >>
+> > >>> Cancelling a migration right after starting it can hang the source
+> > >>> QEMU forever. This happens when the cancel arrives while the source is
+> > >>> still connecting to the destination and the connection then succeeds.
+> > >>> The source goes on as if nothing was cancelled, then waits for a reply
+> > >>> from the destination that never comes. It waits with the BQL held, so
+> > >>> the monitor stops answering too, and the only way out is to kill the
+> > >>> source. We hit this in an automated test that aborts a live migration
+> > >>> right after starting it.
+> > >> How does this test look like? I'm thinking that instead of writing a new
+> > >> test for this bug (haven't read your patch 2 yet), what we need it to
+> > >> remove the usage of migrate_wait_for_dirty_mem from the multifd cancel
+> > >> test. I think that's an artificial delay that's there for no good reason
+> > >> in this case. If your CI manages to hit the issue on a real-ish
+> > >> scenario, that's even more reason to remove that code.
+> > > This is old fashioned product testing over OpenStack cluster
+> > > which specifically performing cancels in a row. Tests are run
+> > > inside VMs inside the product and thus L0 host delays comes
+> > > as a bit of fuzzing.
+> > >
+> > 
+> > That is good to know because I was not sure whether this issue could
+> > happen outside of migration-test.
+> > 
+> > > Tests are running non-stop inside development cycle :-)
+> > >
+> > > That is why I am coming with this or that problems on paths
+> > > like that. But this is not very good in terms of QEMU level
+> > > specific tests and that is why patch 2 comes with a pointing
+> > > tests.
+> > >
+> > > NOTE: both your are my patches are fixed the problem as stated
+> > > and the test passes without both your and my variants.
+> > >
+> > >>> Patch 2 adds a qtest for this window, which Peter left for later when
+> > >>> fixing the early-cancel crash in 4f08b870f8 [1].
+> > >>>
+> > >>> [1] https://lore.kernel.org/r/20260421175820.302795-1-peterx@redhat.com
+> > >>>
+> > >>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> > >>> Cc: Peter Xu <peterx@redhat.com>
+> > >>> Cc: Fabiano Rosas <farosas@suse.de>
+> > >>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > >>> Cc: Laurent Vivier <lvivier@redhat.com>
+> > >>>
+> > >>> Denis V. Lunev (2):
+> > >>>   migration: fix source hang on cancel before the channel connects
+> > >> Here's my version. It's very opinionated due to my long-standing grudge
+> > >> with this code.
+> > >> https://wiki.qemu.org/ToDo/LiveMigration#Migration_cancel_concurrency
+> > >>
+> > >> -- >8 --
+> > >> From a27909503af9749f2cf6d8b901d675ee24c66d2c Mon Sep 17 00:00:00 2001
+> > >> From: Fabiano Rosas <farosas@suse.de>
+> > >> Date: Wed, 25 Nov 2026 18:43:57 -0300
+> > >> Subject: [PATCH 1/2] migration: Avoid early cancel causing a hang
+> > >>
+> > >> If migration is cancelled at just the right moment when the main
+> > >> channel transport has finished connecting, it's possible that the
+> > >> shutdown()s issued by migrate_cancel() miss the (unset) QEMUFiles
+> > >> entirely. A moment later, migration_channel_connect_outgoing() carries
+> > >> along with the migration and initializes the QEMUFiles for the first
+> > >> time.
+> > >>
+> > >> Migration then hangs because the source goes into migration_cleanup()
+> > >> due to its state being CANCELLING and hangs waiting for the return
+> > >> path thread to join, which never happens because the destination is
+> > >> unaware and never sends any SHUT message. The cleanup itself also
+> > >> doesn't kick the RP thread because commit 64763e8ca61 ("migration:
+> > >> Keep s->rp_state.from_dst_file open until migration ends") has changed
+> > >> the code to keep the QEMUFile until after the RP thread exits. The
+> > >> only other way to kick it would be from
+> > >> stop_return_path_thread_on_source() if an error had occurred, but no
+> > >> error has occurred.
+> > >>
+> > >> This situation is not surprising because the migration cancelling has
+> > >> never had any synchronization mechanism aside from the BQL, which in
+> > >> this case is not enough to protect from the race. It has also never
+> > >> had a way to inform the rest of the code in a thread safe manner about
+> > >> the cancellation.
+> > >>
+> > >> To start moving in the correct direction, make the qmp_migrate_cancel
+> > >> command (under BQL) set the migration error, which is protected by the
+> > >> error_mutex and suitable to be used as a way to inform the other
+> > >> threads of the cancellation. This avoids the need to check the
+> > >> MigrationStatus which is already fragile in terms of concurrency.
+> > >>
+> > >> Note that the QMP handler for migrate_cancel is used instead of the
+> > >> internal function because the latter is used from other parts of the
+> > >> code that might have set s->error already.
+> > >>
+> > >> In the case where qmp_migrate_cancel() sets s->error and some other
+> > >> code hits an error due to the shutdown()s, the
+> > >> migrate_error_propagate() call chain will simply ignore the error set
+> > >> for last. This is the correct behavior because errors after cancelling
+> > >> are very likely to be caused by the cancellation itself. This has the
+> > >> extra benefit that the migration cancellation now shows up in the
+> > >> logs, which solves a confusing situation when the user sees "Broken
+> > >> pipe" and thinks it's due to an error.
+> > >>
+> > >> For this specific bug, check that the asynchronous entry to
+> > >> migration_channel_connect_outgoing() doesn't bring an already set
+> > >> s->error and call migration_connect_error_propagate() under the BQL if
+> > >> that's the case. We need the whole migration_connect_error_propagate()
+> > >> here to handle the postcopy resume case as well as making sure
+> > >> migration_cleanup() is reached.
+> > >>
+> > >> Reproduced with /x86_64/migration/multifd+postcopy/tcp/plain/cancel
+> > >> and my stress branch, which basically skips
+> > >> migrate_wait_for_dirty_mem().
+> > >>
+> > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > >> ---
+> > >>  migration/channel.c   | 5 +++++
+> > >>  migration/migration.c | 8 ++++++++
+> > >>  2 files changed, 13 insertions(+)
+> > >>
+> > >> diff --git a/migration/channel.c b/migration/channel.c
+> > >> index 1aeb8814858..12ff68fc38c 100644
+> > >> --- a/migration/channel.c
+> > >> +++ b/migration/channel.c
+> > >> @@ -563,6 +563,11 @@ void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
+> > >>  {
+> > >>      trace_migration_outgoing_channel_set(ioc, object_get_typename(OBJECT(ioc)));
+> > >>  
+> > >> +    if (migrate_has_error(s)) {
+> > >> +        migration_connect_error_propagate(s, error_copy(s->error));
 > 
-> Cancel a migration while the source is still connecting, then let the
-> connection succeed. The source must end up in "cancelled", and a
-> second migration afterwards must complete.
+> [1]
 > 
-> To keep the source waiting in connect(), the test points it at a unix
-> socket of its own whose listen queue is already full. On Linux,
-> connect() then blocks until the test accepts a connection, so the test
-> is Linux-only.
+> > >> +        return;
+> > >> +    }
+> > >> +
+> > >>      if (migrate_channel_requires_tls_upgrade(ioc)) {
+> > >>          Error *local_err = NULL;
+> > >>  
+> > >> diff --git a/migration/migration.c b/migration/migration.c
+> > >> index 5686209ab11..40c3f21d520 100644
+> > >> --- a/migration/migration.c
+> > >> +++ b/migration/migration.c
+> > >> @@ -1890,6 +1890,8 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+> > >>          return;
+> > >>      }
+> > >>  
+> > >> +    migrate_error_free(migrate_get_current());
 > 
-> The return-path capability is on because the hang this test guards
-> against is the cleanup waiting for the return path thread.
+> Is this line somewhat separate from the issue?  When s->error will be
+> non-NULL?
 > 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Cc: Laurent Vivier <lvivier@redhat.com>
+> > >> +
+> > >>      if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
+> > >>          return;
+> > >>      }
+> > >> @@ -2218,6 +2220,9 @@ out:
+> > >>  
+> > >>  void qmp_migrate_cancel(Error **errp)
+> > >>  {
+> > >> +    MigrationState *s = migrate_get_current();
+> > >> +    Error *local_err = NULL;
+> > >> +
+> > >>      /*
+> > >>       * After postcopy migration has started, the source machine is not
+> > >>       * recoverable in case of a migration error. This also means the
+> > >> @@ -2229,6 +2234,9 @@ void qmp_migrate_cancel(Error **errp)
+> > >>          return;
+> > >>      }
+> > >>  
+> > >> +    error_setg(&local_err, "Migration was cancelled by the user.");
+> > >> +    migrate_error_propagate(s, local_err);
+> > >> +
+> > >>      migration_cancel();
+> > >>  }
+> > >>  
+> > > I have spend a bit of time trying to weight against the approaches
+> > > and the only item I found is that "cancel" is actually not a error
+> > > while we are reusing field as a error state.
+> > >
+> > 
+> > That cat is out of the bag already since commit dc487044d5c ("migration:
+> > Make migration_has_failed() work even for CANCELLING"). If
+> > migration_has_failed() includes cancel states, then I think it's
+> > actually a bug that migrate_cancel() doesn't set an error. Otherwise
+> > code that calls migration_has_failed() will have to check
+> > migrate_has_error() to find out if the "failure was an error". That's a
+> > worse pattern in my opinion.
+> 
+> Indeed, at least for qemufile it's the same, where qemu_file_shutdown()
+> sets error for the qemufile error (PS: every time I see these bunch of
+> error flags I headache..).
+> 
+> > 
+> > That's how I came up with this patch actually because I was trying to
+> > avoid checking SETUP specifically, in case something else races and sets
+> > another state in the mean time. As I mentioned briefly in the commit
+> > message, the MigrationStatus is not thread-safe, that cmpxchg only
+> > protects the migration event against a duplicated state change.
+> > 
+> > > Both are working. If you will take your one - pls consider
+> > >
+> > > Tested-by: Denis V. Lunev <den@openvz.org>
+> > > Reviewed-by: Denis V. Lunev <den@openvz.org>
+> > >
+> > > I would say - up to you :-)
+> > >
+> > 
+> > Thank you. Let's see what Peter thinks about it.
+> 
+> I agree with you that if we already have code treating cancellation as part
+> of error, then setting error may make things more aligned.
+> 
+> My only complaint might be that above [1], it has "if there is an error,
+> duplicate that error and try to inject the same error, even if we're
+> pretty sure is already there, so the dup one will be freed".  It was almost
+> a malloc/free unit test..
+> 
+> So.. maybe Fabiano's patch, but use the migrate_cleanup() from Denis
+> instead only at line [1]?
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Or maybe pass NULL to migration_connect_error_propagate() should be
+better.  However it'll need a touch-up to support NULL only because
+trace_migrate_error() will crash, even if the rest seems all fine.
+
+I just noticed there might be weird side effect for postcopy recovery's use
+case if we use migrate_cleanup(), so we don't always want to cleanup in
+case something set the error during postcopy paused..
 
 -- 
 Peter Xu
+
 
