@@ -1,66 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2760606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 10:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8937B606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 10:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=B90TsOuD
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gc1LUYtH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWWJ6-0008NW-DX; Thu, 26 Nov 2026 05:02:26 -0500
+	id 1xWWIi-0008DP-Nm; Thu, 26 Nov 2026 05:02:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIc-00089C-IH
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:56 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIb-00088q-14
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIZ-0006hb-Hy
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:54 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWWIX-0006h8-NS
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 05:01:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795687310;
+ s=mimecast20190719; t=1795687308;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mQ5/lhRKF1dUF6GR87xfTGLG6v/MKuGoUF5eKUhmPXI=;
- b=B90TsOuD87QVJfcKMZAy3OB4dmsCyZ81xBu5QJwBGaqoj8PEbGMYejv9izIMykukYefVJG
- ByQPn4GcdqdWq9RS2snGZj2MlDZg7SEToKwR7XLQevrlGnC0FLpkXHX2GDFFkYzbQCgsew
- IKsVvImPd06QXsVtvdL3JqolhqBC8z0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=buEaE1cjDoa+mJGGTmRjCz3HBC/fQsWm0zKeeJBHy3Q=;
+ b=gc1LUYtH4yz2LQjx2EWVUKi7uPX0hgDiALlT7sJqbVVy+tzJEc4tGAoz9oQoLNfvhXb68o
+ EOg8HrglDe9uWbMhXabP/mqAEE0wHOyrUka60omzJ3Ztog821L/P+/QmEymnMLVtnR11fF
+ tbfnOPnxbDlcSc4ip58E/nuzDimMm6w=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-b1RktcfmP0-YbEqI2YJjTw-1; Thu,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-_DXQkHRBOb--3GBf7UsiBg-1; Thu,
  26 Nov 2026 10:01:46 +0000
-X-MC-Unique: b1RktcfmP0-YbEqI2YJjTw-1
-X-Mimecast-MFC-AGG-ID: b1RktcfmP0-YbEqI2YJjTw_1795687305
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+X-MC-Unique: _DXQkHRBOb--3GBf7UsiBg-1
+X-Mimecast-MFC-AGG-ID: _DXQkHRBOb--3GBf7UsiBg_1795687305
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71D5B180061C; Thu, 26 Nov 2026 10:01:45 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DAF018007EB; Thu, 26 Nov 2026 10:01:45 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 280D71801971; Thu, 26 Nov 2026 10:01:45 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27DD218004FF; Thu, 26 Nov 2026 10:01:45 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CC90321E6884; Thu, 26 Nov 2026 11:01:39 +0100 (CET)
+ id DCAB621E6888; Thu, 26 Nov 2026 11:01:39 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  jsnow@redhat.com, crosa@redhat.com, eblake@redhat.com,
  devel@lists.libvirt.org
-Subject: [PATCH 05/16] qom: Inline object_property_get_type() into its only
- caller
-Date: Thu, 26 Nov 2026 11:01:28 +0100
-Message-ID: <20261126100139.3557890-6-armbru@redhat.com>
+Subject: [PATCH 09/16] qom: Extend ObjectPropertyInfo so clients don't have to
+ parse @type
+Date: Thu, 26 Nov 2026 11:01:32 +0100
+Message-ID: <20261126100139.3557890-10-armbru@redhat.com>
 In-Reply-To: <20261126100139.3557890-1-armbru@redhat.com>
 References: <20261126100139.3557890-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -88,65 +88,124 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+ObjectPropertyInfo member @type is "child<T>" for a child property of
+QOM type T, and "link<T>" for a link property of QOM type T.  Such
+encoding of information in strings should be avoided in QMP, because
+it requires clients to parse the strings in addition to parse JSON.
+
+Turn ObjectPropertyInfo into a union with discriminator @kind and a
+variant member @qom-type in branches "child" and "link".  This
+provides the same information unencoded.
+
+A later commit will deprecate @type.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/qom/object.h | 11 -----------
- qom/object.c         | 13 ++-----------
- 2 files changed, 2 insertions(+), 22 deletions(-)
+ qapi/qom.json      | 48 +++++++++++++++++++++++++++++++++++++++-------
+ qom/qom-qmp-cmds.c |  9 +++++++++
+ 2 files changed, 50 insertions(+), 7 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index c8cedfe0f89..dbfc29a2d6a 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1616,17 +1616,6 @@ bool object_property_parse(Object *obj, const char *name,
- char *object_property_print(Object *obj, const char *name, bool human,
-                             Error **errp);
+diff --git a/qapi/qom.json b/qapi/qom.json
+index cc642c7ba97..ca74b652a0d 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -15,11 +15,33 @@
+ # ***********************
+ ##
  
--/**
-- * object_property_get_type:
-- * @obj: the object
-- * @name: the name of the property
-- * @errp: returns an error if this function fails
-- *
-- * Returns:  The type name of the property.
-- */
--const char *object_property_get_type(Object *obj, const char *name,
--                                     Error **errp);
--
- /**
-  * object_get_root:
-  *
-diff --git a/qom/object.c b/qom/object.c
-index 3c5a8f49154..47e5979aa06 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1802,16 +1802,6 @@ out:
-     return string;
- }
++##
++# @ObjectPropertyKind:
++#
++# @child: TODO
++#
++# @link: TODO
++#
++# @other: TODO
++##
++{ 'enum': 'ObjectPropertyKind',
++  'data': [ 'child', 'link', 'other' ] }
++
++##
++# @ObjectPropertyQomType:
++#
++# @qom-type: TODO
++##
++{ 'struct': 'ObjectPropertyQomType',
++  'data': { 'qom-type': 'str' } }
++
+ ##
+ # @ObjectPropertyInfo:
+ #
+ # @name: the name of the property
+ #
++# @kind: TODO
++#
+ # @type: the type of the property.  This will typically come in one of
+ #     four forms:
+ #
+@@ -48,12 +70,16 @@
+ #
+ # Since: 1.2
+ ##
+-{ 'struct': 'ObjectPropertyInfo',
+-  'data': { 'name': 'str',
++{ 'union': 'ObjectPropertyInfo',
++  'base': { 'name': 'str',
++            'kind': 'ObjectPropertyKind',
+             'type': 'str',
+             'qapi-type': { 'type': 'str', 'features': [ 'unstable' ] },
+             '*description': 'str',
+-            '*default-value': 'any' } }
++            '*default-value': 'any' },
++  'discriminator': 'kind',
++  'data': { 'child': 'ObjectPropertyQomType',
++            'link': 'ObjectPropertyQomType' } }
  
--const char *object_property_get_type(Object *obj, const char *name, Error **errp)
--{
--    ObjectProperty *prop = object_property_find_err(obj, name, errp);
--    if (prop == NULL) {
--        return NULL;
--    }
--
--    return prop->type;
--}
--
- static const char *const root_containers[] = {
-     "audiodevs",
-     "chardevs",
-@@ -2024,7 +2014,8 @@ static Object *object_resolve_link(Object *obj, const char *name,
-     g_autofree char *target_type = NULL;
+ ##
+ # @ObjectPropertyValue:
+@@ -106,10 +132,18 @@
+ #
+ #     -> { "execute": "qom-list",
+ #          "arguments": { "path": "/chardevs" } }
+-#     <- { "return": [ { "name": "type", "type": "string" },
+-#                      { "name": "parallel0", "type": "child<chardev-vc>" },
+-#                      { "name": "serial0", "type": "child<chardev-vc>" },
+-#                      { "name": "mon0", "type": "child<chardev-stdio>" } ] }
++#     <- {"return": [
++#            {"name": "type", "kind": "other", "qapi-type": "str",
++#             "type": "string"},
++#            {"name": "parallel0", "kind": "child", "qapi-type": "str",
++#             "type": "child<chardev-vc>",
++#             "qom-type": "chardev-vc"},
++#            {"name": "compat_monitor0", "kind": "child", "qapi-type": "str",
++#             "type": "child<chardev-stdio>",
++#             "qom-type": "chardev-stdio"},
++#            {"name": "serial0", "kind": "child", "qapi-type": "str",
++#             "type": "child<chardev-vc>",
++#             "qom-type": "chardev-vc"}]}
+ ##
+ { 'command': 'qom-list',
+   'data': { 'path': 'str' },
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 84a29590514..2b491caaf7a 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -34,6 +34,15 @@ static ObjectPropertyInfo *qom_property_info(ObjectProperty *prop)
+     ObjectPropertyInfo *info = g_new0(ObjectPropertyInfo, 1);
  
-     /* Go from link<FOO> to FOO.  */
--    type = object_property_get_type(obj, name, NULL);
-+    ObjectProperty *prop = object_property_find_err(obj, name, NULL);
-+    type = prop ? prop->type : NULL;
-     target_type = g_strndup(&type[5], strlen(type) - 6);
-     return object_resolve_and_typecheck(path, name, target_type, errp);
- }
+     info->name = g_strdup(prop->name);
++    if (object_property_is_child(prop)) {
++        info->kind = OBJECT_PROPERTY_KIND_CHILD;
++        info->u.child.qom_type = g_strdup(prop->qom_type);
++    } else if (object_property_is_link(prop)) {
++        info->kind = OBJECT_PROPERTY_KIND_LINK;
++        info->u.link.qom_type = g_strdup(prop->qom_type);
++    } else {
++        info->kind = OBJECT_PROPERTY_KIND_OTHER;
++    }
+     info->type = g_strdup(prop->type);
+     info->description = g_strdup(prop->description);
+     info->default_value = qobject_ref(prop->defval);
 -- 
 2.55.0
 
