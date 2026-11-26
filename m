@@ -1,129 +1,137 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A29606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F50606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 22:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ow55cTZO;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=aAdux/G+
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Ex9ZA5sO;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LM7VfUQc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWi8X-00079b-IB; Thu, 26 Nov 2026 17:40:17 -0500
+	id 1xWiDO-00018M-HS; Thu, 26 Nov 2026 17:45:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xWi8R-00077Y-97
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:40:11 -0500
+ id 1xWiDN-00016c-BM
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:45:17 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xWi8O-0000z4-1c
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:40:09 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xWiDL-0006Vk-JE
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 17:45:17 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6AQJw8vB3990014
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 22:40:06 GMT
+ 6AQJx2M31713354
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 22:45:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=/fFedCrrCwJbyj+OP+1c8W
- OyGB2E7lX4qHbUf67s/G0=; b=ow55cTZObcSIhnA5z8jzoeima8GJiiJKNt2ki1
- norN3ohFmwm8ZnBUtW2zN1ekpy3BFbYQrFojk1W0el0MQuxs/cuOpYpzGD/XSv4d
- tVgG6/5wTYSDm7gFE5XKsDHtXm40K1m38Cdc0Gl6DhBgb9bR5obL1J/TuzF6fIIg
- My6jsU/DBDZGo2JdVigEAGGlfDj12GNPBSzN2DXcXoCS69lpOq7bqoSuzDmzf5jF
- 9GngOpMoPd+EoQhRx4/l/3wJ8F3FYLXQ89CKLQwdNsSW4KoEktrCPsgQrYMQCQBg
- 5wZiojJgEqBXo4B49o1GsQ/AnMkSvqRJu14uzFXnYNpuwHRg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6ak0401h-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ xynKYx+nxr48g9DIUKwfNykU/ghDOrGL/9YgoD2wNk8=; b=Ex9ZA5sOxy/g1Mvy
+ wl0Qq6PxAd7MWq8oEYzmk/oLZIRs+TJ/N3/TcESgQcpc/q/mTIO9tp56Nh9J/to6
+ zjSeFPZzDBEg/at6HMu5jGM9od+8zDlRL3gjSsCMZTgF6vvfiemZFcqiQ/Ujea/O
+ fBKuWntV5Pb4KBZtHeC04l4c5UdNUaqvTcs1/jubbPyS+6N8kJhNPqXH2+oBKeMD
+ VjaMb0by1SPESvKqdP9n5UUaCG+b1ftvosdvvGWWxRnKHgsZujQ533LykDkxBfL7
+ iiQD7DlPGjnsjwPOztxTigI5ee/HdtUTmTu48gKE+MGUc2uwZK+O1QCgj5xi5OC2
+ 0kC3TQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6gne2rrr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 22:40:05 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93f2373e9b4so842870985a.1
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 14:40:05 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 22:45:14 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-949b0d322fcso1238166985a.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 14:45:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795732803; x=1796337603; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/fFedCrrCwJbyj+OP+1c8WOyGB2E7lX4qHbUf67s/G0=;
- b=aAdux/G+Otly/zC2fUrTGOZBa+8ulTpcQl7tj7V0jei0cJeqcDIYwPuHTllA/Ig6Hn
- ofFjfaIOfjA+kGYLibV7wWXcIaHKLk+yIk7d/hbxTfSeTttguNzrblIv1ciPtit9Qbx3
- rCmpP53pcdv6IpwxDmsBBmg9OoIQWT8ysq6EmMhRJLs5Ayg5vqROiMlbfrz63X5pZXiV
- iL5uVe+3ugWQAXAWEluyCxhKUMv4V95ze/FToz0Z17xt1lpmTMr/okYOyh1VEY9M7n1y
- Wakxg8sFxUGHYHCZupOhVJMRaytMLScDqwygkMrYcUSSwNNZttY6qK6MaY4ddJJuMr4w
- fV2A==
+ d=oss.qualcomm.com; s=google; t=1795733113; x=1796337913; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xynKYx+nxr48g9DIUKwfNykU/ghDOrGL/9YgoD2wNk8=;
+ b=LM7VfUQc5FUpoHqIxadXvIrQm/jn4EPue0W+CttxFEY80BiKbZvty9cNiqJikHEISc
+ WlYrWdRFqW88vqcwANMGKqa9KcYp/e7VUFmolXzgeK0t1nt+O91yS7VderzPo9ciXj6V
+ miTDGdB2l4JX6fbwON1tD5jMuNhcRQ6DNZ3Fyk9hNK5uOReLd0BmypSsUsYLE7CxHH73
+ K5z1zNMcKSsqhAJaTZutB0A6ujOurMa3924pYmP9WU2NmwIkUkuu+Su3l93T4UOCktkg
+ T7nRARtWMwYqVTOmygmndtYCTk0k+R25h+V1Q0tTW6cmXKX0TwIS1WgJfXQ1pWRMRkBP
+ vTaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795732803; x=1796337603;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/fFedCrrCwJbyj+OP+1c8WOyGB2E7lX4qHbUf67s/G0=;
- b=eXJsoAiUBJWW3yRhhZCQf3W9fWPAMUYCwYPHMDTN4ZT1u5N0aye71aR2kna3K0Azwb
- LnazUvYLl0mYLnm2ndrrE7UDK9LzgiZsuTvFiN7HQ6xjZEZ5NFL0tvdCGiJncwIRcXiq
- sz+BMX8kwB491AAq6Dwv86mPBQc6ryXWmyloeYEWCz+hCFAFte0xZrbMkca6T3APS0U/
- mlIHKhtrNIV0HGVZLG3YfmQxkA0mfIevC781jtRiwH7pccXPw9ZbGYBpzWj/a3NN5DHU
- 2XoArlcvlFAI1iZy1GoWpqwZ6zzYB8CE5mxN7ppK84jXwmU+k6zdpVmIE3VfeV5HkhE6
- vlBA==
-X-Gm-Message-State: APuU4Z/kTUjC3gdoeoTJlvGDbOHNcGIU0b96cpjrT5RzkYP3WE00frtb
- QBYS/KlTvT85q6F1AAmguC58sOZ7nxkv06NCaOdzcQNlni8khf3pOMrNigfphzIH9M31n6GOUi4
- +0wjYsUDXESVZI/ZRAyA7Q1uKGXsUL4oV5IDDpFF6Liz8UsI9rFcx5XYotbmQ2Y37tA==
-X-Gm-Gg: AZFdTZfftWM4BqvFvsb+rHbGbgDGtCVPWfIzzOIia/4UWl7wmYgmLNmeiFbYyXudFuX
- SY331HSFiQrPkfDZZpNkzxLVcGKZOLk3I87xJhYHRb7Y4iVRRcEGLP+dOTcXmYKfHHrqo26ceEm
- 5g5QrSna/060PVpnRcwVohHM2BkoFpDleBYjiNKbAn4683P7yUlspZTxkvqy73CMbuUjQ2qXrjE
- ycwi9Xa6FacNwY6Caj+YWWYg6p4C4GHi2zfe7/q6OtKkn8ZXH5VqmQtZipvzSYxkP/g/Khj0Uze
- 8mVbp3lG2kq4oS5DczAo+C3Cbn/NsTcNj68o/LoRYXUOwAJckwbuojsR27W5EifOCGt81fYt3KE
- zpiWk3USndJItpQ7KZ8a/RTV37O5tlU9u5JAMeL8kr52l3Y0HQgEKAkCGPEGBgJLmeD+5O4E49Q
- NyOwJrP/8cPkA1hQ==
-X-Received: by 2002:a05:620a:460e:b0:93d:f7ac:4706 with SMTP id
- af79cd13be357-949ba8260cfmr3682199285a.9.1795732803122; 
- Thu, 26 Nov 2026 14:40:03 -0800 (PST)
-X-Received: by 2002:a05:620a:460e:b0:93d:f7ac:4706 with SMTP id
- af79cd13be357-949ba8260cfmr3682195585a.9.1795732802651; 
- Thu, 26 Nov 2026 14:40:02 -0800 (PST)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [82.67.153.177])
+ d=1e100.net; s=20260707; t=1795733113; x=1796337913;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xynKYx+nxr48g9DIUKwfNykU/ghDOrGL/9YgoD2wNk8=;
+ b=Mg8zrfMD4jiDZzks74fHwQw+JWWEvp+5A8zVbdl9NIfShySzP3pQgVIJPc2nRRxdAX
+ C26qEsa9NONtYPfisDm5qm4zB0ihevTxnA8X68DDMRpz6AO8OqQqyDTIGE30y2j62xfH
+ 1vsfxiBUegmbACZblujNk2++uCUQJy0X7X8BZJ24/CBDkEubbE4rmljgKddE9Ik1Jf+j
+ 3+tZSye/ixGf8IU2sNntpUVksPIfz/WkCKQR/bWKXuVRLeyfdvkrhO0liWXNLeRjrJF4
+ VbgBo+XCbaSma1oNBV3fyer8YIeVRSi9+I2/2iCq4ex1dhKbdm5/jKXx9y+sMCHGMgjb
+ BFfA==
+X-Gm-Message-State: APuU4Z/dQJGRzImcZfsQCKEt0ECQBXkStCf63iPunIedtYOoV2DQFUte
+ Nihz+0cvyQQwGcNZMSswboGOrBboxIUeeiqdaMfetm1mZqX7TtH2sZtxmGb4g9n9KSEftGmcYhh
+ nLbxg8UfilN66BYmVkXl+hw1Q9aMZVp+ziY4nh9w5ihw3/oDy25xbEpjEjg==
+X-Gm-Gg: AZFdTZdjk4OJdiyLr8OuAQZhaklgz9gHzYZJw9A47q/4DeL7jlNvmi39DiUn25KCJ4X
+ Gyct0ezZTEb1/mtxeMSyLnvN8wTDFZ+EnFY2OnQb/aRFFbqbL2EpDzymRAWIG6tAiaGQHrDKCos
+ l/nllkC+5pOcLQurMWhh6ixuNgyoNdI20WtQV34rXYRPjcc4wPAOuMON+D3OzkEZ1SaiT8sdVzI
+ C8UPLEK53kjiHXQ2NEX0AVSuC1j4/qHH1Ko+6NTElegfXmU2us+Mencagi9kgkRQQkIkcASpYUX
+ gl1qVAjpA2exiE44XEi/+3pee5xA6dAFnUpJBpUSUtBMPzPwRcYfVJyFKoWWyugDWoYLhrOStO/
+ nPOrwjckuESJlOGTtmMs1YEb+9WfsX3q79pn0aSIyKiKGDrNNK2e5rJCbPTbkPshoHQONVnVZf5
+ R32R/UWAw=
+X-Received: by 2002:a05:620a:45a8:b0:947:b201:fad7 with SMTP id
+ af79cd13be357-949bab0eeb3mr4040408185a.67.1795733113226; 
+ Thu, 26 Nov 2026 14:45:13 -0800 (PST)
+X-Received: by 2002:a05:620a:45a8:b0:947:b201:fad7 with SMTP id
+ af79cd13be357-949bab0eeb3mr4040402385a.67.1795733112726; 
+ Thu, 26 Nov 2026 14:45:12 -0800 (PST)
+Received: from [192.168.69.202] (pmd666.hd.free.fr. [82.67.153.177])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4ab6c340df4sm49423534f8f.55.2026.11.26.14.40.00
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 26 Nov 2026 14:40:01 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 0/2] target/arm: Read generic timer counters without the BQL
-Date: Thu, 26 Nov 2026 23:39:57 +0100
-Message-ID: <20261126223959.62899-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
+ ffacd0b85a97d-4ab6a680483sm43762069f8f.28.2026.11.26.14.45.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Nov 2026 14:45:11 -0800 (PST)
+Message-ID: <61c71bb9-c9b1-462b-893b-c09d0322785f@oss.qualcomm.com>
+Date: Thu, 26 Nov 2026 23:45:10 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] system/memory: Display address spaces starting at
+ 0x0000.0000
+Content-Language: en-US
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260226220226.20164-1-philmd@linaro.org>
+ <20260226220226.20164-6-philmd@linaro.org> <aah40xnBszzsWyT0@x1.local>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <aah40xnBszzsWyT0@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=T4oZ3PKQ c=1 sm=1 tr=0 ts=6b08b545 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Authority-Analysis: v=2.4 cv=XpVvqlF9 c=1 sm=1 tr=0 ts=6b08b67a cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=0at1Q4f4uHMGvLL1maQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: kIywwQB42USOi8KCy8wAp4OJtDk35QnR
-X-Proofpoint-GUID: kIywwQB42USOi8KCy8wAp4OJtDk35QnR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXyBxOMcdVZ8NA
- t8+3eB41V6LniNIiwffYjwk+F5YGcUf5s8b1C24xqrGyJm9PCTc1K0xLcxusOHhjNzcumbwFiI8
- kn/d7d1rD7T5L7C2cN936Bzam/ur5xqyr7d83oEZPUQ0Xo0BUQys6sRM4DlqmbNPbcgIeJK0pPc
- wtdf6udgY0i3vIyTVi6ZcI83TknDpvLxhmnzjd2Fw9vIsP/qK5q3gpgturEtGFbUZHfkTgbaA4S
- wjecEFxoLkdCmEbNVzR5h5o5iB6Z/jmx55e6R27WVRNP6rWEH2suwKW7lqN7sZkt6/lHa3pcxn4
- iyfzPSbn2P9kBjcshw8E7X3VA+ilRDBC+3w542kRMD7evMU8icbXSvbq3l9F9FVEMSEMz4/E0NC
- NsiJ4HBC5cOZG4T05ZWGuCJZzF+ShiLf9jznO+9LZLjy+D7Sw4WfgpZO/v+CrzsqnYLe76gEJpR
- 4hnnbPXoM1TJBfawz1w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfX8YXQLIxPhH9P
- xibfApfjrk2+ebE6Jr43CgaQkessBJHKvR/pUxqjqWLGezOGlmyKZ0ZDbUCqvWvdcQDT8qZ5HXN
- Tf837GoewgF7qkDU/wF9PoYMkI582kQ=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=wrFheHMyYtGgnyQavWgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXydjP7oU9Np/O
+ f7J7aXH88JHc7S1+UWRtlY09ygekFURZp679AAIUErTB6sqk77tuPCBUNtB7aP6YecH6FR7QLXJ
+ osWG1/tf+cV9IBCD+bGSoX7N3PRemVzHdyertKoKuvI+JpX4M9Ws70FEVntWXUBMUNKLf8o4Jq2
+ 7dNR0Z2Cr6QDVdP+ZUyOi3wjjwQpI4xYPt7+szW7Nd5Go4nxoUyq+s6q8+sRJghWfO8GXDG9yrV
+ xlBAnkEDkk1zmDmewniWJytWP2cKijdzWjCplKjj77Jp1W4UPdP4PgSfMkq+t2qHihVO4Ie/b19
+ jJfoXylnr0bagr3doNuAq5JIG1ZSLHb6ognIktMuZq68C1446r2rwLXMYU4quqPMptIW/8mxLlX
+ iK4ffZrVNFq5FeXtjaOExz8BspgVJmTLz0W0P2eLfnOAf/M4dTRoWXd2IAqyM5dQ0XCtycp/Bte
+ Ydq4bncQRQEWs38PN0A==
+X-Proofpoint-GUID: Gml2ZzCKNmEEBjFcjdDffx7Cw_ddrZTc
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI2MDA4OSBTYWx0ZWRfXyJIDMOzN9JC9
+ sG106SEhszY2xZmvIf40NbZn8P4NzCbcRdlaWU7ECb/Ks6GIYYQhHe0oHNMRMKuh9OEoFp8eKaQ
+ /rykHJA+frO/Eqa49AdLE/tktRjHsoM=
+X-Proofpoint-ORIG-GUID: Gml2ZzCKNmEEBjFcjdDffx7Cw_ddrZTc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-26_05,2026-11-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611260089
 Received-SPF: pass client-ip=205.220.180.131;
@@ -146,51 +154,123 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-ARM_CP_IO both ends the TB and takes the BQL around the hooks.
+Hi Peter :)
 
-Split it into ARM_CP_IO_ENDTB and ARM_CP_IO_BQL (ARM_CP_IO is
-their union, so existing registers are unchanged), then mark
-CNTPCT/CNTVCT and their SS variants ENDTB only: they are
-read-only and only use per-CPU state and QEMU_CLOCK_VIRTUAL,
-read through the timers_state seqlock.
+On 4/3/26 19:24, Peter Xu wrote:
+> Hi, Phil!
+> 
+> On Thu, Feb 26, 2026 at 11:02:23PM +0100, Philippe Mathieu-Daudé wrote:
+>> Since AddressSpace root MemoryRegion can be remapped, it is
+>> bogus to use the MemoryRegion address as the AddressSpace
+>> absolute address. Besides, the AddressSpace APIs take an
+>> @addr argument expecting AddressSpaces start at 0x0000.0000.
+> 
+> Could you share an example where a root MR can have addr!=0, and be
+> remapped while being the root MR of an AS?
 
-Under MTTCG, counter reads are no longer serialized on the
-BQL; with icount this relies on the qemu_icount series
-based-on below.
+virtio-pci.
 
-Note, RISC-V cycle and instret CSR reads reach icount_get()
-and icount_get_raw() without holding the BQL. Call path:
+In virtio_pci_realize():
 
-  helper_csrr()
-    riscv_csrr()
-      read_hpmcounter()
-        riscv_pmu_ctr_get_fixed_counters_val()
-          cycle = icount_get()
-          instret = icount_get_raw()
+     memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
+                        pow2ceil(proxy->notify.offset + 
+proxy->notify.size));
+     address_space_init(&proxy->modern_cfg_mem_as, &proxy->modern_bar,
+                        "virtio-pci-cfg-mem-as");
 
-Based-on: <20261126222530.62175-1-philmd@oss.qualcomm.com>
-"accel/tcg: Do not write qemu_icount from seqlock readers"
+then virtio_pci_device_plugged() registers the very same MR as BAR4:
 
-Philippe Mathieu-Daudé (2):
-  target/arm: Split ARM_CP_IO as ARM_CP_IO_ENDTB + ARM_CP_IO_BQL
-  target/arm: Read generic timer counters without the BQL
+     pci_register_bar(&proxy->pci_dev, proxy->modern_mem_bar_idx,
+                      PCI_BASE_ADDRESS_SPACE_MEMORY |
+                      PCI_BASE_ADDRESS_MEM_PREFETCH |
+                      PCI_BASE_ADDRESS_MEM_TYPE_64,
+                      &proxy->modern_bar);
 
- docs/devel/multi-thread-tcg.rst |  8 +++++---
- target/arm/cpregs.h             | 11 ++++++++++-
- target/arm/helper.c             | 24 ++++++++++++------------
- target/arm/tcg/op_helper.c      |  8 ++++----
- target/arm/tcg/translate-a64.c  |  2 +-
- target/arm/tcg/translate.c      |  2 +-
- 6 files changed, 33 insertions(+), 22 deletions(-)
+When the guest programs BAR4, pci_update_mappings() removes and
+re-adds the MR at the new address, so modern_bar.addr follows the
+guest, while modern_bar stays the root of modern_cfg_mem_as.
 
--- 
-2.55.0
+   $ qemu-system-x86_64 -M q35 -nodefaults \
+       -device virtio-net-pci,disable-legacy=on,netdev=n0 \
+       -netdev user,id=n0 -S
+   (qemu) info mtree
+   address-space: virtio-pci-cfg-mem-as
+     0000000000000000-0000000000003fff (prio 0, container): virtio-pci
+       0000000000000000-0000000000000fff (prio 0, i/o): 
+virtio-pci-common-virtio-net
+       0000000000001000-0000000000001fff (prio 0, i/o): 
+virtio-pci-isr-virtio-net
+       0000000000002000-0000000000002fff (prio 0, i/o): 
+virtio-pci-device-virtio-net
+       0000000000003000-0000000000003fff (prio 0, i/o): 
+virtio-pci-notify-virtio-net
+
+Once SeaBIOS assigned BAR4:
+
+   (qemu) info pci
+       BAR4: 64 bit prefetchable memory at 0xfebfc000 [0xfebfffff]
+   (qemu) info mtree
+   address-space: virtio-pci-cfg-mem-as
+     00000000febfc000-00000000febfffff (prio 1, i/o): virtio-pci
+       00000000febfc000-00000000febfcfff (prio 0, i/o): 
+virtio-pci-common-virtio-net
+       00000000febfd000-00000000febfdfff (prio 0, i/o): 
+virtio-pci-isr-virtio-net
+       00000000febfe000-00000000febfefff (prio 0, i/o): 
+virtio-pci-device-virtio-net
+       00000000febff000-00000000febfffff (prio 0, i/o): 
+virtio-pci-notify-virtio-net
+
+So the AS "moves" with the BAR. render_memory_region() adds the root
+mr->addr, so this isn't only a display matter: the flatview itself
+starts at root->addr.
+
+
+A static (non-remapped) example where that matters is the PReP
+Raven host bridge, whose PCI I/O MR is both mapped in the CPU view
+at 0x80000000 and the root of the "raven-io" AS:
+
+     memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+     address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+     memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+                                 &s->pci_io);
+
+It is also the bus I/O space, so lsi53c810 on the 40p machine gets
+the same root via pci_address_space_io():
+
+   $ qemu-system-ppc -M 40p -S
+   (qemu) info mtree
+   address-space: lsi-pci-io
+   address-space: raven-io
+     0000000080000000-00000000bf7fffff (prio 0, i/o): pci-io
+       0000000080000000-0000000080000007 (prio 0, i/o): dma-chan
+       0000000080000020-0000000080000021 (prio 0, i/o): pic
+       ...
+       0000000080000cf8-0000000080000cfb (prio 0, i/o): pci-conf-idx
+       0000000080000cfc-0000000080000cff (prio 0, i/o): pci-conf-data
+
+The two users of this AS disagree on the origin:
+
+- raven_io_read/write() rely on the current behavior and access
+   pci_io_as at 'addr + PCI_IO_BASE_ADDR';
+
+- lsi_mem_read/write() in I/O mode (DMODE.SIOM) pass a plain PCI I/O
+   address, i.e. expect the AS to start at 0, so with the current
+   flatview such accesses miss (e.g. port 0x20 is at 0x80000020 in
+   lsi-pci-io).
+
+This is what I meant by "AddressSpace APIs take an @addr expecting
+AddressSpaces start at 0x0000.0000"; I'll clarify in v2.
+
+Regards,
+
+Phil.
 
 
