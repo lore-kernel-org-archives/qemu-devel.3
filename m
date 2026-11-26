@@ -1,108 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3EF606A327
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 19:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3610606A329
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Nov 2026 20:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VKWOB3Cj;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=sX1vwvDe
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DD7LCN11;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Tc0XqmY3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWfKH-0003RO-L2; Thu, 26 Nov 2026 14:40:15 -0500
+	id 1xWfnY-0006LP-85; Thu, 26 Nov 2026 15:10:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfKC-0003Kx-GE
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:40:09 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfnP-0006Eq-Gg
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:10:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfK9-0002en-DP
- for qemu-devel@nongnu.org; Thu, 26 Nov 2026 14:40:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWfnM-0006vW-D3
+ for qemu-devel@nongnu.org; Thu, 26 Nov 2026 15:10:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795722004;
+ s=mimecast20190719; t=1795723814;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j58WPcpqiwZjP411s57VI/GqqZaeW2uZZM61RQFRzcI=;
- b=VKWOB3CjZbQkae7xm7yntrvvffNZXkW2U0RQYRQtDMVspMwVOzWJQPRcQcWgiKlgCO96/R
- aL3o74WwHbxDyRyYYXktOdzFN8OzBbvuwJndPOcEAzce2x+y5tc+JckBfgujplaFIOt09+
- vCTsbDMi8DwyawzME0JoYFJTSFaD1XE=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6sEGYohIWQDttXCksKGw29yCaQ4OEAfm6GeFIPAVwRU=;
+ b=DD7LCN11wxmi2zhhSZDFNKFJ9wiJYqHbUTq2zl98gUdkkogv2FvV1Y37TkkPk3AbvJrvfo
+ iTH8i3FWmrcwSfMcJgssVRUtmwNtPhkqVwsvfCwpqJSKFih+1U88xFAvVt2rl4c1AM08Kp
+ /SuJy6rY8qGN7pEbnY3sqetEeKwNPqM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-i16KuolOOeGcBwUmlidL8w-1; Thu, 26 Nov 2026 19:40:02 +0000
-X-MC-Unique: i16KuolOOeGcBwUmlidL8w-1
-X-Mimecast-MFC-AGG-ID: i16KuolOOeGcBwUmlidL8w_1795722001
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93f2373e9b4so828500785a.1
- for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 11:40:01 -0800 (PST)
+ us-mta-317-8TzZoI4HPN2ozREwph9_qA-1; Thu, 26 Nov 2026 20:10:12 +0000
+X-MC-Unique: 8TzZoI4HPN2ozREwph9_qA-1
+X-Mimecast-MFC-AGG-ID: 8TzZoI4HPN2ozREwph9_qA_1795723811
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-949b0d3232fso1012050785a.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Nov 2026 12:10:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795722001; x=1796326801; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=j58WPcpqiwZjP411s57VI/GqqZaeW2uZZM61RQFRzcI=;
- b=sX1vwvDePBDBKglJEOxRutLVHz3wxfDuct9uASgomk3HydgrwHrSCBhqFcgNza3ubT
- VPOq/qEDLwY04ifiXRi9RfMF9rF4YP3fRR4mIayFrgIEf1ej6K3QSOLLFCQv8LmvuQkv
- VSbbD6H0lBgbimlqN0RYI21IGDmC3SPaiF+H2g8l9HrD1x3MTRqHkLSyQ1XMFTGosv5R
- BCcUs+D9roINDiOnJErgELRprLup9EKd2mOqUhRQ9GG/GTmbiIOCcy+DHB6++uOnoXjH
- XhJD/1bjqfiguasdMU7y5LXAgDcVmefu1Sx5YP+ZBEEUPOwOEZIilMLmsOWqNREaamab
- y78A==
+ d=redhat.com; s=google; t=1795723811; x=1796328611; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=6sEGYohIWQDttXCksKGw29yCaQ4OEAfm6GeFIPAVwRU=;
+ b=Tc0XqmY3ONCtQKCftaTsFdox5e4g644HO3ZTZdetsDFFnxs5j24A3s5M1akJwpwjiU
+ XHIQicwvGR38XkG51WshM66oOridS01QeNzJuCfg/PDNUsIsVYOOc09M2RMpywu5JAHH
+ +Ku25v3W7RHcdhAvoNeOR5r9rtp1vD91XxU5lZeHbDpZoUMdTw0YGxPKAYEB7rTAgcro
+ /RRmP/jCGJHtY62/0v506HlyvjB2F6CNekYDVccwBT7YALD7o3CX/wpmyL//AOLX63OQ
+ Hh5WjvJen3ZUpxlfBcpFaDx8T/HJx7Paisu09nr6QVIc1Y5tKyWRVXv3Q5pKbtrAAXEJ
+ Zf4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795722001; x=1796326801;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=j58WPcpqiwZjP411s57VI/GqqZaeW2uZZM61RQFRzcI=;
- b=RndsJvObzvfrUW9rwDgMGyI9P4+kgvWb1AUDisH4VGe9qJq60g+PaX4HhBLYoSmy8f
- AyVs+CmAQYQeaq52cRCUQ6XLiO+xTi7MIKkoHrm9Lq3XLOSEhF5qZUNsjTcXcA68hHtp
- DjIRnUE8Z1Z4aoTLl6d4VkmRMMk7gV5BTy6u6ga7G+iHLocuurcYFv+6yUB388ChOJm3
- p4ahDNKhqgtN2P+WUiZT0M+yRbEr9MoN0HShFeWf1dBhkz2bOEgwJVKtbW2QQ+Ej5Nia
- yUvBKm6mnqm+7jimlqg1T7hKERLSYg/cV53a/ahE3W9QSXX5T4WBnENMuFUe5tX7mliY
- tSxw==
-X-Forwarded-Encrypted: i=1;
- AL+hErE4ABW0JWkMiGY0RKVDF31Pvo9hfqIUVVNWuAXerSSrkdx7hEQ2L35lIHzSlNorp9Pwbx8DClxO9qJO@nongnu.org
-X-Gm-Message-State: APuU4Z/pJNz8wgvxJCCBO3vaoZmBAduCTvOLpcpK6u+ius9nHeIgFbcL
- 3r6y1MFv2yiKsPbzFZiRFrYPsBBlS8Sk7UqM4QAdtFdLrdX/A9RndOdi68Pa3lAzY412KBF/b6E
- bXo19rYaLXeYc6KDTQiWrppZDfV09bXYztauawxhiPjK6cKQK3A/sfc2z
-X-Gm-Gg: AZFdTZefpucmJK3IillXxMlmfrWjtZeipq+4g0zL436MJSv2c9hSuppQ1ZK0BgpGdOG
- UrsXBYpOYer3H8DFZskdtCI7vOZjfpNFz5VF6sVFGIZt4n3MhPLof0td4gubd8iEfoOxq3M8J+w
- 2JqSBkYASN5X9hfTHzQy2A9XysY5x5J8Hq1qehsZFibnbgEEfU2/Fqjl+qWoNTUkUPnBihdU6Vz
- zjikyWbWswIW/+sKVcg+7aqmbEKB/6CmMpOJItIEdotCPxf2vM7rjuHImLKhSoF/YYeJOwFI7zi
- dBZtQIZvGZBdqxaSXDP6uJ8Jvt/NTN+3YEUvvqqnK0XLDIOZPva9lZJtzDMyqnwv2LzuqTClj5c
- h2kesvCRNk5xc7GQtv57F11V0nVVJmrQXY1+dT7BLUld/
-X-Received: by 2002:a05:6214:33c5:b0:921:65e5:5da8 with SMTP id
- 6a1803df08f44-92165e568e4mr202014676d6.56.1795722001226; 
- Thu, 26 Nov 2026 11:40:01 -0800 (PST)
-X-Received: by 2002:a05:6214:33c5:b0:921:65e5:5da8 with SMTP id
- 6a1803df08f44-92165e568e4mr202014356d6.56.1795722000658; 
- Thu, 26 Nov 2026 11:40:00 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795723811; x=1796328611;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6sEGYohIWQDttXCksKGw29yCaQ4OEAfm6GeFIPAVwRU=;
+ b=p8UllhFDhSOEkk1/YjV3GmCoHtaKNssHLKfALGU++ol8T+F4HqFfccDyUWF5bhglP2
+ Xjx/2o6erzWrmEfWxRLnZI2sOwqNgOUzNu/M0Zhx6Vtv68rlRRmPxTAdzWxBvevVgi34
+ pj5RsW+Xfwo8kxX6yMWyyiVm4mbcDxYIkc6Ul8UlOD4FdRwaHoIj+GHgB6dr6ayoJPPS
+ 7xiW6ir44pMt8+rDKITh/FcCRK/r40Wfmv0uf2tSuX7ykoaK5D8TKiks2PU3hWQBL4Pp
+ oKbQMeqGoe/Lqh4S2KA4LfU0oto/AUx1Wr5ZoN1wuJzvKteLchAPgxacbxt7Z8hZ3YH6
+ PLTQ==
+X-Gm-Message-State: APuU4Z8qPEzLoQCrTX9dWcePMFOOz5ISMhjNmHqT5ylPAPe0QNrnNGK1
+ b7x2bLb1BoZFwAe1HKbl+gUHmx1WvYb8bTNkUqrWwrU4lzuwhWE4yETrEUsD/wWEhCha0PxflLe
+ uAiGeiH/8JGnExQnb0i0r1GJAmM9+DdGVIQGFDfauLyx8aeXFVHU8HplM
+X-Gm-Gg: AZFdTZcfiWx2/AU730CWwIobvZm9PVaE/ZRtTgrgJpLQ9peH+NTN49EOAOiVqQjo4FR
+ DZ1BPrXIQK2XACsaFt7sboBqOWnE5oif3Y8rl8oaHUnA5R1iamxvB40hKePzCp3DWCwLttXvb5J
+ otsYtARq/5w8RwLR/JMuqjDAf5ny5dpJVgo5JhoR/OmEqP/EERdJ1++jBgTfpAYs8cFpLrInink
+ T7jQu7EfSzUx5NzoBRdlK+fSGX0zny4vwCsvSLGzHbVdjUDEf0BiTt5MvtkqJYT2FQ++vI1y47J
+ RYJyJbgKvR2PoMCW9AuFZjH2sHg9/Xjbd7HzbjXWny6WnTRdO0sqbQFjCbucg5/foBpX9/orjRU
+ m8hlOAAq+LTOc4TUxgERUKAUtSQgJEfUqVuCLjeFO3UAq
+X-Received: by 2002:a05:620a:1329:b0:949:8119:6702 with SMTP id
+ af79cd13be357-949ba8236e3mr3678457785a.10.1795723811183; 
+ Thu, 26 Nov 2026 12:10:11 -0800 (PST)
+X-Received: by 2002:a05:620a:1329:b0:949:8119:6702 with SMTP id
+ af79cd13be357-949ba8236e3mr3678451385a.10.1795723810637; 
+ Thu, 26 Nov 2026 12:10:10 -0800 (PST)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-92134a16754sm195900836d6.39.2026.11.26.11.40.00
+ af79cd13be357-949bb3a646fsm1664257685a.22.2026.11.26.12.10.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Nov 2026 11:40:00 -0800 (PST)
-Date: Thu, 26 Nov 2026 14:39:59 -0500
+ Thu, 26 Nov 2026 12:10:10 -0800 (PST)
+Date: Thu, 26 Nov 2026 15:10:09 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
- qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 0/2] migration: fix a source hang on cancel before the
- channel connects
-Message-ID: <awiLD8IokxI-w69f@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261125193102.1423555-1-den@openvz.org> <878q2gsdak.fsf@suse.de>
- <6314eded-6904-4722-92f8-8db90cc4688b@virtuozzo.com>
- <8733snslnt.fsf@suse.de>
- <awiJUEoMb3WxUjPo@zhexu-thinkpadt14gen5.rmtcaon.csb>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Hongyan Xu <getshell@seu.edu.cn>,
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Subject: Re: [PATCH for-12.0 v2] coroutine: Make yield_until_fd_readable()
+ detach fd handler always
+Message-ID: <awiSIWr8sqVm3_2N@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20261123133747.2571462-1-peterx@redhat.com>
+ <20261124155932.GA1640366@shajnocz.csb>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <awiJUEoMb3WxUjPo@zhexu-thinkpadt14gen5.rmtcaon.csb>
+In-Reply-To: <20261124155932.GA1640366@shajnocz.csb>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -130,241 +123,127 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 26, 2026 at 02:32:32PM -0500, Peter Xu wrote:
-> On Thu, Nov 26, 2026 at 11:38:14AM -0300, Fabiano Rosas wrote:
-> > "Denis V. Lunev" <den@virtuozzo.com> writes:
+On Tue, Nov 24, 2026 at 10:59:32AM -0500, Stefan Hajnoczi wrote:
+> On Mon, Nov 23, 2026 at 08:37:47AM -0500, Peter Xu wrote:
+> > Hongyan reported a possible use-after-free of RDMA migration code:
 > > 
-> > > On 11/26/26 00:26, Fabiano Rosas wrote:
-> > >> "Denis V. Lunev" <den@openvz.org> writes:
-> > >>
-> > >> What a coincidence, I just spent the afternoon fixing this. 
-> > >>
-> > >>> Cancelling a migration right after starting it can hang the source
-> > >>> QEMU forever. This happens when the cancel arrives while the source is
-> > >>> still connecting to the destination and the connection then succeeds.
-> > >>> The source goes on as if nothing was cancelled, then waits for a reply
-> > >>> from the destination that never comes. It waits with the BQL held, so
-> > >>> the monitor stops answering too, and the only way out is to kill the
-> > >>> source. We hit this in an automated test that aborts a live migration
-> > >>> right after starting it.
-> > >> How does this test look like? I'm thinking that instead of writing a new
-> > >> test for this bug (haven't read your patch 2 yet), what we need it to
-> > >> remove the usage of migrate_wait_for_dirty_mem from the multifd cancel
-> > >> test. I think that's an artificial delay that's there for no good reason
-> > >> in this case. If your CI manages to hit the issue on a real-ish
-> > >> scenario, that's even more reason to remove that code.
-> > > This is old fashioned product testing over OpenStack cluster
-> > > which specifically performing cancels in a row. Tests are run
-> > > inside VMs inside the product and thus L0 host delays comes
-> > > as a bit of fuzzing.
-> > >
+> > https://lore.kernel.org/all/20260904033130.276-1-getshell@seu.edu.cn
 > > 
-> > That is good to know because I was not sure whether this issue could
-> > happen outside of migration-test.
+> > The issue seems real, while this patch is a proposal to fix it in a simpler
+> > way, meanwhile it should be a problem to the yield_until_fd_readable()
+> > helper in general, so it should make more sense to be fixed there too.
 > > 
-> > > Tests are running non-stop inside development cycle :-)
-> > >
-> > > That is why I am coming with this or that problems on paths
-> > > like that. But this is not very good in terms of QEMU level
-> > > specific tests and that is why patch 2 comes with a pointing
-> > > tests.
-> > >
-> > > NOTE: both your are my patches are fixed the problem as stated
-> > > and the test passes without both your and my variants.
-> > >
-> > >>> Patch 2 adds a qtest for this window, which Peter left for later when
-> > >>> fixing the early-cancel crash in 4f08b870f8 [1].
-> > >>>
-> > >>> [1] https://lore.kernel.org/r/20260421175820.302795-1-peterx@redhat.com
-> > >>>
-> > >>> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> > >>> Cc: Peter Xu <peterx@redhat.com>
-> > >>> Cc: Fabiano Rosas <farosas@suse.de>
-> > >>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > >>> Cc: Laurent Vivier <lvivier@redhat.com>
-> > >>>
-> > >>> Denis V. Lunev (2):
-> > >>>   migration: fix source hang on cancel before the channel connects
-> > >> Here's my version. It's very opinionated due to my long-standing grudge
-> > >> with this code.
-> > >> https://wiki.qemu.org/ToDo/LiveMigration#Migration_cancel_concurrency
-> > >>
-> > >> -- >8 --
-> > >> From a27909503af9749f2cf6d8b901d675ee24c66d2c Mon Sep 17 00:00:00 2001
-> > >> From: Fabiano Rosas <farosas@suse.de>
-> > >> Date: Wed, 25 Nov 2026 18:43:57 -0300
-> > >> Subject: [PATCH 1/2] migration: Avoid early cancel causing a hang
-> > >>
-> > >> If migration is cancelled at just the right moment when the main
-> > >> channel transport has finished connecting, it's possible that the
-> > >> shutdown()s issued by migrate_cancel() miss the (unset) QEMUFiles
-> > >> entirely. A moment later, migration_channel_connect_outgoing() carries
-> > >> along with the migration and initializes the QEMUFiles for the first
-> > >> time.
-> > >>
-> > >> Migration then hangs because the source goes into migration_cleanup()
-> > >> due to its state being CANCELLING and hangs waiting for the return
-> > >> path thread to join, which never happens because the destination is
-> > >> unaware and never sends any SHUT message. The cleanup itself also
-> > >> doesn't kick the RP thread because commit 64763e8ca61 ("migration:
-> > >> Keep s->rp_state.from_dst_file open until migration ends") has changed
-> > >> the code to keep the QEMUFile until after the RP thread exits. The
-> > >> only other way to kick it would be from
-> > >> stop_return_path_thread_on_source() if an error had occurred, but no
-> > >> error has occurred.
-> > >>
-> > >> This situation is not surprising because the migration cancelling has
-> > >> never had any synchronization mechanism aside from the BQL, which in
-> > >> this case is not enough to protect from the race. It has also never
-> > >> had a way to inform the rest of the code in a thread safe manner about
-> > >> the cancellation.
-> > >>
-> > >> To start moving in the correct direction, make the qmp_migrate_cancel
-> > >> command (under BQL) set the migration error, which is protected by the
-> > >> error_mutex and suitable to be used as a way to inform the other
-> > >> threads of the cancellation. This avoids the need to check the
-> > >> MigrationStatus which is already fragile in terms of concurrency.
-> > >>
-> > >> Note that the QMP handler for migrate_cancel is used instead of the
-> > >> internal function because the latter is used from other parts of the
-> > >> code that might have set s->error already.
-> > >>
-> > >> In the case where qmp_migrate_cancel() sets s->error and some other
-> > >> code hits an error due to the shutdown()s, the
-> > >> migrate_error_propagate() call chain will simply ignore the error set
-> > >> for last. This is the correct behavior because errors after cancelling
-> > >> are very likely to be caused by the cancellation itself. This has the
-> > >> extra benefit that the migration cancellation now shows up in the
-> > >> logs, which solves a confusing situation when the user sees "Broken
-> > >> pipe" and thinks it's due to an error.
-> > >>
-> > >> For this specific bug, check that the asynchronous entry to
-> > >> migration_channel_connect_outgoing() doesn't bring an already set
-> > >> s->error and call migration_connect_error_propagate() under the BQL if
-> > >> that's the case. We need the whole migration_connect_error_propagate()
-> > >> here to handle the postcopy resume case as well as making sure
-> > >> migration_cleanup() is reached.
-> > >>
-> > >> Reproduced with /x86_64/migration/multifd+postcopy/tcp/plain/cancel
-> > >> and my stress branch, which basically skips
-> > >> migrate_wait_for_dirty_mem().
-> > >>
-> > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > >> ---
-> > >>  migration/channel.c   | 5 +++++
-> > >>  migration/migration.c | 8 ++++++++
-> > >>  2 files changed, 13 insertions(+)
-> > >>
-> > >> diff --git a/migration/channel.c b/migration/channel.c
-> > >> index 1aeb8814858..12ff68fc38c 100644
-> > >> --- a/migration/channel.c
-> > >> +++ b/migration/channel.c
-> > >> @@ -563,6 +563,11 @@ void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
-> > >>  {
-> > >>      trace_migration_outgoing_channel_set(ioc, object_get_typename(OBJECT(ioc)));
-> > >>  
-> > >> +    if (migrate_has_error(s)) {
-> > >> +        migration_connect_error_propagate(s, error_copy(s->error));
-> 
-> [1]
-> 
-> > >> +        return;
-> > >> +    }
-> > >> +
-> > >>      if (migrate_channel_requires_tls_upgrade(ioc)) {
-> > >>          Error *local_err = NULL;
-> > >>  
-> > >> diff --git a/migration/migration.c b/migration/migration.c
-> > >> index 5686209ab11..40c3f21d520 100644
-> > >> --- a/migration/migration.c
-> > >> +++ b/migration/migration.c
-> > >> @@ -1890,6 +1890,8 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
-> > >>          return;
-> > >>      }
-> > >>  
-> > >> +    migrate_error_free(migrate_get_current());
-> 
-> Is this line somewhat separate from the issue?  When s->error will be
-> non-NULL?
-> 
-> > >> +
-> > >>      if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
-> > >>          return;
-> > >>      }
-> > >> @@ -2218,6 +2220,9 @@ out:
-> > >>  
-> > >>  void qmp_migrate_cancel(Error **errp)
-> > >>  {
-> > >> +    MigrationState *s = migrate_get_current();
-> > >> +    Error *local_err = NULL;
-> > >> +
-> > >>      /*
-> > >>       * After postcopy migration has started, the source machine is not
-> > >>       * recoverable in case of a migration error. This also means the
-> > >> @@ -2229,6 +2234,9 @@ void qmp_migrate_cancel(Error **errp)
-> > >>          return;
-> > >>      }
-> > >>  
-> > >> +    error_setg(&local_err, "Migration was cancelled by the user.");
-> > >> +    migrate_error_propagate(s, local_err);
-> > >> +
-> > >>      migration_cancel();
-> > >>  }
-> > >>  
-> > > I have spend a bit of time trying to weight against the approaches
-> > > and the only item I found is that "cancel" is actually not a error
-> > > while we are reusing field as a error state.
-> > >
+> > The problem is about the use of the stack allocated FDYieldUntilData where
+> > we must make sure after yield_until_fd_readable() returns it's not used
+> > anywhere.  If the coroutine yielded can be entered from outside of this
+> > helper (fd_coroutine_enter()), then the aio handler might be installed even
+> > after yield_until_fd_readable() returns, and that makes the stack variable
+> > accessible by aio codd, even if stack gone.
 > > 
-> > That cat is out of the bag already since commit dc487044d5c ("migration:
-> > Make migration_has_failed() work even for CANCELLING"). If
-> > migration_has_failed() includes cancel states, then I think it's
-> > actually a bug that migrate_cancel() doesn't set an error. Otherwise
-> > code that calls migration_has_failed() will have to check
-> > migrate_has_error() to find out if the "failure was an error". That's a
-> > worse pattern in my opinion.
-> 
-> Indeed, at least for qemufile it's the same, where qemu_file_shutdown()
-> sets error for the qemufile error (PS: every time I see these bunch of
-> error flags I headache..).
-> 
+> > Fix it by moving the aio handler removal outside the handler.
 > > 
-> > That's how I came up with this patch actually because I was trying to
-> > avoid checking SETUP specifically, in case something else races and sets
-> > another state in the mean time. As I mentioned briefly in the commit
-> > message, the MigrationStatus is not thread-safe, that cmpxchg only
-> > protects the migration event against a duplicated state change.
-> > 
-> > > Both are working. If you will take your one - pls consider
-> > >
-> > > Tested-by: Denis V. Lunev <den@openvz.org>
-> > > Reviewed-by: Denis V. Lunev <den@openvz.org>
-> > >
-> > > I would say - up to you :-)
-> > >
-> > 
-> > Thank you. Let's see what Peter thinks about it.
 > 
-> I agree with you that if we already have code treating cancellation as part
-> of error, then setting error may make things more aligned.
-> 
-> My only complaint might be that above [1], it has "if there is an error,
-> duplicate that error and try to inject the same error, even if we're
-> pretty sure is already there, so the dup one will be freed".  It was almost
-> a malloc/free unit test..
-> 
-> So.. maybe Fabiano's patch, but use the migrate_cleanup() from Denis
-> instead only at line [1]?
+> Fixes: 923709896b1b ("migration: poll the cm event for destination qemu")
 
-Or maybe pass NULL to migration_connect_error_propagate() should be
-better.  However it'll need a touch-up to support NULL only because
-trace_migrate_error() will crash, even if the rest seems all fine.
+I'll add.
 
-I just noticed there might be weird side effect for postcopy recovery's use
-case if we use migrate_cleanup(), so we don't always want to cleanup in
-case something set the error during postcopy paused..
+> 
+> But it looks like additional fixes are necessary for commit 923709896b1b:
+> 
+> 1. ram_load_precopy() -> aio_co_schedule() + qemu_coroutine_yield()
+> 
+>    rdma_cm_poll_handler() -> qemu_coroutine_enter() hits the "Co-routine
+>    was already scheduled" abort in qemu_aio_coroutine_enter() if called
+>    before the scheduled coroutine runs.
+> 
+> 2. qio_channel_yield() asserts when qio_channel_rdma_readv() returns QIO_CHANNEL_ERR_BLOCK
+> 
+>    There is a code path in qio_channel_rdma_readv() that returns
+>    QIO_CHANNEL_ERR_BLOCK, causing qio_channel_yield() to be called. The
+>    problem here is that qemu_coroutine_enter() is not allowed at this
+>    yield point. You have to use qio_channel_wake_read() to interrupt the
+>    read.
+
+Thanks for going beyond this patch.  My plan is to leave rdma + coroutine
+issues alone until we remove support of that in the bigger series.  We're
+aware serious users of rdma migration and likely they didn't hit them for
+years.  Then I assumed it's fine keeping them there for another short while.
+
+After the other series land, all these issues should be gone.
+
+> 
+> > Reported-by: Hongyan Xu <getshell@seu.edu.cn>
+> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> > Cc: Kevin Wolf <kwolf@redhat.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+> > Cc: Hongyan Xu <getshell@seu.edu.cn>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> > v2:
+> > - Drop FDYieldUntilData altogether [Kevin]
+> > - Drop the comment, doesn't feel as helpful now [myself]
+> > ---
+> >  util/qemu-coroutine-io.c | 20 +++++---------------
+> >  1 file changed, 5 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/util/qemu-coroutine-io.c b/util/qemu-coroutine-io.c
+> > index 364f4d5abf..720d27d737 100644
+> > --- a/util/qemu-coroutine-io.c
+> > +++ b/util/qemu-coroutine-io.c
+> > @@ -65,28 +65,18 @@ qemu_co_send_recv(int sockfd, void *buf, size_t bytes, bool do_send)
+> >      return qemu_co_sendv_recvv(sockfd, &iov, 1, 0, bytes, do_send);
+> >  }
+> >  
+> > -typedef struct {
+> > -    AioContext *ctx;
+> > -    Coroutine *co;
+> > -    int fd;
+> > -} FDYieldUntilData;
+> > -
+> >  static void fd_coroutine_enter(void *opaque)
+> >  {
+> > -    FDYieldUntilData *data = opaque;
+> > -    aio_set_fd_handler(data->ctx, data->fd, NULL, NULL, NULL, NULL, NULL);
+> > -    qemu_coroutine_enter(data->co);
+> > +    qemu_coroutine_enter((Coroutine *)opaque);
+> >  }
+> >  
+> >  void coroutine_fn yield_until_fd_readable(int fd)
+> 
+> Please update the doc comment in include/qemu/coroutine.h to say that
+> yield_until_fd_readable() may be interrupted by re-entering the
+> coroutine early and the function will return immediately. This behavior
+> is part of the API.
+
+I'll add a comment.
+
+But just to mention after the bigger series, I'll likely remove this API
+too.
+
+Thanks,
+
+> 
+> >  {
+> > -    FDYieldUntilData data;
+> > +    AioContext *ctx = qemu_get_current_aio_context();
+> >  
+> >      assert(qemu_in_coroutine());
+> > -    data.ctx = qemu_get_current_aio_context();
+> > -    data.co = qemu_coroutine_self();
+> > -    data.fd = fd;
+> > -    aio_set_fd_handler(data.ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
+> > -                       &data);
+> > +    aio_set_fd_handler(ctx, fd, fd_coroutine_enter, NULL, NULL, NULL,
+> > +                       (void *)qemu_coroutine_self());
+> >      qemu_coroutine_yield();
+> > +    aio_set_fd_handler(ctx, fd, NULL, NULL, NULL, NULL, NULL);
+> >  }
+> > -- 
+> > 2.56.0
+> > 
+> 
 
 -- 
 Peter Xu
-
 
