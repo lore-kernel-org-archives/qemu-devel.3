@@ -1,49 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFFC606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF0E606A321
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=rl8ynk3c
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=iL0YtPRA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp96-0002kL-MP; Fri, 27 Nov 2026 01:09:20 -0500
+	id 1xWp6q-0005Kc-92; Fri, 27 Nov 2026 01:07:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7m-0006aO-VQ; Fri, 27 Nov 2026 01:08:02 -0500
+ id 1xWp6L-00048e-Mq; Fri, 27 Nov 2026 01:06:29 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7i-0006Fg-GC; Fri, 27 Nov 2026 01:07:56 -0500
+ id 1xWp6J-0001zp-Tm; Fri, 27 Nov 2026 01:06:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=bNILwuzYSoBJWUOZip1MPM66tSmcFoQRvTFUN8XnegE=;
+ t=1795759047; bh=eQD4MC0a7ibvoGPvhRGeS4OkPSt1kW4oMH1XLzoCtis=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rl8ynk3cdaVds4MyRtNc4jfd/P7L318Yjrr0X5XXv6h6HyVgGJUSKImIxW5h1RSde
- x07TkOtA7hAKxSTLxdCDvwfMiQmX/jtmMAFjBdnQ6jtgH/BjrDqt52uACSJ16U5eLK
- lEESJxshOXwIbiwqr3O883uNJ35EwGxHb1xJAcosN3BatsagOMmKNN/OwrtVIz4bFS
- xPG8j4IBJfbCMf3DqvhIzE031dSI5twvUAvOS5m8eKZ1Z5mY22PJgeN/zuc0RcY1iu
- Jh8iDh90XBYFcpLUTkRcv2Rcq3mck3wlKcLm9uoiXqf0MVe4bpaAjj38qFdWKvRDcw
- I+PnnMnCzmdVg==
+ b=iL0YtPRAdIB2bHHpSUIEdWMmoKLn0b8svsuLYGKjUwJuqG3B7OaIpeBSDCSssL1E7
+ WChOLr/fsP9guEuuI8ZZ0MkD1gLy4Yd/GRE/oL64ITMVHw6qS8ojKM/XrdIbhiEkqs
+ GNNJg1bH5RlPIPVEnoR1RKIoBE1PhSJUNSlKhqqpUvkYet9ICpGSa/qllRC2HVwkt4
+ 9RTnONTcCp0qGd7UIcrJ5wj7dgljoQX21bMmJVlksw/A8n8Hz60CCMJWVatAPZT5SW
+ 5LI8Wi0dwFtZCw1kHZ93FtCZG0arhef0PbNCGkqEaH/O9x4uUR+So2y9heIQ9+KHai
+ SqGBbj9SO1VWQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2062A1EA367;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 20A1F1EA35A;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1DF70469992;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1E73D469985;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 05A57CF31C; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id 079D0CF302; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 117/152] hw/scsi: validate IU buffer bounds in
- vscsi_preprocess_desc()
-Date: Fri, 27 Nov 2026 08:54:15 +0300
-Message-ID: <20261127055709.39630-54-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, malike <malike@kylinos.cn>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 104/152] block/bochs: validate bitmap size and
+ compute extent_blocks after validation
+Date: Fri, 27 Nov 2026 08:54:02 +0300
+Message-ID: <20261127055709.39630-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -69,125 +67,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+From: malike <malike@kylinos.cn>
 
-cdb_offset and local_desc values are dependent on the guest. If the value
-is large enough, it can lead to an out-of-bounds read in vscsi_fetch_desc().
+bochs_open() computes bitmap_blocks using the formula
+"1 + (le32_to_cpu(bochs.bitmap) - 1) / 512".  le32_to_cpu() returns
+uint32_t, so when bochs.bitmap is zero the subtraction wraps to
+UINT32_MAX (0xFFFFFFFF) in unsigned arithmetic, yielding
+bitmap_blocks = 8388608 instead of 1.
 
-Add an 'avail' constant in vscsi_preprocess_desc() representing the number of
-bytes available in srp_cmd.add_data[] and use it to prevent out-of-bound reads.
+The bitmap field is read directly from the on-disk image header and was
+never validated.  The overflowed bitmap_blocks propagates into
+seek_to_sector()'s bitmap_offset calculation, causing reads to target
+wrong offsets and return I/O errors or incorrect data.
 
-Make all callers of vscsi_preprocess_desc() check its return value and
-handle failure accordingly.
+Add an explicit zero check for bochs.bitmap before the formula.
 
-Fixes: CVE-2026-132127
-Fixes: 8ca8a17c9a16 (pseries: rework PAPR virtual SCSI)
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4162
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260819095855.115823-1-rathc@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-(cherry picked from commit 8a91c8327cc8ffe0291af8f7d2970b7e2d6239ed)
+Also move the extent_blocks calculation to after the existing
+extent_size validation.  The same "1 + (x - 1) / 512" pattern applies
+to extent, but extent==0 is already caught by the "extent_size <
+BDRV_SECTOR_SIZE" check; the calculation is moved after that check for
+clarity and robustness, and uses the already-validated s->extent_size
+instead of re-reading the header field.
+
+Cc: qemu-stable@nongnu.org
+Fixes: a8753c3466dc ("Bochs disk image support")
+Signed-off-by: malike <malike@kylinos.cn>
+Message-ID: <20261014033419.236057-1-malike@kylinos.cn>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit e777dac72518c20d8780e119fb5695c169e9bda4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-index 7ec780da79e..33f9e9c05dc 100644
---- a/hw/scsi/spapr_vscsi.c
-+++ b/hw/scsi/spapr_vscsi.c
-@@ -484,6 +484,8 @@ static int data_out_desc_size(struct srp_cmd *cmd)
- static int vscsi_preprocess_desc(vscsi_req *req)
- {
-     struct srp_cmd *cmd = &req_iu(req)->srp.cmd;
-+    /* bytes available for descriptors behind srp_cmd.add_data */
-+    const unsigned avail = SRP_MAX_IU_LEN - offsetof(struct srp_cmd, add_data);
+diff --git a/block/bochs.c b/block/bochs.c
+index bfda88017d9..7a8091d47d9 100644
+--- a/block/bochs.c
++++ b/block/bochs.c
+@@ -167,8 +167,13 @@ static int bochs_open(BlockDriverState *bs, QDict *options, int flags,
  
-     req->cdb_offset = cmd->add_cdb_len & ~3;
+     s->data_offset = le32_to_cpu(bochs.header) + (s->catalog_size * 4);
  
-@@ -498,16 +500,35 @@ static int vscsi_preprocess_desc(vscsi_req *req)
-     case SRP_NO_DATA_DESC:
-         break;
-     case SRP_DATA_DESC_DIRECT:
-+        if (req->cdb_offset + sizeof(struct srp_direct_buf) > avail) {
-+            fprintf(stderr,
-+                    "vscsi_preprocess_desc: direct desc out of bounds\n");
-+            return -1;
-+        }
-         req->total_desc = req->local_desc = 1;
-         break;
-     case SRP_DATA_DESC_INDIRECT: {
--        struct srp_indirect_buf *ind_tmp = (struct srp_indirect_buf *)
--                (cmd->add_data + req->cdb_offset);
-+        struct srp_indirect_buf *ind_tmp;
-+
-+        if (req->cdb_offset + sizeof(struct srp_indirect_buf) > avail) {
-+            fprintf(stderr,
-+                    "vscsi_preprocess_desc: indirect desc out of bounds\n");
-+            return -1;
-+        }
-+        ind_tmp = (struct srp_indirect_buf *)(cmd->add_data + req->cdb_offset);
- 
-         req->total_desc = be32_to_cpu(ind_tmp->table_desc.len) /
-                           sizeof(struct srp_direct_buf);
-         req->local_desc = req->writing ? cmd->data_out_desc_cnt :
-                           cmd->data_in_desc_cnt;
-+
-+        /* desc_list[] entries must also fit inside the IU buffer */
-+        if (req->local_desc * sizeof(struct srp_direct_buf) >
-+            avail - req->cdb_offset - sizeof(struct srp_indirect_buf)) {
-+            fprintf(stderr,
-+                    "vscsi_preprocess_desc: local_desc out of bounds\n");
-+            return -1;
-+        }
-         break;
-     }
-     default:
-@@ -725,7 +746,11 @@ static void vscsi_inquiry_no_target(VSCSIState *s, vscsi_req *req)
-     memcpy(&resp_data[8], "QEMU    ", 8);
- 
-     req->writing = 0;
--    vscsi_preprocess_desc(req);
-+    if (vscsi_preprocess_desc(req) < 0) {
-+        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-+        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
-+        return;
++    if (le32_to_cpu(bochs.bitmap) == 0) {
++        error_setg(errp, "Bitmap size must not be zero");
++        ret = -EINVAL;
++        goto fail;
 +    }
-     rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
-     if (rc < 0) {
-         vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-@@ -775,7 +800,12 @@ static void vscsi_report_luns(VSCSIState *s, vscsi_req *req)
-         i += 8;
++
+     s->bitmap_blocks = 1 + (le32_to_cpu(bochs.bitmap) - 1) / 512;
+-    s->extent_blocks = 1 + (le32_to_cpu(bochs.extent) - 1) / 512;
+ 
+     s->extent_size = le32_to_cpu(bochs.extent);
+     if (s->extent_size < BDRV_SECTOR_SIZE) {
+@@ -188,6 +193,8 @@ static int bochs_open(BlockDriverState *bs, QDict *options, int flags,
+         goto fail;
      }
  
--    vscsi_preprocess_desc(req);
-+    if (vscsi_preprocess_desc(req) < 0) {
-+        g_free(resp_data);
-+        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
-+        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
-+        return;
-+    }
-     rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
-     g_free(resp_data);
-     if (rc < 0) {
-@@ -823,7 +853,10 @@ static int vscsi_queue_cmd(VSCSIState *s, vscsi_req *req)
-         req->writing = (n < 1);
- 
-         /* Preprocess RDMA descriptors */
--        vscsi_preprocess_desc(req);
-+        if (vscsi_preprocess_desc(req) < 0) {
-+            scsi_req_cancel(req->sreq);
-+            return 1;
-+        }
- 
-         /* Get transfer direction and initiate transfer */
-         if (n > 0) {
++    s->extent_blocks = 1 + (s->extent_size - 1) / 512;
++
+     if (s->catalog_size < DIV_ROUND_UP(bs->total_sectors,
+                                        s->extent_size / BDRV_SECTOR_SIZE))
+     {
 -- 
 2.47.3
 
