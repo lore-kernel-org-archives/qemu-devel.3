@@ -1,99 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457C6606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98707606A338
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Id8NcrQe
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ovq1T8UV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWzb6-0006CX-5A; Fri, 27 Nov 2026 12:18:56 -0500
+	id 1xWzdW-00012E-VM; Fri, 27 Nov 2026 12:21:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWzb1-00066t-Vd
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:18:52 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xWzdU-0000zV-W9
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:21:25 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWzaz-0006ql-Se
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:18:51 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-67be1e468a8so7954302d50.0
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:18:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795799928; cv=none;
- d=google.com; s=arc-20260327;
- b=ZFZsCHXb7js2JRMCO75y8IZQ1gxAZ/nOcRaRBrDLAWcjMnY6qUo0QXiEwTrMWBcNbR
- 4IMECAD40cmEjCuX65TUmL90U6NhZzVYpLxQjCK2CzRw25yv4Z54af7WOTT07LBK4wjz
- M7aSj3XaXb/HRW6deMDNbu+/rWX+ctQiJDkp5f88nnzc2/Bk1FZqqJhB5lTco5Cm+TcD
- DH2t8wd8zTu4yQ7/3om7W50gVXfxkcTafMuRaHEGW9bv565iyI3n6KSY2sWW5iNZiTdj
- 5wKHTDrqMpQOXJig6w59qvG+/hkxHczslotQ1Lfwnmh6sSonCu30qdfhE3tMSlUHM2xX
- YDxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DkExGWsAVhbP89rZ5UXR8iSrPhkB24HeUdkibJZMJfo=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=FrJB0R9bucWDq8fOxqS2v9Rvs/bD8Fkx/KCIKnwKdeUeWCnZIUY6e/9hWu1En1FxBK
- O0NrTLCrR58ZIecwHjgK71uLMn2DPO5nnfEilOxLyB9Ze1Gjlgy9RJxwvnE1rc1VIS95
- 85SmvTt2pRhr5v0XF1rWgwrrr9XqjjKFlgIMTMLD1xulYOwjUYA9vJESFi7RajzgTe9d
- xlxs1FomPeHXAzl7/ditIVwd6+xhaKcDu42W4xcO862dPrb4Lnv/LR1Y9DHBP/hTYwwU
- pEBTRvLqZRpEWcayeRv8vKcw5h7KvTt46F5E1G5CkxfIPbfov4FL6c7XTJadFPE3e9FJ
- GY8g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xWzdS-0006bf-J5
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:21:24 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4bb72b44a97so71820115e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:21:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795799928; x=1796404728; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=DkExGWsAVhbP89rZ5UXR8iSrPhkB24HeUdkibJZMJfo=;
- b=Id8NcrQek0do8eSylcpA9AD3lHg3ORo8VH/KMQrVJ7iq61JtRZbxUfuzLbdWDrvTes
- wBh8Q2R/Kl3jv3JZywJZc4mxBEK8/4QOUP245kcPMDQ3xuuNCCmHhspUDMyTEVw3mMhP
- A4N7MjNM2iapYOLpvoZIIq+yKdX//4Uf0gb3rHl7dU7OrxEfuLfFD58hZqfVJ7woXPU/
- CdMfsfk+NtLyjMMZOw7+pqtmr6o08XMs0KL1fTiBtBjM/kubYiL1ZWbFOqKw4M7xHIF2
- R3jvKivHIICVWtEmSvyfyHdKfDSHD82SkJYWXfbUtLH05rH03oTSQ6Bj6fgckM2Wr3GE
- 0K3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795799928; x=1796404728;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1795800081; x=1796404881; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=DkExGWsAVhbP89rZ5UXR8iSrPhkB24HeUdkibJZMJfo=;
- b=IGijG9hyQO5SkM0gSKFoW2AxpK33LzAFNagFU3TrHqsxQdbp8KbneXr43PWZjIwjgM
- 3Ky88Ha/uIPOzeYcBRBazl+9F7ebX8HXmGGJ2Cmm7yD1a0mWqDuM8Q5bJRGTNXxuSNZe
- RNQJW7CZsOUsat6wqG6RWxZWbMxSStziK2vKD/8MTti0RxBT5tk2HHfcv/chSLFai95b
- /OTx4yByElULn0A0KiiYbCj1NbQ54Qd3cVhPr5HofwjeVT6ZSWHA7Xj6iKtMvwJxMi1g
- lRRwc1osupZDcKcWkaPK5oGxu6GzfMGVED3SLnITvA6pVmORwdG8RYNEddDMGMDrScG1
- Y5yA==
-X-Gm-Message-State: APuU4Z/OFV5ok4pFzVBGT9PsdhgFRT7maAl7C7EiZMc003RQuzCEQsvf
- m/o5asI2zRnDmrzHeQTYtkiWQAYBwkgan4Uz7R7AcLf8puSJjIawFNcncGaIEWRDOTNC2+QMQYR
- Ff5aXQxU0u3BPGHz09d9yl6ogpyxX4O2y8T1YkDbLJg==
-X-Gm-Gg: AZFdTZfPxCKoQPSG9QeHlZkWezwZuLaAC9JWT/xWCNAKzvW+MIv2V706QZcgevo/ee5
- UHNL+GK7D9x3ryWTbtz8aCdyChqOVkpkYH+OM4Y/Z5H7mbCedlWxpeCxbsJT0P5lNPeCK9lSAAS
- L1DpYlLP6c5t1h/JqkL/ip1EP9H1b9TA4O2EP/YxIdbbh+awX3z+UIdH7MsGwkL3dXzVpBIUH1L
- orB4uXg66DF7hXkRmLyDRRaNOxB0TqZri+AaZ8fkHZMadiINf0YkagjuSK6OhCYrs5AikOTUIYN
- toQ8fC5bPUKyklhrvBpyW7CnvEkng2NQoQvqBQlwE14cyVMfyVkzIt4lsn4r5abKwlvCYfaM/qI
- iMUNXuWhCdrlV2oT8xi4rCXL57Ghezezybz6a9CEkOsjQYdeJHo9lBb/7TBRM1QrD3A8OD4DS0Z
- WZMgffTp29NJIy6PDQ6fND
-X-Received: by 2002:a05:690e:169b:b0:67c:1ebe:3850 with SMTP id
- 956f58d0204a3-67df42bb2dcmr11115904d50.12.1795799928447; Fri, 27 Nov 2026
- 09:18:48 -0800 (PST)
+ bh=DmB8Ngrm60cArqmJc2FvpzPwFdkZqNBDPG+fqVqHD4c=;
+ b=ovq1T8UVqo7KyV/YQDG0ID9+7EFaRI4qlNDSlS6XisBMeO0OXU7n5eqiyQH4pdjSjr
+ syKNvEkDIOwD7Exg04JUo+7weae1fv7Pf6Z23eUFugeLMgQnSuaAUoIyYxs1/x+PfY6F
+ ROzWCMcyq0jR330vH3Pt337+tUVzrCfbYJF3S7KoTbfbpc8lJbotM5AooZPhM3F/4viG
+ puWzQy8XJT2XGggYzwXx7o8+f4CPg+Wpk6ByEpUSO9Lqlf4/GpbhducQI4XfCAdorQui
+ sTyGMupFwtUOjjsvNTa+GKgtK88rmTMGsWv/zEAFd33v5Qp0JNl/1yGcWUocUcdRGmyt
+ OYOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795800081; x=1796404881;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=DmB8Ngrm60cArqmJc2FvpzPwFdkZqNBDPG+fqVqHD4c=;
+ b=g1Gu8cMoHb1cGp9BMBZeZ2tREOAhqIUP9c6qVo25Ivm94nGFTcMYJyP0Ulrc58zy7P
+ syoAOamZVpXwO7uAFGUxwqzw4LdXQ6otfwCbORX/ZX0vyx7KBq5Ssqgrc3tt8rJhKZdR
+ OCzm0x6jz09HIhn6lIs/tedhac1z1rwIp0TB/tMNJHRpdLjgW96wszZc68M4UEiFWVNS
+ JgceIugLrB+oxxd8to48joq1djxgXUWWCVkGwvWXqzJxHhu7fah+4XDPZYcSHbpfuhYY
+ 5H4fxi4kPKgL2dC+7f97LQOYhyihUDEKTGJLl231YjF8I2Omh9aBrHinaRycbMCbSSD7
+ VK1Q==
+X-Gm-Message-State: APuU4Z+YyhbFcViOknJgh0eZDtyZqGlGCO7J13vf1KZF3XkRmw5IRo28
+ J6Sc3uL1MXVZQyYqD+RKdQuNi7gD7TQ8NamPF3AlveIKdxHa+cpRzF6cWk1m3ZmiwtE=
+X-Gm-Gg: AZFdTZc+kA1Rb+4b/BLMBWQQRg8Xva9mu87fb+H5PQ6xVYaqtNAyei2soF5upoaPl56
+ aR6fYRZKXrY39rCi8bMOeILzAzog4Yx7Lba55792r/A1Oy1fQYEmw3u9jSWlWIVUuISN/wrbkoH
+ QfpdLMdg38Xjv+EqrMImV3NXRmg53HLmb6ra7wUd9rlXhgmjtaKIi8/6K3f7Fg4xIUd3mUfFZlo
+ OTZE+1z5K3uyVOWLHw+5hWIxoGziwXqE2MGC9MvsUBgJt9y96t1YSLjq9vRtDe8cM/9VXJyeUx6
+ Qk5CmMBx0ffUBmB9XnjkO4oGVf7pM4qH0OKjc68JePE1ut72gQlBdlWywvJXZIw4Wlkc9uG6xd9
+ B4VHds7snV7tZ5gdQ1mBKVLDEVtuqUtNb2rYjsZ7IVQZcU+Nr1ynqwIv1ZvWsYlpD43j0szOZS6
+ +HUvEnE3pcVnPt/FtkcgAILRNk+A0a8jyquiYWp4hhjrav+OSyDeuqfQnBE2pfAiaa9r6uQdBZ0
+ HOJ8g6TcrzcuoCWITuGQsX1rme1UHLIy8R3UbyBankt3oiaYpWy6XgzJsU5R+fxpaWuGC0zxtDw
+ CRQR3mW7L4Efpt01vcEEQrfVlfeT6szT/W7me5yjrKgRdiINPg==
+X-Received: by 2002:a05:600c:a11:b0:4a2:e0c:2b0a with SMTP id
+ 5b1f17b1804b1-4bb888120famr517529795e9.16.1795800080792; 
+ Fri, 27 Nov 2026 09:21:20 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb884865a2sm735619755e9.3.2026.11.27.09.21.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Nov 2026 09:21:19 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B766F5F8CD;
+ Fri, 27 Nov 2026 17:21:18 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Maximilian Zimmermann <maxz@spacecubics.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH 3/3] tests/functional/arm: Add SC-OBC Module A1 test
+In-Reply-To: <20261127-add-scobc-a1-board-v1-3-b572280dcde1@spacecubics.com>
+ (Maximilian Zimmermann's message of "Fri, 27 Nov 2026 11:13:36 +0900")
+References: <20261127-add-scobc-a1-board-v1-0-b572280dcde1@spacecubics.com>
+ <20261127-add-scobc-a1-board-v1-3-b572280dcde1@spacecubics.com>
+User-Agent: mu4e 1.14.5-pre2; emacs 30.1
+Date: Fri, 27 Nov 2026 17:21:18 +0000
+Message-ID: <87a4mutckx.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261030194318.319310-1-richard.henderson@linaro.org>
- <20261030194318.319310-10-richard.henderson@linaro.org>
-In-Reply-To: <20261030194318.319310-10-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Nov 2026 17:18:36 +0000
-X-Gm-Features: Aa3M54rxGfqHeCqJI5HNjHlsMvrEjtYkP6DYPk23C0_ilfzP6TLxhR_jlyXQKxI
-Message-ID: <CAFEAcA_s9K3rwbA15CGJ9TFJnhDWGt5JNEQ+1479wu97oi14Yg@mail.gmail.com>
-Subject: Re: [PATCH 9/9] target/arm: Use tcg_gen_goto_jc3_i64 for aa64 branches
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,35 +113,97 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 30 Oct 2026 at 19:44, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Maximilian Zimmermann <maxz@spacecubics.com> writes:
+
+> Add a functional test for the scobc-a1 machine, so that regressions in
+> the board or its console UART are caught.
 >
-> Assuming FEAT_BTI hasn't needed a page-table lookup to
-> determine the BTYPE for the destination, we can compute
-> the tbflags for the target.  Pass all that to goto_jc3.
+> The test boots the Zephyr v4.5.0 hello_world sample built for the
+> scobc_a1 board directly into HRMEM and waits for the boot banner and the
+> greeting on the console UART.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Maximilian Zimmermann <maxz@spacecubics.com>
 > ---
->  target/arm/tcg/translate-a64.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  MAINTAINERS                           |  1 +
+>  tests/functional/arm/meson.build      |  1 +
+>  tests/functional/arm/test_scobc_a1.py | 30 ++++++++++++++++++++++++++++++
+>  3 files changed, 32 insertions(+)
 >
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index edbf67b03c..4a56fa70b7 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -566,8 +566,11 @@ static bool gen_indirect_branch(DisasContext *s)
->  {
->      if (s->ss_active) {
->          gen_step_complete_exception(s);
-> -    } else {
-> +    } else if (s->tbflags_invalid) {
->          tcg_gen_lookup_and_goto_ptr();
-> +    } else {
-> +        tcg_gen_goto_jc3_i64(cpu_pc, tcg_constant_i64(s->tbflags.flags2),
-> +                             s->tbflags.flags);
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index bc02f6e1be..3bea382cf4 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1104,6 +1104,7 @@ L: qemu-arm@nongnu.org
+>  S: Maintained
+>  F: hw/arm/scobc_a1.c
+>  F: docs/system/arm/scobc-a1.rst
+> +F: tests/functional/arm/test_scobc_a1.py
+>=20=20
+>  Stellaris
+>  M: Peter Maydell <peter.maydell@linaro.org>
+> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meso=
+n.build
+> index 72c7afc84a..88e567e90e 100644
+> --- a/tests/functional/arm/meson.build
+> +++ b/tests/functional/arm/meson.build
+> @@ -70,6 +70,7 @@ tests_arm_system_thorough =3D [
+>    'realview',
+>    'replay',
+>    'sabrelite',
+> +  'scobc_a1',
+>    'smdkc210',
+>    'stellaris',
+>    'sx1',
+> diff --git a/tests/functional/arm/test_scobc_a1.py b/tests/functional/arm=
+/test_scobc_a1.py
+> new file mode 100755
+> index 0000000000..41d18cfef0
+> --- /dev/null
+> +++ b/tests/functional/arm/test_scobc_a1.py
+> @@ -0,0 +1,30 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots Zephyr on the Space Cubics SC-OBC Module A1
+> +#
+> +# Copyright (c) 2026 Space Cubics Inc.
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
+> +
+> +
+> +class ScobcA1Machine(QemuSystemTest):
+> +
+> +    ASSET_HELLO_WORLD =3D Asset(
+> +        'https://downloads.spacecubics.com/development/scobc-a1/qemu/'
+> +        'zephyr-v4.5.0-hello_world.elf',
+> +        '1578aebe742e4b3fc10af22994de4cd7feda3b54be19486a2efe42c099734c6=
+0')
 
-Why does tcg_gen_goto_jc3_i64() take "flags2, flags" rather than
-the more intuitive "flags, flags2" order ?
+It would be useful to include a manifest/config in the directory and the
+reference hash of the zephyr checkout in case people want to
+re-create/expand the binary.
 
--- PMM
+But otherwise thanks for providing an image for the board model :-)
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+> +
+> +    def test_scobc_a1_hello_world(self):
+> +        self.set_machine('scobc-a1')
+> +        kernel_path =3D self.ASSET_HELLO_WORLD.fetch()
+> +        self.vm.set_console()
+> +        self.vm.add_args('-kernel', kernel_path)
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, '*** Booting Zephyr OS build v4.5=
+.0 ***')
+> +        wait_for_console_pattern(self, 'Hello World! scobc_a1')
+> +
+> +
+> +if __name__ =3D=3D '__main__':
+> +    QemuSystemTest.main()
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
