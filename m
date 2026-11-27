@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5B3606A321
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D225606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=cZ9Tijmk
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=J83WKfm8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp5i-0000Ev-3T; Fri, 27 Nov 2026 01:05:50 -0500
+	id 1xWp5e-0008KG-Vp; Fri, 27 Nov 2026 01:05:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp3R-0005Of-9d; Fri, 27 Nov 2026 01:03:30 -0500
+ id 1xWp2P-0004HJ-Lv; Fri, 27 Nov 2026 01:02:30 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp3P-0003UF-8K; Fri, 27 Nov 2026 01:03:28 -0500
+ id 1xWp2N-0002GR-Bm; Fri, 27 Nov 2026 01:02:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759041; bh=USLnaddJDMmmbEY4S8rshxkNFOpIdlFgl6xNZA+fsVE=;
+ t=1795759041; bh=y8sbNur2Ew8KHsSqZLPIjLrwGRaNLDcX95X48jJypbg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cZ9TijmktoNUp2d/Ainisp4EQRdEGppvqQ8d8+qZhtMzAI7GV9JELKgfb+O6rCU9+
- Vtsj2nB+Xtt55sqfpvjs75IMfoWhOhhYkBrx4eKYIjx87cGAkZ7+RCR/Z5X7RbUXTo
- +jdrf7fdYV+lM73ijFiuSSEb1/Qe5dfjNSmetDdehkmq6wDfnkjvXInmTUpTz+mjt1
- GYWJVSkDE1Xl1A3TEkJEIRwAxkA0esF81BppQTaKpB3oUeDdJxURnaq941hArlc0cl
- WSjbE597XosnIXs/IdHj1KwFeGMq7n8z5I1w74vsbLR/1cKccuIPeOZMRv28pg1ShC
- RxVTe9g9S07Xg==
+ b=J83WKfm8es1Drg90ML5Wl4KSd0+9lGDjivDzfoLIY5GZfoQ3RPZwOSR/XOcDRqZzf
+ Q4ScmSEGdh08MZipOZnPGuUi8ZgR0LZfeaZL+JExzWwJ741Yzgwds+pRdOMKkXluau
+ cqpzhfLAuifV198Ivkv0psz9e9BWd3yBqqgUsNsEaTQRqp0PpY9dd3M4xSXk+oLhvn
+ itnUyrAzqoU1/IACkHBc8wU1duwsp1e9vK0jo0HbLYTYRidQ1ZaPUWafT+7rv510vO
+ /a7H0JbveA72kyInJ6jAYni3/MSbJ/xJvtM21NMAWjlQMbFSGmvRhtyQbtAMzT9JZa
+ rtJUAXr/P5GXg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 83D721EA33A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D73A1EA332;
  Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 81821469966;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B09346995E;
  Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 680CDCF2C4; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ id 5010DCF2B4; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 073/152] net/eth.c: Harden _eth_tcp_has_data()
- against short lengths
-Date: Fri, 27 Nov 2026 08:53:31 +0300
-Message-ID: <20261127055709.39630-10-mjt@tls.msk.ru>
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 065/152] hw/core/qdev-properties-system.c: Don't
+ leak str in set_drive_helper()
+Date: Fri, 27 Nov 2026 08:53:23 +0300
+Message-ID: <20261127055709.39630-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -77,51 +76,73 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In _eth_tcp_has_data() we calculate the length of the rest of the
-packet after the ipv4 header by subtracting the header offset from
-the packet length.  If this subtraction underflows we'll return the
-wrong answer. This shouldn't cause any problems if other layers of
-the code are checking lengths and offsets, but defence-in-depth
-suggests doing a checked-subtraction and returning "has no data"
-if the subtraction underflows.
+In set_drive_helper(), we call visit_type_str() to get the value
+being set as a string.  This is an allocated string, and we're
+supposed to free it, but not all paths out of this function do so.
+In particular, the "block backend already exists, change the attached
+node" code path does not free the string. This shows up as a memory
+leak under the newly added virtio-scsi-tests/replaced-node-size
+qtest:
+
+$ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
+  QTEST_QEMU_BINARY=./qemu-system-i386 \
+  ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
+  ./tests/qtest/qos-test --tap -k \
+  -p /i386/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-scsi-pci/virtio-scsi/virtio-scsi-tests/replaced-node-size
+[...]
+Direct leak of 4 byte(s) in 1 object(s) allocated from:
+    #0 0x55f7744155e3 in malloc (/home/pm215/qemu/build/x86-tgt-san-dbg/qemu-system-i386+0x20115e3) (BuildId: 271ffb42d2e322de7813813d8c6cc85351e48a4f)
+    #1 0x713dbd345b79 in g_malloc /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gmem.c:100:13
+    #2 0x713dbd35b988 in g_strdup /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gstrfuncs.c:323:17
+    #3 0x55f777208021 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
+    #4 0x55f777208021 in qobject_input_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qobject-input-visitor.c:542:12
+    #5 0x55f777204d1c in visit_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qapi-visit-core.c:349:10
+    #6 0x55f774df80d1 in set_drive_helper /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:129:10
+    #7 0x55f774dee9fa in set_drive_iothread /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:224:5
+    #8 0x55f7767cc5c8 in field_prop_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties.c:89:12
+    #9 0x55f7767ec12b in object_property_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../qom/object.c:1562:5
+
+Switch to using g_autofree so that the string is properly freed
+all all exit paths.
 
 Cc: qemu-stable@nongnu.org
-Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
+Fixes: d1a58c176a11b ("qdev: allow setting drive property for realized device")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261109-eth-v2-8-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit b5e0b450fc9abe70bc926c39d9d4bcb726002af4)
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Message-id: 20261105114635.3286252-1-peter.maydell@linaro.org
+(cherry picked from commit fc8bb17e47617cee165469fda64293909d0e8ec3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/net/eth.c b/net/eth.c
-index 54b0a77fa0a..74a705a2679 100644
---- a/net/eth.c
-+++ b/net/eth.c
-@@ -118,10 +118,20 @@ _eth_tcp_has_data(bool is_ip4,
-     uint32_t l4len;
- 
-     if (is_ip4) {
--        l4len = be16_to_cpu(ip4_hdr->ip_len) - IP_HDR_GET_LEN(ip4_hdr);
-+        if (usub32_overflow(be16_to_cpu(ip4_hdr->ip_len),
-+                            IP_HDR_GET_LEN(ip4_hdr), &l4len)) {
-+            /* packet too short for claimed IP header: no data */
-+            return false;
-+        }
-     } else {
-         size_t opts_len = full_ip6hdr_len - sizeof(struct ip6_header);
--        l4len = be16_to_cpu(ip6_hdr->ip6_ctlun.ip6_un1.ip6_un1_plen) - opts_len;
-+        uint64_t l4len_64;
-+        if (usub64_overflow(be16_to_cpu(ip6_hdr->ip6_ctlun.ip6_un1.ip6_un1_plen),
-+                            opts_len, &l4len_64)) {
-+            /* packet too short for claimed IP header: no data */
-+            return false;
-+        }
-+        l4len = l4len_64;
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 5bfdfe1ab9d..52d2590a605 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -119,7 +119,7 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
+     DeviceState *dev = DEVICE(obj);
+     const Property *prop = opaque;
+     void **ptr = object_field_prop_ptr(obj, prop);
+-    char *str;
++    g_autofree char *str = NULL;
+     BlockBackend *blk;
+     bool blk_created = false;
+     int ret;
+@@ -154,7 +154,6 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
      }
  
-     return l4len > TCP_HEADER_DATA_OFFSET(tcp);
+     if (!*str) {
+-        g_free(str);
+         *ptr = NULL;
+         return;
+     }
+@@ -208,8 +207,6 @@ fail:
+         /* If we need to keep a reference, blk_attach_dev() took it */
+         blk_unref(blk);
+     }
+-
+-    g_free(str);
+ }
+ 
+ static void set_drive(Object *obj, Visitor *v, const char *name, void *opaque,
 -- 
 2.47.3
 
