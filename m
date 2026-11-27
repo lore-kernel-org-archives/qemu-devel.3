@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669CB606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C7E606A327
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=xPNcD+MW
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=cMpzZBeY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp91-0001qS-Cc; Fri, 27 Nov 2026 01:09:15 -0500
+	id 1xWp8u-0000uD-6H; Fri, 27 Nov 2026 01:09:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7F-00063r-2m; Fri, 27 Nov 2026 01:07:25 -0500
+ id 1xWp7n-0006ag-Rt; Fri, 27 Nov 2026 01:08:06 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7D-0004Hk-45; Fri, 27 Nov 2026 01:07:24 -0500
+ id 1xWp7j-0006Mn-Qm; Fri, 27 Nov 2026 01:07:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=wesWU/kU52fo1IL7Py6uiHo2NbRDJQHY+4zCP0aQHBI=;
+ t=1795759048; bh=5HwSi+FLpK6mk14uWAx654F15zMRVgUumXct+AxS31I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xPNcD+MWBzEBZarq49P5yfOAaMZRBewAccpYD1XSmyXaOY3Ul2cMyfH8I4mj3Ds6F
- fzL4Q5afguamZCVLA07cs86v8YsOT9NftZvzQnyQGkkZuIx/0e3vzp2V5E+KyhblYV
- 6Vq3cFCw9DEzKjlEcmMn67IIEngzTKErDVDpvp1uPFBWBvcvJkiy8jMtLasM6iTd5O
- fNVaiMrr9YQZdlwAoM/Vmz6nqlq3qfCgmrABKayQuusV7USCbYF3EIf7jUNyQ/oRjH
- YxQmJhS4Qas7sfAFDnp6NdSmCmeCxo2nf4CI93NWGm6QWaaXKKqEx9wicY33CCCgch
- LjI7Cg8NroRJw==
+ b=cMpzZBeYTnxHZW411QS/cx6CrgjeIqkmNruuVeSkpefT3qcyH1+eyLAAXJ6AWxSD9
+ AImoL5wa6WEliFgIrdrz3cBHOfKA3yZ4ZCkRBbmvFHRwgDf9ef7Z9CI94gOIUF4aRb
+ RhlbAiKKuuDRC2yb+vtYNxAMuHBajjRq1IlFB9GoCyTcHO3DOlN/jMlYW2xefvVClK
+ ouXafpQiivw68BHSi1ls44I2mQUTWybagAS5vDyV8dbPwgC4O3KixXYBWQQidr8t5v
+ Rs7iJC/zYC/WgH/jje8LM9/DoeQBCamcpgWCs7MP20U5IjGG2WIHzZUsv387YsAcK+
+ E+lyG+X7MEcfw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 09C221EA362;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2645B1EA368;
  Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0797546998D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 22609469993;
  Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EB564CF312; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ id 086F1CF31E; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 112/152] tests/tcg: fix load/restore for test-avx
- and test-mmx
-Date: Fri, 27 Nov 2026 08:54:10 +0300
-Message-ID: <20261127055709.39630-49-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 118/152] nbd: Refactor structured payload
+ interpretation
+Date: Fri, 27 Nov 2026 08:54:16 +0300
+Message-ID: <20261127055709.39630-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -75,129 +74,67 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Eric Blake <eblake@redhat.com>
 
-If "r"(&result) uses %rsp, which GCC16 seems eager to do,
-the comparison fails because run_test()'s assembly block
-moves %rsp below the red zone.  Use fixed registers instead.
+An upcoming patch wants to reuse the payload of a structured reply
+chunk in further code for additional safety checks on the server's
+response.  It will be easiest if the initial parse converts the
+payload from network order into host order along the way, so that I
+don't introduce subtle endian-specific bugs in that upcoming code. A
+quick audit shows that none of the current callers of
+payload_advance*() were reading a memory location within the payload
+after its initial parse.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 75b2b67e6a950f731fb7c44ff1f48a7ebd455e89)
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20261113223742.2546619-7-eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 369852b536ed817824d757c4f132f71bcc6d74e1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/i386/test-avx.c b/tests/tcg/i386/test-avx.c
-index 80fe363cfc2..bb37f7953d0 100644
---- a/tests/tcg/i386/test-avx.c
-+++ b/tests/tcg/i386/test-avx.c
-@@ -150,9 +150,10 @@ static void run_test(const TestDef *t)
-             "push rbx\n\t"
-             "push rcx\n\t"
-             "push rdx\n\t"
--            "push %1\n\t"
--            "push %2\n\t"
--            "mov rax, %0\n\t"
-+            "push rsi\n\t"
-+            "push rdi\n\t"
-+            "push rsi\n\t" // result
-+            "push rdi\n\t" // fn
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "shr rbx, 8\n\t"
-@@ -165,19 +166,21 @@ static void run_test(const TestDef *t)
-             REG(LOADREG)
-             "mov rax, 0x240[rax]\n\t"
-             "call [rsp]\n\t"
--            "mov [rsp], rax\n\t"
--            "mov rax, 8[rsp]\n\t"
-+            "mov [rsp], rax\n\t" // save rax
-+            "mov rax, 8[rsp]\n\t" // get back result
-             REG(STOREREG)
-             "mov rbx, [rsp]\n\t"
--            "mov 0x240[rax], rbx\n\t"
-+            "mov 0x240[rax], rbx\n\t"  // rax
-             "mov rbx, 0\n\t"
--            "mov 0x270[rax], rbx\n\t"
--            "mov 0x278[rax], rbx\n\t"
-+            "mov 0x270[rax], rbx\n\t"  // rsp
-+            "mov 0x278[rax], rbx\n\t"  // rbp
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "and rbx, 0xff\n\t"
-             "mov 0x2c0[rax], rbx\n\t"
-             "add rsp, 16\n\t"
-+            "pop rdi\n\t"
-+            "pop rsi\n\t"
-             "pop rdx\n\t"
-             "pop rcx\n\t"
-             "pop rbx\n\t"
-@@ -185,9 +188,8 @@ static void run_test(const TestDef *t)
-             "add rsp, 128\n\t"
-             MMREG(STOREMM)
-             YMMREG(STOREYMM)
--            : : "r"(init), "r"(&result), "r"(t->fn)
-+            : : "a"(init), "S"(&result), "D"(t->fn)
-             : "memory", "cc",
--            "rsi", "rdi",
-             "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
-             "mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7",
-             "ymm0", "ymm1", "ymm2", "ymm3", "ymm4", "ymm5",
-diff --git a/tests/tcg/i386/test-mmx.c b/tests/tcg/i386/test-mmx.c
-index 09e5d583ffd..1a640f8bbbf 100644
---- a/tests/tcg/i386/test-mmx.c
-+++ b/tests/tcg/i386/test-mmx.c
-@@ -154,9 +154,10 @@ static void run_test(const TestDef *t)
-             "push rbx\n\t"
-             "push rcx\n\t"
-             "push rdx\n\t"
--            "push %1\n\t"
--            "push %2\n\t"
--            "mov rax, %0\n\t"
-+            "push rsi\n\t"
-+            "push rdi\n\t"
-+            "push rsi\n\t" // result
-+            "push rdi\n\t" // fn
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "shr rbx, 8\n\t"
-@@ -169,19 +170,21 @@ static void run_test(const TestDef *t)
-             REG(LOADREG)
-             "mov rax, 0xc0[rax]\n\t"
-             "call [rsp]\n\t"
--            "mov [rsp], rax\n\t"
--            "mov rax, 8[rsp]\n\t"
-+            "mov [rsp], rax\n\t" // save rax
-+            "mov rax, 8[rsp]\n\t" // get back result
-             REG(STOREREG)
-             "mov rbx, [rsp]\n\t"
--            "mov 0xc0[rax], rbx\n\t"
-+            "mov 0xc0[rax], rbx\n\t"  // rax
-             "mov rbx, 0\n\t"
--            "mov 0xf0[rax], rbx\n\t"
--            "mov 0xf8[rax], rbx\n\t"
-+            "mov 0xf0[rax], rbx\n\t"  // rsp
-+            "mov 0xf8[rax], rbx\n\t"  // rbp
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "and rbx, 0xff\n\t"
-             "mov 0x140[rax], rbx\n\t"
-             "add rsp, 16\n\t"
-+            "pop rdi\n\t"
-+            "pop rsi\n\t"
-             "pop rdx\n\t"
-             "pop rcx\n\t"
-             "pop rbx\n\t"
-@@ -190,9 +193,8 @@ static void run_test(const TestDef *t)
-             MMREG(STOREMM)
- 	    EMMS "\n\t"
-             XMMREG(STOREXMM)
--            : : "r"(init), "r"(&result), "r"(t->fn)
-+            : : "a"(init), "S"(&result), "D"(t->fn)
-             : "memory", "cc",
--            "rsi", "rdi",
-             "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
-             "mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7",
-             "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5",
+diff --git a/block/nbd.c b/block/nbd.c
+index e5e16722ba2..052469b3547 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -578,24 +578,36 @@ err:
+     return rc;
+ }
+ 
++/* Consume a field of payload, while swapping it in place to host-endian. */
+ static inline uint16_t payload_advance16(uint8_t **payload)
+ {
++    uint16_t value = lduw_be_p(*payload);
++    stw_he_p(*payload, value);
+     *payload += 2;
+-    return lduw_be_p(*payload - 2);
++    return value;
+ }
+ 
+ static inline uint32_t payload_advance32(uint8_t **payload)
+ {
++    uint32_t value = ldl_be_p(*payload);
++    stl_he_p(*payload, value);
+     *payload += 4;
+-    return ldl_be_p(*payload - 4);
++    return value;
+ }
+ 
+ static inline uint64_t payload_advance64(uint8_t **payload)
+ {
++    uint64_t value = ldq_be_p(*payload);
++    stq_he_p(*payload, value);
+     *payload += 8;
+-    return ldq_be_p(*payload - 8);
++    return value;
+ }
+ 
++/*
++ * nbd_parse_offset_hole_payload:
++ * Parse a chunk for NBD_REPLY_TYPE_OFFSET_HOLE, updating payload in
++ * place to a host-endian description of the region described.
++ */
+ static int nbd_parse_offset_hole_payload(BDRVNBDState *s,
+                                          NBDStructuredReplyChunk *chunk,
+                                          uint8_t *payload, uint64_t orig_offset,
 -- 
 2.47.3
 
