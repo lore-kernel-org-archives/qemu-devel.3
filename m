@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BB9606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6700606A321
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ASc93gKr
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=WyRYOhaB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWowe-00075W-RC; Fri, 27 Nov 2026 00:56:29 -0500
+	id 1xWp1t-0003i1-VQ; Fri, 27 Nov 2026 01:01:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWowZ-0006q7-34; Fri, 27 Nov 2026 00:56:23 -0500
+ id 1xWp0U-0001Rl-4B; Fri, 27 Nov 2026 01:00:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWowX-0000y8-5Q; Fri, 27 Nov 2026 00:56:22 -0500
+ id 1xWp0Q-00013y-DL; Fri, 27 Nov 2026 01:00:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758873; bh=bRygF0JEd4mR6QSOg1Ezc63baOqb3IHdGkq4DYBqYpw=;
+ t=1795758881; bh=mbm3NUxWrX76quZmFKigbExYGYrslSKiG1RNLE+vCUw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ASc93gKryynf00gez1RNwNVDM/URBMW7bPwC8z5mSTQCB+yb3qcYd03JKA37nHgPp
- bqTjPoHLtPjT+N/D6FXHc1EusX9SOVDBLGtFgJiFvpbzskyumlxC2w0LjL+pGFNDrY
- SBuCk2t+555783ajAl/alIJekoXGpse0kjBet4/gNMbN19cBG4hGsk+KJcPbn5rQIV
- m+X+zr36mDNZMFYxXJTa+TeWw1kMhOAOuSxfjV3oxk90O7yeq2DBr1brewfK6hJdrH
- LPukYF8UIywz0P5FJdJQMpWn3wD+RRpI1ysNz+M63wLJAkctUaeyRPFUfFJMGXeSwr
- 9e3u2Hrf+EdHg==
+ b=WyRYOhaBY3YTbN6zgC+hbfMk67NVecXUpISMd78Q8Nj2UdNEy/yMBy8FOFfjQFB8d
+ VdERTxKcpTYoxDcuQveec5z+azokb86qVFSZZp4YgGeSqi/UhWdgPlUVVtyo3b4yW0
+ sysdMbYN804sJzxLHTPJ13nCA6aZHbsO1vKKh72O2mMIGQOYNl1hvhjjX+6oRpU7iT
+ 5ykHVfqzkDjo+gSK+eds1ZOlTLxdjXCXXqtt2GTY/vpv4TBLLl8uE3VtjmPMiFoIOQ
+ Q5CxRlw3f+y5L5hW1aZls1UD0PNHv6y8yoR8g30AtTBOAsJpwj6QH8OFJ9swXyYezv
+ jFqdNeWa0zqiA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E89B81EA2DB;
- Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 940131EA305;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E6631469918;
- Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 91CA646993F;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D48C9CF23C; Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
+ id 8616ECF28A; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 083/140] hw/nvme: fix fdp reclaim unit accounting
-Date: Fri, 27 Nov 2026 08:53:09 +0300
-Message-ID: <20261127055421.39015-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 122/140] hw/intc/arm_gicv3_cpuif: Don't count a
+ virtual EOI in EOImode 1
+Date: Fri, 27 Nov 2026 08:53:48 +0300
+Message-ID: <20261127055421.39015-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
@@ -67,44 +67,53 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-nvme_do_write_fdp falls back to placement handle zero for a write that
-has no Data Placement directive or where the placement identifier is
-invalid. However, it then passes the invalid placement identifier to
-nvme_update_ruh which results in no update to RUAMW for placement handle
-zero.
+icv_eoir_write() increments ICH_HCR_EL2.EOIcount for a virtual EOI with
+no matching list register, in either EOImode. The VirtualWriteEOIR0()
+and VirtualWriteEOIR1() pseudocode in the GICv3 architecture
+specification only does so in EOImode 0 (ICH_VMCR_EL2.VEOIM clear),
+since in EOImode 1 the DIR write increments EOIcount instead.
 
-Reset the placement identifier along with the handle in the fallback.
+In EOImode 1 an interrupt with no list register is therefore counted
+twice, and KVM running under TCG deactivates an interrupt that its guest
+has yet to deactivate.
 
+Increment EOIcount on EOIR only when EOImode is 0.
+
+Fixes: b3b48f529fe8 ("hw/intc/arm_gicv3: Implement ICV_ registers EOIR and IAR")
 Cc: qemu-stable@nongnu.org
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
-Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit f7d61b4064458372dca0c3b1c2053eac6d311e5c)
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Message-id: 20261119091922.1380805-1-fuad.tabba@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 9b00833dfd9e031e2319c9ea85eeb2b622f80f5b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index b9afa41393d..85bcde58368 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -3713,6 +3713,7 @@ static void nvme_do_write_fdp(NvmeCtrl *n, NvmeRequest *req, uint64_t slba,
-         !nvme_parse_pid(ns, pid, &ph, &rg)) {
-         ph = 0;
-         rg = 0;
-+        pid = 0;
-     }
- 
-     ruhid = ns->fdp.phs[ph];
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index 43831cb9a4e..56419a13ff5 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1617,9 +1617,10 @@ static void icv_eoir_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (idx < 0) {
+         /*
+          * No valid list register corresponding to EOI ID; if this is a vLPI
+-         * not in the list regs then do nothing; otherwise increment EOI count
++         * not in the list regs then do nothing; otherwise increment EOI count,
++         * unless drop and deactivate are split, when the DIR write does so.
+          */
+-        if (irq < GICV3_LPI_INTID_START) {
++        if (irq < GICV3_LPI_INTID_START && !icv_eoi_split(env, cs)) {
+             icv_increment_eoicount(cs);
+         }
+     } else {
 -- 
 2.47.3
 
