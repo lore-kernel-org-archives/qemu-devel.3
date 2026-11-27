@@ -1,150 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10655606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884D5606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=f7PCJltB;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NPRaaJRq
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j/WDh61w
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWzRd-0003xv-Ib; Fri, 27 Nov 2026 12:09:09 -0500
+	id 1xWzTw-0006TJ-Ic; Fri, 27 Nov 2026 12:11:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xWzRb-0003xa-Aa
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:09:07 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xWzTt-0006R5-88; Fri, 27 Nov 2026 12:11:29 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xWzRZ-0006rU-Mu
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:09:06 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ARFp3YR3328703
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:09:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +H/xfE97NggNycROBp/OvUvGFoRXCJdWUH7h17XEsjM=; b=f7PCJltBfUXVOohn
- xUJ/HmJHdQuGtCPuoOxDcMdDia8aBz2EfyjEybEMtxC0X/XYiT36x0PkhBmb6cJN
- zZ/iifrkxiCa3sTX6PCOkXY2lhf6n2mRYYDS/KzszfQ6GViDiXuA8vCl7VKTAO3O
- uksedunddL+WQqaBvLlN3kVSNnILQMxQYqghGKD3Nd2byxS6ed2rP6gYfBfjCBFy
- pRjy6I8MkdTYPO+nio+CVmRCC/DS0OQ4KTrN6g6TBFdGw9ogTwWIVDIPqIbL5H76
- Bb9fEDU/5rG0h7Vg+vX3gYuYqlphp+0iaa2jJL37IS/dvviHE1n63asIZ8+GsXiW
- ycMHZw==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j74ghaacn-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:09:03 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-3846d5f54c1so9045539eec.1
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:09:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795799343; x=1796404143; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+H/xfE97NggNycROBp/OvUvGFoRXCJdWUH7h17XEsjM=;
- b=NPRaaJRqBWyXgs4OboIoaCwpkG3Kz2WUhvZiJFe8N8giHwGeY7v69vdxU82roTsz5q
- VTaFWzZkknNy9+BNw8DNyyDQxgLHO3VUwtjoNourwW0UokBe16xass41w2cQwblQ3WEB
- toPaKApq/SJAq6WQ0/zM48eisHM/u9uoW8D2o8mXb+hknMDBNCBt60Vgfee8nK/YXI7O
- 1oD5GorJ3/+ANDpUgLR/Tx2M0Y+n/hXs7RB4HXwxvLCT5sVz+wVtllPAOOTQPTTnjBhk
- OT6p5ZQSVlgRGecHJ371utO2l26hFNYD0tszPFSY44gf5KVXHpYUozj6Xjep2u9zY+bn
- 6TnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795799343; x=1796404143;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+H/xfE97NggNycROBp/OvUvGFoRXCJdWUH7h17XEsjM=;
- b=cMfaZDjlSxXUOIcb0mOTeZI7ab/UrXHtLunqh+RHoU7NHP++ZzsxwmHu9DEmgOvQer
- QNiyxfgZZuw+7p6dvt5RDuzDbLrvhFqA7P73QP878wLDAHuktVltb7YeQaaPwXSmDYCO
- 5hdtUNuDMMEw0F9jQPYpFH+LtMoyVkoYNFDp8WywoTRpjf0ypVU48nFjwiUHc3oul1AG
- 1UJScfCC861VMM0VmPH9upF2SmpsO5jUOTJmPM6TCEQUYnSjS2knT3aDS1CVHe0WBxlN
- QT0nf8/eqk0QkHh5Spw9rBfi4rFbKlQPT1w5pnCo1dBeR2R61VbgWUjXbL94YdsQQ1/q
- 7hJQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErFavE82mqEt9GVPSFpXLoZdJO5R3JCSYvhDmB6yOWdRQ7aryDQGYt4Bz71/5U44sNAe7B39e+O8+4t+@nongnu.org
-X-Gm-Message-State: APuU4Z/s6Wd1munw1sbgHJhJEW5kvFMOCTsMFLAW4OiTt/SwvFpvqO+N
- FqzwcHVBLD4ms5fEwmKG1XKUHAfUehE2w7rvQ9i1bdUhEckkF9drabH5hbeIO+xbNphebWJ1VPY
- HrtQSprFBk7Qp3QyWX0i02RN/3H5GLY9sQC1cH2PCvVmqT6Yi9plIzNB/NA==
-X-Gm-Gg: AZFdTZdzjTTznhWpd7L/+SoIuAU057GJfAWhQQEEXg643/k8jysdZ1Ru3BPWcio+L+j
- zr3Kuz92yfgNoP9iOWPZfQKtPycsInqf5dDI2j2Xkrr5CZM5jRHjgTdZ8nMh1rYsFV9yENwQnvi
- rLUyCSg9QA9iv840MG0wGVy6cJhH+UI/cEjXOxFX7kQINaSYSOOsloxGkubwm9+TkyZEJf51Sxi
- oFif7TlEzeUdhcMyxH+Nq999lGoxxi/QC2OVu837/7W7DunzCa4wcM7tR75Ti12xzBjmkvuYMZx
- dCsFjZIR7mroDOpKWevlmcxhAmJm5fa1TYCRzxl7ijMMQijdshkAJGQrR+ItFDjCRfBgGLnGEh2
- LDs2SUx6cPNuk7VrFuPKBwV4NfUjXk77HW8DInH04jUNM+UbhEDh7YcIcB07kpu3JhW+CLyYByj
- QuyPjjoCWHmUD8fpnPVjm5KEUcVzPE3wNt9pw14qLao5U=
-X-Received: by 2002:a05:693c:8084:b0:36f:4981:da16 with SMTP id
- 5a478bee46e88-3857073f5ebmr23442297eec.25.1795799342838; 
- Fri, 27 Nov 2026 09:09:02 -0800 (PST)
-X-Received: by 2002:a05:693c:8084:b0:36f:4981:da16 with SMTP id
- 5a478bee46e88-3857073f5ebmr23442276eec.25.1795799342241; 
- Fri, 27 Nov 2026 09:09:02 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-385672ce402sm70051550eec.16.2026.11.27.09.09.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Nov 2026 09:09:01 -0800 (PST)
-Message-ID: <5cd3e56c-297e-469a-af18-b201bb99d032@oss.qualcomm.com>
-Date: Fri, 27 Nov 2026 09:09:00 -0800
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xWzTr-0002GM-Jv; Fri, 27 Nov 2026 12:11:28 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id A30F361E4C;
+ Fri, 27 Nov 2026 17:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DE41F00898;
+ Fri, 27 Nov 2026 17:11:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1795799486;
+ bh=0ObbCwqykZL4ABfElcx07tjA2oOqgRu4hh49n78qtQQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=j/WDh61wXrVEVSizxZVMD2krEJwq48YlEMT04urGhRRBiLabH5WACbtcIP5/MvSTP
+ vp+BYBMCS2n96HeNtuQuXHv0zxqZH8Dvg3d/FR/H9wF18agGRACSzyfGMqgEfoxjp5
+ DKejB9ZSKuh46IpKnv9qXxewlmBA3Fjasuj82mzbUyRwAOk/6L2K9ALhCmNDt6LK9/
+ GqqFP+CpAIUZ7XiEMTfZ2TcmH3czQkcdg8UFTgfqdu9dicWR8ig+87jmiDAeF8ObI/
+ +gy6qVsXVCfOtYsK0zXWZ6chZqL9sQBDEuOzJeIgO8cVIubQeyBowv3PJj/gKjODRm
+ u1n7gdd3lQTtw==
+From: Niklas Cassel <cassel@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: Damien Le Moal <dlemoal@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Jeuk Kim <jeuk20.kim@samsung.com>,
+ Daejun Park <daejun7.park@samsung.com>, Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH v19 02/11] docs/qcow2: add the zoned format feature
+Date: Fri, 27 Nov 2026 18:10:59 +0100
+Message-ID: <20261127171108.3256778-3-cassel@kernel.org>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261127171108.3256778-1-cassel@kernel.org>
+References: <20261127171108.3256778-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] accel/tcg: Factor icount_running_cpu() out
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20261126222530.62175-1-philmd@oss.qualcomm.com>
- <20261126222530.62175-2-philmd@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261126222530.62175-2-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA2OCBTYWx0ZWRfX/7yHRW4Pap+5
- JKbUwx2zuy6KD6bN4/4pZmdBx3lBzXqPxHM3YNKFhGFgdMbuVWrIIEvBS0vah0YyIThiymHUCHC
- nXHoWRenQLgVp30XPF69fzxBdA1foA0=
-X-Proofpoint-GUID: AI8l_QsLAMe9mR3t8gA4jRZQoI40gUCx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA2OCBTYWx0ZWRfX6gC40oivQnsn
- VU9fiztImJkdWdmJH+5x+hqJg9Nn1oUyaJz6hx6t5UuKwb0n8Bqu03zwpS0BQkXM1RCqN3sDbw1
- 7Ck3uBJHcMEmfS5PmroJhY+X5AEiSlF13tNBbJtCJ+k+3rtjIhb3uyq7ghb4AAykYeyntNPw94k
- KBkEdVdLRnckN8gG1boSlerHxg5KdSbSryZ1AI0V5cRldleAb4UAfnjRcsrFWYRUmlFTJhYf9bn
- vIjTcYrVvA7YvGkW1lomrL6Zg/gSuY5acqHm4xazj0Gjn1ipKTLBKPeXgaXLb78f0kxNVhjIIjQ
- FM3FnGEIdzdzJxOllnzSe9hkxSZtE6k1/Q8cyzERwcmdqq3MU98KkvV8O+F6sBl0vI7dcd+zmmL
- zv9Rmapq0HT1m2SlLJry4iEWmUFjDTQMeTQ9dktQ//XcUsCWfszGkC38YhVk/7zRTqKU/mIDZ70
- UPtynWQ7dDU2TQWnyfg==
-X-Authority-Analysis: v=2.4 cv=U5kHnuru c=1 sm=1 tr=0 ts=6b09b92f cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=NromAgFTz8thGiVjJsYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-ORIG-GUID: AI8l_QsLAMe9mR3t8gA4jRZQoI40gUCx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-27_03,2026-11-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 malwarescore=0 suspectscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611270068
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,25 +71,84 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/26/2026 2:25 PM, Philippe Mathieu-Daudé wrote:
-> Extract the running vCPU check from icount_get_raw_locked(),
-> to reuse it in a following commit.
-> 
-> No functional change.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->  accel/tcg/icount-common.c | 23 +++++++++++++++++------
->  1 file changed, 17 insertions(+), 6 deletions(-)
-> 
+From: Sam Li <faithilikerun@gmail.com>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Add the specs for the zoned format feature of the qcow2 driver.
+The qcow2 file then can emulate real zoned devices, either passed
+through by virtio-blk device or NVMe ZNS drive to the guest
+given zoned information.
+
+Signed-off-by: Sam Li <faithilikerun@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ docs/system/qemu-block-drivers.rst.inc | 44 ++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+
+diff --git a/docs/system/qemu-block-drivers.rst.inc b/docs/system/qemu-block-drivers.rst.inc
+index 675daa72f9..70b9b8d1b4 100644
+--- a/docs/system/qemu-block-drivers.rst.inc
++++ b/docs/system/qemu-block-drivers.rst.inc
+@@ -172,6 +172,50 @@ This section describes each format and the options that are supported for it.
+     filename`` to check if the NOCOW flag is set or not (Capital 'C' is
+     NOCOW flag).
+ 
++  .. option:: zone.mode
++
++    If this is set to ``host-managed``, the image is an emulated zoned
++    block device. This option is only valid for emulated zoned device files.
++
++  .. option:: zone.size
++
++    The size of a zone in bytes. The device is divided into zones of this
++    size with the exception of the last zone, which may be smaller.
++    Defaults to ``256 MiB``.
++
++  .. option:: zone.capacity
++
++    The initial capacity value, in bytes, for all zones. The capacity must
++    be less than or equal to zone size. If the last zone is smaller, then
++    its capacity is capped. Defaults to ``zone.size``.
++
++    The zone capacity is per zone and may be different between zones in real
++    devices. QCow2 sets all zones to the same capacity.
++
++  .. option:: zone.conventional_zones
++
++    The number of conventional zones of the zoned device. Defaults to ``0``
++    (all zones are sequential-write-required).
++
++  .. option:: zone.max_active_zones
++
++    The maximum allowed active zones (zones in the implicit open, explicit
++    open, or closed state).
++
++    The max active zones must be less or equal to the number of SWR
++    (sequential write required) zones of the device. Defaults to ``0``,
++    meaning no limit.
++
++  .. option:: zone.max_open_zones
++
++    The maximum allowed open zones (zones in the implicit open or explicit
++    open state). The max open zones must not be larger than the max active
++    zones. Defaults to ``zone.max_active_zones`` if that is set, otherwise
++    ``0`` (no limit).
++
++    If the limits of open zones or active zones are equal to the number of
++    SWR zones, then it is the same as having no limits.
++
+ .. program:: image-formats
+ .. option:: qed
+ 
+-- 
+2.56.1
+
 
