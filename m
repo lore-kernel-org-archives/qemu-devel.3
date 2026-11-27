@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F16606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A46C606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=klWZ1QGm
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=RJ+TzULl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp8e-0007jS-GK; Fri, 27 Nov 2026 01:08:53 -0500
+	id 1xWp8i-0007xu-19; Fri, 27 Nov 2026 01:08:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7q-0006b7-JD; Fri, 27 Nov 2026 01:08:07 -0500
+ id 1xWp6k-0004vA-8L; Fri, 27 Nov 2026 01:06:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7o-0006hs-D9; Fri, 27 Nov 2026 01:08:02 -0500
+ id 1xWp6h-0002Fz-4D; Fri, 27 Nov 2026 01:06:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=9TnpMFOnOdevUZY+te72m3MzgfS+oTQBh85EvP5OCuY=;
+ t=1795759047; bh=xTwlYvt3h0Q5ZIiwyheHxQi1L8KS+ZiB5s6tMnLpl5I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=klWZ1QGm67am9fwFO+x+QF7ndKlWyvPApqB3/lYZsTdxx3ZkAKDo5Wy6FYieoiCsw
- dcdTfqCVyFckN17/PNyy/nGHeSHwgA6fFreWoHyhtURSwuGW9mJ6nnCqOe/Mq6Wlvz
- KhcC9geaKQFXSVtQ2pyJlilh23RqvymSy+ng35YKYna0KoeZWa0E/tX2qIzOQdq1rw
- qgTCvOprhJPl6lwJAJXzoalRlzOYJLGI2AIYmj7rTB37WpcR0nyC7hmbHijnXbQbrd
- a0FzuKEBR/axYyeOZ6kbbbJ5FRA4ewGhCGCLGqhSEsE2n60Lluug7Bu5BGhJ24zItL
- Jbmsby/946+dw==
+ b=RJ+TzULl93PYeky6IkVLNuyZTQdbSfaLNJw35Q8Pkn4XV8kJ0UF/XZSfV9iw3tiGR
+ nJ9Eh9Y8VAzzNltG1vqevrTy8M9BFEd7d2ZuSobC67rQ+Fh7UrXf2DgtZq3p3flEcm
+ DxXfsi1ITPq9gwlgm5r6xoCqjZTQ5mEqSSIOMcDS1Vh5RBY1pOpj1bsYzCFLxHw7Je
+ eUmQkTKC5LtrfW70rHUJ4bE0pF0HXFQJN+pKqqKlWPiDX6hZQBGGBZ4nofMM4bFAOg
+ jpiyiUS+FWeV/yKzPzBd8PvHLmtTPwyHyW/CCSqWdQaEZnYlTTdgNJcMjm5CCSodix
+ 9G2XS79aJpM6w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2A84A1EA369;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E33531EA35C;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 285D3469994;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E0F12469987;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0B563CF320; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id D94BECF306; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 119/152] nbd: Pass back offset/length for all
- structured read replies
-Date: Fri, 27 Nov 2026 08:54:17 +0300
-Message-ID: <20261127055709.39630-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 106/152] block/vhdx-log: Improve sanity checks to
+ avoid OOB accesses with bad images
+Date: Fri, 27 Nov 2026 08:54:04 +0300
+Message-ID: <20261127055709.39630-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -67,132 +67,62 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Eric Blake <eblake@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The NBD spec allows a server that has negotiated structured replies to
-respond in any order among its various reply chunks. Although most
-known servers happen to give replies in sequential order, QEMU must be
-prepared for a server that intentionally returns out-of-order read
-chunks (a malicious server could exploit that in an effort to attempt
-to convince QEMU to expose uninitialized memory to a guest that is
-using the NBD client as storage). Although this patch does not
-actually add any new validation of the server's response chunks, it
-does make it easier for the next patch to do so by providing a
-centralized location in the code.  Now, in
-nbd_co_receive_cmdread_reply(), payload contains a host-endian
-offset+length after either the nbd_co_receive_one_chunk for
-OFFSET_DATA or the nbd_parse_offset_hole_payload() for OFFSET_HOLE.
+The multiplication "hdr->descriptor_count * sizeof(VHDXLogDescriptor)" in
+vhdx_log_hdr_is_valid() can overflow on 32-bit systems, so this function
+could mark bad images as valid when the truncated result is smaller than
+hdr->entry_length. Switch to a division on the right hand side instead to
+avoid the overflow problems.
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20261113223742.2546619-8-eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit b96bec51a5ee3eda9f03b85659abb89b5eb4ef60)
+The second problem is in vhdx_log_read_desc(): desc_sectors is a 32-bit
+value, thus the multiplication "desc_sectors * VHDX_LOG_SECTOR_SIZE" is
+also done with 32 bit arithmetics, and the result is used as "size_t"
+parameter for qemu_try_blockalign(), i.e. the parameter here is also
+only 32 bits on 32-bit systems. Let's add a sanity check here to avoid
+the overflow problem that could lead to trouble later.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3860
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20261111150659.253918-1-thuth@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 95c27a042a78947f92c5b5d95be690e76698db5d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nbd.c b/block/nbd.c
-index 052469b3547..d873892c197 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -786,9 +786,17 @@ static int nbd_parse_error_payload(NBDStructuredReplyChunk *chunk,
-     return 0;
- }
- 
-+/*
-+ * nbd_co_receive_offset_data_payload:
-+ * Helper to nbd_co_do_receive_one_chunk when server replies with
-+ * structured reply to NBD_CMD_READ with an OFFSET_DATA chunk. On
-+ * success, synthesize an NBDStructuredReadHole into @payload
-+ * describing the same region that was populated into @qiov.
-+ */
- static int coroutine_fn
- nbd_co_receive_offset_data_payload(BDRVNBDState *s, uint64_t orig_offset,
--                                   QEMUIOVector *qiov, Error **errp)
-+                                   QEMUIOVector *qiov, void **payload,
-+                                   Error **errp)
- {
-     QEMUIOVector sub_qiov;
-     uint64_t offset;
-@@ -797,6 +805,7 @@ nbd_co_receive_offset_data_payload(BDRVNBDState *s, uint64_t orig_offset,
-     NBDStructuredReplyChunk *chunk = &s->reply.structured;
- 
-     assert(nbd_reply_is_structured(&s->reply));
-+    assert(payload);
- 
-     /* The NBD spec requires at least one byte of payload */
-     if (chunk->length <= sizeof(offset)) {
-@@ -826,6 +835,18 @@ nbd_co_receive_offset_data_payload(BDRVNBDState *s, uint64_t orig_offset,
-     ret = qio_channel_readv_all(s->ioc, sub_qiov.iov, sub_qiov.niov, errp);
-     qemu_iovec_destroy(&sub_qiov);
- 
-+    if (ret == 0) {
-+        /*
-+         * Give the caller a struct describing the same region we
-+         * populated here, to allow for easier followup accounting
-+         * between data and hole reads.
-+         */
-+        NBDStructuredReadHole *synth = g_new(NBDStructuredReadHole, 1);
-+        synth->offset = offset;
-+        synth->length = data_size;
-+        *payload = synth;
-+    }
-+
-     return ret < 0 ? -EIO : 0;
- }
- 
-@@ -867,18 +888,21 @@ static coroutine_fn int nbd_co_receive_structured_payload(
- 
- /*
-  * nbd_co_do_receive_one_chunk
-+ * @qiov is non-NULL for NBD_CMD_READ, NULL for all other commands.
-  * for simple reply:
-  *   set request_ret to received reply error
-- *   if qiov is not NULL: read payload to @qiov
-+ *   if qiov is not NULL: read data to @qiov
-+ *   either way, @payload stays NULL
-  * for structured reply chunk:
-- *   if error chunk: read payload, set @request_ret, do not set @payload
-- *   else if offset_data chunk: read payload data to @qiov, do not set @payload
-- *   else: read payload to @payload
-+ *   if error chunk: read chunk payload, set @request_ret, @payload is NULL
-+ *   else if offset_data chunk and @qiov: read data to @qiov, allocate
-+ *     @payload as NBDStructuredReadHole describing region just populated
-+ *   else: read payload to @payload; caller checks size and contents
-  *
-- * If function fails, @errp contains corresponding error message, and the
-- * connection with the server is suspect.  If it returns 0, then the
-- * transaction succeeded (although @request_ret may be a negative errno
-- * corresponding to the server's error reply), and errp is unchanged.
-+ * If function fails, @errp contains corresponding error message, @payload
-+ * is NULL, and the connection with the server is suspect.  If it returns 0,
-+ * then the transaction succeeded (although @request_ret may be a negative
-+ * errno corresponding to the server's error reply), and errp is unchanged.
-  */
- static coroutine_fn int nbd_co_do_receive_one_chunk(
-         BDRVNBDState *s, uint64_t cookie, bool only_structured,
-@@ -945,7 +969,7 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
- 
-         return nbd_co_receive_offset_data_payload(
-                 s, nbd_request_by_cookie(s, cookie, &error_abort)->offset,
--                qiov, errp);
-+                qiov, payload, errp);
+diff --git a/block/vhdx-log.c b/block/vhdx-log.c
+index 4385a2d4f62..5c20468e1e6 100644
+--- a/block/vhdx-log.c
++++ b/block/vhdx-log.c
+@@ -246,7 +246,7 @@ static bool vhdx_log_hdr_is_valid(VHDXLogEntries *log, VHDXLogEntryHeader *hdr,
+         goto exit;
      }
  
-     if (nbd_reply_type_is_error(chunk->type)) {
-@@ -1093,6 +1117,7 @@ static bool coroutine_fn nbd_reply_chunk_iter_receive(BDRVNBDState *s,
-     return true;
+-    if (hdr->descriptor_count * sizeof(VHDXLogDescriptor) > hdr->entry_length) {
++    if (hdr->descriptor_count > hdr->entry_length / sizeof(VHDXLogDescriptor)) {
+         goto exit;
+     }
  
- break_loop:
-+    assert(payload == NULL || *payload == NULL);
-     qemu_mutex_lock(&s->requests_lock);
-     nbd_request_by_cookie(s, cookie, &error_abort)->coroutine = NULL;
-     s->in_flight--;
+@@ -360,6 +360,10 @@ vhdx_log_read_desc(BlockDriverState *bs, BDRVVHDXState *s, VHDXLogEntries *log,
+     }
+ 
+     desc_sectors = vhdx_compute_desc_sectors(hdr.descriptor_count);
++    if (desc_sectors > UINT32_MAX / VHDX_LOG_SECTOR_SIZE) {
++        ret = -EINVAL;
++        goto exit;
++    }
+     desc_entries = qemu_try_blockalign(bs->file->bs,
+                                        desc_sectors * VHDX_LOG_SECTOR_SIZE);
+     if (desc_entries == NULL) {
 -- 
 2.47.3
 
