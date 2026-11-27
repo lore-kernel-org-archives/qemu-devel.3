@@ -1,53 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A507D606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8F1606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=kU5n6unr
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Ju0GHppR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWpAd-0006qJ-Mo; Fri, 27 Nov 2026 01:10:56 -0500
+	id 1xWp3R-0005Hq-HI; Fri, 27 Nov 2026 01:03:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8m-0000Ef-QI; Fri, 27 Nov 2026 01:09:01 -0500
+ id 1xWp1t-0003lV-AP; Fri, 27 Nov 2026 01:01:53 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8k-0001qN-Qt; Fri, 27 Nov 2026 01:09:00 -0500
+ id 1xWp1r-0000DA-By; Fri, 27 Nov 2026 01:01:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=lhfoyL07LkUGq17Mi9BauBfu3nho4RPC3fTRC4+NMhQ=;
+ t=1795758881; bh=FSqVdN1rE0NV7vdJWRWFnUKFk/KKJqRFA1bDmZRyQq0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kU5n6unrPWdJ+AK1HLe6Nn7nHEEUmn/I8l3x4WztR+VuuN1/jsnUPp9AloO0GP21D
- nWpL6r4cQHIwLg2CXcfKGsjnNyyOxGRNrMeXGQ0KT25XQ9jjAVY5l0wt9CqsMg9qCo
- htG0GB2mbSeOsTgaGZiD3ecTe5LEOrIRn1D1G4IEtRZqIZR3CPO2/L39A4tHuuTHYX
- sz5Q6E3yd/gXXjGe9N+YYsv0GXm933LT/XLZthJYh6o6AUlZCoujH7eT9qAIEAqSpi
- W+/TaAr/28op4s4oLTpcR50Plxw6V10q6XCmAj8Rj+vL9/ayqKlvgkMzcVikwMqdyw
- p66vrFsJeiEhw==
+ b=Ju0GHppRd6U+sKo1sHbWK94bCAbou6cBCgm+JcuV1o5O2orWlpwJzucShmaHD2wdn
+ KnGVl/pc5y4gLV3/AZTRLHVs4+6aXFPMtW7YPV4UdL6vfHrtQR8mNJEF38mDby73MU
+ 4pNujI2dBMkHZytB6HrofvgW9txVnrs2nn1i+Bgp0ktv6DqTLLkXXug+Wr+J8FvU2i
+ nyfyBqIJVMX6h3ApOS1hLJI81y1IZa5XsM9nHbsz/6TEeQ/qKyiTLAoNgN787IS5kT
+ Q3trTHpNkaUnYBXYBiEn6lnSGiuB2BTI3Cjb1B7GNp8vOEXEvjAdTUGzOhceqR5pd+
+ Oeu2bCZaJwphA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 52B041EA372;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E830A1EA315;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 50A0E46999D;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E48BA469955;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 25B84CF332; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id B4FEECF2AA; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 128/152] hw/nvme: advance zone write pointer only
- once the write is committed
-Date: Fri, 27 Nov 2026 08:54:26 +0300
-Message-ID: <20261127055709.39630-65-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 138/140] hw/block/pflash_cfi01: Reject
+ out-of-range blk_offset on load
+Date: Fri, 27 Nov 2026 08:54:04 +0300
+Message-ID: <20261127055421.39015-79-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
-References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,74 +77,41 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-nvme_do_write stages the updated zone write pointer before data is
-mapped. If that fails, the write pointer update is already staged and
-subsequent writes will be rejected if attempted at the original
-position.
-
-Move the staging down.
+A migration stream can set blk_offset beyond the flash storage.
+The write-confirm path would then write past the end of it.
+Check that the pending write block fits in the storage in
+pflash_post_load() and fail the load.
 
 Cc: qemu-stable@nongnu.org
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
-Fixes: 975b64665048 ("hw/block/nvme: refactor zone resource management")
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 7e203726411b7a28b2d020339d6267c7c7d4134e)
+Reported-by: phudd6 & kietvha1 from Viettel Cyber Security
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4388
+Fixes: 284a7ee2e290 ("hw/pflash: implement update buffer for block writes")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20261124185556.81132-4-philmd@oss.qualcomm.com>
+(cherry picked from commit 7dcf2a795503c3f4a5221a3bfe52164ab3d2dc47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 36053f5eb86..886d15920c4 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -3779,7 +3779,7 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
-     uint64_t data_size = nvme_l2b(ns, nlb);
-     uint64_t mapped_size = data_size;
-     uint64_t data_offset;
--    NvmeZone *zone;
-+    NvmeZone *zone = NULL;
-     NvmeZonedResult *res = (NvmeZonedResult *)&req->cqe;
-     BlockBackend *blk = ns->blkconf.blk;
-     uint16_t status;
-@@ -3872,10 +3872,6 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
-         if (status) {
-             goto invalid;
-         }
--
--        if (!(zone->d.za & NVME_ZA_ZRWA_VALID)) {
--            zone->w_ptr += nlb;
--        }
-     } else if (ns->endgrp && ns->endgrp->fdp.enabled) {
-         nvme_do_write_fdp(n, req, slba, nlb);
-     }
-@@ -3883,7 +3879,13 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
-     data_offset = nvme_l2b(ns, slba);
- 
-     if (NVME_ID_NS_DPS_TYPE(ns->id_ns.dps)) {
--        return nvme_dif_rw(n, req);
-+        status = nvme_dif_rw(n, req);
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 124cd3f8247..78dfc9602d4 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -1037,6 +1037,13 @@ static void postload_update_cb(void *opaque, bool running, RunState state)
+ static int pflash_post_load(void *opaque, int version_id)
+ {
+     PFlashCFI01 *pfl = opaque;
++    uint64_t size = pfl->sector_len * pfl->nb_blocs;
 +
-+        if (status != NVME_NO_COMPLETE) {
-+            return status;
-+        }
-+
-+        goto out;
-     }
- 
-     if (!wrz) {
-@@ -3901,6 +3903,11 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
-                                            req);
-     }
- 
-+out:
-+    if (ns->params.zoned && !(zone->d.za & NVME_ZA_ZRWA_VALID)) {
-+        zone->w_ptr += nlb;
++    if (pfl->blk_offset != -1
++        && (pfl->blk_offset >= size
++            || size - pfl->blk_offset < pfl->writeblock_size)) {
++        return -EINVAL;
 +    }
-+
-     return NVME_NO_COMPLETE;
  
- invalid:
+     /*
+      * ROMD mode is not in the VMState; derive it from the migrated
 -- 
 2.47.3
 
