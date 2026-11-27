@@ -1,62 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CA8606A32C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 05:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=BRa6YbNF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001EA606A321
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 05:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWovf-00049A-TE; Fri, 27 Nov 2026 00:55:28 -0500
+	id 1xWovY-0003Yp-Uw; Fri, 27 Nov 2026 00:55:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWovd-000406-Gt; Fri, 27 Nov 2026 00:55:25 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1xWovP-0003N7-MK
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 00:55:12 -0500
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWovb-0000To-Me; Fri, 27 Nov 2026 00:55:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758870; bh=/QLuDRg3OdUo/JRVq5JXXvkJ8GrqRIvir4TdTLIUqGs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BRa6YbNFZ6vDbiqavz7abFbwg3zropQARE7X8U6xFXOF9XJhyVOcm7qk7T3OEVj5+
- HxuNr1Te9hfsjYGeYUupM9X0/wj0WVxYxOL2xIKAFUG2NQVG8O6mncQrmLR4Zc9znf
- ya6H4tztfDGlnLKCLVPSUs8JlILAYVXS4Uy3gz8W6ARWaqyuWCEoTI3mZPcPqmpKo/
- 5waFd3c2zuNyCfvzITKsDnjZAKSnorbbLcRwvLu7zYrFFsioJp98IL6ISjexVS9RTr
- R5wDIXqCzlW7JWnsqH+uTfmEFdBcnJYaVUOJKtRkYAo8IuH3yKRZmGJqFl2d5ft52t
- 1oj7JTZFFKQ+Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DD60E1EA2D1;
- Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DB44946990F;
- Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BD0B3CF22A; Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1xWovM-0007X9-H7
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 00:55:11 -0500
+X-UUID: 0ed814aaea2711f19a56ed5b684f684d-20261127
+X-CTIC-Tags: HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CTE_8B,
+ HR_CTT_MISS
+ HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_SJ_LANG, HR_SJ_LEN
+ HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS
+ HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME, IP_TRUSTED, SRC_TRUSTED
+ SA_TRUSTED, SA_EXISTED, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS
+ CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO
+ GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-O-RULE: Release_Ham
+X-CID-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19, REQID:3497c572-d7dc-4fa8-88b6-a2ce6d5056d1, IP:15,
+ URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+ N:release,TS:10
+X-CID-INFO: VERSION:1.3.19, REQID:3497c572-d7dc-4fa8-88b6-a2ce6d5056d1, IP:15,
+ UR
+ L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+ release,TS:10
+X-CID-META: VersionHash:7db8b62, CLOUDID:1c61cfa7ccd9f1f9d0f98e0d5f9cb703,
+ BulkI
+ D:2611271354534P0EL1QI,BulkQuantity:0,SF:10|66|78|102|123|127|136|865|898,
+ TC:nil,Content:0|15|50|99,EDM:-3|-100,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil
+ ,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:
+ 0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 0ed814aaea2711f19a56ed5b684f684d-20261127
+X-User: zhaoguohan@kylinos.cn
+Received: from ubuntu.. [(116.128.244.171)] by mailgw.kylinos.cn
+ (envelope-from <zhaoguohan@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 1217894549; Fri, 27 Nov 2026 13:54:49 +0800
+From: zhaoguohan@kylinos.cn
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 074/140] hw/net/net_rx_pkt: Check for overflow in
- _net_rx_pkt_calc_l4_csum()
-Date: Fri, 27 Nov 2026 08:53:00 +0300
-Message-ID: <20261127055421.39015-15-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Milan Zamazal <mzamazal@redhat.com>, Khan Zhao <zhaoguohan@kylinos.cn>
+Subject: [PATCH] hw/virtio/vhost-user-scmi: propagate startup errors
+Date: Fri, 27 Nov 2026 13:54:24 +0800
+Message-ID: <20261127055424.79483-1-zhaoguohan@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=124.126.103.232;
+ envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,62 +82,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,UNPARSEABLE_RELAY,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Khan Zhao <zhaoguohan@kylinos.cn>
 
-In _net_rx_pkt_calc_l4_csum() we calculate the number of bytes to run
-the checksum over by subtracting the IP header length from the total
-IP packet size.  This shouldn't underflow if other parts of the code
-have been correctly checking and calculating sizes and offsets, but
-for defence in depth check here, and don't checksum any bytes if we
-would otherwise underflow.
+Return errors from vu_scmi_start() through vu_scmi_set_status() so
+device startup failures reach the caller.
 
-Cc: qemu-stable@nongnu.org
-Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261109-eth-v2-14-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit e4236a7e877be37a676680788dbce72a66eb4307)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Remove the duplicate error message after vhost_dev_init(), which
+already reports initialization errors through errp.
 
-diff --git a/hw/net/net_rx_pkt.c b/hw/net/net_rx_pkt.c
-index 03a35f03154..110496e9c81 100644
---- a/hw/net/net_rx_pkt.c
-+++ b/hw/net/net_rx_pkt.c
-@@ -501,8 +501,10 @@ _net_rx_pkt_calc_l4_csum(struct NetRxPkt *pkt)
-             csl = be16_to_cpu(pkt->l4hdr_info.hdr.udp.uh_ulen);
-             trace_net_rx_pkt_l4_csum_calc_ip4_udp();
-         } else {
--            csl = be16_to_cpu(pkt->ip4hdr_info.ip4_hdr.ip_len) -
--                  IP_HDR_GET_LEN(&pkt->ip4hdr_info.ip4_hdr);
-+            uint16_t iplen = be16_to_cpu(pkt->ip4hdr_info.ip4_hdr.ip_len);
-+            uint16_t iphdr_len = IP_HDR_GET_LEN(&pkt->ip4hdr_info.ip4_hdr);
-+
-+            csl = (iplen >= iphdr_len) ? (iplen - iphdr_len) : 0;
-             trace_net_rx_pkt_l4_csum_calc_ip4_tcp();
-         }
+Signed-off-by: Khan Zhao <zhaoguohan@kylinos.cn>
+---
+ hw/virtio/vhost-user-scmi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+index ad5c176c1e2..1dd29ff0008 100644
+--- a/hw/virtio/vhost-user-scmi.c
++++ b/hw/virtio/vhost-user-scmi.c
+@@ -125,7 +125,7 @@ static int vu_scmi_set_status(VirtIODevice *vdev, uint8_t status)
+     }
  
-@@ -517,9 +519,9 @@ _net_rx_pkt_calc_l4_csum(struct NetRxPkt *pkt)
-             struct ip6_header *ip6hdr = &pkt->ip6hdr_info.ip6_hdr;
-             size_t full_ip6hdr_len = pkt->l4hdr_off - pkt->l3hdr_off;
-             size_t ip6opts_len = full_ip6hdr_len - sizeof(struct ip6_header);
-+            uint16_t plen = be16_to_cpu(ip6hdr->ip6_ctlun.ip6_un1.ip6_un1_plen);
- 
--            csl = be16_to_cpu(ip6hdr->ip6_ctlun.ip6_un1.ip6_un1_plen) -
--                  ip6opts_len;
-+            csl = (plen >= ip6opts_len) ? (plen - ip6opts_len) : 0;
-             trace_net_rx_pkt_l4_csum_calc_ip6_tcp();
-         }
- 
+     if (should_start) {
+-        vu_scmi_start(vdev);
++        return vu_scmi_start(vdev);
+     } else {
+         int ret;
+         ret = vu_scmi_stop(vdev);
+@@ -260,8 +260,6 @@ static void vu_scmi_device_realize(DeviceState *dev, Error **errp)
+     ret = vhost_dev_init(&scmi->vhost_dev, &scmi->vhost_user,
+                          VHOST_BACKEND_TYPE_USER, 0, errp);
+     if (ret < 0) {
+-        error_setg_errno(errp, -ret,
+-                         "vhost-user-scmi: vhost_dev_init() failed");
+         do_vhost_user_cleanup(vdev, scmi, vhost_vqs);
+         return;
+     }
 -- 
-2.47.3
+2.43.0
 
 
