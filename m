@@ -1,46 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82A5606A327
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BB9606A321
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=EhRA/sLB
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ASc93gKr
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWoz2-0004mm-Se; Fri, 27 Nov 2026 00:58:58 -0500
+	id 1xWowe-00075W-RC; Fri, 27 Nov 2026 00:56:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWoyq-0004f8-Bm; Fri, 27 Nov 2026 00:58:45 -0500
+ id 1xWowZ-0006q7-34; Fri, 27 Nov 2026 00:56:23 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWoyo-0005ye-J7; Fri, 27 Nov 2026 00:58:44 -0500
+ id 1xWowX-0000y8-5Q; Fri, 27 Nov 2026 00:56:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758877; bh=ohryyHM8xi8veBuXZW0Ev9s9KUmmeGrqP4MHu9NnNWw=;
+ t=1795758873; bh=bRygF0JEd4mR6QSOg1Ezc63baOqb3IHdGkq4DYBqYpw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EhRA/sLBgv2vae4Ug37AJG6b+3hrpeUb7n+2924Gd18Nq6qocpHFVyNr1uySqXr6H
- qH6zjP1PbJXEhpVXYsniWkGLo15uZx8OZbRtnnlWenMYL7+UT6HijJ+NxJm3tfxwl2
- ptBLprOYDEXAA8TdBL0xXqVALcv+jZESYZ0N8iQxsvJD7yCnrX5Aj8FfWYq1adtwCP
- nwTjxPWWosJpsMolbA0kZhSfd+deIdAek+Iwu7eRkt7ktjFpqqpUDnJ9N3XJtGiUoR
- TIbr20iA3s9dSyyY8LYnDB8dqhMeEvkBrW7dK1fYyDW1a2oya16EoNjeras4iUJi4I
- h34eOd+ExF6YA==
+ b=ASc93gKryynf00gez1RNwNVDM/URBMW7bPwC8z5mSTQCB+yb3qcYd03JKA37nHgPp
+ bqTjPoHLtPjT+N/D6FXHc1EusX9SOVDBLGtFgJiFvpbzskyumlxC2w0LjL+pGFNDrY
+ SBuCk2t+555783ajAl/alIJekoXGpse0kjBet4/gNMbN19cBG4hGsk+KJcPbn5rQIV
+ m+X+zr36mDNZMFYxXJTa+TeWw1kMhOAOuSxfjV3oxk90O7yeq2DBr1brewfK6hJdrH
+ LPukYF8UIywz0P5FJdJQMpWn3wD+RRpI1ysNz+M63wLJAkctUaeyRPFUfFJMGXeSwr
+ 9e3u2Hrf+EdHg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CDF1B1EA2F3;
- Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E89B81EA2DB;
+ Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CBD5346992E;
- Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E6631469918;
+ Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AAA41CF268; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ id D48C9CF23C; Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 105/140] virtio-crypto: clean up every data queue
-Date: Fri, 27 Nov 2026 08:53:31 +0300
-Message-ID: <20261127055421.39015-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 083/140] hw/nvme: fix fdp reclaim unit accounting
+Date: Fri, 27 Nov 2026 08:53:09 +0300
+Message-ID: <20261127055421.39015-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
@@ -66,47 +67,44 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-realize() creates max_queues data queues and one BH for each of them.
-unrealize() decides how many to tear down from multiqueue, but nothing ever
-sets that field, so it only deletes the first queue and BH.
+nvme_do_write_fdp falls back to placement handle zero for a write that
+has no Data Placement directive or where the placement identifier is
+invalid. However, it then passes the invalid placement identifier to
+nvme_update_ruh which results in no update to RUAMW for placement handle
+zero.
 
-It does not matter how many queues the guest used here.  unrealize() must
-undo all the allocations made by realize(), so loop over max_queues.
+Reset the placement identifier along with the handle in the fallback.
 
-Fixes: 20cb2ffd5ff3 ("virtio-crypto: using bh to handle dataq's requests")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260728111217.573046-1-zhaoguohan@kylinos.cn>
-(cherry picked from commit b35d34e3ccd1d377702182d9d0f2185dc69e7ea8)
+Cc: qemu-stable@nongnu.org
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit f7d61b4064458372dca0c3b1c2053eac6d311e5c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 3a3de080a4b..dcff927568a 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -1108,10 +1108,9 @@ static void virtio_crypto_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOCrypto *vcrypto = VIRTIO_CRYPTO(dev);
-     VirtIOCryptoQueue *q;
--    int i, max_queues;
-+    int i;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index b9afa41393d..85bcde58368 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -3713,6 +3713,7 @@ static void nvme_do_write_fdp(NvmeCtrl *n, NvmeRequest *req, uint64_t slba,
+         !nvme_parse_pid(ns, pid, &ph, &rg)) {
+         ph = 0;
+         rg = 0;
++        pid = 0;
+     }
  
--    max_queues = vcrypto->multiqueue ? vcrypto->max_queues : 1;
--    for (i = 0; i < max_queues; i++) {
-+    for (i = 0; i < vcrypto->max_queues; i++) {
-         virtio_delete_queue(vcrypto->vqs[i].dataq);
-         q = &vcrypto->vqs[i];
-         qemu_bh_delete(q->dataq_bh);
+     ruhid = ns->fdp.phs[ph];
 -- 
 2.47.3
 
