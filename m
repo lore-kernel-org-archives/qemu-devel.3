@@ -1,47 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FF4606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 05:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05CC606A336
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 05:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=EuADX6hS
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=eA2k/dtL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWoux-0002sB-Jd; Fri, 27 Nov 2026 00:54:43 -0500
+	id 1xWowZ-0006kl-8M; Fri, 27 Nov 2026 00:56:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWouv-0002rD-Br; Fri, 27 Nov 2026 00:54:41 -0500
+ id 1xWowV-0006Vg-M0; Fri, 27 Nov 2026 00:56:19 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWout-0007Te-Fu; Fri, 27 Nov 2026 00:54:41 -0500
+ id 1xWowT-0000jE-Ov; Fri, 27 Nov 2026 00:56:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758870; bh=RvGSrjUl9fuu5uooqpGH/ivpThxsmLKVNk2sM9mjfMI=;
+ t=1795758873; bh=rqHrpyrdzUIbGttG36ZM8a06X6wiBnfA+NQHJVQ2wZI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EuADX6hSMtQYVx2oDgRLDiU1ar+YuXguv04wRl3PWpqvpe8h7nSieI6jOODbAVRB4
- LiyefTM8oADBe/YhOxpOG9wCvz+Z3K14dQ/Ew/U7Sb3eZutOSeaR4eD1evvo9bttMi
- /KXzWunIWwNq7+Th8i+WIo/VxFUbKTpXsD3g5BWfsEPqlEU9SMkJO0QvcjhvM32VWA
- ZpKwENycbe+lPubBk8fFRphNeXqrO+fxIXkCo7hwjhwHYui2Kl2jyYTrGhumPgH3XG
- uSSOt2GIiRSRA5nzD2wPJD+lqF/EBbhV/izJO13avohOrKz9F3iOe9fXRU+8dhhalm
- jNUhcgYX3ErnA==
+ b=eA2k/dtLIMVfGRZoGsEIVLUle2J/iWrqDtAtTdGvE128DFLXqk5upykY8xwJp6t3B
+ INSP76sKu7Y8twMXocc5kygSDimVfj2xPW8EN5sf3CzgXIn5vVfNxjDRGYTHmS47Mr
+ vk5w7avUC+2YhP5v0Zw76SJc6hWMEWHWCBiG6biKEtJYSgnhrhzoPm23nhKusqbuMh
+ Zc94+lXSLOM09AoxrSR+ltn+cJh5nvCgZmzT83zfAb3CQK0xg1kSWiI2A11hd4ZfwO
+ 0s7JwYWIckYWXdTwy1c8ZHK8SZR4j/98566jOB/3V8tei+N1vxlVsRedRWSifoCboP
+ mOg5tyInHpIrg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9BFC81EA2C3;
- Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E41511EA2DA;
+ Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 99A20469901;
- Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E2017469917;
+ Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 92C1DCF20E; Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ id D1B8ECF23A; Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 060/140] hw/core/qdev-properties-system.c: Don't
- leak str in set_drive_helper()
-Date: Fri, 27 Nov 2026 08:52:46 +0300
-Message-ID: <20261127055421.39015-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 082/140] hw/nvme: reject fdp.runs smaller than the
+ lba data size
+Date: Fri, 27 Nov 2026 08:53:08 +0300
+Message-ID: <20261127055421.39015-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
@@ -67,82 +68,46 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-In set_drive_helper(), we call visit_type_str() to get the value
-being set as a string.  This is an allocated string, and we're
-supposed to free it, but not all paths out of this function do so.
-In particular, the "block backend already exists, change the attached
-node" code path does not free the string. This shows up as a memory
-leak under the newly added virtio-scsi-tests/replaced-node-size
-qtest:
+The reclaim unit accounting in nvme_do_write_fdp spins forever if RUNS
+is configured to be smaller than LBADS.
 
-$ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
-  QTEST_QEMU_BINARY=./qemu-system-i386 \
-  ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
-  ./tests/qtest/qos-test --tap -k \
-  -p /i386/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-scsi-pci/virtio-scsi/virtio-scsi-tests/replaced-node-size
-[...]
-Direct leak of 4 byte(s) in 1 object(s) allocated from:
-    #0 0x55f7744155e3 in malloc (/home/pm215/qemu/build/x86-tgt-san-dbg/qemu-system-i386+0x20115e3) (BuildId: 271ffb42d2e322de7813813d8c6cc85351e48a4f)
-    #1 0x713dbd345b79 in g_malloc /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gmem.c:100:13
-    #2 0x713dbd35b988 in g_strdup /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gstrfuncs.c:323:17
-    #3 0x55f777208021 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
-    #4 0x55f777208021 in qobject_input_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qobject-input-visitor.c:542:12
-    #5 0x55f777204d1c in visit_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qapi-visit-core.c:349:10
-    #6 0x55f774df80d1 in set_drive_helper /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:129:10
-    #7 0x55f774dee9fa in set_drive_iothread /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:224:5
-    #8 0x55f7767cc5c8 in field_prop_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties.c:89:12
-    #9 0x55f7767ec12b in object_property_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../qom/object.c:1562:5
-
-Switch to using g_autofree so that the string is properly freed
-all all exit paths.
+Reject such an invalid configuration upfront.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d1a58c176a11b ("qdev: allow setting drive property for realized device")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Message-id: 20261105114635.3286252-1-peter.maydell@linaro.org
-(cherry picked from commit fc8bb17e47617cee165469fda64293909d0e8ec3)
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit e095e8baaa18673e1976f34cce08e4adde061e29)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 6b73127123c..bcab681fbe9 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -118,7 +118,7 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
-     DeviceState *dev = DEVICE(obj);
-     const Property *prop = opaque;
-     void **ptr = object_field_prop_ptr(obj, prop);
--    char *str;
-+    g_autofree char *str = NULL;
-     BlockBackend *blk;
-     bool blk_created = false;
-     int ret;
-@@ -153,7 +153,6 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
-     }
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index dc7a960df18..00db5062359 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -412,6 +412,12 @@ static bool nvme_ns_init_fdp(NvmeNamespace *ns, Error **errp)
+     char *r, *p;
+     uint16_t *ph;
  
-     if (!*str) {
--        g_free(str);
-         *ptr = NULL;
-         return;
-     }
-@@ -207,8 +206,6 @@ fail:
-         /* If we need to keep a reference, blk_attach_dev() took it */
-         blk_unref(blk);
-     }
--
--    g_free(str);
- }
- 
- static void set_drive(Object *obj, Visitor *v, const char *name, void *opaque,
++    if (endgrp->fdp.runs < nvme_l2b(ns, 1)) {
++        error_setg(errp, "fdp.runs must be greater than or equal to the "
++                   "lba data size of the namespace");
++        return false;
++    }
++
+     if (!ns->params.fdp.ruhs) {
+         ns->fdp.nphs = 1;
+         ph = ns->fdp.phs = g_new(uint16_t, 1);
 -- 
 2.47.3
 
