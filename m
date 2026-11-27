@@ -1,52 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C7F606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD07606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=u92Q4A0W
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=SDDv11Bx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp50-0007LR-Gy; Fri, 27 Nov 2026 01:05:11 -0500
+	id 1xWpAW-0006We-IK; Fri, 27 Nov 2026 01:10:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2y-0004YN-Iq; Fri, 27 Nov 2026 01:03:03 -0500
+ id 1xWpAM-0005z7-GL; Fri, 27 Nov 2026 01:10:38 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2t-0003SV-P4; Fri, 27 Nov 2026 01:02:57 -0500
+ id 1xWpA5-00063K-5i; Fri, 27 Nov 2026 01:10:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759041; bh=7ck7EAS/VJ5cMDOatQobGu59jKEMmUWswoc8ywLq23Y=;
+ t=1795759049; bh=zGv67GnA28EVEj6Qqkdf6uzQPPHf6EPlskHzd7aCFp0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=u92Q4A0WmEsAVrSsNdGyjORVMf8ZCVtPXQizJkIrL2fmh83x8DLHf25pR1qvUWVcp
- zzsa9JWfRGDrxKiHbxjDtpqlXJkZvGQRJsfFOOzh2VhFmbI4nZ9DlnqJz0StCXGX5h
- N/K2MH/SiFmN9Eoyp3SCCC76zurTPNSdeIXIFEUYXIGYbMlv6kYWq6RoGuBakr/mAg
- D6dAk4gV/YExcmdZK9Q7zSi6nio5/aRzwakgZ4H4Rez8nxiADwsQBkKfCe15LXfOHz
- /0JL8UP2fH5poe+yS7Daxbn8Rk2sDxGrWOYMFqo5dHAyIiIfpk2CcoQfo+qWRJQHti
- S/kjeHmbejvGw==
+ b=SDDv11BxmnGhP+SvMX1btMrJEzS+ft4Z+bfK1SyybhMcANqhsexiQtHlrh9K/REik
+ VMp7dKx54vdlh6X28+jGfhy3uKLXK+YFUKz/N9jeKw/ieZWX7x+1GVLbA6ZRStzZDS
+ PtO5VazYITsjrC6xK2kZHVteDBZOwmzty48ZIGTT/2unnF3qIeuwSAcHTqM5XiusQ5
+ iROLRHoKX9pOLDtz+DmAaK8POhoaDbDdviJzR7qSdu9MnQyyuYZsfjR7OqLzHLNbgV
+ /F35jxIvzkto45JSoO6T+t4ozJZWlEjXw20Im60Fn7fmGt5WAhChj/+B8HDHUQSX98
+ pirLfo0ALZokQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 709161EA336;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8F0091EA37D;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E68A469962;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C5504699A8;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5C3E7CF2BC; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ id 77E7CCF348; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 069/152] net/eth.c: In eth_get_protocols(),
- don't report TCP data offset off end of packet
-Date: Fri, 27 Nov 2026 08:53:27 +0300
-Message-ID: <20261127055709.39630-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Harshit Mukhedkar <harshit007k@gmail.com>,
+ Karl Mehltretter <kmehltretter@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 139/152] hw/sd/sdcard: Validate migrated blk_len in
+ post_load
+Date: Fri, 27 Nov 2026 08:54:37 +0300
+Message-ID: <20261127055709.39630-76-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,36 +79,54 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Harshit Mukhedkar <harshit007k@gmail.com>
 
-eth_get_protocols() already rejects some out-of-bounds offsets found in
-packets. Add a missing check for TCP data offset.
+Migration streams are untrusted input. A crafted stream can set
+blk_len larger than the 512 byte data[] buffer, so a later block
+read passes that length to blk_pread() and overflows data[] on
+the host heap.
 
-Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4155
+Reject such state in post_load.
+
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4725
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Harshit Mukhedkar <harshit007k@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261109-eth-v2-4-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit c27a586b8bd8b75ac5781d84e84657f94c2d7599)
+Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 2a9bd40be705978b721f7a9f570dc797f2f9db47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/net/eth.c b/net/eth.c
-index 038f7d889c3..a444377fd0a 100644
---- a/net/eth.c
-+++ b/net/eth.c
-@@ -197,7 +197,8 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
-         if (_eth_copy_chunk(input_size,
-                             iov, iovcnt,
-                             *l4hdr_off, sizeof(l4hdr_info->hdr.tcp),
--                            &l4hdr_info->hdr.tcp)) {
-+                            &l4hdr_info->hdr.tcp) &&
-+            input_size - *l4hdr_off >= TCP_HEADER_DATA_OFFSET(&l4hdr_info->hdr.tcp)) {
-             l4hdr_info->proto = ETH_L4_HDR_PROTO_TCP;
-             *l5hdr_off = *l4hdr_off +
-                 TCP_HEADER_DATA_OFFSET(&l4hdr_info->hdr.tcp);
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 868cda9f29a..0ea05b979dd 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1073,11 +1073,24 @@ static int sd_vmstate_pre_load(void *opaque)
+     return 0;
+ }
+ 
++static int sd_vmstate_post_load(void *opaque, int version_id)
++{
++    SDState *sd = opaque;
++
++    /* Check for blk_len that overflows data[] */
++    if (sd->blk_len > sizeof(sd->data)) {
++        return -EINVAL;
++    }
++
++    return 0;
++}
++
+ static const VMStateDescription sd_vmstate = {
+     .name = "sd-card",
+     .version_id = 2,
+     .minimum_version_id = 2,
+     .pre_load = sd_vmstate_pre_load,
++    .post_load = sd_vmstate_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UNUSED(4),
+         VMSTATE_INT32(state, SDState),
 -- 
 2.47.3
 
