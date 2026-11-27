@@ -1,96 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72EE606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 22:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1673A606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 22:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iOWe1IPg
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cHqFMEi4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX4XZ-0000U8-1z; Fri, 27 Nov 2026 17:35:37 -0500
+	id 1xX4nc-0004P5-MS; Fri, 27 Nov 2026 17:52:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleszlucero@gmail.com>)
- id 1xX4XX-0000PY-BY
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:35:35 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aleszlucero@gmail.com>)
- id 1xX4XV-0000R0-S3
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:35:35 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3b41188c8b9so5811839a91.0
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 14:35:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795818932; x=1796423732; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kytycHaD29E8KpBA+lbPjFPnP3pSaxDLMMUKrr4o4U4=;
- b=iOWe1IPg5R0P+kLNUn6fTxcdE0f+zfryJ9YhDTMmi76SWbJMf+anKmOxfW9cME2FbW
- LRoMJaFFvsj92D+fZBSZEM4XcyVx0Pc+Kbkghq7hnE3WLDkSdwI829uMZmoYEfv2Kl8g
- iYn8prH683nFmzVR7qrlhylmMZtzK+sSk6OSqkEdxLirt/pNNO3OT2RfORm77oVoGua8
- uVcXK3L8sXswDStmmMt5iIQs46j2+xq1QFGhlbKL8SUYCa3pZG5a7oJeu4Dj6K0KRQ5M
- BxH9o7QGPvNOoUvf/pfAED2RgB4k1yefVi9SEoD99KbLZJmiy1FIxz9a2AWxeHvCdlNE
- Y2Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795818932; x=1796423732;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=kytycHaD29E8KpBA+lbPjFPnP3pSaxDLMMUKrr4o4U4=;
- b=i449mIJDrxGEcIYdE41NC8dWESC8mX/Ru25cVYkcYeRa5GSlqRzwc9wqAJCxHrJqvE
- dALSkV5mK0qTZNEiFkAcSGAmYInMAsgOYSv/Pg6VJv37/95EL95pvxtja6yV4Ptccozo
- dnNuM2HuvQg8ytPOmwlUtzO4kH/q3kMvxuXUyDNIJoHVDVJuOx1+XoE+tI3LdQK2Tr9V
- GZSMQsp4F30ryJKw2RIhtT29rSV2lKv6cJmmZ4YkK2qw7TbznLbnzp9JFcptWkv2tf1r
- zG5cdue0t3o3+B738GaUCPwiawl/IWmtks9Wyi1fPIVdwD30Y0cGPWnG2ZA4jzo+XJKi
- pYvQ==
-X-Gm-Message-State: APuU4Z/tmAGUJfGtXexPXP1K77b5k3sqSsTTeSX9ERBswqzX/4jHr9aW
- CTwoZrcXEGgtgr2b71RzW7D0dY6Apipta4MlUO+g5dV5flBxW92buJrqjT+0CQ==
-X-Gm-Gg: AZFdTZf0En+qdkg+fN06yJEjJrrVSlGMfSLVaIxuD2vzXdvcdddrAO+C+UvMrCIKhcR
- TDNw7iklEutchTGF66db9XFyxtlKSNBPuIV35LX2DOjcyw/Khqrm906wIJcrhV5a5vUtyjbSfPG
- bBis0PE58r0ifVeFIk5fCRIFltEm/1HWY0q+8vfWbpUHrOUmWonkZfrMYycpzJWWuH3JqHL56uU
- 3pJnSD+plHJLs4rcECQUp8SuFHwiWpjZYIZHoTS/kIc6iXWez5KNSRu4UlPNXmoVH47tyIB9hAM
- 5mkccVnYNDmSfKJhEzMmIxsXUxX78fhKM5b/sz64KqLkg+PpZMJ/oAU9mdQ7AAk1vZstu9i6kOe
- gD68hKN76YIuSabb0oTBb069OP9NMWzNHLagLsnMhbF926HOAmDWASfGpMsKlhjMPu+cVPorsA4
- hBfMkgAYbCmS9dajnyPVpFoURIHLYKmQpagi2D90La4fsf/+GBtUdjWUW2zH1ei2IwuCWu2TTAR
- nWuwMdawSTXsOEgP34kaQD2o38Mwd4V7YDNd08Oue6Vubcx2hH9WUZbM3fsBdTs1Q1cR5TgAZPy
- /fhY2754EvhfnhOEPbBFCqiZQ3ihvXr0Bn9EPA0gSh0GAEAJXbSvxUrHB6hCxq7xCYJResy6tkb
- Ue4feAqWL5eyT0m/hNqzZxcTBQ0Jv/zJShCRzAzuPkEsXQI5LQf88
-X-Received: by 2002:a17:90a:d607:b0:3a4:ad5c:d48a with SMTP id
- 98e67ed59e1d1-3b41c97c8acmr26765818a91.67.1795818932380; 
- Fri, 27 Nov 2026 14:35:32 -0800 (PST)
-Received: from cfarm136.osuosl.org (cfarm136.osuosl.org.
- [2605:bc80:3010:104:21e:67ff:fefd:7034])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b41ad0b2c4sm39880831a91.4.2026.11.27.14.35.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Nov 2026 14:35:30 -0800 (PST)
-From: =?utf-8?q?Oscar_Alejandro_S=C3=A1nchez_Lucero?= <aleszlucero@gmail.com>
-Date: Fri, 27 Nov 2026 22:35:18 +0000
-Subject: [PATCH 4/4] hw/pci-bridge: Convert xio3130_upstream to Resettable
- interface
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1xX4na-0004Oa-Vj
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:52:11 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1xX4nZ-00010A-FS
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:52:10 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id E91574388E;
+ Fri, 27 Nov 2026 22:52:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858681F00893;
+ Fri, 27 Nov 2026 22:52:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1795819927;
+ bh=vGIqN5Xr4P1ID5b70nEDS7FUtSDTGDE69l0IuZDu1uU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=cHqFMEi4QG/1QoUl69NsAL1oAYErggGnI0RCQ49ocqeDcBC6Y1ORSPByOPNIrW1a8
+ 37L1pHRBwBGkF+RdgHfjKmf2GncMUgMTcMOn+uRDMgjhZnC7uwgnohrDp808C9N4Td
+ 2C3LxzzX26IDHCyPZUhbDDV9mzgTHlklOFXG3ULkMVSLQSgA3ZE01f2rCj13hBBssu
+ NsCw3xSM74rrpou5W6O2mlZPLrdXHKtBc845k3YmPfOYpxLAQLTtRz1naXkU8I/dUo
+ THaatbt2ikorT8hvlI24C+FcYCrZ3tXWKRRyz7G4JP3yRtkUBJGviozkZKqthIxS5f
+ BrvSR0tjiU8MA==
+Date: Fri, 27 Nov 2026 14:52:06 -0800
+From: Wei Liu <wei.liu@kernel.org>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH] target/i386/mshv: add SynIC MSR init routine
+Message-ID: <20261127225206.GC5355@liuwe-devbox-debian-v2.local>
+References: <20261125144911.52270-1-magnuskulke@linux.microsoft.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261127-pci-bridge-resettable-v1-4-cdf15c9252c5@gmail.com>
-References: <20261127-pci-bridge-resettable-v1-0-cdf15c9252c5@gmail.com>
-In-Reply-To: <20261127-pci-bridge-resettable-v1-0-cdf15c9252c5@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Oscar_Alejandro_S=C3=A1nchez_Lucero?= <aleszlucero@gmail.com>
-X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=aleszlucero@gmail.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261125144911.52270-1-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=wei.liu@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,68 +70,25 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Replace the deprecated device_class_set_legacy_reset() in
-xio3130_upstream.c with the ResettableClass hold phase.
+On Wed, Nov 25, 2026 at 03:49:11PM +0100, Magnus Kulke wrote:
+> Windows guests on Microsoft Hypervisor expect to be initialized with a
+> specific set of values in its SynIC MSRs, otherwise the paravirtualized
+> timers will not work and boot will stall.
+> 
+> Reference:
+> 
+> https://github.com/microsoft/openvmm/blob/8d4e0313/vmm_core/virt/src/x86/vp.rs
+> 
+> L1801-L1813
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Signed-off-by: Oscar Alejandro Sánchez Lucero <aleszlucero@gmail.com>
----
- hw/pci-bridge/xio3130_upstream.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/hw/pci-bridge/xio3130_upstream.c b/hw/pci-bridge/xio3130_upstream.c
-index 9d58105..149db12 100644
---- a/hw/pci-bridge/xio3130_upstream.c
-+++ b/hw/pci-bridge/xio3130_upstream.c
-@@ -24,6 +24,7 @@
- #include "hw/pci/msi.h"
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
-+#include "hw/core/resettable.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
- 
-@@ -46,11 +47,11 @@ static void xio3130_upstream_write_config(PCIDevice *d, uint32_t address,
-     pcie_aer_write_config(d, address, val, len);
- }
- 
--static void xio3130_upstream_reset(DeviceState *qdev)
-+static void xio3130_upstream_reset_hold(Object *obj, ResetType type)
- {
--    PCIDevice *d = PCI_DEVICE(qdev);
-+    PCIDevice *d = PCI_DEVICE(obj);
- 
--    pci_bridge_reset(qdev);
-+    pci_bridge_reset(DEVICE(obj));
-     pcie_cap_deverr_reset(d);
- }
- 
-@@ -127,6 +128,7 @@ static void xio3130_upstream_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     k->config_write = xio3130_upstream_write_config;
-     k->realize = xio3130_upstream_realize;
-@@ -136,7 +138,7 @@ static void xio3130_upstream_class_init(ObjectClass *klass, const void *data)
-     k->revision = XIO3130_REVISION;
-     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->desc = "TI X3130 Upstream Port of PCI Express Switch";
--    device_class_set_legacy_reset(dc, xio3130_upstream_reset);
-+    rc->phases.hold = xio3130_upstream_reset_hold;
-     dc->vmsd = &vmstate_xio3130_upstream;
- }
- 
-
--- 
-2.53.0
-
+Acked-by: Wei Liu <wei.liu@kernel.org>
 
