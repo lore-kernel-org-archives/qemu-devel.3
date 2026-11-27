@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FFF606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A78606A31E
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=v4WzOBK8
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Pn6TugYB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp5W-00083E-Tw; Fri, 27 Nov 2026 01:05:39 -0500
+	id 1xWp8n-0000B4-It; Fri, 27 Nov 2026 01:09:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2t-0004Wq-I0; Fri, 27 Nov 2026 01:03:00 -0500
+ id 1xWp6m-0004yL-O4; Fri, 27 Nov 2026 01:06:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2l-0002Mr-Ey; Fri, 27 Nov 2026 01:02:51 -0500
+ id 1xWp6k-0002OR-B4; Fri, 27 Nov 2026 01:06:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759041; bh=Usr1oMhwLKtOs8WchfzzOtEEl8dvJ528fmfY2ppgSo0=;
+ t=1795759047; bh=MD7aXMBcOOTD7JyhSNzy5/cuaqfa/vas7ktStoc0K6A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=v4WzOBK8C2JhmeFJsIhdO6Qh53Vnz9Bo8GUPZmM5pZ++lXuAv73tNcAZVZT6RmgOh
- SXqu3I1TIenMKwwtzJXEKgXHmC6Fc5aGzUwuQyQWpZqxXgl7wQ9wB8jooQjs+L833v
- Q+nDVgkK/5sMt66WvGv5CF32IBj6jTzqCsGsHvlzftp3mh3yiW4zvE2ClfQ4864yDH
- 3ZZBSL2kbPjnzqHMNT7Z6l1fH2EenPLYkuvH8pj9g5SMZfO86ngIye9nM4RH4Xt/+w
- 3Hmf1n4p0NPfcHGSK5vw1ma/d6V+BSRNgwUENUYhdzgpJ5X11eMYCyCIuntvG+yz+s
- 0gaTVpnaFTAlA==
+ b=Pn6TugYBWd2vUv3Mxv2Qt5lTmJ5544ayKS/tsiQKZUISKjQuq9kdaYZxNSvEBFEKZ
+ F8IiGl67B/1Mu30YU2ISfDGyEF5GPmBnAmw328JlG5jInXXsRqC98GFwmIYIIbyrYy
+ H6uhKOe6Z77bBAhZf/thAIf/7FrYn0kcPRuVSj9lx1Xe6qskNErPwznhe84lZ8U3hl
+ GN3MbxvbgIbgDVQVRgXOGAG3CY6HHVwWHNK0erLbcIXNWFBIN3YlzltshrbN6VwHuB
+ /esoifJUZnOOFyuUdiKwHA6EX8ErudvDUSiTW/0vUaPDXCHEWqUADBsfkbNhf/H17e
+ bIiA64Vc1dzrQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 62CA41EA333;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E7E3E1EA35D;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5FC3F46995F;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E5AF1469988;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5368CCF2B6; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ id DC8C4CF308; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Daniel Wade <danjwade95@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 066/152] hw/net/net_rx_pkt: Handle bogus l4hdr_off
- when validating SCTP checksum
-Date: Fri, 27 Nov 2026 08:53:24 +0300
-Message-ID: <20261127055709.39630-3-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 107/152] block/vhdx: Add alignment checks for
+ region tables
+Date: Fri, 27 Nov 2026 08:54:05 +0300
+Message-ID: <20261127055709.39630-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -76,72 +76,47 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-In _net_rx_pkt_validate_sctp_sum() we calculate a checksum that
-starts at the NetRxPkt::l4hdr_off offset.  If this offset (which
-might be guest controlled) is larger than the size of the packet, the
-loop that walks through the iovec can walk off the end of it.  The
-resulting out-of-bounds read in attempting to convert the iov to a
-buffer might cause a segfault.
+According to the VHDX specification:
 
-We also weren't correctly checking the return values of iov_to_buf()
-and iov_from_buf() when reading and writing the checksum word: if the
-l4hdr_off claims the checksum word is half off the end of the packet
-these functions will return the count of how much data they were able
-to access, and we should fail if they don't write the entire 4 byte
-word.
+ "The FileOffset and Length fields specify the 64-bit byte offset and 32-bit
+  byte length of the object within the file. The values must be a multiple of
+  1 MB, and FileOffset must be at least 1 MB."
 
-Return "checksum not valid" if the l4hdr_off is too large or the iov
-accesses don't do the full read/write.
-
-Note that this affects only the igb network device; the other user of
-this function (e1000e) does its own check on the l4 header and won't
-calculate a checksum if it's out of range.
+Thus let's add a sanity check to avoid that bad things could happen later.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 907209e3111dd62 ("igb: Implement Rx SCTP CSO")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4138
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261109-eth-v2-1-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 7149c66149a51495aaa7b6c1487cc564030ec622)
+Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/3762
+Reported-by: Daniel Wade <danjwade95@gmail.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20261113072336.46309-1-thuth@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 2a4384b4ef01ee3e2c9aeb96d7748307ff0f248b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/net_rx_pkt.c b/hw/net/net_rx_pkt.c
-index f87b6f046cc..03a35f03154 100644
---- a/hw/net/net_rx_pkt.c
-+++ b/hw/net/net_rx_pkt.c
-@@ -549,19 +549,23 @@ _net_rx_pkt_validate_sctp_sum(struct NetRxPkt *pkt)
-     uint32_t original;
-     bool valid;
+diff --git a/block/vhdx.c b/block/vhdx.c
+index 8013a90a1a4..e71973cf525 100644
+--- a/block/vhdx.c
++++ b/block/vhdx.c
+@@ -566,6 +566,16 @@ vhdx_open_region_tables(BlockDriverState *bs, BDRVVHDXState *s)
  
--    for (vec = pkt->vec; vec->iov_len < off; vec++) {
-+    for (vec = pkt->vec; vec_len > 0 && vec->iov_len < off; vec++) {
-         off -= vec->iov_len;
-         vec_len--;
-     }
-+    if (vec_len == 0) {
-+        return false;
-+    }
+         vhdx_region_entry_le_import(&rt_entry);
  
-     csum_off = off + 8;
- 
--    if (!iov_to_buf(vec, vec_len, csum_off, &original, sizeof(original))) {
-+    if (iov_to_buf(vec, vec_len, csum_off,
-+                   &original, sizeof(original)) != sizeof(original)) {
-         return false;
-     }
- 
--    if (!iov_from_buf(vec, vec_len, csum_off,
--                      &calculated, sizeof(calculated))) {
-+    if (iov_from_buf(vec, vec_len, csum_off,
-+                     &calculated, sizeof(calculated)) != sizeof(calculated)) {
-         return false;
-     }
- 
++        /*
++         * According to the VHDX spec, offset and length must be multiple
++         * of 1 MiB and offset must be at least 1 MiB.
++         */
++        if (!QEMU_IS_ALIGNED(rt_entry.file_offset, MiB) ||
++            !QEMU_IS_ALIGNED(rt_entry.length, MiB) || !rt_entry.file_offset) {
++            ret = -EINVAL;
++            goto fail;
++        }
++
+         /* check for region overlap between these entries, and any
+          * other memory regions in the file */
+         ret = vhdx_region_check(s, rt_entry.file_offset, rt_entry.length);
 -- 
 2.47.3
 
