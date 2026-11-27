@@ -1,56 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9E606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B6B606A31C
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=tSo+qigR
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=N6dw7ej/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWpBg-0008A8-Fz; Fri, 27 Nov 2026 01:12:05 -0500
+	id 1xWpCH-0000Fr-P4; Fri, 27 Nov 2026 01:12:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWpAW-0006bx-Lf; Fri, 27 Nov 2026 01:10:49 -0500
+ id 1xWp9k-0005Zd-2R; Fri, 27 Nov 2026 01:10:00 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWpAU-0008TD-6x; Fri, 27 Nov 2026 01:10:48 -0500
+ id 1xWp9g-0005c9-7y; Fri, 27 Nov 2026 01:09:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759049; bh=LpnehRNUZjmxENOzH+CrqjvYV+X+EMyW8KirZLMVsjM=;
+ t=1795759049; bh=lUMJtG+2D0tbJwxUkhk0y2ZRe0GCSS35EPDYc/ey2tw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tSo+qigROuwjLMdh4dV5jNFS4ATrnYw+Ef8ylx1LIsaVRd2vPiUUq+KP60K0/h/IE
- n/xsZOVRBwklh5387XbZqQphahdxTFvQwgf20hjjF2j9qJN+CsAB8jwvIG/u1VZ4is
- fpnG5YWMjB8+s3aiSFodLDxMLzsDYvaL71h4awXfoxOJVULw5gu3XWQCZdemZple9y
- zuJxfYiZNm6tUpte5JHniPjLx5oFQQwD5zRke+PL/ni0tzHVEHVjEUjgFOUShpedN7
- UJv950pF8qg0z6kB8SkzQ4LXjouJTvNMiw3ChVTKb+w4+JZmvOXpUOin0xPtSLQ07M
- fESc1rVMrIh1A==
+ b=N6dw7ej/LRuEwZ5YDt+edoBdCrPqeUsqrVr00vmFZmnDNaquiTrzOi8MRzBChlgMO
+ yoDR57WA6Ws5ruQOjAFt6wEhqBo164H3ywiaO7Z5eDu0zfub9ZoUQRhNk8CHQ8NQa8
+ NYhk53FPHe4RssCGx4YeQXny8T47F3wYiVY61AJBuzXeB3DxY2x/RNEJ/2MCjjUKHN
+ S7Abt4381iaUZuBrm+xO5BTEQqERZ0mNAlCfhTXojyVTlximXXgqoXiDz8/SkfFk4X
+ XOjZI3KPtfeSSh9psFt/xPJLN18yEz7iqrPuBMwaXSho//3NzHztlOsw2MObT2ylXd
+ 01GhWC8AA0zww==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A5EC71EA381;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8459A1EA37B;
  Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A32FD4699AC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 81AF94699A6;
  Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 83F37CF350; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
+ id 72099CF344; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Thomas Lamprecht <t.lamprecht@proxmox.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 143/152] hw/ide/atapi: fix abort on CD-ROM reads
- past LBA 2^31
-Date: Fri, 27 Nov 2026 08:54:41 +0300
-Message-ID: <20261127055709.39630-80-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 137/152] fdmon-io_uring: avoid idle event loop
+ being accounted as IO wait
+Date: Fri, 27 Nov 2026 08:54:35 +0300
+Message-ID: <20261127055709.39630-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -78,221 +75,212 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
 
-cmd_read() and cmd_read_cd() check the 32-bit LBA from the CDB against
-the medium size, then pass it to ide_atapi_cmd_read() as an int. On a
-medium larger than 4 TiB, a read at LBA 2^31 or above passes the range
-check, turns negative and trips the assertion:
+Since QEMU 10.2, iothreads use io_uring for file descriptor monitoring
+when available at build time. The blocking wait in io_uring_enter()
+gets accounted as IO wait by the kernel even when only poll or timeout
+SQEs are present. The result is nearly 100% IO pressure in PSI on idle
+VMs.
 
-  hw/ide/atapi.c:315: ide_atapi_cmd_read_pio: Assertion
-  `0 <= lba && lba < (s->nb_sectors >> 2)' failed.
+The Linux kernel also has a bug conflating reservations for task
+references and real in-flight requests [0], so the issue could occur
+even if no poll or timeout SQE was present.
 
-Reading the last sector is enough, e.g. a UDF anchor probe, so the
-guest aborts QEMU just by looking at the disc.
+The io_uring_set_iowait() function is available since liburing 2.10,
+so create a stub when it's not available and accept that IOWAIT
+accounting includes POLL_ADD and TIMEOUT ops on older hosts.
 
-Pass the LBA as uint32_t, which is what the CDB carries, and widen
-IDEState.lba to int64_t so it holds every valid LBA and keeps -1 as
-the "not a sector read" marker. The field is not migrated.
+Track the number of in-flight requests that represent real block-layer
+IO (currently, anything submitted via aio_add_sqe() is) in a
+per-AioContext counter, and disable iowait accounting when the count
+is zero.
 
-Fixes: b8d7f1bc5927 ("ide: atapi: check logical block address and read size (CVE-2020-29443)")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: John Snow <jsnow@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261112133455.604657-1-den@openvz.org>
-[PMD: Avoid wrapping at 2^32 in range check]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+SQ-ring composition alone is not a usable signal here: poll SQEs get
+re-armed by process_cqe_aio_handler() on every fd-event cycle, so
+workloads with constant fd wakeups (observed with librbd) always leave
+a non-timeout SQE in the ring even when the guest is idle. Block
+drivers that do not go through aio_add_sqe() (e.g. librbd, libaio,
+thread-pool) never increment the counter and thus always get the flag
+passed, which matches the semantic intent: their iothreads block on
+completion notifications from other threads, not on IO they issued
+themselves.
 
-Message-ID: <20261112133455.604657-1-den@openvz.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit f2a3eb6bcf80f0c02635be67177ed10547d16f30)
+The iowait_accounting_reqs counter added to the AioContext struct must
+be accessed with atomics, since a vCPU thread can reach
+fdmon_io_uring_wait() via aio_poll() (for example via
+virtio_scsi_dataplane_stop()).
+
+[0]: https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@proxmox.com/T/
+
+Cc: qemu-stable@nongnu.org
+Fixes: ded29e64c6f3 ("aio-posix: integrate fdmon into glib event loop")
+Suggested-by: Fiona Ebner <f.ebner@proxmox.com>
+Link: https://lore.proxmox.com/pve-devel/525c4dad-6d04-41f0-8a21-9302b0c6baa4@proxmox.com/
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-id: 20261124113700.470090-1-f.ebner@proxmox.com
+Co-authored-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit d8be4d3166ae991b28171fed3fd336632ba54d5e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
-index 0ea149ad8c6..aec20f968da 100644
---- a/hw/ide/atapi.c
-+++ b/hw/ide/atapi.c
-@@ -47,7 +47,7 @@ static void padstr8(uint8_t *buf, int buf_size, const char *src)
-     }
- }
+diff --git a/include/qemu/aio.h b/include/qemu/aio.h
+index e65e90093a7..dbc5370eb03 100644
+--- a/include/qemu/aio.h
++++ b/include/qemu/aio.h
+@@ -55,6 +55,12 @@ struct CqeHandler {
  
--static void lba_to_msf(uint8_t *buf, int lba)
-+static void lba_to_msf(uint8_t *buf, int64_t lba)
- {
-     lba += 150;
-     buf[0] = (lba / 75) / 60;
-@@ -71,7 +71,7 @@ static inline int media_is_cd(IDEState *s)
-     return (media_present(s) && s->nb_sectors <= CD_MAX_SECTORS);
- }
- 
--static void cd_data_to_raw(uint8_t *buf, int lba)
-+static void cd_data_to_raw(uint8_t *buf, int64_t lba)
- {
-     /* sync bytes */
-     buf[0] = 0x00;
-@@ -309,10 +309,10 @@ static void ide_atapi_cmd_reply(IDEState *s, int size, int max_size)
- }
- 
- /* start a CD-ROM read command */
--static void ide_atapi_cmd_read_pio(IDEState *s, int lba, int nb_sectors,
--                                   int sector_size)
-+static void ide_atapi_cmd_read_pio(IDEState *s, uint32_t lba,
-+                                   int nb_sectors, int sector_size)
- {
--    assert(0 <= lba && lba < (s->nb_sectors >> 2));
-+    assert(lba < (s->nb_sectors >> 2));
- 
-     s->lba = lba;
-     s->packet_transfer_size = nb_sectors * sector_size;
-@@ -409,10 +409,10 @@ eot:
- 
- /* start a CD-ROM read command with DMA */
- /* XXX: test if DMA is available */
--static void ide_atapi_cmd_read_dma(IDEState *s, int lba, int nb_sectors,
--                                   int sector_size)
-+static void ide_atapi_cmd_read_dma(IDEState *s, uint32_t lba,
-+                                   int nb_sectors, int sector_size)
- {
--    assert(0 <= lba && lba < (s->nb_sectors >> 2));
-+    assert(lba < (s->nb_sectors >> 2));
- 
-     s->lba = lba;
-     s->packet_transfer_size = nb_sectors * sector_size;
-@@ -427,7 +427,7 @@ static void ide_atapi_cmd_read_dma(IDEState *s, int lba, int nb_sectors,
-     ide_start_dma(s, ide_atapi_cmd_read_dma_cb);
- }
- 
--static void ide_atapi_cmd_read(IDEState *s, int lba, int nb_sectors,
-+static void ide_atapi_cmd_read(IDEState *s, uint32_t lba, int nb_sectors,
-                                int sector_size)
- {
-     trace_ide_atapi_cmd_read(s, s->atapi_dma ? "dma" : "pio",
-@@ -983,7 +983,7 @@ static void cmd_read(IDEState *s, uint8_t* buf)
-     }
- 
-     lba = ldl_be_p(buf + 2);
--    if (lba >= total_sectors || lba + nb_sectors - 1 >= total_sectors) {
-+    if (lba >= total_sectors || nb_sectors > total_sectors - lba) {
-         ide_atapi_cmd_error(s, ILLEGAL_REQUEST, ASC_LOGICAL_BLOCK_OOR);
-         return;
-     }
-@@ -1005,7 +1005,7 @@ static void cmd_read_cd(IDEState *s, uint8_t* buf)
-     }
- 
-     lba = ldl_be_p(buf + 2);
--    if (lba >= total_sectors || lba + nb_sectors - 1 >= total_sectors) {
-+    if (lba >= total_sectors || nb_sectors > total_sectors - lba) {
-         ide_atapi_cmd_error(s, ILLEGAL_REQUEST, ASC_LOGICAL_BLOCK_OOR);
-         return;
-     }
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index a7ed41fa265..870a20c96a5 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -396,7 +396,7 @@ static void ide_dbdma_start(const IDEDMA *dma, IDEState *s,
-     MACIO_DPRINTF("\n\n------------ IDE transfer\n");
-     MACIO_DPRINTF("buffer_size: %x   buffer_index: %x\n",
-                   s->io_buffer_size, s->io_buffer_index);
--    MACIO_DPRINTF("lba: %x    size: %x\n", s->lba, s->io_buffer_size);
-+    MACIO_DPRINTF("lba: %" PRIx64 "    size: %x\n", s->lba, s->io_buffer_size);
-     MACIO_DPRINTF("-------------------------\n");
- 
-     m->dma_active = true;
-diff --git a/hw/ide/trace-events b/hw/ide/trace-events
-index 57042cafddc..b38ac7a2edd 100644
---- a/hw/ide/trace-events
-+++ b/hw/ide/trace-events
-@@ -48,17 +48,17 @@ bmdma_write_via(uint64_t addr, uint64_t val) "bmdma: writeb 0x%"PRIx64" : 0x%02"
- 
- # atapi.c
- cd_read_sector_sync(int lba) "lba=%d"
--cd_read_sector_cb(int lba, int ret) "lba=%d ret=%d"
--cd_read_sector(int lba) "lba=%d"
-+cd_read_sector_cb(int64_t lba, int ret) "lba=%"PRId64" ret=%d"
-+cd_read_sector(int64_t lba) "lba=%"PRId64
- ide_atapi_cmd_error(void *s, int sense_key, int asc) "IDEState: %p; sense=0x%x asc=0x%x"
- ide_atapi_cmd_reply_end(void *s, int tx_size, int elem_tx_size, int32_t index) "IDEState %p; reply: tx_size=%d elem_tx_size=%d index=%"PRId32
- ide_atapi_cmd_reply_end_eot(void *s, int status) "IDEState: %p; end of transfer, status=0x%x"
- ide_atapi_cmd_reply_end_bcl(void *s, int bcl) "IDEState: %p; byte_count_limit=%d"
- ide_atapi_cmd_reply_end_new(void *s, int status) "IDEState: %p; new transfer started, status=0x%x"
- ide_atapi_cmd_check_status(void *s) "IDEState: %p"
--ide_atapi_cmd_read(void *s, const char *method, int lba, int nb_sectors) "IDEState: %p; read %s: LBA=%d nb_sectors=%d"
-+ide_atapi_cmd_read(void *s, const char *method, uint32_t lba, int nb_sectors) "IDEState: %p; read %s: LBA=%"PRIu32" nb_sectors=%d"
- ide_atapi_cmd(void *s, uint8_t cmd) "IDEState: %p; cmd: 0x%02x"
--ide_atapi_cmd_read_dma_cb_aio(void *s, int lba, int n) "IDEState: %p; aio read: lba=%d n=%d"
-+ide_atapi_cmd_read_dma_cb_aio(void *s, int64_t lba, int n) "IDEState: %p; aio read: lba=%"PRId64" n=%d"
- # Warning: Verbose
- ide_atapi_cmd_packet(void *s, uint16_t limit, const char *packet) "IDEState: %p; limit=0x%x packet: %s"
- 
-diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
-index f5eaaf68e65..c6fd8d7eb1f 100644
---- a/include/hw/ide/ide-dev.h
-+++ b/include/hw/ide/ide-dev.h
-@@ -101,7 +101,7 @@ struct IDEState {
-     int packet_transfer_size;
-     int elementary_transfer_size;
-     int32_t io_buffer_index;
--    int lba;
-+    int64_t lba;
-     int cd_sector_size;
-     int atapi_dma; /* true if dma is requested for the packet cmd */
-     BlockAcctCookie acct;
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 71d23fe56af..4c1e9b24005 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1691,6 +1691,40 @@ static void test_cdrom_pio_raw(void)
-     ahci_test_cdrom_raw(3, false);
- }
- 
-+/* Regression test: read the last sector of a medium over 4 TiB. */
-+static void ahci_test_cdrom_high_lba(bool dma)
-+{
-+    AHCIQState *ahci;
-+    g_autofree unsigned char *tx = g_malloc0(ATAPI_SECTOR_SIZE);
-+    uint64_t lba = (uint64_t)INT32_MAX + 1;
-+    AHCIOpts opts = {
-+        .size = ATAPI_SECTOR_SIZE,
-+        .lba = lba,
-+        .atapi = true,
-+        .atapi_dma = dma,
-+        .post_cb = ahci_cb_cmp_buff,
-+        .opaque = tx,
-+    };
+     /* This field is filled in before ->cb() is called */
+     struct io_uring_cqe cqe;
 +
-+    ahci = ahci_boot_and_enable("-blockdev driver=null-co,node-name=cd0,"
-+                                "read-only=on,read-zeroes=on,size=%" PRIu64 " "
-+                                "-M q35 "
-+                                "-device ide-cd,drive=cd0 ",
-+                                (lba + 1) * ATAPI_SECTOR_SIZE);
-+    ahci_exec(ahci, ahci_port_select(ahci), CMD_ATAPI_READ_10, &opts);
-+    ahci_shutdown(ahci);
++    /*
++     * Whether the in-flight request should count towards IO wait.
++     * Private to the fdmon layer; must not be touched outside of it.
++     */
++    bool iowait_accounting;
+ };
+ 
+ typedef QSIMPLEQ_HEAD(, CqeHandler) CqeHandlerSimpleQ;
+@@ -295,6 +301,12 @@ struct AioContext {
+ 
+     /* Pending callback state for cqe handlers */
+     CqeHandlerSimpleQ cqe_handler_ready_list;
++
++    /*
++     * Number of in-flight requests that should count towards IO wait.
++     * Must be accessed using atomics.
++     */
++    unsigned int iowait_accounting_reqs;
+ #endif /* CONFIG_LINUX_IO_URING */
+ 
+     /* TimerLists for calling timers - one per clock type.  Has its own
+@@ -843,6 +855,9 @@ static inline bool aio_has_io_uring(void)
+  * as soon as @prep_sqe() returns or it may take until the next event loop
+  * iteration.
+  *
++ * The fdmon's IO wait accounting logic currently assumes that the request is
++ * not multishot.
++ *
+  * When the AioContext is destroyed, pending sqes are ignored and their
+  * CqeHandlers are not invoked.
+  *
+diff --git a/meson.build b/meson.build
+index 40e3f4ec44c..38bb8b462c7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2713,6 +2713,8 @@ if linux_io_uring.found()
+                        cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
+   config_host_data.set('HAVE_IO_URING_CQ_HAS_OVERFLOW',
+                        cc.has_header_symbol('liburing.h', 'io_uring_cq_has_overflow'))
++  config_host_data.set('HAVE_IO_URING_SET_IOWAIT',
++                       cc.has_header_symbol('liburing.h', 'io_uring_set_iowait'))
+ endif
+ config_host_data.set('HAVE_TCP_KEEPCNT',
+                      cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPCNT') or
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index b81e412402b..33e0eec9349 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -61,6 +61,32 @@ enum {
+     FDMON_IO_URING_DELETE_AIO_HANDLER = (1 << 3),
+ };
+ 
++#ifndef HAVE_IO_URING_SET_IOWAIT
++static inline int io_uring_set_iowait(struct io_uring *ring, bool enable_iowait)
++{
++    /*
++     * Stub out this liburing 2.10 API on older hosts and accept that
++     * IOWAIT accounting includes POLL_ADD and TIMEOUT ops. Build
++     * against a newer liburing and a newer Linux kernel if you want to
++     * fix IOWAIT accounting.
++     */
++    return 0;
++}
++#endif
++
++/*
++ * Use before calling any liburing function that may call io_uring_enter().
++ *
++ * Configures IO wait accounting for the AioContext's ring depending on the
++ * presence of real block-layer IO. Poll or timeout SQEs alone do not count
++ * towards IO wait.
++ */
++static inline void configure_iowait_accounting(AioContext *ctx)
++{
++    io_uring_set_iowait(&ctx->fdmon_io_uring,
++                        qatomic_read(&ctx->iowait_accounting_reqs) > 0);
 +}
 +
-+static void test_cdrom_dma_high_lba(void)
-+{
-+    ahci_test_cdrom_high_lba(true);
-+}
-+
-+static void test_cdrom_pio_high_lba(void)
-+{
-+    ahci_test_cdrom_high_lba(false);
-+}
-+
- /*
-  * Regression test: a buffered ATAPI read completing after a command
-  * engine restart must not dereference the cleared cur_cmd. Cover both
-@@ -2234,6 +2268,8 @@ int main(int argc, char **argv)
-     qtest_add_func("/ahci/cdrom/pio/single", test_cdrom_pio);
-     qtest_add_func("/ahci/cdrom/pio/multi", test_cdrom_pio_multi);
-     qtest_add_func("/ahci/cdrom/pio/raw", test_cdrom_pio_raw);
-+    qtest_add_func("/ahci/cdrom/dma/high_lba", test_cdrom_dma_high_lba);
-+    qtest_add_func("/ahci/cdrom/pio/high_lba", test_cdrom_pio_high_lba);
+ static inline int poll_events_from_pfd(int pfd_events)
+ {
+     return (pfd_events & G_IO_IN ? POLLIN : 0) |
+@@ -93,6 +119,7 @@ static struct io_uring_sqe *get_sqe(AioContext *ctx)
  
-     qtest_add_func("/ahci/cdrom/pio/bcl", test_atapi_bcl);
-     qtest_add_func("/ahci/cdrom/eject", test_atapi_tray);
+     /* No free sqes left, submit pending sqes first */
+     do {
++        configure_iowait_accounting(ctx);
+         ret = io_uring_submit(ring);
+     } while (ret == -EINTR);
+ 
+@@ -176,9 +203,14 @@ static void fdmon_io_uring_add_sqe(AioContext *ctx,
+ {
+     struct io_uring_sqe *sqe = get_sqe(ctx);
+ 
++    /* Currently, IO wait should be accounted for all requests here. */
++    cqe_handler->iowait_accounting = true;
++
+     prep_sqe(sqe, opaque);
+     io_uring_sqe_set_data(sqe, cqe_handler);
+ 
++    qatomic_inc(&ctx->iowait_accounting_reqs);
++
+     trace_fdmon_io_uring_add_sqe(ctx, opaque, sqe->opcode, sqe->fd, sqe->off,
+                                  cqe_handler);
+ }
+@@ -286,6 +318,10 @@ static bool process_cqe(AioContext *ctx,
+         return false;
+     }
+ 
++    if (cqe_handler->iowait_accounting) {
++        qatomic_dec(&ctx->iowait_accounting_reqs);
++    }
++
+     /*
+      * Special handling for AioHandler cqes. They need ready_list and have a
+      * return value.
+@@ -314,6 +350,7 @@ static int process_cq_ring(AioContext *ctx, AioHandlerList *ready_list)
+ #ifdef HAVE_IO_URING_CQ_HAS_OVERFLOW
+     /* If the CQ overflowed then fetch CQEs with a syscall */
+     if (io_uring_cq_has_overflow(ring)) {
++        configure_iowait_accounting(ctx);
+         io_uring_get_events(ring);
+     }
+ #endif
+@@ -335,9 +372,11 @@ static void fdmon_io_uring_gsource_prepare(AioContext *ctx)
+ {
+     fill_sq_ring(ctx);
+     if (io_uring_sq_ready(&ctx->fdmon_io_uring)) {
+-        while (io_uring_submit(&ctx->fdmon_io_uring) == -EINTR) {
+-            /* Keep trying if syscall was interrupted */
+-        }
++        int ret;
++        do {
++            configure_iowait_accounting(ctx);
++            ret = io_uring_submit(&ctx->fdmon_io_uring);
++        } while (ret == -EINTR); /* Keep trying if syscall was interrupted */
+     }
+ }
+ 
+@@ -424,6 +463,7 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
+      *    rather than -EINTR.
+      */
+     do {
++        configure_iowait_accounting(ctx);
+         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+     } while (ret == -EINTR ||
+              (ret >= 0 && wait_nr > io_uring_cq_ready(&ctx->fdmon_io_uring)));
 -- 
 2.47.3
 
