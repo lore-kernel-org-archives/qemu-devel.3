@@ -1,53 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4AB606A32F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02790606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Uk/Ya73g
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XAzApeNy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX1No-0001qA-Rq; Fri, 27 Nov 2026 14:13:22 -0500
+	id 1xX1Nb-0001kg-Fn; Fri, 27 Nov 2026 14:13:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xX1Ne-0001m4-3C; Fri, 27 Nov 2026 14:13:11 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1xX1NX-0001jG-Fu; Fri, 27 Nov 2026 14:13:03 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xX1Nc-0006EC-Ds; Fri, 27 Nov 2026 14:13:09 -0500
+ id 1xX1NU-0005r0-H9; Fri, 27 Nov 2026 14:13:03 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 1FA8540950;
- Fri, 27 Nov 2026 19:13:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980A41F00893;
- Fri, 27 Nov 2026 19:13:05 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 7EF0D60D27;
+ Fri, 27 Nov 2026 19:12:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EFF1F000C1;
+ Fri, 27 Nov 2026 19:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795806787;
- bh=uroSrAqj9LH1phzTsP/8O/Nv8k16SbW9CDugRtmdQFI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Uk/Ya73gIeqWvwwczqzQ5D3cVNMEb/5NeZsR6OeLBMiw2Swf7q7SCj1WClArSQo9W
- /h+5ybhZk2K+4BblgGusEernqjBlq/bC4T4ExqEkHruHEzXBJ4UvAbkgT2xaM4C0ru
- Oyj6AaL5lFpj1zRMwDEMFeoYPIzVsPqjD3PsC+N3wWWSBJnPz0jM0K5vKJyj2ssI01
- kyEAJtzviBsMt/FASWdv9gzo/UMdxIRxPTya+DX9J0b612K/ERt2UIcZ2UEw/jEWYN
- Ga+HJQYJWiWq7F6eR5OeDoXl9BLL8PPthWI6gWcjY/t9VWzDm9OVWmoFRfrQn8M6pR
- 9BKX9HiFFfaUg==
+ s=k20260515; t=1795806778;
+ bh=lmlpJhMwl6wlGT0M6hE6nj8NniBYUJFqAq3ZbWlo3sw=;
+ h=From:To:Cc:Subject:Date;
+ b=XAzApeNyoK1z5EKPmLZTdtwVxd5d5TW69oJ77O2SCmlrWUqPqXWQkc1RuqD8xaiTw
+ 0qFQyDtqK3nDVtIRH3iQYEExfm4dDcLLOXUmuEx/t8I1Z+NSGbXitm2I8HVeau5H33
+ vYqOK1m9tAGcE4xGmjHGHZNDlkzwQH5zQ7eJKHlN406Y6elCz4VcRWJ+mVNrpufqP+
+ 012ZWa1bXiqTllpPVZCMGe1tQxnTxDTeUzytA+UJak9P6s3g7yTAC4vyNyThC9itSz
+ /fF4e5/dGkP7L/9VDJ/2Z8F86SWXLhPHylAtwa/a7MBgtvbz53V7lNyZxRxyGZ/Dm9
+ zKSr2LldV3bZA==
 From: Niklas Cassel <cassel@kernel.org>
-To: John Snow <jsnow@redhat.com>,
-	"Denis V. Lunev" <den@openvz.org>
+To: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Cc: Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>,
  qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 04/13] hw/ide/ahci: complete unsupported NCQ commands
-Date: Fri, 27 Nov 2026 20:12:39 +0100
-Message-ID: <20261127191250.3298004-5-cassel@kernel.org>
+Subject: [PATCH 00/13] hw/ide: add missing features required for SATA
+Date: Fri, 27 Nov 2026 20:12:35 +0100
+Message-ID: <20261127191250.3298004-1-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261127191250.3298004-1-cassel@kernel.org>
-References: <20261127191250.3298004-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -66,39 +65,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-execute_ncq_command() aborts an NCQ command that it does not implement
-(e.g. SEND FPDMA QUEUED) with ncq_err(), but does not call ncq_finish().
+This series implements mandatory features that should be implemented by
+a SATA disk:
 
-This means that no Set Device Bits FIS is sent, so the command never
-completes. Linux will eventually notice a timeout and reset the port,
-however, the the proper thing to do is to send a SDB FIS after calling
-ncq_err() such that the host gets an IRQ.
+-Sense data reporting
+-General Purpose Logging
+-NCQ Command Error log
+-SATA NCQ Send and Receive log
+-Serial ATA page of the IDENTIFY DEVICE data log
 
-Fixes: 72a065dbb13d ("ahci: add is_ncq predicate helper")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- hw/ide/ahci.c | 1 +
- 1 file changed, 1 insertion(+)
+All these features are added so that we eventually can add ZAC (Zoned
+device ATA Command set) support, which requires all this to e.g. report
+sense data unaligned write command when not writing at the write pointer.
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index e3ae46e869..e14b298ea6 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -1127,6 +1127,7 @@ static void execute_ncq_command(NCQTransferState *ncq_tfs)
-         trace_execute_ncq_command_unsup(ad->hba, port,
-                                         ncq_tfs->tag, ncq_tfs->cmd);
-         ncq_err(ncq_tfs);
-+        ncq_finish(ncq_tfs);
-     }
- }
- 
+However, all patches in this series are unrelated to ZAC and can be
+accepted as is. E.g. this series adds a range check and reports sense data
+LOGICAL BLOCK ADDRESS OUT OF RANGE, if the user tries to read or write an
+LBA outside the LBA range.
+
+
+Kind regards,
+Niklas
+
+
+Niklas Cassel (13):
+  hw/ide: report the SMART state in IDENTIFY DEVICE
+  hw/ide/ahci: stop processing commands after a fatal error
+  hw/ide/ahci: clear a stale error status when an NCQ command is queued
+  hw/ide/ahci: complete unsupported NCQ commands
+  hw/ide: add General Purpose Logging (GPL) feature set support
+  hw/ide: add the IDENTIFY DEVICE data log
+  hw/ide/ahci: add RECEIVE FPDMA QUEUED support
+  hw/ide: add Sense Data Reporting feature set support
+  hw/ide: implement the NCQ Command Error log (10h)
+  tests/qtest/libqos: skip some checks for commands expected to fail
+  hw/ide: report out-of-range accesses as ILLEGAL REQUEST
+  hw/ide/ahci: check the LBA range of NCQ commands
+  hw/ide: report ACS-6 compliance behind AHCI
+
+ hw/ide/ahci-internal.h    |   8 +
+ hw/ide/ahci.c             | 219 ++++++++++--
+ hw/ide/core.c             | 689 ++++++++++++++++++++++++++++++++++---
+ hw/ide/ide-internal.h     |  44 ++-
+ hw/ide/trace-events       |   2 +
+ include/hw/ide/ide-dev.h  |  22 ++
+ tests/qtest/ahci-test.c   | 708 ++++++++++++++++++++++++++++++++++++++
+ tests/qtest/ide-test.c    |   5 +
+ tests/qtest/libqos/ahci.c |  40 ++-
+ tests/qtest/libqos/ahci.h |  18 +-
+ 10 files changed, 1682 insertions(+), 73 deletions(-)
+
+
+base-commit: 29760efaf96bbe5928f8111881eddbf5ac06439e
 -- 
 2.56.1
 
