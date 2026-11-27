@@ -1,129 +1,132 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A9B606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D80E606A326
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JsgIITFG;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=VMqqCite
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=o/9WcptO;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Q/41G67p
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWzLl-00073E-6v; Fri, 27 Nov 2026 12:03:05 -0500
+	id 1xWzMR-0007t0-3U; Fri, 27 Nov 2026 12:03:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xWzJM-0006DU-6h
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:00:44 -0500
+ id 1xWzMJ-0007iH-BS
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:03:41 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xWzJF-00026c-32
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:00:34 -0500
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xWzMH-0006hS-Ho
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:03:39 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ARFpFdH925910
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:00:20 GMT
+ 6ARFoxXR2617012
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:03:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=iJ/m9kqJqR0
- g6z7dcXNQvSzuAJSXZjfn1DxxsqoJ/H4=; b=JsgIITFGkCRFh2PIpyqg6ovfE+r
- tDPnHxvZ5wNXGI8MW9ndRHQAUbtHbfI2yyNli0u5YPhCbEsUSP7qTHox1nFMPOIq
- wxt6IBviKDPm9wfbQIVJk/CLhY6M0YH7PXifrUFBNVtVYPV1GhKV1bXGH3OW6GZk
- TcUzeyeYlJEvbhvWAORA+xtjnwkn9/KGhUcXoh68w5vF5VifB8bArozBZjslff3S
- 0Aq6WFuBjf+t8Y+ugFVnrYCZh1Ki1x+f9Xx+fSygKVTA3eSBc6O70xkFRk4DasDT
- zInO6Dc4JQ0KeT5SjuluM/f/huB4jR9DX7W1D2yh/zjwHqs4J1ZjUMvR50w==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6u49bwnh-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ lR9KUWcmNcTaFKUjabfIvmI+2evQdGRVINxlauJK4BI=; b=o/9WcptOIGdmjPBA
+ l5e6hBNTvTW9k8QK2UV4KjL/zRGJE158eq6HmFsMMKgdNHqwHHrkFSn24HCQAjgk
+ u0TfgDK/S5RLyqF9gUexnx+1rdxwMtpyWi2Bxo70CnDeleOaisT21evL99yHKCN/
+ UW0/MLX8kwmAXoYshPoTX3vqC5PE/KJu/djYdYvbihG7EsqcpNOHX+agE/niIl8z
+ pAbi9/FJ//0RAeEh+ZTNgsEGn/7aU6neR11iIRhCQlN+IMAKkfir1MbInkhI+7GP
+ qjFNfl53lcajztXy1hO66N9xDEToN3ejNjcl1QKZQ1aiGn1FO3DVl9r17G/kJfTO
+ C08g0g==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6u4huygd-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:00:20 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-8b691cf0eeaso9378662b3a.1
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:00:20 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:03:32 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-3854627c1c8so10857094eec.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:03:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795798820; x=1796403620; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iJ/m9kqJqR0g6z7dcXNQvSzuAJSXZjfn1DxxsqoJ/H4=;
- b=VMqqCiteo98KtLOL43bf490LAJabdPpQEaEcHuN1dlMvO0C/dAIGo5KudAgBBZ4zTA
- xHZZj/p11JSZpeg4zLazKr/y1fc/9x5bADqJ9dXI6vf1GfEPVHPIyv6cy0VMVmMh6ZU3
- qZ6XQJ5G+ZYMjn/njYm6cZ4j8se9zzuJCjBrfKixI/di4QVFnRP0t0MXwNfzhr5ZZO+r
- hg1NiXGiiAm3yxJQINykwtCX8mEQLJPsglDKWE+nYKQ5EroTgUXUJI8iE79mPZ/8mpM7
- WxmlSc71tPOIDU+4B0a9i80skzVSifIaLPIR8jEVodTnYtFkAgrNaWi88QINbboWxMO4
- uyvQ==
+ d=oss.qualcomm.com; s=google; t=1795799012; x=1796403812; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lR9KUWcmNcTaFKUjabfIvmI+2evQdGRVINxlauJK4BI=;
+ b=Q/41G67p0WgWgNipTqbMnFq2MHHO36UD6/oMHM8kze8lrsA54ZHcDaTiOFYMH39jbp
+ 88FnV5Q0MYWK2pLGT87pwvldFjSxhYd835qOgHE/YwWGKEJHYuL5rTJVM6xPN1wY0oDZ
+ m33FuOnuyUIeX3IuqpRdeFvMrFspMXA4+iKmZjRcXvVASEOlLGpNNDIn+Cy/QYSgyjdC
+ yMt9I1BESQO8kdiKdSt5gLCDln6zrqWlv8p91/3iIixP9HE4jf45gnCwW5IT76vfIC43
+ 8JZbNfQEAaCZzDuPIv/DYfhZ2vJZmy+eGcd0Jbwfezgp/i8ajBXBSN3kpVw9c/RNs1Wk
+ C9Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795798820; x=1796403620;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=iJ/m9kqJqR0g6z7dcXNQvSzuAJSXZjfn1DxxsqoJ/H4=;
- b=pzxGcPEfwcHqu97S9knmL6lzZhKJFDtJJzv1HWZy3t5kRGo3R3Vn/T3oiQpmlG6WSX
- qb4xPsoWtiP/mTXAH5pztxL+uC/y9CPKNINn4qH0eED5/8A3yA1klC1gtIlSY2tz1E/u
- 8sNiuSIA9ie19gbS5x4aIR3m4MTrLVOEIPX+T/2dTh9yldZvG4i2qdzYoR653fGudKKa
- gF0VW/FOrEDPcFZeCP8i8/rWlHfFHLcvuf9kpblExXo3harI2dPfi8t+gKhVQCMeGJpQ
- WNj/sv6hSgXLDoCv3axriTBk2b/QlcdlGafSZGYf7Gc1bXYKFJYy1CmdnQ7VtBqeY/o9
- r5pg==
-X-Gm-Message-State: APuU4Z8F79Zr4jAvF2vQSD95j9E4F9EFAIvpzAql7Rgf1+xRqNJf9GdG
- EIN1GT1ZWxM92Wr7mmycUUjioI96HKkGVSotDu2BMDjRu5Ybtt7SKAFIcbzQdIQhZQQ+ljo/S4I
- A9MRoxHl1p1QQEHPOo50n5h0xm7mjw61a7EK1kikmGUdy2DjIAUVmdjNyLbKpeY7DtQ==
-X-Gm-Gg: AZFdTZeHWer0HCoFFzM7jcnojyaNbqHGjMehpSWj2QrdtqZJY4K7Jp/9RKO7Ry4I/zl
- zo7TuXcsNkHJrR5tG+qPxctGhuMLHCSXsCq98YqiDjplz0Gn+sWTYGpwj1uAe65nPlaD34iK2H9
- 6Hy4iCh16Fgji2m6g5P7b36iTjUA9vjuYc0EOEZ2DBuoB269wwI37L55o/OPLGVOCOsRgm8KhsH
- U/y+vH/cDb0YFtZFrpYwIhck3W0DDqzwqNz+tE2ZARy/7Iu3sXzoVDf4VM64qIvK5SiD7W+8fJL
- nsxNwjT03D0Thm5p6Tw7y40sEoDzALh0fbKBAhdB4HvEOgPiHVTLw9Ls92DgDDcB8Ie4c+63L6d
- ltI4qauKYAPAKQxKKAeF00ovGI/B+cTMtjOpXDYhat9yUFhmw+1FUk3unBbT8ObhOH5TjZtlDjA
- Vbbl4JB6veSnsVgJEimXx1MPeR9pMS2btIig60
-X-Received: by 2002:a05:6a20:748e:b0:3d3:aec2:4dcd with SMTP id
- adf61e73a8af0-4014c251613mr28385822637.25.1795798819646; 
- Fri, 27 Nov 2026 09:00:19 -0800 (PST)
-X-Received: by 2002:a05:6a20:748e:b0:3d3:aec2:4dcd with SMTP id
- adf61e73a8af0-4014c251613mr28385787637.25.1795798819231; 
- Fri, 27 Nov 2026 09:00:19 -0800 (PST)
-Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
+ d=1e100.net; s=20260707; t=1795799012; x=1796403812;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=lR9KUWcmNcTaFKUjabfIvmI+2evQdGRVINxlauJK4BI=;
+ b=a2mSgplKoMvrFVBz0tIg7M0NldHi+SgC5kJIF96w81s5iiLvSkl/3+ud2ziUaF4tT7
+ wQHbaYNctEOdD/uU5O3oVytJ+FFCgbNGSoIAh3kNnI1hAh0yTPifcWxS+ddkHdrD81Bd
+ YyxIenI9B73fc8NrOwQ4W62hJvm8i0qPC+jFHIsIjsa3p2wkeq14J7VMyQmocI1wPV3H
+ L2V+4u2Ji6zmPvRzE+y13UYCBB+W5R+s5kgMaWw/BFheXBQmBvrpZaSXyQIClwvYKHR2
+ An+uNFyCJhxRDlP6FS1rM0sscENFvHzzJlv/Tsj4ZCxo8qrNLh6cFJpnHZhQX4Cab8KV
+ oIhA==
+X-Gm-Message-State: APuU4Z8oeBRQ7kflHDHQUInh6gVdaxkVfip1hW9aM/dUr8VkulNe0zJg
+ T1NbsYUaD1NeGBiA4dXoO3VmkJz+LuYLtLY5emvTLQ7tZ2IxlzPnyD97WrZopVQAhGzU3XpNImC
+ CFi6dASRp6wTDPgXmpHesU799o0XXdWaK029av9cGOD1GiDWhnNfZeKTW4kY6pvsZ9A==
+X-Gm-Gg: AZFdTZeutKgcVktCU92EfpnayVBFjg4yv9OpfwPTnIEQ1Cdlc+wY6loINL6O1WKKmP5
+ tgR+jixp2fgTcAnrAatqdKLDDTVAU8/z8eIMHN/rpP163yVcBbaLqDbBa1HE3H2al/nLj6doqXS
+ nuCldBSFlQnlw0cQcpeEo83z0gqoqNFuxJjttoywbVw4USgyLsTv+C4s6PfKOLW+bpxchYeMKGr
+ Oejh4l9ivigZsKDMQ7Y3Wz+fQ92fTIsPOuZ16drjnkVle6aPq6NGCTsZx4eKWs5YMkXuUzrrpoD
+ NqldfyxMfSerx/k10sN09lPFhqX10Mub5iZk3ubz70uYLl+GS0gaRUGgTrCJOsZHd6sxis5TXpM
+ k3A/OzxED8sUQgSyqrUjSRtn2Rw9KIfAfB5r4RCPViHSJof/7EkDo8W8tvWRAA9zcwSNMftJJmM
+ AEXQy981DWAH6s7mjUmXzj6o2gw6VreCbmaZjLUUmObC4=
+X-Received: by 2002:a05:7301:fc04:b0:386:ea31:7123 with SMTP id
+ 5a478bee46e88-386ea318008mr3598989eec.25.1795799012118; 
+ Fri, 27 Nov 2026 09:03:32 -0800 (PST)
+X-Received: by 2002:a05:7301:fc04:b0:386:ea31:7123 with SMTP id
+ 5a478bee46e88-386ea318008mr3598965eec.25.1795799011586; 
+ Fri, 27 Nov 2026 09:03:31 -0800 (PST)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8c87077a058sm13014650b3a.8.2026.11.27.09.00.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Nov 2026 09:00:18 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 2/3] contrib/plugins/uftrace_symbols.py: ignore warning
- reported by llvm-addr2line
-Date: Fri, 27 Nov 2026 16:59:52 +0000
-Message-ID: <20261127165953.51257-3-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261127165953.51257-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20261127165953.51257-1-pierrick.bouvier@oss.qualcomm.com>
+ 5a478bee46e88-385c6830815sm66989481eec.20.2026.11.27.09.03.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Nov 2026 09:03:31 -0800 (PST)
+Message-ID: <e4f08428-6955-4ba7-8289-af78646e1faa@oss.qualcomm.com>
+Date: Fri, 27 Nov 2026 09:03:30 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: AD4kdRXHnSxtPEwjBtjZ_VQEkEjTNYsk
-X-Proofpoint-ORIG-GUID: AD4kdRXHnSxtPEwjBtjZ_VQEkEjTNYsk
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA2NyBTYWx0ZWRfX1GA3OMuB4Grt
- PDJDyHsrYdqzQqSXhz5CN3GTU35dmNirZdw1K5IScZG2uYAvH6bMOeODOvpsJlHum256qWDpBNt
- Ribml42h2lAlWpz1nIKN1SI8ZwZb/Io=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA2NyBTYWx0ZWRfX+9nxo0wbnlT7
- sTPllEDsKubZq1aeKx2Li61j5mPDOvl6ktxqOsvcce3fRwkpbMU8rtEKhoWAh0a3LRWbejZIHRU
- aE8oXLrYEVEE0jNb7WWfzoBE4sDlqmKBjPhDUxEHFZAMehyRqVJKjBzmcMaSZNDM6vbFdOML55d
- g6vQr84usUk5KNt5Wu0p7/q2iiUYTLGCwqSAYV8wgLnqnxjjMGozybDqMMuBBSD0zAnbbMZr3ME
- mU1jJpoiOPq2N0aNeLyywpQydmE2GsBUgmWVDLSObiw1TG1M+CDKC3O9TQYhUQEX9su0YoYgB59
- vQvHRet/pKV+v6myDP4yfL/M1tkdQRaQGlhZLD/rzlyZ27xqNnz3n5vMjAgy3uzj7G75SLC2T8/
- bF6WHaKdoVW857Wr5PxQRXeeqXRDLAJSkxaFVfA1pM4cmUrqsoROACh/qiET8TPIO0kj8PqMOG+
- mdLuJD/vinDfYsEgD3Q==
-X-Authority-Analysis: v=2.4 cv=A875rKWG c=1 sm=1 tr=0 ts=6b09b724 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=4uSdFgqm0Hs0aUViYFAA:9 a=zc0IvFSfCIW2DFIPzwfm:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/3] Fixes for 11.2: docker + plugins + gdbstub
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+References: <20261127165953.51257-1-pierrick.bouvier@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20261127165953.51257-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA2NyBTYWx0ZWRfX/ewy287x+IlT
+ 5YSYiBBi+fIrGM93EcYJtBKA/ROl8wf9+pk4JvmDp7h8NBTADbpfDT9kfE7DjhInuLkQm+QSB1w
+ NbGJQNThLetos/5PHmwXkwva4V7x1q0=
+X-Proofpoint-GUID: m4URaeQY2wcOyiKfvLRLcDYphrp7KVOb
+X-Proofpoint-ORIG-GUID: m4URaeQY2wcOyiKfvLRLcDYphrp7KVOb
+X-Authority-Analysis: v=2.4 cv=M9fYuCws c=1 sm=1 tr=0 ts=6b09b7e4 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
+ a=GYMq4rxn_RfNioiAtL8A:9 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA2NyBTYWx0ZWRfX9EW223NkGMu8
+ nzudM2QgVOscJos0Dvkf1x2Gw4f/TVS67wibPUd0j5Bp/RgFk0VmyRQ0vszPsiDnqhB1Y0lyumN
+ yGD3jy5oMTE0FtD+8USTjmE6MUp6+9xXNcbkth9zxkJkHPPQYLVvy5yxmKHQhsoaLto7TJp+zpL
+ V3hOsy5xuleBfQf1Yy3kIvyr6qTe3HQilhwCjI8ryJcZ0iYi7VdDkOn2AwmkAh9tKyHDQHLZmaM
+ TRHF2NTn3EKuomi1WBXstSR7XovDuYXedh50VvJfzRRuHO818YlYvFewmFfMtYepQzuuEpjseIh
+ xTJcge76rkUY7DcU43WnPSpBAaIMk0D6aL9B74N8TyKQ5dmnda1U3ZnkmAlTePBhJd9BSQBNxMl
+ bRVyMzkmssJx5u74Q++Fhvfjy7jSAuEf3oM7fDocJUR4NcYgY4zc04lXIN9bmeSLJben7L+2jJH
+ mpDTYYYDCDkTLJu+fpA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-27_03,2026-11-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 impostorscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270067
 Received-SPF: pass client-ip=205.220.168.131;
@@ -147,41 +150,60 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When trying to trace a riscv64 stack, addr2line reported warning on
-stdout when symbolizing addresses:
-warning: address range table at offset 0x8a0 has a premature terminator entry at offset 0x9c0
-warning: address range table at offset 0x1700 has a premature terminator entry at offset 0x1750
+On 11/27/2026 8:59 AM, Pierrick Bouvier wrote:
+> The following changes since commit 9751c62358073580cbf330a4df22077a7c6a407c:
+> 
+>   Update version for v11.2.0-rc2 release (2026-11-25 21:39:27 -0800)
+> 
+> are available in the Git repository at:
+> 
+>   https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/fixes_11.2-20261127
+> 
+> for you to fetch changes up to ff4c3cf7ca6afd7f3da1a011be304f897d2d5fab:
+> 
+>   gdbstub: reset supported features on Supported request (2026-11-27 16:58:43 +0000)
+> 
+> ----------------------------------------------------------------
+> Changes:
+> - [PATCH] tests/lcitool: Switch to a newer version of netmap and check (Thomas Huth <thuth@redhat.com>)
+>   Link: https://lore.kernel.org/qemu-devel/20261106063103.21061-1-thuth@redhat.com
+> - [PATCH] contrib/plugins/uftrace_symbols.py: ignore warning reported (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+>   Link: https://lore.kernel.org/qemu-devel/20261118021020.1253822-1-pierrick.bouvier@oss.qualcomm.com
+> - [PATCH v2] gdbstub: reset supported features on Supported request (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+>   Link: https://lore.kernel.org/qemu-devel/20261105075346.52926-1-pierrick.bouvier@oss.qualcomm.com
+> 
+> ----------------------------------------------------------------
+> Justin Sapp (1):
+>       gdbstub: reset supported features on Supported request
+> 
+> Pierrick Bouvier (1):
+>       contrib/plugins/uftrace_symbols.py: ignore warning reported by llvm-addr2line
+> 
+> Thomas Huth (1):
+>       tests/lcitool: Switch to a newer version of netmap and check it out faster
+> 
+>  contrib/plugins/uftrace_symbols.py     |  3 ++-
+>  gdbstub/gdbstub.c                      | 15 +++++++--------
+>  gdbstub/user.c                         |  4 +---
+>  tests/docker/dockerfiles/debian.docker |  4 ++--
+>  tests/lcitool/refresh                  |  4 ++--
+>  5 files changed, 14 insertions(+), 16 deletions(-)
 
-Ignore any warning, similar to the error we ignored previously.
+Disclaimer: This PR contains one patch for gdbstub, for which I'm not an
+official maintainer.
 
-Link: https://lore.kernel.org/qemu-devel/20261118021020.1253822-1-pierrick.bouvier@oss.qualcomm.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- contrib/plugins/uftrace_symbols.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Despite multiple pings on v2, I could not get any answer from Alex, so
+sending this now directly, as the fix was tested and reviewed.
+He reviewed the v1, and v2 was a small fix on top.
 
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-index 9f0095e73b9..2b931c49a83 100755
---- a/contrib/plugins/uftrace_symbols.py
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -63,7 +63,8 @@ def find_symbols_locations(elf_file, symbols):
-     out = out.strip().split('\n')
-     # filter out some addr2line error messages
-     skip_err='addr2line: DWARF error: mangled line number section (bad file number)'
--    out = [src for src in out if src != skip_err]
-+    out = [src for src in out
-+           if src != skip_err and not src.startswith('warning:')]
-     assert len(out) == len(symbols)
-     for i in range(len(symbols)):
-         s = symbols[i]
--- 
-2.43.0
-
+Regards,
+Pierrick
 
