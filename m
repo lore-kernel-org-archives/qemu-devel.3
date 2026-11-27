@@ -1,55 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87091606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E13D606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=k+RFke33
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=fTsqoMv9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp3E-0004me-SX; Fri, 27 Nov 2026 01:03:18 -0500
+	id 1xWoyu-0004jX-5z; Fri, 27 Nov 2026 00:58:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp1p-0003gT-Jx; Fri, 27 Nov 2026 01:01:50 -0500
+ id 1xWoyo-0004c3-9Z; Fri, 27 Nov 2026 00:58:43 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp1m-0008LF-Ni; Fri, 27 Nov 2026 01:01:49 -0500
+ id 1xWoyj-0002wr-MI; Fri, 27 Nov 2026 00:58:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758881; bh=4ypmJZW8TwhV5K5tOsXbz43wNFhm9PbeHSRKeE10EKw=;
+ t=1795758877; bh=wesWU/kU52fo1IL7Py6uiHo2NbRDJQHY+4zCP0aQHBI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=k+RFke3342xQjRXEdVWgPCXhsP7OUPtVBPswwjpVEh77QuAV7QBcA2Ms+4QK6CLta
- 2l2aHO4rnwgef/29SPhmt1Hhj9N7sG8CGiYvh3b73106rdzdC8DeIOcsEtxAS3ChbG
- wmJ2Cbi4aCseW1oEs02kbxpYNCaf2ddl4JQe6NJ0Bp3gF1BOO4ULAogV8AkVfxFBIW
- VNssbbwbiWS3tf4Raet+zG56dN5j7bBm3VNTUw9VIDGjSwhCxrY47ovXcNuFwJDWIT
- RNWwTIejuo/LuW3s60y5BWO97XyKQl1ubG1FPL2Bpctxu/M2hNg2oIyi4+Db84ndzi
- BddF/TitEyg4w==
+ b=fTsqoMv9+sbUMwxVoUu4XIlGfTtcz/kkgUDeSt1EOi9V9VuevFEOwu3DtA5g8qslX
+ uZ/o4TwFp7tYFOUy1Yk37VQTBDEc1wrYkCURlKjN6tT21op4jWj+RTic2DxCMCRYHX
+ ApVJBIq48NAf/x2/Ht3oDsjQRTv4w17JYFwUfmHVSMoMNCwM2LEAZ9jDV4CQUwuUDo
+ bSOTSXe+mtASMujrS/TKvGCyCLBN7HaDuunZcCf20LBOzgO47EwviY8MXEud5QF7qt
+ qF103W5W6mGbOhstkCNTKslR0iAjR8BfK69fe5tWWkrKuh+C5Gh3Um/By0ocL41f1l
+ iDVV1yUpGqF2Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DDA201EA313;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C52851EA2F1;
+ Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DB91E469953;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2EBD46992C;
+ Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AF140CF2A6; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ id A4F0BCF264; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Wang Jianqiang <wjq.sec@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 136/140] hw/block/pflash_cfi01: Register VM change
- handler once
-Date: Fri, 27 Nov 2026 08:54:02 +0300
-Message-ID: <20261127055421.39015-77-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 103/140] tests/tcg: fix load/restore for test-avx
+ and test-mmx
+Date: Fri, 27 Nov 2026 08:53:29 +0300
+Message-ID: <20261127055421.39015-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,45 +68,136 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Each pflash_post_load() added a VM change-state handler and
-overwrote pfl->vmstate. Loading twice before the VM resumes
-left the first entry on the list, and resuming then ran a
-freed entry. Register the handler only when none is held.
+If "r"(&result) uses %rsp, which GCC16 seems eager to do,
+the comparison fails because run_test()'s assembly block
+moves %rsp below the red zone.  Use fixed registers instead.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 90c647db8d59 ("Fix pflash migration")
-Reported-by: Wang Jianqiang <wjq.sec@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2635
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20261124185556.81132-2-philmd@oss.qualcomm.com>
-(cherry picked from commit 0522a9457b071fcdb3470278e3df78c1e773d432)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 75b2b67e6a950f731fb7c44ff1f48a7ebd455e89)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 72b29708fff..31d0f226510 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -1048,7 +1048,8 @@ static int pflash_post_load(void *opaque, int version_id)
-         memory_region_rom_device_set_romd(&pfl->mem, false);
-     }
- 
--    if (!pfl->ro) {
-+    /* A second load before the VM resumes must not add a duplicate entry */
-+    if (!pfl->ro && !pfl->vmstate) {
-         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
-                                                         pfl);
-     }
+diff --git a/tests/tcg/i386/test-avx.c b/tests/tcg/i386/test-avx.c
+index 80fe363cfc2..bb37f7953d0 100644
+--- a/tests/tcg/i386/test-avx.c
++++ b/tests/tcg/i386/test-avx.c
+@@ -150,9 +150,10 @@ static void run_test(const TestDef *t)
+             "push rbx\n\t"
+             "push rcx\n\t"
+             "push rdx\n\t"
+-            "push %1\n\t"
+-            "push %2\n\t"
+-            "mov rax, %0\n\t"
++            "push rsi\n\t"
++            "push rdi\n\t"
++            "push rsi\n\t" // result
++            "push rdi\n\t" // fn
+             "pushf\n\t"
+             "pop rbx\n\t"
+             "shr rbx, 8\n\t"
+@@ -165,19 +166,21 @@ static void run_test(const TestDef *t)
+             REG(LOADREG)
+             "mov rax, 0x240[rax]\n\t"
+             "call [rsp]\n\t"
+-            "mov [rsp], rax\n\t"
+-            "mov rax, 8[rsp]\n\t"
++            "mov [rsp], rax\n\t" // save rax
++            "mov rax, 8[rsp]\n\t" // get back result
+             REG(STOREREG)
+             "mov rbx, [rsp]\n\t"
+-            "mov 0x240[rax], rbx\n\t"
++            "mov 0x240[rax], rbx\n\t"  // rax
+             "mov rbx, 0\n\t"
+-            "mov 0x270[rax], rbx\n\t"
+-            "mov 0x278[rax], rbx\n\t"
++            "mov 0x270[rax], rbx\n\t"  // rsp
++            "mov 0x278[rax], rbx\n\t"  // rbp
+             "pushf\n\t"
+             "pop rbx\n\t"
+             "and rbx, 0xff\n\t"
+             "mov 0x2c0[rax], rbx\n\t"
+             "add rsp, 16\n\t"
++            "pop rdi\n\t"
++            "pop rsi\n\t"
+             "pop rdx\n\t"
+             "pop rcx\n\t"
+             "pop rbx\n\t"
+@@ -185,9 +188,8 @@ static void run_test(const TestDef *t)
+             "add rsp, 128\n\t"
+             MMREG(STOREMM)
+             YMMREG(STOREYMM)
+-            : : "r"(init), "r"(&result), "r"(t->fn)
++            : : "a"(init), "S"(&result), "D"(t->fn)
+             : "memory", "cc",
+-            "rsi", "rdi",
+             "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
+             "mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7",
+             "ymm0", "ymm1", "ymm2", "ymm3", "ymm4", "ymm5",
+diff --git a/tests/tcg/i386/test-mmx.c b/tests/tcg/i386/test-mmx.c
+index 09e5d583ffd..1a640f8bbbf 100644
+--- a/tests/tcg/i386/test-mmx.c
++++ b/tests/tcg/i386/test-mmx.c
+@@ -154,9 +154,10 @@ static void run_test(const TestDef *t)
+             "push rbx\n\t"
+             "push rcx\n\t"
+             "push rdx\n\t"
+-            "push %1\n\t"
+-            "push %2\n\t"
+-            "mov rax, %0\n\t"
++            "push rsi\n\t"
++            "push rdi\n\t"
++            "push rsi\n\t" // result
++            "push rdi\n\t" // fn
+             "pushf\n\t"
+             "pop rbx\n\t"
+             "shr rbx, 8\n\t"
+@@ -169,19 +170,21 @@ static void run_test(const TestDef *t)
+             REG(LOADREG)
+             "mov rax, 0xc0[rax]\n\t"
+             "call [rsp]\n\t"
+-            "mov [rsp], rax\n\t"
+-            "mov rax, 8[rsp]\n\t"
++            "mov [rsp], rax\n\t" // save rax
++            "mov rax, 8[rsp]\n\t" // get back result
+             REG(STOREREG)
+             "mov rbx, [rsp]\n\t"
+-            "mov 0xc0[rax], rbx\n\t"
++            "mov 0xc0[rax], rbx\n\t"  // rax
+             "mov rbx, 0\n\t"
+-            "mov 0xf0[rax], rbx\n\t"
+-            "mov 0xf8[rax], rbx\n\t"
++            "mov 0xf0[rax], rbx\n\t"  // rsp
++            "mov 0xf8[rax], rbx\n\t"  // rbp
+             "pushf\n\t"
+             "pop rbx\n\t"
+             "and rbx, 0xff\n\t"
+             "mov 0x140[rax], rbx\n\t"
+             "add rsp, 16\n\t"
++            "pop rdi\n\t"
++            "pop rsi\n\t"
+             "pop rdx\n\t"
+             "pop rcx\n\t"
+             "pop rbx\n\t"
+@@ -190,9 +193,8 @@ static void run_test(const TestDef *t)
+             MMREG(STOREMM)
+ 	    EMMS "\n\t"
+             XMMREG(STOREXMM)
+-            : : "r"(init), "r"(&result), "r"(t->fn)
++            : : "a"(init), "S"(&result), "D"(t->fn)
+             : "memory", "cc",
+-            "rsi", "rdi",
+             "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
+             "mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7",
+             "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5",
 -- 
 2.47.3
 
