@@ -1,146 +1,138 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EF8606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE7A606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 20:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=kvvf7abZ;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=InQsnXKw
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=aGb+zJg7;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=abap0cMV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX1y0-00027w-2U; Fri, 27 Nov 2026 14:50:44 -0500
+	id 1xX2cJ-0002tt-F9; Fri, 27 Nov 2026 15:32:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xX1xq-000244-LF
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 14:50:34 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xX2cH-0002tF-RI
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 15:32:21 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xX1xn-0005Iq-F4
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 14:50:33 -0500
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xX2cF-0002JU-DJ
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 15:32:21 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6ARJRjdx1381751
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 19:50:29 GMT
+ 6ARJB0K13134358
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 20:32:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WOYJakWBcTbr5RUGAjzP67NpYmfLfT5D6b/muxzgPU0=; b=kvvf7abZUdNtg7bX
- rVervZw0Uuk5inYYFRmwSgSYsueGF8s2Eu+FVYGS2Hr+vULv4RMWyWY9d7if6zUf
- 1xXe+cuLyhHSkBYDq1A88y9CoDdXyN6JlXSDWdC5+zO1zSxAC+TLNqkwBbiWp374
- ZOjgDDbcXMSDWOC3Cle3sUs5cdxLrwuPoQEHUGgiqo9rBd57816D1stbC44oYDO8
- aLMOSUhfCheUMJB6edVZRh7Bi6dLMkkj+GAoxpCWe5kLYjKA83rdMrgRNoYfBysr
- zVTY3QsYaTeezK1SRA0QeJIoARWwKhZplwfUq4ztU+eBTA+io/BptMj5fHDbS0hp
- Cdmn+Q==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j7g1s81ed-1
+ 9kyqlox+ibqfw3qVeLQkGH1NeE2/vSq/qzSOmQhKtrs=; b=aGb+zJg7vtq63oGm
+ L+Y24uHHwhr4A+F6EJCPC3oJxj6oj7DfbhOFbeF2qwQ7eeFKx/TMvWslli5CgHkf
+ Wpvn2IQZCA7aCtM40kSSohMuB/8XuY7iaQsXTdD8iCHNnpX5P2aTpkGc3Bp4UqYG
+ EhALwAduNpBd5QOJZcavHAaDUOv7T/LkAeeKMowPfZoBc25GfzXWKrPbNQSe6gcq
+ rL7FnC9pij4Fg4louq2bZetrGy4OBpdzu8g+3s3AexLeRU/7r0SwiWdGzu/Pm11V
+ ABka5aZrWLC0nI9lMyWvY6PcO+UEW4Z1Yos89Fn51QebqQCSM1Wm7VdZHB1x8V+l
+ DyQV8Q==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j74gatuvn-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 19:50:29 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-3869accaac2so5059730eec.1
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 11:50:29 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 20:32:18 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-1b56c696405so13299022c88.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 12:32:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1795809029; x=1796413829; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=WOYJakWBcTbr5RUGAjzP67NpYmfLfT5D6b/muxzgPU0=;
- b=InQsnXKwHaT9hDMTLwpuAEKigvtNC/3GqeJ2S8SdE/7BO9TTGUce9+c1oyK4enHEo/
- hZlKuHsnJ6RJrwEZIiV8cnkrK55913fs2yDXGuj27ZKPNqeekYhfPPtl5SgktL3iWU4+
- DEvKK+DQbDR9A+MbE9W/YgkxXZrwIRfnaWG6YIpfWK9aSDv8cCIsgyGMO5ufk5DjRugk
- 2by2SV8EsjQ793JXg/81L1etMUpsmlsFOtPJYj9FzzdCjWCLQ8+a76rEQgYqJ/KGrLnD
- mP5BSHpa7aUgT7hJgvgucI71hmfxC6WDMWDYm88iJc5MD7xyNeeseGFkCDj3TRBzhZhb
- YdKg==
+ d=oss.qualcomm.com; s=google; t=1795811537; x=1796416337; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9kyqlox+ibqfw3qVeLQkGH1NeE2/vSq/qzSOmQhKtrs=;
+ b=abap0cMVB2u82XrjPxpXLz3uxT3B/gO78jaY+0MwUkFPj8eFhx84SpXQ29q2tv/Zo2
+ L7c97k87b+15qvO5OQp0AYCwQldoKidOmOj5wZ1fmTZafzGB3byF8z9n6cvxUv3mQGJO
+ C5AfR7KAW6PpdoVo3RCNXvN0kDGlSpEUeojk6Wme5Ng2OchepW5BOSbrxQbm13cohdfd
+ hic4MH52KiGDcJ8jJzIVucQn2R8r4H3hFOsVsxbC+vV0RAs099HGtNwiG3EM6qSSLoTV
+ q4SLO7eWtLScK307fTOVhE3Efk04KyJ59j+yeKejIp+s2fD+9IvQjN8tlV91iyy+HkjS
+ HzjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795809029; x=1796413829;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WOYJakWBcTbr5RUGAjzP67NpYmfLfT5D6b/muxzgPU0=;
- b=z7a9hmEs4uoNgmXktn85UUK3DTrNLlgStBcwDlgPnVPxeEHeV4o39E8eCthdBEhIA9
- 6JKjgQn/lLe9+GM+BHeSOiAfs/1BwP838rzh0N58Wi8ZpRYeji4Wb5+VBVeJW44N6Y8d
- 9kk2a6ENy/C+yOVRBBvIXVz/tTxuC2+Z0OixRvsWebhXLPb4Vh1FiQPSXjJqEqI18WjM
- 7Fo3BIIMYM6N2GMs/kw/iaCajvSQkrW4uzqUJ/QW9tRUl0YgRseL+KxtW0PRTPDdmkNP
- Sebj8PkezA/I/5HbvoXfeEiriwvx1Xu1lwgMCPk3OojCT50vSGhtokYD03icuGQEyhKM
- MzAA==
-X-Forwarded-Encrypted: i=1;
- AL+hErEyxqeZpyNRZ8qmmn+8YiD2XBBwF7GpKX0ujVVZ2r0TcL5CVg3ikhXcWQ1dSc85vEHRmepGR4tIXXZh@nongnu.org
-X-Gm-Message-State: APuU4Z+5YFM66HPcIvzaNklm2O1nATSr/GATb4x2M7ibWNnfoni9+tCC
- oThtJYE6u3oXMUwi3f55JEZOwF3YgYV7dUGMueBal2EVGeJkGGskMEgFBnb2NCTpOlNUYDzoeoH
- s4bGYKp5gDtUgYLHhYtbpPBtmFl5bfiwdR2fABDHYn/ATe4safE1uFL+cwvQAMp1O5Q==
-X-Gm-Gg: AZFdTZcSLY9SWDj9JGZ5nLMl8CWZX0MFugJmoe8Dh7OLqKGLCdPkKSWp6LsFYaeNhhV
- 0sNWvorrAhGxSN3M7uE4A6tMVV7iGozVS9jstxL1ZUynAyuu9mCh+y64fgwv74akwjtdj6Jr7kv
- hYmEE8Vk1pMa/RMxXJ06WWYHGDRbQZSet6gWjj+KwHDkCumPfP8eYXXRcjNZC+giXIBOecOLlvh
- 5LN5GSwB/2bKi5gs/LeQte66sh7xlroBYJ6qI15KMyzMl5+MixCk/TN7/l3Ss+hkqEJR72G+md1
- bJ4RqZ81qHGJQsPjoPwJFwKtK/qaxfwG1oR4Vxn1dYI03dNO1ZELhRMKrkTv3y6gzE9hwe2pcDu
- 4benmNbBO2bd6Sw109sEhNN9QYT9sEF6dAcWCnjabirdbdW2RcTAVmB5/WD5tuHkhd6TpCMI2tC
- HBBuBqsWpJmFPbf9SjVQGfFxrz4x8wr3j5bp64TT7S4Rw=
-X-Received: by 2002:a05:693c:811c:b0:386:ddd5:14e2 with SMTP id
- 5a478bee46e88-386ddd52196mr5998919eec.0.1795809028643; 
- Fri, 27 Nov 2026 11:50:28 -0800 (PST)
-X-Received: by 2002:a05:693c:811c:b0:386:ddd5:14e2 with SMTP id
- 5a478bee46e88-386ddd52196mr5998897eec.0.1795809028017; 
- Fri, 27 Nov 2026 11:50:28 -0800 (PST)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-38566fdce48sm80193883eec.14.2026.11.27.11.50.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Nov 2026 11:50:27 -0800 (PST)
-Message-ID: <a2a314d7-6313-40db-a38f-c7185b982fc5@oss.qualcomm.com>
-Date: Fri, 27 Nov 2026 11:50:26 -0800
+ d=1e100.net; s=20260707; t=1795811537; x=1796416337;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9kyqlox+ibqfw3qVeLQkGH1NeE2/vSq/qzSOmQhKtrs=;
+ b=q6feKCLePupJsF7lUzDN2+OUbfgRQn8ZRsBtk+t6Nv7fmlhd1AVnutjypaJgioZoU1
+ Bkkk2+5qqX3xR7xh3wKihQeFF4Ra5bJOA7xr2v1b8j+CyDU/+/dumBCZKfuA2MS6kLXD
+ 222PIzBaovtrE/oK3gq0VyA3riyTCq8j3ZjVBLgYnh5fZUceFYXwiZzzy42lkqvy5Gin
+ yxFcpcBROqgr7d4RaO3FAv09ptsCEoNwm4LWhGVjLWEbcxCpWXimATI3PvFLXQ4FO9V6
+ uZ5EGP3b2QI4LwtXEWfuJQmds7aflnQ8torzGq+mdtyx9N9XH49V/TdxZI57bVkCyAOg
+ FmQw==
+X-Gm-Message-State: APuU4Z8YrE9GotbRbULdgB8wROzvc3gHNIm02I27QikdKq8Fu3btRUr5
+ x/66unDb/5kxAQY7HNtd7TBU88yKb/D9XqxAOez18oTIr53eL+sRALQSCKCx/Qsj/JIf9fgBhDV
+ KmcOOzpEVc0aGFUwB+pKjU1+XUDrMIdRjQtHdcY0owy06kteX2LvJ3cMNHD0sqSGkLA==
+X-Gm-Gg: AZFdTZdHog4BaW3elfBaQn/Uh4ousSaP2L1mv71T6Dlf3jYQQT+2V7msfnYkuKPLNVk
+ 3ZArGA6nDb6TW2lbRlZqXJSY1yz2aPY4DoETJqG4NawoZk1lL5Z7rTMHvmfNwiJn8GxGiRWgB0j
+ JiJB/wT8IMjsA4twFjNh7RpRURczBDCnC4ddqOjlDDd37wir1WkSOeiCSjhbmQu8OOwWhlsotaG
+ bJrbieA8jycuElexmb5m15Iwu33a6BbhtOQ6QnKzlUcn31GlTtjreTozrG5RdISV/HM41KhgV4E
+ zCv72gXThMSfD8lJMwV676siOzAjhDiUhpnMDEJVD7w2YasnO3wXvCjT1PNx68pgd1ZlJRpaSiF
+ Q+KvwdYkDHm8SERqxQHbXanaM6/XEn42RRzPw1CXFt0/FMV38wRI56Z/42rnTqKfQj0VHkBNfif
+ NWwUSn6Kj6CbqccpUJuOST
+X-Received: by 2002:a05:701b:42c6:10b0:1ac:91b6:8dfd with SMTP id
+ a92af1059eb24-1b55690919bmr28775629c88.31.1795811537128; 
+ Fri, 27 Nov 2026 12:32:17 -0800 (PST)
+X-Received: by 2002:a05:701b:42c6:10b0:1ac:91b6:8dfd with SMTP id
+ a92af1059eb24-1b55690919bmr28775602c88.31.1795811536588; 
+ Fri, 27 Nov 2026 12:32:16 -0800 (PST)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1b55681301asm59248021c88.8.2026.11.27.12.32.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Nov 2026 12:32:15 -0800 (PST)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, Ani Sinha <anisinha@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH for-12.0 v2 4/5] target/hexagon: support ELF core dumps
+Date: Fri, 27 Nov 2026 12:32:08 -0800
+Message-Id: <20261127203209.42752-5-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261127203209.42752-1-brian.cain@oss.qualcomm.com>
+References: <20261127203209.42752-1-brian.cain@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-12.0 4/5] target/hexagon: support ELF core dumps
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20261125194855.3154845-1-brian.cain@oss.qualcomm.com>
- <20261125194855.3154845-5-brian.cain@oss.qualcomm.com>
- <692d2bbf-cc9b-4cf5-ab05-43a2f13d8336@oss.qualcomm.com>
- <d24abd48-66cf-45c0-a49b-ed98a85b88ed@oss.qualcomm.com>
- <6ad21845-51da-4853-b617-44208d545898@oss.qualcomm.com>
- <b2e835fc-7084-4e80-b840-c8172b64b354@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <b2e835fc-7084-4e80-b840-c8172b64b354@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=FYOiV5+6 c=1 sm=1 tr=0 ts=6b09df05 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-ORIG-GUID: W68RO78L7U5Myev2nfcej8XQunqb45fF
+X-Proofpoint-GUID: W68RO78L7U5Myev2nfcej8XQunqb45fF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA4MSBTYWx0ZWRfX1vtrcVeLokxf
+ k8eaGd5MlLk7aiPY9FRNv9FJAMkgNn5Lpcf8WyMfKRu3zEvt2F4+QmEkdo3eG2CIRGluSJuAUQC
+ vOPSZAeIrM//9/2SFK2CE1vPbLevMT/nuruSFSSxq0fzBy9oNRBFNmewAo5ezHuaJOQuk0atg/f
+ B4CgoK3xdIs/p23IjAoX9QhNYPLiUpz5b9FT0d+W6Q/Kru6aqVj3/YBSJ7pMk8wLmSQeFTAW2rF
+ 7T0CgUuf7gIyPCY6IDg41XCOo4wcWHwcPUnA8bhnMFqVRkZ26uhNxy5rrjKFfgYr+FRcoVME0u6
+ ZtG06Jsah00fIWSwvTI+bebomxMa8mAckOdAXRye2DOG55ZpGMP+pHKpA81PMynL6vgwToQydC5
+ aSlJMaA2RPnGkgPPUlf7knQ1ajdpd7Qtj9bb0GQsIog7JASG/3djtIS206OUrWqHN2eqiO7huGz
+ QYKN3WeV4czKUvOfslA==
+X-Authority-Analysis: v=2.4 cv=I5bw19gg c=1 sm=1 tr=0 ts=6b09e8d2 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=ypBTFDDTJPA0o81_Rk8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: BENWKb0i__ZfLCmg9AGYG0J2ULZGEPB-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA3OCBTYWx0ZWRfX6S6V8cFpIf6U
- OMOw5E28YaqIKiDOfdH9dQF7AB02xOP1tgZqXAW+QSBrmmj1KVUUGvIVIaOgAzcU+wS9Sz+uoZV
- F0TzhLoIoeTxDFg6HFFA374P5zZvELqx31ei3auIZd9IVIJzfuSFMRdi4EXNLSu3vgCc/wCIDcn
- OQ5phefpaeEBbU0dqwO1P2Ue75HnKWvMYMmJkQvfaVxToYWWyulNhhR5ladSsldZGK24c9bxLOt
- aXytWvBGJ3TFXKcVzukGf0FTG7uLW3B9c5408CI1qe66DnRRFw++qbhAmHVaBZQ02dtMo+xIJig
- 0sj8jvkwLk8CKIxwmyABVAoxVvliy1rVHqKpUcGUbKpzas1E89JszOYIM9R+z0tdq6q/4pUZ6j0
- EVBguxSfGlQGKAVCV08qWYOWBbImD8RgsgvwtAYld1q45HQlw+csXA7fcTsMwrAlxGYbH5VPBjK
- yMdVFW3GS6Xf2Lj7z1Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA3OCBTYWx0ZWRfX2HYwPcAVQq+T
- n/BeobWVK0U+kKEaoJk2CNJ7ebZg/+zLZwjF7egvwqBT7yaPYTcjyHxKUX95dHSlfLyMbz6xvkz
- Qqw1POeH8GFCf5M7YUEB2beg1Axw2LA=
-X-Proofpoint-ORIG-GUID: BENWKb0i__ZfLCmg9AGYG0J2ULZGEPB-
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=0nRkh3ypGcbDwTCxfF0A:9 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA4MSBTYWx0ZWRfX6FrQXlTi/QeH
+ t/NYVXKXXypNETVTdhwU2Dxze3EoJDRWgRa/aAt7jdiyxcWfYfWVP5URJ11ERxiS6GDa0HPkF2k
+ cTI9LWA6lOjgWnsNTy+YlneIyHami+A=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-27_04,2026-11-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 impostorscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270078
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270081
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,373 +151,227 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 11/27/2026 11:38 AM, Brian Cain wrote:
-> 
-> On 11/27/2026 11:35 AM, Pierrick Bouvier wrote:
->> On 11/27/2026 9:32 AM, Brian Cain wrote:
->>> On 11/27/2026 11:29 AM, Pierrick Bouvier wrote:
->>>> On 11/25/2026 11:48 AM, Brian Cain wrote:
->>>>> Write core files for Hexagon.  For each hw thread, write a note w/
->>>>> user_regs_struct layout from linux kernel.
->>>>>
->>>>> In system mode the cause register is filled from SSR, badva from the
->>>>> system
->>>>> register, and pr_pid is the CPU index.
->>>>>
->>>>> dump-guest-memory with paging requested relies on the CPU's
->>>>> get_memory_mapping and get_paging_enabled callbacks.  Implement
->>>>> get_paging_enabled.
->>>>>
->>>>> Build the mappings from the valid TLB entries: for each CPU, consider
->>>>> global
->>>>> entries and those matching the CPU's current ASID.
->>>>>
->>>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>>>> ---
->>>>>    include/hw/hexagon/hexagon_tlb.h |  10 +++
->>>>>    linux-user/hexagon/target_elf.h  |   7 ++
->>>>>    target/hexagon/core-dump.h       |  73 ++++++++++++++++++++
->>>>>    target/hexagon/internal.h        |   8 +++
->>>>>    hw/hexagon/hexagon_tlb.c         |  17 +++++
->>>>>    linux-user/hexagon/elfload.c     |   4 ++
->>>>>    target/hexagon/arch_dump.c       | 112 +++++++++++++++++++++++++
->>>>> ++++++
->>>>>    target/hexagon/cpu.c             |  13 ++++
->>>>>    target/hexagon/meson.build       |   1 +
->>>>>    9 files changed, 245 insertions(+)
->>>>>    create mode 100644 target/hexagon/core-dump.h
->>>>>    create mode 100644 target/hexagon/arch_dump.c
->>>>>
->>>>> diff --git a/include/hw/hexagon/hexagon_tlb.h b/include/hw/hexagon/
->>>>> hexagon_tlb.h
->>>>> index 355ba3888c0..938b80fbb2b 100644
->>>>> --- a/include/hw/hexagon/hexagon_tlb.h
->>>>> +++ b/include/hw/hexagon/hexagon_tlb.h
->>>>> @@ -26,6 +26,16 @@ struct HexagonTLBState {
->>>>>        QemuMutex lock;
->>>>>    };
->>>>>    +typedef struct HexagonTLBMapping {
->>>>> +    uint64_t va;        /* Start of the page, aligned to @size */
->>>>> +    uint64_t pa;        /* Start of the physical page */
->>>>> +    uint64_t size;      /* Page size in bytes */
->>>>> +    uint32_t asid;      /* Valid only when !@global */
->>>>> +    bool global;        /* Entry matches in every ASID */
->>>>> +} HexagonTLBMapping;
->>>>> +
->>>>> +bool hexagon_tlb_decode_entry(uint64_t entry, HexagonTLBMapping
->>>>> *mapping);
->>>>> +
->>>>>    uint64_t hexagon_tlb_read(HexagonTLBState *tlb, uint32_t index);
->>>>>    uint64_t hexagon_tlb_write(HexagonTLBState *tlb, uint32_t index,
->>>>>                               uint64_t value);
->>>>> diff --git a/linux-user/hexagon/target_elf.h b/linux-user/hexagon/
->>>>> target_elf.h
->>>>> index b1eb5ea5037..daaec521a76 100644
->>>>> --- a/linux-user/hexagon/target_elf.h
->>>>> +++ b/linux-user/hexagon/target_elf.h
->>>>> @@ -23,6 +23,13 @@
->>>>>      #define HAVE_ELF_HWCAP          1
->>>>>    +#include "target/hexagon/core-dump.h"
->>>>> +
->>>>> +#define HAVE_ELF_CORE_DUMP      1
->>>>> +#define elf_core_eflags(info)   ((info)->elf_flags)
->>>>> +
->>>>> +typedef HexagonUserRegs target_elf_gregset_t;
->>>>> +
->>>>>    enum {
->>>>>        HWCAP_HEXAGON_ISA_MASK          = 0x7F,
->>>>>        HWCAP_HEXAGON_ISA_V2            = 1,
->>>>> diff --git a/target/hexagon/core-dump.h b/target/hexagon/core-dump.h
->>>>> new file mode 100644
->>>>> index 00000000000..a14b495d04d
->>>>> --- /dev/null
->>>>> +++ b/target/hexagon/core-dump.h
->>>>> @@ -0,0 +1,73 @@
->>>>> +/*
->>>>> + * Hexagon Linux ELF core register layout.
->>>>> + *
->>>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>>> + */
->>>>> +
->>>>> +#ifndef HEXAGON_CORE_DUMP_H
->>>>> +#define HEXAGON_CORE_DUMP_H
->>>>> +
->>>>> +#include "cpu.h"
->>>>> +#include "qemu/bswap.h"
->>>>> +
->>>>> +/* Linux arch/hexagon/include/uapi/asm/user.h: struct
->>>>> user_regs_struct. */
->>>>> +typedef struct target_elf_gregset_t {
->>>>> +    uint32_t gpr[32];
->>>>> +    uint32_t sa0;
->>>>> +    uint32_t lc0;
->>>>> +    uint32_t sa1;
->>>>> +    uint32_t lc1;
->>>>> +    uint32_t m0;
->>>>> +    uint32_t m1;
->>>>> +    uint32_t usr;
->>>>> +    uint32_t p3_0;
->>>>> +    uint32_t gp;
->>>>> +    uint32_t ugp;
->>>>> +    uint32_t pc;
->>>>> +    uint32_t cause;
->>>>> +    uint32_t badva;
->>>>> +    uint32_t cs0;
->>>>> +    uint32_t cs1;
->>>>> +    uint32_t pad;
->>>>> +} HexagonUserRegs;
->>>>> +
->>>>> +QEMU_BUILD_BUG_ON(sizeof(HexagonUserRegs) != 48 * sizeof(uint32_t));
->>>>> +
->>>>> +static inline void hexagon_core_copy_regs(HexagonUserRegs *regs,
->>>>> +                                          const CPUHexagonState *env)
->>>>> +{
->>>>> +    uint32_t preds = 0;
->>>>> +
->>>>> +    for (int i = 0; i < ARRAY_SIZE(regs->gpr); i++) {
->>>>> +        regs->gpr[i] = cpu_to_le32(env->gpr[i]);
->>>>> +    }
->>>>> +    for (int i = 0; i < NUM_PREGS; i++) {
->>>>> +        preds |= (env->pred[i] & 0xff) << (i * 8);
->>>>> +    }
->>>>> +    regs->sa0 = cpu_to_le32(env->gpr[HEX_REG_SA0]);
->>>>> +    regs->lc0 = cpu_to_le32(env->gpr[HEX_REG_LC0]);
->>>>> +    regs->sa1 = cpu_to_le32(env->gpr[HEX_REG_SA1]);
->>>>> +    regs->lc1 = cpu_to_le32(env->gpr[HEX_REG_LC1]);
->>>>> +    regs->m0 = cpu_to_le32(env->gpr[HEX_REG_M0]);
->>>>> +    regs->m1 = cpu_to_le32(env->gpr[HEX_REG_M1]);
->>>>> +    regs->usr = cpu_to_le32(env->gpr[HEX_REG_USR]);
->>>>> +    regs->p3_0 = cpu_to_le32(preds);
->>>>> +    regs->gp = cpu_to_le32(env->gpr[HEX_REG_GP]);
->>>>> +    regs->ugp = cpu_to_le32(env->gpr[HEX_REG_UGP]);
->>>>> +    regs->pc = cpu_to_le32(env->gpr[HEX_REG_PC]);
->>>>> +#ifdef CONFIG_USER_ONLY
->>>>> +    regs->cause = cpu_to_le32(env->cause_code);
->>>>> +    regs->badva = 0;
->>>>> +#else
->>>>> +    regs->cause = cpu_to_le32(extract32(env->t_sreg[HEX_SREG_SSR],
->>>>> +                                     
->>>>> reg_field_info[SSR_CAUSE].offset,
->>>>> +
->>>>> reg_field_info[SSR_CAUSE].width));
->>>>> +    regs->badva = cpu_to_le32(env->t_sreg[HEX_SREG_BADVA]);
->>>>> +#endif
->>>>> +    regs->cs0 = cpu_to_le32(env->gpr[HEX_REG_CS0]);
->>>>> +    regs->cs1 = cpu_to_le32(env->gpr[HEX_REG_CS1]);
->>>>> +    regs->pad = 0;
->>>>> +}
->>>>> +
->>>>> +#endif /* HEXAGON_CORE_DUMP_H */
->>>>> diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
->>>>> index 6def331a83a..1a5ff3daca2 100644
->>>>> --- a/target/hexagon/internal.h
->>>>> +++ b/target/hexagon/internal.h
->>>>> @@ -60,6 +60,14 @@ void G_NORETURN do_raise_exception(CPUHexagonState
->>>>> *env,
->>>>>      #ifndef CONFIG_USER_ONLY
->>>>>    extern const VMStateDescription vmstate_hexagon_cpu;
->>>>> +int hexagon_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState
->>>>> *cs,
->>>>> +                                 int cpuid, DumpState *s);
->>>>> +void hexagon_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
->>>>> +                           const GuestPhysBlockList
->>>>> *guest_phys_blocks);
->>>>> +size_t hexagon_get_note_size(const CPUState *cs, int class, int
->>>>> machine,
->>>>> +                             int nr_cpus);
->>>>> +bool hexagon_cpu_get_memory_mapping(CPUState *cs, MemoryMappingList
->>>>> *list,
->>>>> +                                    Error **errp);
->>>>>    #endif
->>>>>      #endif
->>>>> diff --git a/hw/hexagon/hexagon_tlb.c b/hw/hexagon/hexagon_tlb.c
->>>>> index 07406cea35e..53b835cdd2b 100644
->>>>> --- a/hw/hexagon/hexagon_tlb.c
->>>>> +++ b/hw/hexagon/hexagon_tlb.c
->>>>> @@ -302,6 +302,23 @@ static bool hex_tlb_is_match(uint64_t entry1,
->>>>> uint64_t entry2,
->>>>>      /* Public API */
->>>>>    +bool hexagon_tlb_decode_entry(uint64_t entry, HexagonTLBMapping
->>>>> *mapping)
->>>>> +{
->>>>> +    uint64_t size;
->>>>> +
->>>>> +    if (!GET_PTE_V(entry)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +
->>>>> +    size = hex_tlb_page_size_bytes(entry);
->>>>> +    mapping->size = size;
->>>>> +    mapping->va = ROUND_DOWN(hex_tlb_virt_addr(entry), size);
->>>>> +    mapping->pa = hex_tlb_phys_addr(entry);
->>>>> +    mapping->global = GET_PTE_G(entry);
->>>>> +    mapping->asid = GET_PTE_ASID(entry);
->>>>> +    return true;
->>>>> +}
->>>>> +
->>>>>    uint64_t hexagon_tlb_read(HexagonTLBState *tlb, uint32_t index)
->>>>>    {
->>>>>        g_assert(index < tlb->num_entries);
->>>>> diff --git a/linux-user/hexagon/elfload.c b/linux-user/hexagon/
->>>>> elfload.c
->>>>> index db0bf299cc0..dac8260b302 100644
->>>>> --- a/linux-user/hexagon/elfload.c
->>>>> +++ b/linux-user/hexagon/elfload.c
->>>>> @@ -6,6 +6,10 @@
->>>>>    #include "target_elf.h"
->>>>>    #include "target/hexagon/cpu.h"
->>>>>    +void elf_core_copy_regs(target_elf_gregset_t *regs, const
->>>>> CPUHexagonState *env)
->>>>> +{
->>>>> +    hexagon_core_copy_regs(regs, env);
->>>>> +}
->>>>>      abi_ulong get_elf_hwcap(CPUState *cs)
->>>>>    {
->>>>> diff --git a/target/hexagon/arch_dump.c b/target/hexagon/arch_dump.c
->>>>> new file mode 100644
->>>>> index 00000000000..1e90bf7285f
->>>>> --- /dev/null
->>>>> +++ b/target/hexagon/arch_dump.c
->>>>> @@ -0,0 +1,112 @@
->>>>> +/*
->>>>> + * Hexagon system guest ELF core dumps.
->>>>> + *
->>>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>>> + */
->>>>> +
->>>>> +#include "qemu/osdep.h"
->>>>> +#include "cpu.h"
->>>>> +#include "elf.h"
->>>>> +#include "qapi/error.h"
->>>>> +#include "qemu/range.h"
->>>>> +#include "system/dump.h"
->>>>> +#include "system/memory_mapping.h"
->>>>> +#include "hw/hexagon/hexagon_tlb.h"
->>>>> +#include "internal.h"
->>>>> +#include "macros.h"
->>>>> +#include "sys_macros.h"
->>>>> +#include "core-dump.h"
->>>>> +
->>>>> +/* Linux include/linux/elfcore.h: struct elf_prstatus for the 32-bit
->>>>> ABI. */
->>>>> +typedef struct HexagonElfPrstatus {
->>>>> +    uint8_t pad1[24];
->>>>> +    uint32_t pr_pid;
->>>>> +    uint8_t pad2[44];
->>>>> +    HexagonUserRegs pr_reg;
->>>>> +    uint32_t pr_fpvalid;
->>>>> +} QEMU_PACKED HexagonElfPrstatus;
->>>>> +
->>>>> +QEMU_BUILD_BUG_ON(offsetof(HexagonElfPrstatus, pr_reg) != 72);
->>>>> +QEMU_BUILD_BUG_ON(sizeof(HexagonElfPrstatus) != 268);
->>>>> +
->>>>> +typedef struct HexagonElfNote {
->>>>> +    Elf32_Nhdr header;
->>>>> +    char name[8]; /* "CORE" including NUL, padded to a 4-byte
->>>>> boundary. */
->>>>> +    HexagonElfPrstatus prstatus;
->>>>> +} QEMU_PACKED HexagonElfNote;
->>>>> +
->>>>> +int hexagon_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState
->>>>> *cs,
->>>>> +                                 int cpuid, DumpState *s)
->>>>> +{
->>>>> +    HexagonElfNote note = { 0 };
->>>>> +    HexagonUserRegs regs;
->>>>> +
->>>>> +    note.header.n_namesz = cpu_to_dump32(s, sizeof("CORE"));
->>>>> +    note.header.n_descsz = cpu_to_dump32(s, sizeof(note.prstatus));
->>>>> +    note.header.n_type = cpu_to_dump32(s, NT_PRSTATUS);
->>>>> +    memcpy(note.name, "CORE", sizeof("CORE"));
->>>>> +    note.prstatus.pr_pid = cpu_to_dump32(s, cpuid);
->>>>> +    hexagon_core_copy_regs(&regs, cpu_env(cs));
->>>>> +    memcpy(&note.prstatus.pr_reg, &regs, sizeof(regs));
->>>>> +
->>>>> +    return f(&note, sizeof(note), s);
->>>>> +}
->>>>> +
->>>>> +void hexagon_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
->>>>> +                           const GuestPhysBlockList
->>>>> *guest_phys_blocks)
->>>>> +{
->>>>> +    const HexagonCPU *cpu = HEXAGON_CPU(cs);
->>>>> +
->>>>> +    info->d_machine = EM_HEXAGON;
->>>>> +    info->d_class = ELFCLASS32;
->>>>> +    info->d_endian = ELFDATA2LSB;
->>>>> +    /* The values of HexagonVersion match the EF_HEXAGON_MACH_*
->>>>> flags. */
->>>>> +    info->d_flags = cpu->cfg.hex_def->hex_version;
->>>>> +}
->>>>> +
->>>>> +size_t hexagon_get_note_size(const CPUState *cs, int class, int
->>>>> machine,
->>>>> +                             int nr_cpus)
->>>>> +{
->>>>> +    return sizeof(HexagonElfNote) * nr_cpus;
->>>>> +}
->>>>> +
->>>>> +static bool hexagon_mapping_overlaps(const MemoryMappingList *list,
->>>>> +                                     const HexagonTLBMapping *m)
->>>>> +{
->>>>> +    const MemoryMapping *other;
->>>>> +
->>>>> +    QTAILQ_FOREACH(other, &list->head, next) {
->>>>> +        if (ranges_overlap(other->virt_addr, other->length, m->va,
->>>>> m->size)) {
->>>>> +            return true;
->>>>> +        }
->>>>> +    }
->>>>> +    return false;
->>>>> +}
->>>>> +
->>>>> +bool hexagon_cpu_get_memory_mapping(CPUState *cs, MemoryMappingList
->>>>> *list,
->>>>> +                                    Error **errp)
->>>>> +{
->>>>> +    const HexagonCPU *cpu = HEXAGON_CPU(cs);
->>>>> +    uint32_t asid = GET_SSR_FIELD(SSR_ASID,
->>>>> +                                  cpu_env(cs)->t_sreg[HEX_SREG_SSR]);
->>>>> +    uint32_t num_entries;
->>>>> +
->>>>> +    if (!cpu->tlb) {
->>>>> +        error_setg(errp, "Hexagon CPU has no TLB");
->>>>> +        return false;
->>>>> +    }
->>>>> +
->>>> In this case, shouldn't we assume it's an identity mapping?
->>> Hmm - the behavior is not defined, there's no such hardware device.
->>>
->>> I could change it to an assertion instead if that makes more sense?
->>>
->> Double checking, in system mode, we always have a tlb, it's enforced at
->> realize_step for the cpu.
-> 
-> Yeah - good point, so maybe an assertion makes more sense here. I'll
-> make this change.
-> 
->> I am a bit puzzled this compiles since this field is not even defined in
->> user-mode builds.
-> 
-> target/hexagon/arch_dump.c is only built in sysemu.
->
-
-Ok. I have been confused by the multiple files in current patch,
-arch_dump is limited to the kind of info we would have in system mode
-only. Sounds good.
-
-With the assert on cpu->tlb:
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
- Regards,
-Pierrick
+V3JpdGUgY29yZSBmaWxlcyBmb3IgSGV4YWdvbi4gIEZvciBlYWNoIGh3IHRocmVhZCwgd3JpdGUg
+YSBub3RlIHcvCnVzZXJfcmVnc19zdHJ1Y3QgbGF5b3V0IGZyb20gbGludXgga2VybmVsLgoKSW4g
+c3lzdGVtIG1vZGUgdGhlIGNhdXNlIHJlZ2lzdGVyIGlzIGZpbGxlZCBmcm9tIFNTUiwgYmFkdmEg
+ZnJvbSB0aGUgc3lzdGVtCnJlZ2lzdGVyLCBhbmQgcHJfcGlkIGlzIHRoZSBDUFUgaW5kZXguCgpk
+dW1wLWd1ZXN0LW1lbW9yeSB3aXRoIHBhZ2luZyByZXF1ZXN0ZWQgcmVsaWVzIG9uIHRoZSBDUFUn
+cwpnZXRfbWVtb3J5X21hcHBpbmcgYW5kIGdldF9wYWdpbmdfZW5hYmxlZCBjYWxsYmFja3MuICBJ
+bXBsZW1lbnQKZ2V0X3BhZ2luZ19lbmFibGVkLgoKQnVpbGQgdGhlIG1hcHBpbmdzIGZyb20gdGhl
+IHZhbGlkIFRMQiBlbnRyaWVzOiBmb3IgZWFjaCBDUFUsIGNvbnNpZGVyIGdsb2JhbAplbnRyaWVz
+IGFuZCB0aG9zZSBtYXRjaGluZyB0aGUgQ1BVJ3MgY3VycmVudCBBU0lELgoKUmV2aWV3ZWQtYnk6
+IEhlbGdlIERlbGxlciA8ZGVsbGVyQGdteC5kZT4KUmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZp
+ZXIgPHBpZXJyaWNrLmJvdXZpZXJAb3NzLnF1YWxjb21tLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJp
+YW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIGluY2x1ZGUvaHcvaGV4
+YWdvbi9oZXhhZ29uX3RsYi5oIHwgIDEwICsrKwogbGludXgtdXNlci9oZXhhZ29uL3RhcmdldF9l
+bGYuaCAgfCAgIDcgKysKIHRhcmdldC9oZXhhZ29uL2NvcmUtZHVtcC5oICAgICAgIHwgIDczICsr
+KysrKysrKysrKysrKysrKysrKwogdGFyZ2V0L2hleGFnb24vaW50ZXJuYWwuaCAgICAgICAgfCAg
+IDggKysrCiBody9oZXhhZ29uL2hleGFnb25fdGxiLmMgICAgICAgICB8ICAxNyArKysrKwogbGlu
+dXgtdXNlci9oZXhhZ29uL2VsZmxvYWQuYyAgICAgfCAgIDQgKysKIHRhcmdldC9oZXhhZ29uL2Fy
+Y2hfZHVtcC5jICAgICAgIHwgMTA4ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIHRh
+cmdldC9oZXhhZ29uL2NwdS5jICAgICAgICAgICAgIHwgIDEzICsrKysKIHRhcmdldC9oZXhhZ29u
+L21lc29uLmJ1aWxkICAgICAgIHwgICAxICsKIDkgZmlsZXMgY2hhbmdlZCwgMjQxIGluc2VydGlv
+bnMoKykKIGNyZWF0ZSBtb2RlIDEwMDY0NCB0YXJnZXQvaGV4YWdvbi9jb3JlLWR1bXAuaAogY3Jl
+YXRlIG1vZGUgMTAwNjQ0IHRhcmdldC9oZXhhZ29uL2FyY2hfZHVtcC5jCgpkaWZmIC0tZ2l0IGEv
+aW5jbHVkZS9ody9oZXhhZ29uL2hleGFnb25fdGxiLmggYi9pbmNsdWRlL2h3L2hleGFnb24vaGV4
+YWdvbl90bGIuaAppbmRleCAzNTViYTM4ODhjMC4uOTM4YjgwZmJiMmIgMTAwNjQ0Ci0tLSBhL2lu
+Y2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uX3RsYi5oCisrKyBiL2luY2x1ZGUvaHcvaGV4YWdvbi9o
+ZXhhZ29uX3RsYi5oCkBAIC0yNiw2ICsyNiwxNiBAQCBzdHJ1Y3QgSGV4YWdvblRMQlN0YXRlIHsK
+ICAgICBRZW11TXV0ZXggbG9jazsKIH07CiAKK3R5cGVkZWYgc3RydWN0IEhleGFnb25UTEJNYXBw
+aW5nIHsKKyAgICB1aW50NjRfdCB2YTsgICAgICAgIC8qIFN0YXJ0IG9mIHRoZSBwYWdlLCBhbGln
+bmVkIHRvIEBzaXplICovCisgICAgdWludDY0X3QgcGE7ICAgICAgICAvKiBTdGFydCBvZiB0aGUg
+cGh5c2ljYWwgcGFnZSAqLworICAgIHVpbnQ2NF90IHNpemU7ICAgICAgLyogUGFnZSBzaXplIGlu
+IGJ5dGVzICovCisgICAgdWludDMyX3QgYXNpZDsgICAgICAvKiBWYWxpZCBvbmx5IHdoZW4gIUBn
+bG9iYWwgKi8KKyAgICBib29sIGdsb2JhbDsgICAgICAgIC8qIEVudHJ5IG1hdGNoZXMgaW4gZXZl
+cnkgQVNJRCAqLworfSBIZXhhZ29uVExCTWFwcGluZzsKKworYm9vbCBoZXhhZ29uX3RsYl9kZWNv
+ZGVfZW50cnkodWludDY0X3QgZW50cnksIEhleGFnb25UTEJNYXBwaW5nICptYXBwaW5nKTsKKwog
+dWludDY0X3QgaGV4YWdvbl90bGJfcmVhZChIZXhhZ29uVExCU3RhdGUgKnRsYiwgdWludDMyX3Qg
+aW5kZXgpOwogdWludDY0X3QgaGV4YWdvbl90bGJfd3JpdGUoSGV4YWdvblRMQlN0YXRlICp0bGIs
+IHVpbnQzMl90IGluZGV4LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDY0X3QgdmFs
+dWUpOwpkaWZmIC0tZ2l0IGEvbGludXgtdXNlci9oZXhhZ29uL3RhcmdldF9lbGYuaCBiL2xpbnV4
+LXVzZXIvaGV4YWdvbi90YXJnZXRfZWxmLmgKaW5kZXggYjFlYjVlYTUwMzcuLmRhYWVjNTIxYTc2
+IDEwMDY0NAotLS0gYS9saW51eC11c2VyL2hleGFnb24vdGFyZ2V0X2VsZi5oCisrKyBiL2xpbnV4
+LXVzZXIvaGV4YWdvbi90YXJnZXRfZWxmLmgKQEAgLTIzLDYgKzIzLDEzIEBACiAKICNkZWZpbmUg
+SEFWRV9FTEZfSFdDQVAgICAgICAgICAgMQogCisjaW5jbHVkZSAidGFyZ2V0L2hleGFnb24vY29y
+ZS1kdW1wLmgiCisKKyNkZWZpbmUgSEFWRV9FTEZfQ09SRV9EVU1QICAgICAgMQorI2RlZmluZSBl
+bGZfY29yZV9lZmxhZ3MoaW5mbykgICAoKGluZm8pLT5lbGZfZmxhZ3MpCisKK3R5cGVkZWYgSGV4
+YWdvblVzZXJSZWdzIHRhcmdldF9lbGZfZ3JlZ3NldF90OworCiBlbnVtIHsKICAgICBIV0NBUF9I
+RVhBR09OX0lTQV9NQVNLICAgICAgICAgID0gMHg3RiwKICAgICBIV0NBUF9IRVhBR09OX0lTQV9W
+MiAgICAgICAgICAgID0gMSwKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2NvcmUtZHVtcC5o
+IGIvdGFyZ2V0L2hleGFnb24vY29yZS1kdW1wLmgKbmV3IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXgg
+MDAwMDAwMDAwMDAuLmExNGI0OTVkMDRkCi0tLSAvZGV2L251bGwKKysrIGIvdGFyZ2V0L2hleGFn
+b24vY29yZS1kdW1wLmgKQEAgLTAsMCArMSw3MyBAQAorLyoKKyAqIEhleGFnb24gTGludXggRUxG
+IGNvcmUgcmVnaXN0ZXIgbGF5b3V0LgorICoKKyAqIENvcHlyaWdodCAoYykgUXVhbGNvbW0gVGVj
+aG5vbG9naWVzLCBJbmMuIGFuZC9vciBpdHMgc3Vic2lkaWFyaWVzLgorICogU1BEWC1MaWNlbnNl
+LUlkZW50aWZpZXI6IEdQTC0yLjAtb3ItbGF0ZXIKKyAqLworCisjaWZuZGVmIEhFWEFHT05fQ09S
+RV9EVU1QX0gKKyNkZWZpbmUgSEVYQUdPTl9DT1JFX0RVTVBfSAorCisjaW5jbHVkZSAiY3B1Lmgi
+CisjaW5jbHVkZSAicWVtdS9ic3dhcC5oIgorCisvKiBMaW51eCBhcmNoL2hleGFnb24vaW5jbHVk
+ZS91YXBpL2FzbS91c2VyLmg6IHN0cnVjdCB1c2VyX3JlZ3Nfc3RydWN0LiAqLwordHlwZWRlZiBz
+dHJ1Y3QgdGFyZ2V0X2VsZl9ncmVnc2V0X3QgeworICAgIHVpbnQzMl90IGdwclszMl07CisgICAg
+dWludDMyX3Qgc2EwOworICAgIHVpbnQzMl90IGxjMDsKKyAgICB1aW50MzJfdCBzYTE7CisgICAg
+dWludDMyX3QgbGMxOworICAgIHVpbnQzMl90IG0wOworICAgIHVpbnQzMl90IG0xOworICAgIHVp
+bnQzMl90IHVzcjsKKyAgICB1aW50MzJfdCBwM18wOworICAgIHVpbnQzMl90IGdwOworICAgIHVp
+bnQzMl90IHVncDsKKyAgICB1aW50MzJfdCBwYzsKKyAgICB1aW50MzJfdCBjYXVzZTsKKyAgICB1
+aW50MzJfdCBiYWR2YTsKKyAgICB1aW50MzJfdCBjczA7CisgICAgdWludDMyX3QgY3MxOworICAg
+IHVpbnQzMl90IHBhZDsKK30gSGV4YWdvblVzZXJSZWdzOworCitRRU1VX0JVSUxEX0JVR19PTihz
+aXplb2YoSGV4YWdvblVzZXJSZWdzKSAhPSA0OCAqIHNpemVvZih1aW50MzJfdCkpOworCitzdGF0
+aWMgaW5saW5lIHZvaWQgaGV4YWdvbl9jb3JlX2NvcHlfcmVncyhIZXhhZ29uVXNlclJlZ3MgKnJl
+Z3MsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb25zdCBDUFVI
+ZXhhZ29uU3RhdGUgKmVudikKK3sKKyAgICB1aW50MzJfdCBwcmVkcyA9IDA7CisKKyAgICBmb3Ig
+KGludCBpID0gMDsgaSA8IEFSUkFZX1NJWkUocmVncy0+Z3ByKTsgaSsrKSB7CisgICAgICAgIHJl
+Z3MtPmdwcltpXSA9IGNwdV90b19sZTMyKGVudi0+Z3ByW2ldKTsKKyAgICB9CisgICAgZm9yIChp
+bnQgaSA9IDA7IGkgPCBOVU1fUFJFR1M7IGkrKykgeworICAgICAgICBwcmVkcyB8PSAoZW52LT5w
+cmVkW2ldICYgMHhmZikgPDwgKGkgKiA4KTsKKyAgICB9CisgICAgcmVncy0+c2EwID0gY3B1X3Rv
+X2xlMzIoZW52LT5ncHJbSEVYX1JFR19TQTBdKTsKKyAgICByZWdzLT5sYzAgPSBjcHVfdG9fbGUz
+MihlbnYtPmdwcltIRVhfUkVHX0xDMF0pOworICAgIHJlZ3MtPnNhMSA9IGNwdV90b19sZTMyKGVu
+di0+Z3ByW0hFWF9SRUdfU0ExXSk7CisgICAgcmVncy0+bGMxID0gY3B1X3RvX2xlMzIoZW52LT5n
+cHJbSEVYX1JFR19MQzFdKTsKKyAgICByZWdzLT5tMCA9IGNwdV90b19sZTMyKGVudi0+Z3ByW0hF
+WF9SRUdfTTBdKTsKKyAgICByZWdzLT5tMSA9IGNwdV90b19sZTMyKGVudi0+Z3ByW0hFWF9SRUdf
+TTFdKTsKKyAgICByZWdzLT51c3IgPSBjcHVfdG9fbGUzMihlbnYtPmdwcltIRVhfUkVHX1VTUl0p
+OworICAgIHJlZ3MtPnAzXzAgPSBjcHVfdG9fbGUzMihwcmVkcyk7CisgICAgcmVncy0+Z3AgPSBj
+cHVfdG9fbGUzMihlbnYtPmdwcltIRVhfUkVHX0dQXSk7CisgICAgcmVncy0+dWdwID0gY3B1X3Rv
+X2xlMzIoZW52LT5ncHJbSEVYX1JFR19VR1BdKTsKKyAgICByZWdzLT5wYyA9IGNwdV90b19sZTMy
+KGVudi0+Z3ByW0hFWF9SRUdfUENdKTsKKyNpZmRlZiBDT05GSUdfVVNFUl9PTkxZCisgICAgcmVn
+cy0+Y2F1c2UgPSBjcHVfdG9fbGUzMihlbnYtPmNhdXNlX2NvZGUpOworICAgIHJlZ3MtPmJhZHZh
+ID0gMDsKKyNlbHNlCisgICAgcmVncy0+Y2F1c2UgPSBjcHVfdG9fbGUzMihleHRyYWN0MzIoZW52
+LT50X3NyZWdbSEVYX1NSRUdfU1NSXSwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgcmVnX2ZpZWxkX2luZm9bU1NSX0NBVVNFXS5vZmZzZXQsCisgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIHJlZ19maWVsZF9pbmZvW1NTUl9DQVVTRV0ud2lkdGgpKTsK
+KyAgICByZWdzLT5iYWR2YSA9IGNwdV90b19sZTMyKGVudi0+dF9zcmVnW0hFWF9TUkVHX0JBRFZB
+XSk7CisjZW5kaWYKKyAgICByZWdzLT5jczAgPSBjcHVfdG9fbGUzMihlbnYtPmdwcltIRVhfUkVH
+X0NTMF0pOworICAgIHJlZ3MtPmNzMSA9IGNwdV90b19sZTMyKGVudi0+Z3ByW0hFWF9SRUdfQ1Mx
+XSk7CisgICAgcmVncy0+cGFkID0gMDsKK30KKworI2VuZGlmIC8qIEhFWEFHT05fQ09SRV9EVU1Q
+X0ggKi8KZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2ludGVybmFsLmggYi90YXJnZXQvaGV4
+YWdvbi9pbnRlcm5hbC5oCmluZGV4IDZkZWYzMzFhODNhLi4xYTVmZjNkYWNhMiAxMDA2NDQKLS0t
+IGEvdGFyZ2V0L2hleGFnb24vaW50ZXJuYWwuaAorKysgYi90YXJnZXQvaGV4YWdvbi9pbnRlcm5h
+bC5oCkBAIC02MCw2ICs2MCwxNCBAQCB2b2lkIEdfTk9SRVRVUk4gZG9fcmFpc2VfZXhjZXB0aW9u
+KENQVUhleGFnb25TdGF0ZSAqZW52LAogCiAjaWZuZGVmIENPTkZJR19VU0VSX09OTFkKIGV4dGVy
+biBjb25zdCBWTVN0YXRlRGVzY3JpcHRpb24gdm1zdGF0ZV9oZXhhZ29uX2NwdTsKK2ludCBoZXhh
+Z29uX2NwdV93cml0ZV9lbGYzMl9ub3RlKFdyaXRlQ29yZUR1bXBGdW5jdGlvbiBmLCBDUFVTdGF0
+ZSAqY3MsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnQgY3B1aWQsIER1bXBT
+dGF0ZSAqcyk7Cit2b2lkIGhleGFnb25fZ2V0X2R1bXBfaW5mbyhjb25zdCBDUFVTdGF0ZSAqY3Ms
+IEFyY2hEdW1wSW5mbyAqaW5mbywKKyAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IEd1
+ZXN0UGh5c0Jsb2NrTGlzdCAqZ3Vlc3RfcGh5c19ibG9ja3MpOworc2l6ZV90IGhleGFnb25fZ2V0
+X25vdGVfc2l6ZShjb25zdCBDUFVTdGF0ZSAqY3MsIGludCBjbGFzcywgaW50IG1hY2hpbmUsCisg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIGludCBucl9jcHVzKTsKK2Jvb2wgaGV4YWdvbl9j
+cHVfZ2V0X21lbW9yeV9tYXBwaW5nKENQVVN0YXRlICpjcywgTWVtb3J5TWFwcGluZ0xpc3QgKmxp
+c3QsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJvciAqKmVycnApOwog
+I2VuZGlmCiAKICNlbmRpZgpkaWZmIC0tZ2l0IGEvaHcvaGV4YWdvbi9oZXhhZ29uX3RsYi5jIGIv
+aHcvaGV4YWdvbi9oZXhhZ29uX3RsYi5jCmluZGV4IDA3NDA2Y2VhMzVlLi41M2I4MzVjZGQyYiAx
+MDA2NDQKLS0tIGEvaHcvaGV4YWdvbi9oZXhhZ29uX3RsYi5jCisrKyBiL2h3L2hleGFnb24vaGV4
+YWdvbl90bGIuYwpAQCAtMzAyLDYgKzMwMiwyMyBAQCBzdGF0aWMgYm9vbCBoZXhfdGxiX2lzX21h
+dGNoKHVpbnQ2NF90IGVudHJ5MSwgdWludDY0X3QgZW50cnkyLAogCiAvKiBQdWJsaWMgQVBJICov
+CiAKK2Jvb2wgaGV4YWdvbl90bGJfZGVjb2RlX2VudHJ5KHVpbnQ2NF90IGVudHJ5LCBIZXhhZ29u
+VExCTWFwcGluZyAqbWFwcGluZykKK3sKKyAgICB1aW50NjRfdCBzaXplOworCisgICAgaWYgKCFH
+RVRfUFRFX1YoZW50cnkpKSB7CisgICAgICAgIHJldHVybiBmYWxzZTsKKyAgICB9CisKKyAgICBz
+aXplID0gaGV4X3RsYl9wYWdlX3NpemVfYnl0ZXMoZW50cnkpOworICAgIG1hcHBpbmctPnNpemUg
+PSBzaXplOworICAgIG1hcHBpbmctPnZhID0gUk9VTkRfRE9XTihoZXhfdGxiX3ZpcnRfYWRkcihl
+bnRyeSksIHNpemUpOworICAgIG1hcHBpbmctPnBhID0gaGV4X3RsYl9waHlzX2FkZHIoZW50cnkp
+OworICAgIG1hcHBpbmctPmdsb2JhbCA9IEdFVF9QVEVfRyhlbnRyeSk7CisgICAgbWFwcGluZy0+
+YXNpZCA9IEdFVF9QVEVfQVNJRChlbnRyeSk7CisgICAgcmV0dXJuIHRydWU7Cit9CisKIHVpbnQ2
+NF90IGhleGFnb25fdGxiX3JlYWQoSGV4YWdvblRMQlN0YXRlICp0bGIsIHVpbnQzMl90IGluZGV4
+KQogewogICAgIGdfYXNzZXJ0KGluZGV4IDwgdGxiLT5udW1fZW50cmllcyk7CmRpZmYgLS1naXQg
+YS9saW51eC11c2VyL2hleGFnb24vZWxmbG9hZC5jIGIvbGludXgtdXNlci9oZXhhZ29uL2VsZmxv
+YWQuYwppbmRleCBkYjBiZjI5OWNjMC4uZGFjODI2MGIzMDIgMTAwNjQ0Ci0tLSBhL2xpbnV4LXVz
+ZXIvaGV4YWdvbi9lbGZsb2FkLmMKKysrIGIvbGludXgtdXNlci9oZXhhZ29uL2VsZmxvYWQuYwpA
+QCAtNiw2ICs2LDEwIEBACiAjaW5jbHVkZSAidGFyZ2V0X2VsZi5oIgogI2luY2x1ZGUgInRhcmdl
+dC9oZXhhZ29uL2NwdS5oIgogCit2b2lkIGVsZl9jb3JlX2NvcHlfcmVncyh0YXJnZXRfZWxmX2dy
+ZWdzZXRfdCAqcmVncywgY29uc3QgQ1BVSGV4YWdvblN0YXRlICplbnYpCit7CisgICAgaGV4YWdv
+bl9jb3JlX2NvcHlfcmVncyhyZWdzLCBlbnYpOworfQogCiBhYmlfdWxvbmcgZ2V0X2VsZl9od2Nh
+cChDUFVTdGF0ZSAqY3MpCiB7CmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9hcmNoX2R1bXAu
+YyBiL3RhcmdldC9oZXhhZ29uL2FyY2hfZHVtcC5jCm5ldyBmaWxlIG1vZGUgMTAwNjQ0CmluZGV4
+IDAwMDAwMDAwMDAwLi5jMWIyODkyZTJhZAotLS0gL2Rldi9udWxsCisrKyBiL3RhcmdldC9oZXhh
+Z29uL2FyY2hfZHVtcC5jCkBAIC0wLDAgKzEsMTA4IEBACisvKgorICogSGV4YWdvbiBzeXN0ZW0g
+Z3Vlc3QgRUxGIGNvcmUgZHVtcHMuCisgKgorICogQ29weXJpZ2h0IChjKSBRdWFsY29tbSBUZWNo
+bm9sb2dpZXMsIEluYy4gYW5kL29yIGl0cyBzdWJzaWRpYXJpZXMuCisgKiBTUERYLUxpY2Vuc2Ut
+SWRlbnRpZmllcjogR1BMLTIuMC1vci1sYXRlcgorICovCisKKyNpbmNsdWRlICJxZW11L29zZGVw
+LmgiCisjaW5jbHVkZSAiY3B1LmgiCisjaW5jbHVkZSAiZWxmLmgiCisjaW5jbHVkZSAicWVtdS9y
+YW5nZS5oIgorI2luY2x1ZGUgInN5c3RlbS9kdW1wLmgiCisjaW5jbHVkZSAic3lzdGVtL21lbW9y
+eV9tYXBwaW5nLmgiCisjaW5jbHVkZSAiaHcvaGV4YWdvbi9oZXhhZ29uX3RsYi5oIgorI2luY2x1
+ZGUgImludGVybmFsLmgiCisjaW5jbHVkZSAibWFjcm9zLmgiCisjaW5jbHVkZSAic3lzX21hY3Jv
+cy5oIgorI2luY2x1ZGUgImNvcmUtZHVtcC5oIgorCisvKiBMaW51eCBpbmNsdWRlL2xpbnV4L2Vs
+ZmNvcmUuaDogc3RydWN0IGVsZl9wcnN0YXR1cyBmb3IgdGhlIDMyLWJpdCBBQkkuICovCit0eXBl
+ZGVmIHN0cnVjdCBIZXhhZ29uRWxmUHJzdGF0dXMgeworICAgIHVpbnQ4X3QgcGFkMVsyNF07Cisg
+ICAgdWludDMyX3QgcHJfcGlkOworICAgIHVpbnQ4X3QgcGFkMls0NF07CisgICAgSGV4YWdvblVz
+ZXJSZWdzIHByX3JlZzsKKyAgICB1aW50MzJfdCBwcl9mcHZhbGlkOworfSBRRU1VX1BBQ0tFRCBI
+ZXhhZ29uRWxmUHJzdGF0dXM7CisKK1FFTVVfQlVJTERfQlVHX09OKG9mZnNldG9mKEhleGFnb25F
+bGZQcnN0YXR1cywgcHJfcmVnKSAhPSA3Mik7CitRRU1VX0JVSUxEX0JVR19PTihzaXplb2YoSGV4
+YWdvbkVsZlByc3RhdHVzKSAhPSAyNjgpOworCit0eXBlZGVmIHN0cnVjdCBIZXhhZ29uRWxmTm90
+ZSB7CisgICAgRWxmMzJfTmhkciBoZWFkZXI7CisgICAgY2hhciBuYW1lWzhdOyAvKiAiQ09SRSIg
+aW5jbHVkaW5nIE5VTCwgcGFkZGVkIHRvIGEgNC1ieXRlIGJvdW5kYXJ5LiAqLworICAgIEhleGFn
+b25FbGZQcnN0YXR1cyBwcnN0YXR1czsKK30gUUVNVV9QQUNLRUQgSGV4YWdvbkVsZk5vdGU7CisK
+K2ludCBoZXhhZ29uX2NwdV93cml0ZV9lbGYzMl9ub3RlKFdyaXRlQ29yZUR1bXBGdW5jdGlvbiBm
+LCBDUFVTdGF0ZSAqY3MsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnQgY3B1
+aWQsIER1bXBTdGF0ZSAqcykKK3sKKyAgICBIZXhhZ29uRWxmTm90ZSBub3RlID0geyAwIH07Cisg
+ICAgSGV4YWdvblVzZXJSZWdzIHJlZ3M7CisKKyAgICBub3RlLmhlYWRlci5uX25hbWVzeiA9IGNw
+dV90b19kdW1wMzIocywgc2l6ZW9mKCJDT1JFIikpOworICAgIG5vdGUuaGVhZGVyLm5fZGVzY3N6
+ID0gY3B1X3RvX2R1bXAzMihzLCBzaXplb2Yobm90ZS5wcnN0YXR1cykpOworICAgIG5vdGUuaGVh
+ZGVyLm5fdHlwZSA9IGNwdV90b19kdW1wMzIocywgTlRfUFJTVEFUVVMpOworICAgIG1lbWNweShu
+b3RlLm5hbWUsICJDT1JFIiwgc2l6ZW9mKCJDT1JFIikpOworICAgIG5vdGUucHJzdGF0dXMucHJf
+cGlkID0gY3B1X3RvX2R1bXAzMihzLCBjcHVpZCk7CisgICAgaGV4YWdvbl9jb3JlX2NvcHlfcmVn
+cygmcmVncywgY3B1X2VudihjcykpOworICAgIG1lbWNweSgmbm90ZS5wcnN0YXR1cy5wcl9yZWcs
+ICZyZWdzLCBzaXplb2YocmVncykpOworCisgICAgcmV0dXJuIGYoJm5vdGUsIHNpemVvZihub3Rl
+KSwgcyk7Cit9CisKK3ZvaWQgaGV4YWdvbl9nZXRfZHVtcF9pbmZvKGNvbnN0IENQVVN0YXRlICpj
+cywgQXJjaER1bXBJbmZvICppbmZvLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgY29uc3Qg
+R3Vlc3RQaHlzQmxvY2tMaXN0ICpndWVzdF9waHlzX2Jsb2NrcykKK3sKKyAgICBjb25zdCBIZXhh
+Z29uQ1BVICpjcHUgPSBIRVhBR09OX0NQVShjcyk7CisKKyAgICBpbmZvLT5kX21hY2hpbmUgPSBF
+TV9IRVhBR09OOworICAgIGluZm8tPmRfY2xhc3MgPSBFTEZDTEFTUzMyOworICAgIGluZm8tPmRf
+ZW5kaWFuID0gRUxGREFUQTJMU0I7CisgICAgLyogVGhlIHZhbHVlcyBvZiBIZXhhZ29uVmVyc2lv
+biBtYXRjaCB0aGUgRUZfSEVYQUdPTl9NQUNIXyogZmxhZ3MuICovCisgICAgaW5mby0+ZF9mbGFn
+cyA9IGNwdS0+Y2ZnLmhleF9kZWYtPmhleF92ZXJzaW9uOworfQorCitzaXplX3QgaGV4YWdvbl9n
+ZXRfbm90ZV9zaXplKGNvbnN0IENQVVN0YXRlICpjcywgaW50IGNsYXNzLCBpbnQgbWFjaGluZSwK
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW50IG5yX2NwdXMpCit7CisgICAgcmV0dXJu
+IHNpemVvZihIZXhhZ29uRWxmTm90ZSkgKiBucl9jcHVzOworfQorCitzdGF0aWMgYm9vbCBoZXhh
+Z29uX21hcHBpbmdfb3ZlcmxhcHMoY29uc3QgTWVtb3J5TWFwcGluZ0xpc3QgKmxpc3QsCisgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29uc3QgSGV4YWdvblRMQk1hcHBpbmcg
+Km0pCit7CisgICAgY29uc3QgTWVtb3J5TWFwcGluZyAqb3RoZXI7CisKKyAgICBRVEFJTFFfRk9S
+RUFDSChvdGhlciwgJmxpc3QtPmhlYWQsIG5leHQpIHsKKyAgICAgICAgaWYgKHJhbmdlc19vdmVy
+bGFwKG90aGVyLT52aXJ0X2FkZHIsIG90aGVyLT5sZW5ndGgsIG0tPnZhLCBtLT5zaXplKSkgewor
+ICAgICAgICAgICAgcmV0dXJuIHRydWU7CisgICAgICAgIH0KKyAgICB9CisgICAgcmV0dXJuIGZh
+bHNlOworfQorCitib29sIGhleGFnb25fY3B1X2dldF9tZW1vcnlfbWFwcGluZyhDUFVTdGF0ZSAq
+Y3MsIE1lbW9yeU1hcHBpbmdMaXN0ICpsaXN0LAorICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgRXJyb3IgKiplcnJwKQoreworICAgIGNvbnN0IEhleGFnb25DUFUgKmNwdSA9IEhF
+WEFHT05fQ1BVKGNzKTsKKyAgICB1aW50MzJfdCBhc2lkID0gR0VUX1NTUl9GSUVMRChTU1JfQVNJ
+RCwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjcHVfZW52KGNzKS0+dF9zcmVn
+W0hFWF9TUkVHX1NTUl0pOworICAgIHVpbnQzMl90IG51bV9lbnRyaWVzOworCisgICAgZ19hc3Nl
+cnQoY3B1LT50bGIpOworCisgICAgbnVtX2VudHJpZXMgPSBoZXhhZ29uX3RsYl9nZXRfbnVtX2Vu
+dHJpZXMoY3B1LT50bGIpOworICAgIGZvciAodWludDMyX3QgaSA9IDA7IGkgPCBudW1fZW50cmll
+czsgaSsrKSB7CisgICAgICAgIEhleGFnb25UTEJNYXBwaW5nIG07CisKKyAgICAgICAgaWYgKCFo
+ZXhhZ29uX3RsYl9kZWNvZGVfZW50cnkoaGV4YWdvbl90bGJfcmVhZChjcHUtPnRsYiwgaSksICZt
+KSB8fAorICAgICAgICAgICAgKCFtLmdsb2JhbCAmJiBtLmFzaWQgIT0gYXNpZCkgfHwKKyAgICAg
+ICAgICAgIGhleGFnb25fbWFwcGluZ19vdmVybGFwcyhsaXN0LCAmbSkpIHsKKyAgICAgICAgICAg
+IGNvbnRpbnVlOworICAgICAgICB9CisgICAgICAgIG1lbW9yeV9tYXBwaW5nX2xpc3RfYWRkX21l
+cmdlX3NvcnRlZChsaXN0LCBtLnBhLCBtLnZhLCBtLnNpemUpOworICAgIH0KKyAgICByZXR1cm4g
+dHJ1ZTsKK30KZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2NwdS5jIGIvdGFyZ2V0L2hleGFn
+b24vY3B1LmMKaW5kZXggMzU3NWIzMWQxOTYuLjVmN2YyMmZhMmVhIDEwMDY0NAotLS0gYS90YXJn
+ZXQvaGV4YWdvbi9jcHUuYworKysgYi90YXJnZXQvaGV4YWdvbi9jcHUuYwpAQCAtODcwLDkgKzg3
+MCwyMiBAQCBzdGF0aWMgYm9vbCBoZXhhZ29uX3RsYl9maWxsKENQVVN0YXRlICpjcywgdmFkZHIg
+YWRkcmVzcywgaW50IHNpemUsCiAKICNpbmNsdWRlICJody9jb3JlL3N5c2VtdS1jcHUtb3BzLmgi
+CiAKK3N0YXRpYyBib29sIGhleGFnb25fY3B1X2dldF9wYWdpbmdfZW5hYmxlZChjb25zdCBDUFVT
+dGF0ZSAqY3MpCit7CisgICAgY29uc3QgSGV4YWdvbkNQVSAqY3B1ID0gSEVYQUdPTl9DUFUoY3Mp
+OworCisgICAgcmV0dXJuIEdFVF9TWVNDRkdfRklFTEQoU1lTQ0ZHX01NVUVOLAorICAgICAgICBo
+ZXhhZ29uX2dsb2JhbHJlZ19yZWFkX3N5c2NmZ191bmxvY2tlZChjcHUtPmdsb2JhbHJlZ3MpKTsK
+K30KKwogc3RhdGljIGNvbnN0IHN0cnVjdCBTeXNlbXVDUFVPcHMgaGV4YWdvbl9zeXNlbXVfb3Bz
+ID0gewogICAgIC5oYXNfd29yayA9IGhleGFnb25fY3B1X2hhc193b3JrLAorICAgIC5nZXRfbWVt
+b3J5X21hcHBpbmcgPSBoZXhhZ29uX2NwdV9nZXRfbWVtb3J5X21hcHBpbmcsCisgICAgLmdldF9w
+YWdpbmdfZW5hYmxlZCA9IGhleGFnb25fY3B1X2dldF9wYWdpbmdfZW5hYmxlZCwKICAgICAudHJh
+bnNsYXRlX2Zvcl9kZWJ1ZyA9IGhleGFnb25fY3B1X3RyYW5zbGF0ZV9mb3JfZGVidWcsCisgICAg
+LndyaXRlX2VsZjMyX25vdGUgPSBoZXhhZ29uX2NwdV93cml0ZV9lbGYzMl9ub3RlLAorICAgIC5n
+ZXRfZHVtcF9pbmZvID0gaGV4YWdvbl9nZXRfZHVtcF9pbmZvLAorICAgIC5nZXRfbm90ZV9zaXpl
+ID0gaGV4YWdvbl9nZXRfbm90ZV9zaXplLAogfTsKIAogc3RhdGljIGJvb2wgaGV4YWdvbl9jcHVf
+ZXhlY19pbnRlcnJ1cHQoQ1BVU3RhdGUgKmNzLCBpbnQgaW50ZXJydXB0X3JlcXVlc3QpCmRpZmYg
+LS1naXQgYS90YXJnZXQvaGV4YWdvbi9tZXNvbi5idWlsZCBiL3RhcmdldC9oZXhhZ29uL21lc29u
+LmJ1aWxkCmluZGV4IGRiNjVlZGNiYTU0Li5iOWIyYTJkOTc0MCAxMDA2NDQKLS0tIGEvdGFyZ2V0
+L2hleGFnb24vbWVzb24uYnVpbGQKKysrIGIvdGFyZ2V0L2hleGFnb24vbWVzb24uYnVpbGQKQEAg
+LTMxNCw2ICszMTQsNyBAQCBoZXhhZ29uX3NzLmFkZChmaWxlcygKICkpCiAKIGhleGFnb25fc29m
+dG1tdV9zcy5hZGQoZmlsZXMoCisgICAgJ2FyY2hfZHVtcC5jJywKICAgICAnY3B1X2hlbHBlci5j
+JywKICAgICAnaGV4X21tdS5jJywKICAgICAnaGV4X2ludGVycnVwdHMuYycsCi0tIAoyLjM0LjEK
+Cg==
 
