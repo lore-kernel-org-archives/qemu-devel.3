@@ -1,54 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E470D606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82751606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IpYMfesH
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CCD/+peE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX1OI-0001zb-Ts; Fri, 27 Nov 2026 14:13:52 -0500
+	id 1xX1Pj-0003qq-OI; Fri, 27 Nov 2026 14:15:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xX1Nk-0001oF-Pu; Fri, 27 Nov 2026 14:13:17 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1xX1Nq-0001qp-M7; Fri, 27 Nov 2026 14:13:22 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xX1Ni-0006h4-7G; Fri, 27 Nov 2026 14:13:16 -0500
+ id 1xX1Nn-0006xi-Uo; Fri, 27 Nov 2026 14:13:22 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 05D0D611E2;
- Fri, 27 Nov 2026 19:13:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBE91F0089C;
- Fri, 27 Nov 2026 19:13:10 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id B014B43259;
+ Fri, 27 Nov 2026 19:13:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C151F00899;
+ Fri, 27 Nov 2026 19:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795806792;
- bh=uy9Q7GY0lmCcJqUfxyPIVDl+ko/IhNroj3ddpgWPNb0=;
+ s=k20260515; t=1795806798;
+ bh=MXLr2BgN6g0wofnlccPy2ARfsaXGggCj8CNKnrzWPHE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IpYMfesHd/91aKGyJH4M2Sa2amXT9Jf3nmNGHPzFMUUWvZLF8cAQQgbp8Nb1I3el3
- mAbBQify0wtBwRWZON5nEuRVE4NxCB/kZhraANrz66ycuutoIHXnaSPoDPjzNO/uzq
- TGcr79VNTk2hzUzg9ko9FQ5V+4ONSNcV49AD3BvHLqBppksDo+qigPm8nMsL9OzwDY
- pry74YPUysGpHESIUUyDayxnUB4x+lSSUBC04f2oBNvR1clAmzG34FyHAFBq2FvbGr
- VIEmKsiJEJgSRoKTY0v6J5RRY7SsM1+PyUMJRmqrAgRTy456V9owzhmTSeMZCJ6YRb
- BacjvqxkyasGg==
+ b=CCD/+peET8E8BGPYOVRimn6cYVEfz+0eYRy76bdJdrA2JxBliMpwbAvLJdilxPSVN
+ vchoIvBe2qbz9tGa7yxKureW7Ab20GpMWU7Q5asvTJc/RF7phsGD6A8gPIiLjdfXfK
+ b3rEkMhxDffEdqp1vs0l+GiDrCdpB1yTY2tQUlT3xua/paTVyp0vqSxfwJAuenSMlH
+ BB6NCTBZKnVYXBqeiDReczR5b4jL2Z9sYKDE5jMpUOAtHqNKFqh1yElcaZKdoDcmLE
+ QnCXhREMQcqwsQ9tH6drXccU5WeeDn+n1X8KmF/N/Yfd8RIwvEn6cZXw64E8VnDS8a
+ ItaixkYA9DZug==
 From: Niklas Cassel <cassel@kernel.org>
 To: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>,
  qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 06/13] hw/ide: add the IDENTIFY DEVICE data log
-Date: Fri, 27 Nov 2026 20:12:41 +0100
-Message-ID: <20261127191250.3298004-7-cassel@kernel.org>
+Subject: [PATCH 08/13] hw/ide: add Sense Data Reporting feature set support
+Date: Fri, 27 Nov 2026 20:12:43 +0100
+Message-ID: <20261127191250.3298004-9-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261127191250.3298004-1-cassel@kernel.org>
 References: <20261127191250.3298004-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -74,362 +74,490 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the IDENTIFY DEVICE data log (30h).
-The IDENTIFY DEVICE data log is a mandatory log in the GPL feature set.
+Implement the Sense Data Reporting feature set (ACS-6 4.25).
 
-Implement it with pages 00h to 06h and 08h, which are all the pages that
-ACS-6 9.11.1 makes mandatory for a SATA device, and list it in the General
-Purpose Log Directory.
+When it is enabled, a failed command sets SENSE DATA AVAILABLE, and
+REQUEST SENSE DATA EXT (0Bh) returns the sense key, ASC and ASCQ.
+The sense data is discarded on a reset and when another command is
+accepted.
 
-The Supported Capabilities (03h), Current Settings (04h) and Serial ATA
-(08h) pages copy their bits from the IDENTIFY DEVICE data, so that they
-cannot disagree with it.
+An unsupported command reports INVALID COMMAND OPERATION CODE (ACS-6
+6.8.18), and an invalid input field reports INVALID FIELD IN CDB (6.8.19),
+both with ILLEGAL REQUEST. Other errors make no sense data available.
 
-Extend the read log qtests to check the pages, and to read two pages
-with one READ LOG DMA EXT.
+As with NCQ and GPL, only a disk behind AHCI offers the feature set.
+This feature will be used to populate the NCQ Command Error log and to
+implement NCQ Autosense. Add a qtest that checks the sense data of an
+aborted SET FEATURES.
 
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- hw/ide/core.c           | 195 ++++++++++++++++++++++++++++++++++++++++
- hw/ide/ide-internal.h   |   9 ++
- tests/qtest/ahci-test.c |  70 +++++++++++++++
- 3 files changed, 274 insertions(+)
+ hw/ide/ahci.c             |   3 +
+ hw/ide/core.c             | 146 +++++++++++++++++++++++++++++++++++---
+ hw/ide/ide-internal.h     |   3 +-
+ include/hw/ide/ide-dev.h  |   4 ++
+ tests/qtest/ahci-test.c   |  69 ++++++++++++++++++
+ tests/qtest/libqos/ahci.c |  10 +++
+ tests/qtest/libqos/ahci.h |   5 +-
+ 7 files changed, 230 insertions(+), 10 deletions(-)
 
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 21938703da..d74d185607 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -1225,6 +1225,9 @@ static void process_ncq_command(AHCIState *s, int port, const uint8_t *cmd_fis,
+                    ((uint64_t)ncq_fis->lba2 << 16) |
+                    ((uint64_t)ncq_fis->lba1 << 8) |
+                    (uint64_t)ncq_fis->lba0;
++
++    /* Accepting an NCQ command makes the sense data unavailable (ACS-6 4.25) */
++    ad->port.ifs[0].sense_data_avail = false;
+     ncq_tfs->tag = tag;
+ 
+     /* Sanity-check the NCQ packet */
 diff --git a/hw/ide/core.c b/hw/ide/core.c
-index d09b0fa736..1304202ea2 100644
+index 0ccac398b2..2d8bca0762 100644
 --- a/hw/ide/core.c
 +++ b/hw/ide/core.c
-@@ -1652,6 +1652,192 @@ static bool cmd_write_dma(IDEState *s, uint8_t cmd)
-     return false;
+@@ -37,6 +37,8 @@
+ #include "system/dma.h"
+ #include "hw/block/block.h"
+ #include "system/block-backend.h"
++#include "scsi/constants.h"
++#include "scsi/utils.h"
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "system/replay.h"
+@@ -244,12 +246,13 @@ static void ide_identify(IDEState *s)
+     }
+     if (s->ncq_queues) {
+         /*
+-         * 14=set to 1,
++         * 14=set to 1, 6=Sense Data Reporting supported,
+          * 3=READ LOG DMA EXT/WRITE LOG DMA EXT (GPL DMA) supported
+          */
+-        put_le16(p + 119, (1 << 14) | (1 << 3));
+-        /* 14=set to 1, 3=GPL DMA enabled */
+-        put_le16(p + 120, (1 << 14) | (1 << 3));
++        put_le16(p + 119, (1 << 14) | (1 << 6) | (1 << 3));
++        /* 14=set to 1, 6=Sense Data Reporting enabled, 3=GPL DMA enabled */
++        put_le16(p + 120, (1 << 14) | (1 << 3) |
++                 (s->sense_data_enabled ? (1 << 6) : 0));
+     }
+     if (dev && dev->conf.discard_granularity) {
+         put_le16(p + 169, 1); /* TRIM support */
+@@ -555,11 +558,41 @@ BlockAIOCB *ide_issue_trim(
+     return &iocb->common;
  }
  
+-void ide_abort_command(IDEState *s)
 +/*
-+ * An IDENTIFY DEVICE data bit, and the bit of an IDENTIFY DEVICE data log QWord
-+ * that holds a copy of it.
++ * Record sense data for the Sense Data Reporting feature set (ACS-6 4.25).
++ * When the feature is enabled the SENSE DATA AVAILABLE bit is reported in the
++ * STATUS field so the host can retrieve the sense with REQUEST SENSE DATA EXT.
++ * When it is disabled this is a no-op, so the ATAPI sense_key/asc are left
++ * untouched for packet devices.
 + */
-+typedef struct IDEIdentifyBit {
-+    uint8_t word;
-+    uint8_t bit;
-+    uint8_t qword_bit;
-+} IDEIdentifyBit;
-+
-+/* The Supported Capabilities QWord of page 03h, terminated by a zero word */
-+static const IDEIdentifyBit ide_supported_capabilities[] = {
-+    { 69, 14, 39 },     /* DRAT SUPPORTED */
-+    { 69, 5, 31 },      /* RZAT SUPPORTED */
-+    { 82, 14, 29 },     /* NOP SUPPORTED */
-+    { 82, 5, 24 },      /* VOLATILE WRITE CACHE SUPPORTED */
-+    { 82, 0, 23 },      /* SMART */
-+    { 83, 13, 22 },     /* FLUSH CACHE EXT SUPPORTED */
-+    { 83, 10, 20 },     /* 48-BIT SUPPORTED */
-+    { 84, 6, 12 },      /* WRITE FUA EXT SUPPORTED */
-+    { 84, 5, 11 },      /* GPL SUPPORTED */
-+    { 84, 1, 8 },       /* SMART SELF-TEST SUPPORTED */
-+    { 84, 0, 7 },       /* SMART ERROR LOGGING SUPPORTED */
-+    { 119, 6, 5 },      /* SENSE DATA SUPPORTED */
-+    { 119, 3, 2 },      /* GPL DMA SUPPORTED */
-+    { 0 }
-+};
-+
-+/* The SATA Capabilities QWord of page 08h, terminated by a zero word */
-+static const IDEIdentifyBit ide_sata_capabilities[] = {
-+    { 76, 1, 0 },       /* SATA GEN1 SIGNALING SPEED SUPPORTED */
-+    { 76, 2, 1 },       /* SATA GEN2 SIGNALING SPEED SUPPORTED */
-+    { 76, 3, 2 },       /* SATA GEN3 SIGNALING SPEED SUPPORTED */
-+    { 76, 8, 7 },       /* NCQ FEATURE SET SUPPORTED */
-+    { 76, 9, 8 },       /* RECEIPT OF HOST INITIATED POWER MANAGEMENT ... */
-+    { 76, 10, 9 },      /* SATA PHY EVENT COUNTERS LOG SUPPORTED */
-+    { 76, 11, 10 },     /* UNLOAD WHILE NCQ COMMANDS ARE OUTSTANDING ... */
-+    { 76, 12, 11 },     /* NCQ PRIORITY INFORMATION SUPPORTED */
-+    { 76, 13, 12 },     /* HOST AUTOMATIC PARTIAL TO SLUMBER ... */
-+    { 76, 14, 13 },     /* DEVICE AUTOMATIC PARTIAL TO SLUMBER ... */
-+    { 76, 15, 14 },     /* READ LOG DMA EXT AS EQUIVALENT TO READ LOG EXT ... */
-+    { 77, 4, 15 },      /* NCQ STREAMING SUPPORTED */
-+    { 77, 5, 16 },      /* NCQ QUEUE MANAGEMENT COMMAND SUPPORTED */
-+    { 77, 6, 17 },      /* SEND AND RECEIVE QUEUED COMMANDS SUPPORTED */
-+    { 78, 1, 18 },      /* NONZERO BUFFER OFFSETS SUPPORTED */
-+    { 78, 2, 19 },      /* DMA SETUP AUTO-ACTIVATION SUPPORTED */
-+    { 78, 3, 20 },      /* DEVICE INITIATED POWER MANAGEMENT SUPPORTED */
-+    { 78, 4, 21 },      /* IN-ORDER DATA DELIVERY SUPPORTED */
-+    { 78, 5, 22 },      /* HARDWARE FEATURE CONTROL SUPPORTED */
-+    { 78, 6, 23 },      /* SOFTWARE SETTINGS PRESERVATION SUPPORTED */
-+    { 78, 7, 24 },      /* NCQ AUTOSENSE SUPPORTED */
-+    { 78, 8, 25 },      /* DEVICE SLEEP SUPPORTED */
-+    { 0 }
-+};
-+
-+/* The Current Settings QWord of page 04h, terminated by a zero word */
-+static const IDEIdentifyBit ide_current_settings[] = {
-+    { 85, 5, 13 },      /* VOLATILE WRITE CACHE ENABLED */
-+    { 85, 0, 6 },       /* SMART ENABLED */
-+    { 0 }
-+};
-+
-+/* A QWord with bit 63 set, and a copy of the IDENTIFY DEVICE data @bits */
-+static uint64_t ide_identify_bits(IDEState *s, const IDEIdentifyBit *bits)
++static void ide_set_sense(IDEState *s, SCSISense sense)
 +{
-+    uint64_t qword = 1ULL << 63;
-+
-+    for (; bits->word; bits++) {
-+        if (lduw_le_p(s->identify_data + 2 * bits->word) & (1 << bits->bit)) {
-+            qword |= 1ULL << bits->qword_bit;
-+        }
++    /*
++     * NO SENSE means that there is no sense data to report (ACS-6 6.8.31):
++     * none is made available, and the host relies on the ERROR field.
++     */
++    if (!s->sense_data_enabled || sense.key == NO_SENSE) {
++        return;
 +    }
-+    return qword;
++    s->sense_key = sense.key;
++    s->asc = sense.asc;
++    s->ascq = sense.ascq;
++    s->sense_data_avail = true;
++    s->status |= SENSE_DATA_STAT;
 +}
 +
-+/*
-+ * Build the IDENTIFY DEVICE data log (log address 30h, ACS-6 9.11) pages
-+ * [page, page + count) into the I/O buffer. Page 00h (List of Supported
-+ * pages), page 01h (a copy of the IDENTIFY DEVICE data), page 02h (Capacity),
-+ * page 03h (Supported Capabilities), page 04h (Current Settings), page 05h
-+ * (Strings), page 06h (Security) and page 08h (Serial ATA) are implemented;
-+ * any other page is returned as zeros (ACS-6 9.11.1).
-+ */
-+static void ide_fill_identify_device_log(IDEState *s, uint16_t page,
-+                                         uint16_t count)
-+{
-+    uint16_t i;
-+
-+    /* Update the cached IDENTIFY DEVICE data; this clobbers io_buffer. */
-+    ide_identify(s);
-+    memset(s->io_buffer, 0, count * 512);
-+
-+    for (i = 0; i < count; i++) {
-+        uint8_t *buf = s->io_buffer + i * 512;
-+
-+        switch (page + i) {
-+        case 0x00:
-+            /*
-+             * List of Supported IDENTIFY DEVICE data log pages (ACS-6 9.11.2)
-+             */
-+            put_le16((uint16_t *)buf, 0x0001); /* REVISION NUMBER field */
-+            buf[8] = 8;                        /* number of entries */
-+            buf[9] = 0x00;                     /* page 00h is supported */
-+            buf[10] = 0x01;                    /* page 01h is supported */
-+            buf[11] = 0x02;                    /* page 02h is supported */
-+            buf[12] = 0x03;                    /* page 03h is supported */
-+            buf[13] = 0x04;                    /* page 04h is supported */
-+            buf[14] = 0x05;                    /* page 05h is supported */
-+            buf[15] = 0x06;                    /* page 06h is supported */
-+            buf[16] = 0x08;                    /* page 08h is supported */
-+            break;
-+        case 0x01:
-+            /* Copy of IDENTIFY DEVICE data, words 0..255 (ACS-6 9.11.3) */
-+            memcpy(buf, s->identify_data, sizeof(s->identify_data));
-+            break;
-+        case 0x02:
-+            /* Capacity (ACS-6 9.11.4) */
-+            /* header QWord: 63=set to one, PAGE NUMBER=02h, REVISION=0001h */
-+            stq_le_p(buf, (1ULL << 63) | (0x02ULL << 16) | 0x0001);
-+            /*
-+             * Device Capacity QWord: 63=set to one, 47:0=ACCESSIBLE CAPACITY
-+             * (one greater than the maximum user-accessible LBA)
-+             */
-+            stq_le_p(buf + 8, (1ULL << 63) |
-+                     ((uint64_t)s->nb_sectors & 0xffffffffffffULL));
-+            break;
-+        case 0x03:
-+            /* Supported Capabilities (ACS-6 9.11.5) */
-+            /* header QWord: 63=set to one, PAGE NUMBER=03h, REVISION=0001h */
-+            stq_le_p(buf, (1ULL << 63) | (0x03ULL << 16) | 0x0001);
-+            /* capabilities QWord: 63=valid, the rest copies IDENTIFY data */
-+            stq_le_p(buf + 8, ide_identify_bits(s, ide_supported_capabilities));
-+            break;
-+        case 0x04:
-+            /* Current Settings (ACS-6 9.11.6) */
-+            /* header QWord: 63=set to one, PAGE NUMBER=04h, REVISION=0001h */
-+            stq_le_p(buf, (1ULL << 63) | (0x04ULL << 16) | 0x0001);
-+            /* Current Settings: 63=set to one, rest copies IDENTIFY data */
-+            stq_le_p(buf + 8, ide_identify_bits(s, ide_current_settings));
-+            break;
-+        case 0x05:
-+            /* Strings */
-+            /* header QWord: 63=set to one, PAGE NUMBER=05h, REVISION=0001h */
-+            stq_le_p(buf, (1ULL << 63) | (0x05ULL << 16) | 0x0001);
-+            /*
-+             * SERIAL NUMBER, FIRMWARE REVISION, MODEL NUMBER and ADDITIONAL
-+             * PRODUCT IDENTIFIER: copies of IDENTIFY DEVICE data words 10..19,
-+             * 23..26, 27..46 and 170..173
-+             */
-+            memcpy(buf + 8, s->identify_data + 2 * 10, 20);
-+            memcpy(buf + 32, s->identify_data + 2 * 23, 8);
-+            memcpy(buf + 48, s->identify_data + 2 * 27, 40);
-+            memcpy(buf + 96, s->identify_data + 2 * 170, 8);
-+            break;
-+        case 0x06:
-+            /* Security: the Security feature set is not supported */
-+            /* header QWord: 63=set to one, PAGE NUMBER=06h, REVISION=0001h */
-+            stq_le_p(buf, (1ULL << 63) | (0x06ULL << 16) | 0x0001);
-+            /*
-+             * Master Password Identifier, Security Status, the times required
-+             * for an Enhanced and a Normal Erase, Trusted Computing feature
-+             * set and Security Capabilities: valid, with nothing supported
-+             */
-+            stq_le_p(buf + 8, 1ULL << 63);
-+            stq_le_p(buf + 16, 1ULL << 63);
-+            stq_le_p(buf + 24, 1ULL << 63);
-+            stq_le_p(buf + 32, 1ULL << 63);
-+            stq_le_p(buf + 40, 1ULL << 63);
-+            stq_le_p(buf + 48, 1ULL << 63);
-+            break;
-+        case 0x08:
-+            /* Serial ATA */
-+            /* header QWord: 63=set to one, PAGE NUMBER=08h, REVISION=0001h */
-+            stq_le_p(buf, (1ULL << 63) | (0x08ULL << 16) | 0x0001);
-+            /* SATA Capabilities: 63=set to one, rest copies IDENTIFY data */
-+            stq_le_p(buf + 8, ide_identify_bits(s, ide_sata_capabilities));
-+            /* Current SATA Settings: 63=set to one, nothing enabled */
-+            stq_le_p(buf + 16, 1ULL << 63);
-+            break;
-+        default:
-+            /* Unsupported page: returned as all zeros. */
-+            break;
-+        }
-+    }
++/* Abort the command, and record @sense for Sense Data Reporting */
++static void ide_abort_command_with_sense(IDEState *s, SCSISense sense)
+ {
+     s->status = READY_STAT | ERR_STAT;
+     s->error = ABRT_ERR;
+     ide_transfer_stop(s);
++    ide_set_sense(s, sense);
 +}
 +
- /*
-  * Fill the I/O buffer with the General Purpose Logging data requested by a
-  * READ LOG EXT / READ LOG DMA EXT command and return the number of bytes to
-@@ -1668,6 +1854,9 @@ static int ide_read_log(IDEState *s)
-     case IDE_GPL_LOG_DIRECTORY:
-         log_size = 1;
-         break;
-+    case IDE_GPL_LOG_IDENTIFY_DEVICE:
-+        log_size = IDE_GPL_LOG_IDENTIFY_DEVICE_LEN;
-+        break;
-     default:
-         /* Log (or its associated feature set) not supported (ACS-6 7.25.5). */
-         return -1;
-@@ -1689,6 +1878,12 @@ static int ide_read_log(IDEState *s)
-         memset(s->io_buffer, 0, count * 512);
-         /* word 0: General Purpose Logging Version */
-         put_le16((uint16_t *)s->io_buffer, 0x0001);
-+        /* word N: number of log pages at log address N */
-+        put_le16((uint16_t *)s->io_buffer + IDE_GPL_LOG_IDENTIFY_DEVICE,
-+                 IDE_GPL_LOG_IDENTIFY_DEVICE_LEN);
-+        break;
-+    case IDE_GPL_LOG_IDENTIFY_DEVICE:
-+        ide_fill_identify_device_log(s, page, count);
-         break;
++void ide_abort_command(IDEState *s)
++{
++    ide_abort_command_with_sense(s, SENSE_CODE(NO_SENSE));
+ }
+ 
+ static void ide_set_retry(IDEState *s)
+@@ -1432,6 +1465,14 @@ static void ide_reset(IDEState *s, IDEResetKind kind)
+     s->select = (ATA_DEV_ALWAYS_ON);
+     s->status = READY_STAT | SEEK_STAT;
+ 
++    /*
++     * Sense data does not survive a reset (ACS-6 4.25), but the enabled
++     * state of the Sense Data Reporting feature set does: a power-on reset
++     * should disable it (ACS-6 9.11.5.2.46), but IDE_RESET_HARDWARE also
++     * covers COMRESET, which must not change it.
++     */
++    s->sense_data_avail = false;
++
+     s->lba48 = 0;
+ 
+     /* ATAPI specific */
+@@ -1712,6 +1753,7 @@ static const IDEIdentifyBit ide_sata_capabilities[] = {
+ /* The Current Settings QWord of page 04h, terminated by a zero word */
+ static const IDEIdentifyBit ide_current_settings[] = {
+     { 85, 5, 13 },      /* VOLATILE WRITE CACHE ENABLED */
++    { 120, 6, 10 },     /* SENSE DATA ENABLED */
+     { 85, 0, 6 },       /* SMART ENABLED */
+     { 0 }
+ };
+@@ -1932,7 +1974,7 @@ static bool cmd_read_log(IDEState *s, uint8_t cmd)
+     size = ide_read_log(s, s->sector, s->lcyl | ((uint16_t)s->hob_lcyl << 8),
+                         s->nsector);
+     if (size < 0) {
+-        ide_abort_command(s);
++        ide_abort_command_with_sense(s, SENSE_CODE(INVALID_FIELD));
+         return true;
      }
  
+@@ -2020,6 +2062,38 @@ static bool cmd_specify(IDEState *s, uint8_t cmd)
+     return true;
+ }
+ 
++/*
++ * REQUEST SENSE DATA EXT (0Bh), Sense Data Reporting feature set (ACS-6 7.35)
++ */
++static bool cmd_request_sense_data_ext(IDEState *s, uint8_t cmd)
++{
++    /*
++     * Return the most recent sense data in the LBA field (ACS-6 table 371):
++     * LBA 7:0 = ASCQ, LBA 15:8 = ASC, LBA 19:16 = SENSE KEY. The COUNT and
++     * upper LBA fields (progress indication / vendor specific) are zeroed.
++     */
++    s->nsector = 0;
++    s->hob_nsector = 0;
++    s->hob_sector = 0;
++    s->hob_lcyl = 0;
++    s->hob_hcyl = 0;
++
++    if (s->sense_data_avail) {
++        s->sector = s->ascq;
++        s->lcyl = s->asc;
++        s->hcyl = s->sense_key & 0x0f;
++        s->status |= SENSE_DATA_STAT;
++        /* The sense data is consumed by reading it (ACS-6 4.25). */
++        s->sense_data_avail = false;
++    } else {
++        s->sector = 0;
++        s->lcyl = 0;
++        s->hcyl = 0;
++    }
++
++    return true;
++}
++
+ static bool cmd_set_features(IDEState *s, uint8_t cmd)
+ {
+     uint16_t *identify_data;
+@@ -2049,6 +2123,20 @@ static bool cmd_set_features(IDEState *s, uint8_t cmd)
+         put_le16(identify_data + 85, ide_identify_word85(s));
+         ide_flush_cache(s);
+         return false;
++    case 0xc3: /* enable/disable the Sense Data Reporting feature set */
++        if (!s->ncq_queues) {
++            goto abort_cmd;
++        }
++        s->sense_data_enabled = s->nsector & 0x01;
++        identify_data = (uint16_t *)s->identify_data;
++        if (s->sense_data_enabled) {
++            put_le16(identify_data + 120,
++                     le16_to_cpu(identify_data[120]) | (1 << 6));
++        } else {
++            put_le16(identify_data + 120,
++                     le16_to_cpu(identify_data[120]) & ~(1 << 6));
++        }
++        return true;
+     case 0xcc: /* reverting to power-on defaults enable */
+         s->reset_reverts = true;
+         return true;
+@@ -2101,7 +2189,7 @@ static bool cmd_set_features(IDEState *s, uint8_t cmd)
+     }
+ 
+ abort_cmd:
+-    ide_abort_command(s);
++    ide_abort_command_with_sense(s, SENSE_CODE(INVALID_FIELD));
+     return true;
+ }
+ 
+@@ -2443,6 +2531,8 @@ static const struct {
+     [CFA_REQ_EXT_ERROR_CODE]      = { cmd_cfa_req_ext_error_code, CFA_OK },
+     [WIN_DSM]                     = { cmd_data_set_management, HD_CFA_OK },
+     [WIN_DEVICE_RESET]            = { cmd_device_reset, CD_OK },
++    [WIN_REQUEST_SENSE_DATA_EXT]  = { cmd_request_sense_data_ext,
++                                      HD_OK | AHCI_ONLY },
+     [WIN_RECAL]                   = { cmd_nop, HD_CFA_OK | SET_DSC},
+     [WIN_READ]                    = { cmd_read_pio, ALL_OK },
+     [WIN_READ_ONCE]               = { cmd_read_pio, HD_CFA_OK },
+@@ -2507,6 +2597,15 @@ static bool ide_cmd_permitted(IDEState *s, uint32_t cmd)
+         && (s->ncq_queues || !(ide_cmd_table[cmd].flags & AHCI_ONLY));
+ }
+ 
++/*
++ * Whether the sense data stays available once this command is accepted
++ * (ACS-6 4.25): REQUEST SENSE DATA EXT returns it.
++ */
++static bool ide_cmd_keeps_sense_data(IDEState *s, uint8_t cmd)
++{
++    return cmd == WIN_REQUEST_SENSE_DATA_EXT;
++}
++
+ void ide_bus_exec_cmd(IDEBus *bus, uint32_t val)
+ {
+     IDEState *s;
+@@ -2529,7 +2628,7 @@ void ide_bus_exec_cmd(IDEBus *bus, uint32_t val)
+     }
+ 
+     if (!ide_cmd_permitted(s, val)) {
+-        ide_abort_command(s);
++        ide_abort_command_with_sense(s, SENSE_CODE(INVALID_OPCODE));
+         ide_bus_set_irq(s->bus);
+         return;
+     }
+@@ -2538,6 +2637,15 @@ void ide_bus_exec_cmd(IDEBus *bus, uint32_t val)
+     s->error = 0;
+     s->io_buffer_offset = 0;
+ 
++    /*
++     * Accepting a command makes the sense data unavailable, unless the command
++     * reads it (ACS-6 4.25); a failing command records fresh sense of its own
++     * below.
++     */
++    if (!ide_cmd_keeps_sense_data(s, val)) {
++        s->sense_data_avail = false;
++    }
++
+     complete = ide_cmd_table[val].handler(s, val);
+     if (complete) {
+         s->status &= ~BUSY_STAT;
+@@ -3368,6 +3476,27 @@ static const VMStateDescription vmstate_ide_tray_state = {
+     }
+ };
+ 
++static bool ide_sense_data_needed(void *opaque)
++{
++    IDEState *s = opaque;
++
++    return s->sense_data_enabled || s->sense_data_avail;
++}
++
++/* sense_key and asc travel with the main structure (ATAPI shares them) */
++static const VMStateDescription vmstate_ide_sense_data = {
++    .name = "ide_drive/sense_data",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = ide_sense_data_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(sense_data_enabled, IDEState),
++        VMSTATE_BOOL(sense_data_avail, IDEState),
++        VMSTATE_UINT8(ascq, IDEState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_ide_drive_pio_state = {
+     .name = "ide_drive/pio_state",
+     .version_id = 1,
+@@ -3423,6 +3552,7 @@ const VMStateDescription vmstate_ide_drive = {
+         &vmstate_ide_drive_reset_reverts,
+         &vmstate_ide_tray_state,
+         &vmstate_ide_atapi_gesn_state,
++        &vmstate_ide_sense_data,
+         NULL
+     }
+ };
 diff --git a/hw/ide/ide-internal.h b/hw/ide/ide-internal.h
-index 389e15049e..8da6d72450 100644
+index 382e2a4915..0fb4776356 100644
 --- a/hw/ide/ide-internal.h
 +++ b/hw/ide/ide-internal.h
-@@ -212,6 +212,15 @@
-  * READ LOG EXT / READ LOG DMA EXT (see ACS-6 9.1 table 222).
-  */
- #define IDE_GPL_LOG_DIRECTORY           0x00 /* General Purpose Log Directory */
-+#define IDE_GPL_LOG_IDENTIFY_DEVICE     0x30 /* IDENTIFY DEVICE data log */
-+
-+/*
-+ * Number of 512-byte pages in the IDENTIFY DEVICE data log. Pages 00h (list
-+ * of supported pages), 01h (copy of IDENTIFY DEVICE data), 02h (Capacity),
-+ * 03h (Supported Capabilities), 04h (Current Settings), 05h (Strings), 06h
-+ * (Security) and 08h (Serial ATA) are implemented.
-+ */
-+#define IDE_GPL_LOG_IDENTIFY_DEVICE_LEN 9
- 
- #if (IDE_DMA_BUF_SECTORS < MAX_MULT_SECTORS)
- #error "IDE_DMA_BUF_SECTORS must be bigger or equal to MAX_MULT_SECTORS"
+@@ -26,6 +26,7 @@
+ /* Bits of HD_STATUS */
+ #define ERR_STAT                0x01
+ #define INDEX_STAT              0x02
++#define SENSE_DATA_STAT         0x02    /* SENSE DATA AVAILABLE (ACS-6 6.2.9) */
+ #define ECC_STAT                0x04    /* Corrected error */
+ #define DRQ_STAT                0x08
+ #define SEEK_STAT               0x10
+@@ -65,7 +66,7 @@
+ /* reserved                             0x07 */
+ #define WIN_DEVICE_RESET                0x08
+ /* reserved                             0x09..0x0a */
+-/* REQUEST SENSE DATA EXT               0x0B */
++#define WIN_REQUEST_SENSE_DATA_EXT      0x0B /* 48-Bit */
+ /* reserved                             0x0C..0x0F */
+ #define WIN_RECAL                       0x10 /* obsolete since ATA4 */
+ /* obsolete since ATA3, retired in ATA4 0x11..0x1F */
+diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
+index 258b216b44..01b7952957 100644
+--- a/include/hw/ide/ide-dev.h
++++ b/include/hw/ide/ide-dev.h
+@@ -96,6 +96,10 @@ struct IDEState {
+     struct unreported_events events;
+     uint8_t sense_key;
+     uint8_t asc;
++    /* Sense Data Reporting feature set (ATA HD) */
++    uint8_t ascq;
++    bool sense_data_enabled;
++    bool sense_data_avail;
+     bool tray_open;
+     bool tray_locked;
+     uint8_t cdrom_changed;
 diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 8ff30616d5..ba9ea5c435 100644
+index 5e924010f0..e7df8c9fc8 100644
 --- a/tests/qtest/ahci-test.c
 +++ b/tests/qtest/ahci-test.c
-@@ -1064,6 +1064,9 @@ static void ahci_test_read_log(AHCIQState *ahci, uint8_t read_log_cmd)
- {
-     uint16_t id[256];
-     uint16_t dir[256];
-+    uint16_t page[256];
-+    uint8_t *page8 = (uint8_t *)page;
-+    uint64_t nb, cap;
-     unsigned px;
- 
-     px = ahci_port_select(ahci);
-@@ -1084,14 +1087,81 @@ static void ahci_test_read_log(AHCIQState *ahci, uint8_t read_log_cmd)
-     ahci_io(ahci, px, read_log_cmd, &dir, 512, 0x00);
-     /* word 0: General Purpose Logging Version */
-     g_assert_cmphex(le16_to_cpu(dir[0]), ==, 0x0001);
-+    /* word 30h: number of pages in the IDENTIFY DEVICE data log */
-+    g_assert_cmphex(le16_to_cpu(dir[0x30]), ==, 9);
-+
-+    /* IDENTIFY DEVICE data log (log address 30h), page 0: list of pages. */
-+    ahci_io(ahci, px, read_log_cmd, &page, 512, 0x30);
-+    g_assert_cmphex(le16_to_cpu(page[0]), ==, 0x0001); /* REVISION NUMBER */
-+    g_assert_cmpint(page8[8], ==, 8);                  /* number of entries */
-+    g_assert_cmpint(page8[9], ==, 0x00);               /* page 00h supported */
-+    g_assert_cmpint(page8[10], ==, 0x01);              /* page 01h supported */
-+    g_assert_cmpint(page8[11], ==, 0x02);              /* page 02h supported */
-+    g_assert_cmpint(page8[12], ==, 0x03);              /* page 03h supported */
-+    g_assert_cmpint(page8[13], ==, 0x04);              /* page 04h supported */
-+    g_assert_cmpint(page8[14], ==, 0x05);              /* page 05h supported */
-+    g_assert_cmpint(page8[15], ==, 0x06);              /* page 06h supported */
-+    g_assert_cmpint(page8[16], ==, 0x08);              /* page 08h supported */
-+
-+    /* IDENTIFY DEVICE data log page 1: a copy of the IDENTIFY data. */
-+    ahci_io(ahci, px, read_log_cmd, &page, 512, 0x30 | (1 << 8));
-+    g_assert_cmphex(memcmp(page, id, 512), ==, 0);
-+
-+    /* IDENTIFY DEVICE data log page 2 (page number 2): Capacity. */
-+    ahci_io(ahci, px, read_log_cmd, &page, 512, 0x30 | (2 << 8));
-+    g_assert_cmphex(le16_to_cpu(page[0]), ==, 0x0001);   /* REVISION NUMBER */
-+    g_assert_cmpint(page8[2], ==, 0x02);                 /* PAGE NUMBER */
-+    g_assert_cmpint(page8[7] & (1 << 7), ==, (1 << 7));  /* header bit 63 */
-+    g_assert_cmpint(page8[15] & (1 << 7), ==, (1 << 7)); /* capacity valid */
-+    /* ACCESSIBLE CAPACITY (bits 47:0) must match IDENTIFY words 100..103 */
-+    nb = (uint64_t)le16_to_cpu(id[100]) |
-+         ((uint64_t)le16_to_cpu(id[101]) << 16) |
-+         ((uint64_t)le16_to_cpu(id[102]) << 32) |
-+         ((uint64_t)le16_to_cpu(id[103]) << 48);
-+    cap = (uint64_t)page8[8] | ((uint64_t)page8[9] << 8) |
-+          ((uint64_t)page8[10] << 16) | ((uint64_t)page8[11] << 24) |
-+          ((uint64_t)page8[12] << 32) | ((uint64_t)page8[13] << 40);
-+    g_assert_cmpuint(cap, ==, nb);
-+
-+    /* IDENTIFY DEVICE data log page 3: Supported Capabilities. */
-+    ahci_io(ahci, px, read_log_cmd, &page, 512, 0x30 | (3 << 8));
-+    g_assert_cmphex(le16_to_cpu(page[0]), ==, 0x0001);   /* REVISION NUMBER */
-+    g_assert_cmpint(page8[2], ==, 0x03);                 /* PAGE NUMBER */
-+    g_assert_cmpint(page8[7] & (1 << 7), ==, (1 << 7));  /* header bit 63 */
-+    g_assert_cmpint(page8[8] & (1 << 2), ==, (1 << 2));  /* GPL DMA supported */
-+    g_assert_cmpint(page8[9] & (1 << 3), ==, (1 << 3));  /* GPL (bit 11) */
-+    g_assert_cmpint(page8[10] & (1 << 4), ==, (1 << 4)); /* 48-BIT (bit 20) */
-+
-+    /* IDENTIFY DEVICE data log page 5: Strings, as in the IDENTIFY data. */
-+    ahci_io(ahci, px, read_log_cmd, &page, 512, 0x30 | (5 << 8));
-+    g_assert_cmpint(page8[2], ==, 0x05);                 /* PAGE NUMBER */
-+    g_assert_cmphex(memcmp(page8 + 8, &id[10], 20), ==, 0);  /* SERIAL */
-+    g_assert_cmphex(memcmp(page8 + 48, &id[27], 40), ==, 0); /* MODEL */
-+
-+    /* IDENTIFY DEVICE data log page 8: Serial ATA. */
-+    ahci_io(ahci, px, read_log_cmd, &page, 512, 0x30 | (8 << 8));
-+    g_assert_cmpint(page8[2], ==, 0x08);                 /* PAGE NUMBER */
-+    g_assert_cmpint(page8[8] & (1 << 7), ==, (1 << 7));  /* NCQ supported */
- }
- 
- static void test_read_log_dma(void)
- {
-     AHCIQState *ahci;
-+    uint16_t id[256];
-+    uint16_t idlog[512]; /* two consecutive 512-byte log pages */
-+    unsigned px;
- 
-     ahci = ahci_boot_and_enable(NULL);
-     ahci_test_read_log(ahci, CMD_READ_LOG_DMA_EXT);
-+
-+    /* Also exercise a multi-page DMA transfer: both pages of log 30h. */
-+    px = ahci_port_select(ahci);
-+    ahci_port_clear(ahci, px);
-+    ahci_io(ahci, px, CMD_IDENTIFY, &id, 512, 0);
-+    ahci_io(ahci, px, CMD_READ_LOG_DMA_EXT, &idlog, 1024, 0x30);
-+    g_assert_cmphex(le16_to_cpu(idlog[0]), ==, 0x0001);   /* page 0 header */
-+    g_assert_cmphex(memcmp(&idlog[256], id, 512), ==, 0); /* page 1: IDENTIFY */
-+
+@@ -1174,6 +1174,63 @@ static void test_read_log_pio(void)
      ahci_shutdown(ahci);
  }
+ 
++/* Restart command list processing after a task file error (AHCI 6.2.2) */
++static void ahci_port_restart(AHCIQState *ahci, unsigned px)
++{
++    ahci_px_clr(ahci, px, AHCI_PX_CMD, AHCI_PX_CMD_ST);
++    ahci_port_clear(ahci, px);
++    ahci_px_set(ahci, px, AHCI_PX_CMD, AHCI_PX_CMD_ST);
++}
++
++/* Issue a non-data command; return the D2H Register FIS it completes with */
++static RegD2HFIS ahci_nodata_cmd(AHCIQState *ahci, unsigned px, uint8_t op,
++                                 uint16_t feature, uint16_t count, uint8_t err)
++{
++    AHCICommand *cmd = ahci_command_create(op);
++    RegD2HFIS d2h;
++
++    ahci_command_set_feature(cmd, feature);
++    ahci_command_set_count(cmd, count);
++    if (err) {
++        ahci_command_expect_error(cmd, err);
++    }
++    ahci_command_commit(ahci, cmd, px);
++    ahci_command_issue(ahci, cmd);
++    ahci_command_verify(ahci, cmd);
++    ahci_command_free(cmd);
++    qtest_memread(ahci->parent->qts, ahci->port[px].fb + 0x40, &d2h,
++                  sizeof(d2h));
++    return d2h;
++}
++
++/*
++ * Boot with the Sense Data Reporting feature set enabled, and make sense data
++ * available: SET FEATURES with an unsupported subcommand is aborted, which
++ * records ILLEGAL REQUEST / INVALID FIELD IN CDB.
++ */
++static AHCIQState *ahci_boot_with_sense_data(unsigned *px)
++{
++    AHCIQState *ahci;
++
++    ahci = ahci_boot_and_enable("-drive if=none,id=drive0,file=%s,format=%s "
++                                "-M q35 -device ide-hd,drive=drive0",
++                                tmp_path, imgfmt);
++    *px = ahci_port_select(ahci);
++    ahci_port_clear(ahci, *px);
++    ahci_nodata_cmd(ahci, *px, CMD_SET_FEATURES, 0xc3, 1, 0);
++    ahci_nodata_cmd(ahci, *px, CMD_SET_FEATURES, 0x47, 0, ATA_ERR_ABRT);
++    ahci_port_restart(ahci, *px);
++    return ahci;
++}
++
++/* REQUEST SENSE DATA EXT: the sense key, ASC and ASCQ as KKAAQQh */
++static uint32_t ahci_sense(AHCIQState *ahci, unsigned px)
++{
++    RegD2HFIS fis = ahci_nodata_cmd(ahci, px, CMD_REQ_SENSE_DATA, 0, 0, 0);
++
++    return (fis.lba_lo[2] & 0x0f) << 16 | fis.lba_lo[1] << 8 | fis.lba_lo[0];
++}
++
+ /**
+  * Fragmented DMA test: Perform a standard 4K DMA read/write
+  * test, but make sure the physical regions are fragmented to
+@@ -2617,6 +2674,16 @@ static void create_ahci_io_test(enum IOMode type, enum AddrMode addr,
+ 
+ /******************************************************************************/
+ 
++static void test_sense_data_set_features(void)
++{
++    unsigned px;
++    AHCIQState *ahci = ahci_boot_with_sense_data(&px);
++
++    ahci_nodata_cmd(ahci, px, CMD_SET_FEATURES, 0x47, 0, ATA_ERR_ABRT);
++    g_assert_cmphex(ahci_sense(ahci, px), ==, 0x052400);
++    ahci_shutdown(ahci);
++}
++
+ int main(int argc, char **argv)
+ {
+     const char *arch, *base;
+@@ -2708,6 +2775,8 @@ int main(int argc, char **argv)
+     qtest_add_func("/ahci/identify",   test_identify);
+     qtest_add_func("/ahci/io/dma/read_log", test_read_log_dma);
+     qtest_add_func("/ahci/io/pio/read_log", test_read_log_pio);
++    qtest_add_func("/ahci/io/sense_data/set_features",
++                   test_sense_data_set_features);
+ 
+     for (i = MODE_BEGIN; i < NUM_MODES; i++) {
+         for (j = ADDR_MODE_BEGIN; j < NUM_ADDR_MODES; j++) {
+diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+index d50ff4767b..a4790c2f0c 100644
+--- a/tests/qtest/libqos/ahci.c
++++ b/tests/qtest/libqos/ahci.c
+@@ -71,6 +71,8 @@ AHCICommandProp ahci_command_properties[] = {
+                                  .lba48 = true, .read = true },
+     { .cmd = CMD_READ_LOG_DMA_EXT, .data = true, .dma = true,
+                                  .lba48 = true, .read = true },
++    { .cmd = CMD_SET_FEATURES,   .data = false },
++    { .cmd = CMD_REQ_SENSE_DATA, .lba48 = true },
+     { .cmd = READ_FPDMA_QUEUED,  .data = true,  .dma = true,
+                                  .lba48 = true, .read = true, .ncq = true },
+     { .cmd = WRITE_FPDMA_QUEUED, .data = true,  .dma = true,
+@@ -1219,6 +1221,14 @@ void ahci_command_set_ncq_subcmd(AHCICommand *cmd, uint8_t subcmd)
+     nfis->prio = (nfis->prio & ~0x1f) | (subcmd & 0x1f);
+ }
+ 
++/* Set the 16-bit FEATURE field of a (non-NCQ) command. */
++void ahci_command_set_feature(AHCICommand *cmd, uint16_t feature)
++{
++    g_assert(!cmd->props->ncq);
++    cmd->fis.feature_low = feature & 0xff;
++    cmd->fis.feature_high = (feature >> 8) & 0xff;
++}
++
+ void ahci_command_expect_error(AHCICommand *cmd, uint8_t err)
+ {
+     cmd->interrupts |= AHCI_PX_IS_TFES;
+diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
+index 9b40eabe35..a23ea8b2f0 100644
+--- a/tests/qtest/libqos/ahci.h
++++ b/tests/qtest/libqos/ahci.h
+@@ -282,6 +282,8 @@ enum {
+     CMD_IDENTIFY       = 0xEC,
+     CMD_READ_LOG_EXT     = 0x2F,
+     CMD_READ_LOG_DMA_EXT = 0x47,
++    CMD_SET_FEATURES     = 0xEF,
++    CMD_REQ_SENSE_DATA   = 0x0B,
+     CMD_PACKET         = 0xA0,
+     CMD_PACKET_ID      = 0xA1,
+     /* NCQ */
+@@ -654,9 +656,10 @@ void ahci_command_set_sizes(AHCICommand *cmd, uint64_t xbytes,
+                             unsigned prd_size);
+ void ahci_command_set_count(AHCICommand *cmd, uint16_t count);
+ void ahci_command_set_ncq_subcmd(AHCICommand *cmd, uint8_t subcmd);
+-void ahci_command_expect_error(AHCICommand *cmd, uint8_t err);
+ void ahci_command_set_acmd(AHCICommand *cmd, void *acmd);
+ void ahci_command_enable_atapi_dma(AHCICommand *cmd);
++void ahci_command_set_feature(AHCICommand *cmd, uint16_t feature);
++void ahci_command_expect_error(AHCICommand *cmd, uint8_t err);
+ void ahci_command_adjust(AHCICommand *cmd, uint64_t lba_sect, uint64_t gbuffer,
+                          uint64_t xbytes, unsigned prd_size);
  
 -- 
 2.56.1
