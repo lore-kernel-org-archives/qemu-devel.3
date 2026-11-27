@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F524606A330
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D27F606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Q5kBfViK
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=x59G8KuI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp9C-0003JS-K5; Fri, 27 Nov 2026 01:09:26 -0500
+	id 1xWp9n-0005aI-Fk; Fri, 27 Nov 2026 01:10:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8p-0000Yk-Hc; Fri, 27 Nov 2026 01:09:03 -0500
+ id 1xWp8i-0007zA-3K; Fri, 27 Nov 2026 01:08:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8n-00021m-Hx; Fri, 27 Nov 2026 01:09:03 -0500
+ id 1xWp8e-0000NH-U5; Fri, 27 Nov 2026 01:08:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=/vpU7EDR4R3d/tDH8vxrZRD/2kiPKXa2S+V7kPOO1uE=;
+ t=1795759048; bh=cOkT3Nt28S6VeVnrazZQae4AwPt/CupT90ol7H/THAw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Q5kBfViKSQ1SiphONf9kH7XIpmhh+jDoP4/Gag1Nybv6TkqYl9vMMG5Okk2++r+IZ
- J4eofML63WJ4HY8PK3GtRpI3eds+Mq5FK5jsbtfuf5gCCR8ZUK+1JQw7Klx20q+orn
- O1YiJvRbPx3xsSVawjgArzRp12a4Oej39S14ZwNcLFpsYvTfrT7kSQMhkHcNxai1op
- wYplompLXp6B43w4TU6yMHD9qj0QuEnz96s9MX9vA5KtGJJelGupRhCJkREwSDAgu7
- XGBEKYXaOJ3E1bjxNwhtWtBv8nX7BPJuwvYzgBU42HXMZ6ULQ0aSSedcvj/iJcG5/7
- uEd4+7Xp5A3/Q==
+ b=x59G8KuIsMbwXreLFF4eXdBHgb6AxfvQjemwrlVSSokz2pPCBty3R82kPWEoVP159
+ DYspDEzOvShLhz9BEOuDNH28m4KdTXMQVJkLacb35B6ZplltlTieNImasuldZ1Y7eM
+ 1iH5z8i+as8Rq4Isy3T0T8XAyUPjEsAwZJHH0RV+0B/l6OP6WydM0IsQanyvY/iLgG
+ 93QqugLYao7J38IJcSHxwqL4CHwzQiy5BZh3PXqqz2uUnhrHK+2HFdN/oycrd29FYl
+ p423/SzxiosnuuLxHjXsTQU8GOfxOmBU7xNd13RdFhe/HP4WnfXZu0Sl54ZUCjt57v
+ AV5BbN3wHsnZQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 57A181EA373;
+ by isrv.corpit.ru (Postfix) with ESMTP id 452321EA36F;
  Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5528446999E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 432A446999A;
  Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 28A9DCF334; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id 1D338CF32C; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, WANG Xuerui <git@xen0n.name>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 129/152] host/include/loongarch64: Fix build with
- 128-bit LL/SC enabled
-Date: Fri, 27 Nov 2026 08:54:27 +0300
-Message-ID: <20261127055709.39630-66-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 125/152] hw/nvme: fix zone descriptor extension
+ allocation overflow
+Date: Fri, 27 Nov 2026 08:54:23 +0300
+Message-ID: <20261127055709.39630-62-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -76,61 +76,56 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: WANG Xuerui <git@xen0n.name>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-LoongArch64 v1.1 has native 128-bit LL/SC capability through the
-`sc.q` instruction, and [GCC uses it since 16.1.0][1]. So for
-`-march=la64v1.1` (and equivalents such as `-march=la664` or just
-`-mscq`) configurations the following happens:
+nvme_ns_zoned_init_state sizes the zone descriptor extension array
+with 32-bit arithmetic. A large enough zone extension size and number of
+zones will wrap, causing either null pointer deref on Set Zone
+Descriptor Extension or an out-of-bounds write.
 
-- `CONFIG_ATOMIC128` is set,
-- in `host/include/generic/host/atomic128-cas.h.inc`, `HAVE_CMPXCHG128`
-  is set to `1`,
-- in `accel/tcg/ldst_atomicity.c.inc`, code paths invoking
-  `store_atom_insert_al16` are enabled,
-- this errors out because of the explicit
-  `host/include/loongarch64/host/store-insert-al16.h.inc` override.
+nvme_get_zd_extension has the same problem.
 
-This doesn't affect `-march=la64v1.0` builds because the `atomic128`
-probe, when code-generated without `sc.q` support, correctly fails to
-link without libatomic.
-
-Simply removing the override is enough to make QEMU build and run
-correctly on `sc.q`-enabled hosts. The override was introduced in 2023,
-in commit adc8467e697d ("host/include/loongarch64: Add atomic16 load
-and store"), when it was true that no existing LoongArch implementation
-could perform 128-bit LL/SC nor CAS at that time. It is no longer the
-case since LA664 with LoongArch64 v1.1.
-
-[1]: https://github.com/gcc-mirror/gcc/blob/releases/gcc-16.1.0/gcc/config/loongarch/sync.md#L784
+Fix the initialization by using g_malloc0_n and compute the per-zone
+offset using 64-bit arithmetic.
 
 Cc: qemu-stable@nongnu.org
-Fixes: adc8467e697d ("host/include/loongarch64: Add atomic16 load and store")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4767
-Signed-off-by: WANG Xuerui <git@xen0n.name>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261105102924.1309687-1-i.qemu@xen0n.name>
-(cherry picked from commit 8f18c59c018eff94b6465f73f5cd76a49ee3d6ec)
+Fixes: 1a9290ade33a ("hw/block/nvme: Support Zone Descriptor Extensions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4730
+Reported-by: Karl Mehltretter
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 63c9653696862f55646fa7a88833857cabb6a07d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/host/include/loongarch64/host/store-insert-al16.h.inc b/host/include/loongarch64/host/store-insert-al16.h.inc
-deleted file mode 100644
-index 919fd8d7440..00000000000
---- a/host/include/loongarch64/host/store-insert-al16.h.inc
-+++ /dev/null
-@@ -1,12 +0,0 @@
--/*
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- * Atomic store insert into 128-bit, LoongArch version.
-- */
--
--#ifndef LOONGARCH_STORE_INSERT_AL16_H
--#define LOONGARCH_STORE_INSERT_AL16_H
--
--void store_atom_insert_al16(Int128 *ps, Int128 val, Int128 msk)
--    QEMU_ERROR("unsupported atomic");
--
--#endif /* LOONGARCH_STORE_INSERT_AL16_H */
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index 16524f2d915..5d20f230018 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -249,8 +249,8 @@ static void nvme_ns_zoned_init_state(NvmeNamespace *ns)
+ 
+     ns->zone_array = g_new0(NvmeZone, ns->num_zones);
+     if (ns->params.zd_extension_size) {
+-        ns->zd_extensions = g_malloc0(ns->params.zd_extension_size *
+-                                      ns->num_zones);
++        ns->zd_extensions = g_malloc0_n(ns->num_zones,
++                                        ns->params.zd_extension_size);
+     }
+ 
+     QTAILQ_INIT(&ns->exp_open_zones);
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 43e3c916f73..848786c18b1 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -363,7 +363,8 @@ static inline bool nvme_wp_is_valid(NvmeZone *zone)
+ static inline uint8_t *nvme_get_zd_extension(NvmeNamespace *ns,
+                                              uint32_t zone_idx)
+ {
+-    return &ns->zd_extensions[zone_idx * ns->params.zd_extension_size];
++    return ns->zd_extensions + (uint64_t)zone_idx *
++        ns->params.zd_extension_size;
+ }
+ 
+ static inline void nvme_aor_inc_open(NvmeNamespace *ns)
 -- 
 2.47.3
 
