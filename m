@@ -1,105 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19341606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 13:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E5960A383A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 13:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FRXdjq6z;
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Ij7nMogj
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AIUFI9kt;
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=C8D82H2N
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWwGS-0006Hk-IS; Fri, 27 Nov 2026 08:45:26 -0500
+	id 1xWwJq-0008Np-Dh; Fri, 27 Nov 2026 08:48:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWwGI-0006FB-4m
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:45:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mzamazal@redhat.com>)
+ id 1xWwJn-0008N5-RV
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:48:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xWwGF-0003vC-Ac
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:45:12 -0500
+ (Exim 4.90_1) (envelope-from <mzamazal@redhat.com>)
+ id 1xWwJm-0007vk-HS
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:48:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795787108;
+ s=mimecast20190719; t=1795787329;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=GAS/GcAbOo4YNthvBet/JufLuKlNF/Pkk/CUec2b66E=;
- b=FRXdjq6z3naHKM8+H5aBDbZ/IPS1eSiXjJcBp/ER70f87j+cO6INqb2orkYaH0ztkKE/Um
- JXO+QqvzLmT2kIhhTflFL/VkuRatsYNR0Aj89hZsvUptn/YBlrfVThl2DU2bRTOkI+US9N
- 5mNClUnMZFq6LCon5VuVsDfQH7Ktr5M=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nCc8MABMNyKp6Mjoi5V4GBvR6fhKrELn1MILJrh59gk=;
+ b=AIUFI9kthqbzaWpldbWjxFg2FjcRQwQcnDvriTFwUm/SW196f7Hfdji3XKPAjy3FCr+/0t
+ NNRz/kDdBp6eLuwS0VgMPne7fRPhzlxXpVqAl4Rf6uLpXPKKBYRhUiihdTW/OMdRMuD30B
+ zYjfYacuTlU7eC9DqM8+4mugR6LXWmg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-bcZj9OGhMLCTQxYWr-VtBA-1; Fri, 27 Nov 2026 13:45:06 +0000
-X-MC-Unique: bcZj9OGhMLCTQxYWr-VtBA-1
-X-Mimecast-MFC-AGG-ID: bcZj9OGhMLCTQxYWr-VtBA_1795787106
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-9211f05706bso86056376d6.2
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 05:45:06 -0800 (PST)
+ us-mta-74-9FHjchPVOXeR9weCHxZGfg-1; Fri, 27 Nov 2026 13:47:42 +0000
+X-MC-Unique: 9FHjchPVOXeR9weCHxZGfg-1
+X-Mimecast-MFC-AGG-ID: 9FHjchPVOXeR9weCHxZGfg_1795787261
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4bba856092dso19332585e9.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 05:47:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795787106; x=1796391906; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GAS/GcAbOo4YNthvBet/JufLuKlNF/Pkk/CUec2b66E=;
- b=Ij7nMogj5tNov9lJKGzQ/aUwPIu65QcxoR80lE3YwvqBIymWiS888zi2/vZ6yn2Yec
- gmKVRBg8eic3EvvA8oYHU4RF+U0uXS93s69U5HTmmsAfTpAuXOgOFvlIRSe8z4+otck0
- gcJcCMpS6TJU04XPC9AayOS5ah0yHPtm/h2Oge+6znLv/jezBskSOKAxH6Fb6mesTT9k
- tO/WAdGFiTk3q6ddrnaODquG1RAO6ytvINY5MHKpSoQlGiDoAzqGBfpqV+O/XkmG+pUk
- 2z/zLGSGXU7zfPyV+8o0UoDPQS8ceJOqdtemd8c5Y5gURu7tytY5ZdzshQ/Ja0CY/xBq
- NB0g==
+ d=redhat.com; s=google; t=1795787261; x=1796392061; darn=nongnu.org;
+ h=content-type:mime-version:user-agent:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=nCc8MABMNyKp6Mjoi5V4GBvR6fhKrELn1MILJrh59gk=;
+ b=C8D82H2NIwPpdVhdRrBX2mpDkH1P5niBcwz0VvWAPU620DDgulDEdMlARnNTUqedNc
+ RlFGa6XkdFdzzfJfKBDHUJvJ6rdWPSXeZ0vzBP237kji1L8XlhtEmKAkZlYvQpSvnJHB
+ Kv14awHEvz/4vugNaEkcJG5teDgywcjsK6PqnL6BPEmiZ9Gm+MyUk4S7GbkJ//v5MN4w
+ I6It50hgy64z+X530UQgq54ydON9uOrKEOmw5c5AT0MVblXgJKU2MDq19puN1KrAzeB3
+ 90+zTyhRLMnUu0vuWgWF2pTYwYMPJohAm2AfafRasPv01C4LVX5/rp7ZeBAtGRZiKsLC
+ qqxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795787106; x=1796391906;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GAS/GcAbOo4YNthvBet/JufLuKlNF/Pkk/CUec2b66E=;
- b=U3N8LKg0Qm6wDWH5FnmoSrQAJkjR0HMftVooqU6zjhSvFG9so9mL6rMHkkaTGFdPba
- Panb6cCK3HHjlFdHC8MdyKi/FKmuY5/8oqx9cbShgkmgfVxjIfBJNoUI9iq0E8YRGL0b
- GoVH02ccIcK3Yebrw9lddeJbu7a7dRV3ciYWwnOi0rT3dIw4Cj+cwqgpECHBQNI+XjTe
- S4FZcgZw17tpbb0iBzDyr++s8myPPZZJfDKSOMWoumrq6p6+em2DiQ5+lydLH/3JGLhQ
- Zduol3QQS2+RQHXdrEbsZp9LWpp510UmK7d5ES9uE/XNznvsRG8pwtiPQ3GIzqP5WTTX
- zYtw==
-X-Gm-Message-State: APuU4Z+Uh0nikdATIkM+4lioCUBO0lwwO1cWqvWPnS8kbW111nPB/yz4
- CqLX1O3eNlNZEMeyhE1CX+Y9wqMHYd+i8gXKXXcPw9qI326hGh/gr0TgrO2g4aaROaEGSTPMt+G
- 63JpfKuo3AtRKyJ+ws8bVluwArewq/sxQ6vKm749YAbbQZ1KAi2sjD3oy
-X-Gm-Gg: AZFdTZeq0bApS/8AxL09V7YZ8qpaACZCD7kHfi0g6G5tZTdB6LgBYXY/m01OD9C6CtN
- 4M/6eCKHqhgNylWV0zwFKZ+X7E2WzHGu6gHVeWm2PR7oE26h0R60f+gp9RotoyNopyaiGt45o++
- Onv5qHfBqsVN6KfP9s4qwE19leZzpyBhjfbTyWtYlDOFhdBN/Xc+iB+qv+/xGQl5cYf2MY8MfMC
- apCxZntB9z2hTgigbwsMyVUa3Aa5/hVxe675u3YEjP07SEWubJdhyGdfQeJzVkO+y1Se23HgTG5
- RrcNjVscbA2XXGVyvb4P2pgwcCe6aNIFdgRljOJp01G9w2Ckb496CHdz+b7TsrucEqLMBuReW4R
- Ux3/UdI3sxTEq4A9dvjrmFuhgRcCsofA4/hB3uDtLK1Uh
-X-Received: by 2002:a05:620a:6487:b0:949:3066:5563 with SMTP id
- af79cd13be357-949bac7846dmr3861513885a.74.1795787106216; 
- Fri, 27 Nov 2026 05:45:06 -0800 (PST)
-X-Received: by 2002:a05:620a:6487:b0:949:3066:5563 with SMTP id
- af79cd13be357-949bac7846dmr3861505385a.74.1795787105639; 
- Fri, 27 Nov 2026 05:45:05 -0800 (PST)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-949bb0315f4sm1810732785a.3.2026.11.27.05.45.04
+ d=1e100.net; s=20260707; t=1795787261; x=1796392061;
+ h=content-type:mime-version:user-agent:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=nCc8MABMNyKp6Mjoi5V4GBvR6fhKrELn1MILJrh59gk=;
+ b=FlKHuxJjsef45f0rLPtYqx6raWAD6BkC9LeNMn6dijyrhnsI1o5ZVxpuEZqWbYafnB
+ DTT+gErvotU1uiafXP+00MLEeQN8NWSU9hiUW0sVgfYfyLlSc5i8Ygj8ExmvjBOlteNy
+ ahhFIrGGQcNQxvMNU5ftZ+hGT6cecfADzPpmPwvu59dB/Wo1n5/eBuY3ouR6zS813DRg
+ TZOaKfDpG26iwip/NF3e1W4+LZ+5e4NlkKo41ZAH3XJ4XDvGOVhgyoPDJZzeMd8/LokO
+ L39s5ZMnydva36xPzM9RQ7aJ8qQ4Qk2c01WOBpWoZG/E7VQz8FaCKuXt9vJbx9n+rdBV
+ jE9A==
+X-Gm-Message-State: APuU4Z/fojjdEHbEWeHZtchRFuUFg5TYVMA079ao5Ec65MJjSawQOEjq
+ 5SLReKFFeZJsyoqhoto+fCBo1/chs8aKLxEdxdun9FKbcJq+tKQNWsom3zxGfbPZXVJ7QmIxOpQ
+ IgdGzbBV4H9E4U10jS8NFa0KfzrO2XYY41ZgUO0sUcG5O7o3MW3ejl+y8
+X-Gm-Gg: AZFdTZcUpvDiVYmyZO0FUStcp8r7B8OjslgFXuX51Jmhic4eDDaAIJ2W6CG1AHUHUQi
+ yNzeQ33n7SGqzPkXQu1jlNRrJfD5Y4mRsCCTkTcrUxE1aT6h/dpJBxvnK0v5/yn3/UCCg+taFzh
+ iVGL3vIWNAKt43L3E43DtRk4mI24OYS752KtCJDg3bzQ2XDoiyeat3ZqtqT03bHcDEAeY6qYu3o
+ xtxiWE80Nx1vQMkh3ifHL5XwPyYaym8eVDFiHdbM2Mp+Il8Hgo6x5n/JNRPKwitWj05N6J5tNzb
+ bGt5do9fWTmq2uX5668GoMm0vSlGfhr1SypTj8UBEMvBhZE7a3llesuO7U88aCVpSCd7QZfCnrJ
+ hqle/Eh9MGNN7nvvspLmVGdRsKMtvr88kfWj74UdbQSheAecfpyfwt8pXVypdoAfEiw34sX0UrV
+ PXelYLCpOxZqo/uLk8W9DiKpGI2ggpHZ0=
+X-Received: by 2002:a05:600c:4f10:b0:4a1:88de:9e8b with SMTP id
+ 5b1f17b1804b1-4bb88807909mr549208415e9.5.1795787261186; 
+ Fri, 27 Nov 2026 05:47:41 -0800 (PST)
+X-Received: by 2002:a05:600c:4f10:b0:4a1:88de:9e8b with SMTP id
+ 5b1f17b1804b1-4bb88807909mr549207765e9.5.1795787260681; 
+ Fri, 27 Nov 2026 05:47:40 -0800 (PST)
+Received: from mzamazal-thinkpadp1gen7.tpbc.csb
+ (ip-77-48-47-176.net.vodafone.cz. [77.48.47.176])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb884b7515sm949915425e9.13.2026.11.27.05.47.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Nov 2026 05:45:05 -0800 (PST)
-Date: Fri, 27 Nov 2026 08:45:04 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/5] migration-test: Support running a real kernel
-Message-ID: <awmJYLLhnMxlWhQP@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261126214704.3108327-1-farosas@suse.de>
+ Fri, 27 Nov 2026 05:47:40 -0800 (PST)
+From: Milan Zamazal <mzamazal@redhat.com>
+To: zhaoguohan@kylinos.cn
+Cc: qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH] hw/virtio/vhost-user-scmi: propagate startup errors
+In-Reply-To: <20261127055424.79483-1-zhaoguohan@kylinos.cn>
+ (zhaoguohan@kylinos.cn's message of "Fri, 27 Nov 2026 13:54:24 +0800")
+References: <20261127055424.79483-1-zhaoguohan@kylinos.cn>
+Date: Fri, 27 Nov 2026 14:47:39 +0100
+Message-ID: <85a4mu75dw.fsf@mzamazal-thinkpadp1gen7.tpbc.csb>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261126214704.3108327-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mzamazal@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,45 +118,53 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 26, 2026 at 06:46:59PM -0300, Fabiano Rosas wrote:
-> There's a class of migration performance bugs that are very specific
-> to the internals of QEMU and most likely require work on our side, but
-> are currently invisible to our testing because migration-test runs a
-> simple guest workload (not even that, really). The more important ones
-> are BQL contention issues that result in vcpu starvation.
-> 
-> My plan is to incrementally add some pieces to migration-test to
-> reduce that testing gap.
-> 
-> The first piece is adding support for running a kernel + initrd inside
-> the guest which gives us an easy way to start exercising migration of
-> a more loaded guest that can already cause VM exits.
-> 
-> This series adds support for -kernel and -initrd arguments to
-> migration-test and runs the same set of tests we currently have, but
-> with the kernel instead of the custom loop. By default it uses the
-> initrd from tests/migration-stress/ which runs a read-write loop over
-> all memory and has customizable vcpu and memory size.
+zhaoguohan@kylinos.cn writes:
 
-The whole thing sounds useful, I'll read into details after I flush more of
-the older patches.. which will take some time (it also depends on if next
-week I got some more urgent task "injected"..).
+> From: Khan Zhao <zhaoguohan@kylinos.cn>
+>
+> Return errors from vu_scmi_start() through vu_scmi_set_status() so
+> device startup failures reach the caller.
+>
+> Remove the duplicate error message after vhost_dev_init(), which
+> already reports initialization errors through errp.
+>
+> Signed-off-by: Khan Zhao <zhaoguohan@kylinos.cn>
 
-One high level question: this will grow qtest closer to what the functional
-test is doing.  Have you thought of the relationship between the two, after
-we move qtest more over there?  I assumed not, based on what you mentioned
-in the rest part of cover letter that you planned to have it only for dev
-debug purpose.  But still, we'll start to ask the question to ourselves at
-some point, IIUC.  So I ask first. :)
+Reviewed-by: Milan Zamazal <mzamazal@redhat.com>
 
--- 
-Peter Xu
+> ---
+>  hw/virtio/vhost-user-scmi.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+> index ad5c176c1e2..1dd29ff0008 100644
+> --- a/hw/virtio/vhost-user-scmi.c
+> +++ b/hw/virtio/vhost-user-scmi.c
+> @@ -125,7 +125,7 @@ static int vu_scmi_set_status(VirtIODevice *vdev, uint8_t status)
+>      }
+>  
+>      if (should_start) {
+> -        vu_scmi_start(vdev);
+> +        return vu_scmi_start(vdev);
+>      } else {
+>          int ret;
+>          ret = vu_scmi_stop(vdev);
+> @@ -260,8 +260,6 @@ static void vu_scmi_device_realize(DeviceState *dev, Error **errp)
+>      ret = vhost_dev_init(&scmi->vhost_dev, &scmi->vhost_user,
+>                           VHOST_BACKEND_TYPE_USER, 0, errp);
+>      if (ret < 0) {
+> -        error_setg_errno(errp, -ret,
+> -                         "vhost-user-scmi: vhost_dev_init() failed");
+>          do_vhost_user_cleanup(vdev, scmi, vhost_vqs);
+>          return;
+>      }
 
 
