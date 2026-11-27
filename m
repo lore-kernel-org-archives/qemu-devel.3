@@ -1,92 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1A6606A327
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 14:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BB0606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 14:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oEQbNN1L
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=A5ZJVcXw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWxBw-0006aQ-R7; Fri, 27 Nov 2026 09:44:49 -0500
+	id 1xWxC4-0006mi-PT; Fri, 27 Nov 2026 09:44:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWxBu-0006WT-8u
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:44:46 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xWxC3-0006iH-3O
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:44:55 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWxBr-0002TA-2Q
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:44:45 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4a5177d78c7so83129075e9.2
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 06:44:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xWxC1-0002Va-9G
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:44:54 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4bb9d8e8e90so53283865e9.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 06:44:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795790681; x=1796395481; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BcjrLEb1/iZJUf9MfpKhHmYq1MI4TCqecTpvNrlC6rw=;
- b=oEQbNN1LzUSAWYOagnmU6TSs5p9NFYuNP+5Cbm3q2wcZ7be1tUauXsz6BrvNE3xcIW
- 14li4Ge/oC1SVUUI3NGGm5wkezZLwU/prRY6X6kqfrrH7K9/2WwgQ0G+UB9JqWON/2vq
- 9eaD9J+jmgB8XdKkhHlxcNTQhzQy6ZQXlA1+3Qn+T1TT0aM12E2QDUpz0v9pDjnECYFw
- KJ8uID1J3VIJe4u24fzvPkM2yLvHQDLDMaS8nfrluJOgoylsyhXF5BeFmfrAvqJSIRc3
- ZX//VM77i+iL48KlJe3e0p8sT0imOBSeTpQ0gfpy1FzNQdXhMIJrJtRrCKUmU4nwzO4W
- Z7Nw==
+ d=linaro.org; s=google; t=1795790691; x=1796395491; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xSX8pKUyvTOCcIzht26OjB0n8eHCImgAm6MnuFUvMGI=;
+ b=A5ZJVcXwoMeSvL7khHWg5HhJ/9W/1AqFVAi6rsPLvlgBWL3Ws3qo4z3BDKkZq4dFM5
+ yPi5sZ+REQ8zJ48F4KnUFIrTxZxO2euphQckx1gIkTOMgYmS6c+mYk8VJLvGtYDyW0a0
+ +rEtK9RK0GSmMNDbxYMtkcH9tlNp0g1fDTr4wAnlSRAoF+LimUW4R5QFVRhz+vK43ViG
+ nwvlXLwkk1G11BL1krDfaowa0J2BMrrDMb/LUt3C0R9ku9boFDGh/fyUHq9aruBT2Gcy
+ m/r1hFz3U7y9dAOtnuM4fdIQF/nQZmWA+IT6XZRVRUlCsC3knm0G+fLrjIkWK8lF1cbK
+ +HDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795790681; x=1796395481;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BcjrLEb1/iZJUf9MfpKhHmYq1MI4TCqecTpvNrlC6rw=;
- b=sB03EIasIiCG6/q5hLw6iD2cimQHfpmn/MfUW/3Yd5xGZ129jerOV6afm6p2MCPT6F
- CBCHsHl2T8ohF3Uu/ck8tQIz7MFfdFesFDbSdMB1HI740DLiHkR6cb6wQ8naUcmMEUwR
- su4J4vdzz/tjwsXPbL20bZ6txu9QON+GOjVUdDbuMgo2S6WCajK4C77EMWttkLK0Yqsj
- njWx/l5tlThKMhiFRjCdXzbQHRx6aCtcssHxt02dkEiORULpmRPoypZ5OAfLYG4pAPvS
- nKX7chIQlj+EMR6Fle+u9UEu10pYkTZgFoI4er1XR28Js9Ukm1vPFRSlQQbWSaIHI1dD
- Ma2Q==
-X-Gm-Message-State: APuU4Z87Mgxl5An8CrNwqU3r9INYEEVOZImpUaC5780bJySIAOMi4uoW
- TlNxADAXma/kssMpSvI38PC+j5Fw+ogX6f9o/cLgUlLf0xTVEF6fEAVzEuBZFVT52rJd8N6HlgZ
- eRgNZ
-X-Gm-Gg: AZFdTZdel5NBuwOESB9Mhs2fIofKihejEL0vnRg29LXmWEjilyANnaC42fmX2se50sr
- REliLEF/PXPeakh7NehFaeAT3viE1MtfTR/JD0wfXnotPzVHW0FEcECtvQwB4CN9PybfMEcYgJw
- /wenl5DLenh+bpiPvs4aPmYgmzzN4F13T39gvYoRSoS/o776UxmEoNaPoKUeBXcvRqLXPHAMA5a
- a81gOwMstBwGwxZgJtvJwhQotGgewGQJh0IXqK8Ikej0haNoOfE6cJ9GaAD6404LEIaY+TOu6kI
- bIvEYx3Re6cnvPvftbNELabozhpBmC7z3XFNn6RcPg2ESCTeaneHOJ/ueK2RMifsk5xj6HdR11x
- YVwL3gWuaB9kVgh+crFFQPFkp2njqgEoj/qu0HR/rpIE829L/YCqk4TxqnH/lybOfYWcTaSdZsn
- 79+ZQScZQxDiAiYv7FhxU6g6mvqB1YGjt/0Mck4PP9X3P9EUqCNOzz8b0zq7xoeelCxUBx6QwrS
- l/Hd4XyxkKBTjz6j1MNkwz8CHOUbSft8yuSMMbMiYUT+zozjAahghpVG/VUtZBc2wXWhLeF/8wP
- 8S3peQfwldWa9T8/VJ3oMlHMb1I9VyK9KtvbEOEqBAhmcKBRs2HYhKUysBrqugnoxik+cCNzUdT
- CvzXdZQXB3Ta3TRZ8E8FEeegGhYBB/isU7nSJ6Q60RZ9k2CuQqz30kcA=
-X-Received: by 2002:a05:600c:6219:b0:4bb:a5f1:fc5f with SMTP id
- 5b1f17b1804b1-4bba60168f3mr176959045e9.26.1795790681606; 
- Fri, 27 Nov 2026 06:44:41 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bba6a0d65fsm216862975e9.3.2026.11.27.06.44.40
+ d=1e100.net; s=20260707; t=1795790691; x=1796395491;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xSX8pKUyvTOCcIzht26OjB0n8eHCImgAm6MnuFUvMGI=;
+ b=qQP83Iw4GliFJ9y002PNggf6rQxI7EXS4S9JJKhLPG9N1or95FCIX/WmSdJMGwBQcz
+ rjEQIjasZvaDiCUzIacXicdhDJo/AeT0bv1VD9R9jwNK00RYRYyhgwGh+MAH6qAL02ED
+ QIZQjbQKIkLO/0pxXM/8gQ8T51EwYWTpy3bS+BvSEqdmWg2DaWTAgFFoxCsrlfTGhMgr
+ yUB94K+9bDrVD5qqlaZhQij7rqi78B3dOiHiRSY87I3a38odwO3in4Ai+wgUCVY0q6Xv
+ 86dXE0Ko5yDidiHCQSSNRANJy61zMLDagKGWo7nZwRV6lakhk8znA7T3S9KGRdOcO99H
+ eiLg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEqbjIfF4NurX3aZwm8OlSFix3rFlPSbW4set4R4bLCuwDseWW/5UnMxP+FuskdcArMZh3MmMfNZ4fh@nongnu.org
+X-Gm-Message-State: APuU4Z+Ji2niRYZp1L2KY7nufFGMYDONgtfFvSnD3goVtqytEw/xWaG6
+ F+8aEqQ9vyKxK1ldDsJvKxv0tmIX77OVXc1tov/AMtlcGDz/1GkRDH8kiQNWv2BUU0nGeTeBhb8
+ 4tuQ3
+X-Gm-Gg: AZFdTZeCkAT/g286DDNY1iXjSKxaqlddCbBeYK7uVkOo1GjJNll9kA7gEd6JwRwWE+9
+ T81biSvdMRYpDRZoi24AAJnKoPYhv7YJq7VEqx8WoRWMCeWlkuPfIRLNWSYYO2LXtxdzCqlzjFq
+ fuYa2K12VkMAVf5vYV4X+tSDHB64cEM44I+BjD4qdNPjqNlb9wf9+0suhOnhHk7TRsH+xUhHV9G
+ +veausLeIACtoJIr1+h2cLCkqHxNLopMf7l4glrV3s7255X0KZfCbyFpOj+9z//Y1mh0w/iNPUd
+ hK9T5E7yGer5qYSzT8p7Bu1MxXE97G9EP0Mn5zayb1OiHrnPpkR6/MftXg+6xEsHaFBJxolZZA/
+ Pa9TZBlrMHegoZZVKod1PIK+DIpsiDpe1GvvjLKY7DDBuqqpE83GNFt5iTEgpoMu/DfxbmvLzxt
+ /6ebUeGHEuSFPpd99MXCeWzp2uRyzc+BYO2X+U1Df5cR68IZuNh8rfknZjT25Mxxla3738uYPvV
+ 9QZw7AryNDJIQw1So8mF5ADbiAV7+8MFQ3Qpg3ucnMtYDdEZ6aRZas7TSdDKsWYv1sfCdgXgSHw
+ xXOfld9RLltZkk3nuWGjBgyv0J4k
+X-Received: by 2002:a05:600c:5395:b0:4b1:4017:c4f4 with SMTP id
+ 5b1f17b1804b1-4bb8880ca2fmr491881675e9.20.1795790691265; 
+ Fri, 27 Nov 2026 06:44:51 -0800 (PST)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4ab65cb42absm48316744f8f.1.2026.11.27.06.44.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Nov 2026 06:44:40 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: [PATCH for-11.2 1/3] hw/misc/mac_via: register VM change state
- handler once
-Date: Fri, 27 Nov 2026 14:44:37 +0000
-Message-ID: <20261127144439.627586-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261127144439.627586-1-peter.maydell@linaro.org>
-References: <20261127144439.627586-1-peter.maydell@linaro.org>
+ Fri, 27 Nov 2026 06:44:50 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 14B135F8CD;
+ Fri, 27 Nov 2026 14:44:49 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Honglei Huang <honghuan@amd.com>
+Cc: <dmitry.osipenko@collabora.com>,  <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ <Ray.Huang@amd.com>,  <mst@redhat.com>,  <cohuck@redhat.com>,
+ <pbonzini@redhat.com>,  <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH v7 1/5] virtio-gpu: Update Linux headers to add ROCm
+ capability set
+In-Reply-To: <20261106082711.813336-2-honghuan@amd.com> (Honglei Huang's
+ message of "Fri, 6 Nov 2026 16:27:07 +0800")
+References: <20261106082711.813336-1-honghuan@amd.com>
+ <20261106082711.813336-2-honghuan@amd.com>
+User-Agent: mu4e 1.14.5-pre2; emacs 30.1
+Date: Fri, 27 Nov 2026 14:44:49 +0000
+Message-ID: <87fqwmtjtq.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,46 +109,52 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In the mac_via post-load function we register a VM change state
-handler callback, which is a one-shot (it deletes itself when run).
+Honglei Huang <honghuan@amd.com> writes:
 
-However, loading twice before the VM resumes means the post_load hook
-adds the handler again, overwriting the old v1s->vmstate.  This can
-result in a use-after-free on resume because the first-registered
-callback does not delete itself (which is permitted) but the
-second-registered callback (which is not).
+> Add VIRTIO_GPU_CAPSET_ROCM to the imported virtio_gpu.h so the device
+> can advertise the ROCm capability set to the guest.
+>
+> Signed-off-by: Honglei Huang <honghuan@amd.com>
+> ---
+>  include/standard-headers/linux/virtio_gpu.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standa=
+rd-headers/linux/virtio_gpu.h
+> index c67f50f56cd..976bd225875 100644
+> --- a/include/standard-headers/linux/virtio_gpu.h
+> +++ b/include/standard-headers/linux/virtio_gpu.h
+> @@ -321,6 +321,7 @@ struct virtio_gpu_cmd_submit {
+>  #define VIRTIO_GPU_CAPSET_VENUS 4
+>  #define VIRTIO_GPU_CAPSET_CROSS_DOMAIN 5
+>  #define VIRTIO_GPU_CAPSET_DRM 6
+> +#define VIRTIO_GPU_CAPSET_ROCM 10
 
-Follow the pattern used by vapic.c and only register the callback
-if it has not already been registered.
+Generally while patches are in flight you would include a reference to
+the kernel patches so we can track when they get merged into the kernel:
 
-Cc: qemu-stable@nongnu.org
-Fixes: eb064db94ccd62f054 ("q800: add a block backend to the PRAM")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/misc/mac_via.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  linux-headers: Update to v7.3-rc1-amd-baz (!UPSTREAM)
 
-diff --git a/hw/misc/mac_via.c b/hw/misc/mac_via.c
-index 26ee230dcc4..dfc7d304ffc 100644
---- a/hw/misc/mac_via.c
-+++ b/hw/misc/mac_via.c
-@@ -1192,7 +1192,7 @@ static int via1_post_load(void *opaque, int version_id)
- {
-     MOS6522Q800VIA1State *v1s = MOS6522_Q800_VIA1(opaque);
- 
--    if (v1s->blk) {
-+    if (v1s->blk && !v1s->vmstate) {
-         v1s->vmstate = qemu_add_vm_change_state_handler(
-                            via1_postload_update_cb, v1s);
-     }
--- 
-2.43.0
+  You can find the current proposed  kernel series at http://foo.bar/repo/b=
+ranch.
 
+  sob
+
+And ideally use the update-headers script to import them to make sure
+they are properly sanitised.
+
+>=20=20
+>  /* VIRTIO_GPU_CMD_GET_CAPSET_INFO */
+>  struct virtio_gpu_get_capset_info {
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
