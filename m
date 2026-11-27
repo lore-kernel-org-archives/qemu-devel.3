@@ -1,53 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D322606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 05:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66143606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 05:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=wg0XkT3F
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=wSzFOPhH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWovc-0003u5-Nj; Fri, 27 Nov 2026 00:55:24 -0500
+	id 1xWow9-0004mV-Fy; Fri, 27 Nov 2026 00:55:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWova-0003nw-7L; Fri, 27 Nov 2026 00:55:22 -0500
+ id 1xWovx-0004Wh-Ni; Fri, 27 Nov 2026 00:55:48 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWovY-0000T4-CF; Fri, 27 Nov 2026 00:55:21 -0500
+ id 1xWovv-0000Tt-QR; Fri, 27 Nov 2026 00:55:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758870; bh=/2PoZBuxQkXcxqRfHcrm9vBtjcYItTE1S5aW06zRbKs=;
+ t=1795758870; bh=DcSugkKNOUyx4l5zjyVVPwPAIajcLpZk5wb0ZhQLKP4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wg0XkT3FvDywIICxX5kL9k3eAohfuy/s2Essz0i19gzPg26PHZQtOEpt04EMjRCqW
- 3n40TsOTgi4Bvi8R/pKpRWTR24FT4j3OhTN0yQWLsFK+gC7+9JFQa2s6FF4EGypgCq
- VVPctua/hT812TlZ9Jsspc8XMhI6RORy41XcEkDWlKbOOwWDkOTfeMKS6k9CgGWcpN
- JKxS5sqcgH5SZi0Qyp+NgeiOQs7NUtAFEcelmIkhpSRwiPv2aufJqSTlhRnwpQ/bk7
- CkcHCvKY9i6hAAsWMzwOg/l+CzFPEp6PY4hgt8GY4ixaEqcjhc8GEkbI0devOBRnlW
- SU+Bizn3eTk+g==
+ b=wSzFOPhHf0o0yjbIYANDqcFcATqyVKG6FHnIXeRdPmbfTa9LsbewJoyGJVHsQyPD7
+ cmyq2G/xQ4LdPEoPRffqIpsTSl+jBG3PedwAHxPG00wgbXLtgYTQF4NwtS9VGcxH5/
+ 22xm26o1UQbKdCqsFmFl1YEusRQ7nDacGzQnTcK8M/XjyL6I+20ZaV6cRd1X6fLwW7
+ DOegwQoM5X1v+zvPMaOy+sHHLI6we2eALdnrBNzAxfZvJFOsOpkKaPFl8O05DFMU2H
+ w1Ao8078PP8KEwhZQoWh4/OwiYwSedikT/2X2pwPJ+Xc0ToVFb91ZCNIYgcESaEy1j
+ 0IK/1BFHVxQ1A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D90B71EA2D0;
+ by isrv.corpit.ru (Postfix) with ESMTP id E226A1EA2D2;
  Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D704646990E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DFDD8469910;
  Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BA1CACF228; Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ id BFFD7CF22C; Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 073/140] hw/net/net_tx_pkt: Sanity check L2+L3
- header len in net_tx_pkt_parse_headers()
-Date: Fri, 27 Nov 2026 08:52:59 +0300
-Message-ID: <20261127055421.39015-14-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 075/140] tests/qtest: Make netfilter tests accept
+ padded ethernet packets
+Date: Fri, 27 Nov 2026 08:53:01 +0300
+Message-ID: <20261127055421.39015-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -77,41 +79,78 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In net_tx_pkt_parse_headers() we examine the L2 and L3 headers one
-after the other.  Add a sanity check that the two together don't
-exceed the packet length or the maximum IP packet size.  This
-shouldn't happen if the L3 parsing was done right, but is worth doing
-for defence-in-depth.
+Currently the various netfilter tests assume and assert that the data
+they get from the filter is an exact match for the data that they
+send in to it via the net socket backend.  This happens to be the
+case currently because the net socket backend fails to pad frames to
+the ethernet minimum when the device expects that (unlike e.g.  the
+tap backend).  When we fix the socket backend to honour the device's
+request for padding, the netfilter will see padded packets for
+devices that require them (which is most of them), and not for those
+that don't (notably virtio-net).
+
+This seems best considered as a test error: if you're using netfilter
+to look at what a particular network device is receiving, you want to
+actually see what it is receiving.  And most real-world users of
+filtering will be doing it with the backends like TAP that were
+already doing pad-before-filter; it's only the oddball backends like
+'socket' that forgot to pad.
+
+Make the test cases accept as valid both padded and unpadded frames.
 
 Cc: qemu-stable@nongnu.org
-Fixes: e263cd49c73c595 ("Packet abstraction for VMWARE network devices")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261109-eth-v2-13-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit fda35a236c96ee08e10481f585aa6bd841968395)
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20261110180655.2072265-2-peter.maydell@linaro.org
+(cherry picked from commit f996ee991c1f234046fd9a81ca152a7c8cf7ce3a)
+(Mjt: drop changes to tests/qtest/test-filter-buffer.c which is not in 10.0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-index dc2563721e8..c331628134e 100644
---- a/hw/net/net_tx_pkt.c
-+++ b/hw/net/net_tx_pkt.c
-@@ -267,6 +267,14 @@ static bool net_tx_pkt_parse_headers(struct NetTxPkt *pkt)
-         break;
-     }
+diff --git a/tests/qtest/test-filter-mirror.c b/tests/qtest/test-filter-mirror.c
+index 723d2c2f291..9972712cb49 100644
+--- a/tests/qtest/test-filter-mirror.c
++++ b/tests/qtest/test-filter-mirror.c
+@@ -15,6 +15,7 @@
+ #include "qemu/sockets.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
++#include "net/eth.h"
  
-+    if (l2_hdr->iov_len + l3_hdr->iov_len > ETH_MAX_IP_DGRAM_LEN ||
-+        l2_hdr->iov_len + l3_hdr->iov_len >
-+        iov_size(pkt->raw, pkt->raw_frags)) {
-+        l2_hdr->iov_len = 0;
-+        l3_hdr->iov_len = 0;
-+        return false;
-+    }
-+
-     net_tx_pkt_calculate_hdr_len(pkt);
-     return true;
- }
+ static void test_mirror(void)
+ {
+@@ -58,7 +59,8 @@ static void test_mirror(void)
+     g_assert_cmpint(ret, ==, sizeof(len));
+     len = ntohl(len);
+ 
+-    g_assert_cmpint(len, ==, sizeof(send_buf));
++    /* The snooped network device might or might not have asked for padding */
++    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
+     recv_buf = g_malloc(len);
+     ret = recv(recv_sock[0], recv_buf, len, 0);
+     g_assert_cmpint(ret, ==, len);
+diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-filter-redirector.c
+index a996a80c1c0..b32f2a88bf1 100644
+--- a/tests/qtest/test-filter-redirector.c
++++ b/tests/qtest/test-filter-redirector.c
+@@ -57,6 +57,7 @@
+ #include "qemu/sockets.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
++#include "net/eth.h"
+ 
+ static void test_redirector_tx(void)
+ {
+@@ -115,7 +116,8 @@ static void test_redirector_tx(void)
+     g_assert_cmpint(ret, ==, sizeof(len));
+     len = ntohl(len);
+ 
+-    g_assert_cmpint(len, ==, sizeof(send_buf));
++    /* The snooped network device might or might not have asked for padding */
++    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
+     recv_buf = g_malloc(len);
+     ret = recv(recv_sock, recv_buf, len, 0);
+     g_assert_cmpint(ret, ==, len);
 -- 
 2.47.3
 
