@@ -1,104 +1,103 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E2606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 13:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECA8606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 13:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mvImsDN3
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qngBMslZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWvxy-0006Rb-Cv; Fri, 27 Nov 2026 08:26:18 -0500
+	id 1xWvzl-0007eb-4J; Fri, 27 Nov 2026 08:28:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWvxw-0006Qi-HJ
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:26:16 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ id 1xWvzi-0007e2-Nz
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:28:06 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWvxu-000408-Hi
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:26:16 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-67db3a48dc6so9640674d50.3
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 05:26:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795785973; cv=none;
+ id 1xWvzg-0004cC-GU
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:28:06 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-67be4f2f4d4so9369574d50.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 05:28:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795786083; cv=none;
  d=google.com; s=arc-20260327;
- b=fEgpG1vN8gFQPOfEZTuOJzeBATylgX3oi7cc9Pes0mqa2vkEBS7rRnOR2UbYT6ujPY
- hGK7Lu6D2fj1zRSxvdkfFYCMW6kjcQm29FFSkqivy0tJ+4K2ZyFvuzD2TYYhW8DV1g61
- Nso+6qx7YUPmnFhOfl6X3lCfWDVM3lcJnc2k98+vQPCrXyMEIt/VGiG9RDcGqzbKayc9
- iNx4xzAUHm9DWKleTtqmhOjx68ubFWSTH/q2ZG/x5y3SdmzpQ+T1as3Ovgft1S5iZWhc
- tf/2Knyly2fcZdO4vfEb3ItRRngS8g72wBxdePM5Yen0o8EJ4dB8ojMzGFlwG3YE228H
- jLiw==
+ b=RuxtLtuw61PwHcdD4Rgt0+QehtuV3P6IBjeQ2hVvHU/QbHeF2iPcVQjfi0VfWzpniO
+ ysz2gLcoNizoezVxJmta8IVsDdmiotzMINSWDjBQybcsWTyscmyPrrPYRTBmCK6DQb4x
+ 4SCUsK39QDZFw0RS9sUFJcuNQvGhkcPQCkZx1/J+2qUxkJDj74pYJSVkGN6bvkv1Ivqk
+ ATDBeDRbL6XWNKp7MIYa0/Cs1cqMZIQfXH8eRIgckfjIztAXo/sFVa7hh5dW8l4bsEw9
+ N6z24I8u0CqF/GhpbHNktztimempCzv0G1YV4DTGGXkxFq2+aYL9AgUWLw4dMgL7vGeH
+ Wm7Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=vsmx7k1yAMDoJzsyFw3W/UNhFtofo1M8vK+8szgU8Hs=;
- fh=iAFdQNjaq+PfQzNDdUp5K2HXnN6/oF+/yFKew6uDm8A=;
- b=FnDC+AHnRko5pVy3mWrc83RoY0YQK9Qi8la6hPgMA5dk8M3xxvfM8UNRkMQ9yVl/aX
- FCL04DuF2NP33EIPGDjGXyTDAGuMwFDISk2WQcmzGLQzy6VkAJbVJJGE21NqN37DB+ME
- fnsV45hldUltfS8s3EkT3gIZNGid27NMrpJBGcOyW3AFnCboaEzE4HuMpPJxanKWXVtG
- UMujtpzhjsxTW6pbuBjvEymsWcUzZDyZQLbdZRKoJyXpKEOpTnsmCFZKc6jNUGkbMrQY
- uIAvRUvTvJsy5m/0hvWICJvF/oGwCSDBOi1asq111q/gxDMUpI1OivimkUc06koIbgkf
- Ybtg==; darn=nongnu.org
+ bh=RiIny8Q+zsJR8qlDU8jJJw5A2vkVGDu9dq9CcIFuqis=;
+ fh=SFxUURFPv1FWWDTrQPJm0QHj4JAxq2KxeMsdDIY0mXE=;
+ b=Igs+QuiCCzzfbWGqcXohUD/tJ5ebayQTM1VXSmFWis0aq2joKNybPEAZIpbNiknrhR
+ 4ngzf2iakIvhQAqwXSV3RU27PPvsIzI6IVlDp7qtczvjcXfln8iiNv8csHVQ/IUMy+Vj
+ o4dMONkf77t7yvlkAikaTcjqDljn9algUw+VfS1YtEydzhsydzOHZSiB7s7zXPu8N5WJ
+ fBAfhwNRDjot+c2hDuSqf76zu3Wi9DdUPD2eAztJwGBPnkhkydVQEVDTYxrPDsRM4xjC
+ m5z3/S31ulbOOB19bb3BxDwuRb0Mpo068pO/z/ibPdD4jx7gDmKo+K0iXBYwpH1n8mNo
+ g1BA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795785973; x=1796390773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1795786083; x=1796390883; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=vsmx7k1yAMDoJzsyFw3W/UNhFtofo1M8vK+8szgU8Hs=;
- b=mvImsDN3rIIbwyFu6BWSIlneDtks8UxT6Pn66wPEe5TVe2YCGFz8ULlDFlmpT3XOJ1
- e/1yb9K/9Tr2VHkseFXoqVFotkWsVd7g2mzqyEOHX6pkoIN3fV2PXoEWaRhM9m9VNWx+
- CzZW+up9OIYk2Y2UhPXh95Q9veSZzOxEFzTI4BDTtVlmGQZG95DoXy+67QDwJnAS8rZ6
- PY9/ZwYea7fWgPfVD8HHAQ5LTXVap1hptL27XjFfrzlibB1X8xzyixrKOsN08F+qT43t
- Y14+A6hwLAVZIytnJzfoCcppQafU2NjEdcROJJgog/F+ZyIvycDE4Hm/LZAau27RK1C2
- AY/Q==
+ :content-type; bh=RiIny8Q+zsJR8qlDU8jJJw5A2vkVGDu9dq9CcIFuqis=;
+ b=qngBMslZeROpHOgj4BFfJvwU64Brg4H0h/BmBtq4ashrNXGRfbft+kjQQm53S/B7oL
+ aTBnA0OJUp6qLx8SQX5NMJXgtyzp22SXTIcU1xyuMsQDv3QIMfZvArW9WPG+Z01lLJCX
+ p+tyKt33oQSLkAZGtyPU8Ut91t84m6hfM+K89LE3ASJeyQVMSovda3jPPcQDXyTI1Cbu
+ hfKH5z689A2Li0wMJ+VRa7xerY2OyMBClYznpcC0DCEf24Dnpw5Xa50tRM79qBTecYXU
+ 0GzvP5edzkdfrMxGp1/13ox6+QFkX2+9f4MTCQ23OPiXeKLeQWA027uXlMx2OtfFf/CC
+ oyyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795785973; x=1796390773;
+ d=1e100.net; s=20260707; t=1795786083; x=1796390883;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=vsmx7k1yAMDoJzsyFw3W/UNhFtofo1M8vK+8szgU8Hs=;
- b=ge5xsrpaBIb3XxBau72U84KX1Pz7ro8uVCXvor9t1q2awxRn3S0ve/rw1gNfpAXEuC
- f/DXKmg2PhOiPkDmCq3o73CEMI4furvt2jbosZoeuZ2sfTskcMbKw2fcnjszFG3Qbfs4
- UmCrMpp6P7Q+DitJCUkvsTCYfWuq72Ps685j65N1AhNmdaWFw4VhOyjJ/uIPAlfFhLPR
- dajLOPQwhCZJX2XWuuDvhdjkQTfVC4AUIZnJTI0iIB9K5VQ3nVaDQttIBElChetKmsJy
- TedhW+YWB47RH8mG2U9k+Yo/ThY/7MluKFDmb9tYhoT3doKFBx0Wto8vKhhXAoGaMtnv
- hv5Q==
-X-Gm-Message-State: APuU4Z+3AXPt6IgDK7G79asODjHOCiH13dM/zq3u81hIXwYdQwgAppuQ
- RLYwjYych8PR5JLCVku2rzyEK612tvUyhrHMHeUx5Ll5Z6l/nNob62mUoOfE+FUZ1NThGWb+Fbo
- k58N/4650rcVkuwn666zoy7zaq66W+QzV3g6Qa4hb8g==
-X-Gm-Gg: AZFdTZeA7rsGPG4tHMjUNqAhwAPWowghR2QVJn7Vd5B95mAoAnNRfxWfdTLfmhBNIef
- GeM2WpFqU+QqYtLIHUxdRQsZZxr3mz0rj7GbXsc56z9Jp+XIPl8EzMSmdy5f+G9mTdC52xme7qp
- ciVBLO61BjTapI1xJm0ocRLKnvvz6xhrSfX4e1zTjVz2WqPT18EK/95kfqKwXQM+OUnY59DoasD
- fdWQq30Umn8F5OZn5xn0GDUbLTL/GL5rn0t8lsCrPxhsdkiHhZ//a5+0V5YSB0zaQkVeGDVX6Mr
- cCTIdlX6M8bDP4PCs0ouSyifXICpGbJxQ+gBW5cVI7Ho6EOUyqvtYuXtMMQvlTqh4r/f2638+pC
- MJwxzZHAfKKF7Zd5pLODePfx9ZplSh+KACl/hit8m7Jb1GPW0buKNfLKUPYML+fZtdbkKyzjECR
- zmvRhdOEOcMtRfUTKRI8jCgDNop1nVDLMeCzlY9kY8d2w=
-X-Received: by 2002:a05:690e:408d:b0:67d:c305:ca1f with SMTP id
- 956f58d0204a3-67df43f32b9mr8198630d50.53.1795785972634; Fri, 27 Nov 2026
- 05:26:12 -0800 (PST)
+ bh=RiIny8Q+zsJR8qlDU8jJJw5A2vkVGDu9dq9CcIFuqis=;
+ b=R0Z0aX3xfwgpDaWD8xBSzQGJVskU+1JZZTUBiNDovqoQQKOuBkHm2KX0QXdaI4IJ90
+ cJQ7VHZWBdQHm2/U3JSievY+4ZPfh86309zUZyKS5LX3env2nZbIj2/zF8nKyQNbb2Je
+ +GtAYvlo2OrdfzYmhWogb//tQFlDpaOw4PMzZVk0Uf/0NdZgCzg7SKFjNSNbzDzClTt3
+ G986TfZNf1zg9peKODmGr3W46KpyIYCtBRai9bblI8T0+Fq/iBEZwKyV79el2Rkw7r6V
+ 5IPWMPEjRvOHvekpUJZNZZe1Sk7nUg6foUpbgcnBJiFaWXibEALlVjuhBTSNmKFwmMXe
+ DZag==
+X-Gm-Message-State: APuU4Z9xj8W4tVJjgoCetvXgn/4yqhpl/LijKHn2Sp+TdMLlF+3YwD4H
+ 7FwH872HQBTqWrRGg0E9xtNb52GYjKCiaKKasyLPv7ukXGmzZ5wpoSFeConxyP1lVgc6H8iTzcz
+ 07j/GBrn+julSCfyI0xkxxpxOVbBCJJeoOJndwehAlQ==
+X-Gm-Gg: AZFdTZfLFN3RClBvnll3tLDzJrCuLV/kpAHmStLI2YPqc30uYJhE7Be9dXp4PzIYLIJ
+ P1CqdaJDtJcj//4WAtu/nuyn7uoYeTVsWHkX1/z6lZzrL6Vuxv+tp33y8EUbL8nX+e6/ge+vhST
+ zeLlPtB6D13QObMQvvF7TGw/3kNjulDoGV+CKfK9u/Ljp4YWUuBZlahru8xmqjUHwypDKY1RHlT
+ 4kuVDgxWPlP5RoAaIPd4QPxHtzzmKQtXL78RE2I+CqsRaUBbFv3oTi54cG8nugs+KUa6cPyACcZ
+ XZKtBZUTxGE330DEnDVugvFmjYhoe4QluQBDZxp6RFvfE1WWiQlpR5EMDOd0QPmrIiuthwP7rWM
+ 6B34L0nax3NaIOdHqYYlmUv3LwWDzOLGPRvRVdlL12WdVuS9vsTHR6uwBA8c+cBCPFsx1297E7I
+ 3aAuKZrGcqf052+zGVdQTN
+X-Received: by 2002:a05:690e:1487:b0:67c:50d:aaad with SMTP id
+ 956f58d0204a3-67df4487d6dmr9731544d50.65.1795786083130; Fri, 27 Nov 2026
+ 05:28:03 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261106200309.122830-1-den@openvz.org>
- <20261106200309.122830-2-den@openvz.org>
-In-Reply-To: <20261106200309.122830-2-den@openvz.org>
+ <20261106200309.122830-3-den@openvz.org>
+In-Reply-To: <20261106200309.122830-3-den@openvz.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Nov 2026 13:26:00 +0000
-X-Gm-Features: Aa3M54paZucIx-SicJwGux3Pi1x5wS0v4NBhjqf4JIag-jH-yphl6gny487R6Ys
-Message-ID: <CAFEAcA-LUijuaEYrzet2Zz8E3qZ_8ZJjWONKpYsrRYt1OR7YJQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] virtio-net: fix abort in virtio_net_set_queue_pairs()
- on a deleted tap
+Date: Fri, 27 Nov 2026 13:27:51 +0000
+X-Gm-Features: Aa3M54qHORIuEILBiSU_ZoFT8S8Fq98G-Vj6gyai3tDNEoVLUFxFIvG1z-WhBBA
+Message-ID: <CAFEAcA8QmziJnGGaf42=ybZGSfDwAczbUMwimg4+oUQA0Q13dw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] net/tap: fix busy loop in tap_send() after the tap
+ device is deleted
 To: "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>, 
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>, 
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Fabiano Rosas <farosas@suse.de>, 
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,147 +127,62 @@ On Fri, 6 Nov 2026 at 20:03, Denis V. Lunev <den@openvz.org> wrote:
 >
 > From: Denis V. Lunev <den@openvz.org>
 >
-> Once the tap device behind a multiqueue netdev is deleted on the host,
-> the queue fds QEMU holds are no longer bound to any device and
-> TUNSETQUEUE fails with EINVAL, for attach and detach alike. Management
-> can delete the device under a running VM, e.g. OpenStack unplugs the
-> VIF of an instance it is deleting. The next
-> VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET from the guest then kills QEMU:
+> When the tap device is deleted on the host while QEMU still holds its
+> fd, poll() reports EPOLLERR on the fd every time and read() fails with
+> EBADFD. tap_send() just breaks out of its loop with the handler still
+> registered, the main loop wakes up again at once and QEMU spins at full
+> CPU until the VM is destroyed. Every tap netdev is affected, single
+> queue or multiqueue. With vhost-net the spin starts once vhost stops,
+> e.g. on guest reboot, since vhost removes the handler while it runs.
 >
->   could not enable queue
->   virtio_net_set_queue_pairs: Assertion `!r' failed.
+> Stop read polling on EBADFD and report it. Other read errors are left
+> alone: tun fails a read with EINVAL for a single packet it cannot
+> convert, e.g. an unsupported GSO type, and the next read succeeds.
+> EBADFD only exists on Linux and Solaris, hence the #ifdef. Anything
+> that turns polling back on later, a vhost stop or the delivery of a
+> queued packet, hits EBADFD once and stops it again.
 >
-> A guest reset aborts the same way through set_features(): clearing the
-> features detaches the extra queues and the detach fails too.
+> The test deletes a single queue tap through netlink under a running
+> guest and checks that the CPU time of QEMU stays low afterwards.
+> Deleting the device needs CAP_NET_ADMIN, so the test is skipped
+> without it.
 >
-> Commit a1708203b583 ("net/tap-linux.c: avoid abort when setting invalid
-> fd") removed the earlier abort on the same path in
-> tap_set_vnet_hdr_len(); this is the next one.
->
-> tap_fd_enable() and tap_fd_disable() already report the error. Walk the
-> remaining queues anyway, return the failure and let the callers decide:
-> - the control command restores the previous number of queue pairs and
->   returns VIRTIO_NET_ERR, so the device matches the guest, which keeps
->   its old setting on error. The rollback cannot fail in turn: tap
->   tracks which queues are attached and skips the ioctl for a queue
->   whose attach or detach already failed;
-> - post-load fails the migration, so the source keeps running instead
->   of the destination aborting;
-> - set_features() has no way to report it and carries on with a dead
->   link, as a single queue NIC on a deleted tap already does.
->
-> The test attaches its own copy of the second queue fd before the guest
-> asks for two queue pairs, so the attach from QEMU fails with EINVAL on
-> a live device. Creating the tap needs CAP_NET_ADMIN, so the test is
-> skipped without it.
->
-> Fixes: fed699f9ca6a ("virtio-net: multiqueue support")
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: "Michael S. Tsirkin" <mst@redhat.com>
 > Cc: Jason Wang <jasowangio@gmail.com>
 > Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > Cc: Fabiano Rosas <farosas@suse.de>
 > Cc: Laurent Vivier <lvivier@redhat.com>
 > Cc: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/net/virtio-net.c           |  25 +++++---
->  tests/qtest/virtio-net-test.c | 104 ++++++++++++++++++++++++++++++++++
->  2 files changed, 122 insertions(+), 7 deletions(-)
+>  net/tap.c                     |  8 ++++
+>  tests/qtest/virtio-net-test.c | 70 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 78 insertions(+)
 >
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 54e42cfec9..82e3c22ca3 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -766,24 +766,27 @@ static int peer_detach(VirtIONet *n, int index)
->      return tap_disable(nc->peer);
->  }
+> diff --git a/net/tap.c b/net/tap.c
+> index 9bce0d088f..8274aebda6 100644
+> --- a/net/tap.c
+> +++ b/net/tap.c
+> @@ -265,6 +265,14 @@ static void tap_send(void *opaque)
+>          size_t min_pktsz = sizeof(min_pkt);
 >
-> -static void virtio_net_set_queue_pairs(VirtIONet *n)
-> +static int virtio_net_set_queue_pairs(VirtIONet *n)
->  {
->      int i;
->      int r;
-> +    int ret = 0;
->
->      if (n->nic->peer_deleted) {
-> -        return;
-> +        return 0;
->      }
->
->      for (i = 0; i < n->max_queue_pairs; i++) {
->          if (i < n->curr_queue_pairs) {
->              r = peer_attach(n, i);
-> -            assert(!r);
->          } else {
->              r = peer_detach(n, i);
-> -            assert(!r);
+>          size = tap_read_packet(s->fd, s->buf, sizeof(s->buf));
+> +#ifdef EBADFD
+> +        if (size < 0 && errno == EBADFD) {
+> +            error_report("tap: device is gone, stop polling: %s",
+> +                         strerror(errno));
+> +            tap_read_poll(s, false);
+> +            break;
 > +        }
-> +        if (r < 0) {
-> +            ret = r;
+> +#endif
+
+Why is EBADFD special here ? Most errors on read are not going
+to go away, so I think we should say "allow continuing to poll
+for specific errors that we know will be transient" and stop for
+any others.
+
+>          if (size <= 0) {
+>              break;
 >          }
->      }
-> +    return ret;
->  }
-
-This operates on all the peers from curr_queue_pairs to
-max_queue_pairs, eventually returning a value that effectively
-means either "everything was OK" or else "at least one thing
-failed but you can't tell which".
-
->  static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue);
-> @@ -1499,7 +1502,7 @@ static int virtio_net_handle_mq(VirtIONet *n, uint8_t cmd,
->                                  struct iovec *iov, unsigned int iov_cnt)
->  {
->      VirtIODevice *vdev = VIRTIO_DEVICE(n);
-> -    uint16_t queue_pairs;
-> +    uint16_t queue_pairs, old_queue_pairs;
->      NetClientState *nc = qemu_get_queue(n->nic);
->
->      virtio_net_disable_rss(n);
-> @@ -1532,6 +1535,7 @@ static int virtio_net_handle_mq(VirtIONet *n, uint8_t cmd,
->          return VIRTIO_NET_ERR;
->      }
->
-> +    old_queue_pairs = n->curr_queue_pairs;
->      n->curr_queue_pairs = queue_pairs;
->      if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
->          /*
-> @@ -1543,7 +1547,12 @@ static int virtio_net_handle_mq(VirtIONet *n, uint8_t cmd,
->      /* stop the backend before changing the number of queue_pairs to avoid handling a
->       * disabled queue */
->      virtio_net_set_status(vdev, vdev->status);
-> -    virtio_net_set_queue_pairs(n);
-> +    if (virtio_net_set_queue_pairs(n) < 0) {
-> +        n->curr_queue_pairs = old_queue_pairs;
-> +        virtio_net_set_status(vdev, vdev->status);
-> +        virtio_net_set_queue_pairs(n);
-> +        return VIRTIO_NET_ERR;
-> +    }
-
-Here if we get back a failure indication we assume we can just
-roll back to the old_queue_pairs value. But if one of the
-operations failed but not all of them then that seems like it
-might have bad consquences. If we were trying to reduce the number
-then we might have detached a peer we're now going to try to use
-again without reattaching it, and if we were trying to increase
-the number then we might have attached a peer that we've now
-forgotten that we attached.
-
->      return VIRTIO_NET_OK;
->  }
-> @@ -3298,7 +3307,9 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
->       */
->      n->saved_guest_offloads = n->curr_guest_offloads;
->
-> -    virtio_net_set_queue_pairs(n);
-> +    if (virtio_net_set_queue_pairs(n) < 0) {
-> +        return -EINVAL;
-> +    }
-
-Is there anything we need to undo in this error case ?
-
->      /* Find the first multicast entry in the saved MAC filter */
->      for (i = 0; i < n->mac_table.in_use; i++) {
 
 -- PMM
 
