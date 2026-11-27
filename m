@@ -1,51 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8F1606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27300606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Ju0GHppR
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Clz7H8WS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp3R-0005Hq-HI; Fri, 27 Nov 2026 01:03:30 -0500
+	id 1xWp6T-0004dv-5a; Fri, 27 Nov 2026 01:06:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp1t-0003lV-AP; Fri, 27 Nov 2026 01:01:53 -0500
+ id 1xWp5t-0001IQ-5a; Fri, 27 Nov 2026 01:06:01 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp1r-0000DA-By; Fri, 27 Nov 2026 01:01:52 -0500
+ id 1xWp5r-0008VQ-BV; Fri, 27 Nov 2026 01:06:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758881; bh=FSqVdN1rE0NV7vdJWRWFnUKFk/KKJqRFA1bDmZRyQq0=;
+ t=1795759047; bh=i5Qzt2P1WHNwOqbxbKVIgMQqHlEXaOehIu3pfjPsoic=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ju0GHppRd6U+sKo1sHbWK94bCAbou6cBCgm+JcuV1o5O2orWlpwJzucShmaHD2wdn
- KnGVl/pc5y4gLV3/AZTRLHVs4+6aXFPMtW7YPV4UdL6vfHrtQR8mNJEF38mDby73MU
- 4pNujI2dBMkHZytB6HrofvgW9txVnrs2nn1i+Bgp0ktv6DqTLLkXXug+Wr+J8FvU2i
- nyfyBqIJVMX6h3ApOS1hLJI81y1IZa5XsM9nHbsz/6TEeQ/qKyiTLAoNgN787IS5kT
- Q3trTHpNkaUnYBXYBiEn6lnSGiuB2BTI3Cjb1B7GNp8vOEXEvjAdTUGzOhceqR5pd+
- Oeu2bCZaJwphA==
+ b=Clz7H8WS5Z9eDk+Ymz9x23xJqiW79qDmT2RLrAzRl63bqe5LZVprMHfR65nYm3Kkz
+ AHgUdmYpBCIARxaq3xSroeRkJG0a2BY/COAAHLN06Pg7S5IA5NRVCVyyM6Xluo3yI0
+ uPTwLtHr1E71TkwiMm9DLx5bJ/CQr9FiJTNxbXG8j84c5m8y+KwKds6bcQmz5P+VAw
+ x+XQiRVtBjPftffDQPbOqvuEyLOztX8elnRZz18Grn+g9J0+r7p0kSzVeezdMkca1J
+ Xys91ktKpJnPnqmKrMqWALQhmZKhxGRLCI7ctAvxJVweiiegt6wko4RBIG5irlzv77
+ 7RFVQyV+kpXMQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E830A1EA315;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 095041EA355;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E48BA469955;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0713B469980;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B4FEECF2AA; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ id ED40FCF2F8; Fri, 27 Nov 2026 08:57:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Eric Auger <eric.auger@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 138/140] hw/block/pflash_cfi01: Reject
- out-of-range blk_offset on load
-Date: Fri, 27 Nov 2026 08:54:04 +0300
-Message-ID: <20261127055421.39015-79-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 099/152] hw/virtio/virtio-iommu: Fix IOVA address
+ lookup
+Date: Fri, 27 Nov 2026 08:53:57 +0300
+Message-ID: <20261127055709.39630-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -77,41 +77,42 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-A migration stream can set blk_offset beyond the flash storage.
-The write-confirm path would then write past the end of it.
-Check that the pending write block fits in the storage in
-pflash_post_load() and fail the load.
+The translation code checks the address to be translated
+belongs to mapped segments by calling g_tree_lookup_extended().
+This uses the interval_cmp() function. However the interval
+is badly formed with the .low=addr and .high= addr + 1 instead
+of both being set to addr.
+
+As a result an attempt to translate an unmapped byte just before
+a mapped segment will not fault as expected.
+
+Example: only [0x2000, 0x2fff] IOVA range is mapped.
+An attempt to translate 0x1fff will succeed
 
 Cc: qemu-stable@nongnu.org
-Reported-by: phudd6 & kietvha1 from Viettel Cyber Security
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4388
-Fixes: 284a7ee2e290 ("hw/pflash: implement update buffer for block writes")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4754
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261116173857.367638-1-eric.auger@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20261124185556.81132-4-philmd@oss.qualcomm.com>
-(cherry picked from commit 7dcf2a795503c3f4a5221a3bfe52164ab3d2dc47)
+(cherry picked from commit f445ebd9d7fc1ea229821646d8d84c41b856da40)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 124cd3f8247..78dfc9602d4 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -1037,6 +1037,13 @@ static void postload_update_cb(void *opaque, bool running, RunState state)
- static int pflash_post_load(void *opaque, int version_id)
- {
-     PFlashCFI01 *pfl = opaque;
-+    uint64_t size = pfl->sector_len * pfl->nb_blocs;
-+
-+    if (pfl->blk_offset != -1
-+        && (pfl->blk_offset >= size
-+            || size - pfl->blk_offset < pfl->writeblock_size)) {
-+        return -EINVAL;
-+    }
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 208815096fc..b9ecab01eee 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1185,7 +1185,7 @@ static IOMMUTLBEntry virtio_iommu_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+     GList *l;
  
-     /*
-      * ROMD mode is not in the VMState; derive it from the migrated
+     interval.low = addr;
+-    interval.high = addr + 1;
++    interval.high = addr;
+     granule = ctz64(s->config.page_size_mask);
+ 
+     IOMMUTLBEntry entry = {
 -- 
 2.47.3
 
