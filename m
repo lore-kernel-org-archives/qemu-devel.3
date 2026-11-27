@@ -1,50 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E7E606A321
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9E606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ugjsyUOF
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=tSo+qigR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWpCH-0000Fo-PL; Fri, 27 Nov 2026 01:12:39 -0500
+	id 1xWpBg-0008A8-Fz; Fri, 27 Nov 2026 01:12:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWpBB-0007gJ-Ah; Fri, 27 Nov 2026 01:11:30 -0500
+ id 1xWpAW-0006bx-Lf; Fri, 27 Nov 2026 01:10:49 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWpB6-00033B-Nx; Fri, 27 Nov 2026 01:11:27 -0500
+ id 1xWpAU-0008TD-6x; Fri, 27 Nov 2026 01:10:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759049; bh=zi+EaFnKTm0T4Ni6K8Jrkl9QTbkwQn4N+Vdrlh4jdM8=;
+ t=1795759049; bh=LpnehRNUZjmxENOzH+CrqjvYV+X+EMyW8KirZLMVsjM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ugjsyUOFcQnFNZsPlssBic2eUVxoaX0Lx995+l5kOsCOpOtympXvfFl49PbRsfZxk
- +/Ivf+TOEzRRsXoCol6KBPTuPU4oqCBwj6fVrKhwx940H5rKnSuu+ufRqumN7MJrPO
- mxSsELrWFOIts8xXTvMHCaStazD4LQfOsPzU7PooUCUQOatZ+HSps7ShB0iNWosyYN
- ia+LwbPyF7ri4WZl7U23HzbHTtF0juRAPJNKpkeIA9cYEGRT8TpoINEtaqt2W04cL4
- r5cfBMplikJYThruuKMc9WjrShE+YtErWseTkI3Udh0nkHU3YYK1Mh2MuaibmMhoB/
- AjmcL4tigi4Ig==
+ b=tSo+qigROuwjLMdh4dV5jNFS4ATrnYw+Ef8ylx1LIsaVRd2vPiUUq+KP60K0/h/IE
+ n/xsZOVRBwklh5387XbZqQphahdxTFvQwgf20hjjF2j9qJN+CsAB8jwvIG/u1VZ4is
+ fpnG5YWMjB8+s3aiSFodLDxMLzsDYvaL71h4awXfoxOJVULw5gu3XWQCZdemZple9y
+ zuJxfYiZNm6tUpte5JHniPjLx5oFQQwD5zRke+PL/ni0tzHVEHVjEUjgFOUShpedN7
+ UJv950pF8qg0z6kB8SkzQ4LXjouJTvNMiw3ChVTKb+w4+JZmvOXpUOin0xPtSLQ07M
+ fESc1rVMrIh1A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D59501EA38A;
+ by isrv.corpit.ru (Postfix) with ESMTP id A5EC71EA381;
  Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D339A4699B5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A32FD4699AC;
  Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9E9BBCF362; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
+ id 83F37CF350; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 152/152] target/ppc: Test CF_NO_GOTO_PTR in cflags,
- not in TB flags
-Date: Fri, 27 Nov 2026 08:54:50 +0300
-Message-ID: <20261127055709.39630-89-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 143/152] hw/ide/atapi: fix abort on CD-ROM reads
+ past LBA 2^31
+Date: Fri, 27 Nov 2026 08:54:41 +0300
+Message-ID: <20261127055709.39630-80-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -78,44 +78,221 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-CF_NO_GOTO_PTR is a TB cflags bit, but it was tested against
-tb->flags, where bit 10 is HFLAGS_SE. Use tb_cflags().
+cmd_read() and cmd_read_cd() check the 32-bit LBA from the CDB against
+the medium size, then pass it to ide_atapi_cmd_read() as an int. On a
+medium larger than 4 TiB, a read at LBA 2^31 or above passes the range
+check, turns negative and trips the assertion:
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Matt Turner <mattst88@gmail.com>
-Fixes: 46d396bde988 ("target/ppc: enable PMU instruction count")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+  hw/ide/atapi.c:315: ide_atapi_cmd_read_pio: Assertion
+  `0 <= lba && lba < (s->nb_sectors >> 2)' failed.
+
+Reading the last sector is enough, e.g. a UDF anchor probe, so the
+guest aborts QEMU just by looking at the disc.
+
+Pass the LBA as uint32_t, which is what the CDB carries, and widen
+IDEState.lba to int64_t so it holds every valid LBA and keeps -1 as
+the "not a sector read" marker. The field is not migrated.
+
+Fixes: b8d7f1bc5927 ("ide: atapi: check logical block address and read size (CVE-2020-29443)")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261112133455.604657-1-den@openvz.org>
+[PMD: Avoid wrapping at 2^32 in range check]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261117080843.8314-1-philmd@oss.qualcomm.com>
-(cherry picked from commit da70db241dc765d5dc547a416ce6aa97c449d216)
+
+Message-ID: <20261112133455.604657-1-den@openvz.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit f2a3eb6bcf80f0c02635be67177ed10547d16f30)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 06ed2adf105..506b7fd3b82 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -3660,7 +3660,7 @@ static void gen_lookup_and_goto_ptr(DisasContext *ctx)
-          * tcg_gen_lookup_and_goto_ptr will exit the TB if
-          * CF_NO_GOTO_PTR is set. Count insns now.
-          */
--        if (ctx->base.tb->flags & CF_NO_GOTO_PTR) {
-+        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_PTR) {
-             pmu_count_insns(ctx);
-         }
+diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
+index 0ea149ad8c6..aec20f968da 100644
+--- a/hw/ide/atapi.c
++++ b/hw/ide/atapi.c
+@@ -47,7 +47,7 @@ static void padstr8(uint8_t *buf, int buf_size, const char *src)
+     }
+ }
  
-@@ -6686,7 +6686,7 @@ static void ppc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
-          * tcg_gen_lookup_and_goto_ptr will exit the TB if
-          * CF_NO_GOTO_PTR is set. Count insns now.
-          */
--        if (ctx->base.tb->flags & CF_NO_GOTO_PTR) {
-+        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_PTR) {
-             pmu_count_insns(ctx);
-         }
+-static void lba_to_msf(uint8_t *buf, int lba)
++static void lba_to_msf(uint8_t *buf, int64_t lba)
+ {
+     lba += 150;
+     buf[0] = (lba / 75) / 60;
+@@ -71,7 +71,7 @@ static inline int media_is_cd(IDEState *s)
+     return (media_present(s) && s->nb_sectors <= CD_MAX_SECTORS);
+ }
  
+-static void cd_data_to_raw(uint8_t *buf, int lba)
++static void cd_data_to_raw(uint8_t *buf, int64_t lba)
+ {
+     /* sync bytes */
+     buf[0] = 0x00;
+@@ -309,10 +309,10 @@ static void ide_atapi_cmd_reply(IDEState *s, int size, int max_size)
+ }
+ 
+ /* start a CD-ROM read command */
+-static void ide_atapi_cmd_read_pio(IDEState *s, int lba, int nb_sectors,
+-                                   int sector_size)
++static void ide_atapi_cmd_read_pio(IDEState *s, uint32_t lba,
++                                   int nb_sectors, int sector_size)
+ {
+-    assert(0 <= lba && lba < (s->nb_sectors >> 2));
++    assert(lba < (s->nb_sectors >> 2));
+ 
+     s->lba = lba;
+     s->packet_transfer_size = nb_sectors * sector_size;
+@@ -409,10 +409,10 @@ eot:
+ 
+ /* start a CD-ROM read command with DMA */
+ /* XXX: test if DMA is available */
+-static void ide_atapi_cmd_read_dma(IDEState *s, int lba, int nb_sectors,
+-                                   int sector_size)
++static void ide_atapi_cmd_read_dma(IDEState *s, uint32_t lba,
++                                   int nb_sectors, int sector_size)
+ {
+-    assert(0 <= lba && lba < (s->nb_sectors >> 2));
++    assert(lba < (s->nb_sectors >> 2));
+ 
+     s->lba = lba;
+     s->packet_transfer_size = nb_sectors * sector_size;
+@@ -427,7 +427,7 @@ static void ide_atapi_cmd_read_dma(IDEState *s, int lba, int nb_sectors,
+     ide_start_dma(s, ide_atapi_cmd_read_dma_cb);
+ }
+ 
+-static void ide_atapi_cmd_read(IDEState *s, int lba, int nb_sectors,
++static void ide_atapi_cmd_read(IDEState *s, uint32_t lba, int nb_sectors,
+                                int sector_size)
+ {
+     trace_ide_atapi_cmd_read(s, s->atapi_dma ? "dma" : "pio",
+@@ -983,7 +983,7 @@ static void cmd_read(IDEState *s, uint8_t* buf)
+     }
+ 
+     lba = ldl_be_p(buf + 2);
+-    if (lba >= total_sectors || lba + nb_sectors - 1 >= total_sectors) {
++    if (lba >= total_sectors || nb_sectors > total_sectors - lba) {
+         ide_atapi_cmd_error(s, ILLEGAL_REQUEST, ASC_LOGICAL_BLOCK_OOR);
+         return;
+     }
+@@ -1005,7 +1005,7 @@ static void cmd_read_cd(IDEState *s, uint8_t* buf)
+     }
+ 
+     lba = ldl_be_p(buf + 2);
+-    if (lba >= total_sectors || lba + nb_sectors - 1 >= total_sectors) {
++    if (lba >= total_sectors || nb_sectors > total_sectors - lba) {
+         ide_atapi_cmd_error(s, ILLEGAL_REQUEST, ASC_LOGICAL_BLOCK_OOR);
+         return;
+     }
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index a7ed41fa265..870a20c96a5 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -396,7 +396,7 @@ static void ide_dbdma_start(const IDEDMA *dma, IDEState *s,
+     MACIO_DPRINTF("\n\n------------ IDE transfer\n");
+     MACIO_DPRINTF("buffer_size: %x   buffer_index: %x\n",
+                   s->io_buffer_size, s->io_buffer_index);
+-    MACIO_DPRINTF("lba: %x    size: %x\n", s->lba, s->io_buffer_size);
++    MACIO_DPRINTF("lba: %" PRIx64 "    size: %x\n", s->lba, s->io_buffer_size);
+     MACIO_DPRINTF("-------------------------\n");
+ 
+     m->dma_active = true;
+diff --git a/hw/ide/trace-events b/hw/ide/trace-events
+index 57042cafddc..b38ac7a2edd 100644
+--- a/hw/ide/trace-events
++++ b/hw/ide/trace-events
+@@ -48,17 +48,17 @@ bmdma_write_via(uint64_t addr, uint64_t val) "bmdma: writeb 0x%"PRIx64" : 0x%02"
+ 
+ # atapi.c
+ cd_read_sector_sync(int lba) "lba=%d"
+-cd_read_sector_cb(int lba, int ret) "lba=%d ret=%d"
+-cd_read_sector(int lba) "lba=%d"
++cd_read_sector_cb(int64_t lba, int ret) "lba=%"PRId64" ret=%d"
++cd_read_sector(int64_t lba) "lba=%"PRId64
+ ide_atapi_cmd_error(void *s, int sense_key, int asc) "IDEState: %p; sense=0x%x asc=0x%x"
+ ide_atapi_cmd_reply_end(void *s, int tx_size, int elem_tx_size, int32_t index) "IDEState %p; reply: tx_size=%d elem_tx_size=%d index=%"PRId32
+ ide_atapi_cmd_reply_end_eot(void *s, int status) "IDEState: %p; end of transfer, status=0x%x"
+ ide_atapi_cmd_reply_end_bcl(void *s, int bcl) "IDEState: %p; byte_count_limit=%d"
+ ide_atapi_cmd_reply_end_new(void *s, int status) "IDEState: %p; new transfer started, status=0x%x"
+ ide_atapi_cmd_check_status(void *s) "IDEState: %p"
+-ide_atapi_cmd_read(void *s, const char *method, int lba, int nb_sectors) "IDEState: %p; read %s: LBA=%d nb_sectors=%d"
++ide_atapi_cmd_read(void *s, const char *method, uint32_t lba, int nb_sectors) "IDEState: %p; read %s: LBA=%"PRIu32" nb_sectors=%d"
+ ide_atapi_cmd(void *s, uint8_t cmd) "IDEState: %p; cmd: 0x%02x"
+-ide_atapi_cmd_read_dma_cb_aio(void *s, int lba, int n) "IDEState: %p; aio read: lba=%d n=%d"
++ide_atapi_cmd_read_dma_cb_aio(void *s, int64_t lba, int n) "IDEState: %p; aio read: lba=%"PRId64" n=%d"
+ # Warning: Verbose
+ ide_atapi_cmd_packet(void *s, uint16_t limit, const char *packet) "IDEState: %p; limit=0x%x packet: %s"
+ 
+diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
+index f5eaaf68e65..c6fd8d7eb1f 100644
+--- a/include/hw/ide/ide-dev.h
++++ b/include/hw/ide/ide-dev.h
+@@ -101,7 +101,7 @@ struct IDEState {
+     int packet_transfer_size;
+     int elementary_transfer_size;
+     int32_t io_buffer_index;
+-    int lba;
++    int64_t lba;
+     int cd_sector_size;
+     int atapi_dma; /* true if dma is requested for the packet cmd */
+     BlockAcctCookie acct;
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 71d23fe56af..4c1e9b24005 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1691,6 +1691,40 @@ static void test_cdrom_pio_raw(void)
+     ahci_test_cdrom_raw(3, false);
+ }
+ 
++/* Regression test: read the last sector of a medium over 4 TiB. */
++static void ahci_test_cdrom_high_lba(bool dma)
++{
++    AHCIQState *ahci;
++    g_autofree unsigned char *tx = g_malloc0(ATAPI_SECTOR_SIZE);
++    uint64_t lba = (uint64_t)INT32_MAX + 1;
++    AHCIOpts opts = {
++        .size = ATAPI_SECTOR_SIZE,
++        .lba = lba,
++        .atapi = true,
++        .atapi_dma = dma,
++        .post_cb = ahci_cb_cmp_buff,
++        .opaque = tx,
++    };
++
++    ahci = ahci_boot_and_enable("-blockdev driver=null-co,node-name=cd0,"
++                                "read-only=on,read-zeroes=on,size=%" PRIu64 " "
++                                "-M q35 "
++                                "-device ide-cd,drive=cd0 ",
++                                (lba + 1) * ATAPI_SECTOR_SIZE);
++    ahci_exec(ahci, ahci_port_select(ahci), CMD_ATAPI_READ_10, &opts);
++    ahci_shutdown(ahci);
++}
++
++static void test_cdrom_dma_high_lba(void)
++{
++    ahci_test_cdrom_high_lba(true);
++}
++
++static void test_cdrom_pio_high_lba(void)
++{
++    ahci_test_cdrom_high_lba(false);
++}
++
+ /*
+  * Regression test: a buffered ATAPI read completing after a command
+  * engine restart must not dereference the cleared cur_cmd. Cover both
+@@ -2234,6 +2268,8 @@ int main(int argc, char **argv)
+     qtest_add_func("/ahci/cdrom/pio/single", test_cdrom_pio);
+     qtest_add_func("/ahci/cdrom/pio/multi", test_cdrom_pio_multi);
+     qtest_add_func("/ahci/cdrom/pio/raw", test_cdrom_pio_raw);
++    qtest_add_func("/ahci/cdrom/dma/high_lba", test_cdrom_dma_high_lba);
++    qtest_add_func("/ahci/cdrom/pio/high_lba", test_cdrom_pio_high_lba);
+ 
+     qtest_add_func("/ahci/cdrom/pio/bcl", test_atapi_bcl);
+     qtest_add_func("/ahci/cdrom/eject", test_atapi_tray);
 -- 
 2.47.3
 
