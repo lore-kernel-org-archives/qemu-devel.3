@@ -1,52 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A9B606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03802606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=cE8guphi
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=f86dDtn/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp7S-0006AW-26; Fri, 27 Nov 2026 01:07:43 -0500
+	id 1xWp5r-00015S-50; Fri, 27 Nov 2026 01:05:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp6q-0005OS-GJ; Fri, 27 Nov 2026 01:07:00 -0500
+ id 1xWp48-000618-Q5; Fri, 27 Nov 2026 01:04:19 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp6o-0002ST-9l; Fri, 27 Nov 2026 01:07:00 -0500
+ id 1xWp3y-0003c2-MK; Fri, 27 Nov 2026 01:04:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759047; bh=2WIsmHRrEvy61x7CV7KLzUiAXyjdLJSe0cEE5nvoB38=;
+ t=1795759041; bh=t4wQPZxLx6CiPRp62T7EMHlvyyxduyL3eN39cn5EHJc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cE8guphiZ0BM9uNa/dh/77YoLkEtrJY8NPioJYsaF0+b4R8/P/VzUZTQyKFUg+0n6
- RoMNtI6UShUMyZjtuwaAJZRSAGwm8OYshCXihpKtxCtiRY4WQEwY3kGuiKq52GWJVy
- mLLJctN0VI0JhmTDcWvkQSpXL0bypypoTx7D5VajchbxrmG9MFgBUf8/uebtLvu//p
- gIYyKArly/sKb/22zj36wPXYb5LS3+sdQgCNmrGcBSyAPStmvmqGSnlVST0ctWBi2Q
- WCPYuXUn5iH1gFHK0Xkl/PKHsz8vItrAgElJ1UvIKjUgfISNIaHYlXlL1Cd2wY5wKL
- cuhYQWQitQyiQ==
+ b=f86dDtn/ugKGJhkjjXfVwCSdaNlUJkHRL7I/q2iuNLOkiaBXadmq3BZd936vq7myL
+ /dqVeEM74UFhW/3DmmZ9ANLyJb7vygFO3NeKXPRfUWHG38hNHRMhJ6HSLoXL3ZksBY
+ pKvBMbzk/z7Paq+EH/DbCTQKXGujSmt8r1sNRI9tXzYsUW6LpRV3K/F/e03hbR2I/j
+ S5EYJ5Mw+grtgy2t7N1vbf2B9wZzFftE/Wo7uzkJ6z+YL5KmoGAlpFF3GxbQqmpt5K
+ tLFkd03XapPrEwPGr+5cOfheI/kyzblXpyiuoueFWSD4JncdckbrrArltj9mEEgJkn
+ OA8t9wVnaDINA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F19BA1EA35F;
- Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A8E2E1EA342;
+ Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EE4BA46998A;
- Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A6AB946996E;
+ Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E2455CF30C; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ id 7F3C4CF2D4; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jiang Yuxuan <hooyan2024@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 109/152] target/i386: raise #DE for INT_MIN / -1 in
- IDIV helpers
-Date: Fri, 27 Nov 2026 08:54:07 +0300
-Message-ID: <20261127055709.39630-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 081/152] net: Pad short packets consistently
+ regardless of backend
+Date: Fri, 27 Nov 2026 08:53:39 +0300
+Message-ID: <20261127055709.39630-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,142 +78,218 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Jiang Yuxuan <hooyan2024@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-helper_idivw_AX() and helper_idivl_EAX() perform the division before
-checking whether the quotient fits in the destination.  If the dividend
-is the minimum value and the divisor is -1, the division overflows in
-the host: INT32_MIN / -1 and INT64_MIN / -1 are undefined behaviour in C
-and trap with SIGFPE on x86 hosts.  QEMU then dies of a host SIGFPE
-instead of raising #DE in the guest, taking down the emulator (or the
-whole VM under TCG).
+Currently our handling of short network packets (i.e.  those which
+are smaller than the minimum ethernet frame size of 60 bytes) is a
+little confused.  The intention is that we allow network device
+models to transmit short packets, but we protect them from having to
+deal with receiving short packets unless they explicitly opt into it.
+This means we don't have to have a lot of code in each network device
+to try to handle the short packet size -- historically that code was
+untested, and often a source of "carefully crafted packet can cause
+an out-of-bounds memory access" bugs.
 
-Reject the two overflowing cases before dividing.  The 8-bit form is not
-affected (it widens the dividend to int), and the 64-bit form already
-checks first.
+Our implementation of the padding is currently done when each network
+backend feeds a packet into the system via one of the
+qemu_send_packet family of functions.  This mostly works, except that
+we missed some of the more obscure backends (e.g.  the socket
+backend), and it means code duplication in each backend.  We'd like
+to switch to making qemu_send_packet do the padding itself.  To do
+that, we first need to make sure that all the NetClientState
+implementations which do not want padding set the do_not_pad flag.
+We do this by setting the flag for NetClientState instances created
+by qemu_new_net_client() and qemu_new_net_control_client().  Emulated
+network devices use qemu_new_nic(), which does not set the flag.
 
-Add a regression test for both the 16-bit and 32-bit forms, run by the
-i386 and x86_64 linux-user test suites.
+Note that this also causes the net/hub client to request no padding.
+This is the right behaviour: we want the hub to accept short packets
+and forward them on to all destinations.  Each destination then gets
+to choose whether it sees a padded packet or the short one.  The
+hub.c code is length-agnostic and doesn't look inside the packets it
+is passing on, so it has no issues with short packets.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4687
-Signed-off-by: fujo <hooyan2024@gmail.com>
-Link: https://lore.kernel.org/r/CAAt7E3+jVR+YHZC3996kdC_Xrh9aVJ4YLy8X7+1HyjvOQk09Ug@mail.gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4e61c4bb175d97f85f252977ac867f98c0ba8268)
-(Mjt: back-port tests across make->meson conversion)
+That change means we can rely on do_not_pad being correct for all
+NetClientInfo structs, and so we can pad short packets in the
+qemu_send_packet() and qemu_sendv_packet() family of functions.
+
+If the callsite is already padding, then this will have no effect,
+but callsites like the socket and dgram backends will now correctly
+add padding.  This fixes the bug where when two QEMU instances are
+connected via one of those backends a short ARP packet transmitted by
+one is not correctly padded by the other and gets dropped.
+
+Note that if we pad a packet, our return value on success will
+be the size of the padded packet, not the original. This is OK
+because this function (like the NetQueueDeliverFunc function type
+documented in include/net/queue.h and which we will eventually
+end up calling and returning the return value of) returns
+   >0 - success
+    0 - queue packet for future redelivery
+   <0 - failure (discard packet)
+and doesn't guarantee to return exactly the size of the packet
+sent. None of the callers try to use the return value as an
+exact size.
+
+Cc: qemu-stable@nongu.org
+Fixes: CVE-2026-118490
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2362
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20261110180655.2072265-3-peter.maydell@linaro.org
+(cherry picked from commit f448e6d9cf0a637234ab3c9825c390a35971f7c3)
+(Mjt: back-port across v11.1.0-1283-ge1c7f36f151c "net/tap: QOMify tap backend")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/int_helper.c b/target/i386/tcg/int_helper.c
-index 46741d9f68a..45fa0a82441 100644
---- a/target/i386/tcg/int_helper.c
-+++ b/target/i386/tcg/int_helper.c
-@@ -91,7 +91,7 @@ void helper_idivw_AX(CPUX86State *env, target_ulong t0)
+diff --git a/include/net/eth.h b/include/net/eth.h
+index 3e83f5d68c0..a1bc0c2fd58 100644
+--- a/include/net/eth.h
++++ b/include/net/eth.h
+@@ -439,4 +439,26 @@ eth_parse_ipv6_hdr(const struct iovec *pkt, int pkt_frags,
+ bool eth_pad_short_frame(uint8_t *padded_pkt, size_t *padded_buflen,
+                          const void *pkt, size_t pkt_size);
  
-     num = (env->regs[R_EAX] & 0xffff) | ((env->regs[R_EDX] & 0xffff) << 16);
-     den = (int16_t)t0;
--    if (den == 0) {
-+    if (den == 0 || (num == INT32_MIN && den == -1)) {
-         raise_exception_ra(env, EXCP00_DIVZ, GETPC());
-     }
-     q = (num / den);
-@@ -130,7 +130,7 @@ void helper_idivl_EAX(CPUX86State *env, target_ulong t0)
- 
-     num = ((uint32_t)env->regs[R_EAX]) | ((uint64_t)((uint32_t)env->regs[R_EDX]) << 32);
-     den = t0;
--    if (den == 0) {
-+    if (den == 0 || (num == INT64_MIN && den == -1)) {
-         raise_exception_ra(env, EXCP00_DIVZ, GETPC());
-     }
-     q = (num / den);
-diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
-index f1df40411b0..886a9767751 100644
---- a/tests/tcg/i386/Makefile.target
-+++ b/tests/tcg/i386/Makefile.target
-@@ -14,7 +14,7 @@ config-cc.mak: Makefile
- I386_SRCS=$(notdir $(wildcard $(I386_SRC)/*.c))
- ALL_X86_TESTS=$(I386_SRCS:.c=)
- SKIP_I386_TESTS=test-i386-ssse3 test-avx test-3dnow test-mmx test-flags
--X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
-+X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 test-idiv-overflow $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
- 
- test-i386-sse-exceptions: CFLAGS += -msse4.1 -mfpmath=sse
- run-test-i386-sse-exceptions: QEMU_OPTS += -cpu max
-diff --git a/tests/tcg/i386/test-idiv-overflow.c b/tests/tcg/i386/test-idiv-overflow.c
-new file mode 100644
-index 00000000000..e8fc55a0481
---- /dev/null
-+++ b/tests/tcg/i386/test-idiv-overflow.c
-@@ -0,0 +1,70 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Test that IDIV of the minimum dividend by -1 raises #DE, which Linux
-+ * delivers to the guest as SIGFPE with si_code == FPE_INTDIV.
++/**
++ * eth_pad_short_frame_iov - pad a short frame, iovec version
++ *
++ * This is equivalent to eth_pad_short_frame(), except that it works
++ * on a packet stored in a struct iovec.
++ *
++ * If the Ethernet frame size is shorter than 60 bytes, it will be padded to
++ * 60 bytes at the address @padded_pkt (and the caller will need to handle
++ * it as a not-in-an-iovec packet).
++ *
++ * @padded_pkt: buffer address to hold the padded frame
++ * @padded_buflen: pointer holding length of @padded_pkt. If the frame is
++ *                 padded, the length will be updated to the padded one.
++ * @iov: iovec holding the original Ethernet frame
++ * @iovcnt: number of elements in @iov
++ * @pkt_size: size of the original Ethernet frame (i.e. iov_size(iov, iovcnt))
++ * @return true if the frame is padded, otherwise false
 + */
-+#define _GNU_SOURCE
-+#include <setjmp.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <string.h>
++bool eth_pad_short_frame_iov(uint8_t *padded_pkt, size_t *padded_buflen,
++                             const struct iovec *iov, int iovcnt,
++                             size_t pkt_size);
 +
-+static sigjmp_buf idiv_jmp;
-+static volatile sig_atomic_t idiv_si_code;
+ #endif
+diff --git a/net/eth.c b/net/eth.c
+index 33b61cac414..d5590bb671e 100644
+--- a/net/eth.c
++++ b/net/eth.c
+@@ -615,3 +615,21 @@ bool eth_pad_short_frame(uint8_t *padded_pkt, size_t *padded_buflen,
+ 
+     return true;
+ }
 +
-+static void idiv_sig_handler(int sig, siginfo_t *info, void *puc)
++bool eth_pad_short_frame_iov(uint8_t *padded_pkt, size_t *padded_buflen,
++                             const struct iovec *iov, int iovcnt,
++                             size_t pkt_size)
 +{
-+    (void)sig;
-+    (void)puc;
-+    idiv_si_code = info->si_code;
-+    siglongjmp(idiv_jmp, 1);
-+}
++    assert(padded_buflen && *padded_buflen >= ETH_ZLEN);
 +
-+static int check_idiv_overflow(int width)
-+{
-+    struct sigaction sa, old;
-+    int ret = 1;
-+
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_sigaction = idiv_sig_handler;
-+    sa.sa_flags = SA_SIGINFO | SA_NODEFER;
-+    sigemptyset(&sa.sa_mask);
-+    sigaction(SIGFPE, &sa, &old);
-+
-+    idiv_si_code = 0;
-+    if (sigsetjmp(idiv_jmp, 1) == 0) {
-+        if (width == 16) {
-+            /* DX:AX = 0x8000:0x0000, divisor -1 */
-+            __asm__ volatile ("movl $0x8000, %%edx\n\t"
-+                              "xorl %%eax, %%eax\n\t"
-+                              "movl $-1, %%ecx\n\t"
-+                              "idivw %%cx"
-+                              : : : "eax", "ecx", "edx", "cc");
-+        } else {
-+            /* EDX:EAX = 0x80000000:0x00000000, divisor -1 */
-+            __asm__ volatile ("movl $0x80000000, %%edx\n\t"
-+                              "xorl %%eax, %%eax\n\t"
-+                              "movl $-1, %%ecx\n\t"
-+                              "idivl %%ecx"
-+                              : : : "eax", "ecx", "edx", "cc");
-+        }
-+        printf("FAIL: idiv%d did not raise #DE\n", width);
-+    } else if (idiv_si_code != FPE_INTDIV) {
-+        printf("FAIL: idiv%d raised SIGFPE with si_code %d\n",
-+               width, (int)idiv_si_code);
-+    } else {
-+        ret = 0;
++    if (pkt_size >= ETH_ZLEN) {
++        return false;
 +    }
 +
-+    sigaction(SIGFPE, &old, NULL);
-+    return ret;
-+}
++    /* pad to minimum Ethernet frame length */
++    iov_to_buf(iov, iovcnt, 0, padded_pkt, pkt_size);
++    memset(&padded_pkt[pkt_size], 0, ETH_ZLEN - pkt_size);
++    *padded_buflen = ETH_ZLEN;
 +
-+int main(void)
-+{
-+    int ret = 0;
-+
-+    ret |= check_idiv_overflow(16);
-+    ret |= check_idiv_overflow(32);
-+    return ret;
++    return true;
 +}
+diff --git a/net/net.c b/net/net.c
+index 0a30579ca4a..3f72e8e4f89 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -267,7 +267,8 @@ static void qemu_net_client_setup(NetClientState *nc,
+                                   const char *model,
+                                   const char *name,
+                                   NetClientDestructor *destructor,
+-                                  bool is_datapath)
++                                  bool is_datapath,
++                                  bool do_not_pad)
+ {
+     nc->info = info;
+     nc->model = g_strdup(model);
+@@ -287,6 +288,7 @@ static void qemu_net_client_setup(NetClientState *nc,
+     nc->incoming_queue = qemu_new_net_queue(qemu_deliver_packet_iov, nc);
+     nc->destructor = destructor;
+     nc->is_datapath = is_datapath;
++    nc->do_not_pad = do_not_pad;
+     QTAILQ_INIT(&nc->filters);
+ }
+ 
+@@ -301,7 +303,7 @@ NetClientState *qemu_new_net_client(NetClientInfo *info,
+ 
+     nc = g_malloc0(info->size);
+     qemu_net_client_setup(nc, info, peer, model, name,
+-                          qemu_net_client_destructor, true);
++                          qemu_net_client_destructor, true, true);
+ 
+     return nc;
+ }
+@@ -317,7 +319,7 @@ NetClientState *qemu_new_net_control_client(NetClientInfo *info,
+ 
+     nc = g_malloc0(info->size);
+     qemu_net_client_setup(nc, info, peer, model, name,
+-                          qemu_net_client_destructor, false);
++                          qemu_net_client_destructor, false, true);
+ 
+     return nc;
+ }
+@@ -344,7 +346,7 @@ NICState *qemu_new_nic(NetClientInfo *info,
+ 
+     for (i = 0; i < queues; i++) {
+         qemu_net_client_setup(&nic->ncs[i], info, peers[i], model, name,
+-                              NULL, true);
++                              NULL, true, false);
+         nic->ncs[i].queue_index = i;
+     }
+ 
+@@ -733,6 +735,8 @@ static ssize_t qemu_send_packet_async_with_flags(NetClientState *sender,
+ {
+     NetQueue *queue;
+     int ret;
++    uint8_t min_pkt[ETH_ZLEN];
++    size_t min_pktsz = sizeof(min_pkt);
+ 
+ #ifdef DEBUG_NET
+     printf("qemu_send_packet_async:\n");
+@@ -743,6 +747,13 @@ static ssize_t qemu_send_packet_async_with_flags(NetClientState *sender,
+         return size;
+     }
+ 
++    if (net_peer_needs_padding(sender)) {
++        if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
++            buf = min_pkt;
++            size = min_pktsz;
++        }
++    }
++
+     /* Let filters handle the packet first */
+     ret = filter_receive(sender, NET_FILTER_DIRECTION_TX,
+                          sender, flags, buf, size, sent_cb);
+@@ -897,6 +908,19 @@ ssize_t qemu_sendv_packet_async(NetClientState *sender,
+         return size;
+     }
+ 
++    if (net_peer_needs_padding(sender)) {
++        uint8_t min_pkt[ETH_ZLEN];
++        size_t min_pktsz = sizeof(min_pkt);
++
++        /*
++         * If we pad the packet, we get back a simple buffer, so handle
++         * it by sending it to the non-iov qemu_send_packet function
++         */
++        if (eth_pad_short_frame_iov(min_pkt, &min_pktsz, iov, iovcnt, size)) {
++            return qemu_send_packet_async(sender, min_pkt, min_pktsz, sent_cb);
++        }
++    }
++
+     /* Let filters handle the packet first */
+     ret = filter_receive_iov(sender, NET_FILTER_DIRECTION_TX, sender,
+                              QEMU_NET_PACKET_FLAG_NONE, iov, iovcnt, sent_cb);
 -- 
 2.47.3
 
