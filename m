@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6332A606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECE1606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=XsdJqlai
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=dsouWETz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp6S-0004Y2-86; Fri, 27 Nov 2026 01:06:36 -0500
+	id 1xWp6C-0003GU-0m; Fri, 27 Nov 2026 01:06:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp6E-0003bx-Mf; Fri, 27 Nov 2026 01:06:22 -0500
+ id 1xWp3x-0005mg-70; Fri, 27 Nov 2026 01:04:03 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp6C-00009z-KL; Fri, 27 Nov 2026 01:06:22 -0500
+ id 1xWp3u-0003bS-T3; Fri, 27 Nov 2026 01:04:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759047; bh=c1G/j69cft6IP7fIVp5DDXyk7lUotw8Jb2Q64vVfGeA=;
+ t=1795759041; bh=/QLuDRg3OdUo/JRVq5JXXvkJ8GrqRIvir4TdTLIUqGs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XsdJqlaij1beFxgVmkSr+0k8j7UqsWKxF75nQkhsQWg4Dz+GSLqDGZuILxoxuxKG2
- gik8CDmUH1xtN91rR3Peuqn0uJjpLylb50j8kwV2hcHNzrTqaJ6lAbZUmgltVX/cxj
- dXEzCNUkbelbvFeGf8VZi+r3hieUvojuZQtL7Nhf0VBcyOOH/d6FU/Amq8XUmmMcAT
- fze+uU5ZFwPL9Gk4U49dz/AwgMHNS36G8ccfhWyYasxhViCM85bd/nfTPMYn4XklXc
- J4ltVW/lrBIjGb2YFQh3DalRhMJR52cslt3SLz6KdwJJ+04w6K1ToGqulTJI2ef3KK
- K+P3MP/fXK0KA==
+ b=dsouWETzZFGCIdJDYVF7B9pfm8lRAmmr62pQg/Fm9a2tJb2cUbFGYk2gldMi+DCuP
+ sVzf+VrrnbKUIWo3isTJ2oAgv8HFEVHnZcLf44ARkqR4QheYcQ8JhXfO/tTi2A02Au
+ btBwgpFOIkbvUAitOcaN99uo5hW/KANH7F1bYcrCg2KbyGw/IgOQOp//k7UWGRCvSK
+ KlrdfcXptIdQZlAkdgcsGPDmJH2Koujqng8mYr9IxuWKR39hrT4LiCsZlfl4inyxqr
+ h8DU8R9oUv+WPLnYkbz6Po7oankgPhuKQ1WdoNNJKEYsH3uQXjR/WH1fPeaWzlVGR2
+ ZGo62lkkf+UxA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0DC331EA356;
- Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9FAEA1EA340;
+ Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0B8A8469981;
- Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D95B46996C;
+ Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F0417CF2FA; Fri, 27 Nov 2026 08:57:26 +0300 (MSK)
+ id 79646CF2D0; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 100/152] target/arm: Get HVC UNDEF cases for Secure
- mode right
-Date: Fri, 27 Nov 2026 08:53:58 +0300
-Message-ID: <20261127055709.39630-37-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 079/152] hw/net/net_rx_pkt: Check for overflow in
+ _net_rx_pkt_calc_l4_csum()
+Date: Fri, 27 Nov 2026 08:53:37 +0300
+Message-ID: <20261127055709.39630-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -77,87 +77,51 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In the pre_hvc helper, we have a "bool secure = false" and a FIXME
-comment that we should use the actual Secure state. This is a
-signpost to the fact that we're not getting the UNDEF cases right.
-Specifically, we get most of them correct but are missing the ones
-related to Secure state:
+In _net_rx_pkt_calc_l4_csum() we calculate the number of bytes to run
+the checksum over by subtracting the IP header length from the total
+IP packet size.  This shouldn't underflow if other parts of the code
+have been correctly checking and calculating sizes and offsets, but
+for defence in depth check here, and don't checksum any bytes if we
+would otherwise underflow.
 
- * For A64: HVC must UNDEF at EL1 if EL2 is not enabled in the
-   current Security state
-
- * For v8 A32/T32, HVC must UNDEF in Secure state, if EL2 is not
-   enabled in the current Security state
-
- * For v7, HVC must UNDEF in Secure state
-
-The v7 requirement is identical to the v8 A32/T32 one, since
-there is no Secure EL2 in v7.
-
-This fixes a bug where HVC should have UNDEFed but instead trapped
-when in Secure state with Secure EL2 disabled.  The bug is unlikely
-to affect real-world code, because only test code puts itself in a
-situation where HVC should UNDEF and then executes HVC and requires
-it to UNDEF.
-
-This was noticed by Coverity, because the "if (secure && ...)"
-check was dead code.
-
-CID: 1689834
 Cc: qemu-stable@nongnu.org
-Fixes: 35979d71c401 ("target-arm: A64: Emulate the HVC insn")
+Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20261030092815.573973-1-peter.maydell@linaro.org
-(cherry picked from commit a1c20b516f0aa70914350fdddeb9b45edd5c7522)
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-id: 20261109-eth-v2-14-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit e4236a7e877be37a676680788dbce72a66eb4307)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 422cef2163c..ace95bf7aed 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -1293,8 +1293,6 @@ void HELPER(pre_hvc)(CPUARMState *env)
- {
-     ARMCPU *cpu = env_archcpu(env);
-     int cur_el = arm_current_el(env);
--    /* FIXME: Use actual secure state.  */
--    bool secure = false;
-     bool undef;
- 
-     if (arm_is_psci_call(cpu, EXCP_HVC)) {
-@@ -1304,6 +1302,8 @@ void HELPER(pre_hvc)(CPUARMState *env)
-         return;
-     }
- 
-+    /* Note that we have already UNDEFed HVC from EL0 at translation time */
+diff --git a/hw/net/net_rx_pkt.c b/hw/net/net_rx_pkt.c
+index 03a35f03154..110496e9c81 100644
+--- a/hw/net/net_rx_pkt.c
++++ b/hw/net/net_rx_pkt.c
+@@ -501,8 +501,10 @@ _net_rx_pkt_calc_l4_csum(struct NetRxPkt *pkt)
+             csl = be16_to_cpu(pkt->l4hdr_info.hdr.udp.uh_ulen);
+             trace_net_rx_pkt_l4_csum_calc_ip4_udp();
+         } else {
+-            csl = be16_to_cpu(pkt->ip4hdr_info.ip4_hdr.ip_len) -
+-                  IP_HDR_GET_LEN(&pkt->ip4hdr_info.ip4_hdr);
++            uint16_t iplen = be16_to_cpu(pkt->ip4hdr_info.ip4_hdr.ip_len);
++            uint16_t iphdr_len = IP_HDR_GET_LEN(&pkt->ip4hdr_info.ip4_hdr);
 +
-     if (!arm_feature(env, ARM_FEATURE_EL2)) {
-         /* If EL2 doesn't exist, HVC always UNDEFs */
-         undef = true;
-@@ -1314,12 +1314,19 @@ void HELPER(pre_hvc)(CPUARMState *env)
-         undef = env->cp15.hcr_el2 & HCR_HCD;
-     }
++            csl = (iplen >= iphdr_len) ? (iplen - iphdr_len) : 0;
+             trace_net_rx_pkt_l4_csum_calc_ip4_tcp();
+         }
  
--    /* In ARMv7 and ARMv8/AArch32, HVC is undef in secure state.
--     * For ARMv8/AArch64, HVC is allowed in EL3.
--     * Note that we've already trapped HVC from EL0 at translation
--     * time.
-+    /*
-+     * In ARMv7 and ARMv8/AArch32, HVC is undef in Secure state if
-+     * EL2 is not enabled in the current security state (which is
-+     * always for Secure in v7, as Secure EL2 doesn't exist there).
-+     *
-+     * For ARMv8/AArch64, HVC is undef at EL1 if EL2 is not enabled in
-+     * the current security state.
-+     *
-+     * Because we've already dealt with "EL2 not implemented" above,
-+     * arm_is_el2_enabled() is effectively always true here in NonSecure,
-+     * and we don't need to explicitly also check for secure/non-secure.
-      */
--    if (secure && (!is_a64(env) || cur_el == 1)) {
-+    if (!arm_is_el2_enabled(env) && (!is_a64(env) || cur_el == 1)) {
-         undef = true;
-     }
+@@ -517,9 +519,9 @@ _net_rx_pkt_calc_l4_csum(struct NetRxPkt *pkt)
+             struct ip6_header *ip6hdr = &pkt->ip6hdr_info.ip6_hdr;
+             size_t full_ip6hdr_len = pkt->l4hdr_off - pkt->l3hdr_off;
+             size_t ip6opts_len = full_ip6hdr_len - sizeof(struct ip6_header);
++            uint16_t plen = be16_to_cpu(ip6hdr->ip6_ctlun.ip6_un1.ip6_un1_plen);
+ 
+-            csl = be16_to_cpu(ip6hdr->ip6_ctlun.ip6_un1.ip6_un1_plen) -
+-                  ip6opts_len;
++            csl = (plen >= ip6opts_len) ? (plen - ip6opts_len) : 0;
+             trace_net_rx_pkt_l4_csum_calc_ip6_tcp();
+         }
  
 -- 
 2.47.3
