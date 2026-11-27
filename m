@@ -1,120 +1,141 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C36606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A9B606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KH3drO9R;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ixNRuwCd
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JsgIITFG;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=VMqqCite
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWzLo-0007EF-2k; Fri, 27 Nov 2026 12:03:08 -0500
+	id 1xWzLl-00073E-6v; Fri, 27 Nov 2026 12:03:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1xWzJr-0006OK-H8
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:01:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xWzJM-0006DU-6h
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:00:44 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1xWzJn-0002my-P5
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:01:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795798859;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4U22JztbKCyhSusFsIPF0C3mGRCT4TgGdFAMDFdDZHA=;
- b=KH3drO9R+5aes/1jSwH/nB3U4yUgf4x8TjPxnZ+08HNUBRvno3b/IRtnE1eVCcMtvqmo3q
- jZFyW0m3Jp9+W0g4Qb4mTNrvyao90fetlMRhxAUXUeJLWC3cX1LC/CxsLV4JMe/44I9+lS
- C5qLCwmuEPruExLLzpSQHFViQpMERR0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-j7I_uuhxO42ECtGSKVckrw-1; Fri, 27 Nov 2026 17:00:57 +0000
-X-MC-Unique: j7I_uuhxO42ECtGSKVckrw-1
-X-Mimecast-MFC-AGG-ID: j7I_uuhxO42ECtGSKVckrw_1795798856
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4a359c7f47bso68402855e9.2
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:00:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xWzJF-00026c-32
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:00:34 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ARFpFdH925910
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:00:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=iJ/m9kqJqR0
+ g6z7dcXNQvSzuAJSXZjfn1DxxsqoJ/H4=; b=JsgIITFGkCRFh2PIpyqg6ovfE+r
+ tDPnHxvZ5wNXGI8MW9ndRHQAUbtHbfI2yyNli0u5YPhCbEsUSP7qTHox1nFMPOIq
+ wxt6IBviKDPm9wfbQIVJk/CLhY6M0YH7PXifrUFBNVtVYPV1GhKV1bXGH3OW6GZk
+ TcUzeyeYlJEvbhvWAORA+xtjnwkn9/KGhUcXoh68w5vF5VifB8bArozBZjslff3S
+ 0Aq6WFuBjf+t8Y+ugFVnrYCZh1Ki1x+f9Xx+fSygKVTA3eSBc6O70xkFRk4DasDT
+ zInO6Dc4JQ0KeT5SjuluM/f/huB4jR9DX7W1D2yh/zjwHqs4J1ZjUMvR50w==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6u49bwnh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:00:20 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-8b691cf0eeaso9378662b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:00:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1795798856; x=1796403656; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=4U22JztbKCyhSusFsIPF0C3mGRCT4TgGdFAMDFdDZHA=;
- b=ixNRuwCd5VnF8xbqwA+yj0/8fnVpJKVEq9IKk28yI3pZ1zyX6F2URjgOj4JtZz/TvW
- xcPK1pFsaMVDQxznV0dIPuhsp5RA9OmxVHAWu6uzmh3fQKqg1Ucbjq0OFJLgHyPaIzCQ
- p12XnjBP1LoN6VQ0BFKJf4j3xlR//gn1VlGScfn+FteYbJHMWwgO3zKYqFlI+zea9vqz
- zgzloZThRk6pHGrdlH85OLYP6+isI7twcIdA3pX7BcQho/Ww3LDj1X8aLJfihz3EQOyd
- upLduqdx5jqb14a/Vay/YplkO6IsiH2qKNOoLaQyG53ZRtlC4q9y5DlmqnRVgbqKuZ7m
- ewVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795798856; x=1796403656;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1795798820; x=1796403620; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4U22JztbKCyhSusFsIPF0C3mGRCT4TgGdFAMDFdDZHA=;
- b=GhslnqT7R11wVU1m39zLDkHccY7ZOuBwOh8NgbKwwGQgoqOc5j//2yHqadk9luwyl/
- 5ouPLHbAvNttsB9e5KeGA/T0HdzuH4dpm9YwbMmFyxbrhY58dGVx2b2p3CgeXHkNfH4X
- sG54hfMuar3KtflloOvv46yD0Y6N1MI7dE71IZ7nyZFgmUqR4xPqp5pg6hwZsXGtXRzT
- mO2x8B3nYQ51haCpbRGv9XBLVdZ2VBD46VGKoT8D/jDu5J5MqYNizJOvtxAwB/fHJhkf
- DcfF6qyBRgvLt3rgdgYQN+SFQDQq6QdvB+hmKJa/Kf10Vvw0OcmUArvVDYEoJNgu06VA
- wujQ==
-X-Forwarded-Encrypted: i=1;
- AL+hErErueQ7eMj4RY2gBBliblgLnEv5kWn45VHL0JgRt++twi3iMnjyOUKuu0ohaJlc3iiWlkRZr77IX5Gt@nongnu.org
-X-Gm-Message-State: APuU4Z+QJLxqeVCmgtlMBCK5BrstHqsqBtHJT/5SePDEiNHWgQkc5LHA
- k86ZM80MSu3jdRiI72Y4KiNKUjFluhinTwsSl99CpQJ7pdYrcjlmOrHVDOWY5RHDDveloJ6G0pB
- qgHdTP/TQYdIR5oBjDidsYaidYoZAPcpw/WYv1kiwM8r6X+NorK642El+
-X-Gm-Gg: AZFdTZegwgkLtOQrFHVI6MNK9jW45BPoi89CMbsVXc+uVedi1IJj+LVxJoErLbAMmQU
- Yc2iAEsGy11/0BZLiki2/PEloqaYB26nvf5njZ4z8NCm1EkVk9DUvE8Z1sZgHknsL4kJw77yndr
- QaffF2933GSnxluR+RGocXtXwXPlzvLAr/IW9QEUJ/CKUxkxJFTEXGxKg9RBq31hxpKbLyYx6Hh
- JA2Qb7PGvwSFMwISZlgr1C9kqexsChuyvNs5sv6kHvDjQlG4heWX7o4CGeLQICqLSFYDCq1hXkr
- H6zVfqJ9j57G4Aje9mqFXbkzGQwmHJ641uy7TvlRMEy5H8q98aAWF0DDXkK7B0Ug04mm43Yvi5I
- TSdcX2/gEOZjnwnt0PKuddFVzRrd9I+dIuE2fZs7t6i/5552c9DsNy1anfyuzHuMQwRcvUDvUXU
- dwmuKwfPwOfKhhUSlY
-X-Received: by 2002:a05:600c:45d4:b0:4bb:6994:abf0 with SMTP id
- 5b1f17b1804b1-4bb88817d91mr536744485e9.23.1795798856102; 
- Fri, 27 Nov 2026 09:00:56 -0800 (PST)
-X-Received: by 2002:a05:600c:45d4:b0:4bb:6994:abf0 with SMTP id
- 5b1f17b1804b1-4bb88817d91mr536743905e9.23.1795798855650; 
- Fri, 27 Nov 2026 09:00:55 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:af16:8320:54ea:4bc9?
- ([2a01:e0a:f0e:9070:af16:8320:54ea:4bc9])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4bbab390cf5sm224892895e9.7.2026.11.27.09.00.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Nov 2026 09:00:55 -0800 (PST)
-Message-ID: <64a1ab9c-e43e-43ba-970c-a9f201d82fc3@redhat.com>
-Date: Fri, 27 Nov 2026 18:00:53 +0100
+ bh=iJ/m9kqJqR0g6z7dcXNQvSzuAJSXZjfn1DxxsqoJ/H4=;
+ b=VMqqCiteo98KtLOL43bf490LAJabdPpQEaEcHuN1dlMvO0C/dAIGo5KudAgBBZ4zTA
+ xHZZj/p11JSZpeg4zLazKr/y1fc/9x5bADqJ9dXI6vf1GfEPVHPIyv6cy0VMVmMh6ZU3
+ qZ6XQJ5G+ZYMjn/njYm6cZ4j8se9zzuJCjBrfKixI/di4QVFnRP0t0MXwNfzhr5ZZO+r
+ hg1NiXGiiAm3yxJQINykwtCX8mEQLJPsglDKWE+nYKQ5EroTgUXUJI8iE79mPZ/8mpM7
+ WxmlSc71tPOIDU+4B0a9i80skzVSifIaLPIR8jEVodTnYtFkAgrNaWi88QINbboWxMO4
+ uyvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795798820; x=1796403620;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iJ/m9kqJqR0g6z7dcXNQvSzuAJSXZjfn1DxxsqoJ/H4=;
+ b=pzxGcPEfwcHqu97S9knmL6lzZhKJFDtJJzv1HWZy3t5kRGo3R3Vn/T3oiQpmlG6WSX
+ qb4xPsoWtiP/mTXAH5pztxL+uC/y9CPKNINn4qH0eED5/8A3yA1klC1gtIlSY2tz1E/u
+ 8sNiuSIA9ie19gbS5x4aIR3m4MTrLVOEIPX+T/2dTh9yldZvG4i2qdzYoR653fGudKKa
+ gF0VW/FOrEDPcFZeCP8i8/rWlHfFHLcvuf9kpblExXo3harI2dPfi8t+gKhVQCMeGJpQ
+ WNj/sv6hSgXLDoCv3axriTBk2b/QlcdlGafSZGYf7Gc1bXYKFJYy1CmdnQ7VtBqeY/o9
+ r5pg==
+X-Gm-Message-State: APuU4Z8F79Zr4jAvF2vQSD95j9E4F9EFAIvpzAql7Rgf1+xRqNJf9GdG
+ EIN1GT1ZWxM92Wr7mmycUUjioI96HKkGVSotDu2BMDjRu5Ybtt7SKAFIcbzQdIQhZQQ+ljo/S4I
+ A9MRoxHl1p1QQEHPOo50n5h0xm7mjw61a7EK1kikmGUdy2DjIAUVmdjNyLbKpeY7DtQ==
+X-Gm-Gg: AZFdTZeHWer0HCoFFzM7jcnojyaNbqHGjMehpSWj2QrdtqZJY4K7Jp/9RKO7Ry4I/zl
+ zo7TuXcsNkHJrR5tG+qPxctGhuMLHCSXsCq98YqiDjplz0Gn+sWTYGpwj1uAe65nPlaD34iK2H9
+ 6Hy4iCh16Fgji2m6g5P7b36iTjUA9vjuYc0EOEZ2DBuoB269wwI37L55o/OPLGVOCOsRgm8KhsH
+ U/y+vH/cDb0YFtZFrpYwIhck3W0DDqzwqNz+tE2ZARy/7Iu3sXzoVDf4VM64qIvK5SiD7W+8fJL
+ nsxNwjT03D0Thm5p6Tw7y40sEoDzALh0fbKBAhdB4HvEOgPiHVTLw9Ls92DgDDcB8Ie4c+63L6d
+ ltI4qauKYAPAKQxKKAeF00ovGI/B+cTMtjOpXDYhat9yUFhmw+1FUk3unBbT8ObhOH5TjZtlDjA
+ Vbbl4JB6veSnsVgJEimXx1MPeR9pMS2btIig60
+X-Received: by 2002:a05:6a20:748e:b0:3d3:aec2:4dcd with SMTP id
+ adf61e73a8af0-4014c251613mr28385822637.25.1795798819646; 
+ Fri, 27 Nov 2026 09:00:19 -0800 (PST)
+X-Received: by 2002:a05:6a20:748e:b0:3d3:aec2:4dcd with SMTP id
+ adf61e73a8af0-4014c251613mr28385787637.25.1795798819231; 
+ Fri, 27 Nov 2026 09:00:19 -0800 (PST)
+Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8c87077a058sm13014650b3a.8.2026.11.27.09.00.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Nov 2026 09:00:18 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 2/3] contrib/plugins/uftrace_symbols.py: ignore warning
+ reported by llvm-addr2line
+Date: Fri, 27 Nov 2026 16:59:52 +0000
+Message-ID: <20261127165953.51257-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261127165953.51257-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261127165953.51257-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-12.0 v2 7/9] arm/machine: Convert cpu_post_load() to
- take Error**
-To: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Juraj Marcin <jmarcin@redhat.com>, Gavin Shan <gshan@redhat.com>,
- Eric Auger <eric.auger@redhat.com>
-References: <20261126231631.3392756-1-peterx@redhat.com>
- <20261126231631.3392756-8-peterx@redhat.com> <87se0mquhh.fsf@suse.de>
- <awmR_TMQd9c8gxhd@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <CAFEAcA-d2Das=U+da6W2j2RPR48zf4yxO2k8-SCdwDPMvF_C4w@mail.gmail.com>
-Content-Language: en-US
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <CAFEAcA-d2Das=U+da6W2j2RPR48zf4yxO2k8-SCdwDPMvF_C4w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: AD4kdRXHnSxtPEwjBtjZ_VQEkEjTNYsk
+X-Proofpoint-ORIG-GUID: AD4kdRXHnSxtPEwjBtjZ_VQEkEjTNYsk
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA2NyBTYWx0ZWRfX1GA3OMuB4Grt
+ PDJDyHsrYdqzQqSXhz5CN3GTU35dmNirZdw1K5IScZG2uYAvH6bMOeODOvpsJlHum256qWDpBNt
+ Ribml42h2lAlWpz1nIKN1SI8ZwZb/Io=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA2NyBTYWx0ZWRfX+9nxo0wbnlT7
+ sTPllEDsKubZq1aeKx2Li61j5mPDOvl6ktxqOsvcce3fRwkpbMU8rtEKhoWAh0a3LRWbejZIHRU
+ aE8oXLrYEVEE0jNb7WWfzoBE4sDlqmKBjPhDUxEHFZAMehyRqVJKjBzmcMaSZNDM6vbFdOML55d
+ g6vQr84usUk5KNt5Wu0p7/q2iiUYTLGCwqSAYV8wgLnqnxjjMGozybDqMMuBBSD0zAnbbMZr3ME
+ mU1jJpoiOPq2N0aNeLyywpQydmE2GsBUgmWVDLSObiw1TG1M+CDKC3O9TQYhUQEX9su0YoYgB59
+ vQvHRet/pKV+v6myDP4yfL/M1tkdQRaQGlhZLD/rzlyZ27xqNnz3n5vMjAgy3uzj7G75SLC2T8/
+ bF6WHaKdoVW857Wr5PxQRXeeqXRDLAJSkxaFVfA1pM4cmUrqsoROACh/qiET8TPIO0kj8PqMOG+
+ mdLuJD/vinDfYsEgD3Q==
+X-Authority-Analysis: v=2.4 cv=A875rKWG c=1 sm=1 tr=0 ts=6b09b724 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=4uSdFgqm0Hs0aUViYFAA:9 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-27_03,2026-11-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270067
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,53 +147,41 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi!
+When trying to trace a riscv64 stack, addr2line reported warning on
+stdout when symbolizing addresses:
+warning: address range table at offset 0x8a0 has a premature terminator entry at offset 0x9c0
+warning: address range table at offset 0x1700 has a premature terminator entry at offset 0x1750
 
-On 11/27/26 3:44 PM, Peter Maydell wrote:
-> On Fri, 27 Nov 2026 at 14:23, Peter Xu <peterx@redhat.com> wrote:
->>
->> On Fri, Nov 27, 2026 at 10:22:50AM -0300, Fabiano Rosas wrote:
->>> Peter Xu <peterx@redhat.com> writes:
->>>
->>>> Convert it to post_load_errp() version, so as to be able to report verbose
->>>> errors when hit.
->>>>
->>>> A few things to mention:
->>>>
->>>> - The old "fail" count won't work with Error**, switch to fail and return
->>>>   immediately, assuming we should stop migration immediately hitting the
->>>>   1st error.
->>>>
->>>
->>> You could keep the handle_cpreg* untouched and just create a new generic
->>> Error when fail > 0 like you did for !kvm_arm_cpu_post_load() and
->>> !write_list_to_cpustate(), no? That way we don't lose the reporting of
->>> the other bugged registers.
->>
->> I can, but I thought it was good cleaning up those error_report()s.  I'll
->> see if PeterM has any preference on that.
-> 
-> This is largely Eric's code (cc'd).
+Ignore any warning, similar to the error we ignored previously.
 
-Thanks Peter for looping me in.
+Link: https://lore.kernel.org/qemu-devel/20261118021020.1253822-1-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ contrib/plugins/uftrace_symbols.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Yeah. About the history,  "the fail =" pattern  was pre-existing and I kept it in 
-dbfed8d80837 ("target/arm/machine: Fix detection of unknown incoming cpregs")
-
-Then as Fabiano reported I intended to collect all failures and not stop on the first one. It would be nice to keep that I think because it helps in the failure diagnosis. 
-
-Thanks
-
-Eric
-
-> 
-> -- PMM
+diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+index 9f0095e73b9..2b931c49a83 100755
+--- a/contrib/plugins/uftrace_symbols.py
++++ b/contrib/plugins/uftrace_symbols.py
+@@ -63,7 +63,8 @@ def find_symbols_locations(elf_file, symbols):
+     out = out.strip().split('\n')
+     # filter out some addr2line error messages
+     skip_err='addr2line: DWARF error: mangled line number section (bad file number)'
+-    out = [src for src in out if src != skip_err]
++    out = [src for src in out
++           if src != skip_err and not src.startswith('warning:')]
+     assert len(out) == len(symbols)
+     for i in range(len(symbols)):
+         s = symbols[i]
+-- 
+2.43.0
 
 
