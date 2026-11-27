@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918B2606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0068606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=JU08AEvi
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=MIEOFQd/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp5e-0008Hc-E4; Fri, 27 Nov 2026 01:05:46 -0500
+	id 1xWp8D-0006li-CX; Fri, 27 Nov 2026 01:08:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2y-0004YO-Ix; Fri, 27 Nov 2026 01:03:04 -0500
+ id 1xWp7H-00068D-68; Fri, 27 Nov 2026 01:07:30 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2t-0003SU-PA; Fri, 27 Nov 2026 01:02:58 -0500
+ id 1xWp7F-0004SB-6N; Fri, 27 Nov 2026 01:07:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759041; bh=/EaT6+YM3iccIKgDxmujarIetZhaGJMmlNfxvd4T7+c=;
+ t=1795759048; bh=a2ckOXfPPiN5nUU/k7aJk0gUws1gG56TCRzGI47Wdfg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JU08AEvihDUziIKfkMjZI9jzkysuvZFC+RKhe9P1DqTE19PCsZv05gZ7ts8UKMVF+
- 704AqQwK11BayhniIjAoE1pxqWiPzgHn8FakcS45vrlD7wHwWxE6vaemy8nF9Af9as
- +WDfYV79wfuc8vzUWhNw4ETgcKAboEimJC5hsnKcjNoH2EIamvi3XP2Hsx7evBM9aC
- JXBW1lqwswyXMUvmirGtHouSHTN28GmzvSz2kG1ylSSGtlg5Cmu1TLK2X0aOlU484r
- amS9XsLL06sd1IHpoczE1gv5MfrcwFoW7sAxHxJ2k4HpgmTxu5uU9OX1rZ6h0fe/bH
- ec0AZZtsozWRA==
+ b=MIEOFQd/M1en6QRgIza67LB+HxmD1ZMfsHsVn6Qd3DzmQH04VrlH7x1NyptLtHBCe
+ vig7Kk/dmjzooNSJ7p8ImrWRFMrfqEts3fp5ytbU2d9huG1d55aN34PoWKXUz35RHe
+ tuCJVEjWh3lSo6uU45ub1vSzRQKXTb9XG/+kyaM+rhulGFyTmzeP7JIFTHr9Nxa29Q
+ 0XqyOtYtg4XS5u46OOidwLGfO1V3DI05LG183/ICSMfyV0fd66OQ9twFrHXDMpIEU5
+ 49Xu7vC3Gqac6Q3DYj2Le6WGy2BAMkFVN4TPLYwc+Z9v5QsT/+A8NENqtveyvvWjKA
+ yjZei29jFLbrg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6BCBE1EA335;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0E5601EA363;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 69CBA469961;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0C03246998E;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 59522CF2BA; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ id EE1F4CF314; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 068/152] net/eth.c: Check for undersized IPv4
- headers in eth_get_protocols()
-Date: Fri, 27 Nov 2026 08:53:26 +0300
-Message-ID: <20261127055709.39630-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Dongli Zhang <dongli.zhang@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 113/152] target/i386/kvm: set VM ioctl
+ KVM_SET_TSC_KHZ to maintain TSC synchronization
+Date: Fri, 27 Nov 2026 08:54:11 +0300
+Message-ID: <20261127055709.39630-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -75,45 +74,92 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-In the IPv6 path of eth_get_protocols(), eth_parse_ipv6_hdr() does
-various sanity checks on the packet's IPv6 header, so we won't tell
-the caller we have an IPv6 header when we have a malformed one.
-However for IPv4 we only check the version and that we have at least
-the minimum header size.
+When the guest and host use different TSC frequencies - specifically when
+"tsc-frequency" is configured - the guest TSC becomes unsynchronized after
+additional vCPUs are added.
 
-Harden this codepath by checking also that the header size declared
-in the packet's own headers is neither smaller than the minimum nor
-larger than the actual packet size.
+Suppose the host TSC frequency is 2596.102 MHz. Here are steps to
+reproduce:
 
-Missing these checks shouldn't cause problems if the caller is
-validating all offsets and lengths before use, but checking here
-too is defence-in-depth, hence the cc to stable.
+Create the QEMU instance with a different TSC frequency 2596.100 MHz.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 69ff5ef847457555 ("net/eth: Report if headers are actually present")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261109-eth-v2-3-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 987f5bc647a204493fa658d057e01a4bc184d361)
+-cpu host,tsc-frequency=2596100000 \
+-smp 2,maxcpus=8 \
+
+After the guest VM has booted, add two additional vCPUs.
+
+(qemu) device_add host-x86_64-cpu,id=core2,socket-id=0,core-id=2,thread-id=0
+(qemu) device_add host-x86_64-cpu,id=core3,socket-id=0,core-id=3,thread-id=0
+
+The guest TSC becomes unsynchronized. The vCPUs end up with different TSC
+offsets.
+
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu0/tsc-offset
+-345550695701016
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu1/tsc-offset
+-345550695701016
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu2/tsc-offset
+-345700146347894
+host# cat /sys/kernel/debug/kvm/167789-11/vcpu3/tsc-offset
+-345700945993728
+
+This issue occurs because KVM synchronizes the guest TSC twice for each
+newly added vCPU. In other words, kvm_synchronize_tsc() is invoked twice
+per vCPU by KVM.
+
+During the first synchronization, kvm->arch.default_tsc_khz is used. During
+the second synchronization, the TSC frequency configured by QEMU is used.
+Because different TSC frequencies are used during these two synchronization
+steps, the guest TSC becomes unsynchronized in KVM.
+
+Linux kernel commit ffbb61d09fc5 ("KVM: x86: Accept KVM_[GS]ET_TSC_KHZ as
+a VM ioctl.") introduced support in KVM to help mitigate this issue. QEMU
+should add corresponding support to address the problem on its side.
+
+Always issue the VM ioctl KVM_SET_TSC_KHZ before creating any vCPUs, so
+that the default TSC frequency is set correctly for all subsequently
+created vCPUs.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Link: https://lore.kernel.org/r/20260210202041.153736-1-dongli.zhang@oracle.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit b8619010fc9c01b0ea8505748322d3c40b3d8ae2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/net/eth.c b/net/eth.c
-index 59b278b887c..038f7d889c3 100644
---- a/net/eth.c
-+++ b/net/eth.c
-@@ -163,6 +163,8 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 0f69987bc26..6c852299718 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2062,6 +2062,9 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+     int ret;
  
-         copied = iov_to_buf(iov, iovcnt, *l3hdr_off, iphdr, sizeof(*iphdr));
-         if (copied < sizeof(*iphdr) ||
-+            IP_HDR_GET_LEN(iphdr) < sizeof(*iphdr) ||
-+            input_size - *l3hdr_off < IP_HDR_GET_LEN(iphdr) ||
-             IP_HEADER_VERSION(iphdr) != IP_HEADER_VERSION_4) {
-             return;
+     if (first) {
++        X86CPU *x86cpu = X86_CPU(cpu);
++        CPUX86State *env = &x86cpu->env;
++
+         first = false;
+ 
+         /*
+@@ -2083,6 +2086,17 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+                 return ret;
+             }
          }
++
++        if (!is_tdx_vm() && env->tsc_khz &&
++            kvm_check_extension(kvm_state, KVM_CAP_VM_TSC_CONTROL)) {
++            ret = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
++            if (ret < 0) {
++                error_setg_errno(errp, -ret,
++                           "Unable to set TSC frequency to %"PRId64" kHz",
++                           env->tsc_khz);
++                return ret;
++            }
++        }
+     }
+ 
+     if (is_tdx_vm()) {
 -- 
 2.47.3
 
