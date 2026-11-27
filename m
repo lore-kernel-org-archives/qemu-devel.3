@@ -1,56 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C595606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF1F606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=l5Q2jfZv
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=qRgaM2S3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp6Q-0004Qv-Kh; Fri, 27 Nov 2026 01:06:34 -0500
+	id 1xWp6o-00054F-6l; Fri, 27 Nov 2026 01:06:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp5r-00018C-3R; Fri, 27 Nov 2026 01:05:59 -0500
+ id 1xWp6K-00045c-5Z; Fri, 27 Nov 2026 01:06:28 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp5p-0008NH-9Z; Fri, 27 Nov 2026 01:05:58 -0500
+ id 1xWp6I-0001sE-AM; Fri, 27 Nov 2026 01:06:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759047; bh=h0pw39nGnAkdRQxWy4kRWNwEhwgVE94Xcbv/vbB8ly4=;
+ t=1795759047; bh=7XOnEIzdiqCNq87ksb2GZTmqOSiOxuorB8tMqsLt5O0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=l5Q2jfZvs3zrmf+wTcgO20WTj79KS9RPR+uWNEAFbBhh+cF3fKRyVEFbT3XLSHV7E
- yFYtMw/jvBE7ofz8iNArJ/b7XvqVdB23NA9SIQ1zHnP71zU9pqIG6e8SY+lp271QaC
- FAKga+Q7rswYZwrGfH/xSKipxO2Fto/9317/CeiJMyj6LzL0KB0zSy65qU1E54LATB
- cN3M8NPRYTR/pY1FzlrwfqweDKULy6nnTF/t346D++HaJsVYMH26SshWx3MtSmEJgY
- U+TSUpuOZRqjNYsR5HStCf24YbkDkWRKVCHzH4ixpa8h+5OysRioFaT1aUx93ZXXxP
- OEaUdLKpLBXTA==
+ b=qRgaM2S31SyRv9FdMNtCAtlrOC2bownw1ASVmZ89qIZY5n0VyEjeI7ykX3g6fOv7X
+ egbZLmAsDclMI8OYrPzhRjsT0S3YlELcD2qAztN0gCfQpWCkqnBVSjwQfSA5phM2pq
+ VvjLyav7ODHjrLXujYxu4hLSTie3buy7Lry2jZ/vidDMCgZ/bhq37/R8UqzsTO2YKl
+ zYc/r69tAJVCzXDuy19C6Abh4+plCD/AMo1Mq/mZvMvfKNFGR/9s5mEmByYPRw4JW2
+ IcYHUGfkfRUOdotkW5oZtNBKV+883OG91YnD3jJpCszHjSFphi1G62g5/vr/iMqSy6
+ ggj2peZwBLODg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 051DC1EA354;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C3451EA359;
  Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0232E46997F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 19F09469984;
  Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EA4EBCF2F6; Fri, 27 Nov 2026 08:57:26 +0300 (MSK)
+ id 04CDCCF300; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peng Fan <peng.fan@nxp.com>,
- Julian Vetter <julian.vetter@vates.tech>,
- Stefano Stabellini <sstabellini@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 098/152] hw/xen: Mark legacy Xen backends as
- hotpluggable
-Date: Fri, 27 Nov 2026 08:53:56 +0300
-Message-ID: <20261127055709.39630-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 103/152] target/arm: Fix barrier polarity of A32
+ LDA load-acquire
+Date: Fri, 27 Nov 2026 08:54:01 +0300
+Message-ID: <20261127055709.39630-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -78,52 +74,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peng Fan <peng.fan@nxp.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Commit 250e797ceada ("hw/xen: Have legacy Xen backend inherit from
-DYNAMIC_SYS_BUS_DEVICE") changed TYPE_XENBACKEND to inherit from
-TYPE_DYNAMIC_SYS_BUS_DEVICE, whose class sets hotpluggable = false.
+The A32 and T32 load-acquire instructions LDA, LDAB and LDAH must be
+ordered before the memory accesses that follow them, so their
+translator has to emit a trailing barrier.  op_lda() emits that barrier
+with TCG_BAR_STRL instead of TCG_BAR_LDAQ, inverting the polarity:
+TCG_BAR_STRL annotates a leading barrier ("previous ops will not be
+delayed") and TCG_BAR_LDAQ a trailing one ("following ops will not come
+forward"), as documented in include/tcg/tcg-mo.h.
 
-Legacy Xen backends are created from xenstore at runtime, after the
-machine is ready, so device_initfn() marks them as hotplugged. The new
-class setting makes device_set_realized() reject them with:
+The x86 and aarch64 backends only look at the TCG_MO_* bits, which the
+wrong annotation does not affect, so the generated host code is
+unchanged on those hosts.  The annotation is still wrong: it violates
+the TCG barrier contract, it lets the optimizer's barrier merging in
+fold_mb() combine the barriers of an "LDA; STL" pair into a weaker one
+than the correctly annotated form (STRL|STRL stays STRL instead of
+LDAQ|STRL = SC), and it diverges from every other load-acquire
+translation in the target, which all use TCG_BAR_LDAQ.
 
-  Device 'xen-backend' does not support hotplugging
-
-Since xen_be_get_xendev() realizes the device with &error_fatal, QEMU
-then exits. For example, "xl usbdev-attach" triggers this when the qusb
-backend is created dynamically, killing the guest. The same flag also
-causes qdev_unplug() to ignore these devices.
-
-Override hotpluggable in xendev_class_init() to restore the behavior
-before the offending commit.
+Fix the polarity.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 250e797ceada ("hw/xen: Have legacy Xen backend inherit from DYNAMIC_SYS_BUS_DEVICE")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Julian Vetter <julian.vetter@vates.tech>
-Acked-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-ID: <20261116-qemu-xen-usb-v1-1-bff36d5b646b@nxp.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 8c40d4495d19c2d2d5a97a432d9fb18e23cc8f66)
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 5c33a72bdebe622200b5d81884e1a85090df6abc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 7977b527127..bf4396c9460 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -640,6 +640,13 @@ static void xendev_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 12b9798946b..8ebfc6ceac6 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -4440,7 +4440,7 @@ static bool op_lda(DisasContext *s, arg_LDA *a, MemOp mop)
+     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel);
  
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    /*
-+     * Legacy Xen backends are created and destroyed dynamically from
-+     * xenstore at runtime, after the machine has been initialized.
-+     * TYPE_DYNAMIC_SYS_BUS_DEVICE marks devices as not hotpluggable,
-+     * so override that here.
-+     */
-+    dc->hotpluggable = true;
-     dc->bus_type = TYPE_XENSYSBUS;
+     store_reg(s, a->rt, tmp);
+-    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
+     return true;
  }
  
 -- 
