@@ -1,59 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542F2606A321
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C36606A327
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.a=rsa-sha256 header.s=rs20250326 header.b=QkrOjwcJ
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ce/K8cwk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWpMS-0007n2-4U; Fri, 27 Nov 2026 01:23:08 -0500
+	id 1xWp9E-0003dx-Qc; Fri, 27 Nov 2026 01:09:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xWpMG-0007IF-Mj
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 01:22:57 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xWp8H-00077d-Rp; Fri, 27 Nov 2026 01:08:31 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xWpMD-00034V-Hg
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 01:22:56 -0500
-Received: from [157.82.201.75] ([157.82.201.75]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6AR6MomF002790
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 27 Nov 2026 15:22:50 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=rHAwE4ADfCjApA8fZJkQLukDToXTf4Gw+z1fsudftpQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1795760570; v=1;
- b=QkrOjwcJxgC1sm2r7PPyA2kW//SdMlkVq082tfPUb7n90l2O6h3pM3BBjyZWAMoc
- wYAHD7X412dhm9vxkK1e8fg7Tw4bNXNpOzTC3JQueChbhf1MSMdhwvR45fEeBJAR
- et3DHnu1K+Xh/YIreZlnwI+TvRJ8r+Uu5vucdcavcvqF+JoGTBCuLvwVJse7bXrn
- dBlPxK3EHtn/2iJy29rwfqXgbleN9wRyycYyMMFFaStj47RQZ+th3ggGY19FkPOV
- 68Dqx2gH3ax7GzRKxhJHYZ+wv0TOmvNxdQKOCtkiyKgxEGFDKFQv2wygb+lsOmsU
- 7QY/KTpFYaWY4kX9kUVW7w==
-Message-ID: <b6d7c99c-eb8b-480d-806d-e8051b3e44c1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 27 Nov 2026 15:22:50 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xWp8E-0008Nk-Pm; Fri, 27 Nov 2026 01:08:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1795759048; bh=frGjnXE5JQHay74XKU8NgRMJ1W0cJlPXyib8oqH4hgA=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=ce/K8cwk6PVu8uyRR4/yBBtw3isdnjA7mT1Qxr0GwWseHUfWAnYpmDMvjGr0GogaL
+ rt+02WhV9v+ZsJE2fGeWt6cCE7+T51d3NIX1Xxr/3EYbKhoeApj1emJGwwePbgLbtt
+ e716hQPOUd5rvmyJyTbbLHPdaQhbz3GVkzsT4k+AXnHBqk74bsBopzeWEpEnM8GB8P
+ giF5x47dSe5BPqoyM73ug278ocychxtVVI+OVdf+Tlc+8DkftzQpirDJgqwbGSrQAw
+ E2Rt3G7L8HHu8h+x07h2OaC8rSFQJW9rgWBETZc/khsz3AeauZMSo46urXiWPSDuGS
+ 3/xM9A/kpt9OQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3766B1EA36C;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 353E1469997;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 149D4CF326; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Nikolay Kuratov <kniv@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>, Michael S. Tsirkin <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 122/152] qapi/monitor: Handle missing vhost-user
+ protocol features
+Date: Fri, 27 Nov 2026 08:54:20 +0300
+Message-ID: <20261127055709.39630-59-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] hw/display/vhost-user-gpu: don't set an fd handler
- without a socket
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Dmitry R <rdmitry@taktcycles.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20261124-issue-4848-v4-0-24993c4766fc@redhat.com>
- <20261124-issue-4848-v4-3-24993c4766fc@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20261124-issue-4848-v4-3-24993c4766fc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -71,59 +70,81 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026/11/24 21:47, Marc-André Lureau wrote:
-> A GL display client that stays attached across a device stop can unblock
-> the console after vhost_gpu_fd has been reset to -1: the UpdateDMABUF
-> reply or the one-second gl unblock timer reach
-> vhost_user_gpu_gl_flushed(), which installs the display socket handler
-> on fd -1. With the io_uring fd monitor, the failed poll of fd -1 is
-> reported as readiness, so the handler runs and is re-armed forever.
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-console_hw_gl_unblock_timer() only logs a warning. I guess you meant the 
-timeout specific to D-Bus instead of the timer in the common code, since 
-the timeout actually leads to qemu_console_hw_gl_block(..., false).
+Commit f9a8f5812607 moved protocol_features to the vhost-user backend.
+As a result, VhostStatus.protocol_features is only populated for
+vhost-user devices.
 
-The fix itself looks good to me.
+For an active kernel vhost device, HMP info virtio-status and QMP
+x-query-virtio-status crashes now because of unset protocol-features.
 
-Regards,
-Akihiko Odaki
+Make protocol-features optional in VhostStatus and skip dumping a
+missing object in HMP.
 
-> 
-> Only set the handler when the device has a display socket.
-> 
-> Fixes: 3cddb8b9e0b5 ("display/ui: add a callback to indicate GL state is flushed")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4847
-> Reported-by: Dmitry R <rdmitry@taktcycles.com>
-> Tested-by: Dmitry R <rdmitry@taktcycles.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/display/vhost-user-gpu.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-> index 32e7d9638f68..61a15dd916f8 100644
-> --- a/hw/display/vhost-user-gpu.c
-> +++ b/hw/display/vhost-user-gpu.c
-> @@ -448,6 +448,11 @@ end:
->   static void
->   vhost_user_gpu_update_blocked(VhostUserGPU *g, bool blocked)
->   {
-> +    /* the display socket doesn't exist before DRIVER_OK */
-> +    if (g->vhost_gpu_fd == -1) {
-> +        return;
-> +    }
-> +
->       qemu_set_fd_handler(g->vhost_gpu_fd,
->                           blocked ? NULL : vhost_user_gpu_chr_read, NULL, g);
->   }
-> 
+This is a compatibility break.  Okay, since VhostStatus is only used
+by x-query-virtio-status, which is unstable.
+
+Fixes: f9a8f5812607 ("vhost: move protocol_features to vhost_user")
+Co-authored-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260922213210.1429435-4-vsementsov@yandex-team.ru>
+(cherry picked from commit 8e4906087e874d94a31774bbce8ba35157db6d46)
+(Mjt: back-port across v11.1.0-816-gf3900cfb0cdd
+ "monitor: tighten monitor_printf*()")
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
+index a91bb7dbeda..c4adb6eb7bb 100644
+--- a/hw/virtio/virtio-hmp-cmds.c
++++ b/hw/virtio/virtio-hmp-cmds.c
+@@ -176,8 +176,10 @@ void hmp_virtio_status(Monitor *mon, const QDict *qdict)
+         hmp_virtio_dump_features(mon, s->vhost_dev->features);
+         monitor_printf(mon, "    Acked features:\n");
+         hmp_virtio_dump_features(mon, s->vhost_dev->acked_features);
+-        monitor_printf(mon, "    Protocol features:\n");
+-        hmp_virtio_dump_protocols(mon, s->vhost_dev->protocol_features);
++        if (s->vhost_dev->protocol_features) {
++            monitor_printf(mon, "    Protocol features:\n");
++            hmp_virtio_dump_protocols(mon, s->vhost_dev->protocol_features);
++        }
+     }
+ 
+     qapi_free_VirtioStatus(s);
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 1fc4e38a44d..f8e699a0e4e 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -85,7 +85,8 @@
+ #
+ # @acked-features: vhost_dev acked_features
+ #
+-# @protocol-features: vhost_dev protocol_features
++# @protocol-features: vhost-user protocol features.  Present only for
++#     vhost-user devices.
+ #
+ # @max-queues: vhost_dev max_queues
+ #
+@@ -104,7 +105,7 @@
+             'vq-index': 'int',
+             'features': 'VirtioDeviceFeatures',
+             'acked-features': 'VirtioDeviceFeatures',
+-            'protocol-features': 'VhostDeviceProtocols',
++            '*protocol-features': 'VhostDeviceProtocols',
+             'max-queues': 'uint64',
+             'backend-cap': 'uint64',
+             'log-enabled': 'bool',
+-- 
+2.47.3
 
 
