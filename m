@@ -1,65 +1,65 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F662606A324
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 08:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C31C606A336
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 08:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cf+1+7C9
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=K554ngff
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWrEA-0005YY-Sa; Fri, 27 Nov 2026 03:22:43 -0500
+	id 1xWrEA-0005YQ-Mq; Fri, 27 Nov 2026 03:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWrE7-0005X0-EM
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 03:22:39 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWrE8-0005XI-PL
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 03:22:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWrE6-0004Th-1N
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 03:22:39 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xWrE7-0004UG-0d
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 03:22:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1795767756;
+ s=mimecast20190719; t=1795767758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xbJhqupbYtc0B6G5OeRWpJyA0aXTE49uXc5itHzBvIY=;
- b=cf+1+7C9EswbuO1nvwEcj6hpMhFD8moWMqgG6ZQK7Zei9T/iDuL2c2F/ow2EnNGSOuLzf+
- XqnEXz+nDE+BxGZdH7U084Xhu7cOuQLux4iuVeE+dnDeQV09MWc5Z15L6Svg0aIyMYA1Kf
- Kk0uFRhF3dBlXdlFTc5qjjYlTw7vIkI=
+ bh=gErRrJlp0rTY8ZmiuzGidM0jcDpG4fMxD39hB5y/Ef0=;
+ b=K554ngffVIEDsotPCOlJirXLXAgr1UQpFO63K8OeVzngtENoxOsoxpul5Q6rJCxcSFqnNn
+ iLhAKR7V+KZ4aVg3Ykdlg84twYTfvml2/raQXeUwLC1UpKrhCk2UrRAem47s6XBxmYH2tJ
+ B5CJi/xdZr6iWuaMiDQBLE+x+KFagpg=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-G_YjrKR-PGOsc2kwEMTNog-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-RKTs7QpON7mt-LK3khdUqQ-1; Fri,
  27 Nov 2026 08:22:33 +0000
-X-MC-Unique: G_YjrKR-PGOsc2kwEMTNog-1
-X-Mimecast-MFC-AGG-ID: G_YjrKR-PGOsc2kwEMTNog_1795767751
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: RKTs7QpON7mt-LK3khdUqQ-1
+X-Mimecast-MFC-AGG-ID: RKTs7QpON7mt-LK3khdUqQ_1795767751
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B86081955E97; Fri, 27 Nov 2026 08:22:31 +0000 (UTC)
+ id 985E21956064; Fri, 27 Nov 2026 08:22:31 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A28C1956042; Fri, 27 Nov 2026 08:22:31 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EAB0180197D; Fri, 27 Nov 2026 08:22:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A4B6E21E692D; Fri, 27 Nov 2026 09:22:28 +0100 (CET)
+ id AD20721E6882; Fri, 27 Nov 2026 09:22:28 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 1/4] tests/qmp-cmd-test: Simplify @qapi-type test
-Date: Fri, 27 Nov 2026 09:22:25 +0100
-Message-ID: <20261127082228.3907768-2-armbru@redhat.com>
+Cc: richard.henderson@linaro.org, Peter Krempa <pkrempa@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: [PULL 3/4] file-posix: Fix loss of QAPI feature
+ 'dynamic-auto-read-only'
+Date: Fri, 27 Nov 2026 09:22:27 +0100
+Message-ID: <20261127082228.3907768-4-armbru@redhat.com>
 In-Reply-To: <20261127082228.3907768-1-armbru@redhat.com>
 References: <20261127082228.3907768-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -88,35 +88,56 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-test_qapi_type() checks that if @qapi-type is present, it resolves in
-output of query-qmp-schema.  Absent @qapi-type is reported with
-g_test_message except for child and link properties.
+Recent commit 691094b7091b added a variant member to BlockdevOptions
+branch 'host-device' by changing the branch type to new struct type
+BlockdevOptionsHostDevice that has the old branch type
+BlockdevOptionsFile as base.  This is a perfectly reasonable thing to
+do.  However, since a type only inherits its base's members, and not
+its features or conditions, this lost BlockdevOptionsFile's feature
+'dynamic-auto-read-only'.
 
-The exception became useless when we implemented @qapi-type for child
-and link properties.  Drop it.
+Considering we are in deep freeze, fix the regression the stupidest
+and safest way possible: copy the feature from BlockdevOptionsFile to
+BlockdevOptionsHostDevice.
 
-Fixes: 6955264d5821 ("qom: Convert child and link properties to QAPI-aware registration")
+Reported-by: Peter Krempa <pkrempa@redhat.com>
+Fixes: 691094b7091b ("file-posix: Add 'accept-read-only-device' option")
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20261117103629.2612744-1-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20261124152218.2562390-1-armbru@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- tests/qtest/qmp-cmd-test.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ qapi/block-core.json | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
-index acb7b0dd6a9..5138582bb3f 100644
---- a/tests/qtest/qmp-cmd-test.c
-+++ b/tests/qtest/qmp-cmd-test.c
-@@ -384,8 +384,7 @@ static void test_qapi_type(void)
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 23c5787d99b..7aa4fa2df93 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3403,11 +3403,23 @@
+ #     writable.  If it is true, this check is skipped.  (since: 11.2,
+ #     default: false)
+ #
++# Features:
++#
++# @dynamic-auto-read-only: If present, enabled auto-read-only means
++#     that the driver will open the image read-only at first,
++#     dynamically reopen the image file read-write when the first
++#     writer is attached to the node and reopen read-only when the
++#     last writer is detached.  This allows giving QEMU write
++#     permissions only on demand when an operation actually needs
++#     write access.
++#
+ # Since: 11.2
+ ##
+ { 'struct': 'BlockdevOptionsHostDevice',
+   'base': 'BlockdevOptionsFile',
+-  'data': { '*accept-read-only-device': 'bool' } }
++  'data': { '*accept-read-only-device': 'bool' },
++  'features': [ { 'name': 'dynamic-auto-read-only',
++                  'if': 'CONFIG_POSIX' } ] }
  
-             if (qapi_type) {
-                 g_assert_nonnull(qmp_schema_lookup(&schema, qapi_type));
--            } else if (!g_str_has_prefix(ty, "child<") &&
--                       !g_str_has_prefix(ty, "link<")) {
-+            } else {
-                 g_test_message("%s.%s %s has no associated qapi-type",
-                                name, propname, ty);
-             }
+ ##
+ # @BlockdevOptionsNull:
 -- 
 2.55.0
 
