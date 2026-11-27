@@ -1,53 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2489606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16184606A321
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=KiT27DmF
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=SfFHE978
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp96-0002Tz-5h; Fri, 27 Nov 2026 01:09:20 -0500
+	id 1xWpDN-0003JQ-80; Fri, 27 Nov 2026 01:13:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8m-00006C-0J; Fri, 27 Nov 2026 01:09:00 -0500
+ id 1xWpB0-0007RY-7y; Fri, 27 Nov 2026 01:11:20 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8j-0001oq-PF; Fri, 27 Nov 2026 01:08:59 -0500
+ id 1xWpAx-0002DT-CC; Fri, 27 Nov 2026 01:11:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=KnOJnLy9SNFeLjJPSdFW0RUrr3Q2FmiydDZKQufxSiY=;
+ t=1795759049; bh=Ppn5cHwYnKfgcU9voyP3fyOENUEN+4/p2lp1bEF1mck=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KiT27DmFb/iUcN9aD8fBkSshzA0D3DPDv93i8XwVk794mGzYqS8R2gL1a+NisqjSS
- oFNKKdBrAaKc34w+iuyTLzrX2GDXvZf0deqgUlGFPsbRGReNyoUB7KEMKIQ2wSTnc2
- b36BtqKiMuBBecAVvndXLk2Q+BDCF4hTtY/pS8TsACDTwbd7mKsPX0depWWb7XcI3E
- fgvfMxBr7OTlzKLDlahP+QIV/APwW0kKmjcdAYm61OizC2ylJ3hwbILFZdfOgN1WfR
- Hsc42vYDjyHnhzkNHf060RPshteIir012GkFPiB92f0YrP70oQZc8JWUo+fu8CIY35
- bvxbV8vwyBKGQ==
+ b=SfFHE978ie0koIJyvnEqvgNOjgV3cPeCo1RMOaAu7YJTRAHKq/von4+ro5z0sFp03
+ LH3NVnv1LqJk5TedOc+ky9z2ISNit/kBLT0w1Q1r2xAElgzoRiCXUsSiodvq7pcE5x
+ zjh2bH5aFh7uoPm57MtAxJ2xvLMzLafE6be1qw5nqTZWkEc+bfOyvv39vHDrIMiNpG
+ bN63Bm94aQAn2PnJAkqszfqMmu2o4vHTmkp0XA98IJFeSwM2Ws2nNWcDXTrNoBokc7
+ 0A9v/9JJLzSa74yhUfbjWoMgNlm9LO0RYJI9Q0nh0Jxgp4oBmO3SYW83Q0f5mmi9dw
+ 8TgZaj/OeKdHA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4E3491EA371;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C0E4B1EA386;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4C35746999C;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BDF2E4699B1;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 22EC7CF330; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id 92C13CF35A; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 127/152] hw/nvme: bound zrwa flush by the write
- area and zone write boundary
-Date: Fri, 27 Nov 2026 08:54:25 +0300
-Message-ID: <20261127055709.39630-64-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Wang Jianqiang <wjq.sec@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 148/152] hw/block/pflash_cfi01: Register VM change
+ handler once
+Date: Fri, 27 Nov 2026 08:54:46 +0300
+Message-ID: <20261127055709.39630-85-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,38 +78,37 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-nvme_zone_mgmt_send_zrwa_flush incorrectly accepts a flush up to and
-including one LBA past the zone random write area. Fix the comparison.
-
-Additionally, there is no check that the last LBA to be flushed falls
-within the zone boundary (i.e., the *capacity* of the zone). That is, if
-a zone has a small capacity than size, the write pointer can be pushed
-past it. Fix with a check on the zone write boundary.
+Each pflash_post_load() added a VM change-state handler and
+overwrote pfl->vmstate. Loading twice before the VM resumes
+left the first entry on the list, and resuming then ran a
+freed entry. Register the handler only when none is held.
 
 Cc: qemu-stable@nongnu.org
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
-Fixes: e321b4cdc2dd ("hw/nvme: add support for zoned random write area")
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit d31a68f013bf901c29c55d34d756c5fbbdc02657)
+Fixes: 90c647db8d59 ("Fix pflash migration")
+Reported-by: Wang Jianqiang <wjq.sec@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2635
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20261124185556.81132-2-philmd@oss.qualcomm.com>
+(cherry picked from commit 0522a9457b071fcdb3470278e3df78c1e773d432)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f7973bbc701..36053f5eb86 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -4258,7 +4258,8 @@ static uint16_t nvme_zone_mgmt_send_zrwa_flush(NvmeCtrl *n, NvmeZone *zone,
-         return NVME_INVALID_FIELD | NVME_DNR;
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index a13b91967ed..66539e91c5f 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -1040,7 +1040,8 @@ static int pflash_post_load(void *opaque, int version_id)
+         memory_region_rom_device_set_romd(&pfl->mem, false);
      }
  
--    if (elba < wp || elba > wp + ns->zns.zrwas) {
-+    if (elba < wp || elba >= wp + ns->zns.zrwas ||
-+        elba >= nvme_zone_wr_boundary(zone)) {
-         return NVME_ZONE_BOUNDARY_ERROR | NVME_DNR;
+-    if (!pfl->ro) {
++    /* A second load before the VM resumes must not add a duplicate entry */
++    if (!pfl->ro && !pfl->vmstate) {
+         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
+                                                         pfl);
      }
- 
 -- 
 2.47.3
 
