@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3204F606A324
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46D9606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=CLyRv0KK
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=KM+n1anZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp8N-0007JS-GS; Fri, 27 Nov 2026 01:08:35 -0500
+	id 1xWp7c-0006Gl-W4; Fri, 27 Nov 2026 01:07:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7D-00063c-Kp; Fri, 27 Nov 2026 01:07:25 -0500
+ id 1xWp7B-00063X-Nz; Fri, 27 Nov 2026 01:07:25 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7B-0002im-V1; Fri, 27 Nov 2026 01:07:23 -0500
+ id 1xWp79-0002ZS-Pc; Fri, 27 Nov 2026 01:07:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=HKwXtMh0Ds5Sl0toMnlkAYk54MLXrGm5g/goG3jRfck=;
+ t=1795759048; bh=8cLM5gj9kSlcl8zApT/4UaOcIAGh/O5lC695QOFIydk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CLyRv0KK0VdfepFX7cljtbZPNKF9UDdIm5XpZ7pS4XUdC3abdHCV7lyjG+eFtVaTW
- JGNEUHPBMbcyFDQX4dDNkcf/Zp1CeOCBLqa/4fxpwZyB6llJxDrJxiflUokZj1V8Dm
- F8FZEqpGxmHxCaKnIGJKmySRLAwX2+sfln7VG13FWlUtJNFpAhuTyiiOUA8WPOa/JE
- hIdBZQkm1AHfrl+A10IkOu8clnEPk1ItpJ/6DIE98RoRaBKRcE25eij1Wbu+a0BEf8
- Al0O0+pGwjS7ZuBm8Ol6QWSL6a5U7b4qywF4m8R2wssC2EIvCdzaFheLSvT1fsAmzh
- DK+IlfH2msVng==
+ b=KM+n1anZ6cPDwO23g6ivh5g/ng2pMo1tL5zKSKOmWdKysxv8nuchwkNLWWwOFwSq9
+ 3NawqBIvaUk0Op2sxiURLLzJ+bLO+bLuWl4N1TmBK3FbV/li6gWzy92YV/4Y6uUIe3
+ RqPhQeKMogSMJ9oqUy7bDZ0fVpqXfGEGkZWcOUTyw7xkf1qc2LkkSWtnA5NndcQW8Q
+ P4gHpM6VNR3yeT1xkKFwUr0pOj8cFO0J+s0/6fv2rZhlGmLCWuU5AXDuYqlxrr3Q/Z
+ ab87Dcp/Wn4pgTIFuc6kMbauHBtgCS4QBXfiTkXMBMlk8InRCMsnaKwvYi3BXPe+Bb
+ rh5MxWI7TD/HA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0567A1EA361;
+ by isrv.corpit.ru (Postfix) with ESMTP id 00FB21EA360;
  Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 033DC46998C;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F2E7E46998B;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E85F2CF310; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ id E5567CF30E; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Zixin Wang <w1355457260@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 111/152] target/i386/tcg: fix lea address
- calculation for CS register
-Date: Fri, 27 Nov 2026 08:54:09 +0300
-Message-ID: <20261127055709.39630-48-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 110/152] target/i386/tcg: treat ENTER's size
+ operand as unsigned
+Date: Fri, 27 Nov 2026 08:54:08 +0300
+Message-ID: <20261127055709.39630-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -68,63 +67,130 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Zixin Wang <w1355457260@gmail.com>
 
-When the effective address calculation was simplified in commit 55a15eb3504
-("target/i386/tcg: simplify effective address calculation") the refactoring
-accidentally introduced the ADDSEG() macro into the CS base address inclusion
-test.
+The first immediate operand of ENTER is the size of the dynamic storage
+area and is unsigned.  Decoding it as a signed immediate sign-extends
+values with bit 15 set, moving the stack pointer in the wrong direction.
 
-Fix the logic in gen_lea_v_seg_dest() to use CODE64() instead of ADDSEG() for
-the CS base address inclusion test, and at the same time split it into a switch
-statement to make the logic easier to follow.
+Decode it with I_unsigned and add a regression test covering 32-bit and
+64-bit guests.
 
-Fixes: 55a15eb3504 ("target/i386/tcg: simplify effective address calculation")
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260927123807.492352-1-mark.cave-ayland@ilande.co.uk
+Tested with a minimal x86_64-linux-user build; the new test fails before
+the change and passes after it.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4643
+Signed-off-by: Zixin Wang <w1355457260@gmail.com>
+Link: https://lore.kernel.org/r/CABG6VKODisrETOuH5thhimg_DtJLH+1wmARKL5OsoND5Qse_TA@mail.gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 12b268222422219b21126a2ce59ba59725296f97)
+(cherry picked from commit 40a6c128beeb72fa6d17e8c393b3d60e09ca0a69)
+(Mjt: back-port tests across make->meson conversion)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 5532ed0d7e0..687ed6262dc 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1949,7 +1949,7 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xBE] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
+     [0xBF] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
+ 
+-    [0xC8] = X86_OP_ENTRYrr(ENTER, I,w, I,b),
++    [0xC8] = X86_OP_ENTRYrr(ENTER, I_unsigned, w, I, b),
+     [0xC9] = X86_OP_ENTRY1(LEAVE, A,d64),
+     [0xCA] = X86_OP_ENTRYr(RETF,  I,w),
+     [0xCB] = X86_OP_ENTRY0(RETF),
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index c4ad6fdeb22..87c7658b999 100644
+index 2115c5cd24b..c4ad6fdeb22 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -605,7 +605,25 @@ static void gen_lea_v_seg_dest(DisasContext *s, MemOp aflag, TCGv dest, TCGv a0,
-         ovr_seg = def_seg;
-     }
+@@ -1895,7 +1895,7 @@ static void gen_popa(DisasContext *s)
+     gen_stack_update(s, 8 * size);
+ }
  
--    has_base = ovr_seg >= R_FS || (ovr_seg >= 0 && ADDSEG(s));
-+    switch (ovr_seg) {
-+    case R_DS:
-+    case R_ES:
-+    case R_SS:
-+        has_base = ADDSEG(s);
-+        break;
-+    case R_CS:
-+        has_base = !CODE64(s);
-+        break;
-+    case R_FS:
-+    case R_GS:
-+        has_base = true;
-+        break;
-+    default:
-+        assert(ovr_seg < 0);
-+        has_base = false;
-+        break;
-+    }
+-static void gen_enter(DisasContext *s, int esp_addend, int level)
++static void gen_enter(DisasContext *s, uint16_t esp_addend, int level)
+ {
+     MemOp d_ot = mo_pushpop(s, s->dflag);
+     MemOp a_ot = mo_stacksize(s);
+diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
+index 886a9767751..e3544d27cb7 100644
+--- a/tests/tcg/i386/Makefile.target
++++ b/tests/tcg/i386/Makefile.target
+@@ -14,7 +14,7 @@ config-cc.mak: Makefile
+ I386_SRCS=$(notdir $(wildcard $(I386_SRC)/*.c))
+ ALL_X86_TESTS=$(I386_SRCS:.c=)
+ SKIP_I386_TESTS=test-i386-ssse3 test-avx test-3dnow test-mmx test-flags
+-X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 test-idiv-overflow $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
++X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 test-idiv-overflow test-i386-enter $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+ 
+ test-i386-sse-exceptions: CFLAGS += -msse4.1 -mfpmath=sse
+ run-test-i386-sse-exceptions: QEMU_OPTS += -cpu max
+@@ -67,6 +67,8 @@ else
+ SKIP_I386_TESTS+=test-i386-fprem
+ endif
+ 
++test-i386-enter: CFLAGS=-O2 -fomit-frame-pointer
 +
-     easize = CODE64(s) ? MO_64 : MO_32;
- 
-     if (has_base) {
+ # Update TESTS
+ I386_TESTS:=$(filter-out $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+ TESTS=$(MULTIARCH_TESTS) $(I386_TESTS)
+diff --git a/tests/tcg/i386/test-i386-enter.c b/tests/tcg/i386/test-i386-enter.c
+new file mode 100644
+index 00000000000..509740d88c9
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-enter.c
+@@ -0,0 +1,42 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * ENTER's 16-bit size operand is unsigned.  If the decoder sign-extends
++ * it, the stack pointer moves in the wrong direction.
++ */
++#include <stdio.h>
++
++static int check_enter(void)
++{
++    unsigned long before, after;
++
++#ifdef __x86_64__
++    __asm__ volatile(
++        "movq %%rsp, %0\n\t"
++        "enter $0x8000, $0\n\t"
++        "movq %%rsp, %1\n\t"
++        "leave\n\t"
++        : "=r"(before), "=r"(after)
++        :
++        : "memory");
++    return (before - after) == 0x8008 ? 0 : 1;
++#else
++    __asm__ volatile(
++        "movl %%esp, %0\n\t"
++        "enter $0x8000, $0\n\t"
++        "movl %%esp, %1\n\t"
++        "leave\n\t"
++        : "=r"(before), "=r"(after)
++        :
++        : "memory");
++    return (before - after) == 0x8004 ? 0 : 1;
++#endif
++}
++
++int main(void)
++{
++    if (check_enter()) {
++        printf("FAIL: ENTER treated the 16-bit size operand as signed\n");
++        return 1;
++    }
++    return 0;
++}
 -- 
 2.47.3
 
