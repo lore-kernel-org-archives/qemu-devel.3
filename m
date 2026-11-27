@@ -1,90 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A51606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 22:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033E7606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 22:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Rh+sInSS
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=V7OMnHXR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX4XU-0000KK-GH; Fri, 27 Nov 2026 17:35:32 -0500
+	id 1xX4XW-0000OC-In; Fri, 27 Nov 2026 17:35:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aleszlucero@gmail.com>)
- id 1xX4XT-0000JT-AR
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:35:31 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1xX4XU-0000Kv-Sw
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:35:32 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aleszlucero@gmail.com>)
- id 1xX4XR-00089R-NZ
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:35:31 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-cdd9d0c9bbdso4989786a12.1
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 14:35:28 -0800 (PST)
+ id 1xX4XT-0008So-3c
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 17:35:32 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-3b3d4d3bba3so4201120a91.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 14:35:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795818928; x=1796423728; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1795818930; x=1796423730; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Q+T0GT8vhpia/aIgQqXGu4HlhgAA94U6cmsUTCaWDog=;
- b=Rh+sInSSFUloIr/u3ZDOUrixSlVPt4GutETmtg1MezASGrAAQJevv2V5tD/YnjsXqH
- 2hJI1z2KcePiff7jUTrhO+p0PCnhDTqyF/DG61dPuXRDo28bevBdpVrt6m/61KUO49oU
- 889LCc5IX9S/B3SDH3Yq2dmjRMX9BjbcvSv+LSwI3UV0Q5VdgYUI55P940SwOuJOz3KF
- R/l2XWtvi6uL59j3478T9bV6xI7WKq3com0gDGXZTT0sK/1qhj3X1yIZV37X+X/soGVs
- RSzNSEl6lJykReaWr5qNlML24DxG3XB+AvRkXVMEGIvDuVFanVpwexS+lBtR/MHTUJya
- Ag5A==
+ bh=vvf+mn+5pB9P/zNGPpCeuOO6ANmRnZp8Rsip/AM57eE=;
+ b=V7OMnHXRJ8DMIXcyXiCdH1h7gBDTfVU+puNF7bfl9+m56QF9K2QLnAG3wDpZ8QsxNA
+ SSFqeKuyXNXSVP4YeLMdvhk8rknCasd/mrxIcJmGUkM6ylyUKPBb7LmV+3omex+5H4g7
+ 3dxuLI/8AFuiwHO2TKyk/WTyYn/iaPEU2Zx4zJGhi8ZocjvkmnrbDJpi4s++qFfo4Y/l
+ kPhq6F9AIJ2vwkgeifY9BrZEkLPr5Kx+yGplNwZTizse9h8SA9ow24+J1RAdn5jYw6E/
+ wouaibhf22AhX72WuYNQOf4c/XucDTas9xs6/IDRa0oJnrmZCyNcDS+6gqjYX96gUFwb
+ 3COg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795818928; x=1796423728;
+ d=1e100.net; s=20260707; t=1795818930; x=1796423730;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Q+T0GT8vhpia/aIgQqXGu4HlhgAA94U6cmsUTCaWDog=;
- b=ohiU1XhRVlyOaDnCnl+8ifeG0ovTM7jsThJXVFvIUcZpWP1m8KZmpoqkA5pMQTzX4c
- 8MIrYCxWaXoVbccpn7fz7ejH6LXhA4DogPrme6UGwFWaUQuJEXh8iqlFVczfDMw5FAvJ
- kzuYc1My+Sr/8IOeJy1ntnEM2Ej+UeMDRR60Ys52+XhhOHMt0f6F8NXxXnn2UPfU1jgE
- A627L+cwHDX2QGxLnonP+9UtbE8/z5WeoOVQU0aRQALN2xLL4QEINS5nyKi1YuJevbMd
- obrwI27bZExcDbb1a7cOCF/CbEXrIo2iUiTxNp8xFs1Tv9lCApqziiVqQKIui6Jiltj6
- gvxg==
-X-Gm-Message-State: APuU4Z8QL3kBbOrXGC9OoTNdYnASaS5sCwO1ULjDueWFR1PZ2q9HpoSt
- Cg9D/MYPveYmAKqyuppdlGrZlHh802Vj0JpWHOgv5ZvqTu8N1PjRSAK8
-X-Gm-Gg: AZFdTZfqbIRRHOAula1uvUQvN/H/hi0v0kqAaxxSzLX+RONsAfOXytVODMtMfAdfbvi
- nByCFI5a76plgq4Pja9LMAGTos1VNbvQWM8rAllsOE/B6XPHma9oO41B3CXT1DmO6LUZFWza/lD
- VzkVRnHgjw6X6cu2GaIE26dPivYFPY/ur9ZEWA2/uZe3pFaOzJMlYCCueEKFRXK1oZdVjY55UJq
- krzyHhWMzQpl91NTDgyUx8oPLv/rD3vQsq0E6ph+8qOUCt74J1v3EHfSVmdnTdqHdv44BjGoh2o
- DUsCGC8yDYTZ/+9yrYwb6P1+Df3c0e5yy3uB19d1LRfr3v4GhBNxJL12f4qjZ5M4nl/7mRHRdHp
- YG+gDxnJe4OGk2tI6VJzaHkXJUBFp0lVaTRPCYf2kpgRcoRKOp7k3O0ycKIY0dOWXQPlopfYJ16
- bCf6Haa6IhhAOs/UlupHbRj52rRiZAMRknH9gStB2JrKLYQfp/uJqnvQKQOW3VLY+WMYDuDDg5H
- bo05Uo2QlP8G2W/O6ZYD0eupK94mLTvHgDENDpQZTPZDn6yHWf08uXdMsvo9+4BNz8mtQ4yUaTx
- ZOiZe9jsBCOsskNf0GTWuM2ouW25alGLbXgb8ZLz8GRpORaCCbXw9Uw14MPipqyGH9DLq0soOCk
- OPLIKD181MLmF+nprGECHLlgvTWFYzp4=
-X-Received: by 2002:a17:90a:e70c:b0:3ab:4f1:4f7e with SMTP id
- 98e67ed59e1d1-3b41c92a182mr26641033a91.28.1795818927897; 
- Fri, 27 Nov 2026 14:35:27 -0800 (PST)
+ bh=vvf+mn+5pB9P/zNGPpCeuOO6ANmRnZp8Rsip/AM57eE=;
+ b=hNz8sRxh8XkgDafYK7ussNuAhWbxF1msvECOOUl8GZLX0MjpS+B0iU2w+dMnZwQQV3
+ iPkiid5I7vGJvTrhFRQ7UQnqw8zYHH5zKWpVHXmQPvtQV5ULgrxicSKjEdPbNvxCdPEO
+ k7z3uhsUP5jk0MSW+ftHnwMekbk+xRPgygY6mLXHo3/m8R8MjjTzU+ikw0yVjI40nMKr
+ C9yQfNyk4C3Pgxjq0AQDOg8w4sfBucbmaS0MWw6KZDeZUPYWF1Og/crE/mSoPNyLYfyb
+ UrbY0BfvB8wSAk5K+BpfCNs+HmFvXIlQMYhFm0C83n2dLvEYq563QvkRsC3D0B6lNH3+
+ 2Olw==
+X-Gm-Message-State: APuU4Z/a8GcRbCcwwtpnjgNDmPD91M1zsiu0uOnbPKFtlMb0X7IZgvve
+ G8zZZRtjbTnjycB4MZCtiUMxdhAFWGanSa34yPv4G1Tb5ZZvf+obYYobQYV7prweW0Y=
+X-Gm-Gg: AZFdTZdO4db0yN+G0b0Vbhup0LFDHmMQnThDsSHDSjlxUAMNm9df3tqX1F1oztR2hun
+ RNC9iuVT50aPo8L+HhMpxH7fEDllXGVcPvrCUBcHHB3dWmZYGzOWFjlPfrBoabIG/7Y/aRPPdxg
+ StpVAfVjowjYNwucCy7aXLnjXxGTbrBky9v8rOLjtrCh96jLBFoj3AlEKiXVsRTsnaUnnFXkbHm
+ 17RULrZeTBp46HU5izLNALp8Z9FoaqI0NR7CTJiCcQWy4SxqNtw4SVzZ1jxOoekv9ZisHNpLnGF
+ h0QsV2W2DBsbW8iukGzOX4E+REl48OjaUN6sLa3bu8FIXE0LXcY1hPj3iaWcOm1nccTC8Ehf02/
+ +0dcYEEUQe0QlEfat/JoZ9ir6k1zx4LGozuWvCE/xAG7Ae5bXrgn2c6qqBoIRhA13MsCPP/LEe9
+ qcPovRcRSUslno6pHhssMgS0C0pVB+3hlxTbQ/UbimwcXG2+YOJ0ps80MbxEnqx/MzP39ZtHdOv
+ HS0yLXLACV3YgdZz4RarZkPfgDShBfrsX9ufW1XkR4S5JHBKmakJXpV6h7YnjA0ySwuUdXdc6ZT
+ gWiG+xDih2WmcT/t7PTz6T9i6VeLBzLPI2xud0f8P4znzlLubRRJr7alCRlMpLxX8QfIEwjdETW
+ zCpjGHn8jqNMZ+tbS6qOmX/m+jIanBnc=
+X-Received: by 2002:a17:90b:3d4d:b0:3ac:7556:8eed with SMTP id
+ 98e67ed59e1d1-3b41c956552mr22877943a91.44.1795818929607; 
+ Fri, 27 Nov 2026 14:35:29 -0800 (PST)
 Received: from cfarm136.osuosl.org (cfarm136.osuosl.org.
  [2605:bc80:3010:104:21e:67ff:fefd:7034])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3b41ad0b2c4sm39880831a91.4.2026.11.27.14.35.25
+ 98e67ed59e1d1-3b41ad0b2c4sm39880831a91.4.2026.11.27.14.35.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Nov 2026 14:35:26 -0800 (PST)
+ Fri, 27 Nov 2026 14:35:29 -0800 (PST)
 From: =?utf-8?q?Oscar_Alejandro_S=C3=A1nchez_Lucero?= <aleszlucero@gmail.com>
-Date: Fri, 27 Nov 2026 22:35:16 +0000
-Subject: [PATCH 2/4] hw/pci-bridge: Convert gen_pcie_upstream_port to
+Date: Fri, 27 Nov 2026 22:35:17 +0000
+Subject: [PATCH 3/4] hw/pci-bridge: Convert xio3130_downstream to
  Resettable interface
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261127-pci-bridge-resettable-v1-2-cdf15c9252c5@gmail.com>
+Message-Id: <20261127-pci-bridge-resettable-v1-3-cdf15c9252c5@gmail.com>
 References: <20261127-pci-bridge-resettable-v1-0-cdf15c9252c5@gmail.com>
 In-Reply-To: <20261127-pci-bridge-resettable-v1-0-cdf15c9252c5@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
  =?utf-8?q?Oscar_Alejandro_S=C3=A1nchez_Lucero?= <aleszlucero@gmail.com>
 X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=aleszlucero@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=aleszlucero@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,57 +112,59 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 Replace the deprecated device_class_set_legacy_reset() in
-gen_pcie_upstream_port.c with the ResettableClass hold phase.
+xio3130_downstream.c with the ResettableClass hold phase.
 
 Signed-off-by: Oscar Alejandro Sánchez Lucero <aleszlucero@gmail.com>
 ---
- hw/pci-bridge/gen_pcie_upstream_port.c | 10 ++++++----
+ hw/pci-bridge/xio3130_downstream.c | 10 ++++++----
  1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/pci-bridge/gen_pcie_upstream_port.c b/hw/pci-bridge/gen_pcie_upstream_port.c
-index da3e9e2..c95cf33 100644
---- a/hw/pci-bridge/gen_pcie_upstream_port.c
-+++ b/hw/pci-bridge/gen_pcie_upstream_port.c
-@@ -21,6 +21,7 @@
+diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+index ded948e..81893e6 100644
+--- a/hw/pci-bridge/xio3130_downstream.c
++++ b/hw/pci-bridge/xio3130_downstream.c
+@@ -25,6 +25,7 @@
+ #include "hw/pci/pcie.h"
  #include "hw/pci/pcie_port.h"
  #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
 +#include "hw/core/resettable.h"
  #include "migration/vmstate.h"
- #include "qom/object.h"
- 
-@@ -65,12 +66,12 @@ static void gen_upstream_write_config(PCIDevice *d, uint32_t address,
+ #include "qapi/error.h"
+ #include "qemu/module.h"
+@@ -53,14 +54,14 @@ static void xio3130_downstream_write_config(PCIDevice *d, uint32_t address,
      pcie_aer_write_config(d, address, val, len);
  }
  
--static void gen_upstream_reset(DeviceState *qdev)
-+static void gen_upstream_reset_hold(Object *obj, ResetType type)
+-static void xio3130_downstream_reset(DeviceState *qdev)
++static void xio3130_downstream_reset_hold(Object *obj, ResetType type)
  {
 -    PCIDevice *d = PCI_DEVICE(qdev);
 +    PCIDevice *d = PCI_DEVICE(obj);
-     GenPCIEUpstreamPort *usp = GEN_PCIE_UPSTREAM_PORT(d);
  
+     pcie_cap_deverr_reset(d);
+     pcie_cap_slot_reset(d);
+     pcie_cap_arifwd_reset(d);
 -    pci_bridge_reset(qdev);
 +    pci_bridge_reset(DEVICE(obj));
-     pcie_cap_deverr_reset(d);
-     pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed, false);
  }
-@@ -145,6 +146,7 @@ static void gen_pcie_upstream_port_class_init(ObjectClass *klass,
+ 
+ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
+@@ -157,6 +158,7 @@ static void xio3130_downstream_class_init(ObjectClass *klass, const void *data)
  {
      DeviceClass *dc = DEVICE_CLASS(klass);
      PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
 +    ResettableClass *rc = RESETTABLE_CLASS(klass);
  
-     k->config_write = gen_upstream_write_config;
-     k->realize = gen_upstream_realize;
-@@ -153,7 +155,7 @@ static void gen_pcie_upstream_port_class_init(ObjectClass *klass,
-     k->device_id = PCI_DEVICE_ID_REDHAT_PCIE_USP;
+     k->config_write = xio3130_downstream_write_config;
+     k->realize = xio3130_downstream_realize;
+@@ -166,7 +168,7 @@ static void xio3130_downstream_class_init(ObjectClass *klass, const void *data)
+     k->revision = XIO3130_REVISION;
      set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->desc = "PCI Express Upstream Port";
--    device_class_set_legacy_reset(dc, gen_upstream_reset);
-+    rc->phases.hold = gen_upstream_reset_hold;
-     dc->vmsd = &vmstate_gen_pcie_upstream_port;
-     device_class_set_props(dc, gen_pcie_upstream_port_props);
+     dc->desc = "TI X3130 Downstream Port of PCI Express Switch";
+-    device_class_set_legacy_reset(dc, xio3130_downstream_reset);
++    rc->phases.hold = xio3130_downstream_reset_hold;
+     dc->vmsd = &vmstate_xio3130_downstream;
+     device_class_set_props(dc, xio3130_downstream_props);
  }
 
 -- 
