@@ -1,109 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B718606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C17606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 17:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JSvdXQVR
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=LxngsvnU;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LKOBij2X
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWzzE-0005Em-1U; Fri, 27 Nov 2026 12:43:52 -0500
+	id 1xX02H-0007Ri-Jn; Fri, 27 Nov 2026 12:47:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrija.panic@gmail.com>)
- id 1xWzzC-0005Eb-LG
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:43:50 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <andrija.panic@gmail.com>)
- id 1xWzz9-0001P6-DT
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:43:50 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-492690dd5daso6406570f8f.1
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:43:47 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795801425; cv=none;
- d=google.com; s=arc-20260327;
- b=IKsyDmWR3zIzqjKxcOzplC16iFI1P4kBrlOnxPUlktruYvBeoAq9Af1ITA0THZgcYt
- pjCXtpIblJZpxkgSrm8qk87jTkvHVVD8HTZeKWkJaIvEDt2lRce3v/mTjP13Yj4lq3YW
- pAByJ4vTJXE+fGg+ERFAr9aUHFFeNTqjK9Hy7wSffAV5Etki/XbVAkFT2mXIXD+8qmma
- dVXTAyE9zahs+aeRxDaixl/K5bnR34iUwP4i/n8dSPWP1JM38J2wl+v3oMoSFM7PCPi2
- vLYmVvkX54iZTafhxpWdKzMkZmkcLTiI3H1/Reyr+3kknSsPhz30lizrWNvB0fnp/gNQ
- cMEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=vl5PD79wGqjsh96okuxSjadhefpU8YowdWJP6J0R06U=;
- fh=xHki3uV6HwwhBKBCQ6i4DoJkqefwQbmKK8wfFYgnqYY=;
- b=QzyfkJ2S41leMm0pF7Dn/YiW1XIGB747b9zzAOi6KBYZoyYOF72SPT4XgKJCgalnD7
- SF4200FcysfGHfukxQMP0rT9dEITWWYc5Ay3KQ2AZtkWCsEVasnQBJIpLh4iV/SWgFt+
- boWOB/NUomxDHiv34lrY33u+g5AFkkGLwQ/6aE3AJJtz+R4UD85FtwrmDifKai94Vtbw
- MbV9HDgRAt8AOe/291jsNViJMj16q+fANI3/t6BYbroaxMxVkwVO0iBs6romyTd4yBCA
- 7APL5CJyHpcggSLWFPegUO0wCSHUhK5spGsPd5YLI7m67LR/SbibQylkVqICq0qM0csH
- bldA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xX02G-0007RI-Gf
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:47:00 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xX02E-0007EN-LC
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 12:47:00 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6ARFp7QF925497
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:46:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=E7vmuXwUTgj3KpmeOq+wmP+y0Vr0HC+uTSw
+ fpOp+cDQ=; b=LxngsvnU/bvYdiruNYRRRtlDh1NZw+SmoGbYjItu9SlcgODOlDk
+ Zhn4stcHP1AGCcGuRrRBF/NkPOEwa2aU8WBW4Vs2N/oCBSHa9sHzkPwePrb0xmxU
+ /Ldep+NtWkJ/fife6mzZZoF6KjC3OVW+rQjJav4oAoaPv6HGSsFwJBDhsY7+2ggC
+ PlYzxtCIt4m+HBx1wMW1a88ehmRZjvzRuATVJdslJD4OExkI2rNMHs80P+Xq2HTe
+ YgMRbAJ8+y2Udnd8watkMfmgQ74dXM7Qg1KYw3DeCokxNprZL61O5ensEx3edwXN
+ u//0gFM5k7lgaXpT/OUtnZzf4pBj18KFJcA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j6u49c1x0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 17:46:56 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3b45655b428so7457839a91.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 09:46:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795801425; x=1796406225; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=vl5PD79wGqjsh96okuxSjadhefpU8YowdWJP6J0R06U=;
- b=JSvdXQVR/ir4CwFN+pg3ACAjGorVH0TQ16A/wvoQNB/eZ6N4v6UjPptnAHAaOw/vAi
- OJBBY1T+wHMH/nZm0CDwmf7slh5Mu7ap1iZukPwgz4VjSaRFBx9yTL/alUvFDBnCZiAD
- zFywBNScL96YzeqVWJ+DMuWhXVI7xiRGUTIr/oozmaLSF/Z0i1RVtPYLY8KLT0aW7/cR
- gHzdKjnWb+2Kx7fTxBhG2JYQGhtjm3SWG7rtn/0zJdhPQj2bSfqEI8azVxVUiKAVLoD3
- /d5lHgPfxCa2E1pobnMkpXehNzlnKdf13ymBdK4egA1cBKl1DGW7TFErQpEQ0a5h1fpD
- 0Wlw==
+ d=oss.qualcomm.com; s=google; t=1795801616; x=1796406416; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=E7vmuXwUTgj3KpmeOq+wmP+y0Vr0HC+uTSwfpOp+cDQ=;
+ b=LKOBij2XPl3dNMY//2SXDgqYKS23v7lXU1MR2QwcRToCs+mAWEIoSp+pzOt16p5WqH
+ MFs78r49gKEDKMUM9ElF+BNvwLjno0APm6vWV4nXpV2ADtze/JgrSZhzlpU2evcb7459
+ rtJ9pFW95SzZjyB2191XffmbIvWs4HlkE+hQCCC9aEvCXzsdu6oAYvEjnfQHMM6uAx5k
+ jqF4Yz+NwNEoWzrqXuATWQ24FBcNlO7wgS6UEEtZPFKofvdkt0B7pLe9SMmdsFwnoFiU
+ 5GJyAS6nIyt8JYs3WbiKxm7sW/n0geceY2T8E+7v7+93RYZAN8K+NbazqDKYBEANYgUc
+ yv1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795801425; x=1796406225;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=vl5PD79wGqjsh96okuxSjadhefpU8YowdWJP6J0R06U=;
- b=Nz7PIBJRMasCth2LedZdwSenXv0RQID7DBGeXQTEn1BBuJrWdjr7cMjc515g5Vg9tv
- YRUiWXk4UikmnSOULTJPwAEJUfUFNBBWYSIOYh3J47H9z2HXHVMOAWcYmhNxPORX3mdP
- lrbL56cKfTdlC4fOkwlZACmcd65t5mdzu3DKPy5Taa2i8f7ZNzBPHUa71/EpWAWpFGqR
- JoMdXy77Vm468ovpXCHO3ylpXED4KUZTw5n6r/BhqbxF94zW+4Xv8hbsrd6ik2WVW0zZ
- 89ImSpgIsRe/GtWLsN2NOQ3f7tFShGZrOdsoY7IEEiBmnEysw40NVv5DKsLg1J04uZI9
- SCXg==
-X-Gm-Message-State: APuU4Z9/5YaKrUDQMjL1Cy+x8m0Z9itboqyxPgVkRC5L41gXSeU8BU+a
- PQfBQ3IEi44jV9qgQWzkVXrHttZ7W+BKwfHNuV16esqAZuR69xP9qSmY3ZHKe2Ksnok6OuupowK
- iQ3BRef7wSZ6tq5L5e7JN0Zx7HLMkUc0=
-X-Gm-Gg: AZFdTZfGeckq745zrlLbaoqtOds8nP4+OUEILatWD1KV/Yh8SKkX7In8rwrhYvG5iAg
- i5xfJhZOGByNRFywv/mPyCUwk9Riy7CqOUSMw/Tb7/iSIg1v4PLjfY6vxgKogh8pWGTMxPNdvzv
- VDkyIcT8LXbYZHaAzVh+dA5K+TUI5h7j9Y2GEJuH8fG7lSwwZKDUlSI50Lzqp2N2yGhSmXbGOt3
- QE/q80CkhBBVFCp7pnghQuSpnNfwR1sTm4srFLulYiptQAy2y4m0CK30EJtCKOcS3MCN4irG0FH
- +SIZWzkKtSFrI6NpHmauYvyTtTNhkZmLJ4cLKE5yAcBgMgn0v7AY/jZ0w0BzKroIS8rCTWhmgLn
- OK1JIwupbvYhRV/4FVKrI8HHS7F8QAkeZ7kvjvTa9pylQvJR4nnOcBsDilfYVxz07tB+92D06gF
- 4JjtKUIVwVWGb++cWPrW93/mYZZN9Qz+DTkHEgYL13bVeElrYXR7Lt5rj/ZQNnBOMwwMw5h/wHG
- TQ6F9UZ
-X-Received: by 2002:a5d:5846:0:b0:4a6:4ac6:d950 with SMTP id
- ffacd0b85a97d-4abb400ae95mr51100320f8f.39.1795801425222; Fri, 27 Nov 2026
- 09:43:45 -0800 (PST)
+ d=1e100.net; s=20260707; t=1795801616; x=1796406416;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=E7vmuXwUTgj3KpmeOq+wmP+y0Vr0HC+uTSwfpOp+cDQ=;
+ b=cfFyVwine/JPT2sXQqfbKpZZckZgxuSsEdLCL2Bim2fyvlfsmk5CYEBevFB1N9o3v3
+ AjNj6E53V/R0uVLDcmgnWprMyvlZviEllog9IhYPbMCJq0hKYrSsBubYCSADwizhisAa
+ jaFvhEPS7SE20KW3exS7TdYen/1o4PAXXqHcuT7tuhYOIQINhag5MfVc2Menvn2FHSRB
+ QKUw4Ph5JQ6NEst67UvJ2WC+ExlAFFtsXj3Mw9nxn4vTDXdeLNdOwyqZ7jomJgBZePzm
+ rZ3UU51gcVPTJ9Jc5ffABQ1yidu/BFcl1KRdEUtmkSphtmJW1P0N2/DJxpnZeY1MfkA1
+ Falg==
+X-Gm-Message-State: APuU4Z9TqLpSswyHTCrY+74JvHfXxVEd8H3mkA8K2ADsPgT2VnSyjHzU
+ kqapA2B1IBwIGpk+iJ3Z5CzBKjM/GAnqnWzdQSBqCHREb9TfHDA29jHzqOymskJW7r+OmgwnJCL
+ YZ6IaOokiUXeZD8RyUExqKz/4iV2vqobSK4bJwkItIr6Xrwz9JHqfM6TkS7YGXvHV0w==
+X-Gm-Gg: AZFdTZdDzZhptpdsysSsai5vGKqxFZu0IyxSdVhT4RyGCn6mbFFLzCrAjGdVjcPGJJc
+ a1Xx+eaXloqzbOXCxzvtL4zXJRxsPjeph5NAaMv9FhFfD0iCOlEo3THmKsUcknVS860Pnhv81KH
+ IZouOmAG6qGeZ7dUsE+Y2H3xEQvbi49T6L1VGdA8vYkkJ7dFqa554fGT0X1jmHw2AjLXiPe0mKv
+ cZOzmGHq05U5DTkTQsuy4h0ZZmRQVoCAaJojV+i+VdRkPCVzqk2aoDUCZ2Cf3piAoIxaNHeF6ZA
+ XiPBvrOg+AcydRrK3j2yyqxMjpPUu4VSSng9YQxk5Xzlj+hvJN7eNlranU+/aAK5WWR6yYWFWWA
+ l9peit+L4ctW+lwKBDiwmm2osRHi3Pbb/d3qVm+s8CgomZnZmPYkW56XwycPDTRcIvptNYrKSet
+ I4TdDrTPCSHGgXfKdtnchvvjo6zVZ983UuRgbm
+X-Received: by 2002:a17:90b:3d8d:b0:3b3:b704:118c with SMTP id
+ 98e67ed59e1d1-3b41cb4f321mr23879320a91.65.1795801615781; 
+ Fri, 27 Nov 2026 09:46:55 -0800 (PST)
+X-Received: by 2002:a17:90b:3d8d:b0:3b3:b704:118c with SMTP id
+ 98e67ed59e1d1-3b41cb4f321mr23879269a91.65.1795801615157; 
+ Fri, 27 Nov 2026 09:46:55 -0800 (PST)
+Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3b405ffa98esm41856732a91.17.2026.11.27.09.46.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Nov 2026 09:46:54 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ "Fea.Wang" <fea.wang@sifive.com>,
+ Mark Burton <mburton@qti.qualcomm.com>, Jim Shu <jim.shu@sifive.com>,
+ Max Chou <max.chou@sifive.com>, Jay Chang <jay.chang@sifive.com>,
+ brian.cain@oss.qualcomm.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Gary Zancanelli <gzancane@qti.qualcomm.com>,
+ Gary Zancanelli <quic_gzancane@quicinc.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] target/riscv: add SiFive S7-AD CPU profile
+Date: Fri, 27 Nov 2026 10:46:40 -0700
+Message-ID: <20261127174640.406897-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <CAMvtBPPveK4wH+P9bhWtWk-i9S-xBP-nggvWppFkJ7P=++0D5g@mail.gmail.com>
- <awlLW-Gr30ZTIMEp@redhat.com>
-In-Reply-To: <awlLW-Gr30ZTIMEp@redhat.com>
-From: Andrija Panic <andrija.panic@gmail.com>
-Date: Fri, 27 Nov 2026 18:43:28 +0100
-X-Gm-Features: Aa3M54oIKY819WwgVyNTOVacnMIkeIMhsDtXpyAp2XvpdjGLKYUV9E_BZi2lDTk
-Message-ID: <CAMvtBPPk8qEnJCBZPfdh0Ceys=D9gpJVpFLC+EmP4QDz0kXYJQ@mail.gmail.com>
-Subject: Re: qemu-ga: safer default command policy? (re: "Improve mechanism
- for configuring allowed commands", June 2024)
-To: berrange@redhat.com
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com, 
- armbru@redhat.com
-Content-Type: multipart/alternative; boundary="00000000000009a0320661459a04"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=andrija.panic@gmail.com; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 4YMf2JxgicpT2uxFu2RwPWBPhpYA_hlI
+X-Proofpoint-ORIG-GUID: 4YMf2JxgicpT2uxFu2RwPWBPhpYA_hlI
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI3MDA3MCBTYWx0ZWRfX4VGGwuHZOhU8
+ KwdCqxf4qlPCn9VA/m1QTyny9KkpSMjg0YqQsf0tKuwlFevdHhnkJwCQ/LPzYcEgGEq77wcn4lR
+ H/4BD9zyQFHn245BoxO8yLyQZTEWZmo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI3MDA3MCBTYWx0ZWRfX8w3a59TDsVZp
+ kNWOPT3Q+vFrbOXrluRgx8Bec7/XH3W3cqC0wN8Rc8sc37oAjxvDjh75LaHH09clAP2bvJ2ga7s
+ 10lS5KIJDbLvo1zElLqShJIIp+l1xnu8oV0unixP+fhaTf0jGbWIFLxhDxFsEA09t3Zj9Nsiqoq
+ 9Gw6e5HY+UKxhzUSWR8/St1dk3tOAtz5LrS5lnGl5/hJfzU6LmhpV/gX20FPgwimCTN78Pfd3bZ
+ WfpmkAtEWspMiyR3xcaojife/gue/vr24XcGCPvpVjqGaC881UsJ/RFENWYi/LdEz+5Ywd47Ex7
+ /egFrU4RxrpfySqk27lN/x4w9CxIUudh+G4oSj4Fz3uvMaKR7O62FDvh68qZkpx7Yv553ECy5d+
+ AHfxhE2i5cgikHFdcsukapwG46IcGYPTYm6Ge9h3A2TxBQCjg1lvFr+T6nfE5k/jTMLWhkUMdoT
+ R2FfBixaLpXsnsDMULA==
+X-Authority-Analysis: v=2.4 cv=A875rKWG c=1 sm=1 tr=0 ts=6b09c210 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=Y5XJB6cuqWXhgpbSPVgA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-27_03,2026-11-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611270070
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,415 +152,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=1.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
-X-Spam-Level: *
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---00000000000009a0320661459a04
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Gary Zancanelli <quic_gzancane@quicinc.com>
 
-Hi Daniel,
+We are using this cpu internally at Qualcomm. After a conversation with
+SiFive folks, we publish this in case it might interest upstream.
 
-Thanks for the quick and detailed reply, and for the background on
-the series.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ target/riscv/cpu-qom.h |  1 +
+ target/riscv/cpu.c     | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-> On balance I feel like we shouldn't be handing over the keys on a
-> platter out of the box, and that we should cut out arbitrary file
-> read/write arbitrary exec, and password/ssh key injection by default.
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 61234842e3c..0aa38544094 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -49,6 +49,7 @@
+ #define TYPE_RISCV_CPU_SIFIVE_E31       RISCV_CPU_TYPE_NAME("sifive-e31")
+ #define TYPE_RISCV_CPU_SIFIVE_E34       RISCV_CPU_TYPE_NAME("sifive-e34")
+ #define TYPE_RISCV_CPU_SIFIVE_E51       RISCV_CPU_TYPE_NAME("sifive-e51")
++#define TYPE_RISCV_CPU_SIFIVE_S7_AD     RISCV_CPU_TYPE_NAME("sifive-s7-ad")
+ #define TYPE_RISCV_CPU_SIFIVE_U         RISCV_CPU_TYPE_NAME("sifive-u")
+ #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34")
+ #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 15c27f4ce46..87b15692326 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3608,6 +3608,30 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .misa_mxl_max = MXL_RV64
+     ),
+ 
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_S7_AD, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV64,
++        .misa_ext = RVI | RVM | RVA | RVC | RVS | RVU,
++        .priv_spec = PRIV_VERSION_1_12_0,
++
++        .cfg.mmu = true,
++        .cfg.ext_zifencei = true,
++        .cfg.ext_zicsr = true,
++        .cfg.pmp = true,
++        .cfg.pmp_regions = 8,
++        .cfg.ext_zihintpause = true,
++        .cfg.ext_zba = true,
++        .cfg.ext_zbb = true,
++        .cfg.ext_zkt = true,
++        .cfg.ext_sscofpmf = true,
++        .cfg.ext_svadu = false,
++        .cfg.pmu_mask = MAKE_64BIT_MASK(3, 29),
++        .cfg.max_satp_mode = VM_1_10_MBARE,
++
++        .cfg.mvendorid = 0x489,
++        .cfg.marchid = UINT64_C(0x8000000000000d07),
++        .cfg.mimpid = UINT64_C(0x0a231123),
++    ),
++
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U54, TYPE_RISCV_CPU_SIFIVE_U,
+         .misa_mxl_max = MXL_RV64,
+     ),
+-- 
+2.47.3
 
-Agreed, and I would like to help make that the upstream default
-rather than leave it to each distribution. The packaging survey shows
-why: where a distro made a deliberate choice (RHEL), guests are
-reasonably protected; where the package follows upstream as-is
-(Debian and Ubuntu, and Fedora by the oversight you mention),
-everything is open. Those are also the guests that most cloud images,
-templates and migration tools hand to end users who never look at
-qemu-ga at all. A safe built-in default protects exactly the people
-who don't know they need to configure it.
-
-A proposal for discussion:
-
-- Built-in default: an allow list of what management stacks
-actually use (guest-ping, guest-sync*, guest-info,
-guest-network-get-interfaces, guest-get-osinfo,
-guest-get-host-name, guest-fsfreeze-*, guest-fstrim,
-guest-shutdown, and similar read-only status commands).
-Everything else, including exec, file access and the user
-auth commands, off unless explicitly enabled.
-- An allow list rather than a block list, so a command added in a
-future release stays off until someone decides it is safe.
-- Confidential VMs get your stricter profile on top of that.
-
-Two more points that I think make the case:
-
-- In-guest disk encryption (LUKS, BitLocker) protects data at rest
-from the host, but with today's default the host can still read
-the decrypted files of the running guest through guest-file-read
-or guest-exec. The guest owner did everything right and the agent
-undoes it. I expect that to surprise security auditors.
-- It puts the responsibility in the right place. A cloud operator
-cannot realistically ask every unmanaged tenant to harden an
-in-guest agent; a sane default in the package can.
-
-I am happy to test a v3 on Debian, Ubuntu and RHEL-family guests with
-libvirt and Apache CloudStack, and to report which management
-features keep working under each profile. If it helps, I can also
-collect the list of agent commands the common management stacks
-depend on.
-
-Thanks,
-Andrija
-
-On Fri, Nov 27, 2026 10:20 AM, "Daniel P. Berrang=C3=A9" <berrange@redhat.c=
-om>
-wrote:
-
-> On Fri, Nov 27, 2026 at 06:30:27AM +0100, Andrija Panic wrote:
-> > Hi Daniel, Michael, Kostiantyn, all,
-> >
-> > I would like to revisit Daniel's series from June 2024:
-> >
-> >   [PATCH 00/14] Improve mechanism for configuring allowed commands
-> >
-> https://patchwork.kernel.org/project/qemu-devel/cover/20240604153242.2513=
-34-1-berrange@redhat.com/
-> >
-> > As far as I can see in the archive, it stopped after the branch
-> > request in July 2024, there was no v2, and current master still has
-> > "allow everything" as the fallback policy in ga_command_is_allowed().
-> > Is the idea still wanted? I would be glad to help with testing.
-> >
-> > Why I am asking now: I work on Apache CloudStack and on VMware-to-KVM
-> > migration tooling. Until a few years ago qemu-ga was installed on
-> > relatively few guests. That is changing quickly. Management stacks
-> > now use it for IP reporting, boot readiness checks and quiesced
-> > snapshots, and migration guides tell users to install it. Many guests
-> > that never ran the agent are getting it now, usually from distro
-> > packages, with whatever the distro default is.
-> >
-> > Those defaults differ a lot today (read from each packaging source):
-> >
-> >   - QEMU upstream: everything allowed.
-> >   - Debian and Ubuntu: the unit runs plain /usr/sbin/qemu-ga and no
-> >     qemu-ga.conf is shipped, so everything is allowed. Debian bug
-> >     #1076139 (July 2024) asked for a change; it was marked wishlist,
-> >     with the service file taken from upstream as-is.
-> >   - Fedora rawhide: a block list is shipped but commented out, so
-> >     everything is allowed.
->
-> This is an oversight I noticed a while ago, but didn't want to
-> change until my new patches were merged. IMHO it should have
-> been following RHEL's policy all this time.
->
-> >   - openSUSE Factory: blocks guest-exec and guest-exec-status only;
-> >     guest-file-* stay enabled.
->
-> Pointless, as you just use guest-file-write to the qga config file
-> to re-enable guest-exec
->
-> >   - RHEL 9/10 and rebuilds: an --allow-rpcs list without guest-exec*
-> >     and guest-file-*. That list still includes guest-set-user-password
-> >     and guest-ssh-add-authorized-keys, i.e. the "user auth" group the
-> >     --no-user-auth flag was meant to cover.
-> >
-> > So no distribution I checked blocks password and SSH-key injection,
-> > and only one blocks file access.
-> >
-> > I understand the usual answer: without confidential computing the
-> > host can read guest RAM and disks anyway. I think that undersells two
-> > things:
-> >
-> >   1. Cost and visibility. Reading secrets out of RAM or editing an
-> >      offline disk is deliberate, specialised work. guest-exec is one
-> >      JSON line, gives a root shell, and looks like routine management
-> >      traffic. Least privilege still matters when the attacker is a
-> >      stolen operator credential or a compromised management service
-> >      rather than a determined host admin.
->
-> Yes, I feel the same way. QGA makes it waaaaay to easy for a host
-> admin to compromise a guest.
->
-> >   2. Confidential guests. As Daniel's cover letter says, with SEV-SNP o=
-r
-> >      TDX the host is not trusted, and an agent with every command
-> >      enabled undoes the protection. Guest images are increasingly
-> >      built once and run both ways.
->
-> Any confidential guest image running the QGA today needs to have
-> a CVE filed against it, unless they've blocked a vast number of
-> APIs manually.
->
-> > Concretely:
-> >
-> >   - Is there interest in a v2 of the series? Was there a design
-> >     objection, or did it run out of review time?
->
-> This is just my fault for switching priorities, but also partly
-> because I wasn't entirely happy with the design. I wanted to
-> have  it "do the right thing(tm)" out of the box when running
-> on a confidential VM. With my patches in v2, it required having
-> two separate systemd services, one confidential and one not, or
-> writing a bunch of preexec code to change what features were
-> asked for.  I was thinking about revisiting recently to try for
-> a v3.
->
-> >   - Would the maintainers consider changing the built-in default
-> >     (for example blocking the "unrestricted" and "user auth" groups
-> >     unless explicitly allowed), or is that seen as a distro decision?
->
-> For a confidential VM, we clearly need to strictly lock it down
-> out of the box, otherwise it completely undermines confidentiality.
-> This needs to "do the right thing", as there's way too high risk
-> of users or distros installing QGA in a confidental guest and not
-> realizing the consequences.
->
-> For non-confidential VMs, it is harder to argue what the default
-> behaviour is. On the one hand I think we shouldn't expose APIs to
-> the host admin to directly compromise a running guest. On the
-> other hand, any restrictions we put in place are somewhat like
-> snake-oil, since if they try hard enough a host admin can do
-> anything they like to a non-confidential guest.
->
-> On balance I feel like we shouldn't be handing over the keys on a
-> platter out of the box, and that we should cut out arbitrary file
-> read/write arbitrary exec, and password/ssh key injection by default.
->
-> >
-> > I can test a v2 on Debian, Ubuntu and RHEL-family guests against
-> > libvirt and Apache CloudStack, and report which management features
-> > keep working with each group blocked. CloudStack, for example, only
-> > needs guest-ping, guest-sync, guest-network-get-interfaces and the
-> > guest-fsfreeze-* commands for its core features.
->
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
->
-
---00000000000009a0320661459a04
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><div dir=3D"auto">Hi Daniel,<br><br>Thanks for the qu=
-ick and detailed reply, and for the background on<br>the series.<br><br>&gt=
-; On balance I feel like we shouldn&#39;t be handing over the keys on a<br>=
-&gt; platter out of the box, and that we should cut out arbitrary file<br>&=
-gt; read/write arbitrary exec, and password/ssh key injection by default.<b=
-r><br>Agreed, and I would like to help make that the upstream default<br>ra=
-ther than leave it to each distribution. The packaging survey shows<br>why:=
- where a distro made a deliberate choice (RHEL), guests are<br>reasonably p=
-rotected; where the package follows upstream as-is<br>(Debian and Ubuntu, a=
-nd Fedora by the oversight you mention),<br>everything is open. Those are a=
-lso the guests that most cloud images,<br>templates and migration tools han=
-d to end users who never look at<br>qemu-ga at all. A safe built-in default=
- protects exactly the people<br>who don&#39;t know they need to configure i=
-t.<br><br>A proposal for discussion:<br><br>  - Built-in default: an allow =
-list of what management stacks<br>    actually use (guest-ping, guest-sync*=
-, guest-info,<br>    guest-network-get-interfaces, guest-get-osinfo,<br>   =
- guest-get-host-name, guest-fsfreeze-*, guest-fstrim,<br>    guest-shutdown=
-, and similar read-only status commands).<br>    Everything else, including=
- exec, file access and the user<br>    auth commands, off unless explicitly=
- enabled.<br>  - An allow list rather than a block list, so a command added=
- in a<br>    future release stays off until someone decides it is safe.<br>=
-  - Confidential VMs get your stricter profile on top of that.<br><br>Two m=
-ore points that I think make the case:<br><br>  - In-guest disk encryption =
-(LUKS, BitLocker) protects data at rest<br>    from the host, but with toda=
-y&#39;s default the host can still read<br>    the decrypted files of the r=
-unning guest through guest-file-read<br>    or guest-exec. The guest owner =
-did everything right and the agent<br>    undoes it. I expect that to surpr=
-ise security auditors.<br>  - It puts the responsibility in the right place=
-. A cloud operator<br>    cannot realistically ask every unmanaged tenant t=
-o harden an<br>    in-guest agent; a sane default in the package can.<br><b=
-r>I am happy to test a v3 on Debian, Ubuntu and RHEL-family guests with<br>=
-libvirt and Apache CloudStack, and to report which management<br>features k=
-eep working under each profile. If it helps, I can also<br>collect the list=
- of agent commands the common management stacks<br>depend on.<br><br>Thanks=
-,<br>Andrija</div></div></div><br><div class=3D"gmail_extra"><div>On Fri, N=
-ov 27, 2026 10:20 AM, &quot;Daniel P. Berrang=C3=A9&quot; &lt;<a href=3D"ma=
-ilto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com</a>&gt; wro=
-te:<br><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">On Fri, Nov 27, 20=
-26 at 06:30:27AM +0100, Andrija Panic wrote:<br>
-&gt; Hi Daniel, Michael, Kostiantyn, all,<br>
-&gt; <br>
-&gt; I would like to revisit Daniel&#39;s series from June 2024:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0[PATCH 00/14] Improve mechanism for configuring allowed co=
-mmands<br>
-&gt;=C2=A0 =C2=A0<a href=3D"https://patchwork.kernel.org/project/qemu-devel=
-/cover/20240604153242.251334-1-berrange@redhat.com/" rel=3D"noreferrer" tar=
-get=3D"_blank">https://patchwork.kernel.org/project/qemu-devel/cover/202406=
-04153242.251334-1-berrange@redhat.com/</a><br>
-&gt; <br>
-&gt; As far as I can see in the archive, it stopped after the branch<br>
-&gt; request in July 2024, there was no v2, and current master still has<br=
->
-&gt; &quot;allow everything&quot; as the fallback policy in ga_command_is_a=
-llowed().<br>
-&gt; Is the idea still wanted? I would be glad to help with testing.<br>
-&gt; <br>
-&gt; Why I am asking now: I work on Apache CloudStack and on VMware-to-KVM<=
-br>
-&gt; migration tooling. Until a few years ago qemu-ga was installed on<br>
-&gt; relatively few guests. That is changing quickly. Management stacks<br>
-&gt; now use it for IP reporting, boot readiness checks and quiesced<br>
-&gt; snapshots, and migration guides tell users to install it. Many guests<=
-br>
-&gt; that never ran the agent are getting it now, usually from distro<br>
-&gt; packages, with whatever the distro default is.<br>
-&gt; <br>
-&gt; Those defaults differ a lot today (read from each packaging source):<b=
-r>
-&gt; <br>
-&gt;=C2=A0 =C2=A0- QEMU upstream: everything allowed.<br>
-&gt;=C2=A0 =C2=A0- Debian and Ubuntu: the unit runs plain /usr/sbin/qemu-ga=
- and no<br>
-&gt;=C2=A0 =C2=A0 =C2=A0qemu-ga.conf is shipped, so everything is allowed. =
-Debian bug<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#1076139 (July 2024) asked for a change; it was mar=
-ked wishlist,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0with the service file taken from upstream as-is.<br=
->
-&gt;=C2=A0 =C2=A0- Fedora rawhide: a block list is shipped but commented ou=
-t, so<br>
-&gt;=C2=A0 =C2=A0 =C2=A0everything is allowed.<br>
-<br>
-This is an oversight I noticed a while ago, but didn&#39;t want to<br>
-change until my new patches were merged. IMHO it should have<br>
-been following RHEL&#39;s policy all this time.<br>
-<br>
-&gt;=C2=A0 =C2=A0- openSUSE Factory: blocks guest-exec and guest-exec-statu=
-s only;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0guest-file-* stay enabled.<br>
-<br>
-Pointless, as you just use guest-file-write to the qga config file<br>
-to re-enable guest-exec<br>
-<br>
-&gt;=C2=A0 =C2=A0- RHEL 9/10 and rebuilds: an --allow-rpcs list without gue=
-st-exec*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0and guest-file-*. That list still includes guest-se=
-t-user-password<br>
-&gt;=C2=A0 =C2=A0 =C2=A0and guest-ssh-add-authorized-keys, i.e. the &quot;u=
-ser auth&quot; group the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0--no-user-auth flag was meant to cover.<br>
-&gt; <br>
-&gt; So no distribution I checked blocks password and SSH-key injection,<br=
->
-&gt; and only one blocks file access.<br>
-&gt; <br>
-&gt; I understand the usual answer: without confidential computing the<br>
-&gt; host can read guest RAM and disks anyway. I think that undersells two<=
-br>
-&gt; things:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A01. Cost and visibility. Reading secrets out of RAM or edit=
-ing an<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 offline disk is deliberate, specialised work. gues=
-t-exec is one<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 JSON line, gives a root shell, and looks like rout=
-ine management<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 traffic. Least privilege still matters when the at=
-tacker is a<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 stolen operator credential or a compromised manage=
-ment service<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 rather than a determined host admin.<br>
-<br>
-Yes, I feel the same way. QGA makes it waaaaay to easy for a host<br>
-admin to compromise a guest.<br>
-<br>
-&gt;=C2=A0 =C2=A02. Confidential guests. As Daniel&#39;s cover letter says,=
- with SEV-SNP or<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 TDX the host is not trusted, and an agent with eve=
-ry command<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 enabled undoes the protection. Guest images are in=
-creasingly<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 built once and run both ways.<br>
-<br>
-Any confidential guest image running the QGA today needs to have<br>
-a CVE filed against it, unless they&#39;ve blocked a vast number of<br>
-APIs manually.<br>
-<br>
-&gt; Concretely:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0- Is there interest in a v2 of the series? Was there a des=
-ign<br>
-&gt;=C2=A0 =C2=A0 =C2=A0objection, or did it run out of review time?<br>
-<br>
-This is just my fault for switching priorities, but also partly<br>
-because I wasn&#39;t entirely happy with the design. I wanted to<br>
-have=C2=A0 it &quot;do the right thing(tm)&quot; out of the box when runnin=
-g<br>
-on a confidential VM. With my patches in v2, it required having<br>
-two separate systemd services, one confidential and one not, or<br>
-writing a bunch of preexec code to change what features were<br>
-asked for.=C2=A0 I was thinking about revisiting recently to try for<br>
-a v3.<br>
-<br>
-&gt;=C2=A0 =C2=A0- Would the maintainers consider changing the built-in def=
-ault<br>
-&gt;=C2=A0 =C2=A0 =C2=A0(for example blocking the &quot;unrestricted&quot; =
-and &quot;user auth&quot; groups<br>
-&gt;=C2=A0 =C2=A0 =C2=A0unless explicitly allowed), or is that seen as a di=
-stro decision?<br>
-<br>
-For a confidential VM, we clearly need to strictly lock it down<br>
-out of the box, otherwise it completely undermines confidentiality.<br>
-This needs to &quot;do the right thing&quot;, as there&#39;s way too high r=
-isk<br>
-of users or distros installing QGA in a confidental guest and not<br>
-realizing the consequences.<br>
-<br>
-For non-confidential VMs, it is harder to argue what the default<br>
-behaviour is. On the one hand I think we shouldn&#39;t expose APIs to<br>
-the host admin to directly compromise a running guest. On the<br>
-other hand, any restrictions we put in place are somewhat like<br>
-snake-oil, since if they try hard enough a host admin can do<br>
-anything they like to a non-confidential guest.<br>
-<br>
-On balance I feel like we shouldn&#39;t be handing over the keys on a<br>
-platter out of the box, and that we should cut out arbitrary file<br>
-read/write arbitrary exec, and password/ssh key injection by default.<br>
-<br>
-&gt; <br>
-&gt; I can test a v2 on Debian, Ubuntu and RHEL-family guests against<br>
-&gt; libvirt and Apache CloudStack, and report which management features<br=
->
-&gt; keep working with each group blocked. CloudStack, for example, only<br=
->
-&gt; needs guest-ping, guest-sync, guest-network-get-interfaces and the<br>
-&gt; guest-fsfreeze-* commands for its core features.<br>
-<br>
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer" target=3D=
-"_blank">https://hachyderm.io/@berrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"noreferrer"=
- target=3D"_blank">https://entangle-photo.org</a> :|<br>
-|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer" target=3D"_=
-blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =C2=A0 <a hre=
-f=3D"https://fstop138.berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://fstop138.berrange.com</a> :|<br>
-<br>
-</blockquote></div></div>
-
---00000000000009a0320661459a04--
 
