@@ -1,53 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74C4606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA694606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=h8b4p6rU
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=aQm4eE5I
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp8k-0008Hy-UQ; Fri, 27 Nov 2026 01:08:59 -0500
+	id 1xWp6P-0004MW-Ah; Fri, 27 Nov 2026 01:06:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8J-00078T-DX; Fri, 27 Nov 2026 01:08:33 -0500
+ id 1xWp4P-0006N4-Gn; Fri, 27 Nov 2026 01:04:29 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8H-00007c-JW; Fri, 27 Nov 2026 01:08:31 -0500
+ id 1xWp4N-0003em-QI; Fri, 27 Nov 2026 01:04:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=mlVG467w4nuE4uTadl1wOxS56G0ePQvyMbZoiyCM2/o=;
+ t=1795759043; bh=cSGkDYacU15KGMtrVdQ0ZVzZ2dOCZzUYYXeYh8nJyA0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=h8b4p6rUEIbw7yZfYTQq8eTjQiH4dy8bWxAi+gx7aSf0kAQyVN1+WB9yiQy1qQKvZ
- 2cqgOQ7BOB0+muIyuST9SoUUhWm7YzMqe+8LeutQ0e7QNv7pdBTCKjqkqRJJCkpXLX
- mz3nrcAXxSmc3ZtY1gNxUeSm+G8cUcK7f5pjN81pzgq+wvY50I+okGN0zc7Emtp4AP
- uhcXuhCj8DjvEJIYznWMJVE9EfCS/De5N7mZlNIGodudOBZqdJw0onVj+KyrjY30px
- iccjdBKhrq2acnHDzPkSXibt3OX9kUirJbqWgxxDfhZnL/BuvGs8Ifh3N4rMrO9GbS
- yvVGlh01sXNJQ==
+ b=aQm4eE5IEDfJ923JVci+RI/gbCtwaqvAa9lOReOerRs6Kgu6egjH3EFiGUVMS+7iO
+ yC5vmRimJWX+5jAr+dWw9ArEUK26o/dO31xzxYBzvSqGwHJDrOHaZd34T7yZ5DhDNS
+ cQ59LSxEqLzXPvAUMGYAs5WT/5TEe+Roy7K4wMF6iHPhjJ44YMlbE25bIZKKIrZZMV
+ QxQkZA8IJlglVx1khXJVFYlCNo2hzd6UZoMvHWukWFhtHd21CzKQxRpYP+ZsohiEtJ
+ FdX/n10szB2Uj5XZiGn8I9O+U4taTj5weD0xG9yjasc+fhzo8VjvA+BwPTlfxANQns
+ /MwCjyT8c9DKg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3C4C51EA36D;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ABF081EA347;
+ Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 39DFE469998;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A9450469972;
+ Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 176DACF328; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id 9A1E6CF2DC; Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 123/152] linux-user: copy nanosleep's remaining
- time on EINTR
-Date: Fri, 27 Nov 2026 08:54:21 +0300
-Message-ID: <20261127055709.39630-60-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 085/152] hw/nvme: fix missed CQ updates
+Date: Fri, 27 Nov 2026 08:53:43 +0300
+Message-ID: <20261127055709.39630-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,42 +75,48 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+From: Markku Ahvenjärvi <mankku@gmail.com>
 
-do_syscall1() copies the host's "rem" timespec back to the guest
-whenever safe_nanosleep() fails.  But the kernel only fills in rem when
-the sleep was interrupted (-EINTR).  When a signal arrives just before
-the host call, safe_syscall returns -QEMU_ERESTARTSYS without running
-the syscall at all, so rem is uninitialized stack.
+When doorbell buffers are enabled, CQ head updates may race with
+completion posting. When a CQ doorbell leaves pending completions, the
+event index may become stale and cause the guest to suppress the next
+MMIO doorbell write. QEMU may then fail to observe that the CQ has
+been drained. With legacy INTx, this can leave the interrupt asserted
+indefinitely and cause an interrupt storm.
 
-That is harmless for a guest that passes distinct request and remainder
-buffers, but musl's usleep() calls nanosleep(&ts, &ts).  The garbage
-then overwrites the guest's request before the syscall is restarted, so
-the restarted sleep can last arbitrarily long.
-
-Match clock_nanosleep(), which already only copies the remainder back
-on -TARGET_EINTR.
+Update the CQ event index as part of doorbell processing to ensure that
+subsequent head updates notify QEMU.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 9e518226f431 ("linux-user: Use safe_syscall wrapper for sleep syscalls")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-(cherry picked from commit 2bf4854e7924883223fccfa139dbc87427c7f758)
+Fixes: 3f7fe8de3d49 ("hw/nvme: Implement shadow doorbell buffer support")
+Fixes: 2e53b0b45024 ("hw/nvme: Use ioeventfd to handle doorbell updates")
+Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit c5d75e36cd729131237ffcfc3a52a72c871c6aa7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 5343bea0f87..099d3aea84b 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -12228,7 +12228,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                 return -TARGET_EFAULT;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index d6dee29c330..6baaae7f9f3 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4768,6 +4768,7 @@ static void nvme_cq_notifier(EventNotifier *e)
+         return;
+     }
+ 
++    nvme_update_cq_eventidx(cq);
+     nvme_update_cq_head(cq);
+ 
+     if (cq->tail == cq->head) {
+@@ -8603,6 +8604,8 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
              }
-             ret = get_errno(safe_nanosleep(&req, &rem));
--            if (is_error(ret) && arg2) {
-+            if (ret == -TARGET_EINTR && arg2) {
-                 if (host_to_target_timespec(arg2, &rem)) {
-                     return -TARGET_EFAULT;
-                 }
+ 
+             nvme_irq_deassert(n, cq);
++        } else if (n->dbbuf_enabled) {
++            nvme_update_cq_eventidx(cq);
+         }
+     } else {
+         /* Submission queue doorbell write */
 -- 
 2.47.3
 
