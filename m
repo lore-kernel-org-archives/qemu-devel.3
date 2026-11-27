@@ -1,53 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B23606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A57A606A324
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ncjf2CJs
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=FZmup5rT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp4P-0006JI-RJ; Fri, 27 Nov 2026 01:04:30 -0500
+	id 1xWp8O-0007K7-IT; Fri, 27 Nov 2026 01:08:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2H-0004G0-US; Fri, 27 Nov 2026 01:02:23 -0500
+ id 1xWp6I-0003xF-EI; Fri, 27 Nov 2026 01:06:26 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2E-0000Wv-Rm; Fri, 27 Nov 2026 01:02:17 -0500
+ id 1xWp6G-0001ik-6q; Fri, 27 Nov 2026 01:06:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758881; bh=IxtEAMOX0TmTOJfGbu/ErttVo58ruW6ovHpkhX8oZtw=;
+ t=1795759047; bh=RS2l/KEhosoBaib807+PcMFn3uMHWaxQ7H4O8PfUYhg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ncjf2CJsoXve7WJqkHZ5VeVycYqA8UOXtx4CHDIKyQ3vEUjnhfK1LChhfv22VL3sQ
- aGeikInwdUzsgmdyFbjFxKm6TfWR7hOaIpJmh1lXZIM8Jn0Av0z8gG44s18G3lx9/P
- LUkGNh2gvAKvom3JbDe+CL1u1eCw4RuX0lfQTB5LjPPP53suqJCbVYICRYs0F09pyw
- il8xPZADcFmi5zAUm1Zq/EMk9Dsvt0OOT3xIgqbLsMqiBExw2u+44lngxftCiRaxiI
- GLSO8jRNRXGA0a9FTNbCftg8MfuAVfWp2g1Ty9epzODZllTP/rIxzf79aVoCYQJovO
- SaS1OTq6h/fWQ==
+ b=FZmup5rTfnvpD4h8PlInmQrhvS5lcBgqL+9q2WrDfSwXha7u6crI3rZjzea6KhdIN
+ db1GgQmqRJ7mITWq1S6hqOolwFbXjy5Qg550RFuFte1CYs+7RxamN+17KvR5l1/7k8
+ F9jfcvY68kWIpTALDtZLYoEdAzBG5MwEeaZOCJd2S4x9KWOoe0/82MpMe/+9OsnJDX
+ 9YeBcEdSJOM5TsZ9+aPqsl5H0IljS8hnKFuCukFrbWDjxwsgXY9otPwJbxJP18p1P1
+ RW+mJvmekLw17gUPJprJW6mMYO5wp0oYyqstsrUVniLP5YJad9rOwnpEH1PnJst/RQ
+ 6fhT/i+veUgbw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F11371EA317;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 17CA11EA358;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EDEF0469957;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 15932469983;
+ Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BAE60CF2AE; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ id 01F68CF2FE; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 140/140] target/ppc: Test CF_NO_GOTO_PTR in cflags,
- not in TB flags
-Date: Fri, 27 Nov 2026 08:54:06 +0300
-Message-ID: <20261127055421.39015-81-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 102/152] target/arm: Fix RCsc ordering of
+ store-release instructions
+Date: Fri, 27 Nov 2026 08:54:00 +0300
+Message-ID: <20261127055709.39630-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -71,51 +69,121 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-CF_NO_GOTO_PTR is a TB cflags bit, but it was tested against
-tb->flags, where bit 10 is HFLAGS_SE. Use tb_cflags().
+The Armv8 memory model has no RCpc store: every store-release in the
+architecture, including the AArch64 STLR and STLPUR and the A32/T32
+STL, STLB and STLH, carries RCsc semantics (Arm Architecture Reference
+Manual, DDI 0487, section B2.3.8 "Acquire and release semantics").
+The architecture therefore orders a Store-Release tagged RCsc before
+any subsequent Load-Acquire tagged RCsc of the same shareability
+domain, which is what forbids the [0,0] outcome of a Store Buffering
+litmus test that pairs "STLR X=1; LDAR Y" on one PE with
+"STLR Y=1; LDAR X" on another.
+
+The translators only emit a barrier before the store, which orders the
+memory operations preceding the store before the store itself (release
+semantics).  Nothing prevents the store from being reordered with the
+memory operations that follow it, so under MTTCG the host CPU may
+execute the load-acquire that immediately follows a store-release
+before the store has left its store buffer:
+
+  * on an x86 host (TSO), store-load is the only reordering the
+    hardware may perform, and it is exactly the ordering that is
+    missing here;
+
+  * on an aarch64 host, no dmb follows the store either.
+
+The defect is easily observed with a bare-metal Store Buffering litmus
+test on a 2 vCPU virt guest: "STLR X=1; LDAR Y" on CPU 0 and
+"STLR Y=1; LDAR X" on CPU 1 produce the architecturally forbidden [0,0]
+result in 6 to 7 out of 100000 iterations, while inserting a DMB ISH
+between the store and the load on each CPU brings the number to 0,
+which validates the harness.
+
+Fix this by emitting a full barrier after the store as well, for
+STLR/STLLR and STLPUR on the AArch64 side and STL/STLB/STLH on the
+A32/T32 side.  The TCG_MO_ST_LD bit included in TCG_MO_ALL makes the
+x86 backend emit a serializing lock-prefixed instruction after the
+store, draining the store buffer before any subsequent load executes,
+and the aarch64 backend emit dmb ish; the store therefore becomes
+globally visible before any subsequent memory operation of the same
+vCPU, and the RCsc store->load ordering is satisfied.  This is
+stronger than the architecture strictly requires, since the barrier
+also orders the store with respect to subsequent RCpc operations such
+as LDAPR, but this matches how QEMU already implements FENCE-like
+ordering and keeps the fix simple.  After the fix the litmus test no
+longer produces the forbidden outcome.
+
+The load-acquire side needs no change: the barrier emitted after an
+RCsc LDAR already orders it with all subsequent memory operations, and
+QEMU deliberately implements the RCpc LDAPR family as full load-acquire.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Matt Turner <mattst88@gmail.com>
-Fixes: 46d396bde988 ("target/ppc: enable PMU instruction count")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261117080843.8314-1-philmd@oss.qualcomm.com>
-(cherry picked from commit da70db241dc765d5dc547a416ce6aa97c449d216)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4872
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 9567b4d2c38cf9a44bdcda39163c01d7dc23bd55)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index a52cbc869ae..caa626c53a8 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -3648,7 +3648,7 @@ static void gen_lookup_and_goto_ptr(DisasContext *ctx)
-          * tcg_gen_lookup_and_goto_ptr will exit the TB if
-          * CF_NO_GOTO_PTR is set. Count insns now.
-          */
--        if (ctx->base.tb->flags & CF_NO_GOTO_PTR) {
-+        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_PTR) {
-             pmu_count_insns(ctx);
-         }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 1780490065e..8606475293b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -3672,6 +3672,13 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+                                 true, a->rn != 31, memop);
+     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
+               iss_sf, a->lasr);
++    /*
++     * STLR is an RCsc store-release: the Armv8 architecture orders it
++     * before any subsequent RCsc load-acquire, which is what forbids the
++     * store-buffering litmus test.  The barrier above only orders
++     * previous accesses before the store.
++     */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+     return true;
+ }
  
-@@ -6669,7 +6669,7 @@ static void ppc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
-          * tcg_gen_lookup_and_goto_ptr will exit the TB if
-          * CF_NO_GOTO_PTR is set. Count insns now.
-          */
--        if (ctx->base.tb->flags & CF_NO_GOTO_PTR) {
-+        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_PTR) {
-             pmu_count_insns(ctx);
-         }
+@@ -4415,6 +4422,12 @@ static bool trans_STLR_i(DisasContext *s, arg_ldapr_stlr_i *a)
+     /* Store-Release semantics */
+     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, mop, true, a->rt, iss_sf, true);
++    /*
++     * Like STLR, STLPUR is an RCsc store-release and must be ordered
++     * before any subsequent RCsc load-acquire, so it needs a barrier
++     * after the store as well.
++     */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+     return true;
+ }
  
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 86c3c30a477..12b9798946b 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -4278,6 +4278,12 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
+     tmp = load_reg(s, a->rt);
+     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
++    /*
++     * STL has the same RCsc store-release semantics as the AArch64 STLR
++     * and must be ordered before a subsequent RCsc load-acquire (LDA).
++     * The barrier above only orders previous accesses before the store.
++     */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
+ 
+     return true;
 -- 
 2.47.3
 
