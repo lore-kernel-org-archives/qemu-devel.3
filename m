@@ -1,113 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B65D606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 14:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7E606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 14:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=MIWSzqS6
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=bS3JSK7B
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWwlD-0004CS-Ng; Fri, 27 Nov 2026 09:17:11 -0500
+	id 1xWwmv-0006HO-6U; Fri, 27 Nov 2026 09:18:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWwlA-00041M-Ls
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:17:08 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xWwl8-0002up-PX
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:17:08 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-67db763cec7so8257934d50.1
- for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 06:17:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795789025; cv=none;
- d=google.com; s=arc-20260327;
- b=V+Htkqwy2MAmzNvSPm0sXAL1OZihVy6xPL5WcfhQ41HWNezbtK+3RkbrZEUmvJHOSI
- ylGT3yyHchRDB8nXhXwrj8CZVokZg9b7v1jBTQc6Soe6N51I3MaJQTpj6smnUtB7G1y0
- wdrdN5HcmFF4TrlzfJE/2GLfluSZIK5tDNB2sWGTW1cGyVyuiPzMqAE517rML9dDn4Rg
- ZNjqdgCxKO6haMgKwt6HfW2m4qy6Ui2JvrKBdC/RGQ50VLaeelgkSV3wofHtZWi2lObj
- glJ0Kw6kQGtIsor68LWpp6qHciXWgwDRP6TXD9BOu11VAm7Yd0Qpkn3aweCjqoyEARer
- CBRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GbpEC63hqEjsFzvTM2QQbaF/x3kqLYxTdNHM//EoEpQ=;
- fh=JAgZ/zPes7161L/QPkOIUuvaLld3FzVUr9A/hsiquPE=;
- b=Od0UjqbYV4+WTHBKyvlp+I59XtRKDzQPRY4m3LbKoj0q7OZYUiW0o0rEEebMrGduaa
- cWR27xSbkPRmrs9Ny7J+AqjezyLFE09li+ddCyXOKAL9StJ7+dV8WTpqtou3IbMsMcAf
- DtkK4bOpGhH9kwBdpjHXvHimG52IQtHaDhBN076Wla3D83FLuzpCznkBdRwRGq6MCusG
- Ab7UGaVMU6xpbpoYQULabagIQJRvjD/pH0DjSoyzR3HIfqdtxDbrHfz3X/iuImVW/GKf
- RopQtkvOlTHlQ5t2TIfLfUCzVZoQRampTJ3gnmvUTTFv7RNGoqLio8YbGVwEzoXWC7DD
- kX9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1795789025; x=1796393825; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GbpEC63hqEjsFzvTM2QQbaF/x3kqLYxTdNHM//EoEpQ=;
- b=MIWSzqS6fkTm0Ss12lrh6CvWbU37qeS2Jc3rlCQ5G5DAu+53Er2IzcW7fsW8ULLhEG
- +sklWR6BGuNezilnDia7Fq1CE3q+zPNlHw3SrbslBCCVoolgLahSa6vThVkoXs1MZURE
- wREVNIE7H5JEH5WjnfFc/u4tEAnddT29htuT9frEAOrYQ7YB4+GS08dt8Roj4a9csrpE
- 0Pt+Ue5AOeCPPIs+YGZN3PiVm+A2BwmUGT6xK+zM5Z8cAjnEJBRd+WBKXAmvJEDDevpO
- E8wz1caS0gy2j9ypMhUCCuDQzMw7pzI0ZZNXXqGjhXm/35P0BkWoL43lZg2sTucL7ZT+
- ArNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795789025; x=1796393825;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GbpEC63hqEjsFzvTM2QQbaF/x3kqLYxTdNHM//EoEpQ=;
- b=o/zxnFJa/oNO/Iem6/O4ezgWHNf03QcPs+uxORZSQeRfp5CMU9WOAE5z5C+WF2ksf9
- WMni2/dlw59V/PB5qGCV2cyutqEQu1UzKB4SSwNfkeUFcYgCZsfFF7ZTBrlazmPtoNvD
- UsKza/WrL/Um0KGK9y2tsvKXEz7LutqKve0XXT3DSrcadcORCejW/digtbUHyVSKnc+z
- /e29YGdNgxAimdqVZ5kzIAlZvSzfmgHtI9yBaebtb+iao1Yf9BgS7ZdWLhsMWqFHz94O
- IqGdb3hTyIizu5zVc+JCrmYbM1qe5YDNpCVGooyf4D8rCvO4FJsL4TsR7yMn8LiC3rp5
- 4EZQ==
-X-Gm-Message-State: APuU4Z9reVud5hbqyFCEAzkFYdzrZU+uyYjijDY1YZgmhlLXRnBL8Gf3
- /LGhJFm1aXY6tKv0fj7ARqbceA619oqrvG0RIcf9ryJVEHNlbuGLnnYZEw45IOyqyVj1pqO56UK
- BCns86xGBnQ3lEXQUvfeBrt1uPXLKvgGbpncErYFeKw==
-X-Gm-Gg: AZFdTZfv9FgBqvHBeJQK0ejkZSD2vHX7FrH2QmwOCSk1MochBWjmKkCzw1pSNkkMO0b
- Rs65KuXr9xAncEBXsKNpQM/khwQCzVPGF2jSGyf9uKVDKxbxQVqgiaUr2vEowxlJHknaazcdIkH
- +W6Pv/4q6sgq5ZZPZQg2cDzXznjgKcSYQNUZaD2skia8oHHQxnzEJlH4iYG06avfIAW2f0QViha
- h+yt1MK7IPbaKk3bSmHn7jg2dnyKkrTi0QMspam4txlkWS7oCXoRSNATezbnj7SgiX5awwWSkEr
- unWzZANWDkkMrfKAqbd51oDrwcwUD9/xh1EcYN6MRT0aTvo/0vp2P9TP6QQgxvp+sRcmqHHhLql
- h2mGE36HeOP30krxcQXMIKljKsI2A+yWMQ1dsav3UenWzOxflifE1bsjO+iuOSMoLe3GSVZDfpn
- 5NCekAPrkyGtR1uyPRUQWT+pN45kYgH0NdYDSM5onvEw==
-X-Received: by 2002:a05:690e:bc2:b0:67b:f00a:ccf3 with SMTP id
- 956f58d0204a3-67df450c811mr7696288d50.140.1795789025254; Fri, 27 Nov 2026
- 06:17:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1xWwmt-0006F1-2D
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:18:55 -0500
+Received: from sender6-op-o11.zoho.com ([165.173.180.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1xWwmr-000848-7r
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 09:18:54 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1795789119; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=cZb9nuijX+IYnFyskFAuhJ6tAcsrZm8r2S4gasmylcGiIE7V8gqvzNT1nR6Qqv0dnpzxby1wSnmhpKeqvaxkA/qg2L1X35XR3p6PpxUDAxuOKxG64WtEt+++1ruwuH5hz7EDRFJA8n2qp1xOUqrh2oNWLUdWN3lkzSMb1IRzK5c=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1795789119;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=qQ5jPG6VJSj90YyYlCpvOgtdhphd4aruiMM3SUtklKQ=; 
+ b=XWVcmRVQ60ZQowchbFkLjnVhKgGH7Da7ezMv1p9vFoeEW2tpyK+OzDLnB1Jgb9SQnelcXcJzSwxkmU0+oPfdV6Fgw7MyaHgOe1/cBvCk9FaXlCIpSckYPqtAH/vJ401bTKGZRGpEHUbK3X8hZSHA2lERflC8x37XzafFeaQTKls=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: a=rsa-sha256;
+ b=bS3JSK7B/MlECqCVdaRNWtPvQLoQIpgdEFedI/cGHb8VfMmUuphYXUjqv3fENpJaNRYNnWeQ87E2JOIDNYQfYoqfCYghjk0r55r+sAuiWSEwvLsJcdOsUbHjXN8bBJ/0lZqSZFLcC+Q4oRbSX7ygmUDEqtcLWnrkjalqWC9J6+Y=;
+ c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1;
+ bh=qQ5jPG6VJSj90YyYlCpvOgtdhphd4aruiMM3SUtklKQ=;
+ h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1795789117709877.6886875865706;
+ Fri, 27 Nov 2026 06:18:37 -0800 (PST)
+Message-ID: <ae203d4a-691f-4cdf-bbe0-da1b2a28f823@collabora.com>
+Date: Fri, 27 Nov 2026 17:18:34 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261124185556.81132-1-philmd@oss.qualcomm.com>
- <20261124185556.81132-3-philmd@oss.qualcomm.com>
-In-Reply-To: <20261124185556.81132-3-philmd@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Nov 2026 14:16:53 +0000
-X-Gm-Features: Aa3M54oxRpMy4dw-vP4GpSqEVD0a2kvpOISFSBJx568VF-5XuB46No15anC8VMs
-Message-ID: <CAFEAcA-cCgtPvJmqnwCw7PV6EcdheXLTQxt4JT7MW5J1G7oJtw@mail.gmail.com>
-Subject: Re: [PATCH-for-11.2? 2/3] hw/block/pflash_cfi01: Allow zero-count
- buffer write
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, qemu-stable@nongnu.org, 
- Daniel Skinstad Drabitzius <daniel.drabitzius@northern.tech>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 2/5] virtio-gpu: Add ROCm capability support
+To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
+ odaki@rsg.ci.i.u-tokyo.ac.jp, Ray.Huang@amd.com
+Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org
+References: <20261106082711.813336-1-honghuan@amd.com>
+ <20261106082711.813336-3-honghuan@amd.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20261106082711.813336-3-honghuan@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=165.173.180.11;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender6-op-o11.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,51 +76,106 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 24 Nov 2026 at 18:57, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Linux's Intel CFI driver emits a zero count for a single buffered
-> write (one write cycle, at any bank width). The block update buffer
-> was only started for non-zero counts, so the data was rejected with
-> a programming error. Enable the block update buffer for any count.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 2563be6317fa ("hw/pflash: fix block write start")
-> Reported-by: Daniel Skinstad Drabitzius <daniel.drabitzius@northern.tech>
-> Suggested-by: Daniel Skinstad Drabitzius <daniel.drabitzius@northern.tech=
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4111
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+On 11/6/26 11:27, Honglei Huang wrote:
+> Add support for ROCm (Radeon Open Compute) capability in virtio-gpu.
+> This enables GPU compute workloads using AMD's ROCm platform through the
+> virtio-gpu interface.
+> 
+> Changes include:
+> - Add "rocm" property to virtio-gpu-gl device
+> - Define VIRTIO_GPU_FLAG_ROCM_ENABLED flag
+> - Enable VIRGL_RENDERER_USE_ROCM flag when ROCm is enabled
+> - Add virtio_gpu_rocm_enabled() helper macro
+> 
+> This allows guests to detect and utilize ROCm capabilities through the
+> virtio-gpu device when the feature is enabled.
+> 
+> Signed-off-by: Honglei Huang <honghuan@amd.com>
 > ---
->  hw/block/pflash_cfi01.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-> index 78cb221ddab0..72c544dee8d2 100644
-> --- a/hw/block/pflash_cfi01.c
-> +++ b/hw/block/pflash_cfi01.c
-> @@ -605,7 +605,7 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr off=
-set,
->          switch (pfl->cmd) {
->          case 0xe8: /* Block write */
->              /* FIXME check @offset, @width */
-> -            if (pfl->blk_offset =3D=3D -1 && pfl->counter) {
-> +            if (pfl->blk_offset =3D=3D -1) {
->                  pflash_blk_write_start(pfl, offset);
->              }
->              if (!pfl->ro && (pfl->blk_offset !=3D -1)) {
-> --
+>   hw/display/virtio-gpu-gl.c     |  2 ++
+>   hw/display/virtio-gpu-virgl.c  | 17 +++++++++++++++++
+>   include/hw/virtio/virtio-gpu.h |  3 +++
+>   3 files changed, 22 insertions(+)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index 2b7a41c4664..d1f11a5bb92 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -170,6 +170,8 @@ static const Property virtio_gpu_gl_properties[] = {
+>                       VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
+>       DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.flags,
+>                       VIRTIO_GPU_FLAG_DRM_ENABLED, false),
+> +    DEFINE_PROP_BIT("rocm", VirtIOGPU, parent_obj.conf.flags,
+> +                    VIRTIO_GPU_FLAG_ROCM_ENABLED, false),
+>   };
+>   
+>   static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index f71f287d948..f3512337d05 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -1514,6 +1514,14 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+>               return -EINVAL;
+>           }
+>       }
+> +    if (virtio_gpu_rocm_enabled(g->parent_obj.conf)) {
+> +#ifdef VIRGL_RENDERER_USE_ROCM
+> +        flags |= VIRGL_RENDERER_USE_ROCM;
+> +#else
+> +        error_report("rocm requires a ROCm-enabled virglrenderer");
+> +        return -EINVAL;
+> +#endif
+> +    }
+>   #endif
+>   
+>       ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+> @@ -1615,5 +1623,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
+>           }
+>       }
+>   
+> +    if (virtio_gpu_rocm_enabled(g->parent_obj.conf)) {
+> +        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_ROCM,
+> +                                   &capset_max_ver,
+> +                                   &capset_max_size);
+> +        if (capset_max_size) {
+> +            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_ROCM);
+> +        }
+> +    }
+> +
+>       return capset_ids;
+>   }
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 631dfc63a4d..3c5119ce0e4 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -112,6 +112,7 @@ enum virtio_gpu_base_conf_flags {
+>       VIRTIO_GPU_FLAG_VENUS_ENABLED,
+>       VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
+>       VIRTIO_GPU_FLAG_DRM_ENABLED,
+> +    VIRTIO_GPU_FLAG_ROCM_ENABLED,
+>   };
+>   
+>   #define virtio_gpu_virgl_enabled(_cfg) \
+> @@ -136,6 +137,8 @@ enum virtio_gpu_base_conf_flags {
+>       (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
+>   #define virtio_gpu_drm_enabled(_cfg) \
+>       (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
+> +#define virtio_gpu_rocm_enabled(_cfg) \
+> +    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_ROCM_ENABLED))
+>   
+>   struct virtio_gpu_base_conf {
+>       uint32_t max_outputs;
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-thanks
--- PMM
+-- 
+Best regards,
+Dmitry
 
