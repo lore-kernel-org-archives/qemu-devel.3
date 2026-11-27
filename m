@@ -1,108 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1E7606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 13:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E2606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 13:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=e1HNkf9S;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Vq7ognk5;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=e1HNkf9S;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Vq7ognk5
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mvImsDN3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWvuz-0004eD-JB; Fri, 27 Nov 2026 08:23:13 -0500
+	id 1xWvxy-0006Rb-Cv; Fri, 27 Nov 2026 08:26:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xWvuv-0004dw-S4
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:23:10 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xWvxw-0006Qi-HJ
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:26:16 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xWvus-000777-10
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:23:08 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 30616227AB;
- Fri, 27 Nov 2026 13:23:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1795785782; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cw5rsvM5Cqx8aZxePO8n/oyCfrscJCsH82A2dkbJiak=;
- b=e1HNkf9SqHw5+XNbqgmn9b+MiLG0dGYFVJDWJ7R+LtX53UbOGyZPhzmqTzYiYR7cTvKsGI
- 6o5P10nCytJuOI/GnXVe3G6900M/QQosSlBq5EogsjdYgq3TRrae1TF4XSxoOqOpGpDXDx
- bivvYc9BGkHjhYV1BxiqGIF298B2ack=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1795785782;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cw5rsvM5Cqx8aZxePO8n/oyCfrscJCsH82A2dkbJiak=;
- b=Vq7ognk5zcXcZIva0XJa15ezm9BmchzLKKI/VekDistJds1sHm8hvZl2Eo0qawnMfr1i/y
- FMOmStjWW7Y0wZAg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1795785782; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cw5rsvM5Cqx8aZxePO8n/oyCfrscJCsH82A2dkbJiak=;
- b=e1HNkf9SqHw5+XNbqgmn9b+MiLG0dGYFVJDWJ7R+LtX53UbOGyZPhzmqTzYiYR7cTvKsGI
- 6o5P10nCytJuOI/GnXVe3G6900M/QQosSlBq5EogsjdYgq3TRrae1TF4XSxoOqOpGpDXDx
- bivvYc9BGkHjhYV1BxiqGIF298B2ack=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1795785782;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cw5rsvM5Cqx8aZxePO8n/oyCfrscJCsH82A2dkbJiak=;
- b=Vq7ognk5zcXcZIva0XJa15ezm9BmchzLKKI/VekDistJds1sHm8hvZl2Eo0qawnMfr1i/y
- FMOmStjWW7Y0wZAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C7FB134E8;
- Fri, 27 Nov 2026 13:23:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2yq+DTWECWsaEAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 27 Nov 2026 13:23:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, peterx@redhat.com, Gavin Shan
- <gshan@redhat.com>
-Subject: Re: [PATCH for-12.0 v2 7/9] arm/machine: Convert cpu_post_load() to
- take Error**
-In-Reply-To: <20261126231631.3392756-8-peterx@redhat.com>
-References: <20261126231631.3392756-1-peterx@redhat.com>
- <20261126231631.3392756-8-peterx@redhat.com>
-Date: Fri, 27 Nov 2026 10:22:50 -0300
-Message-ID: <87se0mquhh.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xWvxu-000408-Hi
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 08:26:16 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-67db3a48dc6so9640674d50.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Nov 2026 05:26:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795785973; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fEgpG1vN8gFQPOfEZTuOJzeBATylgX3oi7cc9Pes0mqa2vkEBS7rRnOR2UbYT6ujPY
+ hGK7Lu6D2fj1zRSxvdkfFYCMW6kjcQm29FFSkqivy0tJ+4K2ZyFvuzD2TYYhW8DV1g61
+ Nso+6qx7YUPmnFhOfl6X3lCfWDVM3lcJnc2k98+vQPCrXyMEIt/VGiG9RDcGqzbKayc9
+ iNx4xzAUHm9DWKleTtqmhOjx68ubFWSTH/q2ZG/x5y3SdmzpQ+T1as3Ovgft1S5iZWhc
+ tf/2Knyly2fcZdO4vfEb3ItRRngS8g72wBxdePM5Yen0o8EJ4dB8ojMzGFlwG3YE228H
+ jLiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=vsmx7k1yAMDoJzsyFw3W/UNhFtofo1M8vK+8szgU8Hs=;
+ fh=iAFdQNjaq+PfQzNDdUp5K2HXnN6/oF+/yFKew6uDm8A=;
+ b=FnDC+AHnRko5pVy3mWrc83RoY0YQK9Qi8la6hPgMA5dk8M3xxvfM8UNRkMQ9yVl/aX
+ FCL04DuF2NP33EIPGDjGXyTDAGuMwFDISk2WQcmzGLQzy6VkAJbVJJGE21NqN37DB+ME
+ fnsV45hldUltfS8s3EkT3gIZNGid27NMrpJBGcOyW3AFnCboaEzE4HuMpPJxanKWXVtG
+ UMujtpzhjsxTW6pbuBjvEymsWcUzZDyZQLbdZRKoJyXpKEOpTnsmCFZKc6jNUGkbMrQY
+ uIAvRUvTvJsy5m/0hvWICJvF/oGwCSDBOi1asq111q/gxDMUpI1OivimkUc06koIbgkf
+ Ybtg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1795785973; x=1796390773; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=vsmx7k1yAMDoJzsyFw3W/UNhFtofo1M8vK+8szgU8Hs=;
+ b=mvImsDN3rIIbwyFu6BWSIlneDtks8UxT6Pn66wPEe5TVe2YCGFz8ULlDFlmpT3XOJ1
+ e/1yb9K/9Tr2VHkseFXoqVFotkWsVd7g2mzqyEOHX6pkoIN3fV2PXoEWaRhM9m9VNWx+
+ CzZW+up9OIYk2Y2UhPXh95Q9veSZzOxEFzTI4BDTtVlmGQZG95DoXy+67QDwJnAS8rZ6
+ PY9/ZwYea7fWgPfVD8HHAQ5LTXVap1hptL27XjFfrzlibB1X8xzyixrKOsN08F+qT43t
+ Y14+A6hwLAVZIytnJzfoCcppQafU2NjEdcROJJgog/F+ZyIvycDE4Hm/LZAau27RK1C2
+ AY/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1795785973; x=1796390773;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=vsmx7k1yAMDoJzsyFw3W/UNhFtofo1M8vK+8szgU8Hs=;
+ b=ge5xsrpaBIb3XxBau72U84KX1Pz7ro8uVCXvor9t1q2awxRn3S0ve/rw1gNfpAXEuC
+ f/DXKmg2PhOiPkDmCq3o73CEMI4furvt2jbosZoeuZ2sfTskcMbKw2fcnjszFG3Qbfs4
+ UmCrMpp6P7Q+DitJCUkvsTCYfWuq72Ps685j65N1AhNmdaWFw4VhOyjJ/uIPAlfFhLPR
+ dajLOPQwhCZJX2XWuuDvhdjkQTfVC4AUIZnJTI0iIB9K5VQ3nVaDQttIBElChetKmsJy
+ TedhW+YWB47RH8mG2U9k+Yo/ThY/7MluKFDmb9tYhoT3doKFBx0Wto8vKhhXAoGaMtnv
+ hv5Q==
+X-Gm-Message-State: APuU4Z+3AXPt6IgDK7G79asODjHOCiH13dM/zq3u81hIXwYdQwgAppuQ
+ RLYwjYych8PR5JLCVku2rzyEK612tvUyhrHMHeUx5Ll5Z6l/nNob62mUoOfE+FUZ1NThGWb+Fbo
+ k58N/4650rcVkuwn666zoy7zaq66W+QzV3g6Qa4hb8g==
+X-Gm-Gg: AZFdTZeA7rsGPG4tHMjUNqAhwAPWowghR2QVJn7Vd5B95mAoAnNRfxWfdTLfmhBNIef
+ GeM2WpFqU+QqYtLIHUxdRQsZZxr3mz0rj7GbXsc56z9Jp+XIPl8EzMSmdy5f+G9mTdC52xme7qp
+ ciVBLO61BjTapI1xJm0ocRLKnvvz6xhrSfX4e1zTjVz2WqPT18EK/95kfqKwXQM+OUnY59DoasD
+ fdWQq30Umn8F5OZn5xn0GDUbLTL/GL5rn0t8lsCrPxhsdkiHhZ//a5+0V5YSB0zaQkVeGDVX6Mr
+ cCTIdlX6M8bDP4PCs0ouSyifXICpGbJxQ+gBW5cVI7Ho6EOUyqvtYuXtMMQvlTqh4r/f2638+pC
+ MJwxzZHAfKKF7Zd5pLODePfx9ZplSh+KACl/hit8m7Jb1GPW0buKNfLKUPYML+fZtdbkKyzjECR
+ zmvRhdOEOcMtRfUTKRI8jCgDNop1nVDLMeCzlY9kY8d2w=
+X-Received: by 2002:a05:690e:408d:b0:67d:c305:ca1f with SMTP id
+ 956f58d0204a3-67df43f32b9mr8198630d50.53.1795785972634; Fri, 27 Nov 2026
+ 05:26:12 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-13.30 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -13.30
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+References: <20261106200309.122830-1-den@openvz.org>
+ <20261106200309.122830-2-den@openvz.org>
+In-Reply-To: <20261106200309.122830-2-den@openvz.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 27 Nov 2026 13:26:00 +0000
+X-Gm-Features: Aa3M54paZucIx-SicJwGux3Pi1x5wS0v4NBhjqf4JIag-jH-yphl6gny487R6Ys
+Message-ID: <CAFEAcA-LUijuaEYrzet2Zz8E3qZ_8ZJjWONKpYsrRYt1OR7YJQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] virtio-net: fix abort in virtio_net_set_queue_pairs()
+ on a deleted tap
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,167 +124,151 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Peter Xu <peterx@redhat.com> writes:
-
-> Convert it to post_load_errp() version, so as to be able to report verbose
-> errors when hit.
+On Fri, 6 Nov 2026 at 20:03, Denis V. Lunev <den@openvz.org> wrote:
 >
-> A few things to mention:
+> From: Denis V. Lunev <den@openvz.org>
 >
-> - The old "fail" count won't work with Error**, switch to fail and return
->   immediately, assuming we should stop migration immediately hitting the
->   1st error.
+> Once the tap device behind a multiqueue netdev is deleted on the host,
+> the queue fds QEMU holds are no longer bound to any device and
+> TUNSETQUEUE fails with EINVAL, for attach and detach alike. Management
+> can delete the device under a running VM, e.g. OpenStack unplugs the
+> VIF of an instance it is deleting. The next
+> VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET from the guest then kills QEMU:
 >
-
-You could keep the handle_cpreg* untouched and just create a new generic
-Error when fail > 0 like you did for !kvm_arm_cpu_post_load() and
-!write_list_to_cpustate(), no? That way we don't lose the reporting of
-the other bugged registers.
-
-> - Alone the way, handle_cpreg_only_in_incoming_stream() return value is
->   flipped to make it match QEMU's normal coding style (return true for
->   success, false for error, not vice versa).
+>   could not enable queue
+>   virtio_net_set_queue_pairs: Assertion `!r' failed.
 >
-> - Provide simple error strings for the cases where the lower function
->   doesn't yet take an Error**.
+> A guest reset aborts the same way through set_features(): clearing the
+> features detaches the extra queues and the detach fails too.
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Commit a1708203b583 ("net/tap-linux.c: avoid abort when setting invalid
+> fd") removed the earlier abort on the same path in
+> tap_set_vnet_hdr_len(); this is the next one.
+>
+> tap_fd_enable() and tap_fd_disable() already report the error. Walk the
+> remaining queues anyway, return the failure and let the callers decide:
+> - the control command restores the previous number of queue pairs and
+>   returns VIRTIO_NET_ERR, so the device matches the guest, which keeps
+>   its old setting on error. The rollback cannot fail in turn: tap
+>   tracks which queues are attached and skips the ioctl for a queue
+>   whose attach or detach already failed;
+> - post-load fails the migration, so the source keeps running instead
+>   of the destination aborting;
+> - set_features() has no way to report it and carries on with a dead
+>   link, as a single queue NIC on a deleted tap already does.
+>
+> The test attaches its own copy of the second queue fd before the guest
+> asks for two queue pairs, so the attach from QEMU fails with EINVAL on
+> a live device. Creating the tap needs CAP_NET_ADMIN, so the test is
+> skipped without it.
+>
+> Fixes: fed699f9ca6a ("virtio-net: multiqueue support")
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Jason Wang <jasowangio@gmail.com>
+> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Laurent Vivier <lvivier@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  target/arm/machine.c | 52 ++++++++++++++++++++++++--------------------
->  1 file changed, 29 insertions(+), 23 deletions(-)
+>  hw/net/virtio-net.c           |  25 +++++---
+>  tests/qtest/virtio-net-test.c | 104 ++++++++++++++++++++++++++++++++++
+>  2 files changed, 122 insertions(+), 7 deletions(-)
 >
-> diff --git a/target/arm/machine.c b/target/arm/machine.c
-> index 02a2b78506..e86fa85a9b 100644
-> --- a/target/arm/machine.c
-> +++ b/target/arm/machine.c
-> @@ -11,6 +11,7 @@
->  #include "migration/qemu-file-types.h"
->  #include "migration/vmstate.h"
->  #include "target/arm/gtimer.h"
-> +#include "qapi/error.h"
->  
->  static bool vfp_needed(void *opaque)
->  {
-> @@ -1151,10 +1152,11 @@ static void handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx
->   * Handle the situation where @kvmidx is in the incoming
->   * stream but not on destination. This fails the migration if
->   * no cpreg mig tolerance is matched for this @kvmidx
-> - * Return true if the migration should eventually fail
-> + * Return true if success, false otherwise.
->   */
->  static bool
-> -handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx, uint64_t value)
-> +handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx, uint64_t value,
-> +                                     Error **errp)
->  {
->      g_autofree gchar *name = print_register_name(kvmidx);
->  
-> @@ -1163,18 +1165,17 @@ handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx, uint64_t valu
->          arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
->                                            value, 0, ToleranceOnlySrcTestValue)) {
->          trace_tolerate_cpreg_only_in_incoming_stream(name);
-> -        return false;
-> +        return true;
->      }
-> -    error_report("%s: %s in the incoming stream but unknown on the "
-> -                 "destination: fail migration", __func__, name);
-> -    return true;
-> +    error_setg(errp, "cpreg %s in the incoming stream but unknown on the "
-> +               "destination", name);
-> +    return false;
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 54e42cfec9..82e3c22ca3 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -766,24 +766,27 @@ static int peer_detach(VirtIONet *n, int index)
+>      return tap_disable(nc->peer);
 >  }
->  
-> -static int cpu_post_load(void *opaque, int version_id)
-> +static bool cpu_post_load(void *opaque, int version_id, Error **errp)
+>
+> -static void virtio_net_set_queue_pairs(VirtIONet *n)
+> +static int virtio_net_set_queue_pairs(VirtIONet *n)
 >  {
->      ARMCPU *cpu = opaque;
->      CPUARMState *env = &cpu->env;
-> -    bool fail = false;
->      bool ignore_s_regs;
->      int i, v;
->  
-> @@ -1229,9 +1230,11 @@ static int cpu_post_load(void *opaque, int version_id)
->              continue;
->          }
->          if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
-> -            fail = handle_cpreg_only_in_incoming_stream(cpu,
-> -                                                        cpu->cpreg_vmstate_indexes[v],
-> -                                                        cpu->cpreg_vmstate_values[v]);
-> +            if (!handle_cpreg_only_in_incoming_stream(
-> +                    cpu, cpu->cpreg_vmstate_indexes[v],
-> +                    cpu->cpreg_vmstate_values[v], errp)) {
-> +                return false;
-> +            }
->              v++;
->              continue;
->          }
-> @@ -1278,21 +1281,22 @@ static int cpu_post_load(void *opaque, int version_id)
->       * still regs in the input stream, continue parsing the vmstate array
->       */
->      for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
-> -        fail = handle_cpreg_only_in_incoming_stream(cpu,
-> -                                                    cpu->cpreg_vmstate_indexes[v],
-> -                                                    cpu->cpreg_vmstate_values[v]);
-> -    }
-> -    if (fail) {
-> -        return -1;
-> +        if (!handle_cpreg_only_in_incoming_stream(
-> +                cpu, cpu->cpreg_vmstate_indexes[v],
-> +                cpu->cpreg_vmstate_values[v], errp)) {
-> +            return false;
+>      int i;
+>      int r;
+> +    int ret = 0;
+>
+>      if (n->nic->peer_deleted) {
+> -        return;
+> +        return 0;
+>      }
+>
+>      for (i = 0; i < n->max_queue_pairs; i++) {
+>          if (i < n->curr_queue_pairs) {
+>              r = peer_attach(n, i);
+> -            assert(!r);
+>          } else {
+>              r = peer_detach(n, i);
+> -            assert(!r);
 > +        }
->      }
->  
->      if (kvm_enabled()) {
->          if (!kvm_arm_cpu_post_load(cpu)) {
-> -            return -1;
-> +            error_setg(errp, "kvm_arm_cpu_post_load() failed");
-> +            return false;
->          }
->      } else {
->          if (!write_list_to_cpustate(cpu)) {
-> -            return -1;
-> +            error_setg(errp, "write_list_to_cpustate() failed");
-> +            return false;
+> +        if (r < 0) {
+> +            ret = r;
 >          }
 >      }
->  
-> @@ -1307,7 +1311,8 @@ static int cpu_post_load(void *opaque, int version_id)
->       * thumb_tr_translate_insn().
->       */
->      if (!is_a64(env) && env->thumb && (env->regs[15] & 1)) {
-> -        return -1;
-> +        error_setg(errp, "Misaligned thumb pc");
-> +        return false;
->      }
->  
->      if (tcg_enabled()) {
-> @@ -1325,7 +1330,8 @@ static int cpu_post_load(void *opaque, int version_id)
->                        FPCR_LTPSIZE_SHIFT, FPCR_LTPSIZE_LENGTH) != 4 ||
->              extract32(env->v7m.fpdscr[M_REG_S],
->                        FPCR_LTPSIZE_SHIFT, FPCR_LTPSIZE_LENGTH) != 4) {
-> -            return -1;
-> +            error_setg(errp, "Bogus fpdscr[] values");
-> +            return false;
->          }
->      }
->  
-> @@ -1337,7 +1343,7 @@ static int cpu_post_load(void *opaque, int version_id)
->          arm_rebuild_hflags(env);
->      }
->  
-> -    return 0;
-> +    return true;
+> +    return ret;
 >  }
->  
->  const VMStateDescription vmstate_arm_cpu = {
-> @@ -1347,7 +1353,7 @@ const VMStateDescription vmstate_arm_cpu = {
->      .pre_save = cpu_pre_save,
->      .post_save = cpu_post_save,
->      .pre_load = cpu_pre_load,
-> -    .post_load = cpu_post_load,
-> +    .post_load_errp = cpu_post_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINT32_ARRAY(env.regs, ARMCPU, 16),
->          VMSTATE_UINT64_ARRAY(env.xregs, ARMCPU, 32),
+
+This operates on all the peers from curr_queue_pairs to
+max_queue_pairs, eventually returning a value that effectively
+means either "everything was OK" or else "at least one thing
+failed but you can't tell which".
+
+>  static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue);
+> @@ -1499,7 +1502,7 @@ static int virtio_net_handle_mq(VirtIONet *n, uint8_t cmd,
+>                                  struct iovec *iov, unsigned int iov_cnt)
+>  {
+>      VirtIODevice *vdev = VIRTIO_DEVICE(n);
+> -    uint16_t queue_pairs;
+> +    uint16_t queue_pairs, old_queue_pairs;
+>      NetClientState *nc = qemu_get_queue(n->nic);
+>
+>      virtio_net_disable_rss(n);
+> @@ -1532,6 +1535,7 @@ static int virtio_net_handle_mq(VirtIONet *n, uint8_t cmd,
+>          return VIRTIO_NET_ERR;
+>      }
+>
+> +    old_queue_pairs = n->curr_queue_pairs;
+>      n->curr_queue_pairs = queue_pairs;
+>      if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
+>          /*
+> @@ -1543,7 +1547,12 @@ static int virtio_net_handle_mq(VirtIONet *n, uint8_t cmd,
+>      /* stop the backend before changing the number of queue_pairs to avoid handling a
+>       * disabled queue */
+>      virtio_net_set_status(vdev, vdev->status);
+> -    virtio_net_set_queue_pairs(n);
+> +    if (virtio_net_set_queue_pairs(n) < 0) {
+> +        n->curr_queue_pairs = old_queue_pairs;
+> +        virtio_net_set_status(vdev, vdev->status);
+> +        virtio_net_set_queue_pairs(n);
+> +        return VIRTIO_NET_ERR;
+> +    }
+
+Here if we get back a failure indication we assume we can just
+roll back to the old_queue_pairs value. But if one of the
+operations failed but not all of them then that seems like it
+might have bad consquences. If we were trying to reduce the number
+then we might have detached a peer we're now going to try to use
+again without reattaching it, and if we were trying to increase
+the number then we might have attached a peer that we've now
+forgotten that we attached.
+
+>      return VIRTIO_NET_OK;
+>  }
+> @@ -3298,7 +3307,9 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
+>       */
+>      n->saved_guest_offloads = n->curr_guest_offloads;
+>
+> -    virtio_net_set_queue_pairs(n);
+> +    if (virtio_net_set_queue_pairs(n) < 0) {
+> +        return -EINVAL;
+> +    }
+
+Is there anything we need to undo in this error case ?
+
+>      /* Find the first multicast entry in the saved MAC filter */
+>      for (i = 0; i < n->mac_table.in_use; i++) {
+
+-- PMM
 
