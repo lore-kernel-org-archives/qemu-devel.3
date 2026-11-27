@@ -1,48 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421E6606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F995606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=fpajCANL
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Nkd4fkWb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWovI-0003Gy-T8; Fri, 27 Nov 2026 00:55:05 -0500
+	id 1xWoz9-0005A6-CW; Fri, 27 Nov 2026 00:59:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWovC-0003DQ-BX; Fri, 27 Nov 2026 00:54:58 -0500
+ id 1xWoyz-0004mp-7V; Fri, 27 Nov 2026 00:58:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWovA-0007X0-D5; Fri, 27 Nov 2026 00:54:57 -0500
+ id 1xWoys-0006IO-B5; Fri, 27 Nov 2026 00:58:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758870; bh=UTa2I0iTKdTVBjd5QVdT5kqPIw1hyyps/6RiBmYm0QM=;
+ t=1795758877; bh=+8H2bQdpluRxlagkHA4omJNWUDBPRKMlAzcKh1utdaw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fpajCANLVbx2f5EcfNK3cVTLrgB02vMJRZuhd3ep0AXxIK/+S9x/L2tgQd+3WGU8P
- wbR5owEip3EGMBXMXUN+msYnR7Rnvh9KZexpNzCJbu5P0oeKQUZlB4ZbTZCxOJRxha
- Uy9zX2re98xe+EzfW99KEzCzSekCYsxUBUEjzDkXbBNcHg5g3k13oPBDUGNwIx4sYi
- W+N1dU06YIrSQEOUCG1Im7uAlcmBUt9ym9ZLOa5xKpyotn9fpeQYY/0X6NPiNxWhGo
- LM2lcbm/+ljtlSqHWyutymMuvWHhK6p6YWGIyBwDQMNZQ4k6FAEHagCpshDLPrEiUm
- WL1W40mMScGpw==
+ b=Nkd4fkWbHSIT8UUC7q+rWXXAeYiEYvBAw/s75mqxy7CxhGhxr2v3B74M0ztUTjI7Q
+ vdKK2vup7QGnRB6Yb+8N5sCLfBoWyNLC2OC2/Qt064IR/7cFeB5ebl2dI5huDG1Ujk
+ FIrN8cWLPvGq7/fG+Lhve9eQFwbqtafeML5EmOqvBL5gWeU0042qoLrbzhmDH01hOg
+ Qnp13q8UTSiCqf0QR1513bwi1D5svsR4ubxP2fYWMi3AOSsD8u6bXfynsaX+csfDU7
+ Tt6ADf6y3ycRmdp/oCyAczq17UPwHezERmDIIoB9NbcKv2uHy1+Zi5gqr8gNJmM/wH
+ mvwNy3r91Tk1w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CBDF01EA2CD;
- Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D74D81EA2F5;
+ Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C9AD346990B;
- Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D4F9B469930;
+ Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B153DCF222; Fri, 27 Nov 2026 08:54:30 +0300 (MSK)
+ id B0687CF26C; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 070/140] include/net/eth.h: Make
- eth_get_l2_hdr_length_iov() check protocol
-Date: Fri, 27 Nov 2026 08:52:56 +0300
-Message-ID: <20261127055421.39015-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 107/140] hw/scsi: validate IU buffer bounds in
+ vscsi_preprocess_desc()
+Date: Fri, 27 Nov 2026 08:53:33 +0300
+Message-ID: <20261127055421.39015-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
@@ -68,51 +69,125 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Chinmay Rath <rathc@linux.ibm.com>
 
-In eth_get_l2_hdr_length() we return sizeof(eth_header) for
-any protocol other than VLAN or DVLAN. However, in the iov
-version of this function, if the packet is larger than
-the ethernet header but not large enough for both the eth_header
-and the vlan_header we'll end up returning the actual packet
-size rather than the eth_header size. Fix the "not enough
-data" return case.
+cdb_offset and local_desc values are dependent on the guest. If the value
+is large enough, it can lead to an out-of-bounds read in vscsi_fetch_desc().
 
-This will only cause issues if the caller isn't already checking
-offsets and sizes, so this is defence-in-depth.  It also in theory
-corrects the result for the hypothetical case of an ethernet-level
-protocol that allows a payload of less than 4 bytes.
+Add an 'avail' constant in vscsi_preprocess_desc() representing the number of
+bytes available in srp_cmd.add_data[] and use it to prevent out-of-bound reads.
 
-Cc: qemu-stable@nongnu.org
-Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20261109-eth-v2-10-334cc08e2f2e@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 5251fee208ac4981dc5ac2e4438ed38955fdad43)
+Make all callers of vscsi_preprocess_desc() check its return value and
+handle failure accordingly.
+
+Fixes: CVE-2026-132127
+Fixes: 8ca8a17c9a16 (pseries: rework PAPR virtual SCSI)
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4162
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260819095855.115823-1-rathc@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit 8a91c8327cc8ffe0291af8f7d2970b7e2d6239ed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/net/eth.h b/include/net/eth.h
-index de293f2a537..aa432b8ef01 100644
---- a/include/net/eth.h
-+++ b/include/net/eth.h
-@@ -321,7 +321,7 @@ eth_get_l2_hdr_length_iov(const struct iovec *iov, size_t iovcnt, size_t iovoff)
-     size_t copied = iov_to_buf(iov, iovcnt, iovoff, p, ARRAY_SIZE(p));
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index 60efcca9570..76b87a6464b 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -484,6 +484,8 @@ static int data_out_desc_size(struct srp_cmd *cmd)
+ static int vscsi_preprocess_desc(vscsi_req *req)
+ {
+     struct srp_cmd *cmd = &req_iu(req)->srp.cmd;
++    /* bytes available for descriptors behind srp_cmd.add_data */
++    const unsigned avail = SRP_MAX_IU_LEN - offsetof(struct srp_cmd, add_data);
  
-     if (copied < ARRAY_SIZE(p)) {
--        return copied;
-+        return MIN(copied, sizeof(struct eth_header));
+     req->cdb_offset = cmd->add_cdb_len & ~3;
+ 
+@@ -498,16 +500,35 @@ static int vscsi_preprocess_desc(vscsi_req *req)
+     case SRP_NO_DATA_DESC:
+         break;
+     case SRP_DATA_DESC_DIRECT:
++        if (req->cdb_offset + sizeof(struct srp_direct_buf) > avail) {
++            fprintf(stderr,
++                    "vscsi_preprocess_desc: direct desc out of bounds\n");
++            return -1;
++        }
+         req->total_desc = req->local_desc = 1;
+         break;
+     case SRP_DATA_DESC_INDIRECT: {
+-        struct srp_indirect_buf *ind_tmp = (struct srp_indirect_buf *)
+-                (cmd->add_data + req->cdb_offset);
++        struct srp_indirect_buf *ind_tmp;
++
++        if (req->cdb_offset + sizeof(struct srp_indirect_buf) > avail) {
++            fprintf(stderr,
++                    "vscsi_preprocess_desc: indirect desc out of bounds\n");
++            return -1;
++        }
++        ind_tmp = (struct srp_indirect_buf *)(cmd->add_data + req->cdb_offset);
+ 
+         req->total_desc = be32_to_cpu(ind_tmp->table_desc.len) /
+                           sizeof(struct srp_direct_buf);
+         req->local_desc = req->writing ? cmd->data_out_desc_cnt :
+                           cmd->data_in_desc_cnt;
++
++        /* desc_list[] entries must also fit inside the IU buffer */
++        if (req->local_desc * sizeof(struct srp_direct_buf) >
++            avail - req->cdb_offset - sizeof(struct srp_indirect_buf)) {
++            fprintf(stderr,
++                    "vscsi_preprocess_desc: local_desc out of bounds\n");
++            return -1;
++        }
+         break;
+     }
+     default:
+@@ -717,7 +738,11 @@ static void vscsi_inquiry_no_target(VSCSIState *s, vscsi_req *req)
+     memcpy(&resp_data[8], "QEMU    ", 8);
+ 
+     req->writing = 0;
+-    vscsi_preprocess_desc(req);
++    if (vscsi_preprocess_desc(req) < 0) {
++        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
++        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
++        return;
++    }
+     rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
+     if (rc < 0) {
+         vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
+@@ -767,7 +792,12 @@ static void vscsi_report_luns(VSCSIState *s, vscsi_req *req)
+         i += 8;
      }
  
-     return eth_get_l2_hdr_length(p);
+-    vscsi_preprocess_desc(req);
++    if (vscsi_preprocess_desc(req) < 0) {
++        g_free(resp_data);
++        vscsi_makeup_sense(s, req, HARDWARE_ERROR, 0, 0);
++        vscsi_send_rsp(s, req, CHECK_CONDITION, 0, 0);
++        return;
++    }
+     rc = vscsi_srp_transfer_data(s, req, 0, resp_data, len);
+     g_free(resp_data);
+     if (rc < 0) {
+@@ -815,7 +845,10 @@ static int vscsi_queue_cmd(VSCSIState *s, vscsi_req *req)
+         req->writing = (n < 1);
+ 
+         /* Preprocess RDMA descriptors */
+-        vscsi_preprocess_desc(req);
++        if (vscsi_preprocess_desc(req) < 0) {
++            scsi_req_cancel(req->sreq);
++            return 1;
++        }
+ 
+         /* Get transfer direction and initiate transfer */
+         if (n > 0) {
 -- 
 2.47.3
 
