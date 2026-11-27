@@ -1,45 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A67606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6569C606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WpSzX5NG
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=i+H3aYnQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX1Nf-0001m5-F9; Fri, 27 Nov 2026 14:13:11 -0500
+	id 1xX1Nm-0001on-TY; Fri, 27 Nov 2026 14:13:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xX1NY-0001k2-G7; Fri, 27 Nov 2026 14:13:05 -0500
+ id 1xX1Na-0001kW-Ak; Fri, 27 Nov 2026 14:13:06 -0500
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xX1NW-0005r6-J3; Fri, 27 Nov 2026 14:13:04 -0500
+ id 1xX1NY-0005sY-59; Fri, 27 Nov 2026 14:13:06 -0500
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3ED15418B9;
+ by sea.source.kernel.org (Postfix) with ESMTP id B3CA6449CE;
+ Fri, 27 Nov 2026 19:13:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AD61F00893;
  Fri, 27 Nov 2026 19:13:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B586A1F000C1;
- Fri, 27 Nov 2026 19:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1795806780;
- bh=NIA6vEM+YcWX1sXh5hJuHyoqPH1OUdZMzydKosMLNqA=;
+ s=k20260515; t=1795806782;
+ bh=IUugToqMokQ3XaxPMoFuFHHc5lLNWbQ5b99sDropAdA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WpSzX5NGFodGaasMPe1dhH+2niF5Ygcp6j5HOhl2ghqLKEf0Ih//HWps7P3F0PgHv
- uD909N/IFSflYlmJmLVjfsJtrZRRMvjy1MnJOhwrHp1ZBDcOBdsjRehM+XAEHtSAUO
- tZYG4Np+GGB9rQBBQdMfyfeliU+CmT4KhrfGJ6rrL6pCotL364/ncMDSsbIlN/7J+A
- 3nfTnerdR2tdaz6BVh/jgjSs8YR62vfvHcI6EgOFOdYK0jdI1ky1cbR26LZ5LM2SuR
- D+wX2pYz9GR6HooSsxKD5qzEamL6azgZCONajk8ajP4R8SIEDB+BbhKxU8VIstmJzV
- aaJrqbevkYnfw==
+ b=i+H3aYnQvBG8XfnA/cPOnSeyfys3qQS4qOh+FovR5FccZc/sZeQmt0gu48vsCdXVE
+ wFGwNF4WvFoz7GUkIXdefQAqzbjUqFTp1J9Ci950XsSR/0mvayxsPyBhAWhQbpkC+5
+ VGMsk1MJf12GYghJmVL6MSlZCesZUsCx9zUbm5Em46JDrw5tATenvucxzUucl3hpcK
+ qLpnzxa3pNzPSnlInyIw6oK9TtjlhQM+gdZbYfEbgkwAXQ35HyMRc39PppFoFT01jh
+ qllkYsTeF5Kvx9X8L0D3NUnljPol2+y0KTntPVXp3eKmAUBkeERQjT5km9ot2zp+gr
+ wE+J1b0uGO6hg==
 From: Niklas Cassel <cassel@kernel.org>
-To: John Snow <jsnow@redhat.com>,
-	"Denis V. Lunev" <den@openvz.org>
+To: John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Cc: Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>,
  qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 01/13] hw/ide: report the SMART state in IDENTIFY DEVICE
-Date: Fri, 27 Nov 2026 20:12:36 +0100
-Message-ID: <20261127191250.3298004-2-cassel@kernel.org>
+Subject: [PATCH 02/13] hw/ide/ahci: stop processing commands after a fatal
+ error
+Date: Fri, 27 Nov 2026 20:12:37 +0100
+Message-ID: <20261127191250.3298004-3-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261127191250.3298004-1-cassel@kernel.org>
 References: <20261127191250.3298004-1-cassel@kernel.org>
@@ -73,91 +75,220 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently, IDENTIFY DEVICE word 85 bit 0 always reports the SMART feature
-set as enabled, regardless if it has been disabled using SET FEATURES or
-SMART DISABLE OPERATIONS.
+As per AHCI 1.3.1, 6.2.2, after a fatal error, the HBA should not
+process any further commands until software clears PxCMD.ST.
 
-Add a helper to build word85, such that the SMART feature set and the
-write cache is reported in IDENTIFY DEVICE correctly.
+This was previously missing in the QEMU model, which emulates both
+both the drive and the HBA.
 
-Also, just like the write cache state is re-initialized after migration,
-re-initialize the SMART state after migration.
+Previously, QEMU went on processing commands, and as a failed command
+keeps its bit in PxCI, check_cmd() executed it again when the host issued
+another command without restarting the port.
 
+Add a new state that halts the port after a fatal error.
+Linux, SeaBIOS and libqos already restart the port using PxCMD.ST after
+an error.
+
+Add a qtest that checks that a command issued after a failed WRITE DMA
+EXT, without restarting the port, is not processed, and that the failed
+write is not executed again.
+
+Fixes: 1a16ce64fda1 ("hw/ide/ahci: PxCI should not get cleared when ERR_STAT is set")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- hw/ide/core.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ hw/ide/ahci-internal.h  |  4 +++
+ hw/ide/ahci.c           | 39 ++++++++++++++++++++++++-
+ tests/qtest/ahci-test.c | 63 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 105 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 06e6bb6067..7e3f882969 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -138,6 +138,14 @@ static void ide_identify_size(IDEState *s)
-     put_le16(p + 103, s->nb_sectors >> 48);
+diff --git a/hw/ide/ahci-internal.h b/hw/ide/ahci-internal.h
+index a318f36811..ca11a370c7 100644
+--- a/hw/ide/ahci-internal.h
++++ b/hw/ide/ahci-internal.h
+@@ -165,6 +165,9 @@ enum AHCIPortIRQ {
+ #define DEF_PORT_IRQ              (PORT_IRQ_ERROR | PORT_IRQ_SG_DONE |     \
+                                    PORT_IRQ_SDB_FIS | PORT_IRQ_DMAS_FIS |  \
+                                    PORT_IRQ_PIOS_FIS | PORT_IRQ_D2H_REG_FIS)
++/* The fatal errors, after which the HBA stops (AHCI 1.3.1 6.2.2) */
++#define PORT_IRQ_FATAL            (PORT_IRQ_TF_ERR | PORT_IRQ_HBUS_ERR |   \
++                                   PORT_IRQ_HBUS_DATA_ERR | PORT_IRQ_IF_ERR)
+ 
+ /* PORT_CMD bits */
+ #define PORT_CMD_ATAPI            (1 << 24) /* Device is ATAPI */
+@@ -318,6 +321,7 @@ struct AHCIDevice {
+     bool done_first_drq;
+     int32_t busy_slot;
+     bool init_d2h_sent;
++    bool halted; /* fatal error (PxIS.TFES), until PxCMD.ST is cleared */
+     AHCICmdHdr *cur_cmd;
+     NCQTransferState ncq_tfs[AHCI_MAX_CMDS];
+     MemReentrancyGuard mem_reentrancy_guard;
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 86f6297dc9..3b872c6cf1 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -208,6 +208,13 @@ static void ahci_trigger_irq(AHCIState *s, AHCIDevice *d,
+                            irqstat & d->port_regs.irq_mask);
+ 
+     d->port_regs.irq_stat = irqstat;
++    /*
++     * A fatal error halts the port until PxCMD.ST is cleared
++     * (AHCI 1.3.1 6.2.2).
++     */
++    if (irq & PORT_IRQ_FATAL) {
++        d->halted = true;
++    }
+     ahci_check_irq(s);
  }
  
-+/* IDENTIFY DEVICE word 85: the commands and feature sets that are enabled */
-+static uint16_t ide_identify_word85(IDEState *s)
+@@ -301,6 +308,7 @@ static void ahci_port_write(AHCIState *s, int port, int offset, uint32_t val)
+         if ((pr->cmd & PORT_CMD_START) && !(val & PORT_CMD_START)) {
+             pr->scr_act = 0;
+             pr->cmd_issue = 0;
++            s->dev[port].halted = false;
+         }
+ 
+         /* Block any Read-only fields from being set;
+@@ -565,7 +573,13 @@ static void check_cmd(AHCIState *s, int port)
+     uint8_t slot;
+ 
+     if ((pr->cmd & PORT_CMD_START) && pr->cmd_issue) {
+-        for (slot = 0; (slot < 32) && pr->cmd_issue; slot++) {
++        /*
++         * After a fatal error the HBA processes no commands until software
++         * clears PxCMD.ST (AHCI 1.3.1 6.2.2). A command can fail before
++         * handle_cmd() returns, so check before each slot.
++         */
++        for (slot = 0; (slot < 32) && pr->cmd_issue && !s->dev[port].halted;
++             slot++) {
+             if (pr->cmd_issue & (1U << slot)) {
+                 handle_cmd(s, port, slot);
+             }
+@@ -664,6 +678,7 @@ static void ahci_reset_port(AHCIState *s, int port, IDEResetKind kind)
+     pr->cmd_issue = 0;
+     d->busy_slot = -1;
+     d->init_d2h_sent = false;
++    d->halted = false;
+ 
+     ide_state = &s->dev[port].port.ifs[0];
+     if (!ide_state->blk) {
+@@ -1738,6 +1753,24 @@ static const VMStateDescription vmstate_ncq_tfs = {
+     },
+ };
+ 
++static bool ahci_device_halted_needed(void *opaque)
 +{
-+    /* 14 = NOP supported, 5=WCACHE enabled, 0=SMART feature set enabled */
-+    return (1 << 14) | (blk_enable_write_cache(s->blk) ? 1 << 5 : 0) |
-+           (s->smart_enabled ? 1 : 0);
++    AHCIDevice *ad = opaque;
++
++    return ad->halted;
 +}
 +
- static void ide_identify(IDEState *s)
- {
-     uint16_t *p;
-@@ -204,12 +212,7 @@ static void ide_identify(IDEState *s)
-     } else {
-         put_le16(p + 84, (1 << 14) | 0);
-     }
--    /* 14 = NOP supported, 5=WCACHE enabled, 0=SMART feature set enabled */
--    if (blk_enable_write_cache(s->blk)) {
--        put_le16(p + 85, (1 << 14) | (1 << 5) | 1);
--    } else {
--        put_le16(p + 85, (1 << 14) | 1);
--    }
-+    put_le16(p + 85, ide_identify_word85(s));
-     /* 13=flush_cache_ext,12=flush_cache,10=lba48 */
-     put_le16(p + 86, (1 << 13) | (1 <<12) | (1 << 10));
-     /* 14=set to 1, 8=has WWN, 1=SMART self test, 0=SMART error logging */
-@@ -1714,12 +1717,12 @@ static bool cmd_set_features(IDEState *s, uint8_t cmd)
-     case 0x02: /* write cache enable */
-         blk_set_enable_write_cache(s->blk, true);
-         identify_data = (uint16_t *)s->identify_data;
--        put_le16(identify_data + 85, (1 << 14) | (1 << 5) | 1);
-+        put_le16(identify_data + 85, ide_identify_word85(s));
-         return true;
-     case 0x82: /* write cache disable */
-         blk_set_enable_write_cache(s->blk, false);
-         identify_data = (uint16_t *)s->identify_data;
--        put_le16(identify_data + 85, (1 << 14) | 1);
-+        put_le16(identify_data + 85, ide_identify_word85(s));
-         ide_flush_cache(s);
-         return false;
-     case 0xcc: /* reverting to power-on defaults enable */
-@@ -1942,11 +1945,9 @@ static bool cmd_smart(IDEState *s, uint8_t cmd)
++static const VMStateDescription vmstate_ahci_device_halted = {
++    .name = "ahci port/halted",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = ahci_device_halted_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(halted, AHCIDevice),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static const VMStateDescription vmstate_ahci_device = {
+     .name = "ahci port",
+     .version_id = 1,
+@@ -1767,6 +1800,10 @@ static const VMStateDescription vmstate_ahci_device = {
+                              1, vmstate_ncq_tfs, NCQTransferState),
+         VMSTATE_END_OF_LIST()
+     },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_ahci_device_halted,
++        NULL
++    },
+ };
  
-     switch (s->feature) {
-     case SMART_DISABLE:
--        s->smart_enabled = 0;
--        return true;
--
-     case SMART_ENABLE:
--        s->smart_enabled = 1;
-+        s->smart_enabled = s->feature == SMART_ENABLE;
-+        put_le16((uint16_t *)s->identify_data + 85, ide_identify_word85(s));
-         return true;
- 
-     case SMART_ATTR_AUTOSAVE:
-@@ -2901,6 +2902,7 @@ static int ide_drive_post_load(void *opaque, int version_id)
- 
-     if (s->blk && s->identify_set) {
-         blk_set_enable_write_cache(s->blk, !!(s->identify_data[85] & (1 << 5)));
-+        s->smart_enabled = s->identify_data[85] & 1;
-     }
-     return 0;
+ static int ahci_state_post_load(void *opaque, int version_id)
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 291f29e762..6acb2327e3 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1169,6 +1169,68 @@ static void test_flush_retry(void)
+     ahci_shutdown(ahci);
  }
+ 
++/*
++ * After a command fails, the HBA processes no further commands until software
++ * clears PxCMD.ST (AHCI 1.3.1 6.2.2), so it does not execute the failed
++ * command again either.
++ */
++static void test_halt_after_error(void)
++{
++    g_autofree unsigned char *before = g_malloc(512);
++    g_autofree unsigned char *tx = g_malloc(512);
++    g_autofree unsigned char *rx = g_malloc(512);
++    AHCIQState *ahci;
++    AHCICommand *cmd;
++    uint32_t pending;
++    uint64_t ptr;
++    unsigned px;
++
++    prepare_blkdebug_script(debug_path, "write_aio");
++    ahci = ahci_boot_and_enable("-drive file=blkdebug:%s:%s,if=none,id=drive0,"
++                                "format=%s -M q35 -device ide-hd,drive=drive0",
++                                debug_path, tmp_path, imgfmt);
++    px = ahci_port_select(ahci);
++    ahci_port_clear(ahci, px);
++    ahci_io(ahci, px, CMD_READ_DMA_EXT, before, 512, 0);
++    memset(tx, before[0] ^ 0xff, 512);
++
++    /* A WRITE DMA EXT that fails with the injected I/O error */
++    ptr = ahci_alloc(ahci, 512);
++    qtest_bufwrite(ahci->parent->qts, ptr, tx, 512);
++    cmd = ahci_command_create(CMD_WRITE_DMA_EXT);
++    ahci_command_set_buffer(cmd, ptr);
++    ahci_command_set_size(cmd, 512);
++    ahci_command_commit(ahci, cmd, px);
++    ahci_command_issue(ahci, cmd);
++    /* Not ahci_command_verify(), which would restart the port */
++    g_assert_cmphex(ahci_px_rreg(ahci, px, AHCI_PX_IS) & AHCI_PX_IS_TFES,
++                    !=, 0);
++    ahci_command_free(cmd);
++
++    /* A command issued without restarting the port is not processed */
++    cmd = ahci_command_create(CMD_READ_DMA_EXT);
++    ahci_command_set_buffer(cmd, ptr);
++    ahci_command_set_size(cmd, 512);
++    ahci_command_commit(ahci, cmd, px);
++    ahci_command_issue_async(ahci, cmd);
++    /* Nothing to poll for: give the command time to be processed */
++    g_usleep(50 * 1000);
++    pending = ahci_px_rreg(ahci, px, AHCI_PX_CI) &
++              (1u << ahci_command_slot(cmd));
++    ahci_command_free(cmd);
++    ahci_free(ahci, ptr);
++
++    /* Restarting the port drops it; the sector still has its old data */
++    ahci_px_clr(ahci, px, AHCI_PX_CMD, AHCI_PX_CMD_ST);
++    ahci_port_clear(ahci, px);
++    ahci_px_set(ahci, px, AHCI_PX_CMD, AHCI_PX_CMD_ST);
++    ahci_io(ahci, px, CMD_READ_DMA_EXT, rx, 512, 0);
++    g_assert_cmphex(memcmp(rx, before, 512), ==, 0);
++    g_assert_cmphex(pending, !=, 0);
++
++    ahci_shutdown(ahci);
++}
++
+ /**
+  * Basic sanity test to boot a machine, find an AHCI device, and shutdown.
+  */
+@@ -2404,6 +2466,7 @@ int main(int argc, char **argv)
+ 
+     qtest_add_func("/ahci/flush/simple", test_flush);
+     qtest_add_func("/ahci/flush/retry", test_flush_retry);
++    qtest_add_func("/ahci/io/dma/halt_after_error", test_halt_after_error);
+     qtest_add_func("/ahci/flush/migrate", test_flush_migrate);
+ 
+     qtest_add_func("/ahci/migrate/sanity", test_migrate_sanity);
 -- 
 2.56.1
 
