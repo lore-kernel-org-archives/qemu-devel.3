@@ -1,48 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5019606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B794606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=KJl3ZZnd
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=M0nNHfQ/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp64-0002Tl-RI; Fri, 27 Nov 2026 01:06:12 -0500
+	id 1xWp6b-0004il-GM; Fri, 27 Nov 2026 01:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp4o-0007LU-MG; Fri, 27 Nov 2026 01:04:59 -0500
+ id 1xWp5S-00083I-3q; Fri, 27 Nov 2026 01:05:35 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp4k-0003fK-W8; Fri, 27 Nov 2026 01:04:52 -0500
+ id 1xWp5P-0006LK-KJ; Fri, 27 Nov 2026 01:05:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759043; bh=WZcsg3T7gV+o6mRcxoPMcAb+8k9V20LeO/2QSZBGzc0=;
+ t=1795759046; bh=66B+5IWNTIIs/oBTTaqSrdxOIqK8ZqhBD7MiRfgpahA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KJl3ZZnd7gwd6Qdr5IrM+hEZI1LmclhiWTjrCkDxP12klWnp1cOxpldBlPVqdPRW/
- kiEeCMNr2v/nfM8XAQ4QkwBf/7VbO4EsQMucG8YUBuwHdBPNyaAeZgti/ZqOX2XAJ8
- lN97Am1ymeR4AaN7BxzP9KfaZzRKgv8a1yBZ4toUcxQ6GXmpL+rRpeakwjdD+SYOa2
- iQE7CRv0XEQ7ru/St4b+szRQhXE0e5Q+hp1v2XqVhpOTVaO46r5FSz4gTyYmA597OH
- lXYWd/SeMtJlkHH2cZaA7vD/AWEczd7YTbDDHJV6m34RJ8jGio67FVT8+zuX/lRGO5
- u3A1JDR6us4Tw==
+ b=M0nNHfQ/EiKRSVU44i3K8sXV/b3/VKu17mDF2W5teodF8N6UOvmsjTTx1K3LEJqs3
+ S3LL+SxG8ueAOK1WG6gq0ZJJgA7gttgxEPeclMybpgXkHaZwoINAVoiHAYTx9FBjOa
+ UevaKTbcAUrzAb91tae8fmyrH325wNxzxP/cK5x9QR6fypRLcYutOQc/hiISNeEsV7
+ zvDtP0mBfBthIls4g8mgU2TeGRwXg9HXYuxiWNdiG7XnNxbKDYSwprhOSIS91TLS8g
+ BEnmtlUX8EL/ydsQHhy9tPA+8Run3Jwafhp8UPwK2dqE+Fi+p/Z7IZtYTjm59Cy0ht
+ 94onlvjicuo+g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B0BCD1EA348;
- Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 390AC1EA351;
+ Fri, 27 Nov 2026 08:57:26 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AE757469973;
- Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36A7346997C;
+ Fri, 27 Nov 2026 08:57:26 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9CDC8CF2DE; Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
+ id 2FD7ECF2F0; Fri, 27 Nov 2026 08:57:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 086/152] hw/nvme: clear interrupts on controller
- reset
-Date: Fri, 27 Nov 2026 08:53:44 +0300
-Message-ID: <20261127055709.39630-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifano@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 095/152] hw/usb/dev-mtp: Check length of class
+ control request
+Date: Fri, 27 Nov 2026 08:53:53 +0300
+Message-ID: <20261127055709.39630-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -77,35 +78,41 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Markku Ahvenjärvi <mankku@gmail.com>
+From: Tommaso Califano <tcalifano@redhat.com>
 
-Clear stale CQ interrupt state and ensure the interrupt line is
-deasserted when resetting an NVMe controller.
+usb_mtp_handle_control() reads a 16-bit event code from the request
+data without checking that the host actually sent it. A request with
+wLength < 2 makes the device act on stale bytes left in the control
+buffer.
+
+STALL requests that are too short to hold the event code.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4142
-Fixes: 83d7ed5c570d ("hw/nvme: fix pin-based interrupt behavior (again)")
-Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit ada720d1e8b74f7570d2a3a4052296a4ee234675)
+Fixes: 47bff13cea8d ("dev-mtp: add support for canceling transaction")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4529
+Suggested-by: Hui Peng <https://gitlab.com/benquike>
+Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20261112174907.158825-4-tcalifano@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 69aedf407d94012a7580155bd760e0aa24b6f76b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 6baaae7f9f3..45aacf81467 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8106,6 +8106,10 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-     stl_le_p(&n->bar.intmc, 0);
-     stl_le_p(&n->bar.cc, 0);
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index bc5a6f08917..92dc9a9e21d 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1516,6 +1516,10 @@ static void usb_mtp_handle_control(USBDevice *dev, USBPacket *p,
  
-+    n->cq_pending = 0;
-+    n->irq_status = 0;
-+    nvme_irq_check(n);
-+
-     n->dbbuf_dbs = 0;
-     n->dbbuf_eis = 0;
-     n->dbbuf_enabled = false;
+     switch (request) {
+     case ClassInterfaceOutRequest | 0x64:
++        if (length < sizeof(*event)) {
++            p->status = USB_RET_STALL;
++            break;
++        }
+         if (*event == EVT_CANCEL_TRANSACTION) {
+             g_free(s->result);
+             s->result = NULL;
 -- 
 2.47.3
 
