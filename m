@@ -1,91 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878A9606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 18:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A67606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 19:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WpSzX5NG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX0y6-00016f-J4; Fri, 27 Nov 2026 13:46:51 -0500
+	id 1xX1Nf-0001m5-F9; Fri, 27 Nov 2026 14:13:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xX0xh-000142-Lv
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 13:46:25 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xX1NY-0001k2-G7; Fri, 27 Nov 2026 14:13:05 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xX0xe-0003MB-UK
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 13:46:20 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.100.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xX0xd-00000001IH2-0MM0; Fri, 27 Nov 2026 19:46:17 +0100
-Message-ID: <5be3e4e4-3223-4914-84ae-551d6acc5d5c@maciej.szmigiero.name>
-Date: Fri, 27 Nov 2026 19:46:11 +0100
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xX1NW-0005r6-J3; Fri, 27 Nov 2026 14:13:04 -0500
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 3ED15418B9;
+ Fri, 27 Nov 2026 19:13:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B586A1F000C1;
+ Fri, 27 Nov 2026 19:12:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1795806780;
+ bh=NIA6vEM+YcWX1sXh5hJuHyoqPH1OUdZMzydKosMLNqA=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=WpSzX5NGFodGaasMPe1dhH+2niF5Ygcp6j5HOhl2ghqLKEf0Ih//HWps7P3F0PgHv
+ uD909N/IFSflYlmJmLVjfsJtrZRRMvjy1MnJOhwrHp1ZBDcOBdsjRehM+XAEHtSAUO
+ tZYG4Np+GGB9rQBBQdMfyfeliU+CmT4KhrfGJ6rrL6pCotL364/ncMDSsbIlN/7J+A
+ 3nfTnerdR2tdaz6BVh/jgjSs8YR62vfvHcI6EgOFOdYK0jdI1ky1cbR26LZ5LM2SuR
+ D+wX2pYz9GR6HooSsxKD5qzEamL6azgZCONajk8ajP4R8SIEDB+BbhKxU8VIstmJzV
+ aaJrqbevkYnfw==
+From: Niklas Cassel <cassel@kernel.org>
+To: John Snow <jsnow@redhat.com>,
+	"Denis V. Lunev" <den@openvz.org>
+Cc: Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH 01/13] hw/ide: report the SMART state in IDENTIFY DEVICE
+Date: Fri, 27 Nov 2026 20:12:36 +0100
+Message-ID: <20261127191250.3298004-2-cassel@kernel.org>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261127191250.3298004-1-cassel@kernel.org>
+References: <20261127191250.3298004-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] hw/hyperv/vmbus: check rx_queue head and size in
- post_load
-To: lbyxiaolizi <lbyxiaolizi@x6z.top>
-References: <cover.1793370600.git.lbyxiaolizi@x6z.top>
- <7291dd89682cd9d64dac5ffde6265e74128c6226.1793370600.git.lbyxiaolizi@x6z.top>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Cc: qemu-devel@nongnu.org
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <7291dd89682cd9d64dac5ffde6265e74128c6226.1793370600.git.lbyxiaolizi@x6z.top>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,31 +66,99 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 30.10.2026 15:45, lbyxiaolizi wrote:
-> VMBus.rx_queue has HV_MSG_QUEUE_LEN (16) entries, and vmbus_post_load()
-> schedules process_message(), which indexes
-> vmbus->rx_queue[vmbus->rx_queue_head] directly.
-> 
-> vmstate_rx_queue loads rx_queue_head and rx_queue_size as uint8_t
-> values without bounds checking. Add a post_load hook to reject
-> rx_queue_head >= HV_MSG_QUEUE_LEN or rx_queue_size > HV_MSG_QUEUE_LEN.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4776
-> Signed-off-by: lbyxiaolizi <lbyxiaolizi@x6z.top>
-> ---
->   hw/hyperv/vmbus.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Currently, IDENTIFY DEVICE word 85 bit 0 always reports the SMART feature
+set as enabled, regardless if it has been disabled using SET FEATURES or
+SMART DISABLE OPERATIONS.
 
-Thanks,
-Maciej
+Add a helper to build word85, such that the SMART feature set and the
+write cache is reported in IDENTIFY DEVICE correctly.
+
+Also, just like the write cache state is re-initialized after migration,
+re-initialize the SMART state after migration.
+
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ hw/ide/core.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
+
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 06e6bb6067..7e3f882969 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -138,6 +138,14 @@ static void ide_identify_size(IDEState *s)
+     put_le16(p + 103, s->nb_sectors >> 48);
+ }
+ 
++/* IDENTIFY DEVICE word 85: the commands and feature sets that are enabled */
++static uint16_t ide_identify_word85(IDEState *s)
++{
++    /* 14 = NOP supported, 5=WCACHE enabled, 0=SMART feature set enabled */
++    return (1 << 14) | (blk_enable_write_cache(s->blk) ? 1 << 5 : 0) |
++           (s->smart_enabled ? 1 : 0);
++}
++
+ static void ide_identify(IDEState *s)
+ {
+     uint16_t *p;
+@@ -204,12 +212,7 @@ static void ide_identify(IDEState *s)
+     } else {
+         put_le16(p + 84, (1 << 14) | 0);
+     }
+-    /* 14 = NOP supported, 5=WCACHE enabled, 0=SMART feature set enabled */
+-    if (blk_enable_write_cache(s->blk)) {
+-        put_le16(p + 85, (1 << 14) | (1 << 5) | 1);
+-    } else {
+-        put_le16(p + 85, (1 << 14) | 1);
+-    }
++    put_le16(p + 85, ide_identify_word85(s));
+     /* 13=flush_cache_ext,12=flush_cache,10=lba48 */
+     put_le16(p + 86, (1 << 13) | (1 <<12) | (1 << 10));
+     /* 14=set to 1, 8=has WWN, 1=SMART self test, 0=SMART error logging */
+@@ -1714,12 +1717,12 @@ static bool cmd_set_features(IDEState *s, uint8_t cmd)
+     case 0x02: /* write cache enable */
+         blk_set_enable_write_cache(s->blk, true);
+         identify_data = (uint16_t *)s->identify_data;
+-        put_le16(identify_data + 85, (1 << 14) | (1 << 5) | 1);
++        put_le16(identify_data + 85, ide_identify_word85(s));
+         return true;
+     case 0x82: /* write cache disable */
+         blk_set_enable_write_cache(s->blk, false);
+         identify_data = (uint16_t *)s->identify_data;
+-        put_le16(identify_data + 85, (1 << 14) | 1);
++        put_le16(identify_data + 85, ide_identify_word85(s));
+         ide_flush_cache(s);
+         return false;
+     case 0xcc: /* reverting to power-on defaults enable */
+@@ -1942,11 +1945,9 @@ static bool cmd_smart(IDEState *s, uint8_t cmd)
+ 
+     switch (s->feature) {
+     case SMART_DISABLE:
+-        s->smart_enabled = 0;
+-        return true;
+-
+     case SMART_ENABLE:
+-        s->smart_enabled = 1;
++        s->smart_enabled = s->feature == SMART_ENABLE;
++        put_le16((uint16_t *)s->identify_data + 85, ide_identify_word85(s));
+         return true;
+ 
+     case SMART_ATTR_AUTOSAVE:
+@@ -2901,6 +2902,7 @@ static int ide_drive_post_load(void *opaque, int version_id)
+ 
+     if (s->blk && s->identify_set) {
+         blk_set_enable_write_cache(s->blk, !!(s->identify_data[85] & (1 << 5)));
++        s->smart_enabled = s->identify_data[85] & 1;
+     }
+     return 0;
+ }
+-- 
+2.56.1
 
 
