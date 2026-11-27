@@ -1,51 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F36606A321
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400B2606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=RhqOY5O1
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=aO2lUK8o
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp3M-00057M-R6; Fri, 27 Nov 2026 01:03:25 -0500
+	id 1xWpBM-0007xK-Tz; Fri, 27 Nov 2026 01:11:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp1g-0003F2-5g; Fri, 27 Nov 2026 01:01:42 -0500
+ id 1xWpB5-0007bW-8e; Fri, 27 Nov 2026 01:11:23 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp1L-0005mZ-J1; Fri, 27 Nov 2026 01:01:22 -0500
+ id 1xWpB1-0002bM-Cf; Fri, 27 Nov 2026 01:11:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758881; bh=cH2x/+3Ljp3dISf6dGGgz/+PbOitfvj4OPgaBeJtFpI=;
+ t=1795759049; bh=bADoVsqigttfn/r8KIRTl++aIxuKfwsyCTMydIQZv0c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RhqOY5O1KHxD0Es2HNQOwUAdF4atsXA3/0pCvtbs5Xn2lDUnq/X/p/Qp5bfkD+blb
- U6BarlTTLr/6HEGHh11YqKw8Sj1NB/2wqgRa9TXpuq1au2poUDYefinQXV9zHMmN7g
- 1a4yxbWJ2ZZugVro4Zep7cwrIhBGuLrtgu3Bf0jNO0oDEbWpJ+4noCLpT38f95maZg
- /cmxftbHexpl++AnDJ7O9lG+/1tY8xUKt353LErOhGOgyifv48TKA2VkMxRsfyF9gO
- HtkroJR02vHsWBZv2zSgOXosnTSXBtwMzNgYOvpAvu7NoOHRilV7zWICtvKMtnh5Wt
- MBkATABVJY6nA==
+ b=aO2lUK8oPMxYqhWb9LlqbXgByfJvFRm5nNFywlKqDBeJF2EaGtGFYSof7jcZ6qATb
+ Gb11QAAD017QK+vqVPAqxN4BQjyNhZlu+OnUZH5abwL3sX2KsLBxDBQy98wioaOFhf
+ mrGl/vG3ePiHWCm2Qzp8+2G6qqwGc+ZkV3crNSkGqdf67YimZhCHHgL0S/FjI/isCi
+ l4zMLdWbQsA8U4IDlk7cnpgBqnXjL39RJkAVZFlEBFIM6b5iWjIsIFiOzF5VEqTBzU
+ So79fcvvaQs/ZzRQEseea8ckL3EbFcm/ty+GJPm2ET6G1OEtUMjtlP1PrZOpbnNEqH
+ LgR+v2oDhW8Aw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CC07D1EA30F;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C747A1EA387;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C9E7846994F;
- Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C36854699B2;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A35C2CF29E; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
+ id 95B82CF35C; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Daniel Skinstad Drabitzius <daniel.drabitzius@northern.tech>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 132/140] hw/display/vmware_vga: Zero-initialize
- scratch space
-Date: Fri, 27 Nov 2026 08:53:58 +0300
-Message-ID: <20261127055421.39015-73-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 149/152] hw/block/pflash_cfi01: Allow zero-count
+ buffer write
+Date: Fri, 27 Nov 2026 08:54:47 +0300
+Message-ID: <20261127055709.39630-86-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
-References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -77,42 +78,36 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-The vmware_vga device has a set of scratch registers which the guest
-can use for anything it likes; we implement these by backing them
-with a lump of memory pointed to by s->scratch. However, we allocate
-it with g_malloc(), which means they start out with uninitialized
-contents. We should zero this memory so that we don't potentially
-leak host memory contents to the guest, and so that the guest will
-always see deterministic values.
-
-Since s->scratch has type "uint32_t *" and s->scratch_size is its
-size in 32-bit words, prefer g_new0() over g_malloc0() for this.
+Linux's Intel CFI driver emits a zero count for a single buffered
+write (one write cycle, at any bank width). The block update buffer
+was only started for non-zero counts, so the data was rejected with
+a programming error. Enable the block update buffer for any count.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d34cab9f49bc3 ("VMware SVGA II emulation, by Andrzej Zaborowski.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4519
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261124095719.4126146-2-peter.maydell@linaro.org>
+Fixes: 2563be6317fa ("hw/pflash: fix block write start")
+Reported-by: Daniel Skinstad Drabitzius <daniel.drabitzius@northern.tech>
+Suggested-by: Daniel Skinstad Drabitzius <daniel.drabitzius@northern.tech>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4111
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit fe8c3c714990779540660acc403a7ca03f988fce)
+Message-ID: <20261124185556.81132-3-philmd@oss.qualcomm.com>
+(cherry picked from commit c12cd67241c77dd601f62004aacd02a636ecb07f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index fda3965ca3c..54532d6f08d 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -1255,7 +1255,7 @@ static void vmsvga_init(DeviceState *dev, struct vmsvga_state_s *s,
-                         MemoryRegion *address_space, MemoryRegion *io)
- {
-     s->scratch_size = SVGA_SCRATCH_SIZE;
--    s->scratch = g_malloc(s->scratch_size * 4);
-+    s->scratch = g_new0(uint32_t, s->scratch_size);
- 
-     s->vga.con = graphic_console_init(dev, 0, &vmsvga_ops, s);
- 
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 66539e91c5f..4616767188a 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -598,7 +598,7 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
+         switch (pfl->cmd) {
+         case 0xe8: /* Block write */
+             /* FIXME check @offset, @width */
+-            if (pfl->blk_offset == -1 && pfl->counter) {
++            if (pfl->blk_offset == -1) {
+                 pflash_blk_write_start(pfl, offset);
+             }
+             if (!pfl->ro && (pfl->blk_offset != -1)) {
 -- 
 2.47.3
 
