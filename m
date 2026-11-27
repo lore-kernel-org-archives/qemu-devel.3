@@ -1,55 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C36606A327
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60D0606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ce/K8cwk
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=TzlTChUm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp9E-0003dx-Qc; Fri, 27 Nov 2026 01:09:29 -0500
+	id 1xWpBL-0007o1-K0; Fri, 27 Nov 2026 01:11:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8H-00077d-Rp; Fri, 27 Nov 2026 01:08:31 -0500
+ id 1xWpAW-0006bf-LF; Fri, 27 Nov 2026 01:10:48 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8E-0008Nk-Pm; Fri, 27 Nov 2026 01:08:28 -0500
+ id 1xWpAU-0008TE-8n; Fri, 27 Nov 2026 01:10:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=frGjnXE5JQHay74XKU8NgRMJ1W0cJlPXyib8oqH4hgA=;
+ t=1795759049; bh=IcPjLmqzoFx/l4828qYufbO0PLpKFfScnK4KWUR/xiw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ce/K8cwk6PVu8uyRR4/yBBtw3isdnjA7mT1Qxr0GwWseHUfWAnYpmDMvjGr0GogaL
- rt+02WhV9v+ZsJE2fGeWt6cCE7+T51d3NIX1Xxr/3EYbKhoeApj1emJGwwePbgLbtt
- e716hQPOUd5rvmyJyTbbLHPdaQhbz3GVkzsT4k+AXnHBqk74bsBopzeWEpEnM8GB8P
- giF5x47dSe5BPqoyM73ug278ocychxtVVI+OVdf+Tlc+8DkftzQpirDJgqwbGSrQAw
- E2Rt3G7L8HHu8h+x07h2OaC8rSFQJW9rgWBETZc/khsz3AeauZMSo46urXiWPSDuGS
- 3/xM9A/kpt9OQ==
+ b=TzlTChUmS7vq55h+VyIoqiJpyH2JdZha97EbZW+4sNT++gvjcUn6JBEf8XmnIdJ7K
+ sxN5fggKvfJBuxdH7HLS1a6V4ZD9r7hr/7f65PrdUMzIy4Y0wCoP+pJtMdIW2tP6+B
+ R4uFhgBIm6CyxznxrSxcxQrQ/WCvqk3I3KSa2/RfsvGNFSFDMcJzlCnPEucgyo0xK0
+ hpOuJlGRzwGZ4IlMKjYcgyjYAyHxM/AOjFEICi3SgyRy9y/qcrj80hAc6XaE+yBsO8
+ rmU6DjiWhZ/8dQ+JksmToIhDIi6UhFmsc9ib0VcfwOXT6Rfrb6mcBh4WMQLX2OrVKo
+ X17YRE2kYBSFw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3766B1EA36C;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AB26F1EA382;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 353E1469997;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A8A454699AD;
+ Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 149D4CF326; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id 87093CF352; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Nikolay Kuratov <kniv@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>, Michael S. Tsirkin <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 122/152] qapi/monitor: Handle missing vhost-user
- protocol features
-Date: Fri, 27 Nov 2026 08:54:20 +0300
-Message-ID: <20261127055709.39630-59-mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 144/152] hw/display/vmware_vga: Zero-initialize
+ scratch space
+Date: Fri, 27 Nov 2026 08:54:42 +0300
+Message-ID: <20261127055709.39630-81-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,80 +69,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit f9a8f5812607 moved protocol_features to the vhost-user backend.
-As a result, VhostStatus.protocol_features is only populated for
-vhost-user devices.
+The vmware_vga device has a set of scratch registers which the guest
+can use for anything it likes; we implement these by backing them
+with a lump of memory pointed to by s->scratch. However, we allocate
+it with g_malloc(), which means they start out with uninitialized
+contents. We should zero this memory so that we don't potentially
+leak host memory contents to the guest, and so that the guest will
+always see deterministic values.
 
-For an active kernel vhost device, HMP info virtio-status and QMP
-x-query-virtio-status crashes now because of unset protocol-features.
+Since s->scratch has type "uint32_t *" and s->scratch_size is its
+size in 32-bit words, prefer g_new0() over g_malloc0() for this.
 
-Make protocol-features optional in VhostStatus and skip dumping a
-missing object in HMP.
-
-This is a compatibility break.  Okay, since VhostStatus is only used
-by x-query-virtio-status, which is unstable.
-
-Fixes: f9a8f5812607 ("vhost: move protocol_features to vhost_user")
-Co-authored-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260922213210.1429435-4-vsementsov@yandex-team.ru>
-(cherry picked from commit 8e4906087e874d94a31774bbce8ba35157db6d46)
-(Mjt: back-port across v11.1.0-816-gf3900cfb0cdd
- "monitor: tighten monitor_printf*()")
+Cc: qemu-stable@nongnu.org
+Fixes: d34cab9f49bc3 ("VMware SVGA II emulation, by Andrzej Zaborowski.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4519
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261124095719.4126146-2-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit fe8c3c714990779540660acc403a7ca03f988fce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index a91bb7dbeda..c4adb6eb7bb 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -176,8 +176,10 @@ void hmp_virtio_status(Monitor *mon, const QDict *qdict)
-         hmp_virtio_dump_features(mon, s->vhost_dev->features);
-         monitor_printf(mon, "    Acked features:\n");
-         hmp_virtio_dump_features(mon, s->vhost_dev->acked_features);
--        monitor_printf(mon, "    Protocol features:\n");
--        hmp_virtio_dump_protocols(mon, s->vhost_dev->protocol_features);
-+        if (s->vhost_dev->protocol_features) {
-+            monitor_printf(mon, "    Protocol features:\n");
-+            hmp_virtio_dump_protocols(mon, s->vhost_dev->protocol_features);
-+        }
-     }
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index 567806f0e47..f7289687319 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -1256,7 +1256,7 @@ static void vmsvga_init(DeviceState *dev, struct vmsvga_state_s *s,
+                         MemoryRegion *address_space, MemoryRegion *io)
+ {
+     s->scratch_size = SVGA_SCRATCH_SIZE;
+-    s->scratch = g_malloc(s->scratch_size * 4);
++    s->scratch = g_new0(uint32_t, s->scratch_size);
  
-     qapi_free_VirtioStatus(s);
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 1fc4e38a44d..f8e699a0e4e 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -85,7 +85,8 @@
- #
- # @acked-features: vhost_dev acked_features
- #
--# @protocol-features: vhost_dev protocol_features
-+# @protocol-features: vhost-user protocol features.  Present only for
-+#     vhost-user devices.
- #
- # @max-queues: vhost_dev max_queues
- #
-@@ -104,7 +105,7 @@
-             'vq-index': 'int',
-             'features': 'VirtioDeviceFeatures',
-             'acked-features': 'VirtioDeviceFeatures',
--            'protocol-features': 'VhostDeviceProtocols',
-+            '*protocol-features': 'VhostDeviceProtocols',
-             'max-queues': 'uint64',
-             'backend-cap': 'uint64',
-             'log-enabled': 'bool',
+     s->vga.con = qemu_graphic_console_create(dev, 0, &vmsvga_ops, s);
+ 
 -- 
 2.47.3
 
