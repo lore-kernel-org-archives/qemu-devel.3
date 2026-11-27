@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46D9606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEA0606A326
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=KM+n1anZ
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ZQ5FYHsC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp7c-0006Gl-W4; Fri, 27 Nov 2026 01:07:50 -0500
+	id 1xWpAN-0005wh-Qw; Fri, 27 Nov 2026 01:10:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7B-00063X-Nz; Fri, 27 Nov 2026 01:07:25 -0500
+ id 1xWp8j-00089o-8U; Fri, 27 Nov 2026 01:08:57 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp79-0002ZS-Pc; Fri, 27 Nov 2026 01:07:21 -0500
+ id 1xWp8g-0000WL-K8; Fri, 27 Nov 2026 01:08:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=8cLM5gj9kSlcl8zApT/4UaOcIAGh/O5lC695QOFIydk=;
+ t=1795759048; bh=+Dph76DD3+P+QAclsgVJOChlhLxoopmwIUv9pU/EGqs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KM+n1anZ6cPDwO23g6ivh5g/ng2pMo1tL5zKSKOmWdKysxv8nuchwkNLWWwOFwSq9
- 3NawqBIvaUk0Op2sxiURLLzJ+bLO+bLuWl4N1TmBK3FbV/li6gWzy92YV/4Y6uUIe3
- RqPhQeKMogSMJ9oqUy7bDZ0fVpqXfGEGkZWcOUTyw7xkf1qc2LkkSWtnA5NndcQW8Q
- P4gHpM6VNR3yeT1xkKFwUr0pOj8cFO0J+s0/6fv2rZhlGmLCWuU5AXDuYqlxrr3Q/Z
- ab87Dcp/Wn4pgTIFuc6kMbauHBtgCS4QBXfiTkXMBMlk8InRCMsnaKwvYi3BXPe+Bb
- rh5MxWI7TD/HA==
+ b=ZQ5FYHsCw4rtkdjncnNmb652PWqz77wlH/BbgfnJwLEenVqDh794xg8zBUYT5s07U
+ s3ODKAHcCR5xmHbRXwV826zW6sQex6emwg7TgdWmmGhzilRPWZyOnOgdXUSzbFHbCo
+ LHZ0RwTBaHTdYqY405/OYxwDNYGi2Yv/oW0YO3jHn4I3J+eNW2Jw68RL01d/cXbFUc
+ H3IJfMA13heOR31hbIw85wHwGXoT+HASKBoyOx+nq520z4LOwrE2eVnoEjxrSCpmEX
+ w9AOvloM3CSYWWhGhkYR0E0f78Yu+PdmWYAeN4Dm8bYDMwi8SiiS3GySP71KgeXK+j
+ Tq5J75MR51jYw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 00FB21EA360;
+ by isrv.corpit.ru (Postfix) with ESMTP id 49FE01EA370;
  Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F2E7E46998B;
- Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 47AEE46999B;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E5567CF30E; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
+ id 2021CCF32E; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zixin Wang <w1355457260@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 110/152] target/i386/tcg: treat ENTER's size
- operand as unsigned
-Date: Fri, 27 Nov 2026 08:54:08 +0300
-Message-ID: <20261127055709.39630-47-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 126/152] hw/nvme: fix open zone zrwa allocation
+Date: Fri, 27 Nov 2026 08:54:24 +0300
+Message-ID: <20261127055709.39630-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -75,122 +75,68 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Zixin Wang <w1355457260@gmail.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-The first immediate operand of ENTER is the size of the dynamic storage
-area and is unsigned.  Decoding it as a signed immediate sign-extends
-values with bit 15 set, moving the stack pointer in the wrong direction.
+nvme_zrm_open_flags incorrectly allocates a ZRWA resource regardless of
+the zone state. A ZRWA resource shall only be allocated if
 
-Decode it with I_unsigned and add a regression test covering 32-bit and
-64-bit guests.
+    a) there are available ZRWA resources; and
+    b) the zone is empty.
 
-Tested with a minimal x86_64-linux-user build; the new test fails before
-the change and passes after it.
+Fix the state machine and error out early.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4643
-Signed-off-by: Zixin Wang <w1355457260@gmail.com>
-Link: https://lore.kernel.org/r/CABG6VKODisrETOuH5thhimg_DtJLH+1wmARKL5OsoND5Qse_TA@mail.gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 40a6c128beeb72fa6d17e8c393b3d60e09ca0a69)
-(Mjt: back-port tests across make->meson conversion)
+Cc: qemu-stable@nongnu.org
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+Fixes: e321b4cdc2dd ("hw/nvme: add support for zoned random write area")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 86d136c48476738ab6831940ee24c1482f8a403d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 5532ed0d7e0..687ed6262dc 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1949,7 +1949,7 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xBE] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
-     [0xBF] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
- 
--    [0xC8] = X86_OP_ENTRYrr(ENTER, I,w, I,b),
-+    [0xC8] = X86_OP_ENTRYrr(ENTER, I_unsigned, w, I, b),
-     [0xC9] = X86_OP_ENTRY1(LEAVE, A,d64),
-     [0xCA] = X86_OP_ENTRYr(RETF,  I,w),
-     [0xCB] = X86_OP_ENTRY0(RETF),
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 2115c5cd24b..c4ad6fdeb22 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1895,7 +1895,7 @@ static void gen_popa(DisasContext *s)
-     gen_stack_update(s, 8 * size);
- }
- 
--static void gen_enter(DisasContext *s, int esp_addend, int level)
-+static void gen_enter(DisasContext *s, uint16_t esp_addend, int level)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 10564813273..f7973bbc701 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2037,10 +2037,19 @@ enum {
+ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+                                     NvmeZone *zone, int flags)
  {
-     MemOp d_ot = mo_pushpop(s, s->dflag);
-     MemOp a_ot = mo_stacksize(s);
-diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
-index 886a9767751..e3544d27cb7 100644
---- a/tests/tcg/i386/Makefile.target
-+++ b/tests/tcg/i386/Makefile.target
-@@ -14,7 +14,7 @@ config-cc.mak: Makefile
- I386_SRCS=$(notdir $(wildcard $(I386_SRC)/*.c))
- ALL_X86_TESTS=$(I386_SRCS:.c=)
- SKIP_I386_TESTS=test-i386-ssse3 test-avx test-3dnow test-mmx test-flags
--X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 test-idiv-overflow $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
-+X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 test-idiv-overflow test-i386-enter $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
++    NvmeZoneState state = nvme_get_zone_state(zone);
++
++    bool zrwaa =
++        (flags & NVME_ZRM_ZRWA) && !(zone->d.za & NVME_ZA_ZRWA_VALID);
++
+     int act = 0;
+     uint16_t status;
  
- test-i386-sse-exceptions: CFLAGS += -msse4.1 -mfpmath=sse
- run-test-i386-sse-exceptions: QEMU_OPTS += -cpu max
-@@ -67,6 +67,8 @@ else
- SKIP_I386_TESTS+=test-i386-fprem
- endif
- 
-+test-i386-enter: CFLAGS=-O2 -fomit-frame-pointer
-+
- # Update TESTS
- I386_TESTS:=$(filter-out $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
- TESTS=$(MULTIARCH_TESTS) $(I386_TESTS)
-diff --git a/tests/tcg/i386/test-i386-enter.c b/tests/tcg/i386/test-i386-enter.c
-new file mode 100644
-index 00000000000..509740d88c9
---- /dev/null
-+++ b/tests/tcg/i386/test-i386-enter.c
-@@ -0,0 +1,42 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * ENTER's 16-bit size operand is unsigned.  If the decoder sign-extends
-+ * it, the stack pointer moves in the wrong direction.
-+ */
-+#include <stdio.h>
-+
-+static int check_enter(void)
-+{
-+    unsigned long before, after;
-+
-+#ifdef __x86_64__
-+    __asm__ volatile(
-+        "movq %%rsp, %0\n\t"
-+        "enter $0x8000, $0\n\t"
-+        "movq %%rsp, %1\n\t"
-+        "leave\n\t"
-+        : "=r"(before), "=r"(after)
-+        :
-+        : "memory");
-+    return (before - after) == 0x8008 ? 0 : 1;
-+#else
-+    __asm__ volatile(
-+        "movl %%esp, %0\n\t"
-+        "enter $0x8000, $0\n\t"
-+        "movl %%esp, %1\n\t"
-+        "leave\n\t"
-+        : "=r"(before), "=r"(after)
-+        :
-+        : "memory");
-+    return (before - after) == 0x8004 ? 0 : 1;
-+#endif
-+}
-+
-+int main(void)
-+{
-+    if (check_enter()) {
-+        printf("FAIL: ENTER treated the 16-bit size operand as signed\n");
-+        return 1;
+-    switch (nvme_get_zone_state(zone)) {
++    if (zrwaa && state != NVME_ZONE_STATE_EMPTY) {
++        return NVME_INVALID_ZONE_OP | NVME_DNR;
 +    }
-+    return 0;
-+}
++
++    switch (state) {
+     case NVME_ZONE_STATE_EMPTY:
+         act = 1;
+ 
+@@ -2050,8 +2059,7 @@ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+         if (n->params.auto_transition_zones) {
+             nvme_zrm_auto_transition_zone(ns);
+         }
+-        status = nvme_zns_check_resources(ns, act, 1,
+-                                          (flags & NVME_ZRM_ZRWA) ? 1 : 0);
++        status = nvme_zns_check_resources(ns, act, 1, zrwaa);
+         if (status) {
+             return status;
+         }
+@@ -2079,7 +2087,7 @@ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+         /* fallthrough */
+ 
+     case NVME_ZONE_STATE_EXPLICITLY_OPEN:
+-        if (flags & NVME_ZRM_ZRWA) {
++        if (zrwaa) {
+             ns->zns.numzrwa--;
+ 
+             zone->d.za |= NVME_ZA_ZRWA_VALID;
 -- 
 2.47.3
 
