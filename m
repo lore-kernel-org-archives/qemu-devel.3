@@ -1,52 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54E5606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87B1606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=xlnzzqYH
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=QyBg12G+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWoy2-00038W-Up; Fri, 27 Nov 2026 00:57:55 -0500
+	id 1xWowI-00058K-L2; Fri, 27 Nov 2026 00:56:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWoxx-00035e-Cn; Fri, 27 Nov 2026 00:57:49 -0500
+ id 1xWow4-0004iE-IS; Fri, 27 Nov 2026 00:55:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWoxv-0007JL-Af; Fri, 27 Nov 2026 00:57:48 -0500
+ id 1xWow2-0000Y3-Al; Fri, 27 Nov 2026 00:55:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758877; bh=uYUgT0wcrNpC1/hT3uqOlsgZDY3TnKdp3d0NAdw7tBA=;
+ t=1795758873; bh=oz3lx6F0WctTXoLzva3QVFF1Ke7nEvU8gnCJq690Uzc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xlnzzqYHC2jHU80+/F18fBxhaq3Gj2TGdZ24P0KE5V/rg1LWNDmR6jtq/HGWPWe7N
- 63ZSbphsNbYK26HRtPL2y6K31oyMRuEun+ncUTyvmNoBY4MEEA49LedGPyw8iYzORT
- jwiXyG1Sw7xk5quSvjcthVHSx/TONrcHvCyQ821FHTtsCAHRmDEskJ5jrp6wh7v3bp
- qaTNvFKKZqLuSLiYZWahLX4S14kuZLnPuSLxU1pMFnz5gYm36leG9/sCppP6MJRiW9
- gDaPhegZnQVxadrAY+QDbFj0u4vRUln7ioqwA0u2m9JLmYbLtIBz+zlFrnGVDirL23
- 04Cn073B35wjg==
+ b=QyBg12G+cn6K5p2FgWN7avLLsN0nwD26LUQoAzIPuZuc3gmdEWquBtrF65qnOhcpH
+ CVG6l+tI4brwFOVVZ1WVv8x5k5/AeQlnmJBvS7mvWqa+iFIe8l+JYk7j2ZQIZ830yo
+ +UVqeELVApRy142bQaJH+/zNUBMh4sFQyfGzBQdEpnyUJsS4auwgVYVX7LqCc29uJz
+ OsOFs1P8L5G/7z/nyuAebDVoYx4NumCgOt9tOqNk/b7GdVK5ts0kF9mFLluM2QBMuS
+ 6QuI3squzlgL05+GSYvbkSzTqNJhchUmfsKB3SVonlYBsW/WnhIO6nV+oZgWgH24EW
+ DA2DSrax6bP9g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A94901EA2EB;
- Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D1FD41EA2D6;
+ Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A713B469926;
- Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFABB469913;
+ Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 935C7CF258; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ id C5B1DCF232; Fri, 27 Nov 2026 08:54:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, malike <malike@kylinos.cn>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 097/140] block/bochs: validate bitmap size and
- compute extent_blocks after validation
-Date: Fri, 27 Nov 2026 08:53:23 +0300
-Message-ID: <20261127055421.39015-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Markku=20Ahvenj=C3=A4rvi?= <mankku@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 078/140] hw/nvme: prevent cq_pending underflow
+Date: Fri, 27 Nov 2026 08:53:04 +0300
+Message-ID: <20261127055421.39015-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,64 +75,71 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: malike <malike@kylinos.cn>
+From: Markku Ahvenjärvi <mankku@gmail.com>
 
-bochs_open() computes bitmap_blocks using the formula
-"1 + (le32_to_cpu(bochs.bitmap) - 1) / 512".  le32_to_cpu() returns
-uint32_t, so when bochs.bitmap is zero the subtraction wraps to
-UINT32_MAX (0xFFFFFFFF) in unsigned arithmetic, yielding
-bitmap_blocks = 8388608 instead of 1.
+cq_pending counts interrupt-enabled completion queues with unconsumed
+entries. nvme_cq_notifier() and nvme_process_db() decrement it whenever
+a CQ becomes empty, but they may also process a notification or doorbell
+write for a CQ that was already empty.
 
-The bitmap field is read directly from the on-disk image header and was
-never validated.  The overflowed bitmap_blocks propagates into
-seek_to_sector()'s bitmap_offset calculation, causing reads to target
-wrong offsets and return I/O errors or incorrect data.
-
-Add an explicit zero check for bochs.bitmap before the formula.
-
-Also move the extent_blocks calculation to after the existing
-extent_size validation.  The same "1 + (x - 1) / 512" pattern applies
-to extent, but extent==0 is already caught by the "extent_size <
-BDRV_SECTOR_SIZE" check; the calculation is moved after that check for
-clarity and robustness, and uses the already-validated s->extent_size
-instead of re-reading the header field.
+Decrement cq_pending only when the CQ contained pending completions
+before its head update. Otherwise cq_pending may underflow and
+prevent legacy INTx from being deasserted.
 
 Cc: qemu-stable@nongnu.org
-Fixes: a8753c3466dc ("Bochs disk image support")
-Signed-off-by: malike <malike@kylinos.cn>
-Message-ID: <20261014033419.236057-1-malike@kylinos.cn>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit e777dac72518c20d8780e119fb5695c169e9bda4)
+Fixes: 83d7ed5c570d ("hw/nvme: fix pin-based interrupt behavior (again)")
+Fixes: 2e53b0b45024 ("hw/nvme: Use ioeventfd to handle doorbell updates")
+Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit e019b94a0bca322b312b3843dd1a8cd9c475a50e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/bochs.c b/block/bochs.c
-index b099fb52fe8..4bdfb0920bb 100644
---- a/block/bochs.c
-+++ b/block/bochs.c
-@@ -167,8 +167,13 @@ static int bochs_open(BlockDriverState *bs, QDict *options, int flags,
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 60f67741f9e..94f52cb70f8 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4741,6 +4741,7 @@ static void nvme_cq_notifier(EventNotifier *e)
+ {
+     NvmeCQueue *cq = container_of(e, NvmeCQueue, notifier);
+     NvmeCtrl *n = cq->ctrl;
++    bool pending = cq->tail != cq->head;
  
-     s->data_offset = le32_to_cpu(bochs.header) + (s->catalog_size * 4);
+     if (!event_notifier_test_and_clear(e)) {
+         return;
+@@ -4749,7 +4750,7 @@ static void nvme_cq_notifier(EventNotifier *e)
+     nvme_update_cq_head(cq);
  
-+    if (le32_to_cpu(bochs.bitmap) == 0) {
-+        error_setg(errp, "Bitmap size must not be zero");
-+        ret = -EINVAL;
-+        goto fail;
-+    }
-+
-     s->bitmap_blocks = 1 + (le32_to_cpu(bochs.bitmap) - 1) / 512;
--    s->extent_blocks = 1 + (le32_to_cpu(bochs.extent) - 1) / 512;
+     if (cq->tail == cq->head) {
+-        if (cq->irq_enabled) {
++        if (cq->irq_enabled && pending) {
+             n->cq_pending--;
+         }
  
-     s->extent_size = le32_to_cpu(bochs.extent);
-     if (s->extent_size < BDRV_SECTOR_SIZE) {
-@@ -188,6 +193,8 @@ static int bochs_open(BlockDriverState *bs, QDict *options, int flags,
-         goto fail;
-     }
+@@ -8152,6 +8153,7 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
  
-+    s->extent_blocks = 1 + (s->extent_size - 1) / 512;
-+
-     if (s->catalog_size < DIV_ROUND_UP(bs->total_sectors,
-                                        s->extent_size / BDRV_SECTOR_SIZE))
-     {
+         uint16_t new_head = val & 0xffff;
+         NvmeCQueue *cq;
++        bool pending;
+ 
+         qid = (addr - (0x1000 + (1 << 2))) >> 3;
+         if (unlikely(nvme_check_cqid(n, qid))) {
+@@ -8206,13 +8208,14 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+             qemu_bh_schedule(cq->bh);
+         }
+ 
++        pending = cq->tail != cq->head;
+         cq->head = new_head;
+         if (!qid && n->dbbuf_enabled) {
+             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
+         }
+ 
+         if (cq->tail == cq->head) {
+-            if (cq->irq_enabled) {
++            if (cq->irq_enabled && pending) {
+                 n->cq_pending--;
+             }
+ 
 -- 
 2.47.3
 
