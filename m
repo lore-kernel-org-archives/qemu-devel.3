@@ -1,53 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D27F606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F36606A321
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=x59G8KuI
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=RhqOY5O1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp9n-0005aI-Fk; Fri, 27 Nov 2026 01:10:04 -0500
+	id 1xWp3M-00057M-R6; Fri, 27 Nov 2026 01:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8i-0007zA-3K; Fri, 27 Nov 2026 01:08:56 -0500
+ id 1xWp1g-0003F2-5g; Fri, 27 Nov 2026 01:01:42 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp8e-0000NH-U5; Fri, 27 Nov 2026 01:08:55 -0500
+ id 1xWp1L-0005mZ-J1; Fri, 27 Nov 2026 01:01:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=cOkT3Nt28S6VeVnrazZQae4AwPt/CupT90ol7H/THAw=;
+ t=1795758881; bh=cH2x/+3Ljp3dISf6dGGgz/+PbOitfvj4OPgaBeJtFpI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=x59G8KuIsMbwXreLFF4eXdBHgb6AxfvQjemwrlVSSokz2pPCBty3R82kPWEoVP159
- DYspDEzOvShLhz9BEOuDNH28m4KdTXMQVJkLacb35B6ZplltlTieNImasuldZ1Y7eM
- 1iH5z8i+as8Rq4Isy3T0T8XAyUPjEsAwZJHH0RV+0B/l6OP6WydM0IsQanyvY/iLgG
- 93QqugLYao7J38IJcSHxwqL4CHwzQiy5BZh3PXqqz2uUnhrHK+2HFdN/oycrd29FYl
- p423/SzxiosnuuLxHjXsTQU8GOfxOmBU7xNd13RdFhe/HP4WnfXZu0Sl54ZUCjt57v
- AV5BbN3wHsnZQ==
+ b=RhqOY5O1KHxD0Es2HNQOwUAdF4atsXA3/0pCvtbs5Xn2lDUnq/X/p/Qp5bfkD+blb
+ U6BarlTTLr/6HEGHh11YqKw8Sj1NB/2wqgRa9TXpuq1au2poUDYefinQXV9zHMmN7g
+ 1a4yxbWJ2ZZugVro4Zep7cwrIhBGuLrtgu3Bf0jNO0oDEbWpJ+4noCLpT38f95maZg
+ /cmxftbHexpl++AnDJ7O9lG+/1tY8xUKt353LErOhGOgyifv48TKA2VkMxRsfyF9gO
+ HtkroJR02vHsWBZv2zSgOXosnTSXBtwMzNgYOvpAvu7NoOHRilV7zWICtvKMtnh5Wt
+ MBkATABVJY6nA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 452321EA36F;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CC07D1EA30F;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 432A446999A;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C9E7846994F;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1D338CF32C; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id A35C2CF29E; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 125/152] hw/nvme: fix zone descriptor extension
- allocation overflow
-Date: Fri, 27 Nov 2026 08:54:23 +0300
-Message-ID: <20261127055709.39630-62-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 132/140] hw/display/vmware_vga: Zero-initialize
+ scratch space
+Date: Fri, 27 Nov 2026 08:53:58 +0300
+Message-ID: <20261127055421.39015-73-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
-References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,56 +77,42 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-nvme_ns_zoned_init_state sizes the zone descriptor extension array
-with 32-bit arithmetic. A large enough zone extension size and number of
-zones will wrap, causing either null pointer deref on Set Zone
-Descriptor Extension or an out-of-bounds write.
+The vmware_vga device has a set of scratch registers which the guest
+can use for anything it likes; we implement these by backing them
+with a lump of memory pointed to by s->scratch. However, we allocate
+it with g_malloc(), which means they start out with uninitialized
+contents. We should zero this memory so that we don't potentially
+leak host memory contents to the guest, and so that the guest will
+always see deterministic values.
 
-nvme_get_zd_extension has the same problem.
-
-Fix the initialization by using g_malloc0_n and compute the per-zone
-offset using 64-bit arithmetic.
+Since s->scratch has type "uint32_t *" and s->scratch_size is its
+size in 32-bit words, prefer g_new0() over g_malloc0() for this.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 1a9290ade33a ("hw/block/nvme: Support Zone Descriptor Extensions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4730
-Reported-by: Karl Mehltretter
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 63c9653696862f55646fa7a88833857cabb6a07d)
+Fixes: d34cab9f49bc3 ("VMware SVGA II emulation, by Andrzej Zaborowski.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4519
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261124095719.4126146-2-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit fe8c3c714990779540660acc403a7ca03f988fce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 16524f2d915..5d20f230018 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -249,8 +249,8 @@ static void nvme_ns_zoned_init_state(NvmeNamespace *ns)
- 
-     ns->zone_array = g_new0(NvmeZone, ns->num_zones);
-     if (ns->params.zd_extension_size) {
--        ns->zd_extensions = g_malloc0(ns->params.zd_extension_size *
--                                      ns->num_zones);
-+        ns->zd_extensions = g_malloc0_n(ns->num_zones,
-+                                        ns->params.zd_extension_size);
-     }
- 
-     QTAILQ_INIT(&ns->exp_open_zones);
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 43e3c916f73..848786c18b1 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -363,7 +363,8 @@ static inline bool nvme_wp_is_valid(NvmeZone *zone)
- static inline uint8_t *nvme_get_zd_extension(NvmeNamespace *ns,
-                                              uint32_t zone_idx)
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index fda3965ca3c..54532d6f08d 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -1255,7 +1255,7 @@ static void vmsvga_init(DeviceState *dev, struct vmsvga_state_s *s,
+                         MemoryRegion *address_space, MemoryRegion *io)
  {
--    return &ns->zd_extensions[zone_idx * ns->params.zd_extension_size];
-+    return ns->zd_extensions + (uint64_t)zone_idx *
-+        ns->params.zd_extension_size;
- }
+     s->scratch_size = SVGA_SCRATCH_SIZE;
+-    s->scratch = g_malloc(s->scratch_size * 4);
++    s->scratch = g_new0(uint32_t, s->scratch_size);
  
- static inline void nvme_aor_inc_open(NvmeNamespace *ns)
+     s->vga.con = graphic_console_init(dev, 0, &vmsvga_ops, s);
+ 
 -- 
 2.47.3
 
