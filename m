@@ -1,36 +1,36 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51551606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 18:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878A9606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 18:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xX0xL-00011h-9j; Fri, 27 Nov 2026 13:45:59 -0500
+	id 1xX0y6-00016f-J4; Fri, 27 Nov 2026 13:46:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xX0x9-00011N-MR
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 13:45:48 -0500
+ id 1xX0xh-000142-Lv
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 13:46:25 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xX0x6-0003Jn-M0
- for qemu-devel@nongnu.org; Fri, 27 Nov 2026 13:45:47 -0500
+ id 1xX0xe-0003MB-UK
+ for qemu-devel@nongnu.org; Fri, 27 Nov 2026 13:46:20 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.100.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xX0wv-00000001IGm-0gAN; Fri, 27 Nov 2026 19:45:33 +0100
-Message-ID: <541a90ac-bede-4861-a0e9-e17bc7c00188@maciej.szmigiero.name>
-Date: Fri, 27 Nov 2026 19:45:27 +0100
+ id 1xX0xd-00000001IH2-0MM0; Fri, 27 Nov 2026 19:46:17 +0100
+Message-ID: <5be3e4e4-3223-4914-84ae-551d6acc5d5c@maciej.szmigiero.name>
+Date: Fri, 27 Nov 2026 19:46:11 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] hw/hyperv/vmbus: check seen_gfns <= num_gfns in gpadl
+Subject: Re: [PATCH 5/9] hw/hyperv/vmbus: check rx_queue head and size in
  post_load
 To: lbyxiaolizi <lbyxiaolizi@x6z.top>
 References: <cover.1793370600.git.lbyxiaolizi@x6z.top>
- <8ac1c98ae3c149facc2bff8c29e15c212b52cb4b.1793370600.git.lbyxiaolizi@x6z.top>
+ <7291dd89682cd9d64dac5ffde6265e74128c6226.1793370600.git.lbyxiaolizi@x6z.top>
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
 Cc: qemu-devel@nongnu.org
@@ -75,7 +75,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
  oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
  1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <8ac1c98ae3c149facc2bff8c29e15c212b52cb4b.1793370600.git.lbyxiaolizi@x6z.top>
+In-Reply-To: <7291dd89682cd9d64dac5ffde6265e74128c6226.1793370600.git.lbyxiaolizi@x6z.top>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -105,19 +105,20 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 30.10.2026 15:45, lbyxiaolizi wrote:
-> vmstate_gpadl allocates gpadl->gfns with num_gfns elements and loads
-> seen_gfns as a raw uint32_t. If seen_gfns > num_gfns, the unsigned
-> subtraction num_gfns - seen_gfns in handle_gpadl_body() wraps around
-> and writes past gpadl->gfns[].
+> VMBus.rx_queue has HV_MSG_QUEUE_LEN (16) entries, and vmbus_post_load()
+> schedules process_message(), which indexes
+> vmbus->rx_queue[vmbus->rx_queue_head] directly.
 > 
-> Reject seen_gfns > num_gfns in a post_load hook on vmstate_gpadl.
+> vmstate_rx_queue loads rx_queue_head and rx_queue_size as uint8_t
+> values without bounds checking. Add a post_load hook to reject
+> rx_queue_head >= HV_MSG_QUEUE_LEN or rx_queue_size > HV_MSG_QUEUE_LEN.
 > 
 > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4776
 > Signed-off-by: lbyxiaolizi <lbyxiaolizi@x6z.top>
 > ---
->   hw/hyperv/vmbus.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-
+>   hw/hyperv/vmbus.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
 Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
 Thanks,
