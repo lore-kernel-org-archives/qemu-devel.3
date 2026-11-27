@@ -1,52 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D225606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544D8606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=J83WKfm8
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=hWdKjls7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp5e-0008KG-Vp; Fri, 27 Nov 2026 01:05:47 -0500
+	id 1xWp3a-0005WY-Rc; Fri, 27 Nov 2026 01:03:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2P-0004HJ-Lv; Fri, 27 Nov 2026 01:02:30 -0500
+ id 1xWp1l-0003Jt-74; Fri, 27 Nov 2026 01:01:45 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp2N-0002GR-Bm; Fri, 27 Nov 2026 01:02:24 -0500
+ id 1xWp1g-00085f-IQ; Fri, 27 Nov 2026 01:01:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759041; bh=y8sbNur2Ew8KHsSqZLPIjLrwGRaNLDcX95X48jJypbg=;
+ t=1795758881; bh=kTKCsOzWr+7dbe79l/W99y80uvF0lBiylzUXcoc3s+A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=J83WKfm8es1Drg90ML5Wl4KSd0+9lGDjivDzfoLIY5GZfoQ3RPZwOSR/XOcDRqZzf
- Q4ScmSEGdh08MZipOZnPGuUi8ZgR0LZfeaZL+JExzWwJ741Yzgwds+pRdOMKkXluau
- cqpzhfLAuifV198Ivkv0psz9e9BWd3yBqqgUsNsEaTQRqp0PpY9dd3M4xSXk+oLhvn
- itnUyrAzqoU1/IACkHBc8wU1duwsp1e9vK0jo0HbLYTYRidQ1ZaPUWafT+7rv510vO
- /a7H0JbveA72kyInJ6jAYni3/MSbJ/xJvtM21NMAWjlQMbFSGmvRhtyQbtAMzT9JZa
- rtJUAXr/P5GXg==
+ b=hWdKjls7MzakJt+mrKvzwO+JsJemQVIqWnai1jvH+7eHvDp0R0DfSibGydVeYYKuQ
+ ZAzAFPCnm58K0NBghQQ9cxZ2Sd/vtpdg9D584XYiC20g8Qx1SmB7VihAJO1g2mle+J
+ hTw/ROVt5El2QI6fFjMamuHM2rHKS4g0fEdlLz7tvr7B9UQyFILabBnIyxV6JjNrs0
+ ylfkuh4Eb/IHwFDT4Mx1USoQ/1JbPQ2lM+xFAM7TOo32BqY7FVcPXV+HzZaDckSVgG
+ rRQO10slnyQhq2AnEC9PjX2rtoFY7NfvUAcN0J9tn9o+iACvumvZsCWlDiDk3V5Y13
+ iuY/HYGZ8NA4w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5D73A1EA332;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D0BBA1EA310;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5B09346995E;
- Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CDFD6469950;
+ Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5010DCF2B4; Fri, 27 Nov 2026 08:57:21 +0300 (MSK)
+ id A64E8CF2A0; Fri, 27 Nov 2026 08:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 065/152] hw/core/qdev-properties-system.c: Don't
- leak str in set_drive_helper()
-Date: Fri, 27 Nov 2026 08:53:23 +0300
-Message-ID: <20261127055709.39630-2-mjt@tls.msk.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 133/140] hw/display/vmware_vga: Check for bogus
+ FIFO_STOP and FIFO_NEXT values
+Date: Fri, 27 Nov 2026 08:53:59 +0300
+Message-ID: <20261127055421.39015-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
-References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,73 +78,55 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In set_drive_helper(), we call visit_type_str() to get the value
-being set as a string.  This is an allocated string, and we're
-supposed to free it, but not all paths out of this function do so.
-In particular, the "block backend already exists, change the attached
-node" code path does not free the string. This shows up as a memory
-leak under the newly added virtio-scsi-tests/replaced-node-size
-qtest:
+The guest should never program the FIFO head and tail offsets (in the
+FIFO_NEXT and FIFO_STOP registers) to something outside the bounds of
+the memory area it has defined as for the FIFO via the FIFO_MIN and
+FIFO_MAX registers. If it does that, return a zero fifo length as
+we do for various other bad values.
 
-$ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
-  QTEST_QEMU_BINARY=./qemu-system-i386 \
-  ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 \
-  ./tests/qtest/qos-test --tap -k \
-  -p /i386/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-scsi-pci/virtio-scsi/virtio-scsi-tests/replaced-node-size
-[...]
-Direct leak of 4 byte(s) in 1 object(s) allocated from:
-    #0 0x55f7744155e3 in malloc (/home/pm215/qemu/build/x86-tgt-san-dbg/qemu-system-i386+0x20115e3) (BuildId: 271ffb42d2e322de7813813d8c6cc85351e48a4f)
-    #1 0x713dbd345b79 in g_malloc /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gmem.c:100:13
-    #2 0x713dbd35b988 in g_strdup /usr/src/glib2.0-2.80.0-6ubuntu3.10/debian/build/deb/../../../glib/gstrfuncs.c:323:17
-    #3 0x55f777208021 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
-    #4 0x55f777208021 in qobject_input_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qobject-input-visitor.c:542:12
-    #5 0x55f777204d1c in visit_type_str /home/pm215/qemu/build/x86-tgt-san-dbg/../../qapi/qapi-visit-core.c:349:10
-    #6 0x55f774df80d1 in set_drive_helper /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:129:10
-    #7 0x55f774dee9fa in set_drive_iothread /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties-system.c:224:5
-    #8 0x55f7767cc5c8 in field_prop_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../hw/core/qdev-properties.c:89:12
-    #9 0x55f7767ec12b in object_property_set /home/pm215/qemu/build/x86-tgt-san-dbg/../../qom/object.c:1562:5
-
-Switch to using g_autofree so that the string is properly freed
-all all exit paths.
+Bad values here won't cause any serious problems as we were rejecting
+offsets that would cause us to index outside the s->fifo[] array; but
+they're better rejected. For safety's sake we add an assertion on
+the fifo cursor before we read it.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d1a58c176a11b ("qdev: allow setting drive property for realized device")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Message-id: 20261105114635.3286252-1-peter.maydell@linaro.org
-(cherry picked from commit fc8bb17e47617cee165469fda64293909d0e8ec3)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261124095719.4126146-3-peter.maydell@linaro.org>
+[PMD: Cover whole range in assert()]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 0b3a66649912c1c8e0394d0ef8778c0ad314820c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 5bfdfe1ab9d..52d2590a605 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -119,7 +119,7 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
-     DeviceState *dev = DEVICE(obj);
-     const Property *prop = opaque;
-     void **ptr = object_field_prop_ptr(obj, prop);
--    char *str;
-+    g_autofree char *str = NULL;
-     BlockBackend *blk;
-     bool blk_created = false;
-     int ret;
-@@ -154,7 +154,6 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index 54532d6f08d..bc380d94744 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -581,8 +581,10 @@ static inline int vmsvga_fifo_length(struct vmsvga_state_s *s)
      }
+     if (s->fifo_max > SVGA_FIFO_SIZE ||
+         s->fifo_min >= SVGA_FIFO_SIZE ||
+-        s->fifo_stop >= SVGA_FIFO_SIZE ||
+-        s->fifo_next >= SVGA_FIFO_SIZE) {
++        s->fifo_stop < s->fifo_min ||
++        s->fifo_stop >= s->fifo_max ||
++        s->fifo_next < s->fifo_min ||
++        s->fifo_next >= s->fifo_max) {
+         return 0;
+     }
+     if (s->fifo_max < s->fifo_min + 10 * KiB) {
+@@ -598,7 +600,10 @@ static inline int vmsvga_fifo_length(struct vmsvga_state_s *s)
  
-     if (!*str) {
--        g_free(str);
-         *ptr = NULL;
-         return;
-     }
-@@ -208,8 +207,6 @@ fail:
-         /* If we need to keep a reference, blk_attach_dev() took it */
-         blk_unref(blk);
-     }
--
--    g_free(str);
- }
+ static inline uint32_t vmsvga_fifo_read_raw(struct vmsvga_state_s *s)
+ {
+-    uint32_t cmd = s->fifo[s->fifo_stop >> 2];
++    uint32_t cmd;
++
++    assert(s->fifo_stop < SVGA_FIFO_SIZE);
++    cmd = s->fifo[s->fifo_stop >> 2];
  
- static void set_drive(Object *obj, Visitor *v, const char *name, void *opaque,
+     s->fifo_stop += 4;
+     if (s->fifo_stop >= s->fifo_max) {
 -- 
 2.47.3
 
