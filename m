@@ -1,53 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E13D606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B5B606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=fTsqoMv9
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=SgHWrDfi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWoyu-0004jX-5z; Fri, 27 Nov 2026 00:58:51 -0500
+	id 1xWp01-0000SI-Ex; Fri, 27 Nov 2026 00:59:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWoyo-0004c3-9Z; Fri, 27 Nov 2026 00:58:43 -0500
+ id 1xWozy-0000EV-Un; Fri, 27 Nov 2026 00:59:55 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWoyj-0002wr-MI; Fri, 27 Nov 2026 00:58:39 -0500
+ id 1xWozw-00064L-PT; Fri, 27 Nov 2026 00:59:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795758877; bh=wesWU/kU52fo1IL7Py6uiHo2NbRDJQHY+4zCP0aQHBI=;
+ t=1795758878; bh=/f0P1nfTXib31HZ6rI1+pSbU7rwWRri3iY6L/JlxF64=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fTsqoMv9+sbUMwxVoUu4XIlGfTtcz/kkgUDeSt1EOi9V9VuevFEOwu3DtA5g8qslX
- uZ/o4TwFp7tYFOUy1Yk37VQTBDEc1wrYkCURlKjN6tT21op4jWj+RTic2DxCMCRYHX
- ApVJBIq48NAf/x2/Ht3oDsjQRTv4w17JYFwUfmHVSMoMNCwM2LEAZ9jDV4CQUwuUDo
- bSOTSXe+mtASMujrS/TKvGCyCLBN7HaDuunZcCf20LBOzgO47EwviY8MXEud5QF7qt
- qF103W5W6mGbOhstkCNTKslR0iAjR8BfK69fe5tWWkrKuh+C5Gh3Um/By0ocL41f1l
- iDVV1yUpGqF2Q==
+ b=SgHWrDfinit/nIInW0ATNn7RLKvpCL7Kg/vVzz84BFsqeeMUrM/kS7G/MW93ckwyW
+ 1FZ0m4/9pgrHCLK7QdVkV6RimEot486lrlX+m466evG8osgDwtOWn9Aj37rrVa/Gpd
+ yvJiVWGPIVz72csWICXswLtoN7M/Y6/BRWvPBLFI7h48UOfy+uyxKpybMrFJ1I2gwy
+ 6OyBgqLDQ/jWAS4vzHPOcAJeVwP8j2EwHMioOdiAJZDcbppLfc+myDni8irQM9l902
+ N9cSUXGkIZI5o6UGYe8RGPe/+IgADLXBQqXiLjG9Q2MISIkXvhAqMYsZN17den3Up7
+ 5QECRauVUourg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C52851EA2F1;
- Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 168531EA300;
+ Fri, 27 Nov 2026 08:54:38 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C2EBD46992C;
- Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 141E446993B;
+ Fri, 27 Nov 2026 08:54:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A4F0BCF264; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
+ id D026ECF282; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.16 v2 103/140] tests/tcg: fix load/restore for test-avx
- and test-mmx
-Date: Fri, 27 Nov 2026 08:53:29 +0300
-Message-ID: <20261127055421.39015-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 118/140] linux-user: do not emulate PI futexes
+ given endianness mismatch
+Date: Fri, 27 Nov 2026 08:53:44 +0300
+Message-ID: <20261127055421.39015-59-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,136 +69,77 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-If "r"(&result) uses %rsp, which GCC16 seems eager to do,
-the comparison fails because run_test()'s assembly block
-moves %rsp below the red zone.  Use fixed registers instead.
+For PI futexes, the futex word is expected to contain the thread id in native
+byte order. And failing to emulate that leads to issues as e.g. glibc does
+not expect `ESRCH` to be returned from a `FUTEX_LOCK_PI` operation.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 75b2b67e6a950f731fb7c44ff1f48a7ebd455e89)
+If the mutex is set to be "robust", then this is detected as unrecoverable
+failure and glibc aborts (since a robust mutex should've been unlocked by
+the kernel when the owner dies):
+
+  Fatal glibc error: pthread_mutex_lock.c:450 (__pthread_mutex_lock_full): assertion failed: e != ESRCH || !robust
+  qemu: uncaught target signal 6 (Aborted) - core dumped
+  Aborted (core dumped)
+
+Since `FUTEX_LOCK_PI{,2}` cannot be easily emulated when the host and target
+endianness differs, do not handle them, and return `ENOSYS`. This allows
+e.g. glibc to detect that they do not work and handle things accordingly.
+
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4911
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de> # on 32-bit parisc big endian guest
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 31b27c0b645e8c596e69027d714ce075f1374792)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/i386/test-avx.c b/tests/tcg/i386/test-avx.c
-index 80fe363cfc2..bb37f7953d0 100644
---- a/tests/tcg/i386/test-avx.c
-+++ b/tests/tcg/i386/test-avx.c
-@@ -150,9 +150,10 @@ static void run_test(const TestDef *t)
-             "push rbx\n\t"
-             "push rcx\n\t"
-             "push rdx\n\t"
--            "push %1\n\t"
--            "push %2\n\t"
--            "mov rax, %0\n\t"
-+            "push rsi\n\t"
-+            "push rdi\n\t"
-+            "push rsi\n\t" // result
-+            "push rdi\n\t" // fn
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "shr rbx, 8\n\t"
-@@ -165,19 +166,21 @@ static void run_test(const TestDef *t)
-             REG(LOADREG)
-             "mov rax, 0x240[rax]\n\t"
-             "call [rsp]\n\t"
--            "mov [rsp], rax\n\t"
--            "mov rax, 8[rsp]\n\t"
-+            "mov [rsp], rax\n\t" // save rax
-+            "mov rax, 8[rsp]\n\t" // get back result
-             REG(STOREREG)
-             "mov rbx, [rsp]\n\t"
--            "mov 0x240[rax], rbx\n\t"
-+            "mov 0x240[rax], rbx\n\t"  // rax
-             "mov rbx, 0\n\t"
--            "mov 0x270[rax], rbx\n\t"
--            "mov 0x278[rax], rbx\n\t"
-+            "mov 0x270[rax], rbx\n\t"  // rsp
-+            "mov 0x278[rax], rbx\n\t"  // rbp
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "and rbx, 0xff\n\t"
-             "mov 0x2c0[rax], rbx\n\t"
-             "add rsp, 16\n\t"
-+            "pop rdi\n\t"
-+            "pop rsi\n\t"
-             "pop rdx\n\t"
-             "pop rcx\n\t"
-             "pop rbx\n\t"
-@@ -185,9 +188,8 @@ static void run_test(const TestDef *t)
-             "add rsp, 128\n\t"
-             MMREG(STOREMM)
-             YMMREG(STOREYMM)
--            : : "r"(init), "r"(&result), "r"(t->fn)
-+            : : "a"(init), "S"(&result), "D"(t->fn)
-             : "memory", "cc",
--            "rsi", "rdi",
-             "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
-             "mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7",
-             "ymm0", "ymm1", "ymm2", "ymm3", "ymm4", "ymm5",
-diff --git a/tests/tcg/i386/test-mmx.c b/tests/tcg/i386/test-mmx.c
-index 09e5d583ffd..1a640f8bbbf 100644
---- a/tests/tcg/i386/test-mmx.c
-+++ b/tests/tcg/i386/test-mmx.c
-@@ -154,9 +154,10 @@ static void run_test(const TestDef *t)
-             "push rbx\n\t"
-             "push rcx\n\t"
-             "push rdx\n\t"
--            "push %1\n\t"
--            "push %2\n\t"
--            "mov rax, %0\n\t"
-+            "push rsi\n\t"
-+            "push rdi\n\t"
-+            "push rsi\n\t" // result
-+            "push rdi\n\t" // fn
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "shr rbx, 8\n\t"
-@@ -169,19 +170,21 @@ static void run_test(const TestDef *t)
-             REG(LOADREG)
-             "mov rax, 0xc0[rax]\n\t"
-             "call [rsp]\n\t"
--            "mov [rsp], rax\n\t"
--            "mov rax, 8[rsp]\n\t"
-+            "mov [rsp], rax\n\t" // save rax
-+            "mov rax, 8[rsp]\n\t" // get back result
-             REG(STOREREG)
-             "mov rbx, [rsp]\n\t"
--            "mov 0xc0[rax], rbx\n\t"
-+            "mov 0xc0[rax], rbx\n\t"  // rax
-             "mov rbx, 0\n\t"
--            "mov 0xf0[rax], rbx\n\t"
--            "mov 0xf8[rax], rbx\n\t"
-+            "mov 0xf0[rax], rbx\n\t"  // rsp
-+            "mov 0xf8[rax], rbx\n\t"  // rbp
-             "pushf\n\t"
-             "pop rbx\n\t"
-             "and rbx, 0xff\n\t"
-             "mov 0x140[rax], rbx\n\t"
-             "add rsp, 16\n\t"
-+            "pop rdi\n\t"
-+            "pop rsi\n\t"
-             "pop rdx\n\t"
-             "pop rcx\n\t"
-             "pop rbx\n\t"
-@@ -190,9 +193,8 @@ static void run_test(const TestDef *t)
-             MMREG(STOREMM)
- 	    EMMS "\n\t"
-             XMMREG(STOREXMM)
--            : : "r"(init), "r"(&result), "r"(t->fn)
-+            : : "a"(init), "S"(&result), "D"(t->fn)
-             : "memory", "cc",
--            "rsi", "rdi",
-             "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
-             "mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7",
-             "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5",
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index ffcf6460848..6c425d2fd65 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8043,6 +8043,7 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
+     case FUTEX_WAIT_BITSET:
+         val = tswap32(val);
+         break;
++#if HOST_BIG_ENDIAN == TARGET_BIG_ENDIAN
+     case FUTEX_WAIT_REQUEUE_PI:
+         val = tswap32(val);
+         haddr2 = g2h(cpu, uaddr2);
+@@ -8050,10 +8051,11 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
+     case FUTEX_LOCK_PI:
+     case FUTEX_LOCK_PI2:
+         break;
+-    case FUTEX_WAKE:
+-    case FUTEX_WAKE_BITSET:
+     case FUTEX_TRYLOCK_PI:
+     case FUTEX_UNLOCK_PI:
++#endif
++    case FUTEX_WAKE:
++    case FUTEX_WAKE_BITSET:
+         timeout = 0;
+         break;
+     case FUTEX_FD:
+@@ -8061,7 +8063,9 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
+         timeout = 0;
+         break;
+     case FUTEX_CMP_REQUEUE:
++#if HOST_BIG_ENDIAN == TARGET_BIG_ENDIAN
+     case FUTEX_CMP_REQUEUE_PI:
++#endif
+         val3 = tswap32(val3);
+         /* fall through */
+     case FUTEX_REQUEUE:
 -- 
 2.47.3
 
