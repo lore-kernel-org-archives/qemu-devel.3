@@ -1,51 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1634A606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296FB606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=OY8I12O7
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=FOT+p3Tl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp8m-00006O-Oz; Fri, 27 Nov 2026 01:09:01 -0500
+	id 1xWozv-0008CZ-7F; Fri, 27 Nov 2026 00:59:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7i-0006Qy-EJ; Fri, 27 Nov 2026 01:07:54 -0500
+ id 1xWozr-0007tx-Lb; Fri, 27 Nov 2026 00:59:47 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp7f-00067T-8G; Fri, 27 Nov 2026 01:07:54 -0500
+ id 1xWozp-0002uU-CQ; Fri, 27 Nov 2026 00:59:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759048; bh=Ff+9B8nIiacnkgkAzOz84oWhFZwz1NZZn2HhJLq+AJE=;
+ t=1795758878; bh=LxwHlDsfFiU0ANedGvN5oBIfbjazLqV9sd8ZDPpcFqk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OY8I12O7aTzdH8Mx4x3ERNcDP+OylXggP+/pM0D0EkY9XzS9WLxXWA9QOP15delpr
- tpWObcVzFpBzPSbj2P7Qn+5ExSmfHw2FFJtilvMPJ7GwYobLbYFcMM7ULtPm1bFjZF
- JLft9D0IGmrAqI2wCACovxnFFGTd5usJRH0w2vbKj2h6SOkReZlWlBHj6QfbbEsBYg
- /6Z/yNIBe+tQJSlVPpKRfv6nPtco1645t7oEP7fC2MoY6tQMHdi/OqhYIn2/GAEkuw
- /ThFmjClaaUaMF9zQ071hC12ge2ohywaOrQ7KiD1dUVA6LXcbQMHDzhBTQ87/iLdJ2
- QuG6YdXVcenhw==
+ b=FOT+p3Tll6ZwycGaG22p1XgygOHk/iXP1G1ettQCmGEWQLMOT7DtrkNuWupT0M8QP
+ m5vShYU7xaODv2E1kKpX3fCw7svU+p98NSa3L80JLs1ksyN2i7bxkMOJyWrL/udzXw
+ wjRGX6RJ8K3mOPu3vlCeerDAdo4Q8Nx8FNVln3kqT3K56bskbyEIyTZQrOznNtOAtA
+ jrtEGca+zZMfdhsvxhj9bKeegQnQT5qNc7Jx6SvrnmoAMhE+mgMflBvBOqeiGrcjCz
+ FAkrj+w3L+vm+bDhvLxrATe8m5tk/TeOYUKjejDwBkxZwcKDm6xBiySzU31Hy1v87g
+ u8PyIdruY+KxA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C5351EA366;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 044401EA2FC;
+ Fri, 27 Nov 2026 08:54:38 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 19B06469991;
- Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 021CE469937;
+ Fri, 27 Nov 2026 08:54:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 02B42CF31A; Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
+ id C499ACF27A; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Jia Jia <physicalmtea@gmail.com>, Michael S. Tsirkin <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 116/152] hw/virtio/virtio-crypto: Drain in-flight
- operations before unrealizing (CVE-2026-50625)
-Date: Fri, 27 Nov 2026 08:54:14 +0300
-Message-ID: <20261127055709.39630-53-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 114/140] hw/nvme: fix open zone zrwa allocation
+Date: Fri, 27 Nov 2026 08:53:40 +0300
+Message-ID: <20261127055421.39015-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
-References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,91 +75,68 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Thomas Huth <thuth@redhat.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-virtio_crypto_device_unrealize() does not drain or cancel requests that
-are sitting in the cryptodev backend's throttle delay queue. So when
-hot-unplugging the device, the throttle timer callback can still run and
-complete the queued operation later through the virtio_crypto_req_complete()
-callback, which dereferences the already-freed VirtIOCrypto device and its
-deleted virtqueue, so we end up with a host use-after-free bug here.
+nvme_zrm_open_flags incorrectly allocates a ZRWA resource regardless of
+the zone state. A ZRWA resource shall only be allocated if
 
-Fix it by draining the queue first before deleting the virtqueue and the
-device.
+    a) there are available ZRWA resources; and
+    b) the zone is empty.
 
-CVE: CVE-2026-50625
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3918
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261118123948.221366-1-thuth@redhat.com>
-(cherry picked from commit 902c849979ce2be367dc0a643310d6b45b76bcd4)
+Fix the state machine and error out early.
+
+Cc: qemu-stable@nongnu.org
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4520
+Fixes: e321b4cdc2dd ("hw/nvme: add support for zoned random write area")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 86d136c48476738ab6831940ee24c1482f8a403d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/cryptodev.c b/backends/cryptodev.c
-index e8f2b18f201..1f035d0cd71 100644
---- a/backends/cryptodev.c
-+++ b/backends/cryptodev.c
-@@ -262,6 +262,25 @@ static void cryptodev_backend_throttle_timer_cb(void *opaque)
-     }
- }
- 
-+void cryptodev_backend_drain_requests(CryptoDevBackend *backend)
-+{
-+    CryptoDevBackendOpInfo *opinfo, *tmp;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index c01900a8cad..e77d18809cc 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2017,10 +2017,19 @@ enum {
+ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+                                     NvmeZone *zone, int flags)
+ {
++    NvmeZoneState state = nvme_get_zone_state(zone);
 +
-+    /* Cancels pending timer, prevent it from firing during or after drain */
-+    if (throttle_enabled(&backend->tc)) {
-+        throttle_timers_detach_aio_context(&backend->tt);
++    bool zrwaa =
++        (flags & NVME_ZRM_ZRWA) && !(zone->d.za & NVME_ZA_ZRWA_VALID);
++
+     int act = 0;
+     uint16_t status;
+ 
+-    switch (nvme_get_zone_state(zone)) {
++    if (zrwaa && state != NVME_ZONE_STATE_EMPTY) {
++        return NVME_INVALID_ZONE_OP | NVME_DNR;
 +    }
 +
-+    QTAILQ_FOREACH_SAFE(opinfo, &backend->opinfos, next, tmp) {
-+        QTAILQ_REMOVE(&backend->opinfos, opinfo, next);
-+        cryptodev_backend_operation(backend, opinfo);
-+    }
-+
-+    if (throttle_enabled(&backend->tc)) {
-+        throttle_timers_attach_aio_context(&backend->tt, qemu_get_aio_context());
-+    }
-+}
-+
- int cryptodev_backend_crypto_operation(
-                  CryptoDevBackend *backend,
-                  CryptoDevBackendOpInfo *op_info)
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 85c7279aae2..6d053e7d936 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -1116,6 +1116,8 @@ static void virtio_crypto_device_unrealize(DeviceState *dev)
-     VirtIOCryptoQueue *q;
-     int i;
++    switch (state) {
+     case NVME_ZONE_STATE_EMPTY:
+         act = 1;
  
-+    cryptodev_backend_drain_requests(vcrypto->cryptodev);
-+
-     for (i = 0; i < vcrypto->max_queues; i++) {
-         virtio_delete_queue(vcrypto->vqs[i].dataq);
-         q = &vcrypto->vqs[i];
-diff --git a/include/system/cryptodev.h b/include/system/cryptodev.h
-index b20822df0dc..a160a6781a7 100644
---- a/include/system/cryptodev.h
-+++ b/include/system/cryptodev.h
-@@ -389,6 +389,15 @@ int cryptodev_backend_close_session(
-            CryptoDevCompletionFunc cb,
-            void *opaque);
+@@ -2030,8 +2039,7 @@ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+         if (n->params.auto_transition_zones) {
+             nvme_zrm_auto_transition_zone(ns);
+         }
+-        status = nvme_zns_check_resources(ns, act, 1,
+-                                          (flags & NVME_ZRM_ZRWA) ? 1 : 0);
++        status = nvme_zns_check_resources(ns, act, 1, zrwaa);
+         if (status) {
+             return status;
+         }
+@@ -2059,7 +2067,7 @@ static uint16_t nvme_zrm_open_flags(NvmeCtrl *n, NvmeNamespace *ns,
+         /* fallthrough */
  
-+/**
-+ * cryptodev_backend_drain_requests:
-+ * @backend: the cryptodev backend object
-+ *
-+ * Drain crypto operations that might still be in flight on a throttled
-+ * backend.
-+ */
-+void cryptodev_backend_drain_requests(CryptoDevBackend *backend);
-+
- /**
-  * cryptodev_backend_crypto_operation:
-  * @backend: the cryptodev backend object
+     case NVME_ZONE_STATE_EXPLICITLY_OPEN:
+-        if (flags & NVME_ZRM_ZRWA) {
++        if (zrwaa) {
+             ns->zns.numzrwa--;
+ 
+             zone->d.za |= NVME_ZA_ZRWA_VALID;
 -- 
 2.47.3
 
