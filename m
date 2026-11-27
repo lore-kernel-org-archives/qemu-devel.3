@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA21B606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0392B606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=YbvRfwPI
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=WJRkkAbQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWpD9-000240-Fp; Fri, 27 Nov 2026 01:13:31 -0500
+	id 1xWp8X-0007Wi-BW; Fri, 27 Nov 2026 01:08:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWpBS-00081p-FG; Fri, 27 Nov 2026 01:11:49 -0500
+ id 1xWp7d-0006Le-PB; Fri, 27 Nov 2026 01:07:50 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWpBQ-000334-PV; Fri, 27 Nov 2026 01:11:46 -0500
+ id 1xWp7a-0004aP-IO; Fri, 27 Nov 2026 01:07:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759049; bh=EWjowyrm/FsVwNhP37WjL6i2sCk3C3pFO/ULXufcMnk=;
+ t=1795759048; bh=XJykqrOCZMZO8z5Ff5zu97okwRXnkP+sm1790Moh79U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YbvRfwPILdy8CRKnUsG/ggBNPSx8UB4eMRYN9Cwc/9vxGfbMS1+qvz4PPDv0mG755
- g+8qNxxXr0AXFJmt3oWj54ej5Ovji1y9JJiIyyBXS4BgdxVleAyKRX2oj7vwqBAcAe
- 8OM81We96q8+voGmRVYzJvO/O1vhbUSdYye4HI3tmSzgCRKofT+ZVAZNm+/kc8klja
- FToOq4dx793PAgHbpc+/BBK1/83SC6wHbmmEy9Nv1ul92Mmgdupr1Y+ud7BdFYqvFB
- unmtAnpFFKbgXVfVNWxIgJ0gsX2lFgWNX0so0hMIPe0KLKwj4rrxCdnCJZjWKsFwcb
- QbXCHLCu3Q2qQ==
+ b=WJRkkAbQ/cZN2sFy9KxQzqZcOICT/pgmgWDu19ecUfutrCDKVFFFOf6ylUOss6J7a
+ dgmqg3kQADpZGDCLOrhonTzt0zL68/ZwnnI0FeJbbGw2o6NQDXg/y1nmxLyoA9T154
+ LsHNN73oaVT++ucLAW490LxHi+TuXJq5z7t888sI0Ebld12HgwQwUHOSRuGP0qC663
+ I0ptjquv93Q3Hp9jjEkpy63ffW0YgaU8/AkosDyHQ1GFaGrKLsgeqzav9P8gdIsHcS
+ ZYtc/TeOP/sIlbtPqM/nvQq7MdmO9ysDry/KjoydREu7tLTWy2VBa2eLeRbDy98Cpi
+ Wu+L2docMZaGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D06021EA389;
- Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 134471EA364;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CE0274699B4;
- Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 107CC46998F;
+ Fri, 27 Nov 2026 08:57:28 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9B917CF360; Fri, 27 Nov 2026 08:57:29 +0300 (MSK)
+ id F0F77CF316; Fri, 27 Nov 2026 08:57:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 151/152] hw/ppc/amigaone: Invalidate TBs on NVRAM
- write
-Date: Fri, 27 Nov 2026 08:54:49 +0300
-Message-ID: <20261127055709.39630-88-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Li RongQing <lirongqing@baidu.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.4 v2 114/152] virtio: Reset free_head on shadow
+ virtqueue start
+Date: Fri, 27 Nov 2026 08:54:12 +0300
+Message-ID: <20261127055709.39630-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
 References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
@@ -76,35 +76,49 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-The NVRAM is a ROM device, mapped in romd mode, so the guest can
-execute from it. Its write callback stores the byte with a direct
-store, which TCG does not see: translated blocks of the byte survive.
+free_head tracks the index of the next free descriptor in the SVQ
+descriptor ring.  It is used by vhost_svq_vring_write_descs() to
+choose where to place new descriptors, and is updated as descriptors
+are allocated and recycled.
 
-Flush the written byte, as the other models (TYPE_PFLASH_CFI01/2
-and TYPE_NRF51_NVM) do.
+free_head is zero-initialized when the SVQ is created through
+vhost_svq_new() (g_new0), but it is not reset in vhost_svq_start().
+The start function already resets the rest of the ring state
+(shadow_avail_idx, shadow_used_idx, last_used, last_used_idx and
+num_free), yet free_head is left untouched.
 
-Cc: qemu-stable@nongnu.org
-Fixes: addff513a10e ("ppc/amigaone: Implement NVRAM emulation")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Acked-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20261124180138.69682-1-philmd@oss.qualcomm.com>
-(cherry picked from commit c3800302668ff745e10b810f12723eac7068abda)
+Since an SVQ can be stopped and restarted on the same object, for
+example across vDPA device migration or control virtqueue processing,
+a stale free_head from the previous run survives into the new one.
+This causes new descriptors to be written at the wrong position of
+the SVQ descriptor ring, corrupting it.
+
+Reset free_head to 0 in vhost_svq_start() so that descriptor
+allocation always begins from the head of a fresh ring.
+
+Fixes: 100890f7cad5 ("vhost: Shadow virtqueue buffers forwarding")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261104020053.2548-1-lirongqing@baidu.com>
+(cherry picked from commit 1d0777c4b64ed0a94e0fce8165d8e080753306fc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 2e94e80b569..9b60782172f 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -109,6 +109,7 @@ static void nvram_write(void *opaque, hwaddr addr, uint64_t val,
-     uint8_t *p = memory_region_get_ram_ptr(&s->mr);
- 
-     p[addr] = val;
-+    memory_region_flush_rom_device(&s->mr, addr, 1);
-     if (s->blk && blk_pwrite(s->blk, addr, 1, &val, 0) < 0) {
-         error_report("%s: could not write %s", __func__, blk_name(s->blk));
-     }
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index bcb7f2ffc79..940476272b3 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -846,6 +846,7 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
+     svq->shadow_used_idx = 0;
+     memset(&svq->batch_last, 0, sizeof(svq->batch_last));
+     svq->last_used = 0;
++    svq->free_head = 0;
+     svq->last_used_idx = 0;
+     svq->vdev = vdev;
+     svq->vq = vq;
 -- 
 2.47.3
 
