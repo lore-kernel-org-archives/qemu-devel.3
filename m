@@ -1,51 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1520606A31C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A11D606A31C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Nov 2026 06:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=fHWXBsw9
+	dkim=pass (2048-bit key) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=R9Pcqpsh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xWp5x-0001d5-FC; Fri, 27 Nov 2026 01:06:05 -0500
+	id 1xWozd-000750-LL; Fri, 27 Nov 2026 00:59:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp4M-00067O-8t; Fri, 27 Nov 2026 01:04:27 -0500
+ id 1xWozT-0006dq-Mp; Fri, 27 Nov 2026 00:59:24 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xWp4K-0003cP-Ge; Fri, 27 Nov 2026 01:04:26 -0500
+ id 1xWozR-0002PL-Jw; Fri, 27 Nov 2026 00:59:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1795759043; bh=tLdILqlCN6vZHqSQ8w6+2ILg3Qzo/+jIuHYyzvwjWKw=;
+ t=1795758877; bh=AZwsgeoju6dujUDlTHQIucLYcoyu4pLW8OVcBPXAe/E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fHWXBsw9/324+VVpad/URLBDMfAbnXmO6LNuiyRkO+tBuc+rKnpwSBN61b36UA4pB
- 393Xkq2hJArPqSL0UBASB2S3V1P9gktl7JdmVJIk8v0SB01ngPBWWVGcGXyI9/47ZX
- zIIsrZIHsqd9+tZBWkF1HrRiJamI9VebKZsvaPTyQ8ZXMuRkyXmpL7AtjGxercHw0p
- CLGHBbaiqVJZE/EDjjnRcr/apa5yvA9FrMGo7Hwwfi4sDER/q+QUjTDCdCFTMup08b
- IakEMPmAWG1jpuuq4meMacdSDYKRcqf1qj5JqxLdUhyGBb6FJ4jygr/e1gKph9cfm8
- eABee65DtdhRw==
+ b=R9Pcqpsh07evUXZa6lFum+e8JTTUE237EL2Nn+BGoJN0BeLT/5EoZ2u4t6CibKw6X
+ CwAb8CNoRN4bjw3kAhE5yeWu6JG9ZpPPTJrTgIBbYJAu24R8oWgPz5aaB3qI6oBMMQ
+ aocYrLJKNpfGr+AM8usd7VRZrTt35Q2XoUO+MjvyRKJ8fc0V9IeGClhkzbaoKBm3nC
+ p/jaQfHIl7qRQMQW8tCRC8ImWFlIBeV4z1l34h9nvzlMm6RFzjtm4ZxsZ8syzi41i9
+ 6kehQ65sZAFI7K6MMZQouSg6QkFhR7Au8gpwtBXfUT0OADSA0dVzsGKPp/0lKsVzro
+ pryBE8ZNgKOyA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9A9A21EA344;
- Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F3ED51EA2FB;
+ Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 982EB46996F;
- Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F1CA4469936;
+ Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 913E6CF2D6; Fri, 27 Nov 2026 08:57:23 +0300 (MSK)
+ id C1C57CF278; Fri, 27 Nov 2026 08:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Weil <sw@weilnetz.de>,
- Hui Peng <benquike@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.4 v2 082/152] hw/net/eepro100: fix use-after-free on
- reset after hot-unplug
-Date: Fri, 27 Nov 2026 08:53:40 +0300
-Message-ID: <20261127055709.39630-19-mjt@tls.msk.ru>
+Subject: [Stable-10.0.16 v2 113/140] hw/nvme: fix zone descriptor extension
+ allocation overflow
+Date: Fri, 27 Nov 2026 08:53:39 +0300
+Message-ID: <20261127055421.39015-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
-References: <qemu-stable-11.1.4-20261127085309@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
+References: <qemu-stable-10.0.16-20261127085304@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,88 +76,56 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Stefan Weil <sw@weilnetz.de>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-e100_nic_realize() registers a system reset handler via
-qemu_register_reset(nic_reset, s), but pci_nic_uninit() never
-unregisters it. After the device is hot-unplugged, the LegacyReset
-object stored in the root reset container still holds the raw pointer
-to the freed EEPRO100State, so the next system reset invokes
-nic_reset() on freed memory.
+nvme_ns_zoned_init_state sizes the zone descriptor extension array
+with 32-bit arithmetic. A large enough zone extension size and number of
+zones will wrap, causing either null pointer deref on Set Zone
+Descriptor Extension or an out-of-bounds write.
 
-Instead, define a reset phase on the device itself: assign
-phases.hold in eepro100_class_init() to a wrapper around nic_reset().
-The device is already part of the resettable tree via its parent bus
-(TYPE_DEVICE implements the Resettable interface), so no explicit
-registration is needed, and the reset state is automatically dropped
-when the device is unplugged. This follows the approach used by the
-e1000, e1000e and igb emulations.
+nvme_get_zd_extension has the same problem.
 
-Reported-by: Hui Peng <benquike@gmail.com>
-Reported-by: MyeonghunPak <https://gitlab.com/mhun512>
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261103215430.703404-1-sw@weilnetz.de
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4058
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4510
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit e17590ca62cb15c70a9de0b7d851244544664ebd)
+Fix the initialization by using g_malloc0_n and compute the per-zone
+offset using 64-bit arithmetic.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 1a9290ade33a ("hw/block/nvme: Support Zone Descriptor Extensions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4730
+Reported-by: Karl Mehltretter
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 63c9653696862f55646fa7a88833857cabb6a07d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
-index aaa3eb60f8a..8fe7f31bd2f 100644
---- a/hw/net/eepro100.c
-+++ b/hw/net/eepro100.c
-@@ -617,6 +617,13 @@ static void nic_reset(void *opaque)
-     nic_selective_reset(s);
- }
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index 00db5062359..de2688698d3 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -241,8 +241,8 @@ static void nvme_ns_zoned_init_state(NvmeNamespace *ns)
  
-+static void eepro100_reset_hold(Object *obj, ResetType type)
-+{
-+    EEPRO100State *s = DO_UPCAST(EEPRO100State, dev, PCI_DEVICE(obj));
-+
-+    nic_reset(s);
-+}
-+
- #if defined(DEBUG_EEPRO100)
- static const char * const e100_reg[PCI_IO_SIZE / 4] = {
-     "Command/Status",
-@@ -1871,8 +1878,6 @@ static void e100_nic_realize(PCIDevice *pci_dev, Error **errp)
-     qemu_macaddr_default_if_unset(&s->conf.macaddr);
-     logout("macaddr: %s\n", nic_dump(&s->conf.macaddr.a[0], 6));
+     ns->zone_array = g_new0(NvmeZone, ns->num_zones);
+     if (ns->params.zd_extension_size) {
+-        ns->zd_extensions = g_malloc0(ns->params.zd_extension_size *
+-                                      ns->num_zones);
++        ns->zd_extensions = g_malloc0_n(ns->num_zones,
++                                        ns->params.zd_extension_size);
+     }
  
--    nic_reset(s);
--
-     s->nic = qemu_new_nic(&net_eepro100_info, &s->conf,
-                           object_get_typename(OBJECT(pci_dev)),
-                           pci_dev->qdev.id,
-@@ -1881,8 +1886,6 @@ static void e100_nic_realize(PCIDevice *pci_dev, Error **errp)
-     qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
-     TRACE(OTHER, logout("%s\n", qemu_get_queue(s->nic)->info_str));
- 
--    qemu_register_reset(nic_reset, s);
--
-     s->vmstate = g_memdup(&vmstate_eepro100, sizeof(vmstate_eepro100));
-     s->vmstate->name = qemu_get_queue(s->nic)->model;
-     vmstate_register_any(VMSTATE_IF(&pci_dev->qdev), s->vmstate, s);
-@@ -2064,6 +2067,7 @@ static void eepro100_class_init(ObjectClass *klass, const void *data)
+     QTAILQ_INIT(&ns->exp_open_zones);
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index bb0d369c28e..6d71deb693a 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -351,7 +351,8 @@ static inline bool nvme_wp_is_valid(NvmeZone *zone)
+ static inline uint8_t *nvme_get_zd_extension(NvmeNamespace *ns,
+                                              uint32_t zone_idx)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-     E100PCIDeviceInfo *info;
- 
-     info = eepro100_get_class_by_name(object_class_get_name(klass));
-@@ -2080,6 +2084,7 @@ static void eepro100_class_init(ObjectClass *klass, const void *data)
-     k->revision = info->revision;
-     k->subsystem_vendor_id = info->subsystem_vendor_id;
-     k->subsystem_id = info->subsystem_id;
-+    rc->phases.hold = eepro100_reset_hold;
+-    return &ns->zd_extensions[zone_idx * ns->params.zd_extension_size];
++    return ns->zd_extensions + (uint64_t)zone_idx *
++        ns->params.zd_extension_size;
  }
  
- static void eepro100_register_types(void)
+ static inline void nvme_aor_inc_open(NvmeNamespace *ns)
 -- 
 2.47.3
 
