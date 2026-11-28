@@ -1,90 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACE3606A31C
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Nov 2026 08:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E272606A31C
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Nov 2026 10:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=A6AxxgZ0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fq3RUXsN
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xXDrZ-0007Qs-SJ; Sat, 28 Nov 2026 03:32:53 -0500
+	id 1xXFi6-00043e-DL; Sat, 28 Nov 2026 05:31:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zachwade.k@gmail.com>)
- id 1xXDrX-0007Px-4Y
- for qemu-devel@nongnu.org; Sat, 28 Nov 2026 03:32:51 -0500
-Received: from mail-pj2-x06.google.com ([2607:f8b0:4864:39::6])
+ (Exim 4.90_1) (envelope-from <drifabdelmalekmohamedsaid@gmail.com>)
+ id 1xXFi1-00043J-52
+ for qemu-devel@nongnu.org; Sat, 28 Nov 2026 05:31:09 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zachwade.k@gmail.com>)
- id 1xXDrV-0007ER-1s
- for qemu-devel@nongnu.org; Sat, 28 Nov 2026 03:32:50 -0500
-Received: by mail-pj2-x06.google.com with SMTP id
- 98e67ed59e1d1-3b4be95e0afso2840158a91.1
- for <qemu-devel@nongnu.org>; Sat, 28 Nov 2026 00:32:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <drifabdelmalekmohamedsaid@gmail.com>)
+ id 1xXFhz-0004Jq-Dv
+ for qemu-devel@nongnu.org; Sat, 28 Nov 2026 05:31:08 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4bb85e07aadso108844745e9.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Nov 2026 02:31:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795854767; x=1796459567; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Nr4FtpaGfNFkwiRxs8ounCMJmoWHiETeLGNPli+6bj8=;
- b=A6AxxgZ0VMRCnbsDaOqfKJDeEbzXujvzHqsXyQhKsBqaF+O0jhK9xdTkhRd3EgcLOD
- I+xqCnBNvupWhBq8ftgMOdG5AY1PcWJAdbbFhVazHQrbHX6DPiSQAPr0EhNgpQVwIBFq
- LBWIk/9dN25ODLWhXxOZoa42RYRjJ5tXMJm6faZjk0upMmM3yA8dz7ZMkDxRQoLLjyR2
- F5lbTTj+89rJDyLivAhJC7Qi5AuV3fs22VuWc4sh0Vt9XuYmra4R5QAnkSkSi2cpA8Yi
- lc6dbPWHJ6IoXPKKe9Ty/duWfewR99jy8GFjPl/sUKRhf+F0tX9MnjI1svCOUBb210QW
- RUIg==
+ d=gmail.com; s=20260707; t=1795861865; x=1796466665; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ytyWyrIlAoeO7V9N/lfLSv8jibtFa9CQeG8gEGhcIPI=;
+ b=fq3RUXsNsTLuLCoTN0MO0RvhViv9e0Fasf1NLu0am8BlS2/VRwEJpUm2wHczAnUEd9
+ mA9jf2Xh4vw3zkEvDySG6EgNs3qZcigwBPbnvWNjSFTbg9buPlQuoYCha1SQn3QlRZ+S
+ q4ESZm1V03hWUYqbnrIbPBUZVEKKod2BzHHpAZmVQP+grysNNi01reNUdgYxINO21x3S
+ lCzWwySBnQmWhsDlV2Bx54YKzKsliXR7GflDK3fFxwaoAO6GJuIJ2PG+I3CMrTgrS7JD
+ Z1ww12kctCYSZGmJBXhs0/duzUioHXekox2BKskLdeCsYY6COqKayyBhGL9fOquXHw6Z
+ qcCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795854767; x=1796459567;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Nr4FtpaGfNFkwiRxs8ounCMJmoWHiETeLGNPli+6bj8=;
- b=leiQk9ChsvjJHY1YfFuCD3yNGPKgRdv6L8J0y4FyV9Tz2m1BwPc78Gw6GJzDE/AahO
- BizUh+b0i//YIJv5xBEFvOJbvWe/3CuggD4laME0H9HuY5aNtyRQFR4RdhPtD5SRPpK8
- +srjlB3mDrRFiuxRzE1Uop3eUsVWTbHpWiu37OVbVzAfrufcyCmGGvndAJUVsMlEJbre
- QVPYVyA/LNNgjB4j24dA2OZ2JHITk0EkeNfAdARE1FZvGu8pwQs11TlsDojxrRti+KSM
- WJfIB8KULbvkE8s5FkgOZro/WMJSqW+VBNYaKxqTA1ebAY6lGt+WUJbCi9ReNWmxJEd2
- h5pg==
-X-Gm-Message-State: APuU4Z/e2/P03wKvW7F+eS76hHCgpi4vn33dk8wa5mB+4U1mTwjXygMZ
- tsee/EuLKEhNkjUPapntmuoX1SnWAjDe16RaaxE1DEK66D1ghUa8xKJ11rWkXHlG7/g=
-X-Gm-Gg: AZFdTZdgB1umEFcWoTs9Q3AIDVBkWCgTmUELAW/llLxsYDmVamh+tlHJi2is9buVdiM
- Zv1XXCfPU+AY/6yR4fuPsOGaDCHg3a0PmxdVjXF09Kwn0A1PysTmRN0lkAOpcdDHnK+Wnawpqxo
- dLrWzx8z6cUdCVMvfJQ7Y8MYrHvBHSKpW0gkMUqMX6MyvArHyvYm2zw4eE3o87KuG0Fktwo+9VV
- Agj8a60QW3v4KEbG0gwlglIUX5yHBrXSB1pmOtXQMasB8ATXMOLJHtfq+0a7YHyiDlEZI1sE25N
- Zy+6jpEIsN/Ml4Nxce3GAsx0U5C/+DobvnJThsF+OqBDvEZVZ8cENeZv6e9Ocm1029sz/94jqji
- rexvDhrNuldfnR/JugJ9QxpJfiQl1I1Kx+2P4RGJqrAgCtY3VUtQsTMdzbsmsm5mrqD0WUx0VRl
- C9xh0JKVhmpqEmpYanr3aZijTDnNA0wpTIiBWDh5bpXG1fWnWJS19lAOYdxxfuYXsEJ8k8BFUFm
- MH0w/lUkBiMsMIc6evUxfLvRtPqUxf8lDYDKuPoam2QdMFrZIMT2ohQnfPBWTcGhTEEiyROJAlg
- HHU6LOPELRAkqHhU1IUfP0NRsUQ=
-X-Received: by 2002:a17:90b:2f07:b0:3b5:a68:297c with SMTP id
- 98e67ed59e1d1-3b50a689b5cmr10860735a91.66.1795854767097; 
- Sat, 28 Nov 2026 00:32:47 -0800 (PST)
-Received: from ubuntu.. ([103.49.135.232]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cde6d0332bfsm14410853a12.22.2026.11.28.00.32.44
+ d=1e100.net; s=20260707; t=1795861865; x=1796466665;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ytyWyrIlAoeO7V9N/lfLSv8jibtFa9CQeG8gEGhcIPI=;
+ b=rB23JbGdZk0xqedPyO8U/dC5d0a9C6DHu70oK4fqnMtSs+euTN9QeideGECOsJ6JTC
+ Bkzn2PPN4dK83RQ7GDguRRk0PFkS2lCYTO0MIZ0+OszOUkUsIZMlsZCSNJmR7PxzYOty
+ +/g2tiZ///5xMcCt7CRzwIyp1AOML/bXPPIiGAf4aFBB7DfqMZ9lpPbhWS2ryL5enVEs
+ R6A3CF4watnVTkrRGty1sm1FKIx1k1aNUCIM1qevEuCfdSzHpp4I1BP3rJvIABS3yE53
+ Hj+vNiEDGMt82rkBVwnhue+gyML7/8cAiBIN9rErCnkdVeHsj6W41w2daPp8bHofmC4y
+ 0HYQ==
+X-Gm-Message-State: APuU4Z8UOKkradS7ifG1x765GLT8XTIz4XN/zq/unFgFfDrd45hp+70L
+ gdjlu5ViHx3Gjf4MjDyyPwtzVE0ZGwaD6ddq5bL2TWVG2jPa1qQVqpxmGRwfYw==
+X-Gm-Gg: AZFdTZffRKyH1sjj78O58YfwRt70QHF8giBQ49KkDiObQ5eVN1f/vv27cb/fWBM+fGm
+ czheoTOfuMiPDZCu04vWBcMjQVu2k3mKLZTxv6FJwk7p2eUe/6nF4radeK5cQp+v2+aST1M5lZR
+ vvTUmXNVGmNICorZTKtoczouo8CsfMKwkMVHNdUOUR85PLr9kjW1bJmRWnQomkgINlDkA6zAPne
+ yVCMH5SzCGFscMgMDWuTSBBdt3ejG+q7GHxD3o+OeAPLTVCHKt8s8yZGM8N6PP2bKuhLJFxNtFo
+ 9XMytErcRNBQNs/8DkLrLr3K+YvEVI+T04vQabtRwyj400lZ/uhHf1W1n1hOSsC8+fHpyAbNGTh
+ XzIR/LBDkRXavlkjd85InQ0BXzAHfgow+FgAW+kKgIaPgtpDZudRG1yo+Bvs+HJ/8qM6LXiWrY/
+ A6ZB8yEgsgbBa1BlJ6pnLtNHiQ8PE4F8BrjIlr9WcT07lyulxnbSafAd2RWM+dANel0vUVhQryU
+ oN72HeMrKtSnl9p/45lz4WxfxQ0stwARnTqA2IB0aU6/M3fbcmjbrzuG1679T7sQs2B435xTDY5
+ TQbQ+CobEWYEYtsltn9hjTOnkkXZcT28djvJIVsVCF3L4aopFn9yK5EnXpOYHf0/IfDlJiD6332
+ hlh4nV7cDJg9LcZJogzxB0VfyGI1C8Ud+
+X-Received: by 2002:a05:600c:a087:b0:4bb:5c92:ce22 with SMTP id
+ 5b1f17b1804b1-4bb887fe887mr550914855e9.8.1795861865171; 
+ Sat, 28 Nov 2026 02:31:05 -0800 (PST)
+Received: from DESKTOP-IR7J1S9.localdomain ([105.235.131.156])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4bb905f1489sm508903745e9.0.2026.11.28.02.31.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Nov 2026 00:32:46 -0800 (PST)
-From: Zhu Wei <zachwade.k@gmail.com>
-X-Google-Original-From: Zhu Wei <zhuwei@sangfor.com.cn>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@pond.sub.org>, niming <niming@sangfor.com.cn>,
- zhuwei <zhuwei@sangfor.com.cn>, "zachwade . k" <zachwade.k@gmail.com>
-Subject: [PATCH v5 1/1] block/monitor: fix BlockJobInfoList leak in
- hmp_info_block_jobs()
-Date: Sat, 28 Nov 2026 16:32:24 +0800
-Message-ID: <20261128083238.1434965-2-zhuwei@sangfor.com.cn>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261128083238.1434965-1-zhuwei@sangfor.com.cn>
-References: <20261128083238.1434965-1-zhuwei@sangfor.com.cn>
+ Sat, 28 Nov 2026 02:31:04 -0800 (PST)
+From: Drif Abdelmalek Mohamed Said <drifabdelmalekmohamedsaid@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, David Woodhouse <dwmw2@infradead.org>,
+ Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Drif Abdelmalek Mohamed Said <drifabdelmalekmohamedsaid@gmail.com>
+Subject: [PATCH RESEND] hw/i386/kvm/xen_evtchn: use lock guards
+Date: Sat, 28 Nov 2026 11:31:00 +0100
+Message-ID: <20261128103100.357-1-drifabdelmalekmohamedsaid@gmail.com>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::6;
- envelope-from=zachwade.k@gmail.com; helo=mail-pj2-x06.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=drifabdelmalekmohamedsaid@gmail.com;
+ helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,79 +108,176 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: zhuwei <zhuwei@sangfor.com.cn>
+Replace qemu_mutex_lock()/qemu_mutex_unlock() pairs with
+QEMU_LOCK_GUARD()/WITH_QEMU_LOCK_GUARD() in functions with error paths
+and early returns: xen_evtchn_bind_pirq_op(), xen_physdev_unmap_pirq(),
+xen_be_evtchn_bind_interdomain() and xen_be_evtchn_unbind().
 
-hmp_info_block_jobs() uses 'list' both as the head of the BlockJobInfoList
-returned by qmp_query_block_jobs() and as the iterator of the while loop.
-Once the loop finishes, 'list' is NULL, so the call to
-qapi_free_BlockJobInfoList(list) at the end of the function frees nothing
-and the whole list returned by qmp_query_block_jobs() is leaked.
+No functional change intended.
 
-Keep the head of the list in a separate variable and iterate over a copy,
-the same way hmp_info_blockstats() does, so the entire list is released as
-intended.
-
-Fixes: 93bb1315250d ("hmp: fix memory leak at hmp_info_block_jobs()")
-Signed-off-by: niming <niming@sangfor.com.cn>
-Signed-off-by: zhuwei <zhuwei@sangfor.com.cn>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Drif Abdelmalek Mohamed Said <drifabdelmalekmohamedsaid@gmail.com>
 ---
- block/monitor/block-hmp-cmds.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ hw/i386/kvm/xen_evtchn.c | 82 +++++++++++++++-------------------------
+ 1 file changed, 31 insertions(+), 51 deletions(-)
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 7bae4d425c..9a3df965b0 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -760,7 +760,7 @@ void hmp_info_blockstats(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
- {
--    BlockJobInfoList *list;
-+    BlockJobInfoList *list, *info;
- 
-     list = qmp_query_block_jobs(&error_abort);
- 
-@@ -769,26 +769,25 @@ void hmp_info_block_jobs(MonitorHMP *hmp, const QDict *qdict)
-         return;
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index 9379383e53..c0250cb357 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -1293,20 +1293,17 @@ int xen_evtchn_bind_pirq_op(struct evtchn_bind_pirq *pirq)
+         return -EBUSY;
      }
  
--    while (list) {
--        if (list->value->type == JOB_TYPE_STREAM) {
-+    for (info = list; info; info = info->next) {
-+        if (info->value->type == JOB_TYPE_STREAM) {
-             monitor_hmp_printf(hmp, "Streaming device %s: Completed %" PRId64
-                                " of %" PRId64 " bytes, speed limit %" PRId64
-                                " bytes/s\n",
--                               list->value->device,
--                               list->value->offset,
--                               list->value->len,
--                               list->value->speed);
-+                               info->value->device,
-+                               info->value->offset,
-+                               info->value->len,
-+                               info->value->speed);
-         } else {
-             monitor_hmp_printf(hmp, "Type %s, device %s: Completed %" PRId64
-                                " of %" PRId64 " bytes, speed limit %" PRId64
-                                " bytes/s\n",
--                               JobType_str(list->value->type),
--                               list->value->device,
--                               list->value->offset,
--                               list->value->len,
--                               list->value->speed);
-+                               JobType_str(info->value->type),
-+                               info->value->device,
-+                               info->value->offset,
-+                               info->value->len,
-+                               info->value->speed);
+-    qemu_mutex_lock(&s->port_lock);
++    WITH_QEMU_LOCK_GUARD(&s->port_lock) {
++        ret = allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
++                            &pirq->port);
++        if (ret) {
++            return ret;
++        }
+ 
+-    ret = allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
+-                        &pirq->port);
+-    if (ret) {
+-        qemu_mutex_unlock(&s->port_lock);
+-        return ret;
++        s->pirq[pirq->pirq].port = pirq->port;
++        trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
+     }
+ 
+-    s->pirq[pirq->pirq].port = pirq->port;
+-    trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
+-
+-    qemu_mutex_unlock(&s->port_lock);
+-
+     /*
+      * Need to do the unmask outside port_lock because it may call
+      * back into the MSI translate function.
+@@ -1919,27 +1916,24 @@ int xen_physdev_unmap_pirq(struct physdev_unmap_pirq *unmap)
+     }
+ 
+     BQL_LOCK_GUARD();
+-    qemu_mutex_lock(&s->port_lock);
+-
+-    if (!pirq_inuse(s, pirq)) {
+-        qemu_mutex_unlock(&s->port_lock);
+-        return -ENOENT;
+-    }
++    WITH_QEMU_LOCK_GUARD(&s->port_lock) {
++        if (!pirq_inuse(s, pirq)) {
++            return -ENOENT;
++        }
+ 
+-    gsi = s->pirq[pirq].gsi;
++        gsi = s->pirq[pirq].gsi;
+ 
+-    /* We can only unmap GSI PIRQs */
+-    if (gsi < 0) {
+-        qemu_mutex_unlock(&s->port_lock);
+-        return -EINVAL;
+-    }
++        /* We can only unmap GSI PIRQs */
++        if (gsi < 0) {
++            return -EINVAL;
++        }
+ 
+-    s->gsi_pirq[gsi] = 0;
+-    s->pirq[pirq].gsi = IRQ_UNBOUND; /* Doesn't actually matter because: */
+-    pirq_inuse_word(s, pirq) &= ~pirq_inuse_bit(pirq);
++        s->gsi_pirq[gsi] = 0;
++        s->pirq[pirq].gsi = IRQ_UNBOUND; /* Doesn't actually matter because: */
++        pirq_inuse_word(s, pirq) &= ~pirq_inuse_bit(pirq);
+ 
+-    trace_kvm_xen_unmap_pirq(pirq, gsi);
+-    qemu_mutex_unlock(&s->port_lock);
++        trace_kvm_xen_unmap_pirq(pirq, gsi);
++    }
+ 
+     if (gsi == IRQ_MSI_EMU) {
+         kvm_update_msi_routes_all(NULL, true, 0, 0);
+@@ -2078,7 +2072,7 @@ int xen_be_evtchn_bind_interdomain(struct xenevtchn_handle *xc, uint32_t domid,
+         return -EINVAL;
+     }
+ 
+-    qemu_mutex_lock(&s->port_lock);
++    QEMU_LOCK_GUARD(&s->port_lock);
+ 
+     /* The guest has to have an unbound port waiting for us to bind */
+     gp = &s->port_table[guest_port];
+@@ -2095,15 +2089,14 @@ int xen_be_evtchn_bind_interdomain(struct xenevtchn_handle *xc, uint32_t domid,
+             if (kvm_xen_has_cap(EVTCHN_SEND)) {
+                 assign_kernel_eventfd(gp->type, guest_port, xc->fd);
+             }
+-            break;
++            return ret;
          }
--        list = list->next;
+         /* fall through */
+ 
+     case EVTCHNSTAT_unbound:
+         be_port = find_be_port(s, xc);
+         if (!be_port) {
+-            ret = -ENOSPC;
+-            goto out;
++            return -ENOSPC;
+         }
+ 
+         gp->type = EVTCHNSTAT_interdomain;
+@@ -2113,24 +2106,16 @@ int xen_be_evtchn_bind_interdomain(struct xenevtchn_handle *xc, uint32_t domid,
+         if (kvm_xen_has_cap(EVTCHN_SEND)) {
+             assign_kernel_eventfd(gp->type, guest_port, xc->fd);
+         }
+-        ret = be_port;
+-        break;
++        return be_port;
+ 
+     default:
+-        ret = -EINVAL;
+-        break;
++        return -EINVAL;
+     }
+-
+- out:
+-    qemu_mutex_unlock(&s->port_lock);
+-
+-    return ret;
+ }
+ 
+ int xen_be_evtchn_unbind(struct xenevtchn_handle *xc, evtchn_port_t port)
+ {
+     XenEvtchnState *s = xen_evtchn_singleton;
+-    int ret;
+ 
+     if (!s) {
+         return -ENOTSUP;
+@@ -2140,12 +2125,10 @@ int xen_be_evtchn_unbind(struct xenevtchn_handle *xc, evtchn_port_t port)
+         return -EFAULT;
      }
  
-     qapi_free_BlockJobInfoList(list);
+-    qemu_mutex_lock(&s->port_lock);
++    QEMU_LOCK_GUARD(&s->port_lock);
+ 
+-    if (port && port != xc->be_port) {
+-        ret = -EINVAL;
+-        goto out;
+-    }
++    if (port && port != xc->be_port)
++        return -EINVAL;
+ 
+     if (xc->guest_port) {
+         XenEvtchnPort *gp = &s->port_table[xc->guest_port];
+@@ -2164,10 +2147,7 @@ int xen_be_evtchn_unbind(struct xenevtchn_handle *xc, evtchn_port_t port)
+ 
+     s->be_handles[xc->be_port] = NULL;
+     xc->be_port = 0;
+-    ret = 0;
+- out:
+-    qemu_mutex_unlock(&s->port_lock);
+-    return ret;
++    return 0;
+ }
+ 
+ int xen_be_evtchn_close(struct xenevtchn_handle *xc)
 -- 
-2.56.1
+2.47.3
 
 
